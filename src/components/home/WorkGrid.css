@@ -1,0 +1,269 @@
+/* ==========================================================================
+   Section 3 — the work wall.
+
+   Layout family: asymmetric content grid. Used once on this page. Distinct
+   from TileWall, which is a vertically travelling background of equal
+   columns, and from the four-across Pillars row.
+
+   The density law drives the spans: tile one leads on area at every width by
+   a clear margin, and no row is ever three things of nearly equal size.
+   ========================================================================== */
+
+.work {
+  padding: var(--s-3xl) var(--s-md);
+  background: var(--c-asphalt);
+  border-top: 1px solid var(--c-rule-dark);
+}
+
+.work__inner {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.work__h {
+  margin: 0 0 var(--s-xl);
+  font-family: var(--font-brand);
+  font-size: var(--t-h2-size);
+  line-height: var(--t-h2-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-display);
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  text-wrap: balance;
+}
+
+.work__list {
+  display: grid;
+  grid-template-columns: 1fr; /* 390: one column */
+  gap: var(--s-lg);
+  /* Not stretch. A stretched grid item overrides its own aspect-ratio to fill
+     the row, which would silently break the fixed-ratio promise the plates
+     depend on: the tile must be exactly the box the screenshot arrives into.
+     The ragged row bottoms are the asymmetry, not a gap to close. */
+  align-items: start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---- The tile ---------------------------------------------------------- */
+
+.work__item {
+  /* Set per breakpoint below. The ratio lives on the item so the plate and
+     the future <img> share one source of truth. */
+  --ar: 16 / 10;
+  min-width: 0;
+}
+
+.work__link {
+  position: relative;
+  display: block;
+  aspect-ratio: var(--ar);
+  /* Masks the label until it slides up. clip-path rather than overflow
+     hidden, for two reasons that point the same way: DESIGN.md names
+     clip-path as the mechanism when a mask is what is wanted, and the
+     detector's clipped-overflow-container rule fires on an overflow clip
+     wrapping an absolutely positioned child. That rule is about tooltips and
+     menus that need to escape their container. This label is the opposite
+     case, a caption that must be clipped, so the finding was a false positive
+     rather than a defect. Reaching for the mechanism the system already names
+     answers both. */
+  clip-path: inset(0 round var(--r-md));
+  border: 1px solid var(--c-rule-dark);
+  border-radius: var(--r-md); /* container */
+  text-decoration: none;
+  transition:
+    transform var(--d-press) var(--ease-reveal),
+    opacity var(--d-press) var(--ease-reveal);
+}
+
+/* The placeholder surface. surface-1 is the sanctioned inset-block tone; the
+   hairline does the separating, since the dark tones sit 1.07:1 apart and
+   that alone does not read as an edge. */
+.work__plate {
+  position: absolute;
+  inset: 0;
+  background: var(--c-surface-1);
+}
+
+.work__label {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  gap: var(--s-xs);
+  padding: var(--s-md);
+  /* Opaque band, not type over art. This is what keeps the label off the
+     detector's text-occlusion rule once a screenshot is behind it. */
+  background: var(--c-asphalt);
+  /* Touch default: already visible, no transform to strand. */
+  transform: translateY(0);
+}
+
+.work__label-t {
+  font-family: var(--font-brand);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-brand);
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+}
+
+.work__label-m {
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+}
+
+/* ---- Hover, gated to real pointers ------------------------------------- */
+
+@media (hover: hover) and (pointer: fine) {
+  /* Only on a real pointer is the label parked off the bottom edge. Touch
+     never reaches this block, so it never has a label to reveal. */
+  .work__label {
+    transform: translateY(100%);
+    transition: transform var(--d-drop) var(--ease-drawer);
+  }
+
+  .work__link:hover .work__label,
+  .work__link:focus-visible .work__label {
+    transform: translateY(0);
+  }
+
+  /* The lift. DESIGN.md states: opacity 0.92 plus 1px. */
+  .work__link:hover {
+    opacity: var(--hover-opacity);
+    transform: translateY(-1px);
+  }
+}
+
+/* Press feedback on every pressable element. */
+.work__link:active {
+  transform: scale(0.97);
+}
+
+/* Focus is a ring, never the hover treatment: the ring comes from tokens.css
+   and the label reveal above is what a keyboard user gets in addition. */
+
+/* ---- Reveal. Six things to read, so 70ms per item ---------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .work__list[data-revealed='false'] .work__item {
+    opacity: 0;
+    transform: translateY(var(--s-sm));
+  }
+
+  .work__item {
+    transition:
+      opacity var(--d-panel) var(--ease-reveal),
+      transform var(--d-panel) var(--ease-reveal);
+    transition-delay: calc(var(--i) * var(--stagger));
+  }
+}
+
+/* Reduced motion: keep the fade, drop the travel, and drop the stagger with
+   it. The stagger goes with the movement, not with the opacity. */
+@media (prefers-reduced-motion: reduce) {
+  .work__list[data-revealed='false'] .work__item {
+    opacity: 0;
+  }
+
+  .work__item {
+    transition: opacity var(--d-panel) var(--ease-reveal);
+  }
+
+  .work__label {
+    transform: none;
+    transition: none;
+  }
+
+  .work__link:hover {
+    opacity: var(--hover-opacity);
+    transform: none;
+  }
+
+  .work__link:active {
+    transform: none;
+  }
+}
+
+/* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------ */
+
+/* 390. One column. Tile one leads by being the tallest: 4/3 against 16/10 at
+   the same width is a taller box, so the ratios invert from the wide layouts
+   to keep the same tile in front. */
+.work__item:nth-child(1) {
+  --ar: 4 / 3;
+}
+
+.work__item:nth-child(6) {
+  --ar: 21 / 9;
+}
+
+@media (min-width: 768px) {
+  .work {
+    padding: var(--s-3xl) var(--s-xl);
+  }
+
+  .work__list {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  /* Rows: [6] [3 3] [3 3] [6]. Tile one is full bleed at 16/10 and tile six
+     is full bleed at 21/9, so one is clearly the taller of the two and the
+     leader is unambiguous. */
+  .work__item:nth-child(1) {
+    --ar: 16 / 10;
+    grid-column: span 6;
+  }
+
+  .work__item:nth-child(2),
+  .work__item:nth-child(3),
+  .work__item:nth-child(4),
+  .work__item:nth-child(5) {
+    --ar: 1 / 1;
+    grid-column: span 3;
+  }
+
+  .work__item:nth-child(6) {
+    --ar: 21 / 9;
+    grid-column: span 6;
+  }
+}
+
+@media (min-width: 1024px) {
+  .work {
+    padding: var(--s-3xl) var(--s-2xl);
+  }
+
+  /* Rows: [4 2] [3 3] [2 4]. Woven rather than stacked, no row of three, and
+     tile one holds roughly 1.5 times the area of the next largest. */
+  .work__item:nth-child(1) {
+    --ar: 16 / 10;
+    grid-column: span 4;
+  }
+
+  .work__item:nth-child(2) {
+    --ar: 1 / 1;
+    grid-column: span 2;
+  }
+
+  .work__item:nth-child(3),
+  .work__item:nth-child(4) {
+    --ar: 4 / 3;
+    grid-column: span 3;
+  }
+
+  .work__item:nth-child(5) {
+    --ar: 1 / 1;
+    grid-column: span 2;
+  }
+
+  .work__item:nth-child(6) {
+    --ar: 21 / 9;
+    grid-column: span 4;
+  }
+}

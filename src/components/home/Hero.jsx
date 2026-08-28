@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import TileWall from './TileWall.jsx';
+import { useReducedMotion } from './hooks.js';
 import './Hero.css';
 
 /* The cycling half of the headline. "Not a proposal. The ___" holds still and
@@ -7,18 +8,6 @@ import './Hero.css';
 const PHRASES = ['whole system', 'working site', 'real build', 'finished thing'];
 
 const ROLL_MS = 2400;
-
-function useReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const set = () => setReduced(mq.matches);
-    set();
-    mq.addEventListener('change', set);
-    return () => mq.removeEventListener('change', set);
-  }, []);
-  return reduced;
-}
 
 /* The roll.
    Every phrase is rendered into the same single-column grid, so the column

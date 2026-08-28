@@ -4,33 +4,30 @@
    ========================================================================== */
 
 /* ---- Faces: self-hosted, no third-party request on page load ------------
-   Archivo and Barlow are both SIL OFL. Latin subsets only. font-display
-   swap so text is readable before the face arrives; the fallback stack is
-   metric-adjacent enough that the swap does not reflow the hero.
+   Clash Display and Satoshi are both Fontshare (Indian Type Foundry), free
+   for commercial use with no attribution required. Latin subsets only, woff2
+   only, one variable file per family. font-display swap so text is readable
+   before the face arrives.
+
+   Both files are variable, so the weight RANGE is declared. Without the range
+   a browser pins the file to its default instance -- Clash 700, Satoshi 900 --
+   and every weight token below would silently render wrong.
    -------------------------------------------------------------------- */
 
 @font-face {
-  font-family: 'Archivo';
+  font-family: 'Clash Display';
   font-style: normal;
-  font-weight: 700;
+  font-weight: 200 700;
   font-display: swap;
-  src: url('../assets/fonts/archivo-700.woff2') format('woff2');
+  src: url('../assets/fonts/clash-display-variable.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Barlow';
+  font-family: 'Satoshi';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300 900;
   font-display: swap;
-  src: url('../assets/fonts/barlow-400.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Barlow';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('../assets/fonts/barlow-600.woff2') format('woff2');
+  src: url('../assets/fonts/satoshi-variable.woff2') format('woff2');
 }
 
 :root {
@@ -61,13 +58,22 @@
   --c-rule-dark: rgb(255 255 255 / 12%);
 
   /* ---- Type: Plate 03, in pixels --------------------------------------- */
-  --font-brand: Archivo, 'Helvetica Neue', Arial, sans-serif;
-  --font-offer: Barlow, 'Helvetica Neue', Arial, sans-serif;
+  --font-brand: 'Clash Display', 'Helvetica Neue', Arial, sans-serif;
+  --font-offer: Satoshi, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Weights by register. Deviation from Plate 03, which specifies Archivo
+     700 and Barlow 400/600; the register split and the never-mix rule are
+     unchanged, only the faces and the weights they are set at. */
+  --t-weight-brand: 600; /* display, h1, h2, h3 */
+  --t-weight-body: 400;  /* body, small         */
+  --t-weight-label: 500; /* label               */
 
   /* Hero only, one per page, and the single fluid size in the system.
-     Floor is the h2 step; slope derived from a measured 8.187em longest line;
-     ceiling reached at 1455px. Requires a full-width headline. */
-  --t-display-size: clamp(2.5rem, 9.9vw, 9rem); /* 40px .. 144px */
+     Floor is the h2 step; slope and ceiling derived from a measured 8.479em
+     longest line in Clash Display 600 at -0.03em; ceiling reached at 1360px.
+     Requires a full-width headline. Re-measure both if the face changes:
+     Clash sets 3.57% wider than Archivo did, which cost the old 9rem ceiling. */
+  --t-display-size: clamp(2.5rem, 10vw, 8.5rem); /* 40px .. 136px */
   --t-display-line: 1.02;
   --t-track-display-lg: -0.03em;
 
@@ -114,6 +120,15 @@
   --d-panel: 400ms;
   --stagger: 70ms;
 
+  /* ---- Motion: continuous ambient ---------------------------------------
+     Not an interaction band. One pass of something that was already running
+     before the reader arrived: the tile wall and the client strip. 64s is a
+     floor, not a default. Three stations exist so the wall's columns never
+     fall into step and resolve into one sliding plane. */
+  --d-ambient-1: 64s;
+  --d-ambient-2: 88s;
+  --d-ambient-3: 104s;
+
   /* ---- Interaction ------------------------------------------------------ */
   --hover-opacity: 0.92; /* accent floor is 0.64; never go below */
   --disabled-opacity: 0.4;
@@ -135,6 +150,8 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
+  /* Explicit: Satoshi is variable and its default instance is 900. */
+  font-weight: var(--t-weight-body);
   color: var(--c-shop-white);
   background: var(--c-asphalt);
   -webkit-font-smoothing: antialiased;

@@ -121,7 +121,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-label-size);
   line-height: var(--t-label-line);
-  font-weight: 600;
+  font-weight: var(--t-weight-label);
   letter-spacing: var(--t-track-label);
   text-transform: uppercase;
   color: var(--c-steel-dark);
@@ -155,7 +155,7 @@
      measured. */
   font-size: var(--t-display-size);
   line-height: var(--t-display-line);
-  font-weight: 700;
+  font-weight: var(--t-weight-brand);
   letter-spacing: var(--t-track-display-lg);
   text-wrap: balance;
   color: var(--c-shop-white);
@@ -243,7 +243,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-label-size);
   line-height: var(--t-label-line);
-  font-weight: 600;
+  font-weight: var(--t-weight-label);
   letter-spacing: var(--t-track-label);
   text-transform: uppercase;
   text-decoration: none;

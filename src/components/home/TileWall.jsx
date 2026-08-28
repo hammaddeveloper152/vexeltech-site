@@ -7,24 +7,28 @@ import './TileWall.css';
    so nothing about the layout changes when they arrive.
 
    Roughly six dark to one yellow. The yellow is not a pattern, so the slots
-   are hand-placed at uneven intervals rather than every nth tile. */
+   are hand-placed at uneven intervals rather than every nth tile.
+
+   Each column takes a different ambient station from DESIGN.md, so the three
+   never fall into step and resolve into one sliding plane. The station is the
+   value, not the seconds: do not put a raw duration back in here. */
 const COLUMNS = [
   {
     id: 'a',
     dir: 'down',
-    seconds: 88,
+    station: 2,
     tiles: ['asphalt', 'surface-2', 'surface-1', 'yellow', 'surface-1', 'asphalt', 'surface-2', 'surface-1'],
   },
   {
     id: 'b',
     dir: 'up',
-    seconds: 64,
+    station: 1,
     tiles: ['surface-1', 'asphalt', 'surface-2', 'asphalt', 'surface-1', 'yellow', 'surface-2', 'asphalt', 'surface-1'],
   },
   {
     id: 'c',
     dir: 'down',
-    seconds: 104,
+    station: 3,
     tiles: ['surface-2', 'surface-1', 'asphalt', 'surface-2', 'yellow', 'asphalt', 'surface-1'],
   },
 ];
@@ -38,13 +42,13 @@ function Tile({ tone, col, i }) {
 export default function TileWall() {
   return (
     <div className="wall" aria-hidden="true">
-      {COLUMNS.map(({ id, dir, seconds, tiles }) => (
+      {COLUMNS.map(({ id, dir, station, tiles }) => (
         <div className="wall__col" key={id}>
           {/* The set is rendered twice. The loop is a continuous translate
               across one full set, never a reset, so there is no seam. */}
           <div
             className={`wall__track wall__track--${dir}`}
-            style={{ '--dur': `${seconds}s` }}
+            style={{ '--dur': `var(--d-ambient-${station})` }}
           >
             {tiles.map((tone, i) => (
               <Tile tone={tone} col={id} i={i} key={`x${i}`} />

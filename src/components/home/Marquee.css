@@ -1,0 +1,101 @@
+/* ==========================================================================
+   Section 2 — the strip. Full bleed, edge to edge, no container.
+
+   Layout family: horizontal scroller. Used once on this page.
+
+   Motion is transform only, composited on the GPU. The loop duplicates the
+   set and translates across exactly one set length, so it is continuous
+   rather than a reset, per the same idiom as TileWall.
+   ========================================================================== */
+
+.marquee {
+  background: var(--c-asphalt);
+  /* A hairline above and below. One pixel, no softening. */
+  border-top: 1px solid var(--c-rule-dark);
+  border-bottom: 1px solid var(--c-rule-dark);
+  padding: var(--s-lg) 0;
+  /* Full bleed: no max-width, no horizontal padding, no container. */
+  overflow: hidden;
+}
+
+.marquee__track {
+  display: flex;
+  /* Sized by content so the -50% travel is exactly one set. */
+  width: max-content;
+  will-change: transform;
+  /* Ambient, not an interaction. One element in play, so the fastest
+     station. */
+  animation: marquee-run var(--d-ambient-1) linear infinite;
+}
+
+/* One set length is 50% of the doubled track. */
+@keyframes marquee-run {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee__set {
+  display: flex;
+  align-items: center;
+  gap: var(--s-xl);
+  /* The trailing gap belongs to the set, not to the track. A gap on the track
+     would make one set length and half the track length disagree, and the
+     loop would drift by that difference on every pass. */
+  padding: 0 var(--s-xl) 0 0;
+  margin: 0;
+  list-style: none;
+}
+
+.marquee__item {
+  display: flex;
+  align-items: center;
+  gap: var(--s-xl);
+  white-space: nowrap;
+}
+
+/* The slot. Fixed height, so an <img> at height 100% drops in later without
+   changing the band. */
+.marquee__slot {
+  display: flex;
+  align-items: center;
+  height: var(--s-lg);
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+}
+
+.marquee__sep {
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  color: var(--c-machine-yellow); /* 9.46:1 on asphalt */
+}
+
+/* Pause on hover, gated. Ungated it sticks on touch and the strip never
+   moves again. */
+@media (hover: hover) and (pointer: fine) {
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+}
+
+/* ---- Reduced motion: the strip is static ------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+    will-change: auto;
+    /* Held at the start of the loop, so it reads as a composed static band
+       rather than an animation caught mid-travel. */
+    transform: translate3d(0, 0, 0);
+  }
+}

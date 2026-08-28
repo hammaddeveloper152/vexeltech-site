@@ -37,7 +37,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-label-size);
   line-height: var(--t-label-line);
-  font-weight: 600;
+  font-weight: var(--t-weight-label);
   font-variant-numeric: tabular-nums;
   letter-spacing: var(--t-track-label);
   color: var(--c-machine-yellow);
@@ -47,7 +47,7 @@
   font-family: var(--font-brand);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  font-weight: 700;
+  font-weight: var(--t-weight-brand);
 }
 
 .pillars__d {

@@ -1,0 +1,129 @@
+/* ==========================================================================
+   Section 4 — the numbers.
+
+   Layout family: two by two block on a light ground. Used once on this page,
+   and deliberately not a four-across row, which Pillars already holds.
+
+   Ground change is the strongest separation in the system, and this is the
+   only light section in the run, so it carries the relief on its own.
+   ========================================================================== */
+
+.counters {
+  padding: var(--s-3xl) var(--s-md);
+  background: var(--c-concrete);
+  color: var(--c-asphalt); /* 16.01:1 on concrete */
+}
+
+.counters__inner {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.counters__list {
+  display: grid;
+  /* Two by two at every width. Four short numbers do not need a phone
+     breakpoint, and stacking them to one column would make it a list. */
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-xl) var(--s-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.counters__item {
+  display: grid;
+  gap: var(--s-sm);
+  align-content: start;
+  min-width: 0;
+}
+
+.counters__n {
+  display: block;
+  font-family: var(--font-brand);
+  /* The three that follow. The leader overrides below. */
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-h3);
+  /* Column-aligned figures that change in place. Proportional digits shift
+     the layout as they update. */
+  font-variant-numeric: tabular-nums;
+  /* Reserved from the final string so the count cannot reflow the block. */
+  min-width: calc(var(--chars) * 1ch);
+}
+
+/* The density law's leader: one clear step up the scale, not a nudge. */
+.counters__item--lead .counters__n {
+  font-size: var(--t-h2-size);
+  line-height: var(--t-h2-line);
+  letter-spacing: var(--t-track-display);
+}
+
+.counters__l {
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-steel); /* steel on light, 7.7:1 on concrete */
+}
+
+/* ---- Reveal. Four things to read, so 70ms per item --------------------- */
+
+/* One observer drives both the fade and the count, through the section's own
+   data attribute, so the figures start moving as the block arrives. */
+@media (prefers-reduced-motion: no-preference) {
+  .counters[data-revealed='false'] .counters__item {
+    opacity: 0;
+    transform: translateY(var(--s-sm));
+  }
+
+  .counters__item {
+    transition:
+      opacity var(--d-panel) var(--ease-reveal),
+      transform var(--d-panel) var(--ease-reveal);
+    transition-delay: calc(var(--i) * var(--stagger));
+  }
+}
+
+/* Reduced motion: keep the fade, drop the travel, and drop the stagger with
+   it. The stagger goes with the movement, not with the opacity. */
+@media (prefers-reduced-motion: reduce) {
+  .counters[data-revealed='false'] .counters__item {
+    opacity: 0;
+  }
+
+  .counters__item {
+    transition: opacity var(--d-panel) var(--ease-reveal);
+  }
+}
+
+/* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------ */
+
+@media (min-width: 768px) {
+  .counters {
+    padding: var(--s-3xl) var(--s-xl);
+  }
+
+  .counters__list {
+    gap: var(--s-2xl) var(--s-xl);
+  }
+
+  .counters__n {
+    font-size: var(--t-h2-size);
+    line-height: var(--t-h2-line);
+    letter-spacing: var(--t-track-display);
+  }
+
+  .counters__item--lead .counters__n {
+    font-size: var(--t-h1-size);
+    line-height: var(--t-h1-line);
+  }
+}
+
+@media (min-width: 1024px) {
+  .counters {
+    padding: var(--s-3xl) var(--s-2xl);
+  }
+}
