@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Viewport frames — pre-flight step 11</title>
+    <style>
+      /* Pre-flight step 11. Renders the page in iframes at the five exact
+         widths the law names, because browser window resizing is unreliable
+         here. Each iframe lays out at its TRUE width, so media queries are
+         real; the CSS transform only scales what you see. */
+      :root { --scale: 0.5; }
+      body {
+        margin: 0;
+        padding: 12px;
+        background: #0b0c0d;
+        color: #858a92;
+        font: 12px/1.4 ui-monospace, monospace;
+      }
+      h1 { font-size: 12px; font-weight: 400; margin: 0 0 10px; color: #f0b323; }
+      .row { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+      figure { margin: 0; }
+      figcaption { padding-bottom: 4px; letter-spacing: .06em; }
+      .shell { overflow: hidden; border: 1px solid #333; }
+      iframe { border: 0; display: block; transform: scale(var(--scale)); transform-origin: 0 0; }
+    </style>
+  </head>
+  <body>
+    <h1>PRE-FLIGHT 11 — content over artwork, five widths, shown at 50%</h1>
+    <div class="row" id="a"></div>
+    <div class="row" id="b"></div>
+    <script type="module">
+      const TARGET = new URLSearchParams(location.search).get('src') || '/hero-preview.html';
+      const ALL = [
+        ['a', 390, 844],
+        ['a', 600, 800],
+        ['a', 768, 1024],
+        ['b', 1024, 768],
+        ['b', 1280, 800],
+      ];
+      /* Five live instances of a filtered SVG will freeze the renderer, so the
+         harness renders one row at a time: ?row=a or ?row=b. */
+      const ROW = new URLSearchParams(location.search).get('row') || 'a';
+      const SIZES = ALL.filter(([r]) => r === ROW);
+      const scale = 0.5;
+      for (const [row, w, h] of SIZES) {
+        const fig = document.createElement('figure');
+        const cap = document.createElement('figcaption');
+        cap.textContent = `${w} x ${h}`;
+        const shell = document.createElement('div');
+        shell.className = 'shell';
+        shell.style.width = w * scale + 'px';
+        shell.style.height = h * scale + 'px';
+        const f = document.createElement('iframe');
+        f.src = TARGET;
+        f.width = w;
+        f.height = h;
+        f.title = `${w} by ${h}`;
+        shell.appendChild(f);
+        fig.append(cap, shell);
+        document.getElementById(row).appendChild(fig);
+      }
+    </script>
+  </body>
+</html>

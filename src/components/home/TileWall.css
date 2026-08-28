@@ -1,0 +1,123 @@
+/* ==========================================================================
+   The wall. Full bleed behind everything, floor to ceiling, edge to edge.
+
+   Motion is transform only: translateY on the track, composited on the GPU.
+   Never top, never margin, per BUILD-LAW.md. The loop duplicates the tile set
+   and translates across exactly one set length, so it is continuous rather
+   than a reset, and there is no seam to see.
+   ========================================================================== */
+
+.wall {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr; /* 390: one column */
+  gap: var(--s-md);
+  overflow: hidden;
+  z-index: -3;
+  pointer-events: none;
+}
+
+.wall__col {
+  overflow: hidden;
+}
+
+.wall__track {
+  display: grid;
+  gap: var(--s-md);
+  will-change: transform;
+}
+
+/* One set length is 50% of the doubled track, so the travel is exactly one
+   set and the second copy lands where the first began. */
+.wall__track--up {
+  animation: wall-up var(--dur) linear infinite;
+}
+
+.wall__track--down {
+  animation: wall-down var(--dur) linear infinite;
+}
+
+@keyframes wall-up {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+@keyframes wall-down {
+  from {
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.wall__tile {
+  /* Landscape. A 3/4 portrait tile is 650px tall in a 487px column, so one
+     tile fills the frame and the wall reads as blocks rather than a wall.
+     16/10 puts three in view per column, which is what makes it a wall. */
+  aspect-ratio: 16 / 10;
+  border-radius: var(--r-md);
+  /* A hairline, not a shadow. The three dark tones sit 1.07:1 and 1.13:1
+     apart by design, and under the scrim that separation alone does not read
+     as a wall. The edge does the work instead. */
+  border: 1px solid var(--c-rule-dark);
+  /* Fixed-ratio container. An <img> drops in here later at the same size. */
+  overflow: hidden;
+}
+
+.wall__tile--asphalt {
+  background: var(--c-asphalt);
+}
+
+.wall__tile--surface-1 {
+  background: var(--c-surface-1);
+}
+
+.wall__tile--surface-2 {
+  background: var(--c-surface-2);
+}
+
+.wall__tile--yellow {
+  background: var(--c-machine-yellow);
+}
+
+/* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------- */
+
+@media (min-width: 768px) {
+  .wall {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* The third column is not rendered away, it is simply outside the grid at
+     this width. Keeping it in the DOM means no reflow when it returns. */
+  .wall__col:nth-child(3) {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .wall {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .wall__col:nth-child(3) {
+    display: block;
+  }
+}
+
+/* ---- Reduced motion: the wall stops entirely ---------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .wall__track {
+    animation: none;
+    will-change: auto;
+    /* Held at the start of the loop so the wall reads as a composed static
+       grid rather than a paused animation caught mid-travel. */
+    transform: translate3d(0, 0, 0);
+  }
+}

@@ -1,0 +1,419 @@
+﻿/* ==================================================================
+   VEXELTECH SERVICES - Style layer
+   Uses the same token set as the main styles.css (Barlow fonts,
+   --ink / --beacon / --paper). No separate font/color system.
+   ================================================================== */
+
+/* --- SERVICE HERO (dark, full-width) --------------------------- */
+.svc-hero {
+  background: var(--ink);
+  color: var(--text-d);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(88px, 12vw, 128px) 0 clamp(60px, 8vw, 96px);
+  border-bottom: 1px solid var(--line-d);
+}
+
+.svc-hero-mk {
+  position: absolute;
+  right: -4%;
+  bottom: -20%;
+  width: clamp(200px, 32vw, 380px);
+  opacity: 0.13;
+  pointer-events: none;
+}
+
+.svc-hero-mk .mk {
+  fill: var(--beacon);
+}
+
+.svc-hero .wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.svc-hero h1 {
+  color: #fff;
+}
+
+.svc-hero .lede {
+  color: var(--text-d);
+}
+
+/* --- BADGE CHIP ------------------------------------------------ */
+.svc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--line-d);
+  padding: 8px 16px;
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+  margin-bottom: 28px;
+}
+
+.svc-chip b {
+  color: var(--beacon);
+  font-weight: 600;
+}
+
+/* --- TECH STACK BAR -------------------------------------------- */
+.svc-stack {
+  border-top: 1px solid var(--line-d);
+  border-bottom: 1px solid var(--line-d);
+  background: var(--ink-2);
+  padding: 24px 0;
+}
+
+.svc-stack-in {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.svc-stack-label {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--beacon);
+  white-space: nowrap;
+}
+
+.svc-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.svc-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line-d);
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 6px 14px;
+}
+
+/* --- PRICING SNAPSHOT ------------------------------------------ */
+.svc-price-box {
+  background: var(--ink-2);
+  border: 1px solid var(--beacon);
+  padding: clamp(28px, 5vw, 48px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.svc-price-label {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--beacon);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.svc-price-amount {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.svc-price-sub {
+  font-size: 15px;
+  color: var(--text-d);
+  margin: 0;
+  max-width: 44ch;
+}
+
+/* --- FAQ ACCORDION --------------------------------------------- */
+.svc-faq {
+  border-top: 1px solid var(--line-d);
+}
+
+.svc-faq-item {
+  border-bottom: 1px solid var(--line-d);
+}
+
+.svc-faq-btn {
+  width: 100%;
+  padding: 22px 0;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: var(--disp);
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.15;
+}
+
+.svc-faq-btn:hover {
+  color: var(--beacon);
+}
+
+.svc-faq-icon {
+  color: var(--beacon);
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 400;
+  flex: 0 0 auto;
+  transition: transform 0.2s ease;
+}
+
+.svc-faq-btn[aria-expanded="true"] .svc-faq-icon {
+  transform: rotate(45deg);
+}
+
+.svc-faq-body {
+  padding: 0 0 22px;
+  color: var(--text-d);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* --- SERVICE CARDS GRID ---------------------------------------- */
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 2px;
+  background: var(--line-d);
+}
+
+.svc-card-dark {
+  background: var(--ink-2);
+  padding: 32px 28px;
+  transition: background 0.18s ease;
+}
+
+.svc-card-dark:hover {
+  background: var(--ink-3);
+}
+
+.svc-card-dark h4 {
+  color: #fff;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  margin-bottom: 10px;
+}
+
+.svc-card-dark p {
+  color: var(--text-d);
+  font-size: 15.5px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Light cards */
+.svc-grid-light {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 2px;
+  background: var(--line);
+}
+
+.svc-card-light {
+  background: var(--paper);
+  padding: 32px 28px;
+  transition: background 0.18s ease;
+}
+
+.svc-card-light:hover {
+  background: var(--concrete);
+}
+
+.svc-card-light h4 {
+  color: var(--ink);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  margin-bottom: 10px;
+}
+
+.svc-card-light p {
+  color: var(--steel);
+  font-size: 15.5px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Service card with link (for Services main page) */
+a.svc-card-light {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 2px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+a.svc-card-light:hover {
+  background: var(--concrete);
+  border-bottom-color: var(--ink);
+}
+
+.svc-card-num {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amber);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.svc-card-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-top: 16px;
+}
+
+/* Process step cards */
+.svc-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 2px;
+  background: var(--line-d);
+}
+
+.svc-step {
+  background: var(--ink-2);
+  padding: 32px 28px;
+}
+
+.svc-step-n {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--beacon);
+  display: block;
+  margin-bottom: 14px;
+}
+
+.svc-step h4 {
+  color: #fff;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  margin-bottom: 8px;
+}
+
+.svc-step p {
+  color: var(--text-d);
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Portfolio proof cards */
+.svc-portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 2px;
+  background: var(--line-d);
+  margin-bottom: 32px;
+}
+
+.svc-proj-card {
+  background: var(--ink-2);
+  overflow: hidden;
+}
+
+.svc-proj-shot {
+  height: 200px;
+  position: relative;
+  background: var(--ink-3);
+  overflow: hidden;
+}
+
+.svc-proj-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.svc-proj-card:hover .svc-proj-shot img {
+  transform: scale(1.04);
+}
+
+.svc-proj-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--beacon);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+}
+
+.svc-proj-body {
+  padding: 20px 22px;
+}
+
+.svc-proj-body h4 {
+  color: #fff;
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.25;
+}
+
+/* --- RESPONSIVE ------------------------------------------------ */
+@media (max-width: 860px) {
+  .svc-hero {
+    padding: 80px 0 60px;
+  }
+
+  .svc-stack-in {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .svc-price-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+  .svc-hero {
+    padding: 72px 0 52px;
+  }
+
+  .svc-chip {
+    font-size: 10px;
+    padding: 7px 12px;
+  }
+}

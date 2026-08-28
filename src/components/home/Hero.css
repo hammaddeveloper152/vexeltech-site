@@ -1,0 +1,369 @@
+/* ==========================================================================
+   Hero — section 1
+   Every value resolves through tokens.css. Motion is transform and opacity
+   only, per BUILD-LAW.md. The entrance is predetermined, so it is CSS rather
+   than GSAP: CSS animation runs off the main thread and stays smooth while
+   the page is still loading.
+
+   Content is visible by default. Every hidden-at-rest state lives inside
+   `prefers-reduced-motion: no-preference`, so if animation never runs the
+   hero still reads. Motion enhances the entrance; it never gates it.
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  display: grid;
+  align-content: center;
+  isolation: isolate;
+  min-height: 100svh; /* BUILD-LAW: hero fits one phone screen */
+  padding: var(--s-xl) var(--s-md) var(--s-lg);
+  overflow: clip;
+  background: var(--c-asphalt);
+}
+
+/* ---- Scrim -------------------------------------------------------------- */
+
+/* Flat, not graduated. Asphalt at 55% puts shop white at roughly 6:1 over a
+   machine yellow tile, which is the worst surface in the wall. A scrim that
+   darkened toward the headline would be a gradient, and flat-forever governs
+   fills. It is not needed: 43% already clears 4.5:1 over yellow. */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--c-asphalt);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: -2;
+}
+
+/* ---- Grain -------------------------------------------------------------- */
+
+/* Above the ground, below every piece of content. Fixed so it reads as a
+   property of the surface rather than of the section. */
+.hero__grain {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.055;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Texture, not information. Off with the rest of it. */
+@media (prefers-reduced-motion: reduce) {
+  .hero__grain {
+    display: none;
+  }
+}
+
+/* ---- Construction language (Plates 00, 01) ------------------------------ */
+
+/* Registration brackets: L shapes at the section corners, as on the plates.
+   Hairline, never a full border. */
+.hero__reg {
+  position: absolute;
+  inset: var(--s-md);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero__bracket {
+  position: absolute;
+  width: var(--s-lg);
+  height: var(--s-lg);
+  border: 0 solid var(--c-rule-dark);
+}
+
+.hero__bracket--tl {
+  top: 0;
+  left: 0;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+
+.hero__bracket--tr {
+  top: 0;
+  right: 0;
+  border-top-width: 1px;
+  border-right-width: 1px;
+}
+
+.hero__bracket--bl {
+  bottom: 0;
+  left: 0;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+}
+
+.hero__bracket--br {
+  bottom: 0;
+  right: 0;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+
+/* The plate label pair: a number, a hairline rule, a name. */
+.hero__meta {
+  position: absolute;
+  top: calc(var(--s-md) + var(--s-lg));
+  left: var(--s-md);
+  right: var(--s-md);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--s-md);
+  z-index: 1;
+}
+
+.hero__meta-n,
+.hero__meta-t {
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: 600;
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-steel-dark);
+}
+
+.hero__meta-n {
+  font-variant-numeric: tabular-nums;
+  color: var(--c-machine-yellow);
+}
+
+.hero__meta-rule {
+  height: 1px;
+  background: var(--c-rule-dark);
+}
+
+/* ---- Copy --------------------------------------------------------------- */
+
+.hero__body {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 1200px);
+  align-self: center;
+  width: min(100%, 720px);
+}
+
+.hero__headline {
+  margin: 0 0 var(--s-lg);
+  font-family: var(--font-brand);
+  /* Fluid, not stepped. The clamp floor is the h2 value, so at narrow widths
+     this lands exactly on the fixed scale. Two lines hold from 390 to 1920,
+     measured. */
+  font-size: var(--t-display-size);
+  line-height: var(--t-display-line);
+  font-weight: 700;
+  letter-spacing: var(--t-track-display-lg);
+  text-wrap: balance;
+  color: var(--c-shop-white);
+}
+
+.hero__mask {
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.hero__word {
+  display: inline-block;
+}
+
+.hero__sub {
+  margin: 0 0 var(--s-xl);
+  max-width: 60ch;
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  text-wrap: pretty;
+}
+
+/* ---- The roll ----------------------------------------------------------- */
+
+/* The mask. Height is one row; overflow clips the rest of the track.
+   vertical-align keeps the rolling words on the same baseline as the static
+   half of the line. */
+.ticker {
+  display: inline-grid;
+  overflow: hidden;
+  /* One row exactly. Row height, mask height and travel are all the same
+     value, with enough room for the descenders in "system" and "thing". */
+  height: 1.12em;
+  vertical-align: baseline;
+  margin-bottom: -0.1em;
+}
+
+/* Single column grid: every phrase occupies the same column, so the column
+   sizes to the widest phrase and the mask width is constant. The line cannot
+   reflow between words. */
+.ticker__track {
+  display: grid;
+  grid-auto-rows: 1.12em;
+  transform: translateY(calc(var(--i) * -1.12em));
+  transition: transform 600ms var(--ease-drawer);
+}
+
+.ticker__word {
+  grid-column: 1;
+  line-height: 1.12;
+  white-space: nowrap;
+  /* Shop white, not the accent. Machine yellow here would be 2.89:1 over a
+     scrimmed yellow tile, and a headline-sized accent would also break the
+     one-accent-per-frame rule against the CTA. */
+  color: var(--c-shop-white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker__track {
+    transition: none;
+  }
+}
+
+/* ---- Actions ------------------------------------------------------------ */
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-md);
+  margin-bottom: var(--s-lg);
+}
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
+  min-height: 48px;
+  padding: var(--s-md) var(--s-lg);
+  border: 1px solid var(--c-machine-yellow);
+  border-radius: var(--r-sm);
+  background: var(--c-machine-yellow);
+  color: var(--c-asphalt); /* 9.46:1 */
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: 600;
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+/* One accent per frame: the second action is a line, not a second yellow. */
+.hero__cta--line {
+  background: transparent;
+  border-color: var(--c-rule-dark);
+  color: var(--c-shop-white); /* 17.77:1 */
+}
+
+/* Hover is gated. Ungated it sticks on touch. */
+@media (hover: hover) and (pointer: fine) {
+  .hero__cta:hover {
+    opacity: var(--hover-opacity); /* 0.92 -> 8.16:1, floor is 0.64 */
+    transform: translateY(-1px);
+  }
+}
+
+.hero__cta:active {
+  transform: scale(0.97);
+  opacity: 1;
+}
+
+.hero__note {
+  margin: 0;
+  max-width: 60ch; /* detector: 96 chars/line at 1280 without this */
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-steel-dark);
+}
+
+/* ==========================================================================
+   Entrance. Additive only: nothing above depends on these rules running.
+   Under reduced motion this whole block is skipped and the hero renders
+   complete, which is the required behaviour rather than a fallback.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* 52 iterations sweep in and collapse onto the cut. This is a continuous
+     sweep across one decorative object, not a group stagger: 52 items on the
+     70ms stagger would run 3.6s. Total sweep is 468ms. */
+
+  .hero__reg,
+  .hero__meta {
+    opacity: 0;
+    animation: hero-fade var(--d-drop) var(--ease-reveal) 200ms forwards;
+  }
+
+  /* Masked word split: the mask clips, the word rises out of it. */
+  .hero__mask {
+    overflow: hidden;
+  }
+
+  .hero__word {
+    opacity: 0;
+    transform: translateY(100%);
+    animation: hero-word-in var(--d-panel) var(--ease-reveal) forwards;
+    animation-delay: calc(420ms + var(--i) * var(--stagger));
+  }
+
+  @keyframes hero-word-in {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero__sub {
+    opacity: 0;
+    animation: hero-fade var(--d-panel) var(--ease-reveal) 900ms forwards;
+  }
+
+  .hero__actions {
+    opacity: 0;
+    animation: hero-fade var(--d-panel) var(--ease-reveal) 1000ms forwards;
+  }
+
+  .hero__note {
+    opacity: 0;
+    animation: hero-fade var(--d-panel) var(--ease-reveal) 1080ms forwards;
+  }
+
+  @keyframes hero-fade {
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------- */
+
+@media (min-width: 768px) {
+  .hero {
+    padding: var(--s-2xl) var(--s-xl) var(--s-xl);
+  }
+
+
+  /* Display requires a full-width headline, so the body spans the section.
+     The sub and note keep their own measure caps. */
+  .hero__body {
+    width: min(100%, 1200px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    padding: var(--s-3xl) var(--s-2xl) var(--s-2xl);
+  }
+
+}
+
+@media (min-width: 1280px) {
+  /* 1200 is the column the display clamp was measured against. Capping
+     narrower than this breaks the two-line rule at the top of the range. */
+  .hero__body {
+    width: min(100%, 1200px);
+  }
+}

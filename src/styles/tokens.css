@@ -1,0 +1,160 @@
+/* ==========================================================================
+   VexelTech design tokens
+   Generated from DESIGN.md. Do not invent values here; change DESIGN.md first.
+   ========================================================================== */
+
+/* ---- Faces: self-hosted, no third-party request on page load ------------
+   Archivo and Barlow are both SIL OFL. Latin subsets only. font-display
+   swap so text is readable before the face arrives; the fallback stack is
+   metric-adjacent enough that the swap does not reflow the hero.
+   -------------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/archivo-700.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/barlow-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/barlow-600.woff2') format('woff2');
+}
+
+:root {
+  /* ---- Colour: dark ground (dominant) ---------------------------------- */
+  --c-asphalt: #17181a; /* primary, the ground   */
+  /* Derived along asphalt's own hue (220deg), lightness only. surface-2 is a
+     ceiling: one step higher drops steel-dark and error-dark below 4.5:1. */
+  --c-surface-1: #1d1e20; /* panels        */
+  --c-surface-2: #222326; /* panel on panel */
+  --c-machine-yellow: #f0b323; /* tertiary, the accent  */
+  --c-steel-dark: #858a92; /* secondary text on asphalt ONLY */
+
+  /* ---- Colour: light grounds (relief) ---------------------------------- */
+  --c-shop-white: #ffffff; /* surface */
+  --c-concrete: #f4f3f0; /* neutral */
+  --c-steel: #4c5055; /* secondary text on light ONLY */
+  --c-deep-amber: #8a6300; /* yellow as text on light ONLY */
+  --c-line: #e4e2dd; /* hairline on light ONLY */
+
+  /* ---- Colour: form state ---------------------------------------------- */
+  --c-error: #b4291f; /* light grounds  6.41 / 5.77 */
+  --c-error-dark: #e26057; /* asphalt        5.11        */
+  --c-success: #1e7a46; /* light grounds  5.35 / 4.82 */
+  --c-success-dark: #28a35d; /* asphalt        5.49        */
+
+  /* Dark-ground divider. line is a light-ground token and must not be used
+     on asphalt, where it reads as a near-white rule at 13.72:1. */
+  --c-rule-dark: rgb(255 255 255 / 12%);
+
+  /* ---- Type: Plate 03, in pixels --------------------------------------- */
+  --font-brand: Archivo, 'Helvetica Neue', Arial, sans-serif;
+  --font-offer: Barlow, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Hero only, one per page, and the single fluid size in the system.
+     Floor is the h2 step; slope derived from a measured 8.187em longest line;
+     ceiling reached at 1455px. Requires a full-width headline. */
+  --t-display-size: clamp(2.5rem, 9.9vw, 9rem); /* 40px .. 144px */
+  --t-display-line: 1.02;
+  --t-track-display-lg: -0.03em;
+
+  --t-h1-size: 58px;
+  --t-h1-line: 64px;
+  --t-h2-size: 40px;
+  --t-h2-line: 44px;
+  --t-h3-size: 27px;
+  --t-h3-line: 32px;
+  --t-body-size: 18px;
+  --t-body-line: 28px;
+  --t-small-size: 14px; /* deviation: readability, plate says 12 */
+  --t-small-line: 20px;
+  --t-label-size: 12px; /* deviation: plate says 8, below the 11px floor */
+  --t-label-line: 16px;
+
+  --t-track-display: -0.02em;
+  --t-track-h3: -0.01em;
+  --t-track-label: 0.12em;
+
+  /* ---- Spacing: Plate 04. 32 and 48 are deliberately absent ------------- */
+  --s-xs: 4px;
+  --s-sm: 8px;
+  --s-md: 16px;
+  --s-lg: 24px;
+  --s-xl: 40px;
+  --s-2xl: 64px;
+  --s-3xl: 96px;
+
+  /* ---- Shape ------------------------------------------------------------ */
+  --r-none: 0px;
+  --r-sm: 4px; /* controls   */
+  --r-md: 8px; /* containers */
+
+  /* ---- Motion: curves by role ------------------------------------------ */
+  --ease-reveal: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-move: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* ---- Motion: durations ------------------------------------------------ */
+  --d-press: 160ms;
+  --d-pop: 200ms;
+  --d-drop: 250ms;
+  --d-panel: 400ms;
+  --stagger: 70ms;
+
+  /* ---- Interaction ------------------------------------------------------ */
+  --hover-opacity: 0.92; /* accent floor is 0.64; never go below */
+  --disabled-opacity: 0.4;
+  --focus-ring: 2px;
+  --focus-offset: 2px;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.vt {
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-shop-white);
+  background: var(--c-asphalt);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus is a ring, never the hover treatment. On light grounds the asphalt
+   offset supplies the separation, since machine yellow on white is 1.88:1. */
+.vt :focus-visible {
+  outline: var(--focus-ring) solid var(--c-machine-yellow);
+  outline-offset: var(--focus-offset);
+}
+
+.vt--light :focus-visible {
+  outline-color: var(--c-machine-yellow);
+  box-shadow: 0 0 0 calc(var(--focus-ring) + var(--focus-offset)) var(--c-asphalt);
+}
+
+.vt [disabled],
+.vt [aria-disabled='true'] {
+  opacity: var(--disabled-opacity);
+  pointer-events: none;
+}
