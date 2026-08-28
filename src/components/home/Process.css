@@ -1,0 +1,174 @@
+/* ==========================================================================
+   Section 7 — the line down the page.
+
+   Layout family: numbered vertical sequence on a drawn spine. Used once.
+
+   The rail is the one place on this page where the accent draws rather than
+   labels. The numerals are loud by scale instead, per Plate 04: making both
+   the numerals and the line machine yellow would put two accent objects in
+   one frame competing to be the thing you look at.
+   ========================================================================== */
+
+.process {
+  padding: var(--s-3xl) var(--s-md);
+  background: var(--c-asphalt);
+  border-top: 1px solid var(--c-rule-dark);
+}
+
+.process__inner {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.process__h {
+  margin: 0 0 var(--s-2xl);
+  font-family: var(--font-brand);
+  font-size: var(--t-h2-size);
+  line-height: var(--t-h2-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-display);
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  text-wrap: balance;
+}
+
+/* The rail's coordinate space. The list inside it is what the drawn fraction
+   and the step positions are both measured against, so the two cannot drift. */
+.process__track {
+  position: relative;
+}
+
+.process__steps {
+  display: grid;
+  gap: var(--s-2xl);
+  margin: 0;
+  padding: 0 0 0 var(--s-lg); /* clears the rail */
+  list-style: none;
+}
+
+/* ---- The rail ----------------------------------------------------------- */
+
+.process__rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  /* The unlit track is the standard dark-ground hairline. One pixel, no
+     softening, same as every other rule on asphalt. */
+  background: var(--c-rule-dark);
+}
+
+.process__rail-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--c-accent-draw); /* 9.46:1 on asphalt */
+  /* Drawn with scaleY from the top, never height. Under reduced motion this
+     value stands as the resting state and the line is simply complete. */
+  transform: scaleY(1);
+  transform-origin: top;
+  will-change: transform;
+}
+
+/* ---- A step ------------------------------------------------------------- */
+
+.process__step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: var(--s-md) var(--s-lg);
+}
+
+/* Plate 04: numerals are the loudest thing on the page. Loud by scale here,
+   not by colour. tabular-nums because they are a column of aligned figures. */
+.process__n {
+  font-family: var(--font-brand);
+  font-size: var(--t-h2-size);
+  line-height: var(--t-h2-line);
+  font-weight: var(--t-weight-brand);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--t-track-display);
+  color: var(--c-shop-white);
+}
+
+.process__body {
+  display: grid;
+  gap: var(--s-sm);
+  max-width: 60ch;
+}
+
+.process__t {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-h3);
+  color: var(--c-shop-white);
+}
+
+.process__d {
+  margin: 0;
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  text-wrap: pretty;
+}
+
+/* ---- Reveal: each step lights as the line reaches it --------------------
+   Hidden only inside no-preference, so the reduced-motion and no-JavaScript
+   states are the finished layout rather than a section stuck at zero. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .process__rail-fill {
+    transform: scaleY(0);
+  }
+
+  .process__step[data-lit='false'] {
+    opacity: 0;
+    transform: translateY(var(--s-sm));
+  }
+
+  .process__step {
+    transition:
+      opacity var(--d-panel) var(--ease-reveal),
+      transform var(--d-panel) var(--ease-reveal);
+  }
+}
+
+/* Reduced motion: the line renders complete, the steps render visible, and
+   nothing scrubs. The fade goes with it, because there is no entrance left to
+   fade in from once the section is simply drawn. */
+@media (prefers-reduced-motion: reduce) {
+  .process__step {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------ */
+
+@media (min-width: 768px) {
+  .process {
+    padding: var(--s-3xl) var(--s-xl);
+  }
+
+  .process__steps {
+    padding-left: var(--s-xl);
+    gap: var(--s-3xl);
+  }
+
+  .process__step {
+    gap: var(--s-md) var(--s-xl);
+  }
+
+  .process__n {
+    font-size: var(--t-h1-size);
+    line-height: var(--t-h1-line);
+  }
+}
+
+@media (min-width: 1024px) {
+  .process {
+    padding: var(--s-3xl) var(--s-2xl);
+  }
+}

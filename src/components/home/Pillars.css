@@ -40,7 +40,7 @@
   font-weight: var(--t-weight-label);
   font-variant-numeric: tabular-nums;
   letter-spacing: var(--t-track-label);
-  color: var(--c-machine-yellow);
+  color: var(--c-accent-text-dark);
 }
 
 .pillars__t {

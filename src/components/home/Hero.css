@@ -129,7 +129,7 @@
 
 .hero__meta-n {
   font-variant-numeric: tabular-nums;
-  color: var(--c-machine-yellow);
+  color: var(--c-accent-text-dark);
 }
 
 .hero__meta-rule {
@@ -236,9 +236,9 @@
   /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
   min-height: 48px;
   padding: var(--s-md) var(--s-lg);
-  border: 1px solid var(--c-machine-yellow);
+  border: 1px solid var(--c-accent-ground);
   border-radius: var(--r-sm);
-  background: var(--c-machine-yellow);
+  background: var(--c-accent-ground);
   color: var(--c-asphalt); /* 9.46:1 */
   font-family: var(--font-offer);
   font-size: var(--t-label-size);

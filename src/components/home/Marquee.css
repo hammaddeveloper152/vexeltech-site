@@ -77,7 +77,7 @@
   font-size: var(--t-label-size);
   line-height: var(--t-label-line);
   font-weight: var(--t-weight-label);
-  color: var(--c-machine-yellow); /* 9.46:1 on asphalt */
+  color: var(--c-accent-text-dark); /* 9.46:1 on asphalt */
 }
 
 /* Pause on hover, gated. Ungated it sticks on touch and the strip never

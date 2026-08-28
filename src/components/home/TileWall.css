@@ -83,7 +83,10 @@
 }
 
 .wall__tile--yellow {
-  background: var(--c-machine-yellow);
+  /* A decorative plane, so it takes the fill role rather than the stroke
+     one. The only place accent-ground is used for something that is not
+     the primary call. */
+  background: var(--c-accent-ground);
 }
 
 /* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------- */

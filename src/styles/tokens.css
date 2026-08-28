@@ -37,14 +37,33 @@
      ceiling: one step higher drops steel-dark and error-dark below 4.5:1. */
   --c-surface-1: #1d1e20; /* panels        */
   --c-surface-2: #222326; /* panel on panel */
-  --c-machine-yellow: #f0b323; /* tertiary, the accent  */
+  /* Machine yellow is the palette identity and is documented in DESIGN.md as
+     the tertiary. It is NOT used directly by any component: the three role
+     variables below each carry the literal hex rather than referencing it,
+     which is the entire point of the split. If they aliased this one, editing
+     it to lighten a drawn line would silently take the text accent with it,
+     and that is the bug BUILD-LAW's contrast rule exists to prevent. */
+  --c-machine-yellow: #f0b323; /* tertiary, the accent. Palette only. */
+
+  /* The accent in its jobs. Same hex within a job today, independent tomorrow.
+
+     The text role carries its ground in the name, because the accent as text
+     is two different colours: machine yellow reaches 9.46:1 on asphalt and
+     1.88:1 on white, which is why deep amber exists at all. A single
+     `accent-text` would have read as one thing and meant two, and the frontmatter
+     already uses that name for the light-ground one. Same suffix convention as
+     steel-dark and error-dark: -dark is the value FOR dark grounds. */
+  --c-accent-text-dark: #f0b323; /* machine yellow on asphalt.  9.46:1 */
+  --c-accent-text-light: #8a6300; /* deep amber on white 5.43, concrete 4.90 */
+  --c-accent-ground: #f0b323; /* as a fill: the one primary call per frame  */
+  --c-accent-draw: #f0b323; /* as a drawn line or stroke: rules, the focus ring */
   --c-steel-dark: #858a92; /* secondary text on asphalt ONLY */
 
   /* ---- Colour: light grounds (relief) ---------------------------------- */
   --c-shop-white: #ffffff; /* surface */
   --c-concrete: #f4f3f0; /* neutral */
   --c-steel: #4c5055; /* secondary text on light ONLY */
-  --c-deep-amber: #8a6300; /* yellow as text on light ONLY */
+  --c-deep-amber: #8a6300; /* accent as text on light. Palette only, see accent-text-light. */
   --c-line: #e4e2dd; /* hairline on light ONLY */
 
   /* ---- Colour: form state ---------------------------------------------- */
@@ -90,6 +109,14 @@
   --t-label-size: 12px; /* deviation: plate says 8, below the 11px floor */
   --t-label-line: 16px;
 
+  /* Pull quote: display-sized body, not a heading. Same sizes as the brand
+     register, body leading instead of heading leading. Both line heights are
+     4px multiples, so the role stays on the baseline. */
+  --t-quote-size: 40px;
+  --t-quote-line: 52px; /* 1.300 */
+  --t-quote-size-lg: 58px;
+  --t-quote-line-lg: 76px; /* 1.310 */
+
   --t-track-display: -0.02em;
   --t-track-h3: -0.01em;
   --t-track-label: 0.12em;
@@ -129,6 +156,14 @@
   --d-ambient-2: 88s;
   --d-ambient-3: 104s;
 
+  /* ---- Motion: content rotation ------------------------------------------
+     A dwell, not a duration: how long one piece of content holds the slot
+     before the next replaces it. Set by reading time, so a swapped phrase and
+     a full sentence are two different numbers. Rotation always yields to the
+     reader: hover, focus, and any use of a control stop it. */
+  --d-rotate-phrase: 2400ms;
+  --d-rotate-quote: 7000ms;
+
   /* ---- Interaction ------------------------------------------------------ */
   --hover-opacity: 0.92; /* accent floor is 0.64; never go below */
   --disabled-opacity: 0.4;
@@ -161,12 +196,12 @@
 /* Focus is a ring, never the hover treatment. On light grounds the asphalt
    offset supplies the separation, since machine yellow on white is 1.88:1. */
 .vt :focus-visible {
-  outline: var(--focus-ring) solid var(--c-machine-yellow);
+  outline: var(--focus-ring) solid var(--c-accent-draw);
   outline-offset: var(--focus-offset);
 }
 
 .vt--light :focus-visible {
-  outline-color: var(--c-machine-yellow);
+  outline-color: var(--c-accent-draw);
   box-shadow: 0 0 0 calc(var(--focus-ring) + var(--focus-offset)) var(--c-asphalt);
 }
 

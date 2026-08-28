@@ -1,0 +1,255 @@
+/* ==========================================================================
+   Section 5 — the four disciplines, pinned.
+
+   Layout family: pinned horizontal scroller. Used once on this page.
+
+   Ground: asphalt, with no ground change on the cards. DESIGN.md is explicit
+   that on asphalt a card takes no ground change at all and is separated by
+   space; the hairline is the edge, and the space does the rest.
+   ========================================================================== */
+
+.services {
+  padding: var(--s-3xl) var(--s-md);
+  background: var(--c-asphalt);
+  border-top: 1px solid var(--c-rule-dark);
+}
+
+/* The heading sits above the track and holds still while the cards move. It
+   is inside the pinned section, so it holds by construction rather than by a
+   counter-translate. */
+.services__head {
+  width: min(100%, 1200px);
+  margin: 0 auto var(--s-xl);
+}
+
+.services__h {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: var(--t-h2-size);
+  line-height: var(--t-h2-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-display);
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  text-wrap: balance;
+}
+
+/* ---- Stacked by default ------------------------------------------------
+   This is the 390 layout and the reduced-motion layout, and it is the state
+   the markup renders in before any JavaScript runs. The pin is the
+   enhancement, never the baseline. */
+
+.services__viewport {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.services__track {
+  display: grid;
+  gap: var(--s-xl);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.services__card {
+  min-width: 0;
+}
+
+.services__link {
+  display: grid;
+  gap: var(--s-md);
+  /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
+  min-height: 48px;
+  padding: var(--s-lg);
+  border: 1px solid var(--c-rule-dark);
+  border-radius: var(--r-md); /* container */
+  color: var(--c-shop-white);
+  text-decoration: none;
+  transition:
+    transform var(--d-press) var(--ease-reveal),
+    opacity var(--d-press) var(--ease-reveal);
+}
+
+.services__n {
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--t-track-label);
+  color: var(--c-accent-text-dark); /* 9.46:1 on asphalt */
+}
+
+.services__failure {
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+}
+
+.services__discipline {
+  font-family: var(--font-brand);
+  font-size: var(--t-h2-size);
+  line-height: var(--t-h2-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-display);
+  color: var(--c-shop-white);
+}
+
+/* The artwork slot. Empty until the pillar artifact lands; a fixed-ratio
+   container so the card does not change size when it does. surface-1 is the
+   sanctioned inset-block tone and the hairline supplies the edge, since the
+   dark tones sit 1.07:1 apart and that alone does not read as one. */
+.services__art {
+  display: block;
+  aspect-ratio: 16 / 10;
+  background: var(--c-surface-1);
+  border: 1px solid var(--c-rule-dark);
+  border-radius: var(--r-md);
+}
+
+.services__subs {
+  display: grid;
+  gap: var(--s-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.services__sub {
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+}
+
+/* ---- Hover, gated to real pointers ------------------------------------- */
+
+@media (hover: hover) and (pointer: fine) {
+  .services__link:hover {
+    opacity: var(--hover-opacity);
+    transform: translateY(-1px);
+  }
+}
+
+.services__link:active {
+  transform: scale(0.97);
+}
+
+/* Focus is a ring from tokens.css, never the hover treatment. */
+
+/* ---- Pinned horizontal, 768 and up, motion allowed ---------------------
+   The media condition here must stay identical to the one in gsap.matchMedia
+   in Services.jsx. If they drift, the track lays out horizontally with no
+   tween to move it, or pins with nothing to scroll. */
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  /* A pinned section MUST fit the viewport it is pinned to. While the pin
+     holds, anything past the fold is unreachable: the page is not scrolling,
+     so there is no way for a reader to get to it. At 1024x768 the card ran
+     past the bottom edge and its sub-services were stranded there. So the
+     section is exactly one viewport tall and the card fits inside it. */
+  .services {
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+    padding: var(--s-xl) var(--s-xl) var(--s-2xl);
+  }
+
+  .services__viewport {
+    width: 100%;
+    /* clip rather than hidden: a clipped box cannot be scrolled, so the
+       browser never quietly scrolls a focused off-screen card sideways and
+       fights the focus handler for the same pixels. */
+    overflow: clip;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+  }
+
+  .services__track {
+    display: flex;
+    align-items: stretch;
+    gap: var(--s-2xl);
+    width: max-content;
+    will-change: transform;
+  }
+
+  .services__card {
+    /* One card leads at any moment, with the next one peeking. Four cards of
+       equal size are never on screen together, so the density law is
+       satisfied by the composition rather than by the card sizes.
+
+       The cap is 1200, the same measured column the hero and the other
+       sections use. A tighter cap looks identical up to 1280 and then starts
+       fitting a third card on wide screens, which is exactly the row of three
+       near-equal things the law exists to prevent. */
+    width: min(68vw, 1200px);
+    display: flex;
+  }
+
+  .services__link {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-md);
+    padding: var(--s-lg);
+    min-height: 0;
+  }
+
+  /* The artwork slot absorbs whatever height is left after the type, so the
+     card always ends at the bottom edge of the pinned viewport. A drawn
+     artifact scales to its box, so it does not need the fixed ratio the work
+     plates do; what it needs is to be at artwork scale, which here is every
+     pixel the card is not using for words. */
+  .services__art {
+    flex: 1;
+    min-height: 0;
+    aspect-ratio: auto;
+  }
+
+  .services__discipline {
+    font-size: var(--t-h1-size);
+    line-height: var(--t-h1-line);
+  }
+
+  /* Sub-services stagger in as their own card arrives. Hidden only inside
+     this block, so the stacked layouts never depend on a tween that is not
+     running there. */
+  .services__sub {
+    opacity: 0;
+    transform: translateY(var(--s-sm));
+    transition:
+      opacity var(--d-panel) var(--ease-reveal),
+      transform var(--d-panel) var(--ease-reveal);
+    transition-delay: calc(var(--i) * var(--stagger));
+  }
+
+  .services__card[data-arrived='true'] .services__sub {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 1024px) {
+  .services {
+    padding: var(--s-3xl) var(--s-2xl);
+  }
+}
+
+/* ---- Reduced motion ----------------------------------------------------
+   The pin is released and the cards are a plain stack, which the base layout
+   above already is. Nothing to undo but the interaction transforms. */
+
+@media (prefers-reduced-motion: reduce) {
+  .services__link:hover {
+    opacity: var(--hover-opacity);
+    transform: none;
+  }
+
+  .services__link:active {
+    transform: none;
+  }
+}

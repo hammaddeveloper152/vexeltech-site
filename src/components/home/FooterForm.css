@@ -1,0 +1,270 @@
+/* ==========================================================================
+   Section 9 — the form, and the end of the page.
+
+   Layout family: form column with a meta row beneath it. Used once.
+
+   Ground is asphalt. The FAQ above it is white, and two light sections may
+   not meet; asphalt is also the dominant ground, so the page ends on it.
+
+   This is where the four state tokens finally get used: error, success, the
+   focus ring, and disabled.
+   ========================================================================== */
+
+.foot {
+  padding: var(--s-3xl) var(--s-md);
+  background: var(--c-asphalt);
+  color: var(--c-shop-white); /* 17.77:1 */
+  border-top: 1px solid var(--c-rule-dark);
+}
+
+.foot__inner {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.foot__h {
+  margin: 0 0 var(--s-xl);
+  font-family: var(--font-brand);
+  font-size: var(--t-h2-size);
+  line-height: var(--t-h2-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-display);
+  text-wrap: balance;
+}
+
+/* ---- The form ----------------------------------------------------------- */
+
+.foot__form {
+  display: grid;
+  gap: var(--s-lg);
+  max-width: 75ch;
+}
+
+.foot__field {
+  display: grid;
+  gap: var(--s-sm);
+  margin: 0;
+  min-width: 0;
+}
+
+.foot__label {
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-shop-white);
+}
+
+.foot__req {
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+}
+
+/* The documented `input` component: asphalt on white, 17.77:1. A white field
+   on the asphalt ground is the strongest separation available and needs no
+   border to say where the field is. */
+.foot__input {
+  /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
+  min-height: 48px;
+  width: 100%;
+  padding: var(--s-md);
+  background: var(--c-shop-white);
+  color: var(--c-asphalt);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-sm); /* control */
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+}
+
+.foot__textarea {
+  resize: vertical;
+}
+
+.foot__select {
+  /* The field is a control, so it keeps the control radius and the 48px
+     floor. The native arrow is left alone: replacing it would mean drawing an
+     icon, and iconography is unassigned. */
+  appearance: auto;
+}
+
+/* Error. Never colour alone: the field takes a border, the message takes a
+   mark, and the message itself is words. */
+.foot__input[data-invalid='true'] {
+  border-color: var(--c-error); /* 6.41:1 on white, the field's own ground */
+}
+
+/* Empty until it has something to say, so it collapses to nothing rather
+   than reserving a gap under every field. */
+.foot__err:empty {
+  display: none;
+}
+
+.foot__err {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-sm);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  /* The message sits on asphalt, so it takes the dark-ground variant. 5.11:1.
+     error, the light-ground value, would be 3.06:1 here and fail. */
+  color: var(--c-error-dark);
+}
+
+.foot__err-mark {
+  font-family: var(--font-brand);
+  font-weight: var(--t-weight-brand);
+}
+
+.foot__ok {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-sm);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-success-dark); /* 5.49:1 on asphalt */
+}
+
+.foot__ok-mark {
+  font-family: var(--font-brand);
+  font-weight: var(--t-weight-brand);
+}
+
+/* ---- Actions ------------------------------------------------------------ */
+
+.foot__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-md) var(--s-lg);
+}
+
+/* button-primary. The hero holds the other one, and the two are never in the
+   same viewport, so the one-per-frame rule holds. */
+.foot__submit {
+  min-height: 48px;
+  padding: var(--s-md) var(--s-lg);
+  background: var(--c-accent-ground);
+  color: var(--c-asphalt); /* 9.46:1 */
+  border: 1px solid var(--c-accent-ground);
+  border-radius: var(--r-sm);
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    transform var(--d-press) var(--ease-reveal),
+    opacity var(--d-press) var(--ease-reveal);
+}
+
+/* Disabled comes from tokens.css: opacity 0.4 and pointer-events none, no
+   colour change. This is the one place the accent may go below the 0.64
+   floor, because a disabled control is not actionable. */
+
+.foot__status {
+  margin: 0;
+  min-height: var(--s-lg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .foot__submit:hover {
+    opacity: var(--hover-opacity); /* 8.16:1, above the 0.64 floor */
+    transform: translateY(-1px);
+  }
+}
+
+.foot__submit:active {
+  transform: scale(0.97);
+}
+
+/* Focus is the ring from tokens.css. The form sits on asphalt, so the ring is
+   machine yellow direct at 9.46:1 with no offset colour needed, and it is a
+   ring rather than the hover treatment so the two are never confused. */
+
+/* ---- Meta --------------------------------------------------------------- */
+
+.foot__meta {
+  display: grid;
+  gap: var(--s-lg);
+  margin-top: var(--s-3xl);
+  padding-top: var(--s-xl);
+  border-top: 1px solid var(--c-rule-dark);
+}
+
+.foot__contact {
+  display: grid;
+  gap: var(--s-xs);
+}
+
+.foot__meta-k {
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-steel-dark);
+}
+
+.foot__meta-v {
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-shop-white);
+}
+
+.foot__legal {
+  margin: 0;
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+}
+
+/* ---- Reduced motion ----------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .foot__submit:hover {
+    opacity: var(--hover-opacity);
+    transform: none;
+  }
+
+  .foot__submit:active {
+    transform: none;
+  }
+}
+
+/* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------ */
+
+@media (min-width: 768px) {
+  .foot {
+    padding: var(--s-3xl) var(--s-xl);
+  }
+
+  .foot__form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .foot__field--wide,
+  .foot__actions {
+    grid-column: 1 / -1;
+  }
+
+  .foot__meta {
+    grid-template-columns: repeat(2, 1fr) auto;
+    align-items: start;
+    gap: var(--s-xl);
+  }
+
+  .foot__legal {
+    text-align: right;
+  }
+}
+
+@media (min-width: 1024px) {
+  .foot {
+    padding: var(--s-3xl) var(--s-2xl);
+  }
+}

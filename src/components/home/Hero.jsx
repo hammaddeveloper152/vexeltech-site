@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import TileWall from './TileWall.jsx';
-import { useReducedMotion } from './hooks.js';
+import { cssMs, useReducedMotion } from './hooks.js';
 import './Hero.css';
 
 /* The cycling half of the headline. "Not a proposal. The ___" holds still and
    only the last two words roll. */
 const PHRASES = ['whole system', 'working site', 'real build', 'finished thing'];
 
-const ROLL_MS = 2400;
+
 
 /* The roll.
    Every phrase is rendered into the same single-column grid, so the column
@@ -18,7 +18,9 @@ function Ticker({ reduced }) {
 
   useEffect(() => {
     if (reduced) return undefined;
-    const t = setInterval(() => setI((n) => (n + 1) % PHRASES.length), ROLL_MS);
+    /* The phrase station of the rotation band. DESIGN.md owns the value. */
+    const dwell = cssMs('--d-rotate-phrase', 2400);
+    const t = setInterval(() => setI((n) => (n + 1) % PHRASES.length), dwell);
     return () => clearInterval(t);
   }, [reduced]);
 

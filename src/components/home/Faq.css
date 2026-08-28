@@ -1,0 +1,205 @@
+/* ==========================================================================
+   Section 8 — the quiet one.
+
+   Layout family: stacked disclosure list on a light ground. Used once.
+
+   White rather than concrete. The counter row is the other light section and
+   it is concrete, so the two reliefs are not the same relief, and there is a
+   dark section between them either way.
+
+   ---- How the collapse works, and why it is not animated -----------------
+
+   DESIGN.md allows transform and opacity and nothing else, which leaves no
+   animated way to collapse a height. The usual answers are all layout
+   properties wearing a costume: `max-height` is height, `grid-template-rows:
+   0fr` to `1fr` is a grid track, and both reflow every frame.
+
+   So the height change is not animated at all. The panel is `hidden` when
+   closed and laid out when open, which is instantaneous and therefore
+   animates nothing. The motion budget goes on the content instead: it slides
+   down from behind its own header inside a clipped panel, on transform and
+   opacity. Nothing here interpolates a layout property at any point.
+   ========================================================================== */
+
+.faq {
+  padding: var(--s-3xl) var(--s-md);
+  background: var(--c-shop-white);
+  color: var(--c-asphalt); /* 17.77:1 on white */
+}
+
+.faq__inner {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.faq__h {
+  margin: 0 0 var(--s-xl);
+  font-family: var(--font-brand);
+  font-size: var(--t-h2-size);
+  line-height: var(--t-h2-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-display);
+  text-wrap: balance;
+}
+
+.faq__list {
+  max-width: 75ch;
+  border-top: 1px solid var(--c-line); /* hairline, light ground */
+}
+
+.faq__item {
+  border-bottom: 1px solid var(--c-line);
+}
+
+/* The heading carries the level; the button carries the behaviour. Resetting
+   the heading's own type here keeps the outline correct without the question
+   rendering at h3 scale. */
+.faq__q {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+.faq__btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-lg);
+  width: 100%;
+  /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
+  min-height: 48px;
+  padding: var(--s-lg) 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity var(--d-press) var(--ease-reveal);
+}
+
+.faq__q-t {
+  font-family: var(--font-brand);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-h3);
+  text-wrap: balance;
+}
+
+/* Closed it is a plus. Open it is the same glyph turned 45 degrees, which is
+   a transform rather than a second icon. */
+.faq__mark {
+  flex: none;
+  font-family: var(--font-brand);
+  font-size: var(--t-h3-size);
+  line-height: 1;
+  font-weight: var(--t-weight-brand);
+  color: var(--c-steel); /* 8.12:1 on white */
+  transition: transform var(--d-drop) var(--ease-move);
+}
+
+.faq__mark[data-open='true'] {
+  transform: rotate(45deg);
+}
+
+/* ---- The panel --------------------------------------------------------- */
+
+.faq__panel {
+  /* Clips the content while it slides down from behind the header. Not a
+     height animation: the panel is either laid out or `hidden`. */
+  overflow: clip;
+}
+
+/* A keyframe animation, not a transition. A transition needs the element to
+   have been laid out in its closed state first, which means holding the panel
+   open for a frame before flipping a flag, which means correctness depends on
+   a frame arriving. It does not in a backgrounded tab. An animation runs from
+   its own start value the moment the panel is laid out, so there is nothing to
+   sequence. */
+.faq__panel-in {
+  padding-bottom: var(--s-lg);
+}
+
+.faq__panel[data-open='true'] .faq__panel-in {
+  animation: faq-in var(--d-panel) var(--ease-reveal) both;
+}
+
+@keyframes faq-in {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--s-md) * -1));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Kept at top level rather than nested inside the reduced-motion block: a
+   @keyframes inside @media is valid CSS but tooling handles it unevenly. */
+@keyframes faq-in-reduced {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.faq__a {
+  margin: 0;
+  max-width: 60ch;
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel); /* 8.12:1 on white */
+  text-wrap: pretty;
+}
+
+/* ---- Hover, gated to real pointers ------------------------------------- */
+
+@media (hover: hover) and (pointer: fine) {
+  .faq__btn:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+.faq__btn:active {
+  transform: scale(0.97);
+}
+
+/* Focus is a ring from tokens.css. On light grounds the asphalt offset is
+   what makes it visible, since machine yellow on white is 1.88:1 on its own. */
+
+/* ---- Reduced motion ----------------------------------------------------
+   The panel still opens and closes, it just arrives rather than travels. The
+   fade stays, the slide and the press scale go. */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Keep the fade, drop the travel. */
+  .faq__panel[data-open='true'] .faq__panel-in {
+    animation: faq-in-reduced var(--d-panel) var(--ease-reveal) both;
+  }
+
+  .faq__mark {
+    transition: none;
+  }
+
+  .faq__btn:active {
+    transform: none;
+  }
+}
+
+/* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------ */
+
+@media (min-width: 768px) {
+  .faq {
+    padding: var(--s-3xl) var(--s-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .faq {
+    padding: var(--s-3xl) var(--s-2xl);
+  }
+}

@@ -4,6 +4,19 @@ import { useEffect, useRef, useState } from 'react';
    everywhere: Hero, WorkGrid and CounterRow all read reduced motion from
    here. Do not re-declare either hook locally. */
 
+/* Read a duration token in milliseconds.
+
+   Called at effect time, never at module scope: a module body can evaluate
+   before the stylesheet is applied, and the fallback would silently become the
+   real value with nothing to show it had happened. */
+export function cssMs(name, fallback) {
+  const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  if (!raw) return fallback;
+  const n = parseFloat(raw);
+  if (Number.isNaN(n)) return fallback;
+  return raw.endsWith('ms') ? n : n * 1000;
+}
+
 export function useReducedMotion() {
   const [reduced, setReduced] = useState(false);
 
