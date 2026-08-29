@@ -120,8 +120,24 @@ export default function Process() {
           </div>
 
           <ol className="process__steps" ref={listRef}>
-            {STEPS.map(({ id, n, title, body }) => (
-              <li className="process__step" key={id} data-lit="false">
+            {STEPS.map(({ id, n, title, body }, i) => (
+              /* --row gives each card its own grid row. Without it,
+                 auto-placement fills row one with cards one and two side by
+                 side and the zigzag is just a two-column grid. */
+              <li
+                className="process__step"
+                key={id}
+                data-lit="false"
+                style={{ '--row': i + 1 }}
+              >
+                {/* The branch. Part of the same drawn path as the centre
+                    rail, which is why there are no arrows: the line itself
+                    is the connection. Hidden in the single column below 768,
+                    where the rail is already beside the card. */}
+                <span className="process__jog" aria-hidden="true">
+                  <span className="process__jog-fill" />
+                </span>
+
                 <span className="process__n" aria-hidden="true">
                   {n}
                 </span>

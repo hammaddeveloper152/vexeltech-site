@@ -56,7 +56,11 @@
   --c-accent-text-dark: #f0b323; /* machine yellow on asphalt.  9.46:1 */
   --c-accent-text-light: #8a6300; /* deep amber on white 5.43, concrete 4.90 */
   --c-accent-ground: #f0b323; /* as a fill: the one primary call per frame  */
-  --c-accent-draw: #f0b323; /* as a drawn line or stroke: rules, the focus ring */
+  /* The draw role splits by ground for the same reason the text role does.
+     Machine yellow as a stroke measures 9.46:1 on asphalt and 1.69:1 on
+     concrete, which is not a line, it is a rumour of one. */
+  --c-accent-draw-dark: #f0b323; /* stroke on asphalt.  9.46:1 */
+  --c-accent-draw-light: #8a6300; /* stroke on concrete 4.90, white 5.43 */
   --c-steel-dark: #858a92; /* secondary text on asphalt ONLY */
 
   /* ---- Colour: light grounds (relief) ---------------------------------- */
@@ -117,6 +121,18 @@
   --t-quote-size-lg: 58px;
   --t-quote-line-lg: 76px; /* 1.310 */
 
+  /* Figure: a short numeral set to be the loudest thing on the page, per
+     Plate 04. A second role above the plate scale, like display, but fixed
+     rather than fluid. Lead is 1.5x the rest at every step, which is the
+     density law's "clearly leads" as a number. Numerals only, never words.
+
+     This is the one role that steps with the viewport, so the steps live here
+     rather than in a component. See the overrides below :root. */
+  --t-figure-size: 40px;
+  --t-figure-line: 44px;
+  --t-figure-size-lead: 60px;
+  --t-figure-line-lead: 64px;
+
   --t-track-display: -0.02em;
   --t-track-h3: -0.01em;
   --t-track-label: 0.12em;
@@ -171,6 +187,27 @@
   --focus-offset: 2px;
 }
 
+/* Figure steps. Values, so they belong to the token layer rather than to a
+   component's media query. The ratio between lead and rest is held at exactly
+   1.5 at every step, and every line height stays a 4px multiple. */
+@media (min-width: 768px) {
+  :root {
+    --t-figure-size: 48px;
+    --t-figure-line: 52px;
+    --t-figure-size-lead: 72px;
+    --t-figure-line-lead: 76px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --t-figure-size: 64px;
+    --t-figure-line: 68px;
+    --t-figure-size-lead: 96px;
+    --t-figure-line-lead: 100px;
+  }
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -196,12 +233,12 @@
 /* Focus is a ring, never the hover treatment. On light grounds the asphalt
    offset supplies the separation, since machine yellow on white is 1.88:1. */
 .vt :focus-visible {
-  outline: var(--focus-ring) solid var(--c-accent-draw);
+  outline: var(--focus-ring) solid var(--c-accent-draw-dark);
   outline-offset: var(--focus-offset);
 }
 
 .vt--light :focus-visible {
-  outline-color: var(--c-accent-draw);
+  outline-color: var(--c-accent-draw-dark);
   box-shadow: 0 0 0 calc(var(--focus-ring) + var(--focus-offset)) var(--c-asphalt);
 }
 

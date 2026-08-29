@@ -1,11 +1,20 @@
 /* ==========================================================================
    Section 4 — the numbers.
 
-   Layout family: two by two block on a light ground. Used once on this page,
-   and deliberately not a four-across row, which Pillars already holds.
+   Layout family: four-across figure row on a light ground. Used once.
 
-   Ground change is the strongest separation in the system, and this is the
-   only light section in the run, so it carries the relief on its own.
+   It was a two by two block while the flat Pillars row still held the
+   four-across family. Services replaced Pillars, that constraint died with
+   it, and the block was left sitting in a corner of a section it did not
+   fill. Checked before rebuilding: no other grid on the page is a row of
+   four. The work grid has six tracks but its tiles span 4/2, 3/3 and 2/4, so
+   no row of it holds four of anything, and the wall and the two meta rows are
+   three.
+
+   The figures take the figure role, not a heading step. Plate 04 holds that
+   numerals are the loudest thing on the page, and the largest heading is
+   58px, which makes a numeral at 58px the joint loudest rather than the
+   loudest.
    ========================================================================== */
 
 .counters {
@@ -19,44 +28,99 @@
   margin: 0 auto;
 }
 
+/* Four bare numbers with no heading read as a footer detail rather than a
+   section. */
+.counters__h {
+  margin: 0 0 var(--s-2xl);
+  font-family: var(--font-brand);
+  font-size: var(--t-h2-size);
+  line-height: var(--t-h2-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-display);
+  text-wrap: balance;
+}
+
 .counters__list {
   display: grid;
-  /* Two by two at every width. Four short numbers do not need a phone
-     breakpoint, and stacking them to one column would make it a list. */
+  /* Two across at phone widths. Four figures at figure scale do not fit a
+     358px column, and shrinking them to fit would give up the one thing this
+     section is for. The lead still leads. */
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--s-xl) var(--s-lg);
+  gap: var(--s-2xl) var(--s-lg);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .counters__item {
+  position: relative; /* the separator is positioned against the stat */
   display: grid;
   gap: var(--s-sm);
   align-content: start;
   min-width: 0;
 }
 
+/* ---- Separators --------------------------------------------------------
+   One per stat except the first, so there is never a rule before the first or
+   after the last. Each rule belongs to the stat on its right, which is what
+   lets it light when that stat's own number lands rather than on a timer that
+   hopes to agree with it.
+
+   Below 768 the block folds to two by two and the rules turn horizontal,
+   sitting between the rows. The lit quarter turns with them: a vertical rule
+   draws from its top, a horizontal one from its leading edge. */
+
+.counters__rule {
+  position: absolute;
+  background: var(--c-line); /* the light-ground hairline. 1px, no softening */
+  /* Horizontal, spanning the stat, sitting in the row gap above it. */
+  top: calc(var(--s-2xl) / -2);
+  right: 0;
+  left: 0;
+  height: 1px;
+}
+
+/* The first row has nothing above it to be separated from. */
+.counters__item:nth-child(-n + 2) .counters__rule {
+  display: none;
+}
+
+.counters__rule-lit {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 25%;
+  /* Deep amber, not machine yellow. Machine yellow as a stroke measures
+     1.69:1 on concrete, which is not a line, it is a rumour of one. */
+  background: var(--c-accent-draw-light);
+  transform-origin: left;
+}
+
 .counters__n {
-  display: block;
+  /* All four figures share one box, as tall as the lead's line, with the
+     numeral sitting on its floor. Without this the lead's taller line pushes
+     its label down while the smaller three keep theirs up, and a row of stats
+     with labels at four different heights reads as a collision rather than a
+     row. */
+  display: flex;
+  align-items: flex-end;
+  min-height: var(--t-figure-line-lead);
   font-family: var(--font-brand);
-  /* The three that follow. The leader overrides below. */
-  font-size: var(--t-h3-size);
-  line-height: var(--t-h3-line);
+  font-size: var(--t-figure-size);
+  line-height: var(--t-figure-line);
   font-weight: var(--t-weight-brand);
-  letter-spacing: var(--t-track-h3);
-  /* Column-aligned figures that change in place. Proportional digits shift
-     the layout as they update. */
+  letter-spacing: var(--t-track-display);
+  /* Column-aligned figures that change in place. At this size a proportional
+     digit swap moves the whole row. */
   font-variant-numeric: tabular-nums;
-  /* Reserved from the final string so the count cannot reflow the block. */
+  /* Reserved from the final string so the count cannot reflow the row. */
   min-width: calc(var(--chars) * 1ch);
 }
 
-/* The density law's leader: one clear step up the scale, not a nudge. */
+/* The density law's leader, at exactly 1.5 times the rest. */
 .counters__item--lead .counters__n {
-  font-size: var(--t-h2-size);
-  line-height: var(--t-h2-line);
-  letter-spacing: var(--t-track-display);
+  font-size: var(--t-figure-size-lead);
+  line-height: var(--t-figure-line-lead);
+  letter-spacing: var(--t-track-display-lg);
 }
 
 .counters__l {
@@ -68,6 +132,37 @@
   text-transform: uppercase;
   color: var(--c-steel); /* steel on light, 7.7:1 on concrete */
 }
+
+/* ---- Illumination ------------------------------------------------------
+   The rule lights when its own number lands, staggered 70ms across the four
+   because they are separate things to read. transform only, from a set
+   origin, never width or height. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .counters__rule-lit {
+    transform: scaleX(0);
+    transition: transform var(--d-panel) var(--ease-reveal);
+    transition-delay: calc(var(--i) * var(--stagger));
+  }
+
+  .counters__item[data-landed='true'] .counters__rule-lit {
+    transform: scaleX(1);
+  }
+}
+
+/* Vertical rules draw downward instead of sideways. */
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .counters__rule-lit {
+    transform: scaleY(0);
+  }
+
+  .counters__item[data-landed='true'] .counters__rule-lit {
+    transform: scaleY(1);
+  }
+}
+
+/* Reduced motion: the rules render complete and the numbers render final, so
+   there is nothing to draw. The resting value below is already scaleX(1). */
 
 /* ---- Reveal. Four things to read, so 70ms per item --------------------- */
 
@@ -106,20 +201,49 @@
     padding: var(--s-3xl) var(--s-xl);
   }
 
+  /* Four across, full width. The lead takes a wider track as well as a larger
+     figure, so its number has room to sit on one line at every step and the
+     row reads as one leader and three followers rather than four columns with
+     one shouting. */
   .counters__list {
-    gap: var(--s-2xl) var(--s-xl);
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: var(--s-xl);
+    /* stretch, not start: the rules run the full height of the block, so the
+       stats have to be full height for the rules to have something to run
+       against. */
+    align-items: stretch;
   }
 
-  .counters__n {
-    font-size: var(--t-h2-size);
-    line-height: var(--t-h2-line);
-    letter-spacing: var(--t-track-display);
+  /* Vertical now, sitting in the column gap to the left of the stat and
+     running the full height of the block. */
+  .counters__rule {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: calc(var(--s-xl) / -2);
+    width: 1px;
+    height: auto;
   }
 
-  .counters__item--lead .counters__n {
-    font-size: var(--t-h1-size);
-    line-height: var(--t-h1-line);
+  /* Every stat but the first carries one again. */
+  .counters__item:nth-child(-n + 2) .counters__rule {
+    display: block;
   }
+
+  .counters__item:first-child .counters__rule {
+    display: none;
+  }
+
+  /* The top quarter, drawing downward from the top. */
+  .counters__rule-lit {
+    inset: 0 0 auto 0;
+    width: auto;
+    height: 25%;
+    transform-origin: top;
+  }
+
+  /* The figure sizes themselves step in tokens.css, so nothing here has to
+     repeat them. */
 }
 
 @media (min-width: 1024px) {

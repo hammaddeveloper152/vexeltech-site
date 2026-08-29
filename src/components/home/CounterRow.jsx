@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useReducedMotion, useReveal } from './hooks.js';
 import './CounterRow.css';
 
 /* Section 4. The numbers.
 
-   Two by two on concrete, not four across. Pillars directly above is already
-   a four-across equal-column row, and BUILD-LAW.md allows a layout family
-   once per page. The block also gives the density law its leader: counter one
-   runs a full step up the scale from the other three.
+   Four across, full width. It was a two by two block only while the flat
+   Pillars row still held the four-across layout family; Services replaced
+   Pillars and that constraint died with it. Verified before rebuilding that no
+   other grid on the page is a row of four.
 
    Values are deliberately synthetic and the labels say so. BUILD-LAW.md
-   Truth: no invented client counts, credentials, or capabilities. These are
-   placeholders that cannot be mistaken for a claim, and pre-flight item 5
-   fails loudly on them until the real numbers arrive. */
+   Truth: no invented client counts, credentials, or capabilities. */
 const COUNTERS = [
   { id: 'one', value: 1240, label: 'Placeholder label one' },
   { id: 'two', value: 48, label: 'Placeholder label two' },
@@ -21,8 +19,7 @@ const COUNTERS = [
 ];
 
 /* DESIGN.md's duration table stops at drawers and panels and then says
-   marketing reveals may run longer. A count is a marketing reveal, so it
-   takes a longer figure than any interaction band. */
+   marketing reveals may run longer. A count is a marketing reveal. */
 const COUNT_MS = 1600;
 
 const format = (n) => new Intl.NumberFormat('en-US').format(n);
@@ -57,15 +54,16 @@ function cubicBezier(x1, y1, x2, y2) {
 
 const easeReveal = cubicBezier(0.23, 1, 0.32, 1);
 
-function Counter({ value, label, lead, index, run, reduced }) {
-  /* Under reduced motion the number is simply its final value from the first
-     paint. There is no gentler version of a count, so this one is switched
-     off rather than slowed. */
+function Counter({ value, label, lead, index, run, reduced, landed, onLanded }) {
+  /* Under reduced motion the number is its final value from the first paint.
+     There is no gentler version of a count, so this one is switched off
+     rather than slowed. */
   const [shown, setShown] = useState(reduced ? value : 0);
 
   useEffect(() => {
     if (reduced) {
       setShown(value);
+      onLanded(index);
       return undefined;
     }
     if (!run) return undefined;
@@ -77,20 +75,39 @@ function Counter({ value, label, lead, index, run, reduced }) {
       if (!start) start = ts;
       const p = Math.min((ts - start) / COUNT_MS, 1);
       setShown(Math.round(value * easeReveal(p)));
-      if (p < 1) raf = requestAnimationFrame(step);
+      if (p < 1) {
+        raf = requestAnimationFrame(step);
+      } else {
+        /* The rule lights when its number lands, not on a timer that hopes
+           to agree with it. */
+        onLanded(index);
+      }
     };
 
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
-  }, [value, run, reduced]);
+  }, [value, run, reduced, index, onLanded]);
 
   const final = format(value);
 
   return (
-    <li className={`counters__item${lead ? ' counters__item--lead' : ''}`} style={{ '--i': index }}>
+    <li
+      className={`counters__item${lead ? ' counters__item--lead' : ''}`}
+      style={{ '--i': index }}
+      data-landed={landed ? 'true' : 'false'}
+    >
+      {/* The separator belongs to the stat on its right, so there is none
+          before the first. Vertical between columns, horizontal between rows
+          once the block folds to two by two. */}
+      {index > 0 ? (
+        <span className="counters__rule" aria-hidden="true">
+          <span className="counters__rule-lit" />
+        </span>
+      ) : null}
+
       {/* The width is reserved from the final string, so a number growing a
           digit mid count cannot move anything around it. tabular-nums keeps
-          the digits themselves from jittering in place. */}
+          the digits from jittering in place. */}
       <span className="counters__n" style={{ '--chars': final.length }}>
         {format(shown)}
       </span>
@@ -102,15 +119,32 @@ function Counter({ value, label, lead, index, run, reduced }) {
 export default function CounterRow() {
   const reduced = useReducedMotion();
   const [ref, revealed] = useReveal();
+  const [landed, setLanded] = useState(() => COUNTERS.map(() => false));
+
+  /* Stable across renders. An inline arrow here would be a new function on
+     every render, and it sits in the count effect's dependency list, so the
+     effect would tear down and restart the count on every tick it caused. */
+  const land = useCallback((i) => {
+    setLanded((prev) => {
+      if (prev[i]) return prev;
+      const next = prev.slice();
+      next[i] = true;
+      return next;
+    });
+  }, []);
 
   return (
     <section
       className="vt vt--light counters"
-      aria-label="Placeholder figures"
+      aria-labelledby="counters-h"
       data-revealed={revealed ? 'true' : 'false'}
       ref={ref}
     >
       <div className="counters__inner">
+        <h2 className="counters__h" id="counters-h">
+          Placeholder section heading
+        </h2>
+
         <ul className="counters__list">
           {COUNTERS.map(({ id, value, label }, i) => (
             <Counter
@@ -121,6 +155,8 @@ export default function CounterRow() {
               index={i}
               run={revealed}
               reduced={reduced}
+              landed={landed[i]}
+              onLanded={land}
             />
           ))}
         </ul>

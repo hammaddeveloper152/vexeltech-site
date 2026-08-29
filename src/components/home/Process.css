@@ -1,7 +1,18 @@
 /* ==========================================================================
    Section 7 — the line down the page.
 
-   Layout family: numbered vertical sequence on a drawn spine. Used once.
+   Layout family: alternating zigzag on a drawn spine. Used once.
+
+   From 768 up the steps alternate left and right of a centre rail, one card
+   per grid row. The rail is the connector rather than a decoration beside
+   one: it draws down the centre and branches sideways to each card as it
+   reaches it, so the path itself carries the sequence and there are no
+   arrows to draw. Below 768 it collapses to a single column with the rail
+   straight down the left, because a zigzag in one column is just a stack
+   with the connector pointing at nothing.
+
+   The zigzag also settles the density law without any help: every grid row
+   holds exactly one card, so there is never a row of near-equal things.
 
    The rail is the one place on this page where the accent draws rather than
    labels. The numerals are loud by scale instead, per Plate 04: making both
@@ -61,7 +72,7 @@
 .process__rail-fill {
   position: absolute;
   inset: 0;
-  background: var(--c-accent-draw); /* 9.46:1 on asphalt */
+  background: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
   /* Drawn with scaleY from the top, never height. Under reduced motion this
      value stands as the resting state and the line is simply complete. */
   transform: scaleY(1);
@@ -69,9 +80,18 @@
   will-change: transform;
 }
 
+/* ---- The branch --------------------------------------------------------
+   Only exists in the zigzag. In the single column the rail already runs
+   beside the card and a stub would point at nothing. */
+
+.process__jog {
+  display: none;
+}
+
 /* ---- A step ------------------------------------------------------------- */
 
 .process__step {
+  position: relative; /* the branch is positioned against the card */
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: baseline;
@@ -152,23 +172,123 @@
     padding: var(--s-3xl) var(--s-xl);
   }
 
+  /* The channel the rail runs in. Everything the branch needs is derived
+     from this one value, so the geometry cannot drift out of alignment. */
   .process__steps {
-    padding-left: var(--s-xl);
-    gap: var(--s-3xl);
+    --channel: var(--s-2xl);
+
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--channel);
+    row-gap: var(--s-3xl);
+    padding-left: 0;
+  }
+
+  /* One card per row, alternating sides. That is what makes it a zigzag
+     rather than two columns read top to bottom. */
+  .process__step {
+    gap: var(--s-md) var(--s-lg);
+    padding: var(--s-lg);
+    border: 1px solid var(--c-rule-dark);
+    border-radius: var(--r-md); /* container */
   }
 
   .process__step {
-    gap: var(--s-md) var(--s-xl);
+    /* One card per row, set explicitly. Auto-placement would put the first
+       two side by side in row one, which is a two-column grid, not a
+       zigzag. */
+    grid-row: var(--row);
   }
 
-  .process__n {
-    font-size: var(--t-h1-size);
-    line-height: var(--t-h1-line);
+  .process__step:nth-child(odd) {
+    grid-column: 1;
+  }
+
+  .process__step:nth-child(even) {
+    grid-column: 2;
+  }
+
+  /* The rail moves from the left edge to the centre of the channel. */
+  .process__rail {
+    left: 50%;
+    transform: translateX(-0.5px);
+  }
+
+  /* The branch. Half the channel wide, so it lands exactly on the rail, and
+     level with the middle of the numeral, which is the point the rail's own
+     progress is measured against. Both derived, neither guessed. */
+  .process__jog {
+    display: block;
+    position: absolute;
+    top: calc(var(--s-lg) + var(--t-h2-line) / 2);
+    width: calc(var(--channel) / 2);
+    height: 1px;
+    background: var(--c-rule-dark); /* the unlit track, as on the rail */
+  }
+
+  .process__step:nth-child(odd) .process__jog {
+    left: 100%; /* out of the card's inner edge, toward the centre */
+  }
+
+  .process__step:nth-child(even) .process__jog {
+    right: 100%;
+  }
+
+  .process__jog-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--c-accent-draw-dark);
+    transform: scaleX(1);
+  }
+
+  /* The numeral holds at the h2 step here. At 768 the zigzag gives each card
+     roughly a 264px content box, and a 58px numeral inside that leaves the
+     title wrapping every other word. It goes up a step at 1024, where there
+     is room for it. */
+}
+
+/* The branch draws outward from the rail, never from the card, so the path
+   reads as one line growing rather than two meeting in the middle. */
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .process__jog-fill {
+    transform: scaleX(0);
+  }
+
+  .process__step:nth-child(odd) .process__jog-fill {
+    transform-origin: right; /* the centre end */
+  }
+
+  .process__step:nth-child(even) .process__jog-fill {
+    transform-origin: left; /* the centre end */
+  }
+
+  .process__jog-fill {
+    transition: transform var(--d-drop) var(--ease-move);
+  }
+
+  .process__step[data-lit='true'] .process__jog-fill {
+    transform: scaleX(1);
   }
 }
 
 @media (min-width: 1024px) {
   .process {
     padding: var(--s-3xl) var(--s-2xl);
+  }
+
+  .process__steps {
+    --channel: var(--s-3xl);
+  }
+
+  .process__step {
+    padding: var(--s-xl);
+  }
+
+  .process__n {
+    font-size: var(--t-h1-size);
+    line-height: var(--t-h1-line);
+  }
+
+  .process__jog {
+    top: calc(var(--s-xl) + var(--t-h1-line) / 2);
   }
 }
