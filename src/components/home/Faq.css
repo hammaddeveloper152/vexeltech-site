@@ -48,7 +48,21 @@
 }
 
 .faq__item {
+  position: relative;
   border-bottom: 1px solid var(--c-line);
+}
+
+/* Sits exactly on the static hairline and draws over it from the left. A
+   border cannot be transformed, so the drawn one is its own element. */
+.faq__rule {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 1px;
+  background: var(--c-accent-draw-light); /* 4.90:1 on white */
+  transform: scaleX(0);
+  transform-origin: left;
 }
 
 /* The heading carries the level; the button carries the behaviour. Resetting
@@ -75,7 +89,12 @@
   text-align: left;
   color: inherit;
   cursor: pointer;
-  transition: opacity var(--d-press) var(--ease-reveal);
+  /* transform as well as opacity. The press scale below was already here but
+     only opacity was being transitioned, so it snapped instead of taking the
+     160ms BUILD-LAW asks for. */
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
 }
 
 .faq__q-t {
@@ -96,7 +115,10 @@
   line-height: 1;
   font-weight: var(--t-weight-brand);
   color: var(--c-steel); /* 8.12:1 on white */
-  transition: transform var(--d-drop) var(--ease-move);
+  /* The panel's own duration and curve, not the mark's. The rotation and the
+     answer arriving are one event, and giving them different timings is what
+     makes an accordion feel like two things happening near each other. */
+  transition: transform var(--d-panel) var(--ease-reveal);
 }
 
 .faq__mark[data-open='true'] {
@@ -147,6 +169,31 @@
   }
 }
 
+/* The answer arrives a line at a time. The line index is written by the
+   component after measuring where the words actually fell, so this is the
+   rendered line rather than a guess at where the text breaks. */
+.faq__w {
+  --line: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .faq__panel[data-open='true'] .faq__w {
+    animation: faq-line var(--d-panel) var(--ease-reveal) both;
+    animation-delay: calc(var(--line) * var(--stagger));
+  }
+}
+
+@keyframes faq-line {
+  from {
+    opacity: 0;
+    transform: translateY(var(--s-sm));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .faq__a {
   margin: 0;
   max-width: 60ch;
@@ -161,6 +208,30 @@
 @media (hover: hover) and (pointer: fine) {
   .faq__btn:hover {
     opacity: var(--hover-opacity);
+    transform: translateY(-1px); /* DESIGN.md states: opacity plus 1px */
+  }
+
+  /* Part of the way toward open, so the control shows where it is going
+     before it is pressed. Half the 45 degrees it ends on. */
+  .faq__item:hover .faq__mark:not([data-open='true']) {
+    transform: rotate(22.5deg);
+  }
+
+  .faq__item:hover .faq__rule {
+    transform: scaleX(1);
+  }
+}
+
+/* Focus draws it too, and NOT behind the pointer gate. A keyboard user has no
+   pointer, so gating this with hover would mean the one input that most needs
+   to see where it is never gets told. */
+.faq__item:focus-within .faq__rule {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .faq__rule {
+    transition: transform var(--d-drop) var(--ease-move);
   }
 }
 
@@ -187,6 +258,21 @@
 
   .faq__btn:active {
     transform: none;
+  }
+
+  .faq__btn:hover {
+    opacity: var(--hover-opacity);
+    transform: none;
+  }
+
+  /* The rule arrives rather than drawing, and the answer arrives whole
+     rather than a line at a time. */
+  .faq__rule {
+    transition: none;
+  }
+
+  .faq__panel[data-open='true'] .faq__w {
+    animation: none;
   }
 }
 

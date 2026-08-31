@@ -11,10 +11,19 @@
    no row of it holds four of anything, and the wall and the two meta rows are
    three.
 
-   The figures take the figure role, not a heading step. Plate 04 holds that
-   numerals are the loudest thing on the page, and the largest heading is
-   58px, which makes a numeral at 58px the joint loudest rather than the
-   loudest.
+   The figures take the figure role's set step, not a heading step. Plate 04
+   holds that numerals are the loudest thing on the page, and the largest
+   heading is 58px, which makes a numeral at 58px the joint loudest rather
+   than the loudest.
+
+   All four are the same size and the columns are equal. An earlier build set
+   one figure at 1.5 times the others, reading the density law as applying
+   inside the row. It did not read as hierarchy: it read as one number that
+   had not fitted, it pushed the other three into the right half, and the
+   unequal columns meant nothing lined up. The law is satisfied at section
+   level instead, which is what the heading above the block is for. A row of
+   statistics has already decided that its members matter equally, and that is
+   the whole reason it is a set.
    ========================================================================== */
 
 .counters {
@@ -46,6 +55,9 @@
      358px column, and shrinking them to fit would give up the one thing this
      section is for. The lead still leads. */
   grid-template-columns: repeat(2, 1fr);
+  /* The rules live in these gaps, so the gap is what sets how far a rule
+     floats from the stats it separates. One ramp step down from where it was,
+     which puts each rule 12px off the stat rather than 20px. */
   gap: var(--s-2xl) var(--s-lg);
   margin: 0;
   padding: 0;
@@ -96,14 +108,11 @@
 }
 
 .counters__n {
-  /* All four figures share one box, as tall as the lead's line, with the
-     numeral sitting on its floor. Without this the lead's taller line pushes
-     its label down while the smaller three keep theirs up, and a row of stats
-     with labels at four different heights reads as a collision rather than a
-     row. */
-  display: flex;
-  align-items: flex-end;
-  min-height: var(--t-figure-line-lead);
+  /* All four are the same size, so their line boxes are identical and the
+     numeral tops, the baselines and the labels beneath them all line up
+     without anything being forced to. The earlier version needed a shared
+     minimum height precisely because one figure was bigger than the rest. */
+  display: block;
   font-family: var(--font-brand);
   font-size: var(--t-figure-size);
   line-height: var(--t-figure-line);
@@ -112,15 +121,6 @@
   /* Column-aligned figures that change in place. At this size a proportional
      digit swap moves the whole row. */
   font-variant-numeric: tabular-nums;
-  /* Reserved from the final string so the count cannot reflow the row. */
-  min-width: calc(var(--chars) * 1ch);
-}
-
-/* The density law's leader, at exactly 1.5 times the rest. */
-.counters__item--lead .counters__n {
-  font-size: var(--t-figure-size-lead);
-  line-height: var(--t-figure-line-lead);
-  letter-spacing: var(--t-track-display-lg);
 }
 
 .counters__l {
@@ -151,7 +151,7 @@
 }
 
 /* Vertical rules draw downward instead of sideways. */
-@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
   .counters__rule-lit {
     transform: scaleY(0);
   }
@@ -200,27 +200,38 @@
   .counters {
     padding: var(--s-3xl) var(--s-xl);
   }
+}
 
-  /* Four across, full width. The lead takes a wider track as well as a larger
-     figure, so its number has room to sit on one line at every step and the
-     row reads as one leader and three followers rather than four columns with
-     one shouting. */
+/* Four across from 1024, not 768.
+
+   Four equal tracks of a 688px content width leave 154px each, and a figure
+   at figure scale does not fit that. Holding the two by two one breakpoint
+   longer is what lets the figures be figures at 768 rather than four cramped
+   ones, and it is the same reasoning that keeps the block folded at 390. */
+@media (min-width: 1024px) {
+  .counters {
+    padding: var(--s-3xl) var(--s-2xl);
+  }
+
+  /* Four equal columns, evenly distributed across the full width. The set
+     scans as a set, which is the point of it. */
   .counters__list {
-    grid-template-columns: 1.6fr 1fr 1fr 1fr;
-    gap: var(--s-xl);
-    /* stretch, not start: the rules run the full height of the block, so the
-       stats have to be full height for the rules to have something to run
-       against. */
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--s-lg);
+    /* stretch, not start: the rules run the height of the group, so the stats
+       have to be full height for the rules to have something to run against. */
     align-items: stretch;
   }
 
-  /* Vertical now, sitting in the column gap to the left of the stat and
-     running the full height of the block. */
+  /* Vertical, centred in the column gap so it sits an equal 12px off the stat
+     on either side of it, and running the height of the group. All four items
+     are the same height, so every rule is the same height as every other and
+     each lines up top and bottom with the group it divides. */
   .counters__rule {
     top: 0;
     right: auto;
     bottom: 0;
-    left: calc(var(--s-xl) / -2);
+    left: calc(var(--s-lg) / -2);
     width: 1px;
     height: auto;
   }
@@ -242,12 +253,6 @@
     transform-origin: top;
   }
 
-  /* The figure sizes themselves step in tokens.css, so nothing here has to
-     repeat them. */
-}
-
-@media (min-width: 1024px) {
-  .counters {
-    padding: var(--s-3xl) var(--s-2xl);
-  }
+  /* The figure sizes themselves step in tokens.css, so nothing here repeats
+     them. */
 }

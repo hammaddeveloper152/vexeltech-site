@@ -1,23 +1,26 @@
 /* ==========================================================================
-   Section 7 — the line down the page.
+   Section 7 — one drawn diagram.
 
-   Layout family: alternating zigzag on a drawn spine. Used once.
+   Layout family: alternating zigzag traced by a single drawn route. Used once.
 
-   From 768 up the steps alternate left and right of a centre rail, one card
-   per grid row. The rail is the connector rather than a decoration beside
-   one: it draws down the centre and branches sideways to each card as it
-   reaches it, so the path itself carries the sequence and there are no
-   arrows to draw. Below 768 it collapses to a single column with the rail
-   straight down the left, because a zigzag in one column is just a stack
-   with the connector pointing at nothing.
+   The route is one continuous path: down the spine, out to a card at its
+   numeral, along that card's edge, back to the spine, on to the next. It is
+   stroked twice from the same `d` — a static hairline that gives every card
+   its edge before anything happens, and an accent stroke drawn over it as the
+   reader scrolls. There is no card border and no card fill, because four
+   rounded boxes with a line behind them is the thing this replaced.
 
-   The zigzag also settles the density law without any help: every grid row
-   holds exactly one card, so there is never a row of near-equal things.
+   The hairline along each card's edge is therefore part of the route rather
+   than a rule sitting beside it, and it alternates side with the zigzag
+   because the route does.
 
-   The rail is the one place on this page where the accent draws rather than
-   labels. The numerals are loud by scale instead, per Plate 04: making both
-   the numerals and the line machine yellow would put two accent objects in
-   one frame competing to be the thing you look at.
+   From 768 up the cards alternate around a centre spine, one per grid row.
+   Below that the spine is a straight rail down the left with the cards
+   stacked to its right, because a zigzag in one column is a stack with the
+   connector pointing at nothing.
+
+   The zigzag is layout, not motion, so it is NOT gated on reduced motion.
+   Only the drawing is.
    ========================================================================== */
 
 .process {
@@ -42,74 +45,139 @@
   text-wrap: balance;
 }
 
-/* The rail's coordinate space. The list inside it is what the drawn fraction
-   and the step positions are both measured against, so the two cannot drift. */
+/* ---- The route ---------------------------------------------------------- */
+
 .process__track {
   position: relative;
 }
+
+.process__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.process__rail,
+.process__lit,
+.process__passed,
+.process__strike {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+}
+
+/* The static track. An edge, so it stays a hairline. */
+.process__rail {
+  stroke: var(--c-rule-dark);
+  stroke-width: 1;
+}
+
+/* The route. A mark rather than an edge, so it takes the drawn weight. */
+.process__lit,
+.process__passed,
+.process__strike {
+  stroke-width: var(--stroke-drawn);
+}
+
+/* Ahead of the reader: drawn, but not yet arrived at. */
+.process__lit {
+  stroke: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
+  opacity: var(--ahead-opacity);
+}
+
+/* Behind the reader: full strength, and it holds at the last step reached
+   rather than tracking the scroll, so the route reads as ground covered. */
+.process__passed {
+  stroke: var(--c-accent-draw-dark);
+}
+
+/* Where the route crosses a numeral. White is the brightest thing available
+   on asphalt, which is what makes this the brightest point on the path. */
+.process__strike {
+  stroke: var(--c-shop-white);
+  opacity: 0;
+}
+
+.process__strike[data-lit='true'] {
+  opacity: 1;
+}
+
+/* ---- The steps ---------------------------------------------------------- */
 
 .process__steps {
   display: grid;
   gap: var(--s-2xl);
   margin: 0;
-  padding: 0 0 0 var(--s-lg); /* clears the rail */
+  padding: 0 0 0 var(--s-xl); /* clears the rail in the stacked layout */
   list-style: none;
 }
 
-/* ---- The rail ----------------------------------------------------------- */
-
-.process__rail {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 1px;
-  /* The unlit track is the standard dark-ground hairline. One pixel, no
-     softening, same as every other rule on asphalt. */
-  background: var(--c-rule-dark);
-}
-
-.process__rail-fill {
-  position: absolute;
-  inset: 0;
-  background: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
-  /* Drawn with scaleY from the top, never height. Under reduced motion this
-     value stands as the resting state and the line is simply complete. */
-  transform: scaleY(1);
-  transform-origin: top;
-  will-change: transform;
-}
-
-/* ---- The branch --------------------------------------------------------
-   Only exists in the zigzag. In the single column the rail already runs
-   beside the card and a stub would point at nothing. */
-
-.process__jog {
-  display: none;
-}
-
-/* ---- A step ------------------------------------------------------------- */
-
 .process__step {
-  position: relative; /* the branch is positioned against the card */
+  position: relative;
   display: grid;
   grid-template-columns: auto 1fr;
-  align-items: baseline;
+  align-items: start;
   gap: var(--s-md) var(--s-lg);
 }
 
-/* Plate 04: numerals are the loudest thing on the page. Loud by scale here,
-   not by colour. tabular-nums because they are a column of aligned figures. */
+/* The numeral, at figure scale per Plate 04. The two copies stack in one
+   grid cell so the crossfade costs no layout. */
 .process__n {
+  display: grid;
   font-family: var(--font-brand);
-  font-size: var(--t-h2-size);
-  line-height: var(--t-h2-line);
+  font-size: var(--t-figure-size-solo);
+  line-height: var(--t-figure-line-solo);
   font-weight: var(--t-weight-brand);
   font-variant-numeric: tabular-nums;
-  letter-spacing: var(--t-track-display);
-  color: var(--c-shop-white);
+  letter-spacing: var(--t-track-display-lg);
 }
 
+.process__n-muted,
+.process__n-lit {
+  grid-area: 1 / 1;
+}
+
+/* Struck, not faded. The numeral lands with a settle rather than simply
+   changing colour: it sits at the system's own press scale until the route
+   reaches it, then settles to full size. No new value, transform only.
+
+   The settle goes on the two stacked glyphs, not on their container. The
+   container already carries the translate that hangs it over the card edge,
+   and a second transform there would replace that one rather than compose
+   with it: the numeral would snap back inside the card the moment it lit. */
+.process__n-muted,
+.process__n-lit {
+  transform: scale(0.97);
+  transform-origin: center;
+}
+
+.process__step[data-lit='true'] .process__n-muted,
+.process__step[data-lit='true'] .process__n-lit {
+  transform: scale(1);
+}
+
+.process__n-muted {
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+}
+
+.process__n-lit {
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  opacity: 0;
+}
+
+.process__step[data-lit='true'] .process__n-muted {
+  opacity: 0;
+}
+
+.process__step[data-lit='true'] .process__n-lit {
+  opacity: 1;
+}
+
+/* Title and body sit hard against the numeral rather than centred in a box. */
 .process__body {
   display: grid;
   gap: var(--s-sm);
@@ -134,15 +202,13 @@
   text-wrap: pretty;
 }
 
-/* ---- Reveal: each step lights as the line reaches it --------------------
-   Hidden only inside no-preference, so the reduced-motion and no-JavaScript
-   states are the finished layout rather than a section stuck at zero. */
+/* ---- Illumination -------------------------------------------------------
+   The step lights when the path physically reaches it, measured along the
+   path rather than guessed from the card's position. Hidden only inside
+   no-preference, so the reduced-motion state is the finished diagram rather
+   than a section stuck at zero. */
 
 @media (prefers-reduced-motion: no-preference) {
-  .process__rail-fill {
-    transform: scaleY(0);
-  }
-
   .process__step[data-lit='false'] {
     opacity: 0;
     transform: translateY(var(--s-sm));
@@ -153,14 +219,36 @@
       opacity var(--d-panel) var(--ease-reveal),
       transform var(--d-panel) var(--ease-reveal);
   }
+
+  /* The settle rides with the crossfade. The reveal curve overshoots nothing
+     but decelerates hard, which is what makes a landing read as a landing. */
+  .process__n-muted,
+  .process__n-lit {
+    transition:
+      opacity var(--d-panel) var(--ease-reveal),
+      transform var(--d-panel) var(--ease-reveal);
+  }
+
+  /* The held stretch draws to its new mark rather than jumping there, using
+     the named path-drawing exception rather than a second one. */
+  .process__passed {
+    transition: stroke-dashoffset var(--d-panel) var(--ease-reveal);
+  }
+
+  .process__strike {
+    transition: opacity var(--d-drop) var(--ease-reveal);
+  }
 }
 
-/* Reduced motion: the line renders complete, the steps render visible, and
-   nothing scrubs. The fade goes with it, because there is no entrance left to
-   fade in from once the section is simply drawn. */
 @media (prefers-reduced-motion: reduce) {
   .process__step {
     opacity: 1;
+    transform: none;
+  }
+
+  /* Nothing settles, nothing draws. The diagram is simply complete. */
+  .process__n-muted,
+  .process__n-lit {
     transform: none;
   }
 }
@@ -172,13 +260,9 @@
     padding: var(--s-3xl) var(--s-xl);
   }
 
-  /* The channel the rail runs in. Everything the branch needs is derived
-     from this one value, so the geometry cannot drift out of alignment. */
   .process__steps {
-    --channel: var(--s-2xl);
-
     grid-template-columns: 1fr 1fr;
-    column-gap: var(--channel);
+    column-gap: var(--s-2xl); /* the channel the spine runs down */
     row-gap: var(--s-3xl);
     padding-left: 0;
   }
@@ -186,87 +270,45 @@
   /* One card per row, alternating sides. That is what makes it a zigzag
      rather than two columns read top to bottom. */
   .process__step {
-    gap: var(--s-md) var(--s-lg);
-    padding: var(--s-lg);
-    border: 1px solid var(--c-rule-dark);
-    border-radius: var(--r-md); /* container */
-  }
-
-  .process__step {
-    /* One card per row, set explicitly. Auto-placement would put the first
-       two side by side in row one, which is a two-column grid, not a
-       zigzag. */
     grid-row: var(--row);
   }
 
   .process__step:nth-child(odd) {
     grid-column: 1;
+    grid-template-columns: 1fr auto; /* body, then numeral at the inner edge */
   }
 
   .process__step:nth-child(even) {
     grid-column: 2;
   }
 
-  /* The rail moves from the left edge to the centre of the channel. */
-  .process__rail {
-    left: 50%;
-    transform: translateX(-0.5px);
+  .process__step:nth-child(odd) .process__body {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: right;
+    justify-self: end;
   }
 
-  /* The branch. Half the channel wide, so it lands exactly on the rail, and
-     level with the middle of the numeral, which is the point the rail's own
-     progress is measured against. Both derived, neither guessed. */
-  .process__jog {
-    display: block;
-    position: absolute;
-    top: calc(var(--s-lg) + var(--t-h2-line) / 2);
-    width: calc(var(--channel) / 2);
-    height: 1px;
-    background: var(--c-rule-dark); /* the unlit track, as on the rail */
+  .process__step:nth-child(odd) .process__n {
+    grid-column: 2;
+    grid-row: 1;
   }
 
-  .process__step:nth-child(odd) .process__jog {
-    left: 100%; /* out of the card's inner edge, toward the centre */
+  /* The numeral hangs over the card edge, so the route runs through it rather
+     than stopping at it. A quarter of its own width, whatever that width
+     turns out to be, which is why it is a translate rather than a measured
+     offset: a quarter of a 96px numeral and a quarter of a 60px one are
+     different pixel counts but the same relationship.
+
+     A quarter and not a half. Half would centre the numeral on the card edge
+     and push its far side across the spine, and a numeral crossing the line
+     it is supposed to sit on reads as a mistake. */
+  .process__step:nth-child(odd) .process__n {
+    transform: translateX(25%);
   }
 
-  .process__step:nth-child(even) .process__jog {
-    right: 100%;
-  }
-
-  .process__jog-fill {
-    position: absolute;
-    inset: 0;
-    background: var(--c-accent-draw-dark);
-    transform: scaleX(1);
-  }
-
-  /* The numeral holds at the h2 step here. At 768 the zigzag gives each card
-     roughly a 264px content box, and a 58px numeral inside that leaves the
-     title wrapping every other word. It goes up a step at 1024, where there
-     is room for it. */
-}
-
-/* The branch draws outward from the rail, never from the card, so the path
-   reads as one line growing rather than two meeting in the middle. */
-@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
-  .process__jog-fill {
-    transform: scaleX(0);
-  }
-
-  .process__step:nth-child(odd) .process__jog-fill {
-    transform-origin: right; /* the centre end */
-  }
-
-  .process__step:nth-child(even) .process__jog-fill {
-    transform-origin: left; /* the centre end */
-  }
-
-  .process__jog-fill {
-    transition: transform var(--d-drop) var(--ease-move);
-  }
-
-  .process__step[data-lit='true'] .process__jog-fill {
-    transform: scaleX(1);
+  .process__step:nth-child(even) .process__n {
+    transform: translateX(-25%);
   }
 }
 
@@ -276,19 +318,7 @@
   }
 
   .process__steps {
-    --channel: var(--s-3xl);
+    column-gap: var(--s-3xl);
   }
 
-  .process__step {
-    padding: var(--s-xl);
-  }
-
-  .process__n {
-    font-size: var(--t-h1-size);
-    line-height: var(--t-h1-line);
-  }
-
-  .process__jog {
-    top: calc(var(--s-xl) + var(--t-h1-line) / 2);
-  }
 }

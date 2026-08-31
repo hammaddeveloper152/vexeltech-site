@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import './Faq.css';
 
 /* Section 8. The quiet one.
@@ -46,6 +46,33 @@ export default function Faq() {
      section is for. */
   const toggle = (id) => setOpenId((current) => (current === id ? null : id));
 
+  const listRef = useRef(null);
+
+  /* Group the answer's words into the visual lines they actually fell on, so
+     the stagger runs line by line rather than word by word.
+
+     A layout effect, not an effect: the words are measured and their line
+     index written before the browser paints. Run after paint and every word
+     would start its animation on line zero and only learn its real delay
+     once it was already moving. */
+  useLayoutEffect(() => {
+    const list = listRef.current;
+    if (!list || !openId) return;
+    const panel = list.querySelector(`#faq-panel-${openId}`);
+    if (!panel) return;
+
+    let line = -1;
+    let lastTop = null;
+    panel.querySelectorAll('.faq__w').forEach((w) => {
+      const top = Math.round(w.offsetTop);
+      if (lastTop === null || top !== lastTop) {
+        line += 1;
+        lastTop = top;
+      }
+      w.style.setProperty('--line', line);
+    });
+  }, [openId]);
+
   return (
     <section className="vt vt--light faq" aria-labelledby="faq-h">
       <div className="faq__inner">
@@ -53,11 +80,16 @@ export default function Faq() {
           Questions
         </h2>
 
-        <div className="faq__list">
+        <div className="faq__list" ref={listRef}>
           {ITEMS.map(({ id, q, a }) => {
             const open = openId === id;
             return (
               <div className="faq__item" key={id}>
+                {/* The row's own hairline, drawn over the static one on
+                    hover. Separate element because it scales from the left,
+                    and a border cannot be transformed. */}
+                <span className="faq__rule" aria-hidden="true" />
+
                 <h3 className="faq__q">
                   <button
                     className="faq__btn"
@@ -85,7 +117,17 @@ export default function Faq() {
                   data-open={open}
                 >
                   <div className="faq__panel-in">
-                    <p className="faq__a">{a}</p>
+                    {/* Split into words so they can be grouped into their
+                        rendered lines. Inline spans inside a paragraph, so
+                        the text an assistive technology reads is unchanged. */}
+                    <p className="faq__a">
+                      {a.split(' ').map((word, w) => (
+                        // eslint-disable-next-line react/no-array-index-key
+                        <span className="faq__w" key={`${word}-${w}`}>
+                          {word}{' '}
+                        </span>
+                      ))}
+                    </p>
                   </div>
                 </div>
               </div>

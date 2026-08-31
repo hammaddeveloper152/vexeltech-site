@@ -123,15 +123,19 @@
 
   /* Figure: a short numeral set to be the loudest thing on the page, per
      Plate 04. A second role above the plate scale, like display, but fixed
-     rather than fluid. Lead is 1.5x the rest at every step, which is the
-     density law's "clearly leads" as a number. Numerals only, never words.
+     rather than fluid. Numerals only, never words.
+
+     Two steps, divided by how many figures share the line rather than by
+     which one matters more. Solo is bounded by its own line. Set is bounded
+     by the width its neighbours leave it, and is measured against the widest
+     string in the set rather than chosen.
 
      This is the one role that steps with the viewport, so the steps live here
      rather than in a component. See the overrides below :root. */
-  --t-figure-size: 40px;
-  --t-figure-line: 44px;
-  --t-figure-size-lead: 60px;
-  --t-figure-line-lead: 64px;
+  --t-figure-size: 48px; /* set: four sharing a row */
+  --t-figure-line: 52px;
+  --t-figure-size-solo: 60px; /* solo: one figure alone */
+  --t-figure-line-solo: 64px;
 
   --t-track-display: -0.02em;
   --t-track-h3: -0.01em;
@@ -145,6 +149,12 @@
   --s-xl: 40px;
   --s-2xl: 64px;
   --s-3xl: 96px;
+
+  /* ---- Stroke weight -----------------------------------------------------
+     A hairline is 1px and it is an edge: a divider, a border, the track a
+     route runs along. A drawn stroke is a mark rather than an edge, and at
+     one pixel it does not read as one, it reads as another divider. */
+  --stroke-drawn: 3px;
 
   /* ---- Shape ------------------------------------------------------------ */
   --r-none: 0px;
@@ -182,6 +192,10 @@
 
   /* ---- Interaction ------------------------------------------------------ */
   --hover-opacity: 0.92; /* accent floor is 0.64; never go below */
+  /* The part of a drawn route the reader has not reached yet. Above the 0.64
+     accent floor is not required here: this is a decorative stroke, not the
+     accent carrying a label or a control. */
+  --ahead-opacity: 0.45;
   --disabled-opacity: 0.4;
   --focus-ring: 2px;
   --focus-offset: 2px;
@@ -192,19 +206,26 @@
    1.5 at every step, and every line height stays a 4px multiple. */
 @media (min-width: 768px) {
   :root {
-    --t-figure-size: 48px;
-    --t-figure-line: 52px;
-    --t-figure-size-lead: 72px;
-    --t-figure-line-lead: 76px;
+    --t-figure-size: 64px;
+    --t-figure-line: 68px;
+    --t-figure-size-solo: 72px;
+    --t-figure-line-solo: 76px;
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --t-figure-size: 64px;
-    --t-figure-line: 68px;
-    --t-figure-size-lead: 96px;
-    --t-figure-line-lead: 100px;
+    --t-figure-size-solo: 96px;
+    --t-figure-line-solo: 100px;
+  }
+}
+
+/* The set step goes up once more where the columns are finally wide enough to
+   hold it: 88px puts the widest figure at 237px inside a 270px column. */
+@media (min-width: 1280px) {
+  :root {
+    --t-figure-size: 88px;
+    --t-figure-line: 92px;
   }
 }
 

@@ -54,7 +54,7 @@ function cubicBezier(x1, y1, x2, y2) {
 
 const easeReveal = cubicBezier(0.23, 1, 0.32, 1);
 
-function Counter({ value, label, lead, index, run, reduced, landed, onLanded }) {
+function Counter({ value, label, index, run, reduced, landed, onLanded }) {
   /* Under reduced motion the number is its final value from the first paint.
      There is no gentler version of a count, so this one is switched off
      rather than slowed. */
@@ -88,11 +88,9 @@ function Counter({ value, label, lead, index, run, reduced, landed, onLanded }) 
     return () => cancelAnimationFrame(raf);
   }, [value, run, reduced, index, onLanded]);
 
-  const final = format(value);
-
   return (
     <li
-      className={`counters__item${lead ? ' counters__item--lead' : ''}`}
+      className="counters__item"
       style={{ '--i': index }}
       data-landed={landed ? 'true' : 'false'}
     >
@@ -105,12 +103,14 @@ function Counter({ value, label, lead, index, run, reduced, landed, onLanded }) 
         </span>
       ) : null}
 
-      {/* The width is reserved from the final string, so a number growing a
-          digit mid count cannot move anything around it. tabular-nums keeps
-          the digits from jittering in place. */}
-      <span className="counters__n" style={{ '--chars': final.length }}>
-        {format(shown)}
-      </span>
+      {/* No width reservation. The columns are fixed at 1fr, so a number
+          growing a digit mid count has nothing to push: it changes width
+          inside a track whose width does not depend on it. The reservation
+          this replaced was measured in `ch`, the width of a zero, which
+          over-reserved by the width of the comma and pushed the widest figure
+          out past its own column. tabular-nums still keeps the digits from
+          jittering in place. */}
+      <span className="counters__n">{format(shown)}</span>
       <span className="counters__l">{label}</span>
     </li>
   );
@@ -151,7 +151,6 @@ export default function CounterRow() {
               key={id}
               value={value}
               label={label}
-              lead={i === 0}
               index={i}
               run={revealed}
               reduced={reduced}
