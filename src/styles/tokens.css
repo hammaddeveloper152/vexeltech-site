@@ -185,7 +185,26 @@
   --d-pop: 200ms;
   --d-drop: 250ms;
   --d-panel: 400ms;
+
+  /* Two staggers, split by JOB rather than by section, which is why neither
+     is named for where it is used.
+
+     --stagger separates things the reader reads ONE AT A TIME: four failure
+     statements, six work tiles, three sub-services. The delay is the point,
+     and it says these are discrete.
+
+     --stagger-sweep gives direction to a SINGLE OBJECT MADE OF PARTS: the
+     words of one headline, which are not four things but one line. Here the
+     stagger is not separating anything, it is giving the object a direction
+     to arrive from, so it has to be short enough that the reader registers
+     one event with internal texture rather than counting the parts.
+
+     The sizes follow from that. Five items at 70ms take 280ms of stagger
+     alone and the eye watches them queue; at 16ms they take 64ms and land as
+     one gesture. Do not reach for the sweep value to make a list feel
+     faster. A list that feels slow at 70ms has too many items in it. */
   --stagger: 70ms;
+  --stagger-sweep: 16ms;
 
   /* ---- Motion: continuous ambient ---------------------------------------
      Not an interaction band. One pass of something that was already running

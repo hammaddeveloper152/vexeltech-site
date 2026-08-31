@@ -287,17 +287,38 @@
    ========================================================================== */
 
 @media (prefers-reduced-motion: no-preference) {
-  /* 52 iterations sweep in and collapse onto the cut. This is a continuous
-     sweep across one decorative object, not a group stagger: 52 items on the
-     70ms stagger would run 3.6s. Total sweep is 468ms. */
+  /* The entrance is the signature moment and it reads as speed, not as a
+     gentle reveal. It used to run 1480ms on --d-panel, which is the DRAWER
+     duration: the entrance borrowed it because it was the nearest thing on
+     the ramp, not because a drawer and an arrival are the same event.
+
+     It now runs on --d-drop, 250ms, which was already on the ramp and
+     already inside the 220 to 320ms band that precision motion sits in. No
+     duration was added to the system to do this.
+
+     Total is 750ms, from 1480ms. Every element still arrives in the same
+     order and nothing was removed.
+
+     The easing is unchanged. cubic-bezier(.23, 1, .32, 1) is already a
+     front-loaded ease-out with no overshoot, which is the curve this wants;
+     it only ever needed the shorter duration. */
 
   .hero__reg,
   .hero__meta {
     opacity: 0;
-    animation: hero-fade var(--d-drop) var(--ease-reveal) 200ms forwards;
+    animation: hero-fade var(--d-drop) var(--ease-reveal) 80ms forwards;
   }
 
-  /* Masked word split: the mask clips, the word rises out of it. */
+  /* UNREACHABLE. There is no .hero__mask or .hero__word in Hero.jsx and
+     there never has been in this build, so the word sweep has never run and
+     the headline currently arrives with no entrance at all while everything
+     around it fades in.
+
+     Left in place rather than deleted or wired, both of which are decisions
+     about the signature moment rather than about timing. Retimed to the new
+     tokens so it is correct the moment it is reached: --stagger-sweep for
+     the sweep, because the words of one headline are one object with parts
+     and not a list of things to read one at a time. */
   .hero__mask {
     overflow: hidden;
   }
@@ -305,8 +326,8 @@
   .hero__word {
     opacity: 0;
     transform: translateY(100%);
-    animation: hero-word-in var(--d-panel) var(--ease-reveal) forwards;
-    animation-delay: calc(420ms + var(--i) * var(--stagger));
+    animation: hero-word-in var(--d-drop) var(--ease-reveal) forwards;
+    animation-delay: calc(200ms + var(--i) * var(--stagger-sweep));
   }
 
   @keyframes hero-word-in {
@@ -318,17 +339,17 @@
 
   .hero__sub {
     opacity: 0;
-    animation: hero-fade var(--d-panel) var(--ease-reveal) 900ms forwards;
+    animation: hero-fade var(--d-drop) var(--ease-reveal) 380ms forwards;
   }
 
   .hero__actions {
     opacity: 0;
-    animation: hero-fade var(--d-panel) var(--ease-reveal) 1000ms forwards;
+    animation: hero-fade var(--d-drop) var(--ease-reveal) 440ms forwards;
   }
 
   .hero__note {
     opacity: 0;
-    animation: hero-fade var(--d-panel) var(--ease-reveal) 1080ms forwards;
+    animation: hero-fade var(--d-drop) var(--ease-reveal) 500ms forwards;
   }
 
   @keyframes hero-fade {
