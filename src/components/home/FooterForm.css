@@ -143,6 +143,9 @@
 /* button-primary. The hero holds the other one, and the two are never in the
    same viewport, so the one-per-frame rule holds. */
 .foot__submit {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-sm);
   min-height: 48px;
   padding: var(--s-md) var(--s-lg);
   background: var(--c-accent-ground);
@@ -220,9 +223,29 @@
 }
 
 .foot__meta-v {
+  /* Icon then text, with the icon held at the first line's cap rather than
+     centred against a block that may run to two lines. */
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-sm);
   font-size: var(--t-small-size);
   line-height: var(--t-small-line);
   color: var(--c-shop-white);
+}
+
+/* The address is one contact line carrying two lines of text. */
+.foot__meta-lines {
+  display: grid;
+}
+
+/* Steel-dark, matching the key above the block. The values are the white; the
+   marks are the quieter thing that tells you which value you are looking at,
+   and two whites at the same strength would make the reader choose. */
+.foot__meta-i {
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  /* Nudged onto the first line's optical centre. Half the difference between
+     the small line box and the icon, so it stays true if either changes. */
+  margin-top: calc((var(--t-small-line) - var(--icon-sm)) / 2);
 }
 
 .foot__legal {

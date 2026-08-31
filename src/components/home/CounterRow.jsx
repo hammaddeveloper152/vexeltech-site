@@ -110,6 +110,10 @@ function Counter({ value, label, index, run, reduced, landed, onLanded }) {
           over-reserved by the width of the comma and pushed the widest figure
           out past its own column. tabular-nums still keeps the digits from
           jittering in place. */}
+      {/* No icon. The figure is the visual object here, per Plate 04, and a
+          mark above it would only say "this is a number" over something that
+          is obviously a number. See DESIGN.md Iconography: an icon has to add
+          meaning the element does not already carry. */}
       <span className="counters__n">{format(shown)}</span>
       <span className="counters__l">{label}</span>
     </li>

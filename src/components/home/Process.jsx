@@ -303,7 +303,12 @@ export default function Process() {
                 data-lit="false"
                 style={{ '--row': i + 1 }}
               >
-                {/* Two copies, crossfaded. The numeral lifts from muted to
+                {/* No icon. The numeral is the visual object, per Plate 04,
+                    and a mark beside it would only say "this is a step" over
+                    something a numeral in a sequence already says. See
+                    DESIGN.md Iconography.
+
+                    Two copies, crossfaded. The numeral lifts from muted to
                     full white on opacity alone, so no colour is animated and
                     no new value had to be invented for the muted state: it is
                     steel-dark, the system's own secondary. */}

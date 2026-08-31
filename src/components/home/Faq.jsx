@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
+import { Plus } from '@phosphor-icons/react';
 import './Faq.css';
 
 /* Section 8. The quiet one.
@@ -100,10 +101,15 @@ export default function Faq() {
                     onClick={() => toggle(id)}
                   >
                     <span className="faq__q-t">{q}</span>
-                    {/* A rotated glyph, not an icon. Iconography is unassigned
-                        in the ownership map, and the rotation is transform. */}
-                    <span className="faq__mark" aria-hidden="true" data-open={open}>
-                      +
+                    {/* Now a real icon. Iconography was unassigned when this
+                        was a typed glyph; it is assigned to DESIGN.md and the
+                        plus is Phosphor at the small station. The rotation is
+                        unchanged: transform, on the panel's own duration and
+                        curve. Decorative, because the question beside it and
+                        aria-expanded on the button already say the whole
+                        thing. */}
+                    <span className="faq__mark" data-open={open}>
+                      <Plus className="i i--sm" aria-hidden="true" />
                     </span>
                   </button>
                 </h3>

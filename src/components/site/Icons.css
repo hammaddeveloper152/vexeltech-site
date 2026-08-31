@@ -1,0 +1,33 @@
+/* ==========================================================================
+   Icon stations. DESIGN.md Iconography.
+
+   Three sizes, all existing spacing stations. Set as width and height rather
+   than font-size so an icon's size never depends on the type scale of the
+   thing it happens to sit beside, and set in CSS rather than passed as a prop
+   so a component cannot invent a fourth size on its way past.
+
+   width and height on the element override the width and height attributes
+   Phosphor writes into the SVG, which is what makes one class enough.
+   ========================================================================== */
+
+.i {
+  display: block;
+  /* An icon never shrinks in a flex row. It is a fixed object beside text,
+     not a column of it. */
+  flex: none;
+}
+
+.i--sm {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+}
+
+.i--md {
+  width: var(--icon-md);
+  height: var(--icon-md);
+}
+
+.i--lg {
+  width: var(--icon-lg);
+  height: var(--icon-lg);
+}

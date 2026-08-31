@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Envelope, MapPin, PaperPlaneTilt, Phone } from '@phosphor-icons/react';
 import Wordmark from '../site/Wordmark.jsx';
 import './FooterForm.css';
 
@@ -186,7 +187,12 @@ export default function FooterForm() {
           </p>
 
           <div className="foot__actions">
+            {/* The one icon in the form. Nothing inside the fields: a glyph
+                in an input crowds the value and moves the text away from the
+                edge the label is aligned to. Decorative, because the button
+                already says Send. */}
             <button className="foot__submit" type="submit" disabled={sending}>
+              <PaperPlaneTilt className="i i--sm" aria-hidden="true" />
               {sending ? 'Sending' : 'Send'}
             </button>
 
@@ -220,16 +226,32 @@ export default function FooterForm() {
             <Wordmark size="lg" />
           </a>
 
+          {/* One icon per contact line, at the small station. All decorative:
+              the line beside each one already says what it is, and the block
+              is headed besides. The two address lines are one contact line
+              with two lines of text, so they take one pin between them rather
+              than a pin each. */}
           <div className="foot__contact">
             <span className="foot__meta-k">Contact</span>
-            <span className="foot__meta-v">Placeholder email address</span>
-            <span className="foot__meta-v">Placeholder phone number</span>
+            <span className="foot__meta-v">
+              <Envelope className="i i--sm foot__meta-i" aria-hidden="true" />
+              <span>Placeholder email address</span>
+            </span>
+            <span className="foot__meta-v">
+              <Phone className="i i--sm foot__meta-i" aria-hidden="true" />
+              <span>Placeholder phone number</span>
+            </span>
           </div>
 
           <div className="foot__contact">
             <span className="foot__meta-k">Where</span>
-            <span className="foot__meta-v">Placeholder address line one</span>
-            <span className="foot__meta-v">Placeholder address line two</span>
+            <span className="foot__meta-v">
+              <MapPin className="i i--sm foot__meta-i" aria-hidden="true" />
+              <span className="foot__meta-lines">
+                <span>Placeholder address line one</span>
+                <span>Placeholder address line two</span>
+              </span>
+            </span>
           </div>
 
           <p className="foot__legal">Placeholder legal line, entity name and year.</p>

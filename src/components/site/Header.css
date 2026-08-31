@@ -127,18 +127,17 @@
 .bar__menu {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  /* Square, because the content is a glyph rather than a word. BUILD-LAW:
+     48px minimum on both axes, and the icon is 24px, so the padding is what
+     makes the target rather than the mark. */
+  min-width: 48px;
   min-height: 48px;
-  padding: var(--s-sm) var(--s-md);
+  padding: var(--s-sm);
   background: none;
   border: 1px solid var(--c-rule-dark);
   border-radius: var(--r-sm);
   color: var(--c-shop-white);
-  font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
   cursor: pointer;
   transition:
     opacity var(--d-press) var(--ease-reveal),

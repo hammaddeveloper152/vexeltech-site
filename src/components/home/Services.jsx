@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Browser, Lightning, Megaphone, PenNib } from '@phosphor-icons/react';
 import { getLenis, useSmoothScroll } from './smoothScroll.js';
 import './Services.css';
 
@@ -13,16 +14,22 @@ import './Services.css';
    capabilities, and a list of services this agency has not said it offers is
    exactly that.
 
-   The artwork slot is empty on purpose. CLAUDE.md records four pillar SVGs
-   that "carry over exactly as they are", but there is no SVG file anywhere in
-   either repo and the legacy .art rules are dead CSS with no markup, built on
-   the old palette. Nothing was substituted. The slot is a fixed-ratio
-   container, so each artifact drops in later at artwork scale with no layout
-   change. */
+   The artwork slot now holds an icon at the large station rather than an
+   empty box. It is not the pillar artifact and does not pretend to be: there
+   is still no SVG file anywhere in either repo, the legacy .art rules are dead
+   CSS with no markup on the old palette, and the artifact slot is still open
+   in CLAUDE.md. The slot keeps its fixed ratio, so the real artwork drops in
+   later at artwork scale with no layout change and the icon comes out.
+
+   The icons are safe to name here because the four disciplines came from the
+   user directly. Everything else on this card is a placeholder and its icon
+   would be inventing what the placeholder will say, which is why the
+   sub-services have none. */
 const CARDS = [
   {
     id: 'branding',
     n: '01',
+    Icon: PenNib,
     discipline: 'Branding',
     failure: 'They do not remember you',
     subs: [
@@ -34,6 +41,7 @@ const CARDS = [
   {
     id: 'websites',
     n: '02',
+    Icon: Browser,
     discipline: 'Websites',
     failure: 'They cannot find you',
     subs: [
@@ -45,6 +53,7 @@ const CARDS = [
   {
     id: 'marketing',
     n: '03',
+    Icon: Megaphone,
     discipline: 'Marketing',
     failure: 'Not enough are calling',
     subs: [
@@ -56,6 +65,7 @@ const CARDS = [
   {
     id: 'automation',
     n: '04',
+    Icon: Lightning,
     discipline: 'Automation',
     failure: 'You miss the ones who do',
     subs: [
@@ -161,7 +171,7 @@ export default function Services() {
 
       <div className="services__viewport" ref={viewportRef}>
         <ul className="services__track" ref={trackRef}>
-          {CARDS.map(({ id, n, discipline, failure, subs }, i) => (
+          {CARDS.map(({ id, n, Icon, discipline, failure, subs }, i) => (
             <li className="services__card" key={id}>
               <a
                 className="services__link"
@@ -177,8 +187,11 @@ export default function Services() {
                 <span className="services__discipline">{discipline}</span>
 
                 {/* Artwork slot. Fixed ratio, holds the pillar artifact at
-                    artwork scale when it arrives. */}
-                <span className="services__art" aria-hidden="true" />
+                    artwork scale when it arrives. Decorative: the discipline
+                    is already written directly above it. */}
+                <span className="services__art" aria-hidden="true">
+                  <Icon className="i i--lg services__art-i" />
+                </span>
 
                 <ul className="services__subs">
                   {subs.map((s, j) => (

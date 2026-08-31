@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles/tokens.css';
+import IconProvider from './components/site/Icons.jsx';
 import Header from './components/site/Header.jsx';
 import Hero from './components/home/Hero.jsx';
 import Services from './components/home/Services.jsx';
@@ -21,7 +22,8 @@ import FooterForm from './components/home/FooterForm.jsx';
    so do not reorder to match them. */
 createRoot(document.getElementById('hero-root')).render(
   <React.StrictMode>
-    <>
+    {/* One icon weight for the whole tree. See Icons.jsx. */}
+    <IconProvider>
       <Header />
       <Hero />
       <Services />
@@ -32,6 +34,6 @@ createRoot(document.getElementById('hero-root')).render(
       <Process />
       <Faq />
       <FooterForm />
-    </>
+    </IconProvider>
   </React.StrictMode>
 );

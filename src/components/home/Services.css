@@ -103,12 +103,33 @@
    container so the card does not change size when it does. surface-1 is the
    sanctioned inset-block tone and the hairline supplies the edge, since the
    dark tones sit 1.07:1 apart and that alone does not read as one. */
+/* The slot keeps its reservation and loses its frame.
+
+   The box was drawn as a bordered surface-1 panel while it was honestly
+   empty, so the reserved area read as deliberate rather than as a mistake.
+   That stops being true the moment something is in it: measured at the
+   breakpoints, the icon is 3.1% of the slot at 1024 and 2.1% at 1280, and a
+   64px mark centred in a bordered 820x237 panel does not read as artwork, it
+   reads as an image that failed to load.
+
+   No station fixes this. 96px, the top of the ramp, is still under 5% of the
+   slot; the slot is sized for the pillar artifact and the artifact is what
+   fills it. Until it lands, the mark sits in open space instead of inside a
+   frame around emptiness, which is the difference between a card with a
+   symbol on it and a card with a hole in it. The reservation is unchanged, so
+   the artwork still drops in at the same size. */
 .services__art {
-  display: block;
+  display: grid;
+  place-items: center;
   aspect-ratio: 16 / 10;
-  background: var(--c-surface-1);
-  border: 1px solid var(--c-rule-dark);
-  border-radius: var(--r-md);
+}
+
+/* Steel-dark, not white and not the accent. The card already spends its
+   emphasis on the discipline at h2 scale, and an icon that matches it for
+   strength is a second thing competing to be read first. The accent is not
+   available here at all: this frame's one accent is the numeral. */
+.services__art-i {
+  color: var(--c-steel-dark);
 }
 
 .services__subs {

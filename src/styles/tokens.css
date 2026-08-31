@@ -156,6 +156,20 @@
      one pixel it does not read as one, it reads as another divider. */
   --stroke-drawn: 3px;
 
+  /* ---- Iconography: three stations, all on the spacing ramp -------------
+     Phosphor, bold at every station. See DESIGN.md Iconography. The sizes are
+     existing ramp stations rather than new numbers, so an icon sits in a gap
+     the same size as itself without a value entering the system. 40 is skipped
+     on purpose, the way the ramp already skips 32 and 48: a fourth station
+     would be the comfortable middle setting the ramp exists to refuse.
+
+     Weight is not a token here because it is not a CSS property. Phosphor
+     takes it as a prop, so it is set once in the provider and never passed at
+     a call site. */
+  --icon-sm: var(--s-md); /* 16px, inline with text, metadata, glyphs in controls */
+  --icon-md: var(--s-lg); /* 24px, cards and list rows */
+  --icon-lg: var(--s-2xl); /* 64px, section-level artwork */
+
   /* ---- Shape ------------------------------------------------------------ */
   --r-none: 0px;
   --r-sm: 4px; /* controls   */

@@ -161,10 +161,10 @@
    a transform rather than a second icon. */
 .faq__mark {
   flex: none;
-  font-family: var(--font-brand);
-  font-size: var(--t-h3-size);
-  line-height: 1;
-  font-weight: var(--t-weight-brand);
+  /* The box is the icon now, so there is no type metric to hold it upright.
+     The icon inside takes currentColor from here, which is what keeps the
+     open row's flip to steel-dark working without a second rule. */
+  display: block;
   color: var(--c-steel); /* 8.12:1 on white */
   /* The panel's own duration and curve, not the mark's. The rotation and the
      answer arriving are one event, and giving them different timings is what

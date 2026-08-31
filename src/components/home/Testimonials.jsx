@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { cssMs, useReducedMotion } from './hooks.js';
+import { Quotes } from '@phosphor-icons/react';
 import './Testimonials.css';
 
 /* Section 6. One quote at a time.
@@ -112,6 +113,11 @@ export default function Testimonials() {
               aria-hidden={i === index ? undefined : 'true'}
               data-active={i === index ? 'true' : 'false'}
             >
+              {/* Behind the quote, one per slide. Decorative twice over: the
+                  element is already a blockquote, and a quotation mark that
+                  announced itself would say "quote" before every quote. */}
+              <Quotes className="i i--lg quotes__mark" aria-hidden="true" />
+
               <blockquote className="quotes__q">
                 <p>{quote}</p>
               </blockquote>
@@ -124,9 +130,10 @@ export default function Testimonials() {
         </div>
 
         <div className="quotes__controls">
-          {/* Text, not icons. Iconography is unassigned in the ownership map,
-              and a chevron here would be inventing an icon system on the way
-              past. */}
+          {/* Still text, now by choice rather than because iconography was
+              unassigned. These two are the only content of their controls, and
+              a word says which direction it goes without the reader having to
+              resolve a glyph first. */}
           <button
             className="quotes__btn"
             type="button"

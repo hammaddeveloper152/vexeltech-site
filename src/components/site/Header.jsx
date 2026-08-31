@@ -1,4 +1,5 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
+import { List, X } from '@phosphor-icons/react';
 import Wordmark from './Wordmark.jsx';
 import './Header.css';
 
@@ -128,15 +129,26 @@ export default function Header() {
           Get a Custom Quote
         </a>
 
+        {/* The icon is the whole content of this control, so the control
+            carries the label. DESIGN.md Iconography: the label says what the
+            button does, not what the icon depicts, which is why it is not
+            "three lines". Phosphor rather than a hamburger assembled from
+            divs, and not text, per the brief. The 48px target is on the
+            button's padding, not the 24px glyph. */}
         <button
           className="bar__menu"
           type="button"
           ref={triggerRef}
           aria-expanded={open}
           aria-controls={panelId}
+          aria-label={open ? 'Close the menu' : 'Open the menu'}
           onClick={() => setOpen((v) => !v)}
         >
-          {open ? 'Close' : 'Menu'}
+          {open ? (
+            <X className="i i--md" aria-hidden="true" />
+          ) : (
+            <List className="i i--md" aria-hidden="true" />
+          )}
         </button>
       </div>
 

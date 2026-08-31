@@ -90,14 +90,32 @@
   right: 0;
   bottom: 0;
   left: 0;
-  display: grid;
-  gap: var(--s-xs);
+  /* Text stack, then the arrow hard against the right edge. The arrow is
+     inside the band rather than floating on the plate, so it travels with the
+     label and never becomes type over artwork. */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-md);
   padding: var(--s-md);
   /* Opaque band, not type over art. This is what keeps the label off the
      detector's text-occlusion rule once a screenshot is behind it. */
   background: var(--c-asphalt);
   /* Touch default: already visible, no transform to strand. */
   transform: translateY(0);
+}
+
+.work__label-x {
+  display: grid;
+  gap: var(--s-xs);
+  min-width: 0;
+}
+
+/* Steel-dark, the same secondary the meta line already uses. White would put
+   the arrow level with the title, and the title is what the reader is meant
+   to land on first. */
+.work__go {
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
 }
 
 .work__label-t {

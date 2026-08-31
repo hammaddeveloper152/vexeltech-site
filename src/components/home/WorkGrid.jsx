@@ -1,5 +1,6 @@
 import React from 'react';
 import { useReveal } from './hooks.js';
+import { ArrowUpRight } from '@phosphor-icons/react';
 import './WorkGrid.css';
 
 /* Section 3. The work wall.
@@ -48,8 +49,16 @@ export default function WorkGrid() {
                 {/* Slides up from the bottom edge on hover, on real pointers
                     only. On touch it is simply already there. */}
                 <span className="work__label">
-                  <span className="work__label-t">{title}</span>
-                  <span className="work__label-m">{meta}</span>
+                  <span className="work__label-x">
+                    <span className="work__label-t">{title}</span>
+                    <span className="work__label-m">{meta}</span>
+                  </span>
+
+                  {/* Rides in on the band rather than animating separately.
+                      Decorative: the whole tile is one link and the title
+                      beside it is the accessible name, so an arrow with its
+                      own label would announce the destination twice. */}
+                  <ArrowUpRight className="i i--sm work__go" aria-hidden="true" />
                 </span>
               </a>
             </li>

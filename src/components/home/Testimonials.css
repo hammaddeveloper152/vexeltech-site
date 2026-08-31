@@ -35,6 +35,7 @@
   display: grid;
   gap: var(--s-lg);
   align-content: start;
+  position: relative; /* the mark is positioned against the slide */
   opacity: 0;
   transform: translateY(var(--s-sm));
   transition:
@@ -51,7 +52,34 @@
   pointer-events: auto;
 }
 
+/* Sits behind the quote rather than above it, and takes no space: the slide
+   is a fixed stage and a mark in the flow would move the quote down.
+
+   White at 12%, which is rule-dark: the system's existing dark-ground mark
+   strength, taken as a colour rather than invented as an opacity. Nothing new
+   enters the system, and the mark sits at exactly the weight this system
+   already uses for something present but not to be looked at.
+
+   Not the accent. DESIGN.md fixes the accent's floor at 0.64 because below it
+   the primary call fails AA, and a mark this faint in machine yellow is
+   precisely the case that rule exists to stop. A decorative white mark carries
+   no contrast bar, so it can go where the accent cannot. */
+.quotes__mark {
+  position: absolute;
+  /* Anchored to the quote's own left edge and lifted so its top clears the
+     first line. Hung off the corner on both axes it sat in the margin and
+     read as a stray shape beside the text; sitting flush behind the first
+     word it disappeared under it entirely. */
+  top: calc(var(--s-lg) * -1);
+  left: 0;
+  z-index: 0;
+  color: var(--c-rule-dark); /* white at 12% */
+  pointer-events: none;
+}
+
 .quotes__q {
+  position: relative;
+  z-index: 1; /* the words, over the mark */
   margin: 0;
   max-width: 24ch;
   font-family: var(--font-brand);
