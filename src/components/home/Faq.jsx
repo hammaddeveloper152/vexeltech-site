@@ -84,7 +84,7 @@ export default function Faq() {
           {ITEMS.map(({ id, q, a }) => {
             const open = openId === id;
             return (
-              <div className="faq__item" key={id}>
+              <div className="faq__item" key={id} data-open={open ? 'true' : 'false'}>
                 {/* The row's own hairline, drawn over the static one on
                     hover. Separate element because it scales from the left,
                     and a border cannot be transformed. */}

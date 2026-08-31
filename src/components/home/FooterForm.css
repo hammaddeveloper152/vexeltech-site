@@ -195,6 +195,15 @@
   border-top: 1px solid var(--c-rule-dark);
 }
 
+/* Spans the meta row and sits above it, so the lockup closes the page rather
+   than becoming a fourth column of small print. */
+.foot__brand {
+  display: inline-flex;
+  min-height: 48px;
+  margin-bottom: var(--s-lg);
+  text-decoration: none;
+}
+
 .foot__contact {
   display: grid;
   gap: var(--s-xs);
@@ -256,6 +265,11 @@
     grid-template-columns: repeat(2, 1fr) auto;
     align-items: start;
     gap: var(--s-xl);
+  }
+
+  .foot__brand {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
   }
 
   .foot__legal {

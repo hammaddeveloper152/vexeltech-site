@@ -63,6 +63,7 @@
 .process__rail,
 .process__lit,
 .process__passed,
+.process__edge,
 .process__strike {
   fill: none;
   vector-effect: non-scaling-stroke;
@@ -79,6 +80,7 @@
 /* The route. A mark rather than an edge, so it takes the drawn weight. */
 .process__lit,
 .process__passed,
+.process__edge,
 .process__strike {
   stroke-width: var(--stroke-drawn);
 }
@@ -93,6 +95,18 @@
    rather than tracking the scroll, so the route reads as ground covered. */
 .process__passed {
   stroke: var(--c-accent-draw-dark);
+}
+
+/* The card's edge, lit with its own step rather than when the route happens
+   to reach it. This is what carries the light off the route and onto the
+   card. */
+.process__edge {
+  stroke: var(--c-accent-draw-dark);
+  opacity: 0;
+}
+
+.process__edge[data-lit='true'] {
+  opacity: 1;
 }
 
 /* Where the route crosses a numeral. White is the brightest thing available
@@ -186,12 +200,34 @@
 
 .process__t {
   margin: 0;
+  display: grid;
   font-family: var(--font-brand);
   font-size: var(--t-h3-size);
   line-height: var(--t-h3-line);
   font-weight: var(--t-weight-brand);
   letter-spacing: var(--t-track-h3);
-  color: var(--c-shop-white);
+}
+
+.process__t-muted,
+.process__t-lit {
+  grid-area: 1 / 1;
+}
+
+.process__t-muted {
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+}
+
+.process__t-lit {
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  opacity: 0;
+}
+
+.process__step[data-lit='true'] .process__t-muted {
+  opacity: 0;
+}
+
+.process__step[data-lit='true'] .process__t-lit {
+  opacity: 1;
 }
 
 .process__d {
@@ -209,15 +245,25 @@
    than a section stuck at zero. */
 
 @media (prefers-reduced-motion: no-preference) {
-  .process__step[data-lit='false'] {
-    opacity: 0;
-    transform: translateY(var(--s-sm));
-  }
+  /* The card lights element by element rather than under one dimmer.
 
-  .process__step {
-    transition:
-      opacity var(--d-panel) var(--ease-reveal),
-      transform var(--d-panel) var(--ease-reveal);
+     A blanket opacity on the step was the obvious way to do this and it is
+     the wrong way: it took the body copy to 1.5:1 against a 4.5:1 bar. Its
+     normal colour is steel-dark, the system's muted secondary, already down
+     at 5.12:1, and the arithmetic leaves nowhere to go. Steel-dark stops
+     passing below 0.92 opacity, which is not a state anyone could see anyway.
+
+     So the lift is carried by the two elements that can afford it, each
+     crossfading between two colours that both clear their bar rather than
+     one colour being faded out: the numeral and the title, steel-dark to
+     white. The body copy holds at its normal strength throughout, because
+     there is no legal state beneath it.
+
+     The card's edge lights on the same flag, so the whole step still turns
+     over as one thing. */
+  .process__t-muted,
+  .process__t-lit {
+    transition: opacity var(--d-panel) var(--ease-reveal);
   }
 
   /* The settle rides with the crossfade. The reveal curve overshoots nothing
@@ -235,6 +281,7 @@
     transition: stroke-dashoffset var(--d-panel) var(--ease-reveal);
   }
 
+  .process__edge,
   .process__strike {
     transition: opacity var(--d-drop) var(--ease-reveal);
   }

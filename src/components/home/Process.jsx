@@ -42,6 +42,7 @@ export default function Process() {
   const litRef = useRef(null);
   const passedRef = useRef(null);
   const strikeRefs = useRef([]);
+  const edgeRefs = useRef([]);
   /* Where along the path each step is reached, as a fraction of total length.
      Written by measure(), read by light(). */
   const marks = useRef([]);
@@ -77,6 +78,7 @@ export default function Process() {
       const points = [[spine, 0]];
       const arrivals = [];
       const strikes = [];
+      const edges = [];
 
       steps().forEach((step, i) => {
         const sb = step.getBoundingClientRect();
@@ -96,6 +98,7 @@ export default function Process() {
           strikes.push(nl <= spine && spine <= nr
             ? `M ${nl.toFixed(1)} ${arriveY.toFixed(1)} L ${nr.toFixed(1)} ${arriveY.toFixed(1)}`
             : '');
+          edges.push(''); // stacked, the rail is beside the card, not on it
           return;
         }
 
@@ -118,6 +121,14 @@ export default function Process() {
         const a = Math.max(Math.min(spine, innerX), nl);
         const b = Math.min(Math.max(spine, innerX), nr);
         strikes.push(b > a ? `M ${a.toFixed(1)} ${arriveY.toFixed(1)} L ${b.toFixed(1)} ${arriveY.toFixed(1)}` : '');
+
+        /* The card's own edge, as its own stroke. It is already part of the
+           route, but the route only reaches it after it has passed the
+           numeral, so on the route alone the edge lights a beat behind the
+           step it belongs to. Carrying it on the step's own lit state is what
+           makes the card read as one thing lighting rather than a numeral
+           lighting and an edge catching up. */
+        edges.push(`M ${innerX.toFixed(1)} ${arriveY.toFixed(1)} L ${innerX.toFixed(1)} ${bottom.toFixed(1)}`);
       });
 
       points.push([spine, H]);
@@ -133,6 +144,10 @@ export default function Process() {
 
       strikeRefs.current.forEach((el, i) => {
         if (el) el.setAttribute('d', strikes[i] || '');
+      });
+
+      edgeRefs.current.forEach((el, i) => {
+        if (el) el.setAttribute('d', edges[i] || '');
       });
 
       const total = lit.getTotalLength();
@@ -160,6 +175,8 @@ export default function Process() {
         step.dataset.lit = on ? 'true' : 'false';
         const strike = strikeRefs.current[i];
         if (strike) strike.dataset.lit = on ? 'true' : 'false';
+        const edge = edgeRefs.current[i];
+        if (edge) edge.dataset.lit = on ? 'true' : 'false';
       });
     };
 
@@ -255,8 +272,18 @@ export default function Process() {
             <path className="process__passed" ref={passedRef} />
             {STEPS.map(({ id }, i) => (
               <path
+                className="process__edge"
+                key={`edge-${id}`}
+                data-lit="false"
+                ref={(el) => {
+                  edgeRefs.current[i] = el;
+                }}
+              />
+            ))}
+            {STEPS.map(({ id }, i) => (
+              <path
                 className="process__strike"
-                key={id}
+                key={`strike-${id}`}
                 data-lit="false"
                 ref={(el) => {
                   strikeRefs.current[i] = el;
@@ -286,7 +313,14 @@ export default function Process() {
                 </span>
 
                 <div className="process__body">
-                  <h3 className="process__t">{title}</h3>
+                  {/* The title crossfades the same way the numeral does, two
+                      copies in one cell. Both of its states clear their
+                      contrast bar; a single element dimmed by opacity would
+                      not. */}
+                  <h3 className="process__t">
+                    <span className="process__t-muted">{title}</span>
+                    <span className="process__t-lit">{title}</span>
+                  </h3>
                   <p className="process__d">{body}</p>
                 </div>
               </li>

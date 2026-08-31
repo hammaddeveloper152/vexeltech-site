@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles/tokens.css';
+import Header from './components/site/Header.jsx';
 import Hero from './components/home/Hero.jsx';
 import Services from './components/home/Services.jsx';
 import Marquee from './components/home/Marquee.jsx';
@@ -21,6 +22,7 @@ import FooterForm from './components/home/FooterForm.jsx';
 createRoot(document.getElementById('hero-root')).render(
   <React.StrictMode>
     <>
+      <Header />
       <Hero />
       <Services />
       <Marquee />

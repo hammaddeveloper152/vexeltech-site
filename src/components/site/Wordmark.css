@@ -1,0 +1,70 @@
+/* ==========================================================================
+   The lockup. Mark, then wordmark, with the period in machine yellow.
+
+   Sized in steps rather than fluidly, because a logo has a correct size in
+   each place it appears and Plate 00's cover treatment is a poster, not a
+   header.
+   ========================================================================== */
+
+.wm {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-sm);
+  color: var(--c-shop-white);
+  text-decoration: none;
+}
+
+.wm__mark {
+  display: block;
+  /* Square, keyed to the cap height of the word beside it so the two read as
+     one object rather than a picture next to some type. */
+  width: 1em;
+  height: 1em;
+  flex: none;
+  fill: var(--c-accent-ground); /* the mark is a filled plane, not a stroke */
+}
+
+.wm__word {
+  font-family: var(--font-brand);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-display);
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* The one place the accent is a full stop. Plate 00 sets it this way and it
+   is the only punctuation in the identity. */
+.wm__dot {
+  color: var(--c-accent-text-dark); /* 9.46:1 on asphalt */
+}
+
+/* ---- Sizes -------------------------------------------------------------- */
+
+/* Header. Normal logo scale, not the cover treatment. */
+.wm--md {
+  font-size: var(--t-h3-size);
+}
+
+/* Footer. Larger, because it closes the page rather than labelling a bar. */
+.wm--lg {
+  font-size: var(--t-h2-size);
+}
+
+@media (min-width: 768px) {
+  .wm--lg {
+    font-size: var(--t-h1-size);
+  }
+}
+
+/* On light grounds the word flips and the accent takes its light-ground
+   value; the mark's fill is a plane and reads on either. */
+.vt--light .wm,
+.wm--on-light {
+  color: var(--c-asphalt);
+}
+
+.vt--light .wm__dot,
+.wm--on-light .wm__dot {
+  color: var(--c-accent-text-light); /* deep amber, 4.90 on concrete */
+}

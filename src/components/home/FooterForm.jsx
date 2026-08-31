@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Wordmark from '../site/Wordmark.jsx';
 import './FooterForm.css';
 
 /* Section 9. The form, and the end of the page.
@@ -213,6 +214,12 @@ export default function FooterForm() {
         </form>
 
         <div className="foot__meta">
+          {/* The lockup closes the page. Larger than the bar's, because this
+              one is the sign-off rather than a label on a strip. */}
+          <a className="foot__brand" href="/" aria-label="Vexeltech, home">
+            <Wordmark size="lg" />
+          </a>
+
           <div className="foot__contact">
             <span className="foot__meta-k">Contact</span>
             <span className="foot__meta-v">Placeholder email address</span>

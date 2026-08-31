@@ -1,0 +1,268 @@
+/* ==========================================================================
+   The bar.
+
+   Sticky at the top, transparent over the hero, taking an asphalt ground and
+   a hairline once the hero is behind the reader. That is not decoration: the
+   hero's tile wall runs white and machine yellow tiles under this type, and a
+   bar with no ground over it would be unreadable in the worst case.
+
+   The ground change is a background, which is neither transform nor opacity
+   and so is not animated. Only the opacity of the ground layer is.
+   ========================================================================== */
+
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: none;
+}
+
+/* The ground is its own layer so it can fade rather than the background
+   snapping between two colours. */
+.bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--c-asphalt);
+  border-bottom: 1px solid var(--c-rule-dark);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bar[data-grounded='true']::before {
+  opacity: 1;
+}
+
+.bar__inner {
+  position: relative;
+  /* Above the ground layer, and above the open panel. The button that opens
+     the menu is the button that closes it, so the panel must not cover it:
+     with the bar underneath, Escape was the only way out, and a touch reader
+     does not have an Escape key. */
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: var(--s-lg);
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding: var(--s-sm) var(--s-md);
+}
+
+.bar__brand {
+  display: inline-flex;
+  align-items: center;
+  /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
+  min-height: 48px;
+  margin-right: auto;
+  text-decoration: none;
+}
+
+/* ---- Navigation --------------------------------------------------------- */
+
+.bar__nav {
+  display: none; /* the panel carries it below 1024 */
+}
+
+.bar__list {
+  display: flex;
+  align-items: center;
+  gap: var(--s-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bar__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  text-decoration: none;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+/* ---- The call -----------------------------------------------------------
+
+   button-secondary, not primary. The accent points at the single most
+   important action on the page, and this bar is on screen the whole way down
+   it. A persistent yellow button beside the hero's yellow button means
+   neither one is the call: two of them in a frame is a composition that has
+   not decided. The hero keeps the only machine yellow ground.
+
+   Same treatment as the hero's second button: transparent, distinguished by
+   the white-at-12% border, white label at 17.77:1. */
+
+.bar__cta {
+  display: none;
+  align-items: center;
+  min-height: 48px;
+  padding: var(--s-sm) var(--s-md);
+  background: transparent;
+  border: 1px solid var(--c-rule-dark);
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  border-radius: var(--r-sm); /* control */
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+/* ---- The menu button ---------------------------------------------------- */
+
+.bar__menu {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: var(--s-sm) var(--s-md);
+  background: none;
+  border: 1px solid var(--c-rule-dark);
+  border-radius: var(--r-sm);
+  color: var(--c-shop-white);
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+/* ---- The panel ---------------------------------------------------------- */
+
+.bar__panel {
+  position: fixed;
+  inset: 0;
+  z-index: 20; /* over the page, under the bar */
+  display: grid;
+  align-content: center;
+  gap: var(--s-lg);
+  padding: var(--s-2xl) var(--s-md);
+  background: var(--c-asphalt);
+  overflow-y: auto;
+}
+
+.bar__panel-list {
+  display: grid;
+  gap: var(--s-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bar__panel-link {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  font-family: var(--font-brand);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-h3);
+  color: var(--c-shop-white);
+  text-decoration: none;
+}
+
+.bar__cta--panel {
+  display: inline-flex;
+  justify-self: start;
+}
+
+/* ---- Hover, gated to real pointers ------------------------------------- */
+
+@media (hover: hover) and (pointer: fine) {
+  .bar__link:hover,
+  .bar__cta:hover,
+  .bar__menu:hover,
+  .bar__panel-link:hover {
+    opacity: var(--hover-opacity);
+    transform: translateY(-1px);
+  }
+}
+
+.bar__link:active,
+.bar__cta:active,
+.bar__menu:active,
+.bar__panel-link:active {
+  transform: scale(0.97);
+}
+
+/* Focus is the ring from tokens.css, never the hover treatment. */
+
+/* The ground fades in rather than snapping. Opacity, so it stays inside the
+   motion rule. */
+@media (prefers-reduced-motion: no-preference) {
+  .bar::before {
+    transition: opacity var(--d-drop) var(--ease-reveal);
+  }
+}
+
+/* ---- Reduced motion ----------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .bar__link:hover,
+  .bar__cta:hover,
+  .bar__menu:hover,
+  .bar__panel-link:hover {
+    opacity: var(--hover-opacity);
+    transform: none;
+  }
+
+  .bar__link:active,
+  .bar__cta:active,
+  .bar__menu:active,
+  .bar__panel-link:active {
+    transform: none;
+  }
+}
+
+/* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------ */
+
+@media (min-width: 768px) {
+  .bar__inner {
+    padding: var(--s-sm) var(--s-xl);
+  }
+
+  .bar__cta {
+    display: inline-flex;
+  }
+
+  /* The bar's call is visible from here up, so the panel does not repeat it.
+     Two of them would be the same call twice in one frame. */
+  .bar__cta--panel {
+    display: none;
+  }
+}
+
+/* The full navigation only fits from 1024. Below that it lives in the panel,
+   which is why the menu button is not a phone-only control. */
+@media (min-width: 1024px) {
+  .bar__inner {
+    padding: var(--s-sm) var(--s-2xl);
+  }
+
+  .bar__nav {
+    display: block;
+  }
+
+  .bar__menu {
+    display: none;
+  }
+}
