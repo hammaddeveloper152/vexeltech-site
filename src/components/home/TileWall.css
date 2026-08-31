@@ -30,12 +30,36 @@
 
 /* One set length is 50% of the doubled track, so the travel is exactly one
    set and the second copy lands where the first began. */
+/* ---- The wall starts still, and wakes after the entrance ----------------
+   The animation is applied from the first paint and PAUSED, so the wall is
+   composed and in position immediately and simply is not travelling yet.
+   Nothing is added to the DOM at settle and nothing reflows; one property
+   changes. The hero flips `data-phase` to `ambient` when the last entrance
+   animation ends. See the note at the top of Hero.jsx.
+
+   The three columns do not all resume on the same frame. Their durations are
+   already three different ambient stations so they never fall into step, but
+   starting them together makes the resume itself read as one event with
+   three parts. The delay is declared here and elapses while paused, which is
+   what a paused animation does to its own delay, so unpausing plays out the
+   remaining delay and then the loop. That gives a staggered wake for free,
+   with no second timer and nothing for JavaScript to keep in sync. */
+
 .wall__track--up {
   animation: wall-up var(--dur) linear infinite;
 }
 
 .wall__track--down {
   animation: wall-down var(--dur) linear infinite;
+}
+
+.wall__track {
+  animation-play-state: paused;
+  animation-delay: calc(var(--col, 0) * var(--stagger));
+}
+
+.hero[data-phase='ambient'] .wall__track {
+  animation-play-state: running;
 }
 
 @keyframes wall-up {

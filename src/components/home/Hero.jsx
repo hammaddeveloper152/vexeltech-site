@@ -1,7 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TileWall from './TileWall.jsx';
 import { cssMs, useReducedMotion } from './hooks.js';
 import './Hero.css';
+
+/* The hero runs on ONE clock, not three.
+
+   It used to run on three. The wall, the phrase ticker and the entrance all
+   started at page load and never referenced each other, so the entrance
+   played over a ground that was already moving, and the ticker's first swap
+   landed while the reader was still on the subtext. That the two did not
+   collide was arithmetic, not design: 2400ms of dwell happened to exceed the
+   1480ms the entrance takes.
+
+   So there is a phase instead, and every clock hangs off it:
+
+     load     the wall is composed and STILL, the ticker has not started,
+              the entrance plays against a ground that is not moving. This
+              is the signature moment and it gets the stage to itself.
+
+     ambient  the wall wakes, its three columns staggered, and the ticker
+              starts its first dwell from here rather than from load.
+
+   The handoff is driven by the END OF THE LAST ENTRANCE ANIMATION, not by a
+   timer set to the number the entrance currently adds up to. If those
+   timings change, the handoff follows them. A hardcoded 1480 would drift the
+   first time anyone touched a delay, silently, and the symptom would be the
+   wall waking early over copy that is still arriving. */
+const PHASE_GUARD_MS = 2500;
 
 /* The cycling half of the headline. "Not a proposal. The ___" holds still and
    only the last two words roll. */
@@ -13,16 +38,20 @@ const PHRASES = ['whole system', 'working site', 'real build', 'finished thing']
    Every phrase is rendered into the same single-column grid, so the column
    sizes itself to the widest phrase and the mask width never changes between
    words. The line cannot reflow. Only the track translates. */
-function Ticker({ reduced }) {
+function Ticker({ reduced, phase }) {
   const [i, setI] = useState(0);
 
   useEffect(() => {
     if (reduced) return undefined;
+    /* Waits for the entrance. The first dwell is counted from settle rather
+       than from load, so the first word swap can never land while the reader
+       is still watching the subtext arrive. */
+    if (phase !== 'ambient') return undefined;
     /* The phrase station of the rotation band. DESIGN.md owns the value. */
     const dwell = cssMs('--d-rotate-phrase', 2400);
     const t = setInterval(() => setI((n) => (n + 1) % PHRASES.length), dwell);
     return () => clearInterval(t);
-  }, [reduced]);
+  }, [reduced, phase]);
 
   const index = reduced ? 0 : i;
 
@@ -41,9 +70,43 @@ function Ticker({ reduced }) {
 
 export default function Hero() {
   const reduced = useReducedMotion();
+  const noteRef = useRef(null);
+
+  /* Under reduced motion there is no entrance to wait for, and the wall and
+     the ticker are switched off anyway, so the hero opens already settled
+     rather than sitting in a phase that will never advance. */
+  const [phase, setPhase] = useState(reduced ? 'ambient' : 'load');
+
+  useEffect(() => {
+    if (reduced) {
+      setPhase('ambient');
+      return undefined;
+    }
+
+    const note = noteRef.current;
+    let guard = 0;
+
+    const settle = () => setPhase('ambient');
+
+    /* The note is the last thing the entrance brings in, so its animation
+       ending IS settle. One animation on this element, so no filtering. */
+    if (note) note.addEventListener('animationend', settle, { once: true });
+
+    /* If the entrance never runs, the listener never fires and the wall
+       would be still forever. That is a dead page, not a quiet one, so the
+       guard is a floor rather than a nicety: it covers a browser that skips
+       the animation, a note that is display:none at some future width, and
+       a tab backgrounded through the whole entrance. */
+    guard = setTimeout(settle, PHASE_GUARD_MS);
+
+    return () => {
+      if (note) note.removeEventListener('animationend', settle);
+      clearTimeout(guard);
+    };
+  }, [reduced]);
 
   return (
-    <section className="vt hero" aria-labelledby="hero-h">
+    <section className="vt hero" aria-labelledby="hero-h" data-phase={phase}>
       <TileWall />
 
       {/* Flat scrim between wall and content. Asphalt at 55%, which puts white
@@ -91,7 +154,7 @@ export default function Hero() {
           id="hero-h"
           aria-label="Not a proposal. The whole system."
         >
-          Not a proposal. The <Ticker reduced={reduced} />
+          Not a proposal. The <Ticker reduced={reduced} phase={phase} />
         </h1>
 
         <p className="hero__sub">
@@ -108,7 +171,7 @@ export default function Hero() {
           </a>
         </div>
 
-        <p className="hero__note">
+        <p className="hero__note" ref={noteRef}>
           You decide in ten seconds instead of ten meetings. Nothing to pay until you
           have seen the work.
         </p>

@@ -11,7 +11,12 @@ import './TileWall.css';
 
    Each column takes a different ambient station from DESIGN.md, so the three
    never fall into step and resolve into one sliding plane. The station is the
-   value, not the seconds: do not put a raw duration back in here. */
+   value, not the seconds: do not put a raw duration back in here.
+
+   The wall does not run at page load. It is composed and still until the
+   hero's entrance finishes, then wakes one column at a time on the 70ms
+   stagger. All of that lives in TileWall.css and Hero.jsx; this file only
+   supplies each column's index. */
 const COLUMNS = [
   {
     id: 'a',
@@ -42,13 +47,18 @@ function Tile({ tone, col, i }) {
 export default function TileWall() {
   return (
     <div className="wall" aria-hidden="true">
-      {COLUMNS.map(({ id, dir, station, tiles }) => (
+      {COLUMNS.map(({ id, dir, station, tiles }, col) => (
         <div className="wall__col" key={id}>
           {/* The set is rendered twice. The loop is a continuous translate
               across one full set, never a reset, so there is no seam. */}
           <div
             className={`wall__track wall__track--${dir}`}
-            style={{ '--dur': `var(--d-ambient-${station})` }}
+            /* --col drives the staggered wake in TileWall.css. It is the
+               column's position in the wall, not its ambient station: the
+               stations are deliberately unordered so the columns never fall
+               into step, and staggering by station would wake them in an
+               order the reader can see is arbitrary. */
+            style={{ '--dur': `var(--d-ambient-${station})`, '--col': col }}
           >
             {tiles.map((tone, i) => (
               <Tile tone={tone} col={id} i={i} key={`x${i}`} />
