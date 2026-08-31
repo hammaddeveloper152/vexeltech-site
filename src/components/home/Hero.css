@@ -161,13 +161,51 @@
   color: var(--c-shop-white);
 }
 
+/* One word, one mask. The geometry is the ticker's, deliberately: same
+   1.12em box, same baseline alignment, same -0.1em pull. The ticker already
+   solved this exact problem for "system" and "thing", and the fixed words
+   have to sit on the same line as it, so they use the same numbers rather
+   than a second set that happens to agree.
+
+   1.12em rather than the display line-height of 1.02, because 1.02 cuts the
+   descender off "proposal" the moment the box clips. The box is the word's
+   own height, so a word translated 100% down clears it exactly.
+
+   Geometry lives out here and only the hidden state is behind the motion
+   query, so if the animation never runs the headline is simply present. */
 .hero__mask {
-  display: inline-block;
-  vertical-align: bottom;
+  display: inline-grid;
+  /* clip-path, not overflow alone. While a word is mid-rise its transform
+     promotes it to its own compositing layer, and an ancestor's overflow
+     clip is not reliably applied across that boundary: the ticker painted
+     all four phrases straight over the headline while the DOM went on
+     reporting a correct 1.12em box, because the failure is at paint and not
+     at layout. clip-path is applied as part of this element's own paint and
+     takes its whole subtree with it.
+
+     DESIGN.md names clip-path as the mechanism when a mask is what is
+     wanted, and the work wall already reaches for it over overflow for the
+     same class of reason. overflow stays as well: it costs nothing and it
+     is what a browser without clip-path support would fall back on. */
+  overflow: hidden;
+  clip-path: inset(0);
+  height: 1.12em;
+  vertical-align: baseline;
+  margin-bottom: -0.1em;
 }
 
 .hero__word {
-  display: inline-block;
+  display: block;
+  line-height: 1.12;
+  white-space: nowrap;
+}
+
+/* The ticker is the fifth word and sits inside a mask like the others, so it
+   drops its own baseline offset here: the outer mask is already supplying
+   it, and applying it twice would hang the last two words below the line. */
+.hero__word > .ticker {
+  margin-bottom: 0;
+  vertical-align: top;
 }
 
 .hero__sub {
@@ -186,7 +224,11 @@
    half of the line. */
 .ticker {
   display: inline-grid;
+  /* Same reason as .hero__mask: this one sits INSIDE a mask whose word is
+     transformed during the entrance, so its own clip is the one that has to
+     survive a composited ancestor. */
   overflow: hidden;
+  clip-path: inset(0);
   /* One row exactly. Row height, mask height and travel are all the same
      value, with enough room for the descenders in "system" and "thing". */
   height: 1.12em;
@@ -309,30 +351,43 @@
     animation: hero-fade var(--d-drop) var(--ease-reveal) 80ms forwards;
   }
 
-  /* UNREACHABLE. There is no .hero__mask or .hero__word in Hero.jsx and
-     there never has been in this build, so the word sweep has never run and
-     the headline currently arrives with no entrance at all while everything
-     around it fades in.
+  /* The strike. Transform only, and NO opacity anywhere: the mask is what
+     hides a word at rest, not its alpha. That is the whole difference
+     between a line that strikes and a line that resolves, and it is why
+     there is no fade to tune here.
 
-     Left in place rather than deleted or wired, both of which are decisions
-     about the signature moment rather than about timing. Retimed to the new
-     tokens so it is correct the moment it is reached: --stagger-sweep for
-     the sweep, because the words of one headline are one object with parts
-     and not a list of things to read one at a time. */
-  .hero__mask {
-    overflow: hidden;
-  }
+     translateY(100%) is 100% of the word's own height, and the mask is
+     exactly that height, so the word starts precisely one line below the
+     clip edge. Not 110% or a padding trick: the box and the travel are the
+     same number by construction, so they cannot drift apart.
 
+     Sweep, not the reading stagger. Five words of one sentence are one
+     object with parts. At 70ms the line would take 280ms of stagger alone
+     and the reader would watch it queue.
+
+     BACKWARDS, not forwards, and this is not interchangeable. `forwards`
+     pins the final keyframe on the element for the life of the page, so
+     every word keeps a transform it no longer needs. A transformed ancestor
+     gets its own compositing layer, and the ticker's own overflow clip is
+     then applied across a layer boundary and silently stops clipping: all
+     four phrases paint over the headline. It renders wrong while measuring
+     right, because the clip fails at paint and not at layout, so the DOM
+     reports the correct 1.12em box the whole time.
+
+     `backwards` supplies the from-value during the delay and hands the
+     element back to its own style when the animation ends, which leaves no
+     transform behind. The rest state is the absence of a rule rather than a
+     value pinned on top of one. */
   .hero__word {
-    opacity: 0;
-    transform: translateY(100%);
-    animation: hero-word-in var(--d-drop) var(--ease-reveal) forwards;
-    animation-delay: calc(200ms + var(--i) * var(--stagger-sweep));
+    animation: hero-word-in var(--d-drop) var(--ease-reveal) backwards;
+    animation-delay: calc(200ms + var(--w) * var(--stagger-sweep));
   }
 
   @keyframes hero-word-in {
+    from {
+      transform: translateY(100%);
+    }
     to {
-      opacity: 1;
       transform: translateY(0);
     }
   }

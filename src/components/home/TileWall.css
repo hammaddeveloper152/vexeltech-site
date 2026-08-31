@@ -43,7 +43,16 @@
    three parts. The delay is declared here and elapses while paused, which is
    what a paused animation does to its own delay, so unpausing plays out the
    remaining delay and then the loop. That gives a staggered wake for free,
-   with no second timer and nothing for JavaScript to keep in sync. */
+   with no second timer and nothing for JavaScript to keep in sync.
+
+   The SWEEP stagger, not the reading one. The wall is a single object and
+   its columns are parts of it; the reader does not take them in one at a
+   time. This was built at 70ms on the argument that the wake should read as
+   one thing rather than three, and that argument convicts it: 70ms is the
+   value that says these are discrete. At 16ms the wake spans 32ms and is
+   effectively imperceptible, which is the right outcome for atmosphere. An
+   ambient background coming to life is not an event the reader should be
+   able to count. */
 
 .wall__track--up {
   animation: wall-up var(--dur) linear infinite;
@@ -55,7 +64,7 @@
 
 .wall__track {
   animation-play-state: paused;
-  animation-delay: calc(var(--col, 0) * var(--stagger));
+  animation-delay: calc(var(--col, 0) * var(--stagger-sweep));
 }
 
 .hero[data-phase='ambient'] .wall__track {

@@ -230,7 +230,14 @@
 @media (prefers-reduced-motion: no-preference) {
   .faq__panel[data-open='true'] .faq__w {
     animation: faq-line var(--d-panel) var(--ease-reveal) both;
-    animation-delay: calc(var(--line) * var(--stagger));
+    /* Sweep, not the reading stagger. The rendered lines of one answer are
+       parts of a single object, and the proof is in how --line is assigned:
+       a layout effect measures where the text actually breaks, so the item
+       count changes with the column width. Something whose number of items
+       depends on the viewport cannot be a set of discrete things. At 70ms a
+       six-line answer spent 420ms on stagger alone and the reader watched
+       the paragraph assemble. */
+    animation-delay: calc(var(--line) * var(--stagger-sweep));
   }
 }
 

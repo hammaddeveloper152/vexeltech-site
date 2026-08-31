@@ -32,6 +32,26 @@ const PHASE_GUARD_MS = 2500;
    only the last two words roll. */
 const PHRASES = ['whole system', 'working site', 'real build', 'finished thing'];
 
+/* The fixed half, split so each word can rise out of its own mask.
+
+   The headline had NO entrance before this. The rules for it existed in
+   Hero.css and the markup they needed never did, so the line simply appeared
+   at full size while the brackets, subtext, actions and note faded in around
+   it. The signature moment was the one thing not moving.
+
+   It strikes rather than fades: transform only, no opacity anywhere in the
+   keyframe. What hides a word at rest is its mask, not its alpha, which is
+   why the line reads as struck rather than resolved. Five units at 16ms land
+   in 64ms, so the eye registers one event with internal texture instead of
+   counting words.
+
+   The ticker is the fifth unit and takes the sweep with the rest. It used to
+   sit still through the entrance and start rolling on its own clock, which
+   made it read as a separate widget parked inside the headline rather than
+   as the last two words of the sentence. Its roll still waits for the
+   ambient phase; only its arrival joins the line. */
+const HEAD_WORDS = ['Not', 'a', 'proposal.', 'The'];
+
 
 
 /* The roll.
@@ -154,7 +174,26 @@ export default function Hero() {
           id="hero-h"
           aria-label="Not a proposal. The whole system."
         >
-          Not a proposal. The <Ticker reduced={reduced} phase={phase} />
+          {HEAD_WORDS.map((word, i) => (
+            /* The space lives between the masks, not inside them, so it is
+               the font's own space rather than a margin standing in for one,
+               and the mask clips only glyphs. */
+            <React.Fragment key={word}>
+              <span className="hero__mask" style={{ '--w': i }}>
+                <span className="hero__word">{word}</span>
+              </span>{' '}
+            </React.Fragment>
+          ))}
+
+          {/* --w, not --i. The ticker sets its own --i to drive the roll, and
+              an --i here would be inherited straight into it: the entrance
+              index would silently become the phrase index and the line would
+              open on the wrong word. */}
+          <span className="hero__mask" style={{ '--w': HEAD_WORDS.length }}>
+            <span className="hero__word">
+              <Ticker reduced={reduced} phase={phase} />
+            </span>
+          </span>
         </h1>
 
         <p className="hero__sub">
