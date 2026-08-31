@@ -70,19 +70,38 @@
     opacity var(--d-press) var(--ease-reveal);
 }
 
-.services__n {
-  font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
-  font-weight: var(--t-weight-label);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: var(--t-track-label);
-  color: var(--c-accent-text-dark); /* 9.46:1 on asphalt */
-}
+/* Two things used to sit here and both are gone.
 
-/* The failure line that sat here is gone, along with its rule. It is the
-   section above now, at heading scale rather than label scale. See
-   Failures.css. */
+   The failure line is the section above now, at heading scale rather than
+   label scale. See Failures.css.
+
+   The 01 to 04 numerals are gone outright and nothing replaced them.
+   Structural devices have to encode something true about the content, and
+   these did not: branding, websites, marketing and automation are four
+   disciplines, not four steps, so the order carried no information the
+   reader needed and the numbering only looked like it did. The process
+   steps keep theirs because those genuinely are a sequence.
+
+   ---- This frame now carries NO accent, deliberately ----------------------
+
+   The numerals were the section's one accent, so removing them left the
+   accent unspent, and it stays unspent. DESIGN.md's "one accent per frame"
+   is a ceiling, not a quota: the work wall and the about section already
+   carry none.
+
+   The alternatives were considered and each fought a rule. The accent on
+   the discipline name would put a 58px yellow word well past the 5% of
+   surface limit, and this is a pinned track where one card leads with the
+   next peeking, so two of them would be in frame through every transition.
+   The card hairline going accent contradicts what a hairline is here, an
+   edge whose job is to separate without being looked at, and lighting it
+   means animating border-color, which BUILD-LAW allows for nothing. It
+   would also borrow the drawn-route language that the process route and the
+   failures rail share on purpose, where an accent line lighting on arrival
+   means a route the reader is travelling. A card scroller is not a route.
+
+   The section is not accent-free in the keyboard state: the focus ring is
+   machine yellow, which is the accent doing the job it exists for. */
 
 .services__discipline {
   font-family: var(--font-brand);
@@ -120,8 +139,11 @@
 
 /* Steel-dark, not white and not the accent. The card already spends its
    emphasis on the discipline at h2 scale, and an icon that matches it for
-   strength is a second thing competing to be read first. The accent is not
-   available here at all: this frame's one accent is the numeral. */
+   strength is a second thing competing to be read first.
+
+   Still not the accent now that the numerals are gone and the accent is
+   unspent. An icon is the weakest thing on this card to spend it on, and a
+   frame with no accent is a decision this section is allowed to make. */
 .services__art-i {
   color: var(--c-steel-dark);
 }

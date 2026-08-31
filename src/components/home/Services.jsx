@@ -15,6 +15,13 @@ import './Services.css';
    service at all. See Failures.jsx. The cards keep their discipline names,
    which is the half of the pair this section is for.
 
+   The 01 to 04 numerals are gone too, and nothing replaced them. They were
+   the section's one accent, and this frame now carries none. Both calls are
+   argued in full at the top of Services.css; the short version is that four
+   disciplines are not a sequence, so the numbering encoded nothing, and the
+   accent was better left unspent than moved onto something that would break
+   a different rule to hold it.
+
    Sub-services are obviously synthetic. BUILD-LAW.md Truth: no invented
    capabilities, and a list of services this agency has not said it offers is
    exactly that.
@@ -33,7 +40,6 @@ import './Services.css';
 const CARDS = [
   {
     id: 'branding',
-    n: '01',
     Icon: PenNib,
     discipline: 'Branding',
     subs: [
@@ -44,7 +50,6 @@ const CARDS = [
   },
   {
     id: 'websites',
-    n: '02',
     Icon: Browser,
     discipline: 'Websites',
     subs: [
@@ -55,7 +60,6 @@ const CARDS = [
   },
   {
     id: 'marketing',
-    n: '03',
     Icon: Megaphone,
     discipline: 'Marketing',
     subs: [
@@ -66,7 +70,6 @@ const CARDS = [
   },
   {
     id: 'automation',
-    n: '04',
     Icon: Lightning,
     discipline: 'Automation',
     subs: [
@@ -172,17 +175,13 @@ export default function Services() {
 
       <div className="services__viewport" ref={viewportRef}>
         <ul className="services__track" ref={trackRef}>
-          {CARDS.map(({ id, n, Icon, discipline, subs }, i) => (
+          {CARDS.map(({ id, Icon, discipline, subs }, i) => (
             <li className="services__card" key={id}>
               <a
                 className="services__link"
                 href={`/services/${id}`}
                 onFocus={() => bringIntoView(i)}
               >
-                <span className="services__n" aria-hidden="true">
-                  {n}
-                </span>
-
                 <span className="services__discipline">{discipline}</span>
 
                 {/* Artwork slot. Fixed ratio, holds the pillar artifact at
