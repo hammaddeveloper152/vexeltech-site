@@ -80,15 +80,9 @@
   color: var(--c-accent-text-dark); /* 9.46:1 on asphalt */
 }
 
-.services__failure {
-  font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
-}
+/* The failure line that sat here is gone, along with its rule. It is the
+   section above now, at heading scale rather than label scale. See
+   Failures.css. */
 
 .services__discipline {
   font-family: var(--font-brand);

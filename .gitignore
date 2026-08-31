@@ -13,3 +13,8 @@ Desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# The impeccable detector. Cloned locally, never vendored, per BUILD-LAW.md.
+# It is therefore absent from a fresh clone: re-clone it before pre-flight
+# rather than skipping step 9.
+impeccable/

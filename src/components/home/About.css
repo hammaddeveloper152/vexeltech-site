@@ -1,0 +1,324 @@
+/* ==========================================================================
+   The about section. Between the work wall and the counter row.
+
+   Layout family: edge-bleed feature. Used once. One media panel bled to the
+   viewport edge, against a single block of type.
+
+   This is the closest call on the page, because the hanging-rail ledger in
+   Failures.css is also two columns. They are different families and the
+   difference is structural, not cosmetic:
+
+   - the ledger is a repeating track, four rows sharing two columns, with a
+     drawn rail between them, every column inside the 1200 measure and
+     nothing touching a viewport edge, and type on both sides;
+   - this is one unit, not repeating, with no rail, media against type, and
+     its whole point is the bleed: the panel leaves the measure and runs off
+     the left edge of the screen.
+
+   A reader scanning the page sees an annotated list in one and a photograph
+   with a statement beside it in the other. Recorded here so the call is
+   visible rather than assumed.
+
+   ---- Ground: asphalt, and NOT the second light section --------------------
+
+   The second light section was considered here and ruled out on the rhythm,
+   which is the check DESIGN.md asks for before choosing a ground. The counter
+   row directly below this one is concrete. A light ground here would put two
+   light sections against each other with nothing between them, and DESIGN.md
+   is explicit that the asphalt between reliefs is what makes a relief read.
+
+   That leaves a long dark run from the hero down to the counter row. The
+   relief in this section is carried by the photograph instead: a full-bleed
+   image is a ground change in its own right, and it is the strongest one
+   available without breaking the alternation.
+
+   If a second light section is wanted in this part of the page, the move is
+   to change the counter row's ground, not this one, and that is the user's
+   call rather than a thing to infer.
+   ========================================================================== */
+
+.about {
+  padding: var(--s-3xl) var(--s-md);
+  background: var(--c-asphalt);
+  border-top: 1px solid var(--c-rule-dark);
+}
+
+/* Visually hidden, not display:none. It stays in the accessibility tree and
+   in the heading outline; it just does not paint. See the note in About.jsx
+   for why this section's heading is hidden when no other one is. */
+.about__h {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip-path: inset(50%);
+}
+
+/* ---- Stacked by default ------------------------------------------------
+   This is the 390 layout: the panel across the top at its ratio, the type
+   beneath it. The bleed is the enhancement and it arrives at 1280. */
+
+.about__inner {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  display: grid;
+  gap: var(--s-xl);
+}
+
+/* Capped while it is stacked. A 4 by 5 portrait run to the full width of a
+   1024 container is a 1240px tall image, which is not a feature photograph,
+   it is a poster blocking the section. The cap keeps the ratio, which is the
+   thing that was promised; it only stops the slot growing with the
+   container. It comes off at 1280, where the panel bleeds instead. */
+.about__media {
+  max-width: 480px;
+}
+
+/* The reserved slot. surface-1 is the sanctioned inset-block tone and the
+   hairline supplies the edge, since the dark tones sit 1.07:1 apart and that
+   alone does not read as one. Same treatment as the work wall's plates, on
+   purpose: two empty image slots on one page should look like the same kind
+   of reservation. */
+.about__plate {
+  display: block;
+  aspect-ratio: 4 / 5;
+  background: var(--c-surface-1);
+  border: 1px solid var(--c-rule-dark);
+  border-radius: var(--r-md); /* container */
+}
+
+.about__body {
+  display: grid;
+  gap: var(--s-lg);
+  align-content: start;
+}
+
+/* Pull quote, not h2 and not display. Display-sized body: the brand face at
+   the brand weight and size, with body leading instead of heading leading,
+   because this runs several lines and 1.10 closes the gap between them until
+   the eye loses its place returning to the left margin. */
+.about__statement {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: var(--t-quote-size);
+  line-height: var(--t-quote-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-display);
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  text-wrap: balance;
+}
+
+.about__support {
+  margin: 0;
+  /* The measure DESIGN.md sets for running text, taken as the pixel band it
+     states rather than in ch: "60 to 75 characters, which at 18px body is a
+     conventional content column of roughly 540 to 675px".
+
+     Not ch, and this was measured rather than assumed. ch is the width of
+     the zero glyph, and Satoshi's zero runs well above its own average
+     character, so 62ch resolved to 732px here: over the top of the band
+     while reading like a value inside it. 38rem is 608px, mid band. */
+  max-width: 38rem;
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  text-wrap: pretty;
+}
+
+/* Underlined, always. Not because the colour fails here, but because a link
+   in a block of running text is identified by its underline and reinforced
+   by everything else. The underline is pulled from the font's own metrics
+   rather than the browser default. */
+.about__link {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: var(--s-sm);
+  /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
+  min-height: 48px;
+  padding: var(--s-sm) 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  text-decoration: underline;
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.25em;
+  transition:
+    transform var(--d-press) var(--ease-reveal),
+    opacity var(--d-press) var(--ease-reveal);
+}
+
+/* Steel-dark, not white and not the accent. The label is what the reader
+   lands on, and an arrow at equal strength is a second thing competing to be
+   read first. Same call the work wall's arrow made. */
+.about__go {
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+}
+
+/* ---- Hover, gated to real pointers ------------------------------------- */
+
+@media (hover: hover) and (pointer: fine) {
+  .about__link:hover {
+    opacity: var(--hover-opacity);
+    transform: translateY(-1px);
+  }
+}
+
+.about__link:active {
+  transform: scale(0.97);
+}
+
+/* Focus is a ring from tokens.css, never the hover treatment. */
+
+/* ---- 1280: the panel leaves the measure --------------------------------
+   The section drops its horizontal padding, the inner grid drops its cap,
+   and the media column runs to the left edge of the screen. The type block
+   carries its own padding and sits centred against the panel.
+
+   1280, and this is the one place on the page where a layout waits that
+   long. The reason is the pull quote role, which DESIGN.md specifies for
+   text running five or six lines. Measured at each width with the statement
+   at 58px, splitting the section costs the type column roughly 500px and the
+   line count goes up with it:
+
+   | width | split? | type column | lines |
+   |---|---|---|---|
+   | 1024 | if split here | 527px | 9 |
+   | 1280 | yes | 691px | 5 |
+   | 1440 | yes | 752px, capped | 5 |
+
+   Nine lines is not a pull quote, it is a paragraph set too large, and the
+   panel beside it ends up well under the height of the type it is meant to
+   balance. So below 1280 the section stays stacked and the statement gets
+   the whole measure, where it runs five lines at 1024 and the composition is
+   a photograph above a statement rather than a narrow column beside one.
+
+   36% is the panel's share, set from the other direction: at 32% it cleared
+   the type column easily but the plate stood 506px against a 752px type
+   block and read as a box that happened to touch the edge rather than as a
+   bled feature. 36% puts it at 576px without costing the statement a line.
+
+   The column is capped as well as proportional. 36% alone would put the
+   panel at 691px wide and 864px tall on a 1920 screen, and it keeps growing
+   from there; the cap stops it at a feature image rather than a wall. */
+
+@media (min-width: 1280px) {
+  /* Horizontal padding goes to zero so the panel can reach the edge. The
+     VERTICAL padding stays on the section rather than moving to the type
+     block, which is where it belongs anyway: the section owns its own
+     rhythm, and the body was only carrying it because an earlier version
+     zeroed all four sides at once.
+
+     That earlier version fired cramped-padding on a real reading of the CSS.
+     The section keeps a border-top, and a bordered box whose padding is zero
+     has its children flush against the boundary, whatever insets they happen
+     to carry themselves. Nothing was visually touching the line, but the
+     detector was describing the rule correctly and the rule was right about
+     where the inset ought to live. Fixed rather than waived. */
+  .about {
+    padding: var(--s-3xl) 0;
+  }
+
+  .about__inner {
+    width: 100%;
+    max-width: none;
+    grid-template-columns: min(36%, 520px) minmax(0, 1fr);
+    align-items: center;
+    gap: 0;
+  }
+
+  /* The cap belongs to the stacked layout. Here the column governs. */
+  .about__media {
+    max-width: none;
+  }
+
+  /* The corners that meet the viewport lose their radius, and only those.
+     DESIGN.md gives radius none to "any edge that meets the viewport", which
+     is a rule about edges rather than about whole shapes, so the left pair
+     goes square and the right pair keeps the container radius. The border
+     stays complete all the way around: a three-sided border would be a
+     divider wearing a border's name, and the system does not allow partial
+     borders. */
+  .about__plate {
+    border-radius: 0 var(--r-md) var(--r-md) 0;
+  }
+
+  .about__body {
+    /* Horizontal only. The section carries the vertical. */
+    padding: 0 var(--s-2xl);
+    /* Caps the type block so it does not stretch with the viewport once the
+       panel has stopped growing. 48rem is set from the statement rather than
+       from the paragraph: it is the width at which the pull quote settles at
+       six lines. The supporting paragraph carries its own 62ch measure and
+       is unaffected by this being wider than a body measure.
+
+       It includes the padding. box-sizing is border-box globally, so this
+       cap is 880px of box and 752px of text, and the earlier value was
+       quietly 128px tighter than the number in it suggested. */
+    max-width: 55rem;
+  }
+}
+
+/* ---- Reveal. Four things arriving, so 70ms per item -------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .about__inner[data-revealed='false'] .about__media,
+  .about__inner[data-revealed='false'] .about__statement,
+  .about__inner[data-revealed='false'] .about__support,
+  .about__inner[data-revealed='false'] .about__link {
+    opacity: 0;
+    transform: translateY(var(--s-sm));
+  }
+
+  .about__media,
+  .about__statement,
+  .about__support,
+  .about__link {
+    transition:
+      opacity var(--d-panel) var(--ease-reveal),
+      transform var(--d-panel) var(--ease-reveal);
+    transition-delay: calc(var(--i) * var(--stagger));
+  }
+}
+
+/* Reduced motion: keep the fade, drop the travel, and drop the stagger with
+   it. The stagger goes with the movement, not with the opacity. */
+@media (prefers-reduced-motion: reduce) {
+  .about__inner[data-revealed='false'] .about__media,
+  .about__inner[data-revealed='false'] .about__statement,
+  .about__inner[data-revealed='false'] .about__support,
+  .about__inner[data-revealed='false'] .about__link {
+    opacity: 0;
+  }
+
+  .about__media,
+  .about__statement,
+  .about__support,
+  .about__link {
+    transition: opacity var(--d-panel) var(--ease-reveal);
+  }
+
+  .about__link:hover {
+    opacity: var(--hover-opacity);
+    transform: none;
+  }
+
+  .about__link:active {
+    transform: none;
+  }
+}
+
+/* The pull quote steps up with the viewport, per DESIGN.md's two-step role.
+   Placed last so it is not overwritten by the 1024 block above. */
+@media (min-width: 768px) {
+  .about__statement {
+    font-size: var(--t-quote-size-lg);
+    line-height: var(--t-quote-line-lg);
+  }
+}

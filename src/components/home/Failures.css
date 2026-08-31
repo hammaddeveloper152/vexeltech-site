@@ -1,0 +1,291 @@
+/* ==========================================================================
+   The four failures. Between the hero and Services.
+
+   Layout family: hanging-rail ledger. Used once.
+
+   A wide type column carries the four statements at heading scale, a narrow
+   outer column carries each consequence top aligned to its statement's first
+   line, and a drawn rail runs down the gutter between them. The statements
+   are not cards and are not in a grid; they are the section, and the rail is
+   what the reader travels down.
+
+   Checked against every other family on the page before building: it is not
+   a four across row (the counter row), not a card grid, not a zigzag (the
+   process route), not a scroller (the marquee and Services), not an
+   asymmetric tile grid (the work wall), not a rotator (the testimonials),
+   not a rule separated disclosure stack (the FAQ), and not a form column
+   (the footer). Nothing else on this page is a two column split.
+
+   Ground: asphalt. The hero above and Services below are both asphalt, so
+   this section changes no ground and the hairline at the top is the
+   separation, the same one Services and the work wall already take. Two
+   light sections never meet and none is introduced here.
+   ========================================================================== */
+
+.fail {
+  padding: var(--s-3xl) var(--s-md);
+  background: var(--c-asphalt);
+  border-top: 1px solid var(--c-rule-dark);
+}
+
+.fail__inner {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+/* Steel-dark, not shop white, and this is the one section heading on the page
+   that is not the loudest thing in its own section.
+
+   The statements already take two of the three heading steps, and the lead
+   has to clear the rest by a real interval, so there is no third step left
+   for the heading that does not either tie a statement or drop it out of
+   heading scale entirely. So the heading separates on ground instead of on
+   size, which is the substitution DESIGN.md names: a leader in size, weight,
+   OR ground. 5.12:1 on asphalt, well clear of AA at any size. */
+.fail__h {
+  margin: 0 0 var(--s-2xl);
+  font-family: var(--font-brand);
+  font-size: var(--t-h2-size);
+  line-height: var(--t-h2-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-display);
+  color: var(--c-steel-dark);
+  text-wrap: balance;
+}
+
+/* ---- The ledger --------------------------------------------------------
+   Base is the 390 layout: the rail is a spine down the left with the
+   statement and its consequence stacked to its right. Below 768 there is no
+   outer column to hang anything in, and a 28 character rail beside a 27px
+   statement would be two columns of nothing. The process route folds the
+   same way and for the same reason. */
+
+.fail__list {
+  position: relative;
+  /* The consequence column and the gutter the rail runs down. Both are read
+     back in the rail's own left offset below, so the rail cannot drift out
+     of the gutter when either changes. */
+  --fail-col: 16rem;
+  --fail-gutter: var(--s-2xl);
+}
+
+.fail__items {
+  display: grid;
+  row-gap: var(--s-2xl);
+  margin: 0;
+  padding: 0 0 0 var(--s-xl); /* clears the spine in the stacked layout */
+  list-style: none;
+}
+
+.fail__item {
+  display: grid;
+  row-gap: var(--s-md);
+  min-width: 0;
+}
+
+/* ---- The rail ----------------------------------------------------------
+   Three strokes on one line, which is the process route's construction in
+   the form a straight rule takes it: a static hairline that gives the rail
+   its full length before anything is drawn, the accent ahead of the reader,
+   and the stretch behind them at full strength.
+
+   A hairline is an edge and a drawn stroke is a mark, so the track stays at
+   1px and the two accent strokes take --stroke-drawn. They are concentric,
+   so the drawn stretch covers the track it runs over.
+
+   The section spends its one accent here. There is no numeral, no call, and
+   no second yellow anywhere in this frame. */
+
+.fail__rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--stroke-drawn);
+}
+
+.fail__rail-track,
+.fail__rail-ahead,
+.fail__rail-passed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fail__rail-track {
+  left: calc(50% - 0.5px);
+  width: 1px;
+  background: var(--c-rule-dark);
+}
+
+.fail__rail-ahead,
+.fail__rail-passed {
+  background: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
+  /* Drawn from the top down, on transform. Never height. */
+  transform-origin: top center;
+  will-change: transform;
+}
+
+/* Ahead of the reader: drawn, but not yet arrived at. The same ahead opacity
+   the process route uses, so the two lines read as one treatment. */
+.fail__rail-ahead {
+  opacity: var(--ahead-opacity);
+}
+
+/* ---- Statement and consequence ----------------------------------------- */
+
+.fail__s {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-h3);
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  text-wrap: balance;
+}
+
+/* The leader. One step up from the rest at every width, so the interval is
+   the same decision at 390 as at 1280.
+
+   It is capped at the h2 step below 768 rather than taking h1 there, because
+   the hero display floors at 40px on a phone and a statement below the fold
+   must never be set larger than the headline above it. At 768 the hero is
+   already at 76.8px and the cap comes off. */
+.fail__item--lead .fail__s {
+  font-size: var(--t-h2-size);
+  line-height: var(--t-h2-line);
+  letter-spacing: var(--t-track-display);
+}
+
+.fail__c {
+  margin: 0;
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  text-wrap: pretty;
+}
+
+/* ---- 768: the type steps up, the layout does not ------------------------
+   Both statement steps go up one, because the hero display is fluid and has
+   reached 76.8px by here: the cap that held the leader at h2 on a phone is
+   about clearing the headline above, and above 768 there is nothing to
+   clear. The rail is still a spine and the consequence is still beneath its
+   statement. Measured: the leader at 58px runs one line in the full width
+   column here, and would run two in a split one. */
+
+@media (min-width: 768px) {
+  .fail__s {
+    font-size: var(--t-h2-size);
+    line-height: var(--t-h2-line);
+    letter-spacing: var(--t-track-display);
+  }
+
+  .fail__item--lead .fail__s {
+    font-size: var(--t-h1-size);
+    line-height: var(--t-h1-line);
+  }
+}
+
+/* ---- 1024: the ledger opens -------------------------------------------
+   The consequence column comes out to the right and the rail moves off the
+   left edge to sit centred in the gutter between the two columns. This is
+   the layout family proper; below this width it is the folded version.
+
+   1024 and not 768, and this is a family change rather than a nudge, which
+   is the distinction DESIGN.md draws when it says to reach for a breakpoint.
+   The consequence column and its gutter cost a fixed 320px whatever the
+   viewport does, which at 768 leaves the type column 401px: every statement
+   wraps, the leader included, and a ledger whose statements all run two
+   lines is not a ledger, it is a stack with a margin. At 1024 the type
+   column is 672px, the leader runs one line at 58px, and the longest of the
+   other three runs one line at 40px. Measured at both widths, not assumed. */
+
+@media (min-width: 1024px) {
+  .fail__items {
+    padding: 0;
+  }
+
+  .fail__item {
+    grid-template-columns: minmax(0, 1fr) var(--fail-col);
+    column-gap: var(--fail-gutter);
+    /* Top aligned, not centred. The consequence hangs from its statement's
+       first line the way a margin note hangs from the line it annotates. A
+       centred one would float against a statement that wraps and sit level
+       with one that does not. */
+    align-items: start;
+    row-gap: 0;
+  }
+
+  /* Centred in the gutter, derived from the same two values the columns are
+     built from rather than from a measured offset that would go stale. */
+  .fail__rail {
+    left: calc(100% - var(--fail-col) - var(--fail-gutter) / 2);
+    margin-left: calc(var(--stroke-drawn) / -2);
+  }
+}
+
+/* ---- Motion ------------------------------------------------------------
+   Two mechanisms, deliberately. The statements arrive once on the 70ms
+   stagger, four separate things to read. The consequences are gated on the
+   rail instead and appear as it passes their statement, which is a scrub and
+   has to work in both directions. See the note in Failures.jsx.
+
+   Every hidden at rest state below is gated twice: on no-preference, and on
+   data-drawn, which the effect sets only once it is actually running. If
+   gsap never loads, nothing here is hidden and the section reads as four
+   statements with four lines under them. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .fail__list[data-revealed='false'] .fail__s {
+    opacity: 0;
+    transform: translateY(var(--s-sm));
+  }
+
+  .fail__s {
+    transition:
+      opacity var(--d-panel) var(--ease-reveal),
+      transform var(--d-panel) var(--ease-reveal);
+    transition-delay: calc(var(--i) * var(--stagger));
+  }
+
+  .fail__list[data-drawn='true'] .fail__rail-ahead,
+  .fail__list[data-drawn='true'] .fail__rail-passed {
+    transform: scaleY(0);
+  }
+
+  .fail__list[data-drawn='true'] .fail__c {
+    opacity: 0;
+    transform: translateY(var(--s-sm));
+  }
+
+  .fail__list[data-drawn='true'] .fail__item[data-lit='true'] .fail__c {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* No delay on this one. The consequence is answering the rail, which is
+     already where the reader is, so a stagger here would be the page lagging
+     behind its own line. */
+  .fail__c {
+    transition:
+      opacity var(--d-panel) var(--ease-reveal),
+      transform var(--d-panel) var(--ease-reveal);
+  }
+}
+
+/* Reduced motion: keep the fade on the statements, drop the travel, and drop
+   the stagger with it. The stagger goes with the movement. The rail and the
+   consequences are handled in the effect, which draws everything complete
+   from the first paint, so there is nothing to undo for them here. */
+@media (prefers-reduced-motion: reduce) {
+  .fail__list[data-revealed='false'] .fail__s {
+    opacity: 0;
+  }
+
+  .fail__s {
+    transition: opacity var(--d-panel) var(--ease-reveal);
+  }
+}

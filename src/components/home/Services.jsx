@@ -7,8 +7,13 @@ import './Services.css';
 
 /* Section 5. The four disciplines, pinned.
 
-   Replaces the flat four-across Pillars row. The failure lines carry over
-   from it verbatim: they are the user's copy, not new writing.
+   Replaces the flat four-across Pillars row.
+
+   The failure lines are no longer here. They came over from Pillars as small
+   labels on these cards and they are now the section above this one, at
+   heading scale, where they name what is broken before the page mentions a
+   service at all. See Failures.jsx. The cards keep their discipline names,
+   which is the half of the pair this section is for.
 
    Sub-services are obviously synthetic. BUILD-LAW.md Truth: no invented
    capabilities, and a list of services this agency has not said it offers is
@@ -31,7 +36,6 @@ const CARDS = [
     n: '01',
     Icon: PenNib,
     discipline: 'Branding',
-    failure: 'They do not remember you',
     subs: [
       'Placeholder sub-service one',
       'Placeholder sub-service two',
@@ -43,7 +47,6 @@ const CARDS = [
     n: '02',
     Icon: Browser,
     discipline: 'Websites',
-    failure: 'They cannot find you',
     subs: [
       'Placeholder sub-service one',
       'Placeholder sub-service two',
@@ -55,7 +58,6 @@ const CARDS = [
     n: '03',
     Icon: Megaphone,
     discipline: 'Marketing',
-    failure: 'Not enough are calling',
     subs: [
       'Placeholder sub-service one',
       'Placeholder sub-service two',
@@ -67,7 +69,6 @@ const CARDS = [
     n: '04',
     Icon: Lightning,
     discipline: 'Automation',
-    failure: 'You miss the ones who do',
     subs: [
       'Placeholder sub-service one',
       'Placeholder sub-service two',
@@ -171,7 +172,7 @@ export default function Services() {
 
       <div className="services__viewport" ref={viewportRef}>
         <ul className="services__track" ref={trackRef}>
-          {CARDS.map(({ id, n, Icon, discipline, failure, subs }, i) => (
+          {CARDS.map(({ id, n, Icon, discipline, subs }, i) => (
             <li className="services__card" key={id}>
               <a
                 className="services__link"
@@ -181,8 +182,6 @@ export default function Services() {
                 <span className="services__n" aria-hidden="true">
                   {n}
                 </span>
-
-                <span className="services__failure">{failure}</span>
 
                 <span className="services__discipline">{discipline}</span>
 
