@@ -90,9 +90,12 @@
 
 /* Registration brackets: L shapes at the section corners, as on the plates.
    Hairline, never a full border. */
+/* Inset from the PLATE, not from the section. 8px, with 24px brackets, puts
+   each corner mark inside the plate's own padding and clear of the copy: the
+   top pair sits above the meta row, the bottom pair below the note. */
 .hero__reg {
   position: absolute;
-  inset: var(--s-md);
+  inset: var(--s-sm);
   pointer-events: none;
   z-index: 1;
 }
@@ -132,25 +135,18 @@
   border-right-width: 1px;
 }
 
-/* The plate label pair: a number, a hairline rule, a name. */
+/* The plate label pair: a number, a hairline rule, a name.
+
+   In flow at the top of the plate, not absolutely positioned over the hero.
+   It needs no ground of its own because it is standing on one, and its
+   hairline now runs across a flat sheet at a height the copy determines
+   rather than across a photograph at a height nothing determines. */
 .hero__meta {
-  position: absolute;
-  top: calc(var(--s-md) + var(--s-lg));
-  left: var(--s-md);
-  right: var(--s-md);
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: var(--s-md);
-  z-index: 1;
-  /* Its own opaque ground, for the same reason the copy has one. This row is
-     outside the copy plate and sits directly on the wall, and it is
-     steel-dark at 12px: the single worst pair on the page to leave over a
-     photograph. It is decorative and aria-hidden, which is not a licence to
-     let it fall to 1.14:1 where a sighted reader can still see it. */
-  padding: var(--s-sm) var(--s-md);
-  background: var(--c-asphalt);
-  border-radius: var(--r-sm); /* control-scale bar, not a container */
+  margin-bottom: var(--s-lg);
 }
 
 .hero__meta-n,
@@ -228,6 +224,49 @@
   width: 100%;
   padding: var(--s-xl) var(--s-md);
   background: var(--c-asphalt);
+}
+
+/* ---- The plate is ANCHORED, not floating -------------------------------
+
+   Four visible edges is a card. A card sits ON the wall and reads as a thing
+   placed there; a plane that runs off the screen reads as architecture the
+   wall is behind. So from 768 the plate keeps exactly two visible edges, top
+   and right, and leaves the frame on the other two.
+
+   The bleed is GEOMETRY, not a softened edge. No gradient, no fade, no mask:
+   flat-forever governs fills and this is a fill, so the edge stays hard and
+   simply leaves the viewport. -100vw and -100vh overshoot deliberately and
+   the section's own `overflow: clip` does the cutting, which means the bleed
+   does not depend on the hero's padding, its height, or how the copy is
+   aligned inside it. Change any of those and this still runs off the edge.
+
+   Painted by a pseudo-element rather than by the body's own background, so
+   the copy's box is untouched. The measure is the thing this section keeps
+   nearly breaking, and a plate that paints outside the box it is measured in
+   cannot cost it a character.
+
+   The border stays complete on all four sides. Two of them are outside the
+   clip, which is a viewport crop rather than a partial border, and the
+   system's ban is on declaring three sides and calling it a border. Only the
+   top-right corner is visible, so it is the only one with a radius: the rest
+   meet the viewport, and DESIGN.md gives radius none to any edge that does. */
+@media (min-width: 768px) {
+  .hero__body {
+    background: none;
+  }
+
+  .hero__body::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    left: -100vw;
+    bottom: -100vh;
+    background: var(--c-asphalt);
+    border: 1px solid var(--c-rule-dark);
+    border-radius: 0 var(--r-md) 0 0;
+  }
 }
 
 .hero__headline {
@@ -500,11 +539,17 @@
 /* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------- */
 
 @media (min-width: 768px) {
-  /* Still no horizontal padding: the band runs edge to edge until 1024.
-     At 768 this is the difference between 736px of measure and 656, and the
-     two-line threshold there is 654. */
+  /* Asymmetric, and deliberately so. There is nothing to inset from on the
+     left because the plate runs off that edge; the right is where the wall
+     shows, so that is the only side that gets a margin. 24px rather than 40
+     because the two-line threshold at 768 is 654px of measure and 40 leaves
+     640. */
   .hero {
-    padding: var(--s-2xl) 0 var(--s-xl);
+    padding: var(--s-2xl) var(--s-lg) var(--s-xl) 0;
+  }
+
+  .hero__body {
+    padding: var(--s-xl) var(--s-lg) var(--s-xl) var(--s-xl);
   }
 
 
@@ -520,7 +565,7 @@
      its horizontal padding back and the band becomes a plate: the wall shows
      down both sides of it rather than only above and below. */
   .hero {
-    padding: var(--s-3xl) var(--s-xl) var(--s-2xl);
+    padding: var(--s-3xl) var(--s-xl) var(--s-2xl) 0;
   }
 
   .hero__body {
@@ -529,10 +574,12 @@
        its own padding rather than that column with the padding taken out of
        it. Capping the plate at 1200 left 1152 of measure, which is under the
        threshold at 136px and cost the second line at 1920. */
-    width: min(100%, calc(1200px + 2 * var(--s-lg)));
-    padding: var(--s-xl) var(--s-lg);
-    border: 1px solid var(--c-rule-dark);
-    border-radius: var(--r-md); /* container */
+    width: min(100%, calc(1200px + var(--s-2xl) + var(--s-lg)));
+    /* Asymmetric: more inset on the bleeding side. A line of type set hard
+       against an edge that runs off-screen reads as falling off it, and the
+       left is the only side with no margin outside the plate to stand in for
+       that. The border and radius live on the pseudo-element now. */
+    padding: var(--s-xl) var(--s-lg) var(--s-xl) var(--s-2xl);
   }
 }
 

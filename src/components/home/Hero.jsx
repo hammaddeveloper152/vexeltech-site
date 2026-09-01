@@ -129,10 +129,11 @@ export default function Hero() {
     <section className="vt hero" aria-labelledby="hero-h" data-phase={phase}>
       <TileWall />
 
-      {/* Flat scrim between wall and content. Asphalt at 55%, which puts white
-          at roughly 6:1 over a machine yellow tile, the worst case in the
-          wall. Uniform rather than graduated: a scrim that darkens toward the
-          headline is a gradient, and it is not needed to clear AA. */}
+      {/* Flat scrim between wall and content. It no longer carries any
+          contrast: the plate does that. 25% is set for subordination alone,
+          and the full reasoning and what it costs are recorded on the rule in
+          Hero.css. Uniform rather than graduated, because a scrim that
+          darkens toward the headline is a gradient. */}
       <div className="hero__scrim" aria-hidden="true" />
 
       {/* Grain sits above the scrim, below content. */}
@@ -150,21 +151,34 @@ export default function Hero() {
         <rect width="100%" height="100%" filter="url(#vt-grain)" />
       </svg>
 
-      {/* Construction language, Plates 00 and 01. */}
-      <div className="hero__reg" aria-hidden="true">
-        <i className="hero__bracket hero__bracket--tl" />
-        <i className="hero__bracket hero__bracket--tr" />
-        <i className="hero__bracket hero__bracket--bl" />
-        <i className="hero__bracket hero__bracket--br" />
-      </div>
+      {/* Construction language, Plates 00 and 01. Both of these live INSIDE
+          the plate now.
 
-      <div className="hero__meta" aria-hidden="true">
-        <span className="hero__meta-n">00</span>
-        <span className="hero__meta-rule" />
-        <span className="hero__meta-t">The decision</span>
-      </div>
+          They used to sit on the hero and float over the wall. On flat tone
+          blocks that was fine. On photographs it was not: the meta row is
+          steel-dark at 12px, the worst pair on the page to leave over an
+          image, and its hairline rule crossed the middle of whatever
+          photograph happened to be passing at an arbitrary height, reading as
+          a scratch rather than as a device. The brackets are white at 12% and
+          simply vanished over a bright tile.
 
+          On the plate they have the flat sheet the plates draw them on, a
+          hairline is legible again, and the meta pair sits with the copy it
+          labels instead of hovering above it. */}
       <div className="hero__body">
+        <div className="hero__reg" aria-hidden="true">
+          <i className="hero__bracket hero__bracket--tl" />
+          <i className="hero__bracket hero__bracket--tr" />
+          <i className="hero__bracket hero__bracket--bl" />
+          <i className="hero__bracket hero__bracket--br" />
+        </div>
+
+        <div className="hero__meta" aria-hidden="true">
+          <span className="hero__meta-n">00</span>
+          <span className="hero__meta-rule" />
+          <span className="hero__meta-t">The decision</span>
+        </div>
+
         {/* The roll needs all four phrases in the DOM to size its mask, which
             leaves the h1 text content reading as the phrases run together.
             aria-label gives the heading its canonical accessible name; every
