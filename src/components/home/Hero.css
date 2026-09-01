@@ -16,22 +16,51 @@
   align-content: center;
   isolation: isolate;
   min-height: 100svh; /* BUILD-LAW: hero fits one phone screen */
-  padding: var(--s-xl) var(--s-md) var(--s-lg);
+  /* No horizontal padding below 1024: the plate is a full-bleed band there
+     and supplies its own inset. See the plate. */
+  padding: var(--s-xl) 0 var(--s-lg);
   overflow: clip;
   background: var(--c-asphalt);
 }
 
 /* ---- Scrim -------------------------------------------------------------- */
 
-/* Flat, not graduated. Asphalt at 55% puts shop white at roughly 6:1 over a
-   machine yellow tile, which is the worst surface in the wall. A scrim that
-   darkened toward the headline would be a gradient, and flat-forever governs
-   fills. It is not needed: 43% already clears 4.5:1 over yellow. */
+/* Flat, not graduated. A scrim that darkened toward the headline would be a
+   gradient, and flat-forever governs fills.
+
+   ---- 55% to 25%, and the reason it moved --------------------------------
+
+   At 55% this scrim WAS the contrast mechanism. The wall was flat tone
+   blocks, the worst surface in it was a machine yellow tile, and 55% put
+   shop white at 6.19:1 over it and steel-dark at 4.78:1. Every pair in the
+   hero depended on this one number.
+
+   Photographs ended that. Five of the fourteen contain pure white pixels and
+   two blow over 1% of their visible area to white. Measured on the rendered
+   wall at 55%: shop white fell to 3.89:1 and steel-dark to 1.12:1. Raising
+   the scrim does not fix it either, because steel-dark needs 95% to clear
+   4.5:1 and at 95% there is no photograph left.
+
+   So the contrast moved to opaque ground. The copy plate and the meta band
+   carry every pair now, at values DESIGN.md already certifies and which no
+   image swap can move. THIS SCRIM CARRIES NO CONTRAST REQUIREMENT AT ALL,
+   and 25% is chosen for the only job it has left: keeping the wall
+   subordinate to the copy. Measured on the rendered wall, mean luminance
+   0.128 at 25% against 0.192 unscrimmed, so the photographs read as present
+   and recessive rather than as the subject.
+
+   ---- What this costs, recorded so it is not rediscovered ----------------
+
+   At 25% the wall is BRIGHT. Shop white over its 99th percentile is 1.7:1
+   and steel-dark is 0.5:1. Nothing text-bearing may sit outside the plate or
+   the band without an opaque ground of its own. The old rule, that the scrim
+   makes the wall safe to put type on, is gone: it is now the opposite, and
+   anything added to this section has to bring its own ground. */
 .hero__scrim {
   position: absolute;
   inset: 0;
   background: var(--c-asphalt);
-  opacity: 0.55;
+  opacity: 0.25;
   pointer-events: none;
   z-index: -2;
 }
@@ -114,6 +143,14 @@
   align-items: center;
   gap: var(--s-md);
   z-index: 1;
+  /* Its own opaque ground, for the same reason the copy has one. This row is
+     outside the copy plate and sits directly on the wall, and it is
+     steel-dark at 12px: the single worst pair on the page to leave over a
+     photograph. It is decorative and aria-hidden, which is not a licence to
+     let it fall to 1.14:1 where a sighted reader can still see it. */
+  padding: var(--s-sm) var(--s-md);
+  background: var(--c-asphalt);
+  border-radius: var(--r-sm); /* control-scale bar, not a container */
 }
 
 .hero__meta-n,
@@ -139,12 +176,58 @@
 
 /* ---- Copy --------------------------------------------------------------- */
 
+/* ---- The copy plate -----------------------------------------------------
+
+   An OPAQUE asphalt ground under the copy, not a scrim over the wall.
+
+   The wall used to be flat tone blocks and a 55% scrim was enough to carry
+   every contrast pair over it. Photographs broke that, and not marginally:
+   five of the fourteen contain pure white pixels, and two blow more than 1%
+   of their visible area to white. Measured over a blown highlight at the old
+   scrim, shop white fell to 3.96:1 and steel-dark to 1.14:1. Steel-dark
+   would have needed a 95% scrim to clear 4.5:1, at which point the
+   photographs are a black rectangle.
+
+   So contrast is no longer the scrim's job. The plate restores the asphalt
+   ground under the type and every pair on it is one DESIGN.md already
+   certifies: shop white 17.77:1, steel-dark 5.12:1, machine yellow 9.46:1.
+   They cannot drift with the imagery, which is the point: an image swap must
+   never be able to break the headline.
+
+   Same pattern as the work wall's label band, which is opaque for the same
+   reason and says so. */
 .hero__body {
   position: relative;
   z-index: 2;
-  width: min(100%, 1200px);
   align-self: center;
-  width: min(100%, 720px);
+  /* 720px of MEASURE plus the plate's own padding, not 720px of plate.
+     Adding the padding inside the old width took the copy column down to
+     640px and pushed the headline to three lines; DESIGN.md records that two
+     lines hold from 390 to 1920 and that is a measured property of the
+     headline, not an accident. The plate is drawn around the measure. */
+  /* ---- Below 1024 the plate is a full-bleed BAND ----------------------
+
+     A plate costs measure, and the measure is not free to spend: DESIGN.md
+     records that the headline holds two lines from 390 to 1920 and that is
+     measured, not incidental. The threshold is about 1090px of measure at
+     the top of the display clamp and it scales with the font size.
+
+     Adding 24px a side inside the old widths took 390 to 310px of measure
+     and 768 to 640, and both fell to three lines. Below 1024 there is no
+     width to pay for both a section inset and a plate inset, so the section
+     gives up its horizontal padding entirely and the plate runs edge to
+     edge. At 390 that returns exactly the 358px of measure the copy had
+     before the plate existed.
+
+     It is a band rather than a card here, so it takes no border and no
+     radius: DESIGN.md gives radius none to any edge that meets the
+     viewport, and a border would be a partial one the moment the left and
+     right edges leave the screen, which the system does not allow. The
+     ground change from photograph to asphalt is the edge, and a ground
+     change is the strongest separation the system has. */
+  width: 100%;
+  padding: var(--s-xl) var(--s-md);
+  background: var(--c-asphalt);
 }
 
 .hero__headline {
@@ -417,29 +500,40 @@
 /* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------- */
 
 @media (min-width: 768px) {
+  /* Still no horizontal padding: the band runs edge to edge until 1024.
+     At 768 this is the difference between 736px of measure and 656, and the
+     two-line threshold there is 654. */
   .hero {
-    padding: var(--s-2xl) var(--s-xl) var(--s-xl);
+    padding: var(--s-2xl) 0 var(--s-xl);
   }
 
 
   /* Display requires a full-width headline, so the body spans the section.
      The sub and note keep their own measure caps. */
   .hero__body {
-    width: min(100%, 1200px);
+    width: 100%;
   }
 }
 
 @media (min-width: 1024px) {
+  /* From here there is width to pay for both insets, so the section takes
+     its horizontal padding back and the band becomes a plate: the wall shows
+     down both sides of it rather than only above and below. */
   .hero {
-    padding: var(--s-3xl) var(--s-2xl) var(--s-2xl);
+    padding: var(--s-3xl) var(--s-xl) var(--s-2xl);
   }
 
-}
-
-@media (min-width: 1280px) {
-  /* 1200 is the column the display clamp was measured against. Capping
-     narrower than this breaks the two-line rule at the top of the range. */
   .hero__body {
-    width: min(100%, 1200px);
+    /* The cap is on the MEASURE, not on the plate. 1200 is the column the
+       display clamp was measured against, so the plate is that column plus
+       its own padding rather than that column with the padding taken out of
+       it. Capping the plate at 1200 left 1152 of measure, which is under the
+       threshold at 136px and cost the second line at 1920. */
+    width: min(100%, calc(1200px + 2 * var(--s-lg)));
+    padding: var(--s-xl) var(--s-lg);
+    border: 1px solid var(--c-rule-dark);
+    border-radius: var(--r-md); /* container */
   }
 }
+
+

@@ -92,34 +92,29 @@
 .wall__tile {
   /* Landscape. A 3/4 portrait tile is 650px tall in a 487px column, so one
      tile fills the frame and the wall reads as blocks rather than a wall.
-     16/10 puts three in view per column, which is what makes it a wall. */
+     16/10 puts three in view per column, which is what makes it a wall.
+
+     The ratio is the contract: every source image is a different shape and
+     none of them is 16:10, so the container decides the slot and the image
+     fills it. Nothing about the layout depends on what an image is. */
   aspect-ratio: 16 / 10;
   border-radius: var(--r-md);
-  /* A hairline, not a shadow. The three dark tones sit 1.07:1 and 1.13:1
-     apart by design, and under the scrim that separation alone does not read
-     as a wall. The edge does the work instead. */
+  /* A hairline, not a shadow. It survived the move from flat tones to
+     photographs because it is doing a different job now: it separates one
+     photograph from the next where two dark frames meet. */
   border: 1px solid var(--c-rule-dark);
-  /* Fixed-ratio container. An <img> drops in here later at the same size. */
   overflow: hidden;
 }
 
-.wall__tile--asphalt {
-  background: var(--c-asphalt);
-}
-
-.wall__tile--surface-1 {
-  background: var(--c-surface-1);
-}
-
-.wall__tile--surface-2 {
-  background: var(--c-surface-2);
-}
-
-.wall__tile--yellow {
-  /* A decorative plane, so it takes the fill role rather than the stroke
-     one. The only place accent-ground is used for something that is not
-     the primary call. */
-  background: var(--c-accent-ground);
+.wall__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* cover, so the slot crops the image rather than the image resizing the
+     slot. Twelve of the fourteen are portrait and lose more than half their
+     height to this; that is a cropping decision made in the source files,
+     not something the stylesheet should try to rescue. */
+  object-fit: cover;
 }
 
 /* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------- */
