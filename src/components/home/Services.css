@@ -133,8 +133,31 @@
    the artwork still drops in at the same size. */
 .services__art {
   display: grid;
-  place-items: center;
-  aspect-ratio: 16 / 10;
+  /* Centred down the slot, aligned to the text edge across it. The artwork
+     will fill this box, so the alignment only governs the interim icon, and a
+     centred icon in a left-aligned card reads as a stray mark. */
+  place-items: center start;
+  /* 3:1, and this is the reservation.
+
+     It was 16:10, which at a 870px card is a 512px tall box. That does not
+     fit a pinned section alongside the heading and the sub-services, which is
+     why the desktop rule replaced the ratio with `flex: 1` and let the slot
+     absorb whatever height was left. That produced the bug this replaces: a
+     64px icon centred in 301px of nothing, with the sub-services pushed to
+     the floor of the card.
+
+     4:1, and the criterion matters. The first attempt used 3:1, derived as
+     the tallest slot that still fits the tightest viewport. That is the wrong
+     test for a slot whose artwork does not exist yet: it maximises the empty
+     space the interim icon sits in, which is the bug being fixed.
+
+     So it is derived from the card's own type instead. The heading is 64px
+     and the sub-services 76px; at 4:1 the slot is 205px at a 1280 card, which
+     is substantial against both without dominating either. It also fits with
+     real room everywhere, 382px of card in a 491px viewport at 1024x768
+     against 437px at 3:1. One ratio at every width, so the artwork is cropped
+     once. */
+  aspect-ratio: 4 / 1;
 }
 
 /* Steel-dark, not white and not the accent. The card already spends its
@@ -208,7 +231,10 @@
 
   .services__track {
     display: flex;
-    align-items: stretch;
+    /* Centred, not stretched. The card is as tall as its content and sits in
+       the middle of the pinned viewport, with the air above and below it
+       rather than inside it. */
+    align-items: center;
     gap: var(--s-2xl);
     width: max-content;
     will-change: transform;
@@ -227,24 +253,22 @@
     display: flex;
   }
 
+  /* The card is sized by its content. It used to be stretched to the pinned
+     viewport: the track stretched the card, the card stretched the link, and
+     the artwork slot absorbed everything left over. Three elements each
+     passing height down to the next, and a 64px icon at the end of it. */
   .services__link {
+    /* flex: 1 is for WIDTH. The card is a row flex container, so this is what
+       makes the link fill it; without it the link shrinks to its own content
+       and the artwork slot collapses with it. The height stretch that caused
+       the bug came from the TRACK stretching the card, which is now centred
+       instead. Two different axes, one property, and only one of them was
+       wrong. */
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: var(--s-md);
     padding: var(--s-lg);
-    min-height: 0;
-  }
-
-  /* The artwork slot absorbs whatever height is left after the type, so the
-     card always ends at the bottom edge of the pinned viewport. A drawn
-     artifact scales to its box, so it does not need the fixed ratio the work
-     plates do; what it needs is to be at artwork scale, which here is every
-     pixel the card is not using for words. */
-  .services__art {
-    flex: 1;
-    min-height: 0;
-    aspect-ratio: auto;
   }
 
   .services__discipline {

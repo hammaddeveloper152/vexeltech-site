@@ -119,24 +119,34 @@
 
 /* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------- */
 
+/* Columns not in the grid at a given width are hidden rather than removed,
+   so nothing reflows or reloads when they come back. One on a phone, three at
+   tablet, six at desktop. */
+.wall__col:nth-child(n + 2) {
+  display: none;
+}
+
 @media (min-width: 768px) {
   .wall {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  /* The third column is not rendered away, it is simply outside the grid at
-     this width. Keeping it in the DOM means no reflow when it returns. */
-  .wall__col:nth-child(3) {
-    display: none;
+  .wall__col:nth-child(-n + 3) {
+    display: block;
   }
 }
 
 @media (min-width: 1024px) {
   .wall {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 
-  .wall__col:nth-child(3) {
+  /* :nth-child(n) rather than a bare .wall__col. The hiding rule above is
+     .wall__col:nth-child(n + 2), which is one class plus one pseudo-class; a
+     bare .wall__col is one class and loses to it on specificity no matter
+     how late it appears. This selector matches every column and carries the
+     same weight, so source order decides and the columns come back. */
+  .wall__col:nth-child(n) {
     display: block;
   }
 }
