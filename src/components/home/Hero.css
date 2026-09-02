@@ -135,41 +135,6 @@
   border-right-width: 1px;
 }
 
-/* The plate label pair: a number, a hairline rule, a name.
-
-   In flow at the top of the plate, not absolutely positioned over the hero.
-   It needs no ground of its own because it is standing on one, and its
-   hairline now runs across a flat sheet at a height the copy determines
-   rather than across a photograph at a height nothing determines. */
-.hero__meta {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: var(--s-md);
-  margin-bottom: var(--s-lg);
-}
-
-.hero__meta-n,
-.hero__meta-t {
-  font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
-  color: var(--c-steel-dark);
-}
-
-.hero__meta-n {
-  font-variant-numeric: tabular-nums;
-  color: var(--c-accent-text-dark);
-}
-
-.hero__meta-rule {
-  height: 1px;
-  background: var(--c-rule-dark);
-}
-
 /* ---- Copy --------------------------------------------------------------- */
 
 /* ---- The copy plate -----------------------------------------------------
@@ -308,6 +273,37 @@
   white-space: nowrap;
 }
 
+/* ---- The slot ----------------------------------------------------------
+
+   A drawn machine yellow rule under the rotating word, redrawn on every swap
+   on the same 3px stroke and the same technique the process route and the
+   failures rail share. It is the one place the identity's own motif appears
+   inside the sentence rather than beside it.
+
+   FIXED WIDTH, spanning the mask rather than the live word. The mask is
+   already sized to the widest phrase so the line cannot reflow, and a rule
+   that resized to each word would twitch on every swap. Holding still turns
+   it into a slot the words arrive into, which is what it should read as. The
+   cost is that it overhangs the shorter phrases, and that is the honest
+   trade: the alternative reintroduces the reflow the mask exists to prevent. */
+.hero__slot {
+  position: relative;
+  display: inline-block;
+}
+
+.hero__rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* Below the descender line of the mask, which is 1.12em against a 1.02
+     line height, so the rule clears "system" and "thing" without the mask
+     having to grow. */
+  bottom: -0.06em;
+  height: var(--stroke-drawn);
+  background: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
+  transform-origin: left center;
+}
+
 /* The ticker is the fifth word and sits inside a mask like the others, so it
    drops its own baseline offset here: the outer mask is already supplying
    it, and applying it twice would hang the last two words below the line. */
@@ -372,10 +368,20 @@
 
 /* ---- Actions ------------------------------------------------------------ */
 
+/* One primary, then a link. Not two buttons.
+
+   These used to be two boxed controls of near-equal weight in small uppercase
+   Satoshi with wide tracking, which is the most default button treatment
+   there is and, worse, a composition that had not decided which action
+   mattered. The uppercase label was only the visible half of that.
+
+   So the hierarchy is the fix rather than the size: the primary takes the
+   brand register and a square corner, and the second action stops being a
+   button at all. */
 .hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-md);
+  display: grid;
+  justify-items: start;
+  gap: var(--s-lg);
   margin-bottom: var(--s-lg);
 }
 
@@ -385,17 +391,30 @@
   justify-content: center;
   /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
   min-height: 48px;
-  padding: var(--s-md) var(--s-lg);
-  border: 1px solid var(--c-accent-ground);
-  border-radius: var(--r-sm);
-  background: var(--c-accent-ground);
-  color: var(--c-asphalt); /* 9.46:1 */
-  font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
+  padding: var(--s-lg) var(--s-xl);
+  /* SHOP WHITE, not machine yellow, and this is a consequence rather than a
+     preference. One accent per frame, and this frame spends it on the rule
+     under the headline. White is already a sanctioned ground in the system
+     and asphalt on white is 17.77:1, so the primary is still unmistakably
+     the primary and still clears the call button's contrast floor by a wide
+     margin; it simply is not the accent any more.
+
+     The footer's submit keeps machine yellow. That is a different frame. */
+  border: 1px solid var(--c-shop-white);
+  /* Square. A radius is the softening this register trades away, and
+     DESIGN.md gives `none` as the default with radius as the exception. */
+  border-radius: var(--r-none);
+  background: var(--c-shop-white);
+  color: var(--c-asphalt); /* 17.77:1 */
+  /* The brand register at the h3 step. Clash Display at 600 is the brand
+     weight and h3 is an existing step: no face, weight or size was added to
+     the system to do this. Sentence case comes from the copy, not from a
+     text-transform. */
+  font-family: var(--font-brand);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-h3);
   text-decoration: none;
   transition:
     opacity var(--d-press) var(--ease-reveal),
@@ -403,10 +422,24 @@
 }
 
 /* One accent per frame: the second action is a line, not a second yellow. */
+/* The second action is a LINK, not a quieter button. Underlined, in the offer
+   register, because that is what the system already uses to mark a link and
+   it needs no new affordance. It keeps the 48px target through padding: the
+   underline is the signal, the box is not. */
 .hero__cta--line {
-  background: transparent;
-  border-color: var(--c-rule-dark);
+  min-height: 48px;
+  padding: 0;
+  background: none;
+  border: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-body);
+  letter-spacing: normal;
   color: var(--c-shop-white); /* 17.77:1 */
+  text-decoration: underline;
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.25em;
 }
 
 /* Hover is gated. Ungated it sticks on touch. */
@@ -453,8 +486,7 @@
      front-loaded ease-out with no overshoot, which is the curve this wants;
      it only ever needed the shorter duration. */
 
-  .hero__reg,
-  .hero__meta {
+  .hero__reg {
     opacity: 0;
     animation: hero-fade var(--d-drop) var(--ease-reveal) 80ms forwards;
   }
@@ -497,6 +529,39 @@
     }
     to {
       transform: translateY(0);
+    }
+  }
+
+  /* The rule draws FASTER than the word rolls, and that is the whole point.
+
+     The roll is 600ms. Matching the rule to it would put two things moving
+     for the same 600ms every 2.4 seconds, which reads as two events and, at
+     the edge of vision, as something blinking. At --d-drop the rule is done
+     in 250ms and is then still while the word finishes settling, so the pair
+     reads as one event with a cause: the rule snaps, the word arrives on it.
+     It also cuts the moving time in the reader's periphery from a quarter of
+     every dwell to a tenth.
+
+     backwards, not forwards, for the reason recorded on the word strike: the
+     end state is the element's own, so nothing is left pinned on it. */
+  .hero__rule {
+    animation: hero-rule-draw var(--d-drop) var(--ease-reveal) backwards;
+  }
+
+  /* On first paint the rule waits for the headline. The ticker is the fifth
+     word of the sweep, so it lands at 200ms plus four steps plus its own
+     duration, and the rule draws under it from there. Swaps happen only once
+     the phase is ambient, where there is nothing to wait for. */
+  .hero[data-phase='load'] .hero__rule {
+    animation-delay: calc(200ms + 4 * var(--stagger-sweep) + var(--d-drop));
+  }
+
+  @keyframes hero-rule-draw {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
     }
   }
 

@@ -58,23 +58,7 @@ const HEAD_WORDS = ['Not', 'a', 'proposal.', 'The'];
    Every phrase is rendered into the same single-column grid, so the column
    sizes itself to the widest phrase and the mask width never changes between
    words. The line cannot reflow. Only the track translates. */
-function Ticker({ reduced, phase }) {
-  const [i, setI] = useState(0);
-
-  useEffect(() => {
-    if (reduced) return undefined;
-    /* Waits for the entrance. The first dwell is counted from settle rather
-       than from load, so the first word swap can never land while the reader
-       is still watching the subtext arrive. */
-    if (phase !== 'ambient') return undefined;
-    /* The phrase station of the rotation band. DESIGN.md owns the value. */
-    const dwell = cssMs('--d-rotate-phrase', 2400);
-    const t = setInterval(() => setI((n) => (n + 1) % PHRASES.length), dwell);
-    return () => clearInterval(t);
-  }, [reduced, phase]);
-
-  const index = reduced ? 0 : i;
-
+function Ticker({ index }) {
   return (
     <span className="ticker">
       <span className="ticker__track" style={{ '--i': index }}>
@@ -91,6 +75,12 @@ function Ticker({ reduced, phase }) {
 export default function Hero() {
   const reduced = useReducedMotion();
   const noteRef = useRef(null);
+
+  /* The phrase index lives HERE rather than inside Ticker, because the rule
+     under the word has to redraw on the same event that swaps it. Two
+     components cannot share a swap by each running their own timer; they can
+     only share it by sharing the state that causes it. */
+  const [phrase, setPhrase] = useState(0);
 
   /* Under reduced motion there is no entrance to wait for, and the wall and
      the ticker are switched off anyway, so the hero opens already settled
@@ -125,6 +115,20 @@ export default function Hero() {
     };
   }, [reduced]);
 
+  useEffect(() => {
+    if (reduced) return undefined;
+    /* Waits for the entrance. The first dwell is counted from settle rather
+       than from load, so the first word swap can never land while the reader
+       is still watching the subtext arrive. */
+    if (phase !== 'ambient') return undefined;
+    /* The phrase station of the rotation band. DESIGN.md owns the value. */
+    const dwell = cssMs('--d-rotate-phrase', 2400);
+    const t = setInterval(() => setPhrase((n) => (n + 1) % PHRASES.length), dwell);
+    return () => clearInterval(t);
+  }, [reduced, phase]);
+
+  const index = reduced ? 0 : phrase;
+
   return (
     <section className="vt hero" aria-labelledby="hero-h" data-phase={phase}>
       <TileWall />
@@ -151,32 +155,21 @@ export default function Hero() {
         <rect width="100%" height="100%" filter="url(#vt-grain)" />
       </svg>
 
-      {/* Construction language, Plates 00 and 01. Both of these live INSIDE
-          the plate now.
+      {/* Construction language, Plate 01. Inside the plate, where the flat
+          sheet the plates draw it on actually exists: over the photographs
+          these vanished, because they are white at 12%.
 
-          They used to sit on the hero and float over the wall. On flat tone
-          blocks that was fine. On photographs it was not: the meta row is
-          steel-dark at 12px, the worst pair on the page to leave over an
-          image, and its hairline rule crossed the middle of whatever
-          photograph happened to be passing at an arbitrary height, reading as
-          a scratch rather than as a device. The brackets are white at 12% and
-          simply vanished over a bright tile.
-
-          On the plate they have the flat sheet the plates draw them on, a
-          hairline is legible again, and the meta pair sits with the copy it
-          labels instead of hovering above it. */}
+          The 00 / THE DECISION row that used to sit above the headline is
+          gone. Moving it onto the plate fixed its legibility and left its
+          real problem untouched: a numeral, a hairline and a label strung
+          across the top of the copy read as a stray rule rather than as a
+          device. The brackets carry the construction language on their own. */}
       <div className="hero__body">
         <div className="hero__reg" aria-hidden="true">
           <i className="hero__bracket hero__bracket--tl" />
           <i className="hero__bracket hero__bracket--tr" />
           <i className="hero__bracket hero__bracket--bl" />
           <i className="hero__bracket hero__bracket--br" />
-        </div>
-
-        <div className="hero__meta" aria-hidden="true">
-          <span className="hero__meta-n">00</span>
-          <span className="hero__meta-rule" />
-          <span className="hero__meta-t">The decision</span>
         </div>
 
         {/* The roll needs all four phrases in the DOM to size its mask, which
@@ -199,14 +192,28 @@ export default function Hero() {
             </React.Fragment>
           ))}
 
-          {/* --w, not --i. The ticker sets its own --i to drive the roll, and
+          {/* The slot. The rule is a sibling of the mask rather than inside
+              it, because the mask clips and a rule under the word has to sit
+              outside the clip to be seen at all.
+
+              key={index} is the mechanism, not a React formality: changing
+              the key remounts the rule, and remounting is what restarts a CSS
+              animation from its first frame. The rule therefore redraws on
+              exactly the event that swaps the word, because it is the same
+              state change, rather than on a second timer hoping to agree with
+              the first.
+
+              --w, not --i. The ticker sets its own --i to drive the roll, and
               an --i here would be inherited straight into it: the entrance
               index would silently become the phrase index and the line would
               open on the wrong word. */}
-          <span className="hero__mask" style={{ '--w': HEAD_WORDS.length }}>
-            <span className="hero__word">
-              <Ticker reduced={reduced} phase={phase} />
+          <span className="hero__slot">
+            <span className="hero__mask" style={{ '--w': HEAD_WORDS.length }}>
+              <span className="hero__word">
+                <Ticker index={index} />
+              </span>
             </span>
+            <i className="hero__rule" key={index} aria-hidden="true" />
           </span>
         </h1>
 
@@ -215,12 +222,16 @@ export default function Hero() {
           already built.
         </p>
 
+        {/* Sentence case in the SOURCE, not a text-transform. The labels were
+            Title Case with `text-transform: uppercase` over the top, so
+            switching the transform off alone would have left "Get a Custom
+            Quote". Case is copy. */}
         <div className="hero__actions">
           <a className="hero__cta" href="/contact-us">
-            Get a Custom Quote
+            Get a custom quote
           </a>
           <a className="hero__cta hero__cta--line" href="/contact-us">
-            Request a Proposal
+            Request a proposal
           </a>
         </div>
 
