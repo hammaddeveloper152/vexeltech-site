@@ -92,11 +92,37 @@
   --t-weight-label: 500; /* label               */
 
   /* Hero only, one per page, and the single fluid size in the system.
-     Floor is the h2 step; slope and ceiling derived from a measured 8.479em
-     longest line in Clash Display 600 at -0.03em; ceiling reached at 1360px.
-     Requires a full-width headline. Re-measure both if the face changes:
-     Clash sets 3.57% wider than Archivo did, which cost the old 9rem ceiling. */
-  --t-display-size: clamp(2.5rem, 10vw, 8.5rem); /* 40px .. 136px */
+
+     RE-DERIVED for the half-plate hero. The old slope was 10vw, set when the
+     headline was the whole composition and ran the full width of the
+     section. It now shares the frame with the tile wall and sets in a plate
+     about half the viewport wide, so the same slope produced four lines and
+     pushed the call below the fold.
+
+     The derivation is the string, not a screenshot. Measured in Clash
+     Display 600 at -0.03em, the headline is 15.477em on one line, and the
+     measure bands that produce each line count are:
+
+       2 lines   8.52em to 15.48em
+       3 lines   6.40em to 8.48em
+       4 lines   2.36em to 6.36em
+
+     The plate gives the headline `50vw - 88px` of measure at 1024 and up, so
+     the ratio is (50 - 8800/V) / slope. At a 6vw slope that lands at 6.90em
+     at 1024, 7.19em at 1280 and 7.60em at 2000: inside the three-line band
+     at every width, and nearest its middle where most readers are. 5vw would
+     reach 8.6em and drop to two lines on a wide screen; 7vw reaches 6.3em and
+     breaks to four at 1024.
+
+     Floor is unchanged at the h2 step. The ceiling is unchanged at 8.5rem but
+     is now reached at 2267px rather than 1360px, and it is paired with the
+     plate's own 1000px cap: above 2267 both are fixed, so the ratio settles
+     at 6.71em and the line count stops moving.
+
+     Re-measure the three bands above if the face changes. They are properties
+     of the string in this typeface and nothing else here survives without
+     them. */
+  --t-display-size: clamp(2.5rem, 6vw, 8.5rem); /* 40px .. 136px */
   --t-display-line: 1.02;
   --t-track-display-lg: -0.03em;
 

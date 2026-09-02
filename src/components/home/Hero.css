@@ -226,46 +226,32 @@
   background: var(--c-asphalt);
 }
 
-/* ---- The plate is ANCHORED, not floating -------------------------------
+/* ---- The plate is sized to its copy ------------------------------------
 
-   Four visible edges is a card. A card sits ON the wall and reads as a thing
-   placed there; a plane that runs off the screen reads as architecture the
-   wall is behind. So from 768 the plate keeps exactly two visible edges, top
-   and right, and leaves the frame on the other two.
+   Not bled, and not a card either. It sits hard against the left edge of the
+   viewport with no margin on that side, and its height is exactly the copy
+   plus its own padding. The wall runs above it, below it, and down its right
+   side.
 
-   The bleed is GEOMETRY, not a softened edge. No gradient, no fade, no mask:
-   flat-forever governs fills and this is a fill, so the edge stays hard and
-   simply leaves the viewport. -100vw and -100vh overshoot deliberately and
-   the section's own `overflow: clip` does the cutting, which means the bleed
-   does not depend on the hero's padding, its height, or how the copy is
-   aligned inside it. Change any of those and this still runs off the edge.
+   This replaced a version that bled off the left and the bottom. That one
+   solved the four-edges problem and created a worse one: with the measure
+   the headline needs, a plate that also runs off the bottom fills nearly the
+   whole viewport, the wall disappears behind it, and everything below the
+   copy is dead plate. A plane that leaves the frame only reads as
+   architecture when there is something left to see around it.
 
-   Painted by a pseudo-element rather than by the body's own background, so
-   the copy's box is untouched. The measure is the thing this section keeps
-   nearly breaking, and a plate that paints outside the box it is measured in
-   cannot cost it a character.
+   So the plate stops where the copy stops. The left edge is at x=0 and is
+   the only one that meets the viewport, which is why it is the only pair of
+   corners without a radius: DESIGN.md gives radius none to any edge that
+   meets the viewport, and the right pair keeps the container step. The
+   border stays complete on all four sides.
 
-   The border stays complete on all four sides. Two of them are outside the
-   clip, which is a viewport crop rather than a partial border, and the
-   system's ban is on declaring three sides and calling it a border. Only the
-   top-right corner is visible, so it is the only one with a radius: the rest
-   meet the viewport, and DESIGN.md gives radius none to any edge that does. */
+   No gradient and no fade anywhere in this. Flat-forever governs fills and
+   the plate is a fill; every edge here is a hard one. */
 @media (min-width: 768px) {
   .hero__body {
-    background: none;
-  }
-
-  .hero__body::before {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    right: 0;
-    left: -100vw;
-    bottom: -100vh;
-    background: var(--c-asphalt);
     border: 1px solid var(--c-rule-dark);
-    border-radius: 0 var(--r-md) 0 0;
+    border-radius: 0 var(--r-md) var(--r-md) 0;
   }
 }
 
@@ -540,10 +526,10 @@
 
 @media (min-width: 768px) {
   /* Asymmetric, and deliberately so. There is nothing to inset from on the
-     left because the plate runs off that edge; the right is where the wall
-     shows, so that is the only side that gets a margin. 24px rather than 40
-     because the two-line threshold at 768 is 654px of measure and 40 leaves
-     640. */
+     left because the plate is flush to the viewport there; the right is
+     where the wall shows, so that is the only side that gets a margin. 24px
+     rather than 40 because the two-line threshold at 768 is 654px of measure
+     and 40 leaves 640. */
   .hero {
     padding: var(--s-2xl) var(--s-lg) var(--s-xl) 0;
   }
@@ -561,24 +547,32 @@
 }
 
 @media (min-width: 1024px) {
-  /* From here there is width to pay for both insets, so the section takes
-     its horizontal padding back and the band becomes a plate: the wall shows
-     down both sides of it rather than only above and below. */
+  /* Zero on the left, because the plate is flush to the viewport there and
+     has nothing to be inset from. The right is where the wall shows down the
+     side of the plate, so that is the only horizontal margin. */
   .hero {
     padding: var(--s-3xl) var(--s-xl) var(--s-2xl) 0;
   }
 
   .hero__body {
-    /* The cap is on the MEASURE, not on the plate. 1200 is the column the
-       display clamp was measured against, so the plate is that column plus
-       its own padding rather than that column with the padding taken out of
-       it. Capping the plate at 1200 left 1152 of measure, which is under the
-       threshold at 136px and cost the second line at 1920. */
-    width: min(100%, calc(1200px + var(--s-2xl) + var(--s-lg)));
-    /* Asymmetric: more inset on the bleeding side. A line of type set hard
-       against an edge that runs off-screen reads as falling off it, and the
-       left is the only side with no margin outside the plate to stand in for
-       that. The border and radius live on the pseudo-element now. */
+    /* Half the viewport, capped. This is the whole composition: a plate
+       against a wall rather than a plate with a margin.
+
+       It used to be a 1200px measure plus padding, which at 1280 left the
+       wall a 40px strip down one side. That was not a wall, it was a border,
+       and it was forced by the headline needing 1090px to hold two lines.
+       The fix was upstream in the display size rather than here; see the
+       re-derivation on --t-display-size.
+
+       50vw gives the headline 50vw - 88px of measure, which is the number
+       the display slope was solved against. The 1000px cap stops the plate
+       growing forever on wide screens and pairs with the clamp's own
+       ceiling: past 2267px both are fixed and the line count settles. */
+    width: min(100%, 50vw, 1000px);
+    /* Asymmetric: more inset on the flush side. The left edge sits on the
+       viewport with no margin outside it, so the copy needs its optical
+       margin from the inside instead. The right has the wall beyond it and
+       needs less. */
     padding: var(--s-xl) var(--s-lg) var(--s-xl) var(--s-2xl);
   }
 }
