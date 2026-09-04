@@ -31,6 +31,15 @@ Then, from the repo root:
 | `refine.mjs <W> <H> '[["A","B",lo,hi]]' <step>` | exact seam range and worst frame, with a screenshot |
 | `a11y.mjs <W> <H>` | landmark, skip link, tab order, process titles, the strip's pause control |
 | `ink.mjs` | painted ink of a carrier against the others at the same step |
+| `plates.mjs` | the work plates' painted boxes at every breakpoint — the source for the video asset spec |
+| `transfer.mjs` | page transfer and largest paint, five runs, from Resource Timing |
+| `workgrid.mjs` | the work grid's three plate states, and that each fills its box |
+| `final.mjs` | reduced motion, dead overrides, and every element on the page painting machine yellow |
+
+`final.mjs` is the one to run after any change to where the accent lands: it
+walks every element on the page and lists the ones computing to `#F0B323`. The
+answer should be the wordmark plus exactly the carriers `DESIGN.md` names, and
+nothing else.
 
 Measured cold (`setCacheEnabled(false)`) on a production build, after
 `document.fonts.ready` plus the fonts-ready ScrollTrigger refresh, with
