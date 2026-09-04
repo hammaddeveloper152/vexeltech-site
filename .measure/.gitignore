@@ -1,0 +1,10 @@
+# Outputs, not tooling.
+#
+# BUILD-LAW's test for what gets committed is whether someone could re-derive
+# it from the documents alone. The scripts in here, no: they implement a
+# threshold and a window that the prose only describes. Their screenshots and
+# JSON, yes — by running them. So the harness is tracked and what it prints is
+# not, and a stale sweep from three builds ago never gets mistaken for a
+# current measurement.
+*.png
+*.json
