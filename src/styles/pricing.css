@@ -76,12 +76,15 @@
   /* The lead card sits 12px higher, so the row needs the headroom or the lift
      clips against the panel above. */
   padding-top: 12px;
-  /* START, NOT STRETCH. Stretched, the Custom card was as tall as the two
-     beside it and its call sat at the bottom of a column of nothing — the
-     stretch was hiding the fact that the card had less to say rather than
-     making it a peer. Top-aligned, each card is the height of its own content
-     and every call sits 32px under that card's last row. */
-  align-items: start;
+  /* STRETCH, AND THIS REVERSES `align-items: start`.
+
+     Top-aligning was right while the short card was short: stretching it put
+     its call at the bottom of a column of nothing, which hid the fact that it
+     had less to say. The fix was to give it more to say. Basic now carries the
+     four lines it does NOT have and Custom carries three questions and a
+     commitment, so all three have content to the floor and equal height is a
+     comparison rather than a disguise. */
+  align-items: stretch;
 }
 
 @media (min-width: 900px) {
@@ -133,11 +136,11 @@
      with it; only the plane underneath them changes. */
   background-color: var(--c-lit-raised);
   border-top-color: rgb(255 255 255 / 18%);
-  /* 12px higher and 24px taller than its neighbours: the lift is the row's,
-     the height is the card's own padding. */
+  /* 12px higher than its neighbours, and 12px taller because of it. The extra
+     BOTTOM padding is gone: with the row stretched it only lifted this card's
+     call 12px above the other two, and the three calls share a line. */
   margin-top: -12px;
   padding-top: calc(var(--s-xl) + 12px);
-  padding-bottom: calc(var(--s-xl) + 12px);
   /* The left-edge arc glow is GONE. Arc now has a fixed station on every
      object — the rim, bottom right — and a second arc glow on the opposite
      side of the pick contradicted it: two rims, one of them where the key is
@@ -328,13 +331,27 @@
 
    32 IS OFF THE SPACING RAMP, which runs 4, 8, 16, 24, 40, 64, 96 and omits 32
    deliberately. Directed value, recorded here rather than rounded to 40 or 24
-   without saying so. */
+   without saying so.
+
+   PINNED, 2026-09-10: `auto` above it and the 32px kept as padding, so the
+   call sits on the floor of every card at the same y and still never rides up
+   against the last row. The cards are equal height now, and three buttons on
+   one line read as a row of choices where three at three heights read as
+   three separate cards. */
 .card__foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--s-md);
-  margin: 32px 0 0;
+  /* TWO ROWS, ALWAYS, and the second one is reserved whether the card has an
+     ask link or not. As a wrapping flex row the lead card's foot was two lines
+     tall and the others' were one, so bottom-pinning the FOOT put the lead's
+     button 64px above the other two — the boxes aligned and the things a
+     reader actually sees did not. A fixed two-row grid makes every foot the
+     same height, so the buttons share a line and the floors do too. */
+  display: grid;
+  grid-template-rows: auto 48px;
+  justify-items: start;
+  align-content: end;
+  gap: var(--s-sm);
+  margin: auto 0 0;
+  padding-top: 32px;
 }
 
 /* ONE SOLID CALL PER PANEL, and it belongs to the lead. The ladder shipped
@@ -456,5 +473,181 @@
   .card__cta:hover,
   .card__cta:active {
     transform: none;
+  }
+}
+
+/* ---- The ghost rows: what Basic does not have -------------------------
+
+   Steel-lift at 50%, and a hairline square in place of the filled yellow one —
+   a filled yellow square is the site's "this is here" mark, and none of these
+   lines is here.
+
+   IN THE DELTA STATE THEY LIGHT WITH THE ADVANCE ROWS. Press the Advance price
+   and the same four lines go machine yellow on both cards at once: present on
+   one, absent on the other, side by side, one colour. That is the comparison
+   the ladder exists to make, and it is the reason these rows are on the card
+   rather than the gap being left empty.
+
+   0.80, AND THE NUMBER WAS SOLVED RATHER THAN ESTIMATED. At the 50% these rows
+   were first drawn at, steel-lift over lit-near composites to #5D6066 and
+   reads 2.61:1 — under the 4.5:1 floor, on painted pixels as well as declared.
+
+   0.79 WAS QUOTED AS THE FLOOR AND IT IS NOT: it lands on 4.495:1, five
+   thousandths short, which the walk correctly fails. Solved across the range
+   instead of estimated from rounded arithmetic:
+
+     0.78 -> 4.388    0.79 -> 4.495    0.80 -> 4.556    0.82 -> 4.741
+
+   0.80 is the first value that clears, and it clears with enough margin that
+   anti-aliasing cannot flip it back. The rows are still visibly the lesser of
+   the two states: what separates a ghost from a real row is the hairline
+   square and the lift into yellow, not the last two points of contrast. */
+.card__ghosts {
+  margin-top: var(--s-lg);
+}
+
+.card__ghost-h {
+  margin: 0 0 var(--s-sm);
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+}
+
+.card__row--ghost {
+  color: var(--c-steel-lift);
+  opacity: 0.8;
+  transition:
+    color var(--d-drop) var(--ease-reveal),
+    opacity var(--d-drop) var(--ease-reveal);
+}
+
+.card__tick--ghost {
+  background: none;
+  box-shadow: inset 0 0 0 1px var(--c-steel-lift);
+}
+
+.card__ghosts[data-lit='true'] .card__row--ghost {
+  color: var(--c-accent-text-dark); /* 8.77:1 on lit-near */
+  opacity: 1;
+}
+
+.card__ghosts[data-lit='true'] .card__tick--ghost {
+  box-shadow: inset 0 0 0 1px var(--c-accent-ground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card__row--ghost {
+    transition: none;
+  }
+}
+
+/* ---- The Custom card's commitment ------------------------------------- */
+
+.card__terms {
+  margin: var(--s-lg) 0 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-bone); /* 13.67:1 on lit-near */
+}
+
+/* ---- The tab row: a sliding pill and a figure per tab -----------------
+
+   The pill is one `::before` on the row, placed from three custom properties
+   that the page's effect measures. `data-slide` is set by that effect and by
+   nothing else, so with no JavaScript the attribute is absent, the pill is not
+   drawn, and the per-label `:checked` background does what it always did. One
+   state or the other, never both. */
+.tabs__row {
+  position: relative;
+}
+
+.tabs__row[data-slide='true']::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: var(--pill-w, 0);
+  height: var(--pill-h, 0);
+  border-radius: 999px;
+  background: var(--c-accent-ground);
+  transform: translate(var(--pill-x, 0), var(--pill-y, 0));
+  transition:
+    transform var(--d-drop) var(--ease-reveal),
+    width var(--d-drop) var(--ease-reveal);
+}
+
+/* With the pill drawn, the labels stop painting their own. */
+.tabs__row[data-slide='true'] .tabs__tab {
+  position: relative;
+  z-index: 1;
+  background: none;
+}
+
+#tab-branding:checked ~ .tabs__row[data-slide='true'] [for=tab-branding],
+#tab-websites:checked ~ .tabs__row[data-slide='true'] [for=tab-websites],
+#tab-marketing:checked ~ .tabs__row[data-slide='true'] [for=tab-marketing],
+#tab-automation:checked ~ .tabs__row[data-slide='true'] [for=tab-automation] {
+  background: none;
+}
+
+/* The tab is two lines now: the discipline, and what it starts at. */
+.tabs__tab {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 2px;
+  padding-top: var(--s-sm);
+  padding-bottom: var(--s-sm);
+}
+
+.tabs__from {
+  font-family: var(--font-offer);
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-steel-lift); /* 6.09:1 on surface-warm */
+}
+
+/* On the active pill this line stands on machine yellow, so it takes the
+   asphalt the label takes rather than a value written for the track. */
+#tab-branding:checked ~ .tabs__row [for=tab-branding] .tabs__from,
+#tab-websites:checked ~ .tabs__row [for=tab-websites] .tabs__from,
+#tab-marketing:checked ~ .tabs__row [for=tab-marketing] .tabs__from,
+#tab-automation:checked ~ .tabs__row [for=tab-automation] .tabs__from {
+  color: var(--c-asphalt); /* 9.46:1 */
+}
+
+/* ---- The swap: a 70ms stagger, transform and opacity only -------------
+
+   The panels switch by `display`, so the animation restarts every time a panel
+   is shown, which is the behaviour wanted and costs no state. `--i` is the
+   card's index, set inline by the component. */
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.tabs__panel .card {
+  animation: cardIn var(--d-drop) var(--ease-reveal) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tabs__panel .card {
+    animation: none;
+  }
+
+  .tabs__row[data-slide='true']::before {
+    transition: none;
   }
 }

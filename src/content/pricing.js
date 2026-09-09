@@ -290,15 +290,36 @@ export const CUSTOM = {
    for each one — the same treatment the figures had while they were blank, and
    for the same reason.
 
-   TWELVE LINES ARE OUTSTANDING: three each for branding, websites, marketing
-   and automation. The moment they land here the card stops showing pending
-   rows and nothing else moves; the rows are already the right height. */
+   SUPPLIED BY THE FOUNDER, 2026-09-10. The twelve lines below are verbatim.
+   The card's pending rows are gone and nothing else moved, which is what the
+   reservation was built to do. */
 export const NEEDS = {
-  branding: [null, null, null],
-  websites: [null, null, null],
-  marketing: [null, null, null],
-  automation: [null, null, null],
+  branding: [
+    'Your market and who you are up against',
+    'How many touchpoints the identity has to cover',
+    'What already exists that has to survive',
+  ],
+  websites: [
+    'How many pages and what each one has to do',
+    'What it connects to: booking, payments, CRM, forms',
+    'Where the visitors come from',
+  ],
+  marketing: [
+    'The market and the competition in it',
+    'The monthly budget range',
+    'What has been tried and what it returned',
+  ],
+  automation: [
+    'The tools already in use',
+    'The workflow that eats the most hours each week',
+    'The volume it has to handle',
+  ],
 };
+
+/* The line under the intake rows. Founder-supplied, and it is the one thing on
+   the Custom card that is a commitment rather than a question. */
+export const CUSTOM_TERMS =
+  'Every custom job is priced on the call and in writing before any work starts.';
 
 export const LADDER = {
   branding: {

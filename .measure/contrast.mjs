@@ -7,6 +7,7 @@
    ground set on a section three levels up is not a declared pair with the text
    inside it. */
 import puppeteer from 'puppeteer';
+import { PNG } from 'pngjs';
 
 const URL = process.argv[2] || 'http://localhost:4179/';
 const AA_BODY = 4.5, AA_LARGE = 3.0;
@@ -68,14 +69,92 @@ for (const [w,h] of [[1280,800],[390,844]]) {
         cls: (el.className||'').toString().slice(0,38) || el.tagName,
         txt: txt.slice(0,34), ratio: +ratio.toFixed(2), need, size: Math.round(size),
         fg: c.color, ground: `rgb(${ground.map(Math.round).join(', ')})`,
+        /* DOCUMENT coordinates, not viewport ones. The walk ends at the
+           bottom of the page, so a viewport box for anything above it is off
+           screen and samples nothing — the first version of the pixel check
+           silently cleared no pairs for exactly that reason. */
+        box: [Math.round(r.left + scrollX), Math.round(r.top + scrollY), Math.round(r.width), Math.round(r.height)],
       });
     }
     return out;
   }, AA_BODY, AA_LARGE);
 
-  console.log(`\n=== ${w}x${h} — ${findings.length} failing pair(s) ===`);
-  for (const f of findings) console.log(`  ${String(f.ratio).padStart(5)} (needs ${f.need})  ${f.size}px  ${f.cls.padEnd(30)} "${f.txt}"  ${f.fg} on ${f.ground}`);
-  bad += findings.length;
+  /* ---- EVERY FAILURE IS RE-CHECKED AGAINST PAINTED PIXELS ---------------
+
+     The walk above climbs the DOM for the first ancestor that paints a
+     background. That is the right test for a ground three levels up and it is
+     blind to a ground that is not an ancestor at all: a sibling `::before`, a
+     canvas, an absolutely positioned plate behind the text. The pricing tabs
+     are exactly that — the active pill is a `::before` on the row, so the
+     label's computed ancestor is the track and its PAINTED ground is the pill,
+     and the walk reported asphalt on surface-warm at 1.12:1 for a pair that is
+     asphalt on machine yellow at 9.46:1.
+
+     So a failure is a candidate, not a verdict. Each one is re-measured
+     against the pixels actually painted inside the element's own box, away
+     from the glyphs, and a pair that passes there is a ground the DOM could
+     not see rather than a defect. Same discipline BUILD-LAW already records
+     for the stale-node false positive: check a surprising measurement against
+     the pixels before believing it. */
+  const real = [];
+  const hidden = [];
+  if (findings.length) {
+    const im = PNG.sync.read(await p.screenshot({ type: 'png', fullPage: true }));
+    const lin2 = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; };
+    const L2 = (r, g, b) => 0.2126 * lin2(r) + 0.7152 * lin2(g) + 0.0722 * lin2(b);
+    const CR2 = (a, b) => { const l1 = Math.max(a, b), l2 = Math.min(a, b); return (l1 + 0.05) / (l2 + 0.05); };
+    for (const f of findings) {
+      const [x, y, bw, bh] = f.box;
+      /* the MODAL colour inside the box: glyphs are a minority of the pixels,
+         so the most common value is the ground under them */
+      const tally = new Map();
+      for (let yy = Math.max(0, y + 1); yy < Math.min(im.height, y + bh - 1); yy++) {
+        for (let xx = Math.max(0, x + 1); xx < Math.min(im.width, x + bw - 1); xx++) {
+          const i = (yy * im.width + xx) * 4;
+          const k = `${im.data[i]},${im.data[i + 1]},${im.data[i + 2]}`;
+          tally.set(k, (tally.get(k) || 0) + 1);
+        }
+      }
+      let best = null, bestN = 0;
+      for (const [k, n2] of tally) if (n2 > bestN) { best = k; bestN = n2; }
+      if (!best) { real.push(f); continue; }
+      const g2 = best.split(',').map(Number);
+
+      /* THE GLYPH COLOUR COMES FROM PIXELS TOO, and this is the half that
+         matters. The first version compared the DECLARED colour against the
+         painted ground, which ignores every opacity between them — it cleared
+         the ghost rows at 6.33:1 when the composite a reader sees is 2.61:1.
+         A pixel check that only replaces one side of the pair is worse than
+         no check, because it clears real failures while it fixes false ones.
+
+         The glyph core is the pixel furthest in luminance from the ground.
+         Anti-aliased edges sit between the two, so the extreme is the ink. */
+      const gl = L2(g2[0], g2[1], g2[2]);
+      let ink = null, far = -1;
+      for (let yy = Math.max(0, y + 1); yy < Math.min(im.height, y + bh - 1); yy++) {
+        for (let xx = Math.max(0, x + 1); xx < Math.min(im.width, x + bw - 1); xx++) {
+          const i = (yy * im.width + xx) * 4;
+          const d = Math.abs(L2(im.data[i], im.data[i + 1], im.data[i + 2]) - gl);
+          if (d > far) { far = d; ink = [im.data[i], im.data[i + 1], im.data[i + 2]]; }
+        }
+      }
+      if (!ink) { real.push(f); continue; }
+      const ratio2 = CR2(L2(ink[0], ink[1], ink[2]), gl);
+      const shot = { ...f, painted: `rgb(${g2.join(', ')})`, inkPainted: `rgb(${ink.join(', ')})`, ratio2: +ratio2.toFixed(2) };
+      if (ratio2 >= f.need) hidden.push(shot); else real.push(shot);
+    }
+  }
+
+  console.log(`\n=== ${w}x${h} — ${real.length} failing pair(s) ===`);
+  for (const f of real) {
+    const painted = f.painted ? `  [painted ${f.painted} ${f.ratio2}:1]` : '';
+    console.log(`  ${String(f.ratio).padStart(5)} (needs ${f.need})  ${f.size}px  ${f.cls.padEnd(30)} "${f.txt}"  ${f.fg} on ${f.ground}${painted}`);
+  }
+  if (hidden.length) {
+    console.log(`  -- ${hidden.length} pair(s) cleared on painted pixels: a ground the DOM walk cannot see --`);
+    for (const f of hidden) console.log(`     ${String(f.ratio).padStart(5)} declared -> ${f.ratio2}:1 painted   ${f.cls.padEnd(28)} "${f.txt}"  on ${f.painted}`);
+  }
+  bad += real.length;
   await p.close();
 }
 await b.close();

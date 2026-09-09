@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FIGURES, LADDER, CUSTOM, NEEDS, money } from '../../content/pricing.js';
+import { FIGURES, LADDER, CUSTOM, NEEDS, CUSTOM_TERMS, money } from '../../content/pricing.js';
 import { CALL_HREF } from './parts.jsx';
 
 /* THE PRICING LADDER — Advance, Basic, Custom, and the delta.
@@ -41,6 +41,47 @@ function Marker() {
   return <p className="card__marker">Start here</p>;
 }
 
+/* THE GHOST ROWS. What Basic does not have, on Basic's own card.
+
+   Three cards of different lengths is a comparison a reader has to do by
+   scrolling, and the empty half of the shortest card is the part that says
+   nothing. So Basic's gap is filled with the four lines Advance has and it
+   does not — DERIVED, never typed: the delta-flagged features plus the
+   turnaround, which is the same set the caption counts.
+
+   They are the absent items, so they are drawn absent: steel-lift at 50%, and
+   a hairline square instead of the filled yellow one, because a filled yellow
+   square is the site's "this is here" mark and none of this is here.
+
+   IN THE DELTA STATE THEY LIGHT WITH THE ADVANCE ROWS. That is the whole
+   argument for putting them on the card: press the Advance price and the four
+   things you are paying for light up on BOTH cards at once — present on one,
+   absent on the other, same four lines, same colour, side by side. */
+function ghostsFor(set, tier) {
+  const lead = set.tiers.find((t) => t.id === set.lead);
+  if (!lead || lead.id === tier.id) return [];
+  const rows = lead.features.filter((f) => typeof f !== 'string' && f.delta).map((f) => f.t);
+  if (lead.turnaroundDelta && lead.turnaround) rows.push(lead.turnaround);
+  return rows;
+}
+
+function Ghosts({ rows, open }) {
+  if (!rows.length) return null;
+  return (
+    <div className="card__ghosts" data-lit={open ? 'true' : 'false'}>
+      <p className="card__ghost-h">Not in Basic</p>
+      <ul className="card__rows card__rows--ghost">
+        {rows.map((t) => (
+          <li className="card__row card__row--ghost" key={t}>
+            <span className="card__tick card__tick--ghost" aria-hidden="true" />
+            {t}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function Row({ line, open }) {
   const text = typeof line === 'string' ? line : line.t;
   const delta = typeof line === 'string' ? false : !!line.delta;
@@ -52,7 +93,7 @@ function Row({ line, open }) {
   );
 }
 
-function Tier({ tier, lead, marked, deltaAmount, open, setOpen }) {
+function Tier({ tier, i, lead, marked, deltaAmount, open, setOpen, ghosts }) {
   const price = money(FIGURES[tier.figure]);
   const flagged = tier.features.filter((f) => typeof f !== 'string' && f.delta).length;
   const count = flagged + (tier.turnaroundDelta ? 1 : 0);
@@ -75,7 +116,7 @@ function Tier({ tier, lead, marked, deltaAmount, open, setOpen }) {
   const Price = showsDelta ? 'button' : 'p';
 
   return (
-    <li className={'card' + (lead ? ' card--lead' : '')}>
+    <li className={'card' + (lead ? ' card--lead' : '')} style={{ '--i': i }}>
       {marked ? <Marker /> : null}
       <h3 className="card__name">{tier.name}</h3>
 
@@ -101,6 +142,8 @@ function Tier({ tier, lead, marked, deltaAmount, open, setOpen }) {
           <Row key={typeof f === 'string' ? f : f.t} line={f} open={open} />
         ))}
       </ul>
+
+      <Ghosts rows={ghosts} open={open} />
 
       {/* ONE SOLID CALL IN THE PANEL, and it belongs to the pick. Every card in
           the ladder used to carry a yellow fill, which is three primaries in
@@ -130,9 +173,9 @@ function Tier({ tier, lead, marked, deltaAmount, open, setOpen }) {
    line because the lines have never been supplied; see the note beside it in
    content/pricing.js. A pending row is visibly one, at the height a real line
    will occupy, so filling them in moves nothing. */
-function CustomCard({ why, needs }) {
+function CustomCard({ why, needs, i }) {
   return (
-    <li className="card card--custom">
+    <li className="card card--custom" style={{ '--i': i }}>
       <h3 className="card__name">{CUSTOM.name}</h3>
       <p className="card__price card__price--quote">{CUSTOM.quote}</p>
       {why ? <p className="card__why">{why}</p> : null}
@@ -150,6 +193,9 @@ function CustomCard({ why, needs }) {
           </li>
         ))}
       </ul>
+
+      {/* The card's one commitment, under the three questions. */}
+      <p className="card__terms">{CUSTOM_TERMS}</p>
 
       <p className="card__foot">
         <Link className="card__ask card__ask--only" to={CALL_HREF}>
@@ -181,18 +227,20 @@ export default function PricingCards({ discipline }) {
 
   return (
     <ul className={`cards cards--${count}`}>
-      {set.tiers.map((tier) => (
+      {set.tiers.map((tier, i) => (
         <Tier
           key={tier.id}
+          i={i}
           tier={tier}
           lead={set.lead === tier.id}
           marked={marked === tier.id}
           deltaAmount={deltaAmount}
           open={open}
           setOpen={setOpen}
+          ghosts={ghostsFor(set, tier)}
         />
       ))}
-      <CustomCard why={set.why} needs={NEEDS[discipline] || [null, null, null]} />
+      <CustomCard why={set.why} needs={NEEDS[discipline] || [null, null, null]} i={set.tiers.length} />
     </ul>
   );
 }
