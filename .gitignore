@@ -18,3 +18,7 @@ Desktop.ini
 # It is therefore absent from a fresh clone: re-clone it before pre-flight
 # rather than skipping step 9.
 impeccable/
+
+# The measurement build's output. The harness itself is tracked and states its
+# own rules in .measure/.gitignore; nothing about it belongs here as well.
+dist-measure/

@@ -8,3 +8,18 @@
 # current measurement.
 *.png
 *.json
+
+# out/ wholesale, because it is 41 MB and it holds contact sheets as well as
+# frames, and .html is caught by neither rule above.
+out/
+
+# EXCEPT evidence/, and it is the one exception this file gets.
+#
+# Those frames show shapes that were built, measured, rejected, and whose code
+# has since been DELETED — two hero entrances and two page transitions. The
+# test above is "could someone re-derive this by running the script", and for
+# these the answer is no: there is no longer a script, a switch or a stylesheet
+# that produces them. They are the only pictures in here that a re-run cannot
+# bring back, which is exactly why they are the only ones kept.
+!evidence/
+!evidence/*.png

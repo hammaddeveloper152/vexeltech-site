@@ -1,46 +1,168 @@
-# .measure — the accent measurement harness
+# .measure — the measurement harness
 
-Not part of the build. It is the tooling behind two rules recorded in
-`BUILD-LAW.md` (`vexel-tech-site/BUILD-LAW.md`), and it is here so the next
-pass does not rebuild it:
+Not part of the build. **Tracked in git**, deliberately, and the reason is a
+rule in `BUILD-LAW.md`: *tooling we wrote is committed; only third-party clones
+are ignored.* The test that rule sets is **could someone re-derive this from
+the document alone?** For the impeccable detector, yes — the clone command is
+in the document. For a script implementing a threshold, a window and a freeze
+that the documents describe only in prose, no.
 
-- **One accent per frame is per VIEWPORT, not per section** — the seam walk.
-- **The window the 5% ceiling is measured in**, with the anti-alias threshold.
+That test is why the split below is where it is:
+
+| | Tracked | Why |
+|---|---|---|
+| `*.mjs`, this README | **yes** | we wrote them, and recorded numbers cite them |
+| `evidence/` | **yes** | frames of shapes whose code no longer exists, so no re-run brings them back |
+| `out/`, and every other `*.png` and `*.json` | **no** | 41 MB that a committed script regenerates on demand, and a stale sweep from three builds ago must never be mistaken for a current measurement |
+
+`.measure/.gitignore` holds those rules and is the only place they live. The
+repository root deliberately says nothing about this directory: two ignore
+rules in two files is how they drift.
+
+**Half of this directory was tracked and half was not, which is worse than
+neither.** Sixteen files were committed in two earlier passes and twenty-two
+were not, so `git ls-files .measure` looked healthy while the scripts behind
+the most recent numbers sat outside it. BUILD-LAW records gitignored tooling
+disappearing as a repeated failure here — the detector vanished from the build
+machine once and step 9 reported nothing rather than reporting a failure, and
+the site repo went a whole build with no ignore rule at all — and a directory
+that is half tracked is the same hazard with a smaller symptom. A harness that
+produced recorded numbers is part of the record: if it is gone, the numbers
+cannot be reproduced and the rules they support cannot be checked.
+
+## Dependencies — one command, and it must be one command
 
 Puppeteer and pngjs are installed **unsaved**, so `npm install` removes them
-and nothing says so. Reinstall both in one command; two `--no-save` installs
-run separately will uninstall each other:
+and nothing says so. Reinstall both in a single command; two `--no-save`
+installs run separately will uninstall each other:
 
     npm install --no-save --no-audit --no-fund puppeteer@25.9.0 pngjs
 
-Build the rebuilt page as its own entry and serve it. `vite build` alone only
-builds `index.html`, which is the legacy tree:
+## Serving
+
+Two entries, two ports, and they are not interchangeable.
+
+**The section harness**, for anything about the home page's sections. `vite
+build` alone only builds `index.html`, which is the site; this builds
+`hero-preview.html`, which renders the section tree directly with no router in
+front of it:
 
     npx vite build --config .measure/vite.measure.config.js
     npx vite preview --config .measure/vite.measure.config.js --port 4178 --strictPort
 
-Then, from the repo root:
+**The site itself**, for anything about routes, transitions or page weight:
 
-| Script | What it does |
+    npx vite build
+    npx vite preview --port 4179 --strictPort
+
+Run every script from the repo root.
+
+## What each script proves
+
+Grouped by the claim it supports, because a script's value here is the recorded
+statement it backs rather than the file it writes.
+
+### The identity's geometry
+
+| Script | What it proves |
 |---|---|
-| `lib.mjs` | the threshold, the ground set, the eleven frames and their carriers |
+| `markgeom.mjs` | **Every angle in the mark, from the shipped path.** This is the script that found `DESIGN.md` naming the wrong arm: the record said "the mark's angle, 52.8 degrees, the long arm's 44 across and 58 up", and the long arm is 66.27° outer and 62.59° inner while 52.8 is the SHORT arm's outer edge at 51.93. It also derives the transition's cut and the hero line's `47/60` travel constant, so the shapes cannot drift from the logo. **DESIGN.md's angle table cites this file; if it goes, the correction cannot be re-derived.** |
+| `wordmark.mjs` | the lockup's painted area against the frame, which is what the wordmark's exemption from the accent count rests on |
+
+### The accent, and the two rules about where it is measured
+
+| Script | What it proves |
+|---|---|
+| `lib.mjs` | the threshold itself: the anti-alias solve at `a >= 0.5`, residual 32, the four grounds, the eleven frames and their carriers. Everything below imports it |
 | `window.mjs <W> <H>` | every carrier's painted area in the settled window |
 | `sweep.mjs <W> <H>` | painted accent per section at every 100px of scroll (`STEP=` to change) |
 | `report.mjs <W>` | reads a sweep and prints seams and areas |
-| `seams.mjs <W> <H>` | carrier bands and the seam arithmetic |
-| `refine.mjs <W> <H> '[["A","B",lo,hi]]' <step>` | exact seam range and worst frame, with a screenshot |
-| `a11y.mjs <W> <H>` | landmark, skip link, tab order, process titles, the strip's pause control |
+| `seams.mjs <W> <H>` | **one accent per frame is per VIEWPORT, not per section** — the carrier bands and the seam arithmetic behind that rule |
+| `refine.mjs <W> <H> '[["A","B",lo,hi]]' <step>` | the exact seam range and worst frame, with a screenshot |
 | `ink.mjs` | painted ink of a carrier against the others at the same step |
+| `pageaccent.mjs` | the same walk across all eight pages rather than the home page alone |
+| `final.mjs` | **run this after any change to where the accent lands.** Walks every element on the page and lists the ones computing to `#F0B323`, plus reduced motion and dead overrides |
+
+### The two page-wide devices
+
+| Script | What it proves |
+|---|---|
+| `entrance.mjs` | **the hero entrance, frozen frame by frame.** Asserts the composite travel is 51.93° before it writes a frame, so the words cannot arrive on a path the line does not describe. Carries two traps it fell into: `getAnimations()` drops a finished `backwards`-fill animation, so a pause installed after load reaches nothing; and at document-start there is no `documentElement` to inject into yet |
+| `wipe.mjs` | **the page transition.** Frames, the share of the frame that is machine yellow at the instant the route swaps, the delay the destination waits, and first-load LCP with the component in the bundle. Also carries the false-positive write-up: a stale DOM node held across a navigation reproduces the exact signature of BUILD-LAW's cached-document defect |
+
+### Layout, type and the container budget
+
+| Script | What it proves |
+|---|---|
+| `barbudget.mjs` | the header's content box against its four fixed costs — the test that found the call sitting 23px past its own edge for the whole build |
+| `barframes.mjs`, `barsteps.mjs` | the bar at each width, and each candidate type step in it |
+| `phrase.mjs`, `phrase2.mjs` | the rotating phrase's measured em widths, which is what the display clamp is solved against |
+| `herov.mjs` | the hero's vertical budget: call and note above the fold at every width |
 | `plates.mjs` | the work plates' painted boxes at every breakpoint — the source for the video asset spec |
+| `workgrid.mjs` | the grid's three plate states, and that each fills its box |
+| `quotes.mjs` | the testimonial slot against its longest quote |
+| `slots.mjs` | every empty asset slot and its reserved ratio |
+
+### Pages, routes and weight
+
+| Script | What it proves |
+|---|---|
+| `routes.mjs` | every route resolves, and the count of document responses a click produces — the measurement that settled the cached-document defect |
+| `reachable.mjs` | nothing is orphaned: every destination is reachable from the bar or the footer |
+| `pageshots.mjs`, `pagesv2.mjs`, `shots.mjs` | page and section captures at the recorded widths |
+| `pageweight.mjs` | bytes per route, and **that the rebuilt routes make zero third-party requests** |
 | `transfer.mjs` | page transfer and largest paint, five runs, from Resource Timing |
-| `workgrid.mjs` | the work grid's three plate states, and that each fills its box |
-| `final.mjs` | reduced motion, dead overrides, and every element on the page painting machine yellow |
+| `legacyaudit.mjs` | what each legacy page actually published — the audit that took ten of them off the router |
+| `scope-legacy.mjs` | the PostCSS pass that rewrote 1,500 legacy selectors to require `.lg`, zero dropped |
 
-`final.mjs` is the one to run after any change to where the accent lands: it
-walks every element on the page and lists the ones computing to `#F0B323`. The
-answer should be the wordmark plus exactly the carriers `DESIGN.md` names, and
-nothing else.
+### Copy and access
 
-Measured cold (`setCacheEnabled(false)`) on a production build, after
-`document.fonts.ready` plus the fonts-ready ScrollTrigger refresh, with
-`--disable-lcd-text` so antialiasing is greyscale rather than subpixel.
+| Script | What it proves |
+|---|---|
+| `a11y.mjs <W> <H>` | landmark, skip link, tab order, process titles, the strip's pause control |
+| `checkcopy.mjs` | no em or en dashes and no exclamation marks in shipped output |
+| `rules.mjs` | painted separators per page — the count that went 160 to 82 |
+
+## The traps, in one place
+
+Every one of these produced a passing measurement that was wrong. They are
+written up where they bit, and listed here so a new script can be checked
+against them before it is trusted.
+
+1. **`getAnimations()` drops finished `backwards`-fill animations.** Pause at
+   document-start, never after load. `entrance.mjs`.
+2. **At document-start `document.documentElement` may not exist.** An injected
+   script that assumes it throws where nothing surfaces it. `entrance.mjs`.
+3. **Freezing animations does not freeze the wall clock.** React timers and
+   `setInterval` keep running, so a "frozen" frame can show state from
+   hundreds of milliseconds later. `wipe.mjs` drops timers over 200ms;
+   `entrance.mjs` pins the ticker.
+4. **Seeking every animation to the same time settles nothing.** Seek the
+   thing under test; push everything else to its end, or the page under the
+   overlay is in a state no reader would see. `wipe.mjs`.
+5. **A DOM node held across a navigation is detached, and a click on it
+   reaches no React handler** — so the browser follows the `href` and the
+   trace reads exactly like a cached-document bug. Re-query, or reload.
+   `wipe.mjs`, and `BUILD-LAW.md` next to the real defect.
+6. **`overflow: hidden` is not reliable across a compositing boundary.** Use
+   `clip-path: inset(0)` and screenshot anything that masks moving content; a
+   correct box measurement is not evidence the pixels are right.
+7. **Measure with greyscale antialiasing, never subpixel**, or a colour
+   classifier counts red and blue glyph fringes and you are measuring the
+   renderer rather than the page.
+
+## evidence/
+
+Frames of four shapes that were built, measured, rejected, and whose code has
+since been deleted. They are tracked because they are the only thing that
+cannot be regenerated — every other picture under `out/` comes back by running
+a committed script, and these do not.
+
+| File | What it shows |
+|---|---|
+| `rejected-wipe-sweep-1280.png` | the page transition as a single V driving across. A chevron cannot cover a frame wider than its arms span, so full cover needed a 340-unit horizontal smear, and the smear puts the two arm edges on opposite sides of the object: what crosses the frame is the mark's corner, not the chevron |
+| `rejected-wipe-strike-1280.png` | the transition as a V drawn from its vertex and held. The most legible of the three as the mark, and rejected on two measured costs: a 247ms hold on every route change, buying 14.0% cover at 1280 |
+| `rejected-entrance-punch-1280.png` | the hero entrance punching each word up through its own line box. Masked, so the visible travel is one line-height whatever the amplitude says |
+| `rejected-entrance-sweep-1280.png` | the same, in sequence along the diagonal at an 18ms stagger |
+
+`DESIGN.md` carries what each one measured and why it was not taken.
