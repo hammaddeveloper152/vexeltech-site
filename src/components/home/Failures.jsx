@@ -16,7 +16,27 @@ import './Failures.css';
    The order is the order a customer is lost in: found, called, answered,
    remembered. That is why the first one leads on size below. Nothing in the
    four statements is a claim about VexelTech, so BUILD-LAW.md Truth is not in
-   play for them. The consequences are placeholder and say so. */
+   play for them.
+
+   ---- The consequences, 2026-09-08 --------------------------------------
+
+   ALL FOUR ARE NOW THE USER'S COPY. They arrived in two passes and the
+   sources are different, which is worth keeping straight.
+
+   Lines one and two come from content answer 1.2, which names exactly two
+   conditions a customer arrives in: a business "not getting enough leads by
+   spending alot on their marketing budget", and one that does "not have any
+   online presence". Those are the consequences of not being found and of
+   nobody calling.
+
+   Lines three and four were given directly on 2026-09-08. Nothing in either
+   document said what it costs to miss the calls you do get or to be
+   forgotten after the job — 2.4 lists what automation does for a workflow
+   and 2.1 lists branding deliverables, and neither states a consequence for
+   the reader — so both slots held a placeholder until the user wrote them.
+
+   Budget: 60 to 80 characters, the measured slot. All four are inside it:
+   74, 73, 62, 68. */
 const FAILURES = [
   {
     id: 'find',
@@ -28,22 +48,27 @@ const FAILURES = [
        decided, and the section heading cannot be the leader here because the
        statements are the section. */
     lead: true,
-    consequence: 'Placeholder consequence line, about the length the real one will run.',
+    /* Source 1.2: businesses "who do not have any online presence". */
+    consequence: 'No online presence, so the search that should have found you finds nobody.',
   },
   {
     id: 'call',
     statement: 'Not enough are calling',
-    consequence: 'Placeholder consequence line for the second statement.',
+    /* Source 1.2: "not getting enough leads by spending alot on their
+       marketing budget". */
+    consequence: 'The marketing budget goes out every month and the leads do not come back.',
   },
   {
     id: 'miss',
     statement: 'You miss the ones who do',
-    consequence: 'Placeholder consequence line for the third statement.',
+    /* The user, directly, 2026-09-08. 62 characters. */
+    consequence: 'A missed call is a job that goes to whoever picked up instead.',
   },
   {
     id: 'remember',
     statement: 'They do not remember you',
-    consequence: 'Placeholder consequence line for the fourth statement.',
+    /* The user, directly, 2026-09-08. 68 characters. */
+    consequence: 'Work with no name on it is work the next customer never hears about.',
   },
 ];
 
@@ -196,7 +221,7 @@ export default function Failures() {
             out of heading scale. The statements are the section; this only
             labels them. */}
         <h2 className="fail__h" id="fail-h">
-          Placeholder section heading
+          What it costs you
         </h2>
 
         <div

@@ -1,0 +1,383 @@
+/* ==========================================================================
+   THE SERVICES PAGE. Header and footer untouched; every word of copy kept.
+   ========================================================================== */
+
+/* ---- 1. The page ground, lit -------------------------------------------
+
+   The hero's light model applied to a page: one key top left at 6%, the
+   ground falling away from it, and the page-wide grain on `html::after`
+   already over the top. Identical construction to the About page and the
+   pricing ladder — the same three pages now share one ground, which is the
+   point of it being a model rather than a treatment. */
+
+.pg {
+  background-color: var(--lit-far);
+  background-image:
+    radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%),
+    radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* ---- 2. The heading block, over the surface ----------------------------
+
+   The About page's mount, at the same 60% of the hero's height and derived
+   from the same tokens rather than typed, so the two cannot drift. DESIGN.md
+   records the surface as the brand's recurring device; this is its fourth
+   mount and it carries every rule the others do. */
+.svc__top {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  min-height: calc((100svh - (48px + 2 * var(--s-sm) + 1px)) * 0.6);
+  display: grid;
+  align-content: center;
+}
+
+.svc__surface {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: blur(0.75px);
+  pointer-events: none;
+  /* Eased over the last 24%, not linear over the last 12%. See the About
+     page's note and DESIGN.md: a 60px linear ramp is not enough room for a
+     crease at 13% luminance to reach the ground, and it reads as an edge. */
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 76%,
+    rgb(0 0 0 / 72%) 85%,
+    rgb(0 0 0 / 32%) 93%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 76%,
+    rgb(0 0 0 / 72%) 85%,
+    rgb(0 0 0 / 32%) 93%,
+    transparent 100%
+  );
+}
+
+.svc__top-in {
+  position: relative;
+  z-index: 1;
+}
+
+/* The page head restates its two values against the surface rather than
+   against the flat ground they were written for. Both measured off painted
+   pixels; the DOM cannot see a sibling canvas. */
+.svc__top .pg__h {
+  color: var(--c-shop-white);
+}
+
+.svc__top .pg__lead {
+  color: var(--c-bone);
+}
+
+/* No two mounts touch: 48px of ground between the heading block and the first
+   plate's own surface. DESIGN.md carries the minimum. */
+section:has(> .pg__section-in > .svc) {
+  padding-top: 48px;
+}
+
+/* ---- 3. The index rail and the plate column ---------------------------- */
+
+.svc {
+  display: grid;
+  gap: var(--s-xl);
+}
+
+@media (min-width: 1024px) {
+  /* The index takes a column of its own so it is in the left margin of the
+     CONTENT. The page's own inline padding is 64px at this width and the
+     container is already at its cap, so there is no margin outside it to put
+     a rail in — a column is the honest way to make one. */
+  .svc {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: var(--s-2xl);
+    align-items: start;
+  }
+}
+
+.svc__plates {
+  display: grid;
+  /* 40px between plates, and it is the ramp's own step. */
+  gap: var(--s-xl);
+  /* The artefact bleeds 24px past the plate's right edge, so the column has
+     to stop clipping it and the page has to not grow a scrollbar for it. The
+     plate itself keeps `overflow: hidden` for the glow; the bleed is on a
+     child that sits outside that box. */
+  min-width: 0;
+}
+
+/* ---- The index -------------------------------------------------------- */
+
+.svc__index {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .svc__index {
+    display: block;
+    position: sticky;
+    /* Clear of the sticky bar, which is 48px of content plus its own padding
+       and hairline — the same expression the heading block derives from. */
+    top: calc(48px + 2 * var(--s-sm) + 1px + var(--s-xl));
+    align-self: start;
+  }
+}
+
+.svc__index-list {
+  display: grid;
+  gap: var(--s-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* A numeral is a name here — which plate this is — so it takes the name face.
+   40px, steel-lift, 6.09:1 on the page ground. */
+.svc__index-n {
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* BUILD-LAW: 48px minimum on a tap target, and this is a control. */
+  min-height: 48px;
+  padding: 0 0 0 var(--s-md);
+  border: 0;
+  background: none;
+  font-family: var(--font-name);
+  font-size: var(--t-name-l);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--c-steel-lift);
+  cursor: pointer;
+  transition: color var(--d-drop) var(--ease-reveal);
+}
+
+/* The active numeral goes white and its bar appears. Two signals rather than
+   one, because colour alone at this size is a value change a reader has to
+   compare against a neighbour to notice. */
+.svc__index-n[data-active='true'] {
+  color: var(--c-shop-white);
+}
+
+/* The same 3px yellow bar the plates carry, at the same full strength, which
+   is what ties the index to the object it indexes. Scale, not opacity: yellow
+   on a dark ground is 100% or it is nothing. */
+.svc__index-bar {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 3px;
+  background: var(--c-accent-ground);
+  transform: scaleY(0);
+  transform-origin: 50% 0;
+  transition: transform var(--d-drop) var(--ease-reveal);
+}
+
+.svc__index-n[data-active='true'] .svc__index-bar {
+  transform: scaleY(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .svc__index-n:hover {
+    color: var(--c-shop-white);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc__index-bar {
+    transition: none;
+  }
+}
+
+/* ---- 4. The plate ------------------------------------------------------ */
+
+.svc__plate {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  gap: var(--s-xl);
+  padding: var(--s-2xl) var(--s-2xl) var(--s-2xl) calc(var(--s-2xl) + var(--s-xs));
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-top-color: rgb(255 255 255 / 14%);
+  border-radius: var(--r-md);
+  background: var(--c-surface-warm);
+  box-shadow: var(--lit-inset);
+  /* The resting state. Alternating, so the four read as a stack that was set
+     down rather than as one shape repeated. */
+  transform: rotate(-1.5deg);
+  transition: transform var(--d-drop) var(--ease-reveal);
+}
+
+.svc__plate[data-side='right'] {
+  transform: rotate(1.5deg);
+}
+
+/* Arrived: straight, and lifted 4px. One transform, one curve, one duration —
+   the About plate's mechanic exactly, on a different trigger. */
+.svc__plate[data-in='true'],
+.svc__plate[data-side='right'][data-in='true'] {
+  transform: rotate(0deg) translateY(-4px);
+}
+
+/* The key, in the top-left corner. Warm white at 10% over 200px, the one glow
+   value on the site — never yellow at a partial opacity, which composites
+   into the banned olive band. */
+.svc__plate::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(200px 200px at 0 0, rgb(255 241 204 / 10%) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* The bar: 3px, machine yellow at 100%, full height, one per plate. */
+.svc__plate::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: var(--c-accent-ground);
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  /* Left column the copy, right column the artefact at 40% OF THE PLATE — of
+     its border box, not of the content box a percentage resolves against.
+
+     Those are different numbers and the bleed is why. The slot's rendered
+     width is its column plus the 64px of padding it crosses plus the 24px it
+     stands past the edge, so a plain `40%` rendered at 43% of the plate. The
+     column is solved back from the number that was asked for:
+
+       col + (padding + bleed) = 0.4 * (content + 2 * padding)
+       col = 40% + 0.8 * padding - padding - 24px
+           = 40% - 0.2 * padding - 24px
+
+     Measured at 1280: a 1048px plate, a 419px slot, 40.0%. */
+  .svc__plate {
+    grid-template-columns: minmax(0, 1fr) calc(40% - 0.2 * var(--s-2xl) - 24px);
+    gap: var(--s-2xl);
+    align-items: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc__plate,
+  .svc__plate[data-side='right'],
+  .svc__plate[data-in='true'],
+  .svc__plate[data-side='right'][data-in='true'] {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* The copy column. `.disc__name`, `.disc__line`, `.disc__list` and
+   `.disc__item` are the page's existing rules and are untouched — the plate is
+   a new container around the same blocks, not a new set of type rules. The one
+   thing that changes is the line's value: it was steel-dark on the flat
+   ground, and steel-dark is banned on a surface. */
+.svc__body {
+  min-width: 0;
+}
+
+.svc__plate .disc__line {
+  color: var(--c-bone); /* 13.16:1 on surface-warm */
+  margin-bottom: var(--s-lg);
+}
+
+.svc__plate .disc__detail {
+  color: var(--c-steel-lift); /* 6.09:1 on surface-warm */
+}
+
+/* ---- 5. The artefact slot ---------------------------------------------
+
+   4:1, the home Services card's own ratio, so one artwork is cropped once for
+   both places it appears. It BLEEDS 24px past the plate's right edge, which is
+   what makes it read as an object standing on the plate rather than a panel
+   set into it — the plate is the ground and the artefact is on top of it. */
+.svc__art {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 4 / 1;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: var(--r-md);
+  background: var(--c-surface-warm);
+  box-shadow: var(--lit-inset);
+}
+
+@media (min-width: 1024px) {
+  .svc__art {
+    /* Out past the plate's own padding and 24px beyond its edge. The plate
+       does not clip — only its `::before` glow is bounded, and that is a
+       pseudo-element with its own box. */
+    margin-right: calc((var(--s-2xl) + 24px) * -1);
+  }
+}
+
+/* THE SLOT IS LIT, NOT EMPTY, while the file does not exist. The page's own
+   surface at half intensity behind a hairline: a slot that is clearly waiting
+   rather than one that failed to load. Same treatment, same reason, as the
+   About portrait. */
+.svc__art-surface {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  filter: blur(0.75px);
+  pointer-events: none;
+}
+
+/* Cover-fit, so the ratio above is the crop and the file's own dimensions do
+   not move the layout. */
+.svc__art-img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- 6. The closing call ----------------------------------------------
+
+   96px under the fourth plate and nothing else between them. The section's own
+   bottom padding goes to zero so the gap is one number owned by the call,
+   rather than two paddings meeting and adding up — the same correction the
+   About page needed. */
+section:has(> .pg__section-in > .svc) {
+  padding-bottom: 0;
+}
+
+/* The last plate is LIFTED 4px once it arrives, and the call's 96px is
+   measured from the layout box, which the lift does not move. Left alone the
+   reader sees 100px. The 4px comes back here so the gap on screen is the gap
+   that was asked for. */
+.svc__plates {
+  margin-bottom: -4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No lift, so nothing to give back. */
+  .svc__plates {
+    margin-bottom: 0;
+  }
+}

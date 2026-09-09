@@ -22,7 +22,18 @@
    ========================================================================== */
 
 .faq {
-  padding: var(--s-3xl) var(--s-md);
+  /* The band's inline padding, named once. The list below bleeds out by this
+     value, so the two can never drift apart: when the padding was a token and
+     the bleed was a different token, 390 had 16px of padding against a 24px
+     bleed and the page scrolled 8px sideways on a phone. */
+  --faq-pad: var(--s-md);
+  /* Never bleed further than the band is padded. Above 768 the padding is the
+     larger of the two and this resolves to --s-lg, which is the value the row
+     was designed at; at 390 it resolves to the padding and the bleed stops at
+     the viewport edge. */
+  --faq-bleed: min(var(--s-lg), var(--faq-pad));
+
+  padding: var(--s-3xl) var(--faq-pad);
   background: var(--c-shop-white);
   color: var(--c-asphalt); /* 17.77:1 on white */
 }
@@ -45,14 +56,19 @@
 .faq__list {
   /* Pulled out by the band's own padding, so the question text still lines up
      with the section heading while the open row's ground extends past it. */
-  max-width: calc(75ch + var(--s-lg) * 2);
-  margin-inline: calc(var(--s-lg) * -1);
-  border-top: 1px solid var(--c-line); /* hairline, light ground */
+  max-width: calc(75ch + var(--faq-bleed) * 2);
+  margin-inline: calc(var(--faq-bleed) * -1);
+  /* The list's own top rule is gone. The four rows keep their bottom
+     hairlines, which are load-bearing — see register.css — but the line
+     above the first question was a section separator wearing a row's
+     clothes, and the heading above it already separates. */
 }
 
 .faq__item {
   position: relative;
-  padding-inline: var(--s-lg);
+  /* Matches the list's bleed exactly, so the question text lines up with the
+     section heading at every width. */
+  padding-inline: var(--faq-bleed);
   border-bottom: 1px solid var(--c-line);
 }
 
@@ -86,11 +102,15 @@
   color: var(--c-steel-dark); /* 5.12:1 on asphalt */
 }
 
-/* The rule takes the stroke role for the ground it is now on. Deep amber on
-   asphalt is 3.27:1, which scrapes the graphic bar and reads as a smudge;
-   machine yellow is 9.46:1 and is what accent-draw-dark is for. */
+/* The open row inverts to shop white, so its drawn rule takes `line`, the
+   light-ground hairline. It claimed `accent-draw-dark` until now — machine
+   yellow, a DARK-ground token, on a white row — and only load order kept it
+   off the page, because register.css sets the same pair. BUILD-LAW Contrast:
+   dead override code has produced near-invisible text on this project before,
+   and this one had the accent one sheet away from landing at 1.88:1 on white.
+   register.css owns where the accent lands; this is kept in step with it. */
 .faq__item[data-open='true'] .faq__rule {
-  background: var(--c-accent-draw-dark);
+  background: var(--c-line); /* hairline on white */
 }
 
 /* Sits exactly on the static hairline and draws over it from the left. A
@@ -103,11 +123,18 @@
    panel had not moved. */
 .faq__rule {
   position: absolute;
-  right: var(--s-lg);
+  /* Same inset as the row's padding, so the drawn rule starts and ends under
+     the question text rather than under the band's bleed. */
+  right: var(--faq-bleed);
   bottom: -1px;
-  left: var(--s-lg);
+  left: var(--faq-bleed);
   height: 1px;
-  background: var(--c-accent-draw-light); /* 4.90:1 on white */
+  /* Closed rows sit on asphalt, so the dark-ground divider. Deep amber was
+     the value here while this section had a light ground; the register took
+     the section to asphalt and register.css has set rule-dark ever since,
+     with this line disagreeing underneath it. Same class as the open-row
+     rule above. */
+  background: var(--c-rule-dark); /* white at 12% */
   transform: scaleX(0);
   transform-origin: left;
 }
@@ -359,12 +386,12 @@
 
 @media (min-width: 768px) {
   .faq {
-    padding: var(--s-3xl) var(--s-xl);
+    --faq-pad: var(--s-xl);
   }
 }
 
 @media (min-width: 1024px) {
   .faq {
-    padding: var(--s-3xl) var(--s-2xl);
+    --faq-pad: var(--s-2xl);
   }
 }

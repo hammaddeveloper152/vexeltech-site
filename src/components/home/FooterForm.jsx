@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Envelope, MapPin, PaperPlaneTilt, Phone } from '@phosphor-icons/react';
-import Wordmark from '../site/Wordmark.jsx';
+import { PaperPlaneTilt } from '@phosphor-icons/react';
+import FooterMeta from './FooterMeta.jsx';
+import { budgetBands } from '../../content/pricing.js';
 import './FooterForm.css';
 
 /* Section 9. The form, and the end of the page.
@@ -14,19 +15,47 @@ import './FooterForm.css';
 
    There is no Vexel Scales line anywhere in this file, by decision. */
 
+/* THE FORM IS NOT LIVE, and it says so on the page.
+
+   There is no endpoint. Until there is one, the submit is disabled and a
+   visible line under it says the form is not live yet. It used to validate,
+   show a sending state for 900ms and then report "Message sent" — a reader
+   who filled it in was told it had gone somewhere, and it had not. BUILD-LAW
+   Truth applies to interface states as much as to copy: a success message is
+   a claim.
+
+   A mailto was the other option and was not taken, because the address is a
+   placeholder too. Flip this to true only when `onSubmit` posts to something
+   real; the sent and failed branches below are already wired for that. */
+const LIVE = false;
+
 const FIELDS = [
   { id: 'name', label: 'Name', type: 'text', autoComplete: 'name', required: true },
   { id: 'email', label: 'Email', type: 'email', autoComplete: 'email', required: true },
   { id: 'company', label: 'Company', type: 'text', autoComplete: 'organization', required: false },
 ];
 
-/* Obviously synthetic. Real bands are a pricing decision, not a form
-   decision, and inventing them here would be inventing the price list. */
-const BUDGETS = [
+/* THE BUDGET BANDS ARE REAL, from 2026-09-08.
+
+   They were placeholders because bands are price data and the price was in
+   conflict. The user settled it — one website at $700 — and the bands come
+   straight from the figures: `budgetBands()` in src/content/pricing.js, which
+   derives them from FIGURES so a price change cannot leave a band behind.
+
+   Up to $300 / $300 to $700 / $700 or more. The top band is open-ended AT
+   the highest published price rather than above it, because $700 is the
+   largest figure this business publishes and naming a ceiling nobody quoted
+   would be inventing one. The full reasoning is in that file.
+
+   The fallback is not decoration: if any figure returns to null the bands go
+   with it and the field says it is a placeholder again, rather than showing
+   three ranges derived from a number that is no longer there. */
+const BUDGETS = budgetBands() || [
   'Placeholder range one',
   'Placeholder range two',
   'Placeholder range three',
 ];
+
 
 function validate(id, value) {
   const v = value.trim();
@@ -78,11 +107,18 @@ export default function FooterForm() {
       return;
     }
 
+    /* Nothing to post to. The button is disabled while LIVE is false, so this
+       branch is only reachable by a submit event that bypassed the button —
+       the Enter key in a field — and it must still not pretend. */
+    if (!LIVE) {
+      setStatus('idle');
+      return;
+    }
+
     setStatus('sending');
-    /* STUB. Wired to nothing on purpose. See the note in the summary for what
-       a real endpoint needs before this is replaced. */
-    await new Promise((resolve) => setTimeout(resolve, 900));
-    setStatus('sent');
+    /* Replace with the real request. On success setStatus('sent'), on any
+       failure setStatus('failed'); both messages below are already written. */
+    setStatus('failed');
   };
 
   const sending = status === 'sending';
@@ -191,7 +227,12 @@ export default function FooterForm() {
                 in an input crowds the value and moves the text away from the
                 edge the label is aligned to. Decorative, because the button
                 already says Send. */}
-            <button className="foot__submit" type="submit" disabled={sending}>
+            <button
+              className="foot__submit"
+              type="submit"
+              disabled={!LIVE || sending}
+              aria-describedby={LIVE ? undefined : 'foot-offline'}
+            >
               <PaperPlaneTilt className="i i--sm" aria-hidden="true" />
               {sending ? 'Sending' : 'Send'}
             </button>
@@ -199,6 +240,15 @@ export default function FooterForm() {
             {/* Polite, so it does not cut across whatever the reader is doing,
                 and always present so the region is not created on the fly. */}
             <p className="foot__status" role="status">
+              {!LIVE ? (
+                /* Plain and visible, not a tooltip and not a disabled-state
+                   colour alone: a greyed button on its own reads as broken,
+                   and the reader should know it is deliberate. */
+                <span className="foot__offline" id="foot-offline">
+                  This form isn't wired up yet, so nothing you type here reaches us.
+                  Email us instead and it will.
+                </span>
+              ) : null}
               {status === 'sent' ? (
                 <span className="foot__ok">
                   <span className="foot__ok-mark" aria-hidden="true">
@@ -219,43 +269,7 @@ export default function FooterForm() {
           </div>
         </form>
 
-        <div className="foot__meta">
-          {/* The lockup closes the page. Larger than the bar's, because this
-              one is the sign-off rather than a label on a strip. */}
-          <a className="foot__brand" href="/" aria-label="Vexeltech, home">
-            <Wordmark size="lg" />
-          </a>
-
-          {/* One icon per contact line, at the small station. All decorative:
-              the line beside each one already says what it is, and the block
-              is headed besides. The two address lines are one contact line
-              with two lines of text, so they take one pin between them rather
-              than a pin each. */}
-          <div className="foot__contact">
-            <span className="foot__meta-k">Contact</span>
-            <span className="foot__meta-v">
-              <Envelope className="i i--sm foot__meta-i" aria-hidden="true" />
-              <span>Placeholder email address</span>
-            </span>
-            <span className="foot__meta-v">
-              <Phone className="i i--sm foot__meta-i" aria-hidden="true" />
-              <span>Placeholder phone number</span>
-            </span>
-          </div>
-
-          <div className="foot__contact">
-            <span className="foot__meta-k">Where</span>
-            <span className="foot__meta-v">
-              <MapPin className="i i--sm foot__meta-i" aria-hidden="true" />
-              <span className="foot__meta-lines">
-                <span>Placeholder address line one</span>
-                <span>Placeholder address line two</span>
-              </span>
-            </span>
-          </div>
-
-          <p className="foot__legal">Placeholder legal line, entity name and year.</p>
-        </div>
+        <FooterMeta />
       </div>
     </footer>
   );

@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useReveal } from './hooks.js';
 import { ArrowUpRight } from '@phosphor-icons/react';
+import { VideoTile, videoAllowed } from './Video.jsx';
+import { clipForPlate } from './workVideo.js';
 import './WorkGrid.css';
 
 /* Section 3. The work wall.
@@ -29,6 +32,12 @@ const TILES = [
 export default function WorkGrid() {
   const [ref, revealed] = useReveal();
 
+  /* Asked once, after mount, never watched. A connection that changes
+     mid-visit must not start six downloads under someone. See Video.jsx for
+     the four reasons this comes back false. */
+  const [allow, setAllow] = useState(false);
+  useEffect(() => setAllow(videoAllowed()), []);
+
   return (
     <section className="vt work" aria-labelledby="work-h" ref={ref}>
       <div className="work__inner">
@@ -40,11 +49,38 @@ export default function WorkGrid() {
             reveal is additive: data-revealed only ever adds motion, and the
             grid is fully laid out before it runs. */}
         <ul className="work__list" data-revealed={revealed ? 'true' : 'false'}>
-          {TILES.map(({ id, title, meta }, i) => (
+          {TILES.map(({ id, title, meta }, i) => {
+            /* Plates are numbered from one, in grid order. */
+            const clip = clipForPlate(i + 1);
+            return (
             <li className="work__item" key={id} style={{ '--i': i }}>
-              <a className="work__link" href={`/work/${id}`}>
-                {/* The plate. An <img> replaces this later at the same size. */}
-                <span className="work__plate" aria-hidden="true" />
+              <Link className="work__link" /* `/work/<id>` matched no route and fell through to the 404 —
+                 six tiles linking nowhere. There are no project pages and no
+                 projects; `/portfolio` is where the work will live and is a
+                 real page today. Re-point these when the plates are filled. */
+              to="/portfolio">
+                {/* The surface. Three states, and the plate is the same box in
+                    all of them, so nothing about the grid moves as files
+                    arrive.
+
+                    `live` is the section's own reveal rather than a timer:
+                    nothing asks for a byte until the grid has entered, which
+                    is the work grid's version of the gate that used to be the
+                    hero's ambient phase. See Video.jsx and workVideo.js. */}
+                {clip && clip.mp4 && allow ? (
+                  <VideoTile clip={clip} live={revealed} className="work__video" />
+                ) : clip ? (
+                  <img
+                    className="work__video"
+                    src={clip.poster}
+                    alt=""
+                    aria-hidden="true"
+                    decoding="async"
+                    fetchPriority="low"
+                  />
+                ) : (
+                  <span className="work__plate" aria-hidden="true" />
+                )}
 
                 {/* Slides up from the bottom edge on hover, on real pointers
                     only. On touch it is simply already there. */}
@@ -60,9 +96,10 @@ export default function WorkGrid() {
                       own label would announce the destination twice. */}
                   <ArrowUpRight className="i i--sm work__go" aria-hidden="true" />
                 </span>
-              </a>
+              </Link>
             </li>
-          ))}
+            );
+          })}
         </ul>
       </div>
     </section>

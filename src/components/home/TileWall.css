@@ -18,12 +18,22 @@
   pointer-events: none;
 }
 
+/* The lane no longer clips. An artefact wider than its lane spills into the
+   neighbours by design — that spill is what breaks the column read — and the
+   wall itself still clips at the hero's edge. */
 .wall__col {
-  overflow: hidden;
+  overflow: visible;
 }
 
+/* A flex column, not a grid. A negative top margin on a grid item pulls it
+   up inside its own row and overlaps nothing; on a flex item it pulls it over
+   the item before, which is what a sheet lying on a sheet is. The doubled
+   track still travels exactly half its height per loop: both copies carry the
+   same items with the same overlaps, so half is still one set. */
 .wall__track {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: var(--s-md);
   will-change: transform;
 }
@@ -89,21 +99,68 @@
   }
 }
 
-.wall__tile {
-  /* Landscape. A 3/4 portrait tile is 650px tall in a 487px column, so one
-     tile fills the frame and the wall reads as blocks rather than a wall.
-     16/10 puts three in view per column, which is what makes it a wall.
+/* ---- An artefact on the bench ---------------------------------------------
 
-     The ratio is the contract: every source image is a different shape and
-     none of them is 16:10, so the container decides the slot and the image
-     fills it. Nothing about the layout depends on what an image is. */
+   Geometry arrives as custom properties from bench.js: --w is the share of
+   the lane, --ar the artefact's OWN ratio, --rot its angle, --up how far it
+   lies over the one before it.
+
+   No border, no radius, no shadow. A sheet has square corners and its own
+   edge, and that edge is in the image. The 1px rule-dark hairline the grid
+   tiles carried was for separating photograph from photograph; an object on
+   a bench is separated by being an object. Anything that suggested depth here
+   — a shadow under the sheet, a gradient across it — would be depth in CSS,
+   and DESIGN.md puts the light in the photography and nowhere else.
+
+   The rotation is a transform, so it is free, and it is applied to the item
+   rather than the image so the clip travels with the object. flex-shrink 0:
+   an artefact never gives up height to make the column fit. */
+.bench__item {
+  flex: 0 0 auto;
+  width: calc(var(--w, 1) * 100%);
+  aspect-ratio: var(--ar, 1.6);
+  margin-top: var(--up, 0);
+  transform: rotate(var(--rot, 0deg));
+  overflow: hidden;
+}
+
+/* The first item in each copy of the set carries no overlap: --up is 0 in
+   the data for index 0, and the gap between the last item of copy one and
+   the first of copy two is the track's own gap, so the seam is ordinary. */
+
+/* ---- The still layer -------------------------------------------------------
+
+   The objects at the mark's angle. Positioned on the WALL, not in a lane, so
+   they can lie across several lanes; they do not drift, which is what makes
+   them read as put down rather than as part of the surface. Above the lanes,
+   below the scrim. --x and --y are the centre as shares of the wall. */
+.bench__still {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: calc(var(--w) * 100%);
+  aspect-ratio: var(--ar);
+  transform: translate(-50%, -50%) rotate(var(--rot));
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Kept for anything that still renders a grid tile. Nothing in the bench
+   uses it. */
+.wall__tile {
   aspect-ratio: 16 / 10;
   border-radius: var(--r-md);
-  /* A hairline, not a shadow. It survived the move from flat tones to
-     photographs because it is doing a different job now: it separates one
-     photograph from the next where two dark frames meet. */
   border: 1px solid var(--c-rule-dark);
   overflow: hidden;
+}
+
+/* <picture> is an inline wrapper by default and would leave a descender gap
+   under the image inside a fixed-ratio slot. It carries no styling of its own
+   beyond filling the tile. */
+.wall__pic {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .wall__img {
@@ -115,6 +172,35 @@
      height to this; that is a cropping decision made in the source files,
      not something the stylesheet should try to rescue. */
   object-fit: cover;
+}
+
+/* A moving tile is the same slot with a different element in it. It takes
+   .wall__img in full — same box, same cover crop — so a slot that gains or
+   loses a clip does not change the wall's geometry by a pixel.
+
+   The poster is painted by the element itself, so there is no second layer to
+   cross-fade and nothing to hide while the video decodes: a <video> shows its
+   poster until the first frame is ready and then swaps, which is the whole
+   reason the poster has to be a still FROM the clip rather than the tile's own
+   photograph. A different image there would read as a cut. */
+.wall__video {
+  /* Belt and braces against a UA that gives video a default background: a
+     tile that fails to decode must show its poster, never a black rectangle
+     in the middle of a wall of photographs. */
+  background: transparent;
+  /* Not interactive. The wall is aria-hidden and the tile is texture. */
+  pointer-events: none;
+}
+
+/* Reduced motion is handled in JS as well — videoAllowed() refuses outright,
+   so no clip is ever requested — but the rule is repeated here so a video
+   element that somehow exists cannot animate. */
+@media (prefers-reduced-motion: reduce) {
+  .wall__video {
+    /* Nothing to disable: a paused video is a still. This block exists to
+       record that the JS gate is the mechanism, not a CSS one. */
+    animation: none;
+  }
 }
 
 /* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------- */

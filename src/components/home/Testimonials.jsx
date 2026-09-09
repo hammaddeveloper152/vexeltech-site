@@ -115,7 +115,13 @@ export default function Testimonials() {
             >
               {/* Behind the quote, one per slide. Decorative twice over: the
                   element is already a blockquote, and a quotation mark that
-                  announced itself would say "quote" before every quote. */}
+                  announced itself would say "quote" before every quote.
+
+                  It was tried as this frame's carrier — the mark as type, in
+                  Monigue at the figure size, in machine yellow — and measured
+                  out. See Testimonials.css. It is back to what it was: a
+                  texture at the strength this system uses for something
+                  present and not to be looked at. */}
               <Quotes className="i i--lg quotes__mark" aria-hidden="true" />
 
               <blockquote className="quotes__q">
@@ -143,6 +149,12 @@ export default function Testimonials() {
             Prev
           </button>
 
+          {/* Metadata, not the carrier. It says which of four the reader is
+              on, which is a thing a control row says quietly, and it sits at
+              the small loud size in white beside the two words it belongs
+              with. It used to be this frame's accent at the figure size, and
+              a count is the wrong thing for a section to shout: it is the one
+              element in the frame that carries no meaning about the work. */}
           <span className="quotes__count">
             <span className="quotes__count-n">{pad(index + 1)}</span>
             <span aria-hidden="true"> / </span>

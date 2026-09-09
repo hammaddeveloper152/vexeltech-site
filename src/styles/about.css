@@ -1,0 +1,373 @@
+/* ==========================================================================
+   THE ABOUT PAGE. Header and footer untouched; every word of copy kept.
+   ========================================================================== */
+
+/* ---- 1. The page ground, lit ------------------------------------------- */
+
+.pg {
+  background-color: var(--lit-far);
+  background-image:
+    radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%),
+    radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* ---- 2. The heading block, over the surface ----------------------------
+
+   60% of the hero's height. The hero is `100svh - 65px` — the bar is sticky
+   and in flow — so this is that number times 0.6, derived from the same tokens
+   rather than typed, so the two cannot drift. */
+.abt__top {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  min-height: calc((100svh - (48px + 2 * var(--s-sm) + 1px)) * 0.6);
+  display: grid;
+  align-content: center;
+}
+
+.abt__surface {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: blur(0.75px);
+  pointer-events: none;
+  /* THE FADE IS EASED, AND IT IS LONGER THAN A LINEAR ONE CAN BE.
+
+     The rule is that the surface falls away into the ground beneath it rather
+     than ending at an edge. A single linear stop from 88% to 100% is 60px at
+     1280, and 60px is not enough room for a crease at 13% luminance to reach
+     the ground: the alpha ramp is linear, the eye is not, and what it read as
+     was a hard edge with a short gradient painted just above it. Four stops
+     approximating an ease-out over the last 24% put the same fall on a curve —
+     most of the alpha goes in the first half of the ramp and the last of it
+     lands on nothing. Measured row by row after: monotonic, no step. */
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 76%,
+    rgb(0 0 0 / 72%) 85%,
+    rgb(0 0 0 / 32%) 93%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 76%,
+    rgb(0 0 0 / 72%) 85%,
+    rgb(0 0 0 / 32%) 93%,
+    transparent 100%
+  );
+}
+
+.abt__top-in {
+  position: relative;
+  z-index: 1;
+}
+
+/* The page head sits on the surface, so its two values are restated against
+   it rather than against the flat ground they were written for. Both measured
+   off painted pixels; the DOM cannot see a sibling canvas. */
+.abt__top .pg__h {
+  color: var(--c-shop-white);
+}
+
+.abt__top .pg__lead {
+  color: var(--c-bone);
+}
+
+/* THE TWO MOUNTS NEVER TOUCH. The feature section's first row is the portrait
+   slot, which carries the surface a second time. Landing it on the heading
+   block's last pixel put one mount's fade-out against the other mount's
+   border, which is the seam the fade exists to prevent. 48px of ground between
+   them, on the SECTION rather than on the slot, so the statement column moves
+   with it and the row stays aligned. */
+section:has(> .pg__section-in > .abt__feature) {
+  padding-top: 48px;
+}
+
+/* ---- 3. The edge-bleed feature ----------------------------------------- */
+
+.abt__feature {
+  display: grid;
+  gap: var(--s-xl);
+}
+
+@media (min-width: 1024px) {
+  /* The panel leaves the measure and runs off the right edge, which is the
+     home page's About family — the same structure mirrored, not a new one. */
+  .abt__feature {
+    grid-template-columns: minmax(0, 1fr) min(42%, 560px);
+    align-items: center;
+    gap: var(--s-3xl);
+    margin-right: calc(var(--s-2xl) * -1);
+  }
+}
+
+/* `.pgq` carries its own two-column grid from pages.css, written for a
+   full-width block. Nested in the feature's left column it split 600px into
+   312 and 223 and set a 58px statement in 313 — four words a line. Inside the
+   feature it is one column: statement, then the support beneath it. */
+.abt__feature .pgq {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-lg);
+}
+
+/* 922 by 1152, one ratio at every width, so the photograph is cropped once
+   rather than once per breakpoint. */
+.abt__portrait {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 922 / 1152;
+  max-width: 460px;
+  /* THE HAIRLINE IS 14% ON EVERY EDGE, not 8% with a lit top. A card in a
+     stack takes its light from above and states that on the top edge alone;
+     this one runs off the side of the viewport and its job is to be a visible
+     reservation, so the edge holds one value the whole way round. */
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: var(--r-md);
+  background: var(--c-surface-warm);
+  box-shadow:
+    /* the arc, 32px, rising from the left edge — the home About's own
+       construction at its own strength */
+    inset 32px 0 32px -32px rgb(13 71 189 / 10%),
+    var(--lit-inset);
+}
+
+@media (min-width: 1024px) {
+  /* IT ENDS AT THE VIEWPORT, NOT AT THE CONTAINER. The negative margin on the
+     feature grid is exactly the section's inline padding, so the slot's right
+     edge lands on 100vw. BUILD-LAW: verified against `clientWidth`, never
+     against the box it sits in — measured against its parent it was perfect
+     the whole time it was 8px short of the screen. */
+  .abt__portrait {
+    max-width: none;
+    border-radius: var(--r-md) 0 0 var(--r-md);
+    border-right: 0;
+  }
+}
+
+/* THE SLOT IS LIT, NOT EMPTY. The home page's reservation was a surface-1
+   plate with a hairline and a ratio label, and on a saturated ground it read
+   as an image that had failed to load. This one carries the page's own surface
+   at half intensity: a slot that is clearly waiting rather than broken. */
+.abt__portrait-surface {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  filter: blur(0.75px);
+  pointer-events: none;
+}
+
+/* ---- 4. The seam under the concrete band -------------------------------
+
+   The counter row is a ground change and it ends on a hard edge, which is
+   correct. What was wrong is that the section beneath it had no top padding at
+   all, so "Who we work with" started on the band's last pixel and read as
+   clipped by it. 96px above, matching the band's own padding.
+
+   Nothing below: the closing call carries its own 96px, and two paddings
+   meeting is what put most of a viewport of empty ground between the people
+   line and the call. One gap, owned by the call. */
+section:has(> .pg__section-in > .abt__people) {
+  padding-top: 96px;
+  padding-bottom: 0;
+}
+
+/* ---- 5. The two situations, as plates ---------------------------------- */
+
+.abt__people-head {
+  max-width: 62ch;
+  margin-bottom: var(--s-2xl);
+}
+
+/* EQUAL HEIGHT IN BOTH DIRECTIONS. Two columns share a row and stretch to it;
+   stacked at 390 they are two rows, where stretch does nothing — which is why
+   they measured 202 and 178 there. `1fr` rows put both on the taller one. */
+.plates {
+  display: grid;
+  gap: var(--s-xl);
+  grid-auto-rows: 1fr;
+  margin-bottom: var(--s-xl);
+}
+
+@media (min-width: 768px) {
+  .plates {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* A button, because it is pressed. The tilt is the resting state; open is zero
+   degrees AND 4px of lift, both in one transform so the whole mechanic is one
+   property, on one curve, at one duration. */
+.plate {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  align-content: start;
+  gap: var(--s-sm);
+  /* BUILD-LAW: 48px minimum, and this is far past it. */
+  min-height: 48px;
+  /* The left padding clears the 3px bar and then some, so the bar is an edge
+     the type stands off rather than a rule the type sits on. */
+  padding: var(--s-xl) var(--s-xl) var(--s-xl) calc(var(--s-xl) + var(--s-xs));
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-top-color: rgb(255 255 255 / 14%);
+  border-radius: var(--r-md);
+  /* WARM, because the key is yellow. A neutral grey plate under a yellow key
+     is a plate no light reached. tokens.css carries the derivation. */
+  background: var(--c-surface-warm);
+  box-shadow: var(--lit-inset);
+  text-align: left;
+  cursor: pointer;
+  transform: rotate(-1.5deg);
+  transition:
+    transform var(--d-drop) var(--ease-reveal),
+    background-color var(--d-drop) var(--ease-reveal);
+}
+
+/* The key, in the top-left corner, clipped by the card: 200px of warm white at
+   10%, the one glow value on the site.
+
+   IT WAS MACHINE YELLOW AT 16%, AND THAT WAS THE OLIVE BAND AGAIN. Yellow at a
+   partial opacity over a warm surface composites to the dark bronze DESIGN.md
+   bans as a resting value — the fourth arrival, from a direction nobody was
+   watching. #FFF1CC is the top stop of the hero shader's own ramp, which is
+   what this key looks like where it is brightest, and it lands above the band
+   instead of inside it. 200px rather than 160 because a radial whose peak sits
+   inside the panel's own dither is not a soft glow, it is an absent one. */
+.plate::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: radial-gradient(200px 200px at 0 0, rgb(255 241 204 / 10%) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* THE BAR. 3px, machine yellow at 100%, the full height of the plate, one per
+   plate. It replaces a 6px square in the title: a square before a word is a
+   bullet, and a bullet on a two-line title is a list marker on something that
+   is not a list. An edge is a different claim — it says which object this is
+   without saying anything about the words. 100% is the only strength yellow
+   takes on a dark ground at this scale; DESIGN.md bans the mid-ramp. */
+.plate::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: var(--c-accent-ground);
+  pointer-events: none;
+}
+
+.plate[data-side='right'] {
+  transform: rotate(1.5deg);
+}
+
+.plate[data-open='true'],
+.plate[data-side='right'][data-open='true'] {
+  transform: rotate(0deg) translateY(-4px);
+  background: var(--c-surface-warm-raised);
+}
+
+.plate:active {
+  transform: rotate(0deg) translateY(-4px) scale(0.99);
+}
+
+/* THE NAME FACE, SLANTED CUT. The plate titles name the two situations, which
+   is the closest thing on this page to a product name — and the slant is what
+   separates a situation from the heading above it without a second size. 32px
+   flat at both widths; the name register does not scale. */
+.plate__title {
+  font-family: var(--font-name-slanted);
+  font-size: var(--t-name-m);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  /* 15.86:1 on surface-warm, 14.32:1 on warm-raised */
+  color: var(--c-shop-white);
+}
+
+/* ON THE PLATE AT REST. A plate that says nothing until it is touched gives a
+   reader no reason to touch it. */
+.plate__detail {
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  /* 13.16:1 on surface-warm, 11.88:1 on warm-raised */
+  color: var(--c-bone);
+}
+
+/* THE ANSWER, AND IT IS THE ONLY CONDITIONAL LINE. Always in the flow so
+   nothing moves when it lights — the pricing caption's construction, and the
+   reason both are transform-and-opacity clean. It is only ever read on the
+   raised surface, because the plate raises and the line lights together. */
+.plate__reveal {
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-bone); /* 11.88:1 on warm-raised */
+  opacity: 0;
+  transition: opacity var(--d-drop) var(--ease-reveal);
+}
+
+.plate__reveal-lead {
+  color: var(--c-accent-text-dark); /* 7.62:1 on warm-raised */
+}
+
+.plate[data-open='true'] .plate__reveal {
+  opacity: 1;
+}
+
+/* Hover is the affordance and it is gated; the STATE is available to touch,
+   which is what stops a tap leaving a hover stuck on. */
+@media (hover: hover) and (pointer: fine) {
+  .plate:hover {
+    border-top-color: rgb(255 255 255 / 18%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plate {
+    transform: none;
+    transition: opacity var(--d-drop) var(--ease-reveal);
+  }
+
+  .plate[data-side='right'],
+  .plate[data-open='true'],
+  .plate[data-side='right'][data-open='true'],
+  .plate:active {
+    transform: none;
+  }
+}
+
+/* ---- The people, as one line ------------------------------------------- */
+
+.abt__people {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: 28px;
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-bone); /* 13.84:1 on the page ground */
+}
+
+.abt__slash {
+  color: var(--c-accent-text-dark); /* 9.46:1 */
+}

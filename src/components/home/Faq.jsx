@@ -4,29 +4,61 @@ import './Faq.css';
 
 /* Section 8. The quiet one.
 
-   Placeholder questions. BUILD-LAW.md Truth: an answer here is a statement
-   about price, timeline, ownership or process, and none of those may be
-   written until they are given. */
+   ---- All four written, and two of them carry arguments -----------------
+
+   The four answers come from content answers 7.2, 7.3 and 7.4 plus the
+   founder's own words, rewritten in the voice on 2026-09-09.
+
+   | Item | From |
+   |---|---|
+   | Timeline  | 7.2, four business days, then the revision rounds |
+   | Ownership | 7.3 and the founder: their hosting, their credentials |
+   | Changes   | the founder: revisions are a conversation, not a negotiation |
+   | Support   | 7.4, 30 days at no cost |
+
+   TWO OF THESE WERE NOT ON THE SITE AT ALL and both are stronger than what
+   they replaced. Ownership said "100% ownership", which is abstract and
+   which every agency claims; it now says whose hosting and whose
+   credentials, which a reader can picture. Changes had no home anywhere
+   except a pricing bullet reading "Unlimited revisions": a deliverable
+   where an argument should have been.
+
+   The fourth slot held the price question and a placeholder while the price
+   was in conflict. That conflict is settled and the price lives on
+   /pricing, so the slot was free for the changes question.
+
+   Budget: 150 to 250 characters an answer. Measured after the rewrite.
+*/
 const ITEMS = [
   {
     id: 'one',
-    q: 'Placeholder question one',
-    a: 'Placeholder answer one. This paragraph stands in for a real answer and commits to nothing about price, timeline, or how the work is run.',
+    q: 'How long does it take?',
+    a: "Four business days to build your site. Then the revision rounds start, and it changes with each one until it's the site you actually wanted. We don't put a cap on how many.",
   },
   {
+    /* ARGUMENT TWO, and the reason this answer was rewritten. It used to say
+       "Yes, 100% ownership", which is abstract: a reader cannot picture it
+       and every agency claims it. What they are afraid of is being locked
+       in, and the concrete version of not being locked in is whose hosting
+       it sits on and whose name is on the credentials. The founder's own
+       words. */
     id: 'two',
-    q: 'Placeholder question two',
-    a: 'Placeholder answer two, written to roughly the length a real answer runs so the panel is sized by something honest.',
+    q: 'Do I actually own it?',
+    a: "Yes, and it isn't just a word. When it's live and approved it transfers to your hosting, with all the credentials and the ownership under your name. You own everything you paid for.",
   },
   {
+    /* ARGUMENT ONE, and this slot was the price placeholder until the price
+       moved to /pricing. It is the strongest thing the founder says and it
+       was buried in a pricing bullet reading "Unlimited revisions". A bullet
+       states a deliverable; this states what the deliverable is FOR. */
     id: 'three',
-    q: 'Placeholder question three',
-    a: 'Placeholder answer three. Nothing here is a claim and nothing here should survive to a deploy.',
+    q: 'What if I want changes?',
+    a: "Then you ask, and we change it. Revisions here are a conversation, not a negotiation. A dedicated team stays on your project, so there's none of the nuisance other agencies make of it.",
   },
   {
     id: 'four',
-    q: 'Placeholder question four',
-    a: 'Placeholder answer four, closing the set.',
+    q: 'What happens after launch?',
+    a: "Thirty days of support and maintenance, at no cost. It's part of the work rather than a retainer, so there's nothing extra to pay in the month after you go live.",
   },
 ];
 
@@ -75,7 +107,7 @@ export default function Faq() {
   }, [openId]);
 
   return (
-    <section className="vt vt--light faq" aria-labelledby="faq-h">
+    <section className="vt faq" aria-labelledby="faq-h">
       <div className="faq__inner">
         <h2 className="faq__h" id="faq-h">
           Questions

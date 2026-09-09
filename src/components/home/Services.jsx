@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Browser, Lightning, Megaphone, PenNib } from '@phosphor-icons/react';
@@ -22,9 +23,27 @@ import './Services.css';
    accent was better left unspent than moved onto something that would break
    a different rule to hold it.
 
-   Sub-services are obviously synthetic. BUILD-LAW.md Truth: no invented
-   capabilities, and a list of services this agency has not said it offers is
-   exactly that.
+   ---- Sub-services, written 2026-09-08 ----------------------------------
+
+   All twelve are the user's, from the content answers and the pricing sheet.
+   Nothing here is a capability this agency has not stated.
+
+   Each is a short noun phrase, which is the slot: three lines under a
+   discipline name at the statement size, in a card whose width the pinned
+   track fixes. Longest is 25 characters.
+
+   | Discipline | Source |
+   |---|---|
+   | Branding   | 2.1 and 1.1, plus the pricing sheet's branding tiers |
+   | Websites   | 1.1 development services, 2.2, the website tiers |
+   | Marketing  | 1.1 marketing services, and the sheet's own three headings: SEO, Meta Ads, Google PPC |
+   | Automation | 1.1 automations, verbatim: workflow automations, AI agents, chat bots |
+
+   Two lines compress two sourced items into one phrase because the slot
+   holds three and the source lists more: "Stationery and social kit" is
+   2.1's stationery plus its social media kit, and "Web apps and ecommerce"
+   is two entries from 1.1's development list. Both halves of each are the
+   user's; neither adds anything.
 
    The artwork slot now holds an icon at the large station rather than an
    empty box. It is not the pillar artifact and does not pretend to be: there
@@ -34,49 +53,39 @@ import './Services.css';
    later at artwork scale with no layout change and the icon comes out.
 
    The icons are safe to name here because the four disciplines came from the
-   user directly. Everything else on this card is a placeholder and its icon
-   would be inventing what the placeholder will say, which is why the
-   sub-services have none. */
+   user directly.
+
+   The sub-services still take no icon, and the reason has changed rather
+   than gone away. It used to be Truth: an icon beside a placeholder invents
+   what the placeholder will say. They are real copy now, so the test is
+   DESIGN.md Iconography instead: an icon must add meaning the element does
+   not already carry, and "Chatbots" beside a chat bubble carries nothing
+   twice. Twelve marks on four cards would also put twelve objects against
+   the one artwork slot each card is built around. */
 const CARDS = [
   {
     id: 'branding',
     Icon: PenNib,
     discipline: 'Branding',
-    subs: [
-      'Placeholder sub-service one',
-      'Placeholder sub-service two',
-      'Placeholder sub-service three',
-    ],
+    subs: ['Custom logo design', 'Brand guidelines', 'Stationery and social kit'],
   },
   {
     id: 'websites',
     Icon: Browser,
     discipline: 'Websites',
-    subs: [
-      'Placeholder sub-service one',
-      'Placeholder sub-service two',
-      'Placeholder sub-service three',
-    ],
+    subs: ['Custom websites', 'Web apps and ecommerce', 'UI and UX design'],
   },
   {
     id: 'marketing',
     Icon: Megaphone,
     discipline: 'Marketing',
-    subs: [
-      'Placeholder sub-service one',
-      'Placeholder sub-service two',
-      'Placeholder sub-service three',
-    ],
+    subs: ['SEO and search ranking', 'Google and Meta ads', 'Lead generation and CRO'],
   },
   {
     id: 'automation',
     Icon: Lightning,
     discipline: 'Automation',
-    subs: [
-      'Placeholder sub-service one',
-      'Placeholder sub-service two',
-      'Placeholder sub-service three',
-    ],
+    subs: ['Workflow automation', 'AI agents', 'Chatbots'],
   },
 ];
 
@@ -177,9 +186,13 @@ export default function Services() {
         <ul className="services__track" ref={trackRef}>
           {CARDS.map(({ id, Icon, discipline, subs }, i) => (
             <li className="services__card" key={id}>
-              <a
+              <Link
                 className="services__link"
-                href={`/services/${id}`}
+                /* The canonical anchor, not `/services/<id>`. That path is a
+                   REDIRECT since the sub-service pages came off the router,
+                   and a card should point at the page rather than at a hop
+                   through one. */
+                to={`/services#${id}`}
                 onFocus={() => bringIntoView(i)}
               >
                 <span className="services__discipline">{discipline}</span>
@@ -198,7 +211,7 @@ export default function Services() {
                     </li>
                   ))}
                 </ul>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

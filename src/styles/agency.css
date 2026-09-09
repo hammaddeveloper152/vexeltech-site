@@ -1,0 +1,729 @@
+/* ==========================================================================
+   THE AGENCY REGISTER. Loaded last, and it supersedes the ground rules in
+   register.css rather than sitting beside them.
+
+   ---- What was withdrawn, and by whom -------------------------------------
+
+   Four rules were withdrawn by the user on 2026-09-09, all four of them his
+   own: the 5% accent ceiling, asphalt everywhere, flat forever, and two
+   colours. The reason he gave is the right one and it is worth keeping at the
+   top of this file, because it is the argument this sheet exists to answer:
+
+     A BRANDING AGENCY WHOSE OWN SITE IS THAT RESTRAINED IS ARGUING AGAINST
+     ITSELF.
+
+   Every one of those rules was defensible on its own terms and the sum of
+   them made a site that looked like an engineering document. This company
+   sells design. The page has to be the work.
+
+   ---- What did NOT move ---------------------------------------------------
+
+   THE TYPE SYSTEM IS UNTOUCHED. Monigue shouts, Clash is for controls,
+   Satoshi is for reading, and the loud scale is still the hero's own measure
+   divided by a fixed number. Nothing here sets a font-size on a heading, a
+   statement or a figure. The scale was never the problem.
+
+   And four rules stand because they are about the reader rather than about
+   taste: every contrast pair passes, reduced motion is honoured, tap targets
+   stay 48px, and nothing here invents a client, a number or a claim. This
+   sheet adds no image, no font and no request — every surface in it is a
+   gradient, a clip-path or a colour, so the page does not get slower.
+
+   ---- THE THIRD COLOUR, and why it is not a third colour ------------------
+
+   `--c-arc: #0d47bd`. Hue **220.2 degrees**.
+
+   Asphalt is #17181a and its hue is **220.0**. The ground has always been a
+   blue; it has simply been a blue at almost no chroma. Arc is the same hue at
+   full chroma, so the palette is not gaining a colour, it is turning one up.
+   That is the argument, and it is why no other hue was tried: a red or a
+   green would have been a decision about taste, and this one is a decision
+   already in the file.
+
+   Named for the light off a welding arc, which is the blue a machine makes,
+   and it sits beside machine yellow and asphalt in the same vocabulary.
+
+   Its pairs, measured: white 7.91, bone 6.57, concrete 7.13, machine yellow
+   4.21. **Yellow on arc is LARGE TEXT ONLY** — it clears 3:1 and not 4.5:1,
+   so headings and figures may take it and body may not.
+
+   ---- The ground rhythm ---------------------------------------------------
+
+   Eleven sections, five grounds, four changes. Big blocks, not alternation:
+
+     hero        asphalt, with a colossal arc chevron off the top right
+     failures    asphalt
+     services    MACHINE YELLOW, full bleed, asphalt plates standing on it
+     marquee     asphalt
+     work        asphalt
+     about       ARC, full bleed, the one blue section
+     counters    MACHINE YELLOW, the figures in asphalt at scale
+     testimonial asphalt
+     process     asphalt
+     faq         SHOP WHITE, because it is the reading section
+     footer      asphalt, with the chevron again, outlined
+
+   White type may never sit on machine yellow — 1.88:1 — so every yellow
+   section is asphalt-on-yellow throughout, and anything that needs to be
+   white stands on its own asphalt plate.
+   ========================================================================== */
+
+/* THE DOCUMENT HAS NO GROUND, and it never had one. `html`, `body` and `#root`
+   are all transparent, so what sits behind every section is the user agent's
+   white. Nothing showed it while every section painted asphalt edge to edge;
+   a full-page render of this pass showed a white band where the pinned
+   services scroller's spacer sits, because a spacer has no background to
+   paint. No reader reaches that position — the pin covers it at every real
+   scroll offset — but BUILD-LAW records this exact failure once already, the
+   footer meta row landing on the user agent's white on six pages at once, and
+   the fix there was one wrapper. This is the same fix, one level up.
+
+   It goes on `html` rather than `body` so overscroll at either end of the
+   document is asphalt too, which is what a reader on a trackpad actually
+   sees. */
+html {
+  background: var(--c-asphalt);
+}
+
+:root {
+  --c-arc: #0d47bd;
+  --c-arc-deep: #08307f; /* the gradient's far end, same hue */
+
+  /* Depth, and it is a HARD offset rather than a soft blur. A blurred shadow
+     is a claim about a light source and a soft material; this register has
+     neither. A hard offset is a printed object with a second impression under
+     it, which is what these cards are. */
+  --lift: 14px 14px 0 var(--c-asphalt);
+  --lift-sm: 8px 8px 0 var(--c-asphalt);
+}
+
+/* ---- NO PATTERNED GROUNDS ------------------------------------------------
+
+   A diagonal hazard rake ran on the two yellow sections at the mark's own
+   51.93 degrees. It is gone from every section and it does not come back
+   anywhere on the site; DESIGN.md carries the rule.
+
+   The reason is that a pattern is not a surface. Grain changes how a plane
+   catches light and leaves its colour exactly where it was — which is why the
+   light model keeps it. A repeating stripe is a second thing ON the plane,
+   competing with everything standing on it, and on a machine yellow ground it
+   turned the loudest surface on the page into a texture swatch.
+
+   Texture on this site is grain and light. Nothing else. */
+
+/* ==========================================================================
+   1. HERO — a colossal chevron off the top right
+   ========================================================================== */
+
+/* THE CHEVRON IS OUT. It was a colossal arc mark bleeding off the top right,
+   behind the headline, and it failed on three counts at once: it read as a
+   flat shape pasted behind the type rather than as the mark, its edge cut
+   through PROPOSAL, and at that scale a filled silhouette with no light on it
+   is a shape rather than a logo. Removed entirely — not softened, not moved.
+
+   THE ARC COLOUR STAYS EVERYWHERE ELSE: the about section's ground, the
+   failures radial, the work plates' offset and the footer's radial are all
+   untouched. What is gone is one decorative plane in one section. */
+
+/* A warm rise out of the bottom left, under everything. It is the only
+   gradient on an asphalt ground and it is there so the hero has a light
+   source at all — the ground used to be one flat value corner to corner. */
+.hero {
+  background-image: radial-gradient(
+    120% 80% at 8% 100%,
+    rgb(240 179 35 / 10%) 0%,
+    transparent 60%
+  );
+}
+
+/* ==========================================================================
+   2. FAILURES — asphalt, and the section finally spends something
+
+   Arc rises out of the top right corner, which is the seam the hero's chevron
+   leaves off. The gradient is the only thing carrying the blue between the
+   hero and the about section, and without it the third colour appears twice
+   and reads as two accidents rather than a palette.
+   ========================================================================== */
+
+.fail {
+  background-image: radial-gradient(
+    90% 60% at 100% 0%,
+    rgb(13 71 189 / 22%) 0%,
+    transparent 70%
+  );
+}
+
+/* THE LEAD STATEMENT GIVES ITS YELLOW BACK, and the reason is the seam walk
+   rather than a change of mind.
+
+   It was machine yellow at 128px, which was the loudest legal thing the
+   section could do once the 5% ceiling was withdrawn. But this section sits
+   between the hero's yellow call above it and the machine yellow services
+   ground below it, and the walk found it sharing a viewport with BOTH — the
+   call for 600px of scroll and the yellow ground for another 400. Three
+   yellow carriers in one frame at the worst position.
+
+   It is the one section on the page that cannot afford a yellow carrier,
+   because of where it sits rather than because of what it is. White at
+   17.77:1, and the section's yellow is the rail alone. */
+.fail__item--lead .fail__s {
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+}
+
+/* The rail the reader has passed goes yellow with it. It was a 12% white
+   hairline, which is a rule that has been read rather than a route that has
+   been travelled. */
+.fail__rail-passed {
+  background: var(--c-accent-draw-dark);
+}
+
+/* ==========================================================================
+   3. SERVICES — MACHINE YELLOW, full bleed, asphalt plates standing on it
+
+   The loudest statement the page can make about what this company sells, and
+   it is the section that says it. Every pair on the yellow is asphalt at
+   9.46:1; anything that has to be white stands on its own plate.
+   ========================================================================== */
+
+/* THE ONLY YELLOW GROUND ON THE PAGE, now the counter row has gone to
+   concrete. Lit like every other surface: the key is top left, so the ground
+   rises to #F5BC33 there and falls to #E6A81C at bottom right. Page-wide grain
+   at 4% already sits over it — one overlay, not one per section. */
+.services {
+  background-color: #e6a81c;
+  background-image: radial-gradient(120% 120% at 0% 0%, #f5bc33 0%, #e6a81c 62%);
+  background-repeat: no-repeat;
+}
+
+.services__h,
+.services .services__head {
+  color: var(--c-asphalt); /* 9.46:1 on machine yellow */
+}
+
+/* The cards are objects: plates standing on the yellow rather than tinting it,
+   and lit like every other surface — the 1px edge, the brighter top edge where
+   the key strikes, the 24px arc glow down the left edge at 10%, and the key's
+   own 200px corner glow at 16%.
+
+   THE GROUND IS surface-warm, NOT ASPHALT, and this is the section where the
+   reason is plainest: the card is standing ON the key. A plate the colour of
+   the page's shadow, sitting in the middle of a machine yellow field, is a
+   hole in the field. Warm, it is an object the same light reached. */
+.services__card {
+  background-color: var(--c-surface-warm);
+  /* warm white at 10%, the site's one glow value — never yellow at a partial
+     opacity, which composites into the banned olive band */
+  background-image: radial-gradient(
+    200px 200px at 0 0,
+    rgb(255 241 204 / 10%) 0%,
+    transparent 70%
+  );
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-top-color: rgb(255 255 255 / 14%);
+  border-radius: var(--r-md);
+  box-shadow:
+    var(--lift),
+    inset 24px 0 24px -24px rgb(13 71 189 / 10%),
+    inset 0 1px 0 rgb(255 255 255 / 6%);
+}
+
+/* THE DISCIPLINE NAMES ARE BONE, NOT YELLOW, and this is the seam walk again.
+
+   They were machine yellow on the asphalt card, which is legal at 9.46:1 and
+   was right while the section stood on a dark ground. On a yellow ground it is
+   two problems at once: it is a second yellow carrier in a viewport whose
+   ground is already the carrier, and it is type the SAME COLOUR as the field
+   behind the card, which reads as a hole punched through the plate rather than
+   as a name.
+
+   The section's yellow is the ground. The names are bone on asphalt, 13.84:1,
+   and the card does the tying rather than the colour. */
+/* THE NAME FACE. This is a product name — one of the four disciplines — and
+   Moldie is the face for those and for nothing else. 40px flat at both widths:
+   see the name register in tokens.css. */
+.services__discipline {
+  font-family: var(--font-name);
+  font-size: var(--t-name-l);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--c-bone); /* 13.16:1 on surface-warm */
+}
+
+/* Services.css raises the name to the h1 step inside the pinned rail. The name
+   register does not scale, so that override is cancelled here rather than
+   left to fight the cascade at one breakpoint. */
+@media (min-width: 861px) {
+  .services__discipline {
+    font-size: var(--t-name-l);
+    line-height: var(--t-loud-line);
+  }
+}
+
+.services__sub,
+.services__link {
+  color: var(--c-bone); /* 13.16:1 on surface-warm */
+}
+
+/* The icon was steel-dark, which is the GROUND's secondary value and is 4.57:1
+   on this surface — a tenth of a point off the floor, and off it entirely the
+   moment a card raises. steel-lift is the surface's own value, 6.09:1, and it
+   keeps the icon below the discipline name, which is the whole reason it was
+   not white. */
+.services__art-i {
+  color: var(--c-steel-lift);
+}
+
+.services__art {
+  border-color: rgb(255 255 255 / 14%);
+}
+
+/* ==========================================================================
+   4. MARQUEE — asphalt, and IT CARRIES NO YELLOW
+
+   The separators were machine yellow and the strip had a 2px yellow rule top
+   and bottom. Both are gone and neither comes back; DESIGN.md carries the rule.
+
+   The reason is position, not taste. The strip sits directly between the
+   machine yellow services ground above it and the work grid's yellow numerals
+   below, and it is only 116px tall — so anything yellow in it is in frame with
+   one or the other at every scroll position there is. A seam walk found it
+   sharing a viewport with plates 01 and 02 for 400px of scroll at 1280 and 700
+   at 390.
+
+   A marquee is a passage. It is the one section on the page a reader is always
+   leaving, and the recorded rule for a seam is that the passage yields.
+   ========================================================================== */
+
+.marquee {
+  border-top: 1px solid var(--c-rule-dark);
+  border-bottom: 1px solid var(--c-rule-dark);
+}
+
+.marquee__sep {
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+}
+
+/* ==========================================================================
+   5. WORK — asphalt, and the plates get an edge that reads as an object
+   ========================================================================== */
+
+/* The lit card treatment, and NO arc glow: About sits below these and owns
+   the arc in that viewport. The offset stays — an offset is not a glow, and
+   DESIGN.md records it as one of arc's four working uses. */
+.work__plate {
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-top-color: rgb(255 255 255 / 14%);
+  box-shadow:
+    10px 10px 0 rgb(13 71 189 / 55%),
+    inset 0 1px 0 rgb(255 255 255 / 6%);
+  /* The key, in the corner, at the value every other plate on the site
+     carries. A radial rather than a box-shadow so it is clipped by the plate's
+     own box and reads as light on the plane rather than as an edge.
+     warm white at 10%, the site's one glow value — never yellow at a partial
+     opacity, which composites into the banned olive band */
+  background-image: radial-gradient(
+    200px 200px at 0 0,
+    rgb(255 241 204 / 10%) 0%,
+    transparent 70%
+  );
+}
+
+/* FULL MACHINE YELLOW, and one step down the loud scale.
+
+   They were steel-dark — grey on grey, reading as a placeholder rather than as
+   a plate number — and then yellow at 55%, which is the translucent-fill
+   mistake the footer mark made: 55% yellow on surface-1 composites to #8f6e21,
+   a bronze that is not in the palette. Yellow on dark is 100% or it is a
+   stroke.
+
+   At full strength six figures at the FIGURE tier (128px) would be six loud
+   objects in one section, so they drop to the heading tier — 96px at 1280,
+   48 at 390 — which is one step down and still the second largest type in the
+   section. */
+/* THE NAME FACE. A plate number is the plate's name — it is the only thing
+   identifying the object while the poster is missing — and 96px flat, because
+   the plate's box is the same object at both widths and the numeral is two
+   characters either way. */
+.work__plate::before {
+  color: var(--c-accent-text-dark); /* 8.44:1 on surface-warm */
+  font-family: var(--font-name);
+  font-size: var(--t-name-fig);
+  line-height: var(--t-loud-line);
+  letter-spacing: 0;
+}
+
+/* ==========================================================================
+   6. ABOUT — ASPHALT. ARC IS REJECTED AS A GROUND.
+
+   This section was a full-bleed field of arc and it is asphalt again. The
+   finding is recorded in DESIGN.md and it is worth stating here too, because
+   it is the kind of thing that gets tried again:
+
+     ARC WORKS AS AN ACCENT AND FAILS AS A GROUND. A flat field of it with no
+     image on it is a large flat blue field. The same colour at EDGE or GLOW
+     scale — a radial, an offset, a rule — reads as depth.
+
+   Nothing else from that pass moves. The 95px Monigue statement across three
+   lines, the two full-width bands, the dropped image slot and the section's
+   own restated secondary text all stay; they were fixes to the composition and
+   the composition was never the problem.
+
+   Arc keeps its four working uses — the Failures radial, the work plates'
+   offset, the footer radial, and the glow below — and this section keeps it at
+   that scale rather than losing it entirely.
+   ========================================================================== */
+
+.about {
+  background: var(--c-asphalt);
+  /* Arc at glow scale, which is the scale it works at. Rising from the left,
+     under the statement, so the section still carries the colour without
+     standing on it. */
+  background-image: radial-gradient(
+    90% 70% at 0% 40%,
+    rgb(13 71 189 / 30%) 0%,
+    transparent 68%
+  );
+}
+
+/* THE STATEMENT IS MONIGUE, at the statement tier, like every other statement
+   on the site.
+
+   It was Satoshi — the BODY face — in the one section where the company speaks
+   as itself. That is not a small slip: register.css assigns Monigue to "every
+   section heading, every statement, every figure", and then About.css set this
+   one in Clash and register.css overrode it to Satoshi, so the page's most
+   personal line ended up in the face reserved for reading. Two sheets each
+   made a local decision and the tier was lost between them.
+
+   `--t-loud-s` is the statement tier: 58px at 1280, 40 at 390, the hero's own
+   measure over 20. Uppercase, because that is what the tier is — the four
+   failure statements and the four service disciplines are set exactly this
+   way, and this line is now one of them. */
+.about__statement {
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-s);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+}
+
+/* ---- THE SLOT IS OUT, AND THE SECTION TAKES THE WHOLE FRAME -------------
+
+   The 4:5 portrait slot is dropped from the layout until the photograph
+   exists. On asphalt an empty hairline plate read as a RESERVATION — the same
+   treatment the work plates and the services artefact slot use, so a reader
+   met the same kind of empty box three times and understood it. On arc blue
+   it stopped being that: a black rectangle with a "4 : 5" label on a saturated
+   ground reads as an image that failed to load, not as a space being kept.
+
+   The markup stays. `.about__media` is hidden, not deleted, so the photograph
+   drops back into a slot that still exists — and CLAUDE.md's open-slot table
+   is corrected in the same pass, because a reservation nobody can see is not
+   a reservation.
+
+   Everything else here follows from that. With the plate gone the section had
+   a statement strip across the top of an empty field, so:
+
+   THE STATEMENT GOES UP A TIER, from statement (58px) to heading (95px at
+   1280). At 58px across the full measure it set two thin lines with 300px of
+   nothing under them; at 95px across the same measure it sets three and
+   becomes the object the section is about.
+
+   THE RIGHT THIRD IS NOW USED. The supporting paragraph and the link share the
+   band beneath the statement, so both bands run edge to edge instead of
+   stopping two thirds across. */
+
+/* THE SECTION RESTATES ITS OWN SECONDARY TEXT, and it keeps doing so now that
+   the ground is asphalt again. It is bone rather than steel-dark by choice —
+   13.84:1 against 5.12 — because this is the one section that speaks in the
+   first person and its supporting line should not read as caption-grey.
+
+   The rule that produced this is recorded in DESIGN.md and it outlives the arc
+   ground that exposed it: EVERY GROUND CHANGE RESTATES ITS OWN SECONDARY TEXT.
+   Rewriting this block once deleted the line and the paragraph fell back to
+   steel-dark, which is 2.28:1 on arc, and nothing caught it until a contrast
+   walk ran. */
+.about__support {
+  color: var(--c-bone); /* 13.84:1 on asphalt */
+}
+
+/* The link is a white plate on asphalt, and its offset is arc — the colour at
+   edge scale, which is the scale it works at. */
+.about__link {
+  color: var(--c-asphalt); /* 17.77:1 on its own white plate */
+  box-shadow: 8px 8px 0 var(--c-arc);
+}
+
+.about__go {
+  color: var(--c-steel); /* 8.12:1 on white */
+}
+
+.about__statement {
+  font-size: var(--t-loud-h);
+}
+
+/* AT EVERY WIDTH, not from 1024 up. The first cut scoped this to the desktop
+   layout and left the black plate standing on a phone, where it is worse: it
+   takes a whole screen of arc blue before the reader reaches a word. The
+   reason the slot goes is the ground, and the ground does not change with the
+   viewport. */
+.about__media {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .about__inner {
+    display: block;
+  }
+
+  /* TWO FULL-WIDTH BANDS, not two columns.
+
+     The first cut of this put the statement in an 8-of-13 column with the
+     paragraph and link beside it, and two things went wrong that only showed
+     in the render: the statement took FOUR lines in 650px instead of the two
+     or three it wanted, and the link — 27px Clash plus its padding and arrow —
+     needed about 400px in a 437px column and wrapped to "How we work with /
+     you", which reads as broken rather than as a button.
+
+     The arithmetic says they cannot both have what they need: three lines of
+     this string at 95px needs 754px, the link needs 400, and with a gap that
+     is 1,218 in a 1,152 frame. So they stop competing for the same row. The
+     statement takes the whole width and sets two lines; the paragraph and the
+     link share the band beneath it. Both bands run edge to edge, which is the
+     point — nothing is left holding a third of the frame. */
+  .about__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--s-2xl);
+    row-gap: var(--s-2xl);
+    align-items: end;
+    max-width: none;
+    padding: 0;
+  }
+
+  .about__statement {
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+
+  .about__support {
+    grid-column: 1;
+    max-width: 68ch;
+    margin: 0;
+  }
+
+  /* The button sizes to its own content in an `auto` track, so it cannot wrap
+     however narrow the paragraph beside it gets. */
+  .about__link {
+    grid-column: 2;
+    justify-self: end;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 1280px) {
+  .about {
+    padding: var(--s-3xl) var(--s-2xl);
+  }
+
+  .about__inner {
+    width: min(100%, 1200px);
+    margin: 0 auto;
+  }
+}
+
+/* ==========================================================================
+   7. COUNTERS — CONCRETE. The page's second light ground.
+
+   It was the second machine yellow band. Services is the only yellow ground
+   now, which is what makes it read as the loudest section rather than as one
+   of two.
+
+   EVERY TEXT VALUE ON THIS SECTION IS RESTATED HERE WITH ITS RATIO, per the
+   ground-change rule in DESIGN.md: a value that is correct by inheritance is
+   one edit away from being wrong by inheritance, and steel-dark inheriting
+   onto a light ground would be 2.4:1.
+   ========================================================================== */
+
+.counters {
+  background-color: var(--c-concrete);
+  background-image:
+    /* Arc rising from the RIGHT edge at 8%: the About glow's construction,
+       mirrored. Arc at glow scale, never as a field. */
+    radial-gradient(90% 70% at 100% 40%, rgb(13 71 189 / 8%) 0%, transparent 68%),
+    radial-gradient(120% 120% at 0% 0%, #f4f3f0 0%, #eceae5 62%);
+  background-repeat: no-repeat;
+}
+
+.counters__h {
+  color: var(--c-asphalt); /* 17.10:1 on concrete */
+}
+
+.counters .counters__item .counters__n {
+  color: var(--c-asphalt); /* 17.10:1 on concrete */
+}
+
+.counters__l {
+  color: var(--c-steel); /* 7.81:1 on concrete — steel, not steel-dark */
+}
+
+/* Hairlines take the light-ground rule. `--c-rule-dark` is white at 12% and
+   would be invisible here. */
+.counters__rule,
+.counters__rule-lit {
+  background: var(--c-line);
+  opacity: 1;
+}
+
+.counters__rule-lit {
+  background: var(--c-asphalt);
+}
+
+/* ==========================================================================
+   8. TESTIMONIALS — asphalt, and the quote mark goes very large
+   ========================================================================== */
+
+.quotes {
+  background-image: radial-gradient(
+    70% 70% at 50% 0%,
+    rgb(240 179 35 / 8%) 0%,
+    transparent 70%
+  );
+}
+
+.quotes__mark {
+  color: var(--c-accent-text-dark);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   9. PROCESS — asphalt, unchanged in ground. The route is already the accent.
+   ========================================================================== */
+
+/* ==========================================================================
+   10. FAQ — SHOP WHITE. The reading section, and the one light ground.
+
+   Every pair flips: asphalt on white is 17.77, steel is 8.12, and the accent
+   as text becomes deep amber at 5.43 because machine yellow on white is
+   1.88:1 and is never text on a light ground.
+   ========================================================================== */
+
+.faq {
+  background: var(--c-shop-white);
+  background-image: none;
+}
+
+.faq__h,
+.faq__q,
+.faq__q-t {
+  color: var(--c-asphalt); /* 17.77:1 */
+}
+
+.faq__a {
+  color: var(--c-steel); /* 8.12:1 on white */
+}
+
+.faq__mark {
+  color: var(--c-accent-text-light); /* deep amber, 5.43:1 */
+}
+
+.faq__rule {
+  background: var(--c-line);
+}
+
+/* The open row inverted to white on a dark page. The page is white here, so
+   it inverts the other way: an open answer stands on asphalt. */
+.faq__item[data-open='true'] {
+  background: var(--c-asphalt);
+  border-radius: var(--r-md);
+  box-shadow: var(--lift-sm);
+}
+
+.faq__item[data-open='true'] .faq__q-t {
+  color: var(--c-shop-white);
+}
+
+.faq__item[data-open='true'] .faq__a {
+  color: var(--c-bone);
+}
+
+.faq__item[data-open='true'] .faq__mark {
+  color: var(--c-accent-text-dark); /* back to machine yellow on asphalt */
+}
+
+.faq__item[data-open='true'] .faq__rule {
+  background: rgb(255 255 255 / 18%);
+}
+
+/* ==========================================================================
+   11. FOOTER — asphalt, and the page ends in the brand's own light
+
+   ARC NEVER TOUCHES THE FOOTER. The haze and the mark were both arc and both
+   are gone. The page opens on asphalt under a machine yellow key and it closes
+   the same way; putting the third colour in the last frame ended the page on a
+   colour the brand does not own.
+   ========================================================================== */
+
+.foot {
+  position: relative;
+  overflow: clip;
+  /* The hero bloom, mirrored. The hero's key is 900px at 8% -6%, top left;
+     this is the same construction at 92% 106%, bottom right, at 5%. The light
+     enters top left and leaves bottom right, which is one source across the
+     whole document rather than a glow per section. */
+  background-image: radial-gradient(
+    900px 700px at 92% 106%,
+    rgb(240 179 35 / 5%) 0%,
+    transparent 70%
+  );
+}
+
+/* THE MARK IS A STROKE, NOT A FILL, and that is the rule rather than a
+   treatment for this one shape.
+
+   It was a translucent yellow fill at 14%, then a translucent arc fill at 10%,
+   and both were wrong for the same reason: MACHINE YELLOW AT LOW ALPHA ON
+   ASPHALT IS A MUDDY BRONZE. It stops being the accent and becomes a colour
+   the palette does not contain — 14% yellow over asphalt composites to about
+   #3f3620, which is neither yellow nor ground.
+
+   So yellow on dark is 100% or it is a stroke. A 2px line at 35% still reads
+   as machine yellow because a stroke is thin enough that the eye reads the
+   colour rather than the composite, and it draws the mark instead of blocking
+   it in.
+
+   An inline data URI rather than a clip-path: a clip gives a silhouette and
+   there is no way to stroke one. No request, no file. `non-scaling-stroke`
+   keeps the line 2px whatever the element scales to. */
+.foot::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: -14vw;
+  bottom: -22vh;
+  width: 56vh;
+  height: 56vh;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M7 33 29 25 50 60 78 6 94 2 54 93Z' fill='none' stroke='%23F0B323' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+
+/* Everything in the footer sits above it. */
+.foot__inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Reduced motion, and the one thing this sheet adds that moves.
+
+   Nothing here animates. The gradients and the clip-paths are static, the
+   shadows are static, and no keyframe is declared. The grain in the hero is
+   the page's only texture that switches off, and Hero.css already switches it.
+   This block exists so that is stated rather than assumed.
+   ========================================================================== */

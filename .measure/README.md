@@ -102,6 +102,14 @@ statement it backs rather than the file it writes.
 | `workgrid.mjs` | the grid's three plate states, and that each fills its box |
 | `quotes.mjs` | the testimonial slot against its longest quote |
 | `slots.mjs` | every empty asset slot and its reserved ratio |
+| `heroink.mjs` | the hero's text against the lit surface, off painted pixels, over ten frames — the DOM cannot see a sibling canvas, so every pair on a surface is measured this way |
+| `surface.mjs` | the surface's own distribution at a named mount (`surface.mjs hero`, `surface.mjs about`): peak luminance, the share under 3%, **the share resting in the olive band**, and where the brightest decile sits on the ramp. The band figure is the one that matters — DESIGN.md bans it as a resting value, and this is what proves the transfer curve's knee skips it |
+| `about.mjs` | the About page: the heading block's two values against the surface at both widths, then a full-page capture with one plate held open |
+| `warm.mjs` | **the warm surfaces, and every text value that lands on one.** Where surface-warm and warm-raised actually paint, what sits on them and at what ratio, and whether steel-dark is on a surface anywhere — it is the ground's secondary value, 4.57:1 on surface-warm and 4.13:1 on warm-raised, and banned above the ground. Opens every plate and the lead card first, because a hover state does not exist in a resting DOM |
+| `carrier.mjs` | **machine yellow as a share of the frame, off painted pixels.** The DOM walk in `pageaccent.mjs` cannot see a pseudo-element, a gradient stop or a canvas, and the plate's left bar, the corner glow and the work numerals are all three. Reports two numbers per frame — the share of the frame and the share of the objects' own surface — and intersects each object box with its clipping ancestors, which is what stopped the services rail reading 10.7% carrier from ground the card does not paint |
+| `warmshots.mjs` | the three frames the warm surfaces changed, captured at 1280 |
+| `svcshots.mjs` | the Services page at both widths, with plate 02 **frozen at half its rotation** — the straighten is a CSS transition, `getAnimations()` returns it as a `CSSTransition`, and the seek finds the half-tilt frame by bisecting the timeline rather than assuming it is the halfway point. On `--ease-reveal` it is not: 125ms of 250ms is already 0.19 of 1.5 degrees. It freezes that one animation and nothing else, for the reason BUILD-LAW records twice |
+| `dead.mjs` | **did a deleted rule ever match anything?** Loads every route at both widths, opens every conditional surface first so a state-only rule cannot hide, and counts elements carrying the class. A deletion can only change a painted pixel if something matched the selector, so this is the proof that stands in for a before-and-after screenshot when the removed code was dead. Written for the `.tier*` removal; the selector at the top is the thing to edit for the next one |
 
 ### Pages, routes and weight
 
@@ -119,6 +127,7 @@ statement it backs rather than the file it writes.
 
 | Script | What it proves |
 |---|---|
+| `contrast.mjs [url]` | **every PAINTED text pair on a page, not every declared one.** Reads each text element's computed colour, walks UP for the first ancestor that actually paints a background, composites the alphas, and measures against 4.5:1 or 3:1 by size. This is the gap the impeccable detector cannot see: it reads declared CSS pairs, and a ground set on a section three levels above the text is not a declared pair with it. Written for the agency register, where five grounds replaced one and every inherited colour had to be re-checked; it found a 128px figure painting machine yellow on machine yellow at 1:1 |
 | `a11y.mjs <W> <H>` | landmark, skip link, tab order, process titles, the strip's pause control |
 | `checkcopy.mjs` | no em or en dashes and no exclamation marks in shipped output |
 | `rules.mjs` | painted separators per page — the count that went 160 to 82 |

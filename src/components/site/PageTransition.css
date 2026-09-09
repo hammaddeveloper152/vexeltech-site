@@ -1,0 +1,144 @@
+/* ==========================================================================
+   THE PAGE TRANSITION — the mark, at page scale.
+
+   ---- Why the mark and not another device ---------------------------------
+
+   Five devices were built on the hero headline and all five came out, and
+   DESIGN.md records why each one failed. The common cause is in the fourth
+   entry of that table: one word is too small a place to put a brand, and a
+   device that appears once reads as a defect rather than as a signature. The
+   reference competitor's mark works because it REPEATS.
+
+   A route change is the one event on this site that repeats by itself, on
+   every page, for the whole visit. So the device goes there, and the device
+   is the V — the one shape on this site that is the brand's own. A bolt, a
+   diagonal band or an abstract shape would be a stock transition that any
+   site could run. This one cannot be copied without copying the logo.
+
+   ---- The geometry is the mark's, not a number typed in --------------------
+
+   Every path here is derived from the path in `Wordmark.jsx` by
+   `.measure/markgeom.mjs`, which prints them. Six points on a 0 0 100 100
+   box: P0 7,33  P1 29,25  P2 50,60  P3 78,6  P4 94,2  P5 54,93.
+
+   THE MARK HAS NO SINGLE ANGLE, and DESIGN.md used to say it did. It recorded
+   "52.8 degrees, the long arm's 44 across and 58 up"; measured off the shipped
+   path the long arm is 66.27 degrees outer and 62.59 inner, and the edge that
+   is actually 52.8 is the SHORT arm's outer edge at 51.93. The sentence named
+   the wrong arm. It is corrected there, and the reason it matters here is that
+   this cut uses BOTH arms and so never has to pick one — which is exactly why
+   the chevron is a better home for the mark than any single line.
+
+   ---- How the shape is scaled ---------------------------------------------
+
+   `preserveAspectRatio="xMidYMid slice"` on a viewBox 91 units tall. Slice
+   scales uniformly to COVER the element, so the scale is max(vw/vbW, vh/91),
+   and with vbW at 600 the second term wins at every viewport up to 6.6:1. Two
+   things follow and both are wanted: the V is EXACTLY the frame height at
+   every width, and the angles are the path's angles rather than a percentage
+   box's, which is what a non-uniform fit would have made of them.
+
+   ---- Motion ---------------------------------------------------------------
+
+   Transform only, on two elements.
+
+   `cubic-bezier(.25, .5, .85, .85)`, terminal slope (1-.85)/(1-.85) = 1.0:
+   the halves are still moving at their average speed at the instant they
+   stop. It is the curve the hero's entrance was built on and it is here for
+   the same reason — a page transition that settles reads as slow, whatever
+   its duration says.
+   ========================================================================== */
+
+.pt {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  /* Decoration over a route change, never a control. It must not eat a click
+     that lands during it. */
+  pointer-events: none;
+  /* Keeps a full-viewport animated layer from inviting a layout or style
+     recalculation of the page it is sitting over. */
+  contain: strict;
+}
+
+.pt__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pt__fill {
+  fill: var(--c-accent-ground);
+}
+
+/* ---- The split ------------------------------------------------------------
+
+   THIS IS THE SLICE THE FOURTH FAILED HEADLINE DEVICE WAS REACHING FOR.
+
+   That one displaced two halves of a WORD along the diagonal and was rejected
+   on amplitude: the mask is sized to its widest phrase, so the travel could
+   not exceed about one percent of the phrase's width and it read as a scratch
+   rather than a cut. The constraint was the container, not the idea. At page
+   scale the container is the viewport and the amplitude is unbounded, so the
+   same cut that could not move 5.58px inside a word moves a whole screen here.
+
+   The cut is the outer chevron — the short arm's outer edge at 51.93 degrees
+   into the vertex, then out along the long arm's outer edge at 66.27 —
+   extended to x -300 and x 400 so it crosses the frame at every aspect ratio.
+   It divides the frame in two: the wedge under the V, and everything else.
+   The wedge goes down, the rest goes up, and what opens between them is the V.
+
+   BOTH HALVES ARE THE SAME YELLOW, so at rest the seam is invisible and the
+   frame is one plane. The seam exists only while they are apart, which is the
+   whole gesture: the plane was always the mark, and parting it says so.
+
+   The 60ms hold before they part is what makes that legible. Without it the
+   plane is in two pieces from the first frame and the reader sees a wipe that
+   happens to be V-shaped rather than a plane being cut. */
+
+.pt__lower {
+  animation: pt-split-down 320ms cubic-bezier(0.25, 0.5, 0.85, 0.85) 60ms forwards;
+}
+
+.pt__upper {
+  animation: pt-split-up 320ms cubic-bezier(0.25, 0.5, 0.85, 0.85) 60ms forwards;
+}
+
+/* 130% of the viewBox height, not 100%. A percentage transform on an SVG child
+   resolves against the nearest viewBox rather than the element's own box, so
+   this is 130% of 91 units at every viewport — one number, correct everywhere.
+   100% would leave the wedge's own vertex sitting on the last row of pixels:
+   it starts at the frame's bottom edge, so it has further to go than the frame
+   is tall. */
+@keyframes pt-split-down {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 130%, 0);
+  }
+}
+
+@keyframes pt-split-up {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -130%, 0);
+  }
+}
+
+/* ==========================================================================
+   Reduced motion. No transition at all, and the route change is instant.
+
+   This is a switch-off, not a reduction, and it is the same call DESIGN.md
+   already makes for Lenis: there is no gentler version of putting a plane
+   between a reader and the page they asked for. The component renders nothing
+   under the preference, so this rule is the belt to that braces — for a reader
+   who changes the preference mid-visit, after the component has decided.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .pt {
+    display: none;
+  }
+}

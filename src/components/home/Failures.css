@@ -25,7 +25,9 @@
 .fail {
   padding: var(--s-3xl) var(--s-md);
   background: var(--c-asphalt);
-  border-top: 1px solid var(--c-rule-dark);
+/* Section separator REMOVED 2026-09-08: on an all-asphalt page two
+   sections are separated by space, not by a stroke. See DESIGN.md,
+   "Separation on an all-asphalt page". */
 }
 
 .fail__inner {
@@ -121,8 +123,15 @@
 }
 
 .fail__rail-ahead,
+/* Steel-dark, not the accent. The register pass took the drawn route's colour
+   off it and left this rule claiming the accent underneath; the two disagreed
+   for the whole build, decided only by load order. BUILD-LAW Contrast: dead
+   override code has produced near-invisible text on this project before, and
+   a stroke that repaints itself machine yellow the day these two sheets swap
+   order is the same defect. register.css owns where the accent lands; this is
+   kept in step with it. */
 .fail__rail-passed {
-  background: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
+  background: var(--c-rule-dark); /* white at 12% */
   /* Drawn from the top down, on transform. Never height. */
   transform-origin: top center;
   will-change: transform;

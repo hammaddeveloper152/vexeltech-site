@@ -1,45 +1,74 @@
+/* INTERNAL LINKS ARE ROUTER LINKS, NOT PLAIN ANCHORS, from 2026-09-08.
+
+   Every internal link in the rebuild was `<a href>`, which makes the browser
+   FETCH A NEW DOCUMENT for a route the router could have rendered in place.
+
+   That is why the wordmark could land on the old hero. `/` served the legacy
+   homepage until the route swap earlier the same day, so a browser that had
+   visited it could hold a cached document for that exact URL — and a plain
+   anchor is precisely what hands the browser the chance to use it. A `<Link>`
+   never requests a document, so the cache has nothing to answer.
+
+   It was also wrong on its own terms: a full reload on every internal click
+   re-parses the bundle, re-runs the hero entrance and throws away scroll
+   position, on a site that is one bundle already. */
 import React, { useEffect, useId, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { List, X } from '@phosphor-icons/react';
 import Wordmark from './Wordmark.jsx';
 import './Header.css';
 
-/* The bar. Placeholder navigation. BUILD-LAW.md Truth: the real site map is
-   fifteen pages the user has not listed here, and inventing section names
-   would be inventing the site. */
+/* The bar.
+
+   ---- Navigation, PROPOSED 2026-09-08 -----------------------------------
+
+   Content answer 10.1 lists eight destinations: Home Page, Services,
+   Pricing, About Us, Contact US, Resources, Portfolio, Case Studies. The bar
+   holds four. These four are a proposal and are trivially reversible; they
+   are written in rather than left as PLACEHOLDER LINK because the container
+   budget at 1024 cannot be measured against a label nobody will ship.
+
+   TWO OF THE EIGHT ARE ALREADY IN THE BAR AND DO NOT NEED A SLOT.
+   Home is the wordmark, which is a link to `/` and the first thing in the
+   tab order after the skip link. Contact is the call, which 10.3 names
+   "Let's Talk". Spending nav slots on either would be the same destination
+   twice in one 65px strip.
+
+   That leaves six for four, and the four chosen are the ones a reader
+   deciding whether an agency is serious opens in order: what you do, what it
+   costs, what you have done, who you are. Services and Pricing are the offer.
+   Portfolio is the evidence. About us is the company.
+
+   THE OTHER FOUR LIVE IN THE FOOTER: Home, Contact us, Resources and Case
+   studies. 10.4 says the footer carries all the website pages, so the footer
+   list is all eight rather than only the four that missed; see FooterForm.
+
+   Case studies is the closest call. It is proof, like Portfolio, and it was
+   left out of the bar because two proof links side by side make the reader
+   choose between them before they know the difference. In the footer it sits
+   next to Portfolio where that comparison is cheap.
+
+   Social icons, also 10.4: NOT built. No account or URL was given, and a
+   social icon linking nowhere is an invented capability. */
 const NAV = [
-  { id: 'one', label: 'Placeholder link one', href: '/placeholder-one' },
-  { id: 'two', label: 'Placeholder link two', href: '/placeholder-two' },
-  { id: 'three', label: 'Placeholder link three', href: '/placeholder-three' },
-  { id: 'four', label: 'Placeholder link four', href: '/placeholder-four' },
+  { id: 'services', label: 'Services', href: '/services' },
+  { id: 'pricing', label: 'Pricing', href: '/pricing' },
+  { id: 'portfolio', label: 'Portfolio', href: '/portfolio' },
+  { id: 'about', label: 'About us', href: '/about-us' },
 ];
+
+/* 10.3, the user's own label for this call, verbatim. It replaces "Get a
+   custom quote", which was written here before the content arrived. */
+const CTA = 'Let’s Talk';
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
 export default function Header() {
-  const [grounded, setGrounded] = useState(false);
   const [open, setOpen] = useState(false);
   const panelRef = useRef(null);
   const triggerRef = useRef(null);
   const panelId = useId();
-
-  /* The bar is transparent over the hero and takes a ground once the hero is
-     behind the reader, so the type never has to hold up over the tile wall.
-     Observed rather than measured off a scroll listener: the hero's own
-     height is the threshold, whatever that height turns out to be. */
-  useEffect(() => {
-    const hero = document.querySelector('.hero');
-    if (!hero || typeof IntersectionObserver === 'undefined') {
-      setGrounded(true);
-      return undefined;
-    }
-    const io = new IntersectionObserver(
-      ([entry]) => setGrounded(!entry.isIntersecting),
-      { threshold: 0 }
-    );
-    io.observe(hero);
-    return () => io.disconnect();
-  }, []);
 
   /* The panel is a modal: while it is open it is the only thing you can
      reach. Escape closes it, Tab cycles inside it, and focus goes back to the
@@ -106,28 +135,32 @@ export default function Header() {
     };
   }, [open]);
 
+  /* No ground state. The bar is asphalt with a hairline at every scroll
+     position, because the hero it sits over carries no photography any more
+     and the transparent state was putting white navigation on a white
+     headline. See Header.css. */
   return (
-    <header className="vt bar" data-grounded={grounded ? 'true' : 'false'}>
+    <header className="vt bar">
       <div className="bar__inner">
-        <a className="bar__brand" href="/" aria-label="Vexeltech, home">
+        <Link className="bar__brand" to="/" aria-label="Vexeltech, home">
           <Wordmark size="md" />
-        </a>
+        </Link>
 
         <nav className="bar__nav" aria-label="Main">
           <ul className="bar__list">
             {NAV.map(({ id, label, href }) => (
               <li key={id}>
-                <a className="bar__link" href={href}>
+                <Link className="bar__link" to={href}>
                   {label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
         </nav>
 
-        <a className="bar__cta" href="/contact-us">
-          Get a Custom Quote
-        </a>
+        <Link className="bar__cta" to="/contact-us">
+          {CTA}
+        </Link>
 
         {/* The icon is the whole content of this control, so the control
             carries the label. DESIGN.md Iconography: the label says what the
@@ -166,16 +199,16 @@ export default function Header() {
           <ul className="bar__panel-list">
             {NAV.map(({ id, label, href }) => (
               <li key={id}>
-                <a className="bar__panel-link" href={href} onClick={() => setOpen(false)}>
+                <Link className="bar__panel-link" to={href} onClick={() => setOpen(false)}>
                   {label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
 
-          <a className="bar__cta bar__cta--panel" href="/contact-us" onClick={() => setOpen(false)}>
-            Get a Custom Quote
-          </a>
+          <Link className="bar__cta bar__cta--panel" to="/contact-us" onClick={() => setOpen(false)}>
+            {CTA}
+          </Link>
         </div>
       ) : null}
     </header>

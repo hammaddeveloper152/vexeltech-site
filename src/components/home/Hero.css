@@ -1,9 +1,33 @@
 /* ==========================================================================
-   Hero — section 1
+   Hero — section 1. LOUD.
+
+   Type and colour carry the hero. There is no photography in it at all, and
+   that is deliberate: every previous direction stalled on imagery — the
+   photograph wall on its sourcing, the lit bench on its artefacts — and this
+   one needs none. The headline is the whole hero, in the loud register at the
+   largest size the measure allows, and the primary call is the frame's one
+   accent, large and solid.
+
+   ---- Asphalt stays, and that is what makes this ours ------------------------
+
+   The reference competitor is loud in many colours on white. One accent on a
+   black ground is a harsher, more confident loud, and it cannot be mistaken
+   for theirs. That is the reason the ground does not move: not habit, and not
+   the palette record, but the fact that the same loudness on white would be
+   somebody else's. DESIGN.md carries this.
+
+   ---- What came out, and why it is still in the tree -----------------------
+
+   The copy plate existed to hold contrast over photographs; without
+   photographs it had no job, so the type sits directly on asphalt. The tile
+   wall, the bench arrangement, the responsive ladder and the video capability
+   are all still in the tree — TileWall.jsx, bench.js, videoTiles.js — and
+   unmounted. They are machinery a later section may want. The scrim went with
+   the wall: it subordinated a picture and there is no picture.
+
    Every value resolves through tokens.css. Motion is transform and opacity
-   only, per BUILD-LAW.md. The entrance is predetermined, so it is CSS rather
-   than GSAP: CSS animation runs off the main thread and stays smooth while
-   the page is still loading.
+   only, per BUILD-LAW.md. The entrance is CSS rather than GSAP because it is
+   predetermined and CSS animation stays smooth while the page is loading.
 
    Content is visible by default. Every hidden-at-rest state lives inside
    `prefers-reduced-motion: no-preference`, so if animation never runs the
@@ -15,60 +39,28 @@
   display: grid;
   align-content: center;
   isolation: isolate;
-  min-height: 100svh; /* BUILD-LAW: hero fits one phone screen */
-  /* No horizontal padding below 1024: the plate is a full-bleed band there
-     and supplies its own inset. See the plate. */
-  padding: var(--s-xl) 0 var(--s-lg);
+  /* BUILD-LAW: the hero fits one phone screen. ONE SCREEN INCLUDES THE BAR.
+     The bar is sticky and in flow, 65px tall — the 48px target plus s-sm
+     above and below plus its 1px rule — so a hero at 100svh always has its
+     last 65px below the fold. The plate hid that by being shorter than the
+     frame and centring in it; a headline that fills the frame does not. The
+     bar's height is derived here from the same tokens that build it rather
+     than typed as 65, so the two cannot drift apart. */
+  min-height: calc(100svh - (48px + 2 * var(--s-sm) + 1px));
+  /* The inset IS the measure now. There is no plate to supply one, so the
+     section carries it, and the headline size below is derived from exactly
+     this number at each width: 16 on a phone, 40 at tablet, 64 at desktop.
+     Change one and the other has to be re-derived. */
+  padding: var(--s-lg) var(--s-md);
   overflow: clip;
   background: var(--c-asphalt);
-}
-
-/* ---- Scrim -------------------------------------------------------------- */
-
-/* Flat, not graduated. A scrim that darkened toward the headline would be a
-   gradient, and flat-forever governs fills.
-
-   ---- 55% to 25%, and the reason it moved --------------------------------
-
-   At 55% this scrim WAS the contrast mechanism. The wall was flat tone
-   blocks, the worst surface in it was a machine yellow tile, and 55% put
-   shop white at 6.19:1 over it and steel-dark at 4.78:1. Every pair in the
-   hero depended on this one number.
-
-   Photographs ended that. Five of the fourteen contain pure white pixels and
-   two blow over 1% of their visible area to white. Measured on the rendered
-   wall at 55%: shop white fell to 3.89:1 and steel-dark to 1.12:1. Raising
-   the scrim does not fix it either, because steel-dark needs 95% to clear
-   4.5:1 and at 95% there is no photograph left.
-
-   So the contrast moved to opaque ground. The copy plate and the meta band
-   carry every pair now, at values DESIGN.md already certifies and which no
-   image swap can move. THIS SCRIM CARRIES NO CONTRAST REQUIREMENT AT ALL,
-   and 25% is chosen for the only job it has left: keeping the wall
-   subordinate to the copy. Measured on the rendered wall, mean luminance
-   0.128 at 25% against 0.192 unscrimmed, so the photographs read as present
-   and recessive rather than as the subject.
-
-   ---- What this costs, recorded so it is not rediscovered ----------------
-
-   At 25% the wall is BRIGHT. Shop white over its 99th percentile is 1.7:1
-   and steel-dark is 0.5:1. Nothing text-bearing may sit outside the plate or
-   the band without an opaque ground of its own. The old rule, that the scrim
-   makes the wall safe to put type on, is gone: it is now the opposite, and
-   anything added to this section has to bring its own ground. */
-.hero__scrim {
-  position: absolute;
-  inset: 0;
-  background: var(--c-asphalt);
-  opacity: 0.25;
-  pointer-events: none;
-  z-index: -2;
 }
 
 /* ---- Grain -------------------------------------------------------------- */
 
 /* Above the ground, below every piece of content. Fixed so it reads as a
-   property of the surface rather than of the section. */
+   property of the surface rather than of the section. Texture on asphalt;
+   the only thing between the ground and the type. */
 .hero__grain {
   position: fixed;
   inset: 0;
@@ -86,163 +78,95 @@
   }
 }
 
-/* ---- Construction language (Plates 00, 01) ------------------------------ */
-
-/* Registration brackets: L shapes at the section corners, as on the plates.
-   Hairline, never a full border. */
-/* Inset from the PLATE, not from the section. 8px, with 24px brackets, puts
-   each corner mark inside the plate's own padding and clear of the copy: the
-   top pair sits above the meta row, the bottom pair below the note. */
-.hero__reg {
-  position: absolute;
-  inset: var(--s-sm);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.hero__bracket {
-  position: absolute;
-  width: var(--s-lg);
-  height: var(--s-lg);
-  border: 0 solid var(--c-rule-dark);
-}
-
-.hero__bracket--tl {
-  top: 0;
-  left: 0;
-  border-top-width: 1px;
-  border-left-width: 1px;
-}
-
-.hero__bracket--tr {
-  top: 0;
-  right: 0;
-  border-top-width: 1px;
-  border-right-width: 1px;
-}
-
-.hero__bracket--bl {
-  bottom: 0;
-  left: 0;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-}
-
-.hero__bracket--br {
-  bottom: 0;
-  right: 0;
-  border-bottom-width: 1px;
-  border-right-width: 1px;
-}
-
 /* ---- Copy --------------------------------------------------------------- */
 
-/* ---- The copy plate -----------------------------------------------------
-
-   An OPAQUE asphalt ground under the copy, not a scrim over the wall.
-
-   The wall used to be flat tone blocks and a 55% scrim was enough to carry
-   every contrast pair over it. Photographs broke that, and not marginally:
-   five of the fourteen contain pure white pixels, and two blow more than 1%
-   of their visible area to white. Measured over a blown highlight at the old
-   scrim, shop white fell to 3.96:1 and steel-dark to 1.14:1. Steel-dark
-   would have needed a 95% scrim to clear 4.5:1, at which point the
-   photographs are a black rectangle.
-
-   So contrast is no longer the scrim's job. The plate restores the asphalt
-   ground under the type and every pair on it is one DESIGN.md already
-   certifies: shop white 17.77:1, steel-dark 5.12:1, machine yellow 9.46:1.
-   They cannot drift with the imagery, which is the point: an image swap must
-   never be able to break the headline.
-
-   Same pattern as the work wall's label band, which is opaque for the same
-   reason and says so. */
+/* Not a plate. A container for the copy that spans the section, on asphalt,
+   with nothing behind it. It keeps its own padding so the brackets have a
+   corner to sit in. */
 .hero__body {
   position: relative;
   z-index: 2;
   align-self: center;
-  /* 720px of MEASURE plus the plate's own padding, not 720px of plate.
-     Adding the padding inside the old width took the copy column down to
-     640px and pushed the headline to three lines; DESIGN.md records that two
-     lines hold from 390 to 1920 and that is a measured property of the
-     headline, not an accident. The plate is drawn around the measure. */
-  /* ---- Below 1024 the plate is a full-bleed BAND ----------------------
-
-     A plate costs measure, and the measure is not free to spend: DESIGN.md
-     records that the headline holds two lines from 390 to 1920 and that is
-     measured, not incidental. The threshold is about 1090px of measure at
-     the top of the display clamp and it scales with the font size.
-
-     Adding 24px a side inside the old widths took 390 to 310px of measure
-     and 768 to 640, and both fell to three lines. Below 1024 there is no
-     width to pay for both a section inset and a plate inset, so the section
-     gives up its horizontal padding entirely and the plate runs edge to
-     edge. At 390 that returns exactly the 358px of measure the copy had
-     before the plate existed.
-
-     It is a band rather than a card here, so it takes no border and no
-     radius: DESIGN.md gives radius none to any edge that meets the
-     viewport, and a border would be a partial one the moment the left and
-     right edges leave the screen, which the system does not allow. The
-     ground change from photograph to asphalt is the edge, and a ground
-     change is the strongest separation the system has. */
   width: 100%;
-  padding: var(--s-xl) var(--s-md);
-  background: var(--c-asphalt);
+  /* No horizontal padding. The first build had 16px a side here on top of
+     the section's inset, which took the 1280 measure from 1152 to 1120 and
+     the ratio to 5.89em — under the 5.94em phrase line — so every width
+     wrapped to three lines. The section's inset IS the measure; nothing may
+     sit between it and the headline. */
+  padding: var(--s-md) 0;
 }
 
-/* ---- The plate is sized to its copy ------------------------------------
+/* ---- The headline ---------------------------------------------------------
 
-   Not bled, and not a card either. It sits hard against the left edge of the
-   viewport with no margin on that side, and its height is exactly the copy
-   plus its own padding. The wall runs above it, below it, and down its right
-   side.
+   THE WHOLE HERO. Monigue, uppercase, full bleed, as large as the measure
+   allows at every width.
 
-   This replaced a version that bled off the left and the bottom. That one
-   solved the four-edges problem and created a worse one: with the measure
-   the headline needs, a plate that also runs off the bottom fills nearly the
-   whole viewport, the wall disappears behind it, and everything below the
-   copy is dead plate. A plane that leaves the frame only reads as
-   architecture when there is something left to see around it.
+   The size is derived from the STRING against the VIEWPORT, not from the old
+   display clamp. That clamp was solved for a half-width plate that no longer
+   exists, so it is void here; --t-display-size is not referenced.
 
-   So the plate stops where the copy stops. The left edge is at x=0 and is
-   the only one that meets the viewport, which is why it is the only pair of
-   corners without a radius: DESIGN.md gives radius none to any edge that
-   meets the viewport, and the right pair keeps the container step. The
-   border stays complete on all four sides.
+   The derivation, measured in Monigue at tracking 0:
 
-   No gradient and no fade anywhere in this. Flat-forever governs fills and
-   the plate is a fill; every edge here is a hard one. */
-@media (min-width: 768px) {
-  .hero__body {
-    border: 1px solid var(--c-rule-dark);
-    border-radius: 0 var(--r-md) var(--r-md) 0;
-  }
-}
+     widest rotating phrase      FINISHED THING     4.658em
+     "THE " + the widest phrase                     5.944em   <- the binding line
+     NOT A PROPOSAL.                                ~5.0em
+     the whole string on one line                  11.176em
 
+   Two lines — "NOT A PROPOSAL." over "THE [phrase]" — are bound by the
+   phrase line at 5.944em. Three lines are bound by the SAME line, so they buy
+   no size and cost a line; BUILD-LAW asks for two anyway. The size is
+   therefore the measure divided by 5.944, with 2% of slack so a rounding
+   never wraps the phrase line onto a third:
+
+     font-size = (100vw - 2 * inset) / 6.06
+
+   Which lands at 59px at 390, 114 at 768, 148 at 1024, 190 at 1280, 217 at
+   1440 and 296 at 1920 — the measure, every time. There is no floor and no
+   ceiling: the string fills the width it is given. Line bands are trivial by
+   construction: the phrase line is the measure at every width, so it is two
+   lines everywhere, and the only thing that can change that is a phrase
+   wider than FINISHED THING.
+
+   Line height 0.88. Uppercase, and no glyph in any of the six strings
+   descends, so the box only has to hold the caps: 0.70em of cap in an 0.88em
+   line. Monigue's hhea and typo metrics disagree by 6%, so `normal` would be
+   a different box in different engines; this is explicit for that reason. */
 .hero__headline {
-  margin: 0 0 var(--s-lg);
-  font-family: var(--font-brand);
-  /* Fluid, not stepped. The clamp floor is the h2 value, so at narrow widths
-     this lands exactly on the fixed scale. Two lines hold from 390 to 1920,
-     measured. */
-  font-size: var(--t-display-size);
-  line-height: var(--t-display-line);
-  font-weight: var(--t-weight-brand);
-  letter-spacing: var(--t-track-display-lg);
+  /* The line is positioned against THIS band, not against the section: the
+     section's centre sits lower, because the body carries the sub, the two
+     calls and the note under the headline, and a line through the section's
+     middle would cross the sub rather than the words.
+
+     `isolation: isolate` makes the h1 a stacking context so the line's
+     z-index -1 is resolved inside it — behind the words, in front of the
+     ground — instead of escaping to the section and landing under the grain. */
+  position: relative;
+  isolation: isolate;
+  /* s-md, not s-lg: the sub's own 36px leading supplies the air below the
+     headline at 1024 and up, and the 8px this saves is what keeps the note
+     above the fold at 1280x800 once the sub stepped up. */
+  margin: 0 0 var(--s-md);
+  font-family: var(--font-loud);
+  /* min() of the width-derived size and a height guard. Two lines at 0.88
+     plus the sub, the call, the link and the note need about 360px under the
+     headline; the guard keeps the call above the fold on a short, wide
+     viewport (a 1920x700 laptop lid). Width binds at every width tested. */
+  font-size: min(calc((100vw - 2 * var(--s-md)) / 6.06), calc((100svh - 360px) / 1.76));
+  line-height: 0.88;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
   text-wrap: balance;
   color: var(--c-shop-white);
 }
 
-/* One word, one mask. The geometry is the ticker's, deliberately: same
-   1.12em box, same baseline alignment, same -0.1em pull. The ticker already
-   solved this exact problem for "system" and "thing", and the fixed words
-   have to sit on the same line as it, so they use the same numbers rather
-   than a second set that happens to agree.
+/* One word, one mask. The geometry is the ticker's, deliberately: same box,
+   same baseline alignment. The box is the line's own height, so a word
+   translated 100% down clears it exactly.
 
-   1.12em rather than the display line-height of 1.02, because 1.02 cuts the
-   descender off "proposal" the moment the box clips. The box is the word's
-   own height, so a word translated 100% down clears it exactly.
+   0.88em, the headline's line height, rather than the 1.12em the Clash
+   version needed: that number carried the descenders of "system" and
+   "thing", and there are no descenders in an uppercase line.
 
    Geometry lives out here and only the hidden state is behind the motion
    query, so if the animation never runs the headline is simply present. */
@@ -252,111 +176,135 @@
      promotes it to its own compositing layer, and an ancestor's overflow
      clip is not reliably applied across that boundary: the ticker painted
      all four phrases straight over the headline while the DOM went on
-     reporting a correct 1.12em box, because the failure is at paint and not
-     at layout. clip-path is applied as part of this element's own paint and
-     takes its whole subtree with it.
-
-     DESIGN.md names clip-path as the mechanism when a mask is what is
-     wanted, and the work wall already reaches for it over overflow for the
-     same class of reason. overflow stays as well: it costs nothing and it
-     is what a browser without clip-path support would fall back on. */
+     reporting a correct box, because the failure is at paint and not at
+     layout. clip-path is applied as part of this element's own paint and
+     takes its whole subtree with it. overflow stays as well: it costs
+     nothing and it is what a browser without clip-path support would fall
+     back on. */
   overflow: hidden;
   clip-path: inset(0);
-  height: 1.12em;
+  height: 0.88em;
   vertical-align: baseline;
-  margin-bottom: -0.1em;
 }
 
 .hero__word {
   display: block;
-  line-height: 1.12;
+  line-height: 0.88;
   white-space: nowrap;
 }
 
 /* ---- The slot ----------------------------------------------------------
 
-   A drawn machine yellow rule under the rotating word, redrawn on every swap
-   on the same 3px stroke and the same technique the process route and the
-   failures rail share. It is the one place the identity's own motif appears
-   inside the sentence rather than beside it.
-
-   FIXED WIDTH, spanning the mask rather than the live word. The mask is
-   already sized to the widest phrase so the line cannot reflow, and a rule
-   that resized to each word would twitch on every swap. Holding still turns
-   it into a slot the words arrive into, which is what it should read as. The
-   cost is that it overhangs the shorter phrases, and that is the honest
-   trade: the alternative reintroduces the reflow the mask exists to prevent. */
+   The rotating phrase, in a mask sized to the widest of the four so the line
+   never reflows. No rule under it: the rule was the frame's one accent while
+   the call was white, and the call carries the accent now. */
 .hero__slot {
   position: relative;
   display: inline-block;
 }
 
-.hero__rule {
-  position: absolute;
-  left: 0;
-  right: 0;
-  /* Below the descender line of the mask, which is 1.12em against a 1.02
-     line height, so the rule clears "system" and "thing" without the mask
-     having to grow. */
-  bottom: -0.06em;
-  height: var(--stroke-drawn);
-  background: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
-  transform-origin: left center;
-}
-
 /* The ticker is the fifth word and sits inside a mask like the others, so it
-   drops its own baseline offset here: the outer mask is already supplying
-   it, and applying it twice would hang the last two words below the line. */
+   drops its own baseline handling here: the outer mask is already supplying
+   it. */
 .hero__word > .ticker {
   margin-bottom: 0;
   vertical-align: top;
 }
 
+/* ---- The support stack, sized against the headline -----------------------
+
+   The sub and the note were the plate's stack surviving in a frame with no
+   plate: 18px and 14px under a 190px headline is a ratio of 10.6:1 and reads
+   as a footnote. They step with the headline now, and every step is a size
+   the system already has:
+
+     width      headline    sub        ratio     note
+     390        59px        18 / 28    3.3       18 / 28
+     1024       148px       27 / 36    5.5       18 / 28
+     1280       190px       27 / 36    7.0       18 / 28
+     1440       217px       27 / 36    8.0       18 / 28
+     1920       296px       40 / 52    7.4       18 / 28
+
+   Seven-to-one at 1280 is the target: the sub holds its own without
+   competing. Forty at 1280 (4.8:1) was rendered and competes — three lines
+   of Satoshi at quote size under the headline is a second statement. The
+   note goes from small to body at every width and stays there; it is the
+   footnote and it should read as one, just not as a caption.
+
+   Satoshi, still: the sub EXPLAINS. Putting it in Clash at the h3 step would
+   make it a heading. The offer register does not have a 27 or a 40 step of
+   its own, so these borrow the brand register's h3 and quote sizes with body
+   leading — the same move the pull quote role makes in the other direction. */
 .hero__sub {
-  margin: 0 0 var(--s-xl);
+  margin: 0 0 var(--s-lg);
   max-width: 60ch;
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  /* BONE, and the ground it is restated against is not asphalt.
+
+     It was steel-dark, which is declared for asphalt ONLY and was correct
+     while the hero was a flat ground. The hero now carries a lit surface whose
+     peak is 13.4% luminance, and steel-dark tolerates 1.72%. The surface used
+     to be masked off the copy to protect this value; the value changed
+     instead, and DESIGN.md carries the rule that produced.
+
+     bone on the surface's brightest pixel: 4.73:1. On the ground where the
+     surface has fallen away: 13.84:1. Both measured off painted pixels, since
+     the canvas is a sibling of this element and no DOM walk can see it. */
+  color: var(--c-bone);
   text-wrap: pretty;
 }
 
 /* ---- The roll ----------------------------------------------------------- */
 
-/* The mask. Height is one row; overflow clips the rest of the track.
-   vertical-align keeps the rolling words on the same baseline as the static
-   half of the line. */
+/* The mask. Height is one row; overflow clips the rest of the track. */
+/* The canonical phrase, for assistive technology only. See Hero.jsx.
+
+   Absolutely positioned, so it is OUT OF FLOW and therefore not a grid item:
+   the single-column track still sizes to the widest rotating phrase and the
+   mask width does not move. `position: relative` on `.ticker` only gives it
+   something predictable to anchor to; with no offsets it changes no layout.
+
+   Clipped to a 1px box rather than hidden. `display: none`, `visibility:
+   hidden` and `hidden` all take an element OUT OF THE ACCESSIBILITY TREE,
+   which would put the h1's name back to the fragment this exists to fix. */
+.ticker__a11y {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .ticker {
+  position: relative;
   display: inline-grid;
   /* Same reason as .hero__mask: this one sits INSIDE a mask whose word is
      transformed during the entrance, so its own clip is the one that has to
      survive a composited ancestor. */
   overflow: hidden;
   clip-path: inset(0);
-  /* One row exactly. Row height, mask height and travel are all the same
-     value, with enough room for the descenders in "system" and "thing". */
-  height: 1.12em;
+  /* One row exactly: row height, mask height and travel are one value. */
+  height: 0.88em;
   vertical-align: baseline;
-  margin-bottom: -0.1em;
 }
 
 /* Single column grid: every phrase occupies the same column, so the column
-   sizes to the widest phrase and the mask width is constant. The line cannot
-   reflow between words. */
+   sizes to the widest phrase and the mask width is constant. */
 .ticker__track {
   display: grid;
-  grid-auto-rows: 1.12em;
-  transform: translateY(calc(var(--i) * -1.12em));
+  grid-auto-rows: 0.88em;
+  transform: translateY(calc(var(--i) * -0.88em));
   transition: transform 600ms var(--ease-drawer);
 }
 
 .ticker__word {
   grid-column: 1;
-  line-height: 1.12;
+  line-height: 0.88;
   white-space: nowrap;
-  /* Shop white, not the accent. Machine yellow here would be 2.89:1 over a
-     scrimmed yellow tile, and a headline-sized accent would also break the
-     one-accent-per-frame rule against the CTA. */
+  /* Shop white. The accent is the call, and a headline-sized accent would
+     be a second one in the frame. Recorded in DESIGN.md as the choice made. */
   color: var(--c-shop-white);
 }
 
@@ -368,16 +316,8 @@
 
 /* ---- Actions ------------------------------------------------------------ */
 
-/* One primary, then a link. Not two buttons.
-
-   These used to be two boxed controls of near-equal weight in small uppercase
-   Satoshi with wide tracking, which is the most default button treatment
-   there is and, worse, a composition that had not decided which action
-   mattered. The uppercase label was only the visible half of that.
-
-   So the hierarchy is the fix rather than the size: the primary takes the
-   brand register and a square corner, and the second action stops being a
-   button at all. */
+/* One primary, then a link. Not two buttons. The primary is LARGE AND SOLID
+   and it is the frame's accent; the second action is a line. */
 .hero__actions {
   display: grid;
   justify-items: start;
@@ -385,43 +325,47 @@
   margin-bottom: var(--s-lg);
 }
 
+/* MACHINE YELLOW, at scale. The accent as a fill has exactly one recorded
+   job in this system — "the one primary call per frame, nothing else" — and
+   this is it. It went white when the frame spent its accent on the rule
+   under the phrase; the rule is gone and the accent comes home.
+
+   Measured at 1280, the call paints about 24,000px^2 of a 1,024,000px^2
+   frame: 2.3%, under the 5% ceiling with room, and roughly 16x the accent
+   this frame carried before. A yellow rotating phrase at the same size would
+   have painted 5-6% of the frame in ink alone — over the ceiling — and would
+   have been the fifth device on the headline. A full-bleed block is capped by
+   the same 5% to a 40px band, which is a rule, not a block.
+
+   The brand register at the h2 step: bigger than the h3 the hero call took
+   before, because the headline it sits under went from 77px to 190. Square,
+   sentence case from the copy. Asphalt on machine yellow, 9.46:1. */
 .hero__cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
   min-height: 48px;
-  padding: var(--s-lg) var(--s-xl);
-  /* SHOP WHITE, not machine yellow, and this is a consequence rather than a
-     preference. One accent per frame, and this frame spends it on the rule
-     under the headline. White is already a sanctioned ground in the system
-     and asphalt on white is 17.77:1, so the primary is still unmistakably
-     the primary and still clears the call button's contrast floor by a wide
-     margin; it simply is not the accent any more.
-
-     The footer's submit keeps machine yellow. That is a different frame. */
-  border: 1px solid var(--c-shop-white);
-  /* Square. A radius is the softening this register trades away, and
-     DESIGN.md gives `none` as the default with radius as the exception. */
+  /* Body step at 390, h3 from 768, h2 from 1280 — the call is sized against
+     the headline it sits under (59px, 114px, 190px) and against the 5% rule.
+     At the h2 step on a phone the label wrapped to two lines and the button
+     painted 18% of the frame. See the breakpoints. */
+  padding: var(--s-md) var(--s-lg);
+  border: 1px solid var(--c-accent-ground);
   border-radius: var(--r-none);
-  background: var(--c-shop-white);
-  color: var(--c-asphalt); /* 17.77:1 */
-  /* The brand register at the h3 step. Clash Display at 600 is the brand
-     weight and h3 is an existing step: no face, weight or size was added to
-     the system to do this. Sentence case comes from the copy, not from a
-     text-transform. */
+  background: var(--c-accent-ground);
+  color: var(--c-asphalt); /* 9.46:1 */
   font-family: var(--font-brand);
-  font-size: var(--t-h3-size);
-  line-height: var(--t-h3-line);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
   font-weight: var(--t-weight-brand);
-  letter-spacing: var(--t-track-h3);
+  letter-spacing: normal;
   text-decoration: none;
   transition:
     opacity var(--d-press) var(--ease-reveal),
     transform var(--d-press) var(--ease-reveal);
 }
 
-/* One accent per frame: the second action is a line, not a second yellow. */
 /* The second action is a LINK, not a quieter button. Underlined, in the offer
    register, because that is what the system already uses to mark a link and
    it needs no new affordance. It keeps the 48px target through padding: the
@@ -445,7 +389,7 @@
 /* Hover is gated. Ungated it sticks on touch. */
 @media (hover: hover) and (pointer: fine) {
   .hero__cta:hover {
-    opacity: var(--hover-opacity); /* 0.92 -> 8.16:1, floor is 0.64 */
+    opacity: var(--hover-opacity); /* 0.92 -> 8.70:1 on the yellow, floor is 0.64 */
     transform: translateY(-1px);
   }
 }
@@ -458,126 +402,419 @@
 .hero__note {
   margin: 0;
   max-width: 60ch; /* detector: 96 chars/line at 1280 without this */
-  font-size: var(--t-small-size);
-  line-height: var(--t-small-line);
-  color: var(--c-steel-dark);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone); /* 4.73:1 on the lit surface, 13.84:1 where it falls away */
 }
 
 /* ==========================================================================
-   Entrance. Additive only: nothing above depends on these rules running.
-   Under reduced motion this whole block is skipped and the hero renders
-   complete, which is the required behaviour rather than a fallback.
+   THE ENTRANCE — the signature.
+
+   ---- What was wrong with the last one --------------------------------------
+
+   The loudest type on the site arrived with the gentlest entrance on the site.
+   Five words rose 100% of their own height on a 250ms ease-out, 16ms apart,
+   and the support stack faded in behind them. Nothing about it was memorable:
+   a visitor came away remembering that the page was black and the type was
+   big, which is a description of the ground and the scale, not of an event.
+
+   ---- What happens now ------------------------------------------------------
+
+   Four beats, and the whole thing is under a second from blank to still:
+
+     0      to  80ms    EMPTY ASPHALT. Nothing is on the screen.
+     80     to 244ms    A single line draws across the frame at 51.93 degrees,
+                        the short arm's outer edge. Only thing on screen.
+     250    to ~470ms   The headline arrives ALONG that line and locks. The
+                        words travel up and to the right at exactly that
+                        angle, from outside their own masks, and stop.
+     306    to 470ms    The line runs off the top-right end and is gone.
+     540    to 910ms    The rest of the hero follows: sub, calls, note.
+
+   ---- Why the line, and why it is not on the type ---------------------------
+
+   DESIGN.md records four devices built on this headline and taken out again,
+   and BUILD-LAW records a fifth. Every one of them was a TREATMENT APPLIED TO
+   A LETTERFORM — a stencil face, an accent colour, a horizontal cut, a cut
+   along the diagonal — and every one failed in the same place: one word is
+   too small a thing to carry a brand, and a device inside a glyph reads as a
+   defect rather than as a decision.
+
+   This one is not on the type. It is a separate object that exists beside the
+   words, for 390ms, and then leaves. It is the only place the mark's angle
+   appears on the page, so it says the angle once, clearly, in motion, and
+   spends nothing at rest.
+
+   ---- Where this stands against the recorded law ----------------------------
+
+   Three rules are set aside here deliberately and none of them is hidden.
+
+   1. "Reveals use cubic-bezier(.23, 1, .32, 1)." This entrance does not, in
+      any of the three versions. A reveal curve is a settle, and the brief is
+      a HIT: the value that makes it read as a hit is the one that stops, and
+      that is what a hit is. Scoped to the hero, as the machine variant's
+      strike already was; nothing outside the hero sees these curves.
+
+   2. "--stagger-sweep is 16ms" and "the sweep is what makes the strike read
+      as one event". Entrance B spends 28ms and reads as five arrivals on one
+      diagonal, which is the thing being compared. A and C spend NOTHING, which
+      is further from 16ms in the other direction: they land as one blow.
+
+   3. The travel is no longer purely vertical, so the amplitude is no longer
+      bounded by the mask's own height. It is bounded by the mask's height
+      only in its VERTICAL component, which is what still hides the word at
+      rest, and the horizontal component runs on the mask itself where nothing
+      clips it. See the two keyframes below.
+
+   What is NOT set aside: transform and opacity only, with clip-path used for
+   the line exactly as DESIGN.md names it; `backwards` fill everywhere inside
+   a mask, so no transform is left pinned; clip-path alongside overflow on
+   every mask that contains transformed content; the 160ms press; hover
+   gating; and reduced motion, which gets no line and no travel at all.
+
+   Additive only: nothing above depends on these rules running. Under reduced
+   motion this whole block is skipped and the hero renders complete.
    ========================================================================== */
 
+/* ---- The three characters of the hit ------------------------------------
+
+   `?entrance=a|b|c`, and A is what renders with no parameter. They differ in
+   FOUR values and nothing else. The line is identical in all three, as are
+   the type, the scale, the ground and the copy.
+
+   --hit is the travel's VERTICAL component, in em of the display size, so it
+   scales with the headline at every width. The horizontal component is
+   derived from it by the angle and never set by hand.
+
+   ---- WHAT THE MASK COSTS, AND WHY THIS ENTRANCE HAS NONE ------------------
+
+   Three characters of the hit were rendered and compared, and the first cut of
+   them set --hit to 0.95, 1.7 and 3em expecting that to be three distances.
+   IT IS NOT, AND THE FRAMES SHOWED IT: a masked word is invisible until its
+   remaining displacement drops BELOW the mask's own 0.88em, so every masked
+   version crosses exactly 0.88em of screen and not one pixel more. Raising
+   --hit does not lengthen the visible travel. It only buys arrival speed and
+   lengthens the time the word spends hidden — at 3em the word was still
+   entirely inside its mask at 360ms and the whole hit collapsed into the last
+   thirty milliseconds and read as a pop.
+
+   So "how far" is not a variable while the mask is what hides the word. The
+   slam gives the mask up to make distance real, and pays for it in the one
+   place this file had refused to spend. The other two are in DESIGN.md with
+   what they measured, and their frames are in `.measure/evidence/`.
+
+   ---- THE SLAM, as shipped -------------------------------------------------
+
+     2.2em   220ms   together   UNMASKED, dead stop
+
+   The mask is released, so the words fly the whole 2.2em in view — 418px at
+   1280, two and a half line-heights, most of the upper frame — and converge on
+   their slots along the line. Every word lands on one beat; there is no
+   stagger and no per-word index.
+
+   THE CURVE IS THE REASON THIS ONE WAS TAKEN. `cubic-bezier(.25,.5,.85,.85)`
+   has terminal slope (1-.85)/(1-.85) = 1.0: the line is still moving at its
+   average speed at the instant it stops. The other two ran the reveal curve at
+   terminal slope 0, which settles — and a settle is what the entrance this
+   replaced already did. No duration produces that difference; only the curve
+   does.
+
+   ---- What it spends, and it is not hidden ---------------------------------
+
+   With no mask there is nothing to hide the words during the 80 to 250ms the
+   line has the screen to itself, and the brief for this entrance is explicit
+   that nothing is on screen but the line. So the words are cut in on OPACITY,
+   which DESIGN.md's note on this entrance ruled out: "no opacity anywhere in
+   the keyframe. What hides a word at rest is its mask, not its alpha."
+
+   THE REASON THAT RULE EXISTS IS A FADE, AND THIS IS NOT ONE. It is a step:
+   opacity goes 0 to 1 inside the first 1% of the duration, 2.2ms, at the
+   instant the travel starts, so the word is never seen resolving — it is
+   absent, and then it is present and already at full speed. What the rule
+   protects against is a word that arrives by BECOMING VISIBLE instead of by
+   moving, and a 2.2ms step cannot do that.
+
+   THE TRANSFORM-ONLY ALTERNATIVE WAS COSTED AND IT FAILS ON A PHONE. If the
+   travel is long enough to start the word outside the section, the section's
+   own `overflow: clip` hides it and no opacity is needed. That travel is
+   measurable: the word must clear the hero's bottom edge, which is 705px at
+   1280 and 624px at 390, so --hit would have to be 100svh rather than 2.2em.
+   At 1280 that is 61px of movement per 60Hz frame, 0.32 of a cap height, and
+   it is fine. At 390 the display is 59px and the same 100svh is 64px per
+   frame — **1.08 cap heights, so the word teleports by more than its own
+   height every frame** and the flight strobes. One clock cannot have two
+   amplitudes. The opacity is the cheaper of the two costs and it is the one
+   taken.
+
+   DESIGN.md's rule is amended rather than excepted, because this is the
+   shipping entrance and not a preview variant. */
+.hero {
+  --d-strike: 220ms;
+  --ease-strike: cubic-bezier(0.25, 0.5, 0.85, 0.85);
+  --hit: 2.2em;
+}
+
+/* ---- The line ------------------------------------------------------------
+
+   51.93 DEGREES, AND IT IS AN EDGE OF THE MARK RATHER THAN "THE MARK'S ANGLE".
+
+   This line ran at 52.8 until 2026-09-09, on DESIGN.md's recorded sentence:
+   "the mark's angle, 52.8 degrees, the long arm's 44 across and 58 up".
+   Measured off the shipped path the long arm is 66.27 degrees on its outer
+   edge and 62.59 on its inner, and no edge runs 44 and 58. The figure was
+   right about a real edge and wrong about which: the SHORT arm's outer edge,
+   P5 to P0, runs 47 across and 60 up, and atan(60/47) is 51.93.
+
+   THE SHORT ARM'S EDGE IS ALSO THE RIGHT ONE FOR THIS DEVICE, which is why
+   the correction is 0.87 degrees rather than 14. Two reasons beyond the name:
+
+   A 66-degree line cannot cross a wide frame. Over the 735px hero at 1280 the
+   short arm's edge covers 575px of width; the long arm's covers 323. The long
+   arm makes a short steep slash through the middle, and this line exists to
+   run ACROSS the page.
+
+   And the words travel along it, so the angle sets the horizontal component of
+   their arrival — 47/60 below. At the long arm's angle that factor is 0.4394
+   and the arrival collapses back towards the plain vertical rise this entrance
+   replaced. The diagonal IS the entrance; the shallower edge is the one that
+   has one.
+
+   Negative, because screen y runs down and the line runs UP to the right —
+   which is the direction the words then travel.
+
+   160vmax, not a computed diagonal. The frame's diagonal is 1476px at
+   1280x735 and 872px at 390x780; 160vmax is 2048 and 1248 at those two, so
+   the line overruns the corners by about a third at both. It enters the frame
+   already moving and leaves it still moving, which is what "fast" costs.
+
+   2px, and it is the perpendicular thickness: a rotation preserves the short
+   side of a rectangle, so the line is 2px thick on its own axis rather than
+   2px of vertical extent smeared across the angle.
+
+   Machine yellow. DESIGN.md pins the accent as a FILL to "the one primary
+   call per frame, nothing else" — and the line does not breach it, because
+   the two are never on screen together. The line is gone at 470ms and the
+   call's own animation does not begin until 600ms. That is 130ms of asphalt
+   between them, and it is why the sequencing above is not arbitrary.
+
+   Drawn and withdrawn with clip-path, which DESIGN.md names as the mechanism
+   for a masked reveal. Not scaleX: a scaled rectangle is a distorted stroke
+   whichever axis you scale, and the same document rejects transform for
+   drawing a path for that reason. Not stroke-dashoffset either — that is for
+   a path that turns, and this one does not, so it would cost an SVG, a
+   viewBox and a preserveAspectRatio that has to be prevented from skewing
+   the very angle the line exists to state. */
+.hero__strike {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: -1;
+  width: 160vmax;
+  /* 3px, not 2. At 2 it rendered as a scratch rather than as a line: rotated
+     51.93 degrees and antialiased at device scale 1, a 2px rectangle puts
+     roughly half its ink into partial coverage on both edges and what is left
+     reads as a hairline. 3px holds a solid core. It is the perpendicular
+     thickness either way — a rotation preserves the short side of a rectangle,
+     so this is 3px on the line's own axis rather than 3px of vertical extent
+     smeared across the angle. */
+  height: 3px;
+  transform: translate(-50%, -50%) rotate(-51.93deg);
+  background: var(--c-accent-ground);
+  pointer-events: none;
+  /* Invisible at rest and under reduced motion. The element is only ever
+     visible while its own animation is running. */
+  clip-path: inset(0 100% 0 0);
+  display: none;
+}
+
+/* ==========================================================================
+   Entrance rules. Everything below runs only where motion is welcome.
+   ========================================================================== */
 @media (prefers-reduced-motion: no-preference) {
-  /* The entrance is the signature moment and it reads as speed, not as a
-     gentle reveal. It used to run 1480ms on --d-panel, which is the DRAWER
-     duration: the entrance borrowed it because it was the nearest thing on
-     the ramp, not because a drawer and an arrival are the same event.
+  /* ---- Beat one: the line ------------------------------------------------
 
-     It now runs on --d-drop, 250ms, which was already on the ramp and
-     already inside the 220 to 320ms band that precision motion sits in. No
-     duration was added to the system to do this.
+     80ms of empty asphalt first. It is short, and it is the whole reason the
+     line reads as an arrival rather than as page furniture that was always
+     there: something has to be absent before anything can appear.
 
-     Total is 750ms, from 1480ms. Every element still arrives in the same
-     order and nothing was removed.
+     390ms, linear, in three phases the percentages carry:
 
-     The easing is unchanged. cubic-bezier(.23, 1, .32, 1) is already a
-     front-loaded ease-out with no overshoot, which is the curve this wants;
-     it only ever needed the shorter duration. */
+       0    to 42%   ( 80 to 244ms)  draws, left end to right end
+       42%  to 58%   (244 to 306ms)  drawn, and held. The words start into
+                                     this hold, so for 56ms the line and the
+                                     first moving word are on screen together
+                                     and the diagonal is legible as the thing
+                                     they are travelling on.
+       58%  to 100%  (306 to 470ms)  runs off the top-right and is gone
 
-  .hero__reg {
-    opacity: 0;
-    animation: hero-fade var(--d-drop) var(--ease-reveal) 80ms forwards;
+     LINEAR, and it is not a lapse. Every other curve in this file is an
+     ease-out because it is describing something arriving under its own
+     momentum. A line drawn by a machine is drawn at a constant rate, and an
+     eased draw would put a deceleration into an object that has no mass. The
+     rule the system actually pins is "never ease-in for UI"; linear is not
+     ease-in.
+
+     `both`: `backwards` holds the fully-clipped from-state through the 80ms
+     of delay, `forwards` holds the fully-clipped to-state afterwards, so the
+     element is invisible at both ends and visible only in between. A pinned
+     clip-path is not the hazard `forwards` carries elsewhere in this file —
+     that hazard is a pinned TRANSFORM promoting an element whose descendants
+     depend on an overflow clip, and this element has no descendants and is
+     already promoted by its own static rotate. */
+  .hero__strike {
+    display: block;
+    animation: hero-strike 390ms linear 80ms both;
   }
 
-  /* The strike. Transform only, and NO opacity anywhere: the mask is what
-     hides a word at rest, not its alpha. That is the whole difference
-     between a line that strikes and a line that resolves, and it is why
-     there is no fade to tune here.
+  @keyframes hero-strike {
+    0% {
+      clip-path: inset(0 100% 0 0);
+    }
+    42% {
+      clip-path: inset(0 0 0 0);
+    }
+    58% {
+      clip-path: inset(0 0 0 0);
+    }
+    100% {
+      clip-path: inset(0 0 0 100%);
+    }
+  }
 
-     translateY(100%) is 100% of the word's own height, and the mask is
-     exactly that height, so the word starts precisely one line below the
-     clip edge. Not 110% or a padding trick: the box and the travel are the
-     same number by construction, so they cannot drift apart.
+  /* ---- Beat two: the headline arrives along it ---------------------------
 
-     Sweep, not the reading stagger. Five words of one sentence are one
-     object with parts. At 70ms the line would take 280ms of stagger alone
-     and the reader would watch it queue.
+     ONE MOTION, SPLIT ACROSS TWO ELEMENTS, and the split is the mechanism.
 
-     BACKWARDS, not forwards, and this is not interchangeable. `forwards`
-     pins the final keyframe on the element for the life of the page, so
-     every word keeps a transform it no longer needs. A transformed ancestor
-     gets its own compositing layer, and the ticker's own overflow clip is
-     then applied across a layer boundary and silently stops clipping: all
-     four phrases paint over the headline. It renders wrong while measuring
-     right, because the clip fails at paint and not at layout, so the DOM
-     reports the correct 1.12em box the whole time.
+     The travel is a single vector at the mark's angle. Its two components go
+     on different elements because they need different clipping:
 
+       VERTICAL, on .hero__word, INSIDE the mask.
+         The word starts --hit below its resting position. The mask is 0.88em
+         tall and --hit is never less than that, so the word begins entirely
+         outside its own clip and the MASK is what hides it. No opacity in
+         the keyframe anywhere. That is the difference between a line that is
+         struck and one that resolves, and it is why there is no fade in this
+         entrance to tune.
+
+       HORIZONTAL, on .hero__mask, OUTSIDE the clip.
+         The mask carries the word left by --hit * 47/60, and nothing
+         clips the mask except the section's own `overflow: clip`. This is
+         the part that could not be done inside the mask: BUILD-LAW records
+         the ticker mask shaving 2.8px off the outer strokes of "w" and "m"
+         for the whole of a previous build, because that mask is sized to its
+         widest phrase and any horizontal displacement inside it clips. The
+         same defect, animated, would clip the leading edge of every word for
+         the whole of its travel. Moving the horizontal component up one
+         element removes the possibility rather than tuning around it.
+
+     0.78333 is 47/60, which is the short arm's outer edge run over its rise,
+     taken straight off the path. It is a ratio of two integers rather than a
+     rounded 1/tan, so it is exact by construction. The angle is stated once,
+     in the line's own rotation, and derived everywhere else, so the two cannot
+     drift apart: if the edge ever changes, this constant is the only other
+     place to fix.
+
+     The composite is a straight line at 51.93 degrees because both components
+     run on the SAME duration, the SAME delay and the SAME easing. Give them
+     different curves and the path bends.
+
+     BACKWARDS, not forwards, on both, and this is not interchangeable.
+     `forwards` pins the final keyframe for the life of the page, so every
+     word and every mask would keep a transform it no longer needs; a
+     transformed ancestor is promoted to its own layer, and the ticker's clip
+     is then applied across a layer boundary and silently stops clipping — all
+     four phrases paint over the headline while every measurement of the box
+     goes on passing, because the failure is at paint and not at layout.
      `backwards` supplies the from-value during the delay and hands the
-     element back to its own style when the animation ends, which leaves no
-     transform behind. The rest state is the absence of a rule rather than a
-     value pinned on top of one. */
-  .hero__word {
-    animation: hero-word-in var(--d-drop) var(--ease-reveal) backwards;
-    animation-delay: calc(200ms + var(--w) * var(--stagger-sweep));
+     element back to its own style at the end, leaving nothing pinned.
+
+     The delay is 250ms, which is 6ms after the line finishes drawing. */
+  .hero__mask {
+    animation: hero-mask-hit var(--d-strike) var(--ease-strike) backwards;
+    animation-delay: 250ms;
   }
 
-  @keyframes hero-word-in {
+  .hero__word {
+    animation: hero-word-throw var(--d-strike) var(--ease-strike) backwards;
+    animation-delay: 250ms;
+  }
+
+  @keyframes hero-mask-hit {
     from {
-      transform: translateY(100%);
+      transform: translateX(calc(var(--hit) * -0.78333));
     }
     to {
+      transform: translateX(0);
+    }
+  }
+
+  /* ---- The mask gives up its clip so the throw is visible ----------------
+
+     `.hero__mask`'s clip exists for ONE job — hiding the word during the
+     entrance — and at rest it does nothing: the line is uppercase, no glyph
+     in any of the six strings descends, and the rotating phrase is clipped by
+     `.ticker`'s own clip-path one level in rather than by this one. So
+     releasing it changes the resting hero not at all. That was proved rather
+     than asserted: with the three characters still in the tree, the settled
+     frames of all three were diffed and every box matched to the sub-pixel,
+     with 119 of 1,024,000 pixels differing along glyph edges from the presence
+     of the clip alone.
+
+     `.ticker` keeps `overflow: hidden` AND `clip-path: inset(0)`, and it needs
+     both: its ancestors here are transformed, so it sits across a compositing
+     boundary, and BUILD-LAW records that an overflow clip is not reliably
+     applied across one — the ticker painted all four phrases over the headline
+     once already while every measurement of its box passed, because the
+     failure is at paint and not at layout. clip-path is applied as part of the
+     element's own paint and survives. SCREENSHOT THIS ONE; a measurement is
+     not evidence here. */
+  .hero__mask {
+    overflow: visible;
+    clip-path: none;
+  }
+
+  /* The cut. Opacity steps 0 to 1 across the first 1% of the duration — 2.2ms
+     — so the word is absent, then present and already travelling at speed. It
+     is not a fade and there is nothing in it to tune; see the note above the
+     tokens for why this is spent here and nowhere else. */
+  @keyframes hero-word-throw {
+    0% {
+      opacity: 0;
+      transform: translateY(var(--hit));
+    }
+    1% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
       transform: translateY(0);
     }
   }
 
-  /* The rule draws FASTER than the word rolls, and that is the whole point.
+  /* ---- Beat four: the rest of the hero -----------------------------------
 
-     The roll is 600ms. Matching the rule to it would put two things moving
-     for the same 600ms every 2.4 seconds, which reads as two events and, at
-     the edge of vision, as something blinking. At --d-drop the rule is done
-     in 250ms and is then still while the word finishes settling, so the pair
-     reads as one event with a cause: the rule snaps, the word arrives on it.
-     It also cuts the moving time in the reader's periphery from a quarter of
-     every dwell to a tenth.
+     540 / 600 / 660, still 60ms apart and still on --d-drop, so the stack
+     itself is unchanged; only the moment it starts moved, from 380 to 540.
+     The note finishes at 910ms.
 
-     backwards, not forwards, for the reason recorded on the word strike: the
-     end state is the element's own, so nothing is left pinned on it. */
-  .hero__rule {
-    animation: hero-rule-draw var(--d-drop) var(--ease-reveal) backwards;
-  }
-
-  /* On first paint the rule waits for the headline. The ticker is the fifth
-     word of the sweep, so it lands at 200ms plus four steps plus its own
-     duration, and the rule draws under it from there. Swaps happen only once
-     the phase is ambient, where there is nothing to wait for. */
-  .hero[data-phase='load'] .hero__rule {
-    animation-delay: calc(200ms + 4 * var(--stagger-sweep) + var(--d-drop));
-  }
-
-  @keyframes hero-rule-draw {
-    from {
-      transform: scaleX(0);
-    }
-    to {
-      transform: scaleX(1);
-    }
-  }
-
+     The gap in front of it is deliberate and it is where beat three lives:
+     the headline has locked, the line is running off, and for a moment the
+     only thing on the screen is a still headline on asphalt. Start the stack
+     any earlier and the line's exit is competing with the sub's arrival,
+     which puts two events on one beat and loses both. */
   .hero__sub {
     opacity: 0;
-    animation: hero-fade var(--d-drop) var(--ease-reveal) 380ms forwards;
+    animation: hero-fade var(--d-drop) var(--ease-reveal) 540ms forwards;
   }
 
   .hero__actions {
     opacity: 0;
-    animation: hero-fade var(--d-drop) var(--ease-reveal) 440ms forwards;
+    animation: hero-fade var(--d-drop) var(--ease-reveal) 600ms forwards;
   }
 
   .hero__note {
     opacity: 0;
-    animation: hero-fade var(--d-drop) var(--ease-reveal) 500ms forwards;
+    animation: hero-fade var(--d-drop) var(--ease-reveal) 660ms forwards;
   }
 
   @keyframes hero-fade {
@@ -589,57 +826,72 @@
 
 /* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------- */
 
+
+/* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------
+
+   Only the INSET changes, and the headline size changes with it because it
+   is derived from it. Nothing else here is width-dependent: no plate, no
+   measure cap, no layout family switch. */
+
 @media (min-width: 768px) {
-  /* Asymmetric, and deliberately so. There is nothing to inset from on the
-     left because the plate is flush to the viewport there; the right is
-     where the wall shows, so that is the only side that gets a margin. 24px
-     rather than 40 because the two-line threshold at 768 is 654px of measure
-     and 40 leaves 640. */
   .hero {
-    padding: var(--s-2xl) var(--s-lg) var(--s-xl) 0;
+    padding: var(--s-xl) var(--s-xl);
   }
 
-  .hero__body {
-    padding: var(--s-xl) var(--s-lg) var(--s-xl) var(--s-xl);
+  .hero__headline {
+    font-size: min(calc((100vw - 2 * var(--s-xl)) / 6.06), calc((100svh - 360px) / 1.76));
   }
 
-
-  /* Display requires a full-width headline, so the body spans the section.
-     The sub and note keep their own measure caps. */
-  .hero__body {
-    width: 100%;
+  /* The call steps up with the headline. h3 here; h2 from 1280. */
+  /* :not(--line): the link shares the class for its target size and its
+     hover, and must not take the primary's step. */
+  .hero__cta:not(.hero__cta--line) {
+    padding: var(--s-lg) var(--s-xl);
+    font-size: var(--t-h3-size);
+    line-height: var(--t-h3-line);
+    letter-spacing: var(--t-track-h3);
   }
 }
 
 @media (min-width: 1024px) {
-  /* Zero on the left, because the plate is flush to the viewport there and
-     has nothing to be inset from. The right is where the wall shows down the
-     side of the plate, so that is the only horizontal margin. */
-  .hero {
-    padding: var(--s-3xl) var(--s-xl) var(--s-2xl) 0;
+  .hero__sub {
+    max-width: 44ch;
+    font-size: var(--t-h3-size);
+    line-height: 36px; /* 1.333, on the 4px baseline */
   }
 
-  .hero__body {
-    /* Half the viewport, capped. This is the whole composition: a plate
-       against a wall rather than a plate with a margin.
+  /* s-lg vertically, not s-xl. The plate needed air around it; a headline
+     that fills the width does not, and at 1280x800 the 32px this saves is
+     what keeps the note above the fold with the call. */
+  .hero {
+    padding: var(--s-lg) var(--s-2xl);
+  }
 
-       It used to be a 1200px measure plus padding, which at 1280 left the
-       wall a 40px strip down one side. That was not a wall, it was a border,
-       and it was forced by the headline needing 1090px to hold two lines.
-       The fix was upstream in the display size rather than here; see the
-       re-derivation on --t-display-size.
-
-       50vw gives the headline 50vw - 88px of measure, which is the number
-       the display slope was solved against. The 1000px cap stops the plate
-       growing forever on wide screens and pairs with the clamp's own
-       ceiling: past 2267px both are fixed and the line count settles. */
-    width: min(100%, 50vw, 1000px);
-    /* Asymmetric: more inset on the flush side. The left edge sits on the
-       viewport with no margin outside it, so the copy needs its optical
-       margin from the inside instead. The right has the wall beyond it and
-       needs less. */
-    padding: var(--s-xl) var(--s-lg) var(--s-xl) var(--s-2xl);
+  .hero__headline {
+    font-size: min(calc((100vw - 2 * var(--s-2xl)) / 6.06), calc((100svh - 360px) / 1.76));
   }
 }
 
+@media (min-width: 1280px) {
+  /* h2, and the full s-2xl padding. Measured at 1280x800 the call paints
+     498x94 = 46,800px^2 of a 1,024,000px^2 frame, 4.6%: at scale, and under
+     the 5% ceiling. At 1024 and 768 the same button is 6% of a smaller frame
+     and at 390 it wraps to two lines and paints 18%, which is why it steps.
+     The ceiling is measured on the painted colour, per DESIGN.md. */
+  /* :not(--line): the link shares the class for its target size and its
+     hover, and must not take the primary's step. */
+  .hero__cta:not(.hero__cta--line) {
+    padding: var(--s-lg) var(--s-2xl);
+    font-size: var(--t-h2-size);
+    line-height: var(--t-h2-line);
+    letter-spacing: var(--t-track-display);
+  }
+}
 
+@media (min-width: 1920px) {
+  .hero__sub {
+    max-width: 32ch;
+    font-size: var(--t-quote-size);
+    line-height: var(--t-quote-line);
+  }
+}

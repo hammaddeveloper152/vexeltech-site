@@ -1,36 +1,47 @@
 /* ==========================================================================
    The bar.
 
-   Sticky at the top, transparent over the hero, taking an asphalt ground and
-   a hairline once the hero is behind the reader. That is not decoration: the
-   hero's tile wall runs white and machine yellow tiles under this type, and a
-   bar with no ground over it would be unreadable in the worst case.
+   Sticky at the top, on asphalt, with a hairline under it. Always. There is
+   no transparent state and no fade.
 
-   The ground change is a background, which is neither transform nor opacity
-   and so is not animated. Only the opacity of the ground layer is.
+   ---- Why that changed --------------------------------------------------
+
+   The bar used to be transparent until the hero was behind the reader, and
+   the reason was the hero's tile wall: white and machine yellow tiles ran
+   under this type, so a bar with no ground over it would have been
+   unreadable in the worst case — and a solid lid dropped over photography
+   reads as a lid, which is why it faded in rather than simply being there.
+
+   **The wall is gone.** The hero carries no photography at all, so the
+   condition the fade was reasoned from does not exist, and what the fade
+   actually produced was a defect: for every scroll position where any part
+   of the hero was still in view, the bar was transparent and the display
+   headline scrolled under it. At about 380px the white navigation sat
+   directly on the white headline. Measured, not guessed: shop white on shop
+   white is 1:1.
+
+   Nothing replaces it, because nothing needs to. Asphalt bar over asphalt
+   page is one surface, not a lid, and the only thing that ever has to be
+   hidden is content passing underneath. No scrim, no gradient, no shadow, no
+   accent: the bar's own call stays white and the wordmark's yellow is the
+   identity's, exempt from the frame's count by definition.
+
+   The hairline is unconditional for the same reason it is now needed: with
+   both grounds identical there is otherwise nothing to say where the sticky
+   surface ends, and a reader should be able to see that the top strip is
+   fixed before anything scrolls under it. It is the system's own dark-ground
+   divider at white 12%.
+
+   This deleted the IntersectionObserver, the `data-grounded` attribute and
+   the fading ground layer. The state was the bug.
    ========================================================================== */
 
 .bar {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: none;
-}
-
-/* The ground is its own layer so it can fade rather than the background
-   snapping between two colours. */
-.bar::before {
-  content: '';
-  position: absolute;
-  inset: 0;
   background: var(--c-asphalt);
   border-bottom: 1px solid var(--c-rule-dark);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.bar[data-grounded='true']::before {
-  opacity: 1;
 }
 
 .bar__inner {
@@ -108,13 +119,116 @@
   background: transparent;
   border: 1px solid var(--c-rule-dark);
   color: var(--c-shop-white); /* 17.77:1 on asphalt */
-  border-radius: var(--r-sm); /* control */
-  font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
+  /* Square, sentence case, brand register — the hero CTA decision. What this
+     frame does NOT take is the hero's h3 STEP, and the reason is width.
+
+     THE REJECTED TREATMENT WAS NOT A SIZE. It was 12px Satoshi 500 UPPERCASE
+     at 0.12em tracking with a 4px radius, on a full-size primary call in a
+     hero frame. What is rejected there is the face, the case, the tracking
+     and the corner, not the number of pixels. This rule shares only the
+     number: Clash Display, sentence case, no tracking, square.
+
+     WHY NOT h3 — SUPERSEDED 2026-09-08. The table below was true and is not
+     any more, and the reason is exactly the failure mode it was written to
+     catch: it was measured against strings nobody was going to ship.
+
+     The old measurement, kept because the arithmetic is still the method.
+     Four PLACEHOLDER LINK labels and a call reading "Get a custom quote", at
+     1024: content box 896, brand 203 + nav 476 + two 24px gaps = 727, call
+     budget 169px.
+
+       h3     27 / 32   call 287px   118 over   page scrolls sideways 55px
+       body   18 / 28   call 206px    37 over   call sits past the content edge
+       small  14 / 20   call 168px     1 under  fits, but 1px is not slack
+       label  12 / 16   call 149px    20 under  fits
+       [the rejected treatment]  192px  23 over
+
+     RE-MEASURED with the real labels — Services, Pricing, Portfolio, About
+     us — and the user's own call string, "Let's Talk" (content answer 10.3).
+     Same method, same viewport, `.measure/barbudget.mjs` and
+     `.measure/barsteps.mjs`:
+
+       content box  896      unchanged, the padding did not move
+       brand        203.47   unchanged
+       nav          347.55   was 476 — the placeholders were 128px wider
+       gaps          48      unchanged
+       fixed        599.02   was 727
+       CALL BUDGET  296.98   was 169
+
+       label  12 / 16   call  90.17px   206.81 under
+       small  14 / 20   call  99.53px   197.45 under
+       body   18 / 28   call 118.25px   178.73 under
+       h3     27 / 32   call 160.38px   136.60 under
+       h2     40 / 44   call 221.20px    75.78 under
+
+     EVERY STEP NOW FITS, h2 included, and the page does not scroll sideways
+     at any of them. "The h3 step cannot be carried here at all" was a
+     property of a 20-character placeholder label repeated four times, not a
+     property of this bar.
+
+     ---- THE STEP IS 18px, DECIDED 2026-09-08 ---------------------------
+
+     THIS IS A COMPOSITION DECISION AND NO LONGER A WIDTH ONE. The recorded
+     reason for 12px was arithmetic: it was the largest step that fitted the
+     budget with room to move. That budget was derived from four PLACEHOLDER
+     LINK labels and it does not exist any more. Every step from 12 to 40
+     fits now, so the number is not chosen by what fits and must be chosen by
+     what it does to the frame.
+
+     Judged on rendered frames rather than on width, each capturing the bar
+     AND the hero's call together, because the question is competition, not
+     whether the call clears its container. `.measure/barframes.mjs`:
+
+       step   bar call        as a share of the hero's call
+                              1280        1024
+       12px   90.17 x 48      9.0%        16.0%
+       18px  118.25 x 48     12.0%        21.0%
+       27px  160.38 x 50     17.0%        29.0%
+
+     At 12px the call LOSES TO THE NAVIGATION BESIDE IT. The four links are
+     uppercase Satoshi at 0.12em tracking, which reads heavier at the same
+     size than sentence-case Clash, so the one control in the bar was the
+     quietest thing in it. A call that reads as a nav item is not a call.
+
+     At 27px it stops being subordinate. The hero's call shrinks at 1024
+     while the bar's does not, so the ratio climbs to 29% and two buttons
+     read as peers in one frame.
+
+     18px is where it reads as a control and still clearly answers to the
+     hero's. The type step changes; NOTHING ELSE DOES. Still button-
+     secondary, still transparent with the 12% border, still square, still
+     sentence case, still the brand register. What was rejected at this size
+     long ago was 12px Satoshi 500 uppercase at 0.12em tracking with a 4px
+     radius, and none of that is what this is.
+
+     Re-measured at 1024 after the change, `.measure/barbudget.mjs`:
+     content box 896, brand 203.47 + nav 347.55 + two 24px gaps = 599.02,
+     call budget 296.98, call 118.25, SLACK 178.73px. No sideways scroll.
+
+     The budget is a limit and not a target, and 178.73px of it belongs to a
+     ten-character string. The call and the four labels are all content and
+     all five have moved once already; re-run the two scripts if any of them
+     changes again.
+
+     This is the figure role's logic applied to a control: a call that has a
+     frame to itself takes h3, and a call sharing a 64px bar with a wordmark
+     and five navigation links takes the step the bar has room for. The
+     breakpoint is not the variable — the navigation stays at 1024, where it
+     has always been.
+
+     Tracking is `normal` rather than a brand-register token. The register's
+     smallest recorded tracking is -0.01em at 27px, and negative tracking at
+     12px closes counters rather than tightening a line.
+
+     Ground is unchanged: transparent with the 12% border. The hero's own note
+     still holds — two filled calls in a frame is a composition that has not
+     decided. */
+  border-radius: var(--r-none);
+  font-family: var(--font-brand);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: normal;
   text-decoration: none;
   white-space: nowrap;
   transition:
@@ -250,8 +364,6 @@
   }
 }
 
-/* The full navigation only fits from 1024. Below that it lives in the panel,
-   which is why the menu button is not a phone-only control. */
 @media (min-width: 1024px) {
   .bar__inner {
     padding: var(--s-sm) var(--s-2xl);

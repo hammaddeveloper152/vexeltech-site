@@ -1,5 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import './styles/tokens.css';
 import IconProvider from './components/site/Icons.jsx';
 import Header from './components/site/Header.jsx';
@@ -14,6 +15,15 @@ import Testimonials from './components/home/Testimonials.jsx';
 import Process from './components/home/Process.jsx';
 import Faq from './components/home/Faq.jsx';
 import FooterForm from './components/home/FooterForm.jsx';
+/* The loud register, applied to every section below the hero. Imported LAST so
+   it wins on source order. See src/styles/register.css. */
+import './styles/register.css';
+/* The agency register, loaded LAST because it supersedes the sheet above on
+   ground, depth and where the accent lands. register.css still owns face and
+   size; agency.css owns colour. See its header for what was withdrawn. */
+import './styles/agency.css';
+/* The light model. DESIGN.md Elevation & Depth is asphalt-dominant, LIT. */
+import './styles/lit.css';
 
 /* Ground rhythm: asphalt to concrete and back. The light sections carry the
    relief, and no two of them meet. There are two: the counter row on
@@ -34,21 +44,55 @@ import FooterForm from './components/home/FooterForm.jsx';
    numbers in the build brief were a build sequence, not a page order, so do
    not reorder to match them. */
 createRoot(document.getElementById('hero-root')).render(
+  /* THE HARNESS NEEDS A ROUTER NOW.
+
+     The bar, the footer lockup and every call became `<Link>` when the
+     internal links stopped being plain anchors, and `useHref` throws outside
+     a Router. This entry renders the section tree directly rather than
+     through App, so it has to supply the context itself.
+
+     BrowserRouter rather than MemoryRouter: the harness is served at
+     hero-preview.html and the links should resolve against the real origin,
+     so a click here goes where it would go on the site. */
   <React.StrictMode>
+    <BrowserRouter>
     {/* One icon weight for the whole tree. See Icons.jsx. */}
     <IconProvider>
+      {/* First tab stop on the page, and the reason it is here: at 1280 the
+          bar puts six links between the top of the document and the first
+          word of the hero, and a keyboard reader met all six before reaching
+          any content. The link is in the tab order at all times and off the
+          screen until it takes focus. Styled in tokens.css, not here, because
+          it belongs to the page rather than to any section. */}
+      <a className="skip" href="#main">
+        Skip to content
+      </a>
+
       <Header />
-      <Hero />
-      <Failures />
-      <Services />
-      <Marquee />
-      <WorkGrid />
-      <About />
-      <CounterRow />
-      <Testimonials />
-      <Process />
-      <Faq />
-      <FooterForm />
+
+      {/* The one main landmark. Every section below the bar is content, so
+          the landmark is the whole run of them, and the skip link has
+          somewhere to land. tabIndex -1 makes it a focus target without
+          putting it in the tab order: without it the browser moves the
+          scroll position and leaves focus on the link, so the next Tab goes
+          back into the bar, which is the thing the link just skipped. */}
+      <main id="main" tabIndex={-1}>
+        {/* No preview switch. `?variant=machine` came out with `?hero` and
+            `?entrance` on 2026-09-09; the harness renders the hero as it
+            ships and nothing else. */}
+        <Hero />
+        <Failures />
+        <Services />
+        <Marquee />
+        <WorkGrid />
+        <About />
+        <CounterRow />
+        <Testimonials />
+        <Process />
+        <Faq />
+        <FooterForm />
+      </main>
     </IconProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

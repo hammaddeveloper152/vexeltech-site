@@ -13,7 +13,9 @@
 .quotes {
   padding: var(--s-3xl) var(--s-md);
   background: var(--c-asphalt);
-  border-top: 1px solid var(--c-rule-dark);
+/* Section separator REMOVED 2026-09-08: on an all-asphalt page two
+   sections are separated by space, not by a stroke. See DESIGN.md,
+   "Separation on an all-asphalt page". */
 }
 
 .quotes__inner {
@@ -60,10 +62,41 @@
    enters the system, and the mark sits at exactly the weight this system
    already uses for something present but not to be looked at.
 
-   Not the accent. DESIGN.md fixes the accent's floor at 0.64 because below it
-   the primary call fails AA, and a mark this faint in machine yellow is
-   precisely the case that rule exists to stop. A decorative white mark carries
-   no contrast bar, so it can go where the accent cannot. */
+   ---- Tried as the frame's carrier, and measured out --------------------
+
+   The mark was rebuilt as type — the quotation glyph in Monigue at the figure
+   size, in machine yellow, in the flow above the quote — to take the carrier
+   the count had been holding. Monigue carries U+201C (advance 63.2 against
+   Arial Narrow's 54.6, so it is in the face and not a fallback), and the
+   build rendered correctly. It still fails, and the reason is a number rather
+   than a taste.
+
+   The loud scale is derived on CAP HEIGHT: every step of it is an uppercase
+   Monigue string, and a quotation mark has no cap height. At 128px, the
+   figure step, painted at 1280:
+
+     testimonial mark      ink 32 x 38px        869 accent px
+     counter lead figure   ink 105 x 205px   12,665 accent px   14.6x
+     failures lead         ink 92 x 838px    53,645 accent px
+
+   and against the two carriers a whole step SMALLER, at the 95px heading:
+
+     FAQ heading           ink 69 x 311px    15,924 accent px   18.3x
+     work heading          ink 69 x 456px    22,106 accent px   25.4x
+
+   At 390 the ratios hold: 220px of ink against the counter figure's 3,210 at
+   the same 64px, and against the FAQ heading's 3,946 at 48px.
+
+   So the mark at the top of the scale paints 7% of the ink a figure paints at
+   the same size, and less than any other carrier on the page paints at a step
+   below it. It is 0.09% of the frame; the count it replaced was 0.4%. Nothing
+   on this page reads it as an object, and the only sizes that would fix that
+   are past the display step, which belongs to the hero and to nothing else.
+
+   That is the honest finding: it reads as decoration, so the section takes no
+   carrier. One accent per frame is a ceiling, not a quota — the work wall and
+   the services scroller already spend nothing — and the count goes white
+   rather than being handed an accent it was the wrong element for. */
 .quotes__mark {
   position: absolute;
   /* Anchored to the quote's own left edge and lifted so its top clears the
@@ -141,7 +174,18 @@
   border: 1px solid var(--c-rule-dark);
   border-radius: var(--r-sm); /* control */
   color: var(--c-shop-white);
-  font-family: var(--font-offer);
+  /* CLASH, and it was Satoshi until the face audit walked all eight pages.
+
+     This is a <button>, and the register is not ambiguous: Clash is for
+     controls and only controls — calls, buttons, the questions a reader
+     presses. It had `--font-offer` with no reason recorded anywhere; the
+     comment above it explains the ground and the border and says nothing
+     about the face, which is what a value set by habit rather than by
+     decision looks like.
+
+     The SIZE stays on the label tier — 12px, uppercase, tracked — because a
+     carousel's prev/next is metadata-scaled. Only the face moves. */
+  font-family: var(--font-brand);
   font-size: var(--t-label-size);
   line-height: var(--t-label-line);
   font-weight: var(--t-weight-label);
@@ -165,8 +209,13 @@
   color: var(--c-steel-dark);
 }
 
+/* The whole count is one colour and it is not the accent. The current number
+   used to be machine yellow and this frame's carrier; it carries nothing now,
+   so nothing in this row claims the yellow. Kept in step with register.css,
+   which owns where the accent lands, so no rule in the tree still points at
+   the old carrier. */
 .quotes__count-n {
-  color: var(--c-accent-text-dark); /* 9.46:1 on asphalt */
+  color: inherit;
 }
 
 @media (hover: hover) and (pointer: fine) {

@@ -26,7 +26,9 @@
 .process {
   padding: var(--s-3xl) var(--s-md);
   background: var(--c-asphalt);
-  border-top: 1px solid var(--c-rule-dark);
+/* Section separator REMOVED 2026-09-08: on an all-asphalt page two
+   sections are separated by space, not by a stroke. See DESIGN.md,
+   "Separation on an all-asphalt page". */
 }
 
 .process__inner {
@@ -85,23 +87,30 @@
   stroke-width: var(--stroke-drawn);
 }
 
+/* Steel-dark, not the accent. The register pass took the drawn route's colour
+   off it and left this rule claiming the accent underneath; the two disagreed
+   for the whole build, decided only by load order. BUILD-LAW Contrast: dead
+   override code has produced near-invisible text on this project before, and
+   a stroke that repaints itself machine yellow the day these two sheets swap
+   order is the same defect. register.css owns where the accent lands; this is
+   kept in step with it. */
 /* Ahead of the reader: drawn, but not yet arrived at. */
 .process__lit {
-  stroke: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
+  stroke: var(--c-steel-dark); /* 5.12:1 on asphalt */
   opacity: var(--ahead-opacity);
 }
 
 /* Behind the reader: full strength, and it holds at the last step reached
    rather than tracking the scroll, so the route reads as ground covered. */
 .process__passed {
-  stroke: var(--c-accent-draw-dark);
+  stroke: var(--c-steel-dark);
 }
 
 /* The card's edge, lit with its own step rather than when the route happens
    to reach it. This is what carries the light off the route and onto the
    card. */
 .process__edge {
-  stroke: var(--c-accent-draw-dark);
+  stroke: var(--c-steel-dark);
   opacity: 0;
 }
 

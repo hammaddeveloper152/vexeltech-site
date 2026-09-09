@@ -5,32 +5,62 @@ import './Process.css';
 
 /* Section 7. One drawn diagram.
 
-   Placeholder steps. BUILD-LAW.md Truth: how this agency actually works is a
-   capability claim and cannot be written here until it is given. */
+   ---- The four steps, written 2026-09-08 --------------------------------
+
+   The user's process, from content answers 3.1 to 3.4, one answer per step
+   and in the user's order. Nothing is added and nothing is reordered.
+
+   | Step | Source |
+   |---|---|
+   | 01 | 3.1 — a booked meeting with a professional, most probably a brand strategist, a complete discovery of 30 minutes, their problem and what they are looking for |
+   | 02 | 3.2 — onboarding, research, the design phase for branding and the UI/UX phase for the website |
+   | 03 | 3.3 — development and QA and launch |
+   | 04 | 3.4 — handover the digital assets, 100% ownership, we will be just the design or IT partners |
+
+   Budgets: titles under 30 characters, bodies about 120. Measured, they run
+   18 / 21 / 20 / 22 and 114 / 112 / 116 / 117. The titles set in Monigue at
+   the small loud step and are uppercased by the register, so the character
+   count is what keeps each one on its line.
+
+   ---- The turnaround, settled 2026-09-08 --------------------------------
+
+   THE WEBSITE IS FOUR BUSINESS DAYS, and step 03 says so. It was held out
+   of this page while 7.2's four business days and 2.2 and 3.5's "within
+   weeks" were unreconciled; the user settled it in favour of 7.2, and
+   "within weeks" is not used anywhere on this site.
+
+   3.5's OTHER two figures are still not here: a custom logo within 24 hours
+   and branding within 5 business days. They are unambiguous and could be
+   written, and they are held back on composition rather than on truth —
+   three clocks in one four-step sequence is three durations for a reader to
+   reconcile, and the build one is the one this page is about. Which of them
+   belongs on the homepage is a content decision, not a build one.
+
+   3.6 is blank in the source. There is no fifth step and none is invented. */
 const STEPS = [
   {
     id: 'one',
     n: '01',
-    title: 'Placeholder step one',
-    body: 'Placeholder description for the first step. It stands in for real copy and describes nothing about how the work is done.',
+    title: 'A call, not a pitch',
+    body: "Thirty minutes with a brand strategist. You tell us what's wrong and what you're after, and we listen before we price anything.",
   },
   {
     id: 'two',
     n: '02',
-    title: 'Placeholder step two',
-    body: 'Placeholder description for the second step, written to about the length the real one will run.',
+    title: 'Then we design it',
+    body: 'Onboarding and research first, then design starts: the brand work for branding, the UI and UX for the site.',
   },
   {
     id: 'three',
     n: '03',
-    title: 'Placeholder step three',
-    body: 'Placeholder description for the third step. Nothing here is a claim and nothing here should survive to a deploy.',
+    title: 'We build and test it',
+    body: "Four business days to build it, then testing. You look at it and tell us what to change, as many times as it takes.",
   },
   {
     id: 'four',
     n: '04',
-    title: 'Placeholder step four',
-    body: 'Placeholder description for the fourth and last step, closing the sequence.',
+    title: 'You own it outright',
+    body: "It moves to your hosting, with every credential and the ownership under your name. You own everything you paid for.",
   },
 ];
 
@@ -321,10 +351,25 @@ export default function Process() {
                   {/* The title crossfades the same way the numeral does, two
                       copies in one cell. Both of its states clear their
                       contrast bar; a single element dimmed by opacity would
-                      not. */}
+                      not.
+
+                      Only one of the two copies is in the accessibility
+                      tree. The pair is a paint trick — two glyph sets in one
+                      grid cell swapping opacity — and to a screen reader it
+                      was two headings' worth of text, so every step title was
+                      announced twice. The numeral above hides both its copies
+                      on the wrapper and this was missed on the way past.
+
+                      The muted copy is the one that stays: it is the copy
+                      that is present before the route reaches the step, both
+                      carry identical text, and opacity leaves an element in
+                      the tree, so the name never empties when the step
+                      lights. */}
                   <h3 className="process__t">
                     <span className="process__t-muted">{title}</span>
-                    <span className="process__t-lit">{title}</span>
+                    <span className="process__t-lit" aria-hidden="true">
+                      {title}
+                    </span>
                   </h3>
                   <p className="process__d">{body}</p>
                 </div>

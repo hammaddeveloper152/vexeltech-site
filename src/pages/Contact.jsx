@@ -1,3 +1,8 @@
+/* THE EMAIL IS info@vexeltechsolutions.com, given by the user 2026-09-08.
+   Every hello@ address in this file was replaced. It is not a branding
+   change: a published address that nobody reads sends a reader's message
+   nowhere, and on the legal pages it is the address a privacy request or a
+   data subject request is told to use. */
 import React from 'react';
 import SecondaryLayout from '../components/SecondaryLayout.jsx';
 
@@ -128,15 +133,17 @@ export default function Contact() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div className="gcard">
                 <span className="label">Direct Contact</span>
-                <div className="gcard-n" style={{ marginBottom: '12px' }}>Vexel Scales LLC</div>
+                {/* The entity line read "Vexel Scales LLC". Removed 2026-09-08:
+                    CLAUDE.md records no Vexel Scales reference of any kind
+                    anywhere on the site, decided by the user directly. */}
                 <p className="gcard-m" style={{ marginBottom: '16px' }}>Richmond, TX 77406, USA</p>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   <a href="tel:+13852843265" className="btn btn--ink" style={{ justifyContent: 'flex-start' }}>
                     📞 (385) 284-3265
                   </a>
-                  <a href="mailto:hello@vexeltechsolutions.com" className="btn btn--line" style={{ justifyContent: 'flex-start' }}>
-                    ✉️ hello@vexeltechsolutions.com
+                  <a href="mailto:info@vexeltechsolutions.com" className="btn btn--line" style={{ justifyContent: 'flex-start' }}>
+                    ✉️ info@vexeltechsolutions.com
                   </a>
                 </div>
               </div>

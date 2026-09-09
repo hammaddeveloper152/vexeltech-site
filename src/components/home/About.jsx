@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowUpRight } from '@phosphor-icons/react';
 import { useReveal } from './hooks.js';
 import './About.css';
@@ -47,10 +48,10 @@ const COPY = {
      If the real statement needs to be longer than this, it wants the
      supporting paragraph, not a longer quote. */
   statement:
-    'Placeholder first-person statement, written to about the length the real one should run when it is set at this size.',
+    'We know how hard it is to spend your earnings and get nothing for it.',
   support:
-    'Placeholder supporting paragraph at body scale, written to about the length the real one will run. It asserts nothing about this agency and nothing here should survive to a deploy.',
-  link: 'Placeholder link label',
+    'So we build long-term partnerships instead of treating you as an invoice to be paid. A dedicated team stays on your project, which is why asking for a change here is a conversation and not a negotiation.',
+  link: 'How we work with you',
 };
 
 export default function About() {
@@ -100,14 +101,14 @@ export default function About() {
             {COPY.support}
           </p>
 
-          <a className="about__link" href="/about-us" style={{ '--i': 3 }}>
+          <Link className="about__link" to="/about-us" style={{ '--i': 3 }}>
             {COPY.link}
             {/* Decorative. The label beside it is the link's accessible name,
                 so an arrow with its own label would announce the destination
                 twice. Steel-dark rather than white, the same call the work
                 wall's arrow made: the label is what the reader lands on. */}
             <ArrowUpRight className="i i--sm about__go" aria-hidden="true" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

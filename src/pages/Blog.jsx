@@ -13,7 +13,7 @@ const POSTS = [
     category: 'Web Dev Tips',
     title: 'How Much Does a Website Cost for a Small Business in 2025?',
     excerpt:
-      'Templates, freelancers, agencies, or a custom build — the real answer depends on what your business actually needs to convert visitors into paying clients.',
+      'Templates, freelancers, agencies, or a custom build: the real answer depends on what your business actually needs to convert visitors into paying clients.',
     author: 'VexelTech Team',
     date: 'Aug 15, 2026',
     readTime: '7 min read',
@@ -69,7 +69,7 @@ const POSTS = [
     category: 'Web Dev Tips',
     title: 'How to Pick a Web Design Agency as a Small Business Owner',
     excerpt:
-      'The five questions you must ask before signing any contract — and the red flags that signal you are about to spend money on the wrong partner.',
+      'The five questions you must ask before signing any contract, and the red flags that signal you are about to spend money on the wrong partner.',
     author: 'VexelTech Team',
     date: 'Jul 20, 2026',
     readTime: '6 min read',
@@ -274,6 +274,26 @@ function PostCard({ post, large = false }) {
 /* ─────────────────────────────────────────────────────────────────
    PAGE COMPONENT
 ───────────────────────────────────────────────────────────────── */
+/* THE NEWSLETTER IS NOT LIVE, and it says so on the page.
+
+   It posted nowhere. The Subscribe button set a local flag and the block
+   swapped to "You're in. Expect your first dispatch this week." — a reader
+   who typed their address was told they were subscribed, and they were not.
+
+   That is the same defect the footer form was fixed for and it takes the
+   same fix, deliberately, so there is one shape for this on the site:
+   BUILD-LAW.md **Truth** applies to interface states as much as to copy, and
+   a success message is a claim. No endpoint is added here.
+
+   The submit is disabled and a visible line under it says the form is not
+   live. The line is plain rather than a disabled colour alone, because a
+   greyed button on its own reads as broken and the reader should be able to
+   see that it is deliberate.
+
+   The success branch below is KEPT and wired, so flipping this one constant
+   is the whole of turning it on once there is somewhere to post to. */
+const NEWSLETTER_LIVE = false;
+
 export default function Blog() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [emailVal, setEmailVal] = useState('');
@@ -288,7 +308,7 @@ export default function Blog() {
 
   return (
     <SecondaryLayout
-      title="Ideas Worth Sharing — VexelTech Blog"
+      title="Ideas Worth Sharing | VexelTech Blog"
       description="Practical ideas about website cost, branding vs logo design, marketing automation, and conversion strategy for startup founders and small business owners."
     >
 
@@ -320,7 +340,7 @@ export default function Blog() {
           </h1>
 
           <p className="lede" style={{ color: 'var(--text-d)', maxWidth: '680px', fontSize: '19px', lineHeight: '1.65', marginBottom: '40px' }}>
-            Short, specific guidance on website costs, brand strategy, marketing automation, and conversion — written for founders who build in public.
+            Short, specific guidance on website costs, brand strategy, marketing automation, and conversion, written for founders who build in public.
           </p>
 
           {/* Stats row */}
@@ -456,7 +476,7 @@ export default function Blog() {
           <div className="wrap">
             <span style={{ fontSize: '48px' }}>✍️</span>
             <h2 className="h-md" style={{ marginTop: '16px', marginBottom: '8px' }}>Articles in this category are coming soon</h2>
-            <p style={{ color: 'var(--steel)' }}>Check back shortly — we publish weekly.</p>
+            <p style={{ color: 'var(--steel)' }}>Check back shortly. We publish weekly.</p>
             <button
               onClick={() => setActiveCategory('All')}
               className="btn btn--go"
@@ -501,7 +521,7 @@ export default function Blog() {
                 One idea, four expressions<span style={{ color: 'var(--beacon)' }}>.</span>
               </h2>
               <p style={{ color: 'var(--text-d)', fontSize: '16px', lineHeight: '1.65', maxWidth: '420px' }}>
-                Every week we publish one strategic insight on brand, web, or growth — written to repurpose directly into your LinkedIn posts, Instagram captions, and email newsletters.
+                Every week we publish one strategic insight on brand, web, or growth, written to repurpose directly into your LinkedIn posts, Instagram captions, and email newsletters.
               </p>
               <div style={{ display: 'flex', gap: '24px', marginTop: '24px', flexWrap: 'wrap' }}>
                 {['No spam', 'Unsubscribe any time', 'Founder-authored'].map(t => (
@@ -520,7 +540,7 @@ export default function Blog() {
               borderRadius: '4px',
               padding: '36px'
             }}>
-              {submitted ? (
+              {submitted && NEWSLETTER_LIVE ? (
                 <div style={{ textAlign: 'center', padding: '16px 0' }}>
                   <span style={{ fontSize: '40px', display: 'block', marginBottom: '12px' }}>🎉</span>
                   <h3 className="h-md" style={{ color: '#fff', fontSize: '20px', marginBottom: '8px' }}>You're in.</h3>
@@ -566,12 +586,30 @@ export default function Blog() {
                       }}
                     />
                     <button
-                      onClick={() => { if (emailVal) setSubmitted(true); }}
+                      onClick={() => { if (NEWSLETTER_LIVE && emailVal) setSubmitted(true); }}
                       className="btn btn--go"
-                      style={{ width: '100%', padding: '14px', fontWeight: '700', justifyContent: 'center', marginTop: '4px' }}
+                      disabled={!NEWSLETTER_LIVE}
+                      aria-describedby={NEWSLETTER_LIVE ? undefined : 'nl-offline'}
+                      style={{
+                        width: '100%', padding: '14px', fontWeight: '700',
+                        justifyContent: 'center', marginTop: '4px',
+                        opacity: NEWSLETTER_LIVE ? 1 : 0.4,
+                        pointerEvents: NEWSLETTER_LIVE ? 'auto' : 'none'
+                      }}
                     >
-                      Subscribe — It's Free
+                      Subscribe, it is free
                     </button>
+
+                    {/* Plain and visible. Not a tooltip, and not the disabled
+                        opacity on its own. */}
+                    {NEWSLETTER_LIVE ? null : (
+                      <p
+                        id="nl-offline"
+                        style={{ color: 'var(--text-d)', fontSize: '14px', marginTop: '4px' }}
+                      >
+                        This signup is not live yet.
+                      </p>
+                    )}
                   </div>
                 </>
               )}
@@ -654,7 +692,7 @@ export default function Blog() {
               Ready to put these ideas into practice<span style={{ color: 'var(--beacon)' }}>?</span>
             </h2>
             <p className="lede" style={{ color: 'var(--text-d)', margin: 0, maxWidth: '520px' }}>
-              Bring us your homepage, your offer, or just your problem. We will tell you what we would fix first — no pitch deck required.
+              Bring us your homepage, your offer, or just your problem. We will tell you what we would fix first. No pitch deck required.
             </p>
           </div>
           <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>

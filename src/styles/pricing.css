@@ -1,0 +1,478 @@
+/* ==========================================================================
+   THE PRICING LADDER. Cards only — the page header, the discipline tabs'
+   position and the footer are untouched.
+
+   The light model from the hero, applied to a page: one key top left, the
+   ground falling away from it, grain over the whole thing, and every card lit
+   by the same source rather than each one deciding for itself.
+   ========================================================================== */
+
+/* ---- The page ground ----------------------------------------------------
+
+   Identical construction to `.hero` in lit.css: the yellow bloom at 6% over
+   900px from the top left, then the fall from #1E1F22 to #111214. The
+   page-wide grain overlay on `html::after` already sits over this; one
+   overlay, not one per page. */
+.pg {
+  background-color: var(--lit-far);
+  background-image:
+    radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%),
+    radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* ---- The tabs become a pill group --------------------------------------
+
+   A track rather than a rule: the four disciplines are one control with one
+   active state, and a filled pill says that where an underline said "you are
+   here on a list". The active fill is machine yellow with asphalt on it,
+   9.46:1; the rest are bone on the track.
+
+   Only the LOOK changes. The radios, the `:checked` siblings, the arrow-key
+   operation and the panels all stay exactly as they were. */
+.tabs__row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--s-xs);
+  margin-bottom: var(--s-2xl);
+  padding: var(--s-xs);
+  border: 0;
+  border-radius: 999px;
+  /* The track takes the cards' ground rather than the neutral one. It is not a
+     card, but it is a lit surface 24px above a row of warm ones, and a cool
+     grey pill directly over them reads as a control borrowed from another
+     page. */
+  background: var(--c-surface-warm);
+  box-shadow: var(--lit-inset);
+}
+
+.tabs__tab {
+  min-height: 48px;
+  padding: 0 var(--s-lg);
+  border: 0;
+  border-radius: 999px;
+  margin: 0;
+  color: var(--c-bone); /* 13.16:1 on surface-warm */
+}
+
+#tab-branding:checked ~ .tabs__row [for=tab-branding],
+#tab-websites:checked ~ .tabs__row [for=tab-websites],
+#tab-marketing:checked ~ .tabs__row [for=tab-marketing],
+#tab-automation:checked ~ .tabs__row [for=tab-automation] {
+  background: var(--c-accent-ground);
+  color: var(--c-asphalt); /* 9.46:1 */
+}
+
+/* ---- The ladder --------------------------------------------------------- */
+
+.cards {
+  display: grid;
+  gap: var(--s-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* The lead card sits 12px higher, so the row needs the headroom or the lift
+     clips against the panel above. */
+  padding-top: 12px;
+  /* START, NOT STRETCH. Stretched, the Custom card was as tall as the two
+     beside it and its call sat at the bottom of a column of nothing — the
+     stretch was hiding the fact that the card had less to say rather than
+     making it a peer. Top-aligned, each card is the height of its own content
+     and every call sits 32px under that card's last row. */
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .cards--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cards--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* THE CARD, LIT. The four properties every surface on this site carries — the
+   1px edge, the brighter top edge where the key strikes, the inset highlight
+   just inside it, and a fill one step above the ground — plus a 220px glow
+   bleeding in from the top-left corner, clipped to the card.
+
+   `overflow: hidden` is what clips the glow, and `isolation` keeps the
+   pseudo-element's stacking to this card. */
+.card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-xl);
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-top-color: rgb(255 255 255 / 14%);
+  border-radius: var(--r-md);
+  /* WARM, because the key is yellow. tokens.css carries the derivation and
+     the two constraints the pair comes with. */
+  background: var(--c-surface-warm);
+  box-shadow: var(--lit-inset);
+}
+
+/* THE CORNER GLOW: WARM WHITE AT 10%, 200px, AND IT IS THE KEY ON EVERY CARD.
+
+   It was arc at 7% on the cards that are not the pick and yellow at 9% on the
+   one that is, which made the glow carry the recommendation. That is two jobs
+   for one device: the light source is not a label. The pick is the RAISED
+   surface and the brighter top edge; the glow is identical on every card,
+   because there is one key and it does not change depending on which plane it
+   lands on.
+
+   THE COLOUR IS #FFF1CC, NOT MACHINE YELLOW. Machine yellow at 16% over a warm
+   surface composites into the olive band — the exact value DESIGN.md bans as a
+   resting one, arrived at for the fourth time and from a new direction. The
+   warm-white stop is the top of the hero shader's own ramp, which is what the
+   key looks like where it is brightest, and at 10% it lands above the band
+   rather than inside it. See DESIGN.md: a glow uses the warm-white stop, never
+   yellow at partial opacity.
+
+   200px, not 160, because a radial whose peak sits inside the panel's own
+   dither is not a soft glow, it is an absent one. */
+.card::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -56px;
+  left: -56px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  filter: blur(28px);
+  background: rgb(255 241 204 / 10%);
+  pointer-events: none;
+}
+
+.card--lead {
+  background: var(--c-surface-warm-raised);
+  border-top-color: rgb(255 255 255 / 18%);
+  /* 12px higher and 24px taller than its neighbours: the lift is the row's,
+     the height is the card's own padding. */
+  margin-top: -12px;
+  padding-top: calc(var(--s-xl) + 12px);
+  padding-bottom: calc(var(--s-xl) + 12px);
+  box-shadow:
+    /* the 32px arc glow rising from the left edge, About's construction */
+    inset 32px 0 32px -32px rgb(13 71 189 / 30%),
+    var(--lit-inset);
+}
+
+/* ---- Inside the card ---------------------------------------------------- */
+
+/* "Most chosen" — one line of mono metadata above the name. It is carried
+   because the founder supplied it; see the note in content/pricing.js. */
+.card__marker {
+  margin: 0 0 var(--s-sm);
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  /* STEEL-LIFT, NOT STEEL-DARK. steel-dark is 4.13:1 on warm-raised and it is
+     banned on a surface; it is the ground's secondary value. 5.50:1 here. */
+  color: var(--c-steel-lift);
+}
+
+/* THE NAME FACE. Basic, Advance, Custom, A website — these are product names,
+   which is the whole of Moldie's role. 32px flat at both widths; the name
+   register does not scale. */
+.card__name {
+  margin: 0;
+  font-family: var(--font-name);
+  font-size: var(--t-name-m);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white);
+}
+
+/* 96px, Monigue, and it is the object the card is about. */
+.card__price {
+  display: block;
+  margin: var(--s-sm) 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-loud);
+  font-size: 96px;
+  line-height: 0.9;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+  color: var(--c-shop-white);
+}
+
+/* The quote line on the Custom card, at the price size so the card is a peer
+   of the ones beside it rather than a footnote to them. */
+.card__price--quote {
+  margin-top: var(--s-md);
+  font-size: var(--t-loud-small);
+  line-height: var(--t-loud-line);
+  text-transform: uppercase;
+  color: var(--c-bone); /* 13.16:1 on surface-warm */
+}
+
+/* The live price is a button. The cursor and the underline only appear where
+   there is a pointer to show them; the state itself works on touch. */
+.card__price--live {
+  cursor: default;
+  transition: opacity var(--d-press) var(--ease-reveal), transform var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card__price--live {
+    cursor: pointer;
+  }
+
+  .card__price--live:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+.card__price--live:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card__price--live:active {
+    transform: none;
+  }
+}
+
+/* The caption under the price. Present in the flow at all times so nothing
+   moves when it lights; only its opacity changes. */
+/* THE SLANTED CUT. The caption is what the delta mechanic says when it fires,
+   and the slant is what marks it as the answer to the price above it rather
+   than another line of card metadata. */
+.card__caption {
+  margin: var(--s-xs) 0 0;
+  min-height: var(--t-label-line);
+  font-family: var(--font-name-slanted);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-accent-text-dark); /* 7.62:1 on warm-raised */
+  opacity: 0;
+  transition: opacity var(--d-drop) var(--ease-reveal);
+}
+
+.card__caption[data-lit='true'] {
+  opacity: 1;
+}
+
+/* The turnaround, lifted out of the feature list into a second figure. */
+.card__turn {
+  margin: var(--s-md) 0 var(--s-lg);
+  font-family: var(--font-offer);
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--c-shop-white);
+  transition: color var(--d-drop) var(--ease-reveal);
+}
+
+.card__turn[data-lit='true'] {
+  color: var(--c-accent-text-dark);
+}
+
+.card__why {
+  margin: var(--s-lg) 0 var(--s-lg);
+  max-width: 34ch;
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-bone);
+}
+
+/* ---- The rows ----------------------------------------------------------- */
+
+/* NO BOTTOM MARGIN. The 32px under the last row belongs to `.card__foot` and
+   has to be the whole of it — this carried 40px of its own, so the measured
+   gap was 72 on every priced card and 32 on the Custom one, which is the exact
+   inconsistency the fixed step was added to remove. */
+.card__rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card__row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-sm);
+  min-height: 44px;
+  border-top: 1px solid rgb(255 255 255 / 6%);
+  font-family: var(--font-offer);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-bone); /* 13.16:1 on surface-warm, 11.88:1 on warm-raised */
+  transition: color var(--d-drop) var(--ease-reveal);
+}
+
+.card__row:last-child {
+  border-bottom: 1px solid rgb(255 255 255 / 6%);
+}
+
+/* A 6px square at full strength, not a dash and not a tick. DESIGN.md
+   Iconography: a list item is already a list item, so a tick says what the
+   list already says; the square is a marker, not a claim. */
+.card__tick {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  background: var(--c-accent-ground);
+}
+
+.card__row[data-lit='true'] {
+  color: var(--c-accent-text-dark); /* 7.62:1 on warm-raised */
+}
+
+/* ---- The calls ---------------------------------------------------------- */
+
+/* 32px UNDER THE LAST FEATURE ROW, on every card, and it is not `auto`.
+   `margin-top: auto` pushed the call to the bottom of whatever height the row
+   gave the card, so the gap above it was a different number on each of the
+   three. A fixed step means the call sits in the same relation to the content
+   above it everywhere, which is the thing a reader actually registers.
+
+   32 IS OFF THE SPACING RAMP, which runs 4, 8, 16, 24, 40, 64, 96 and omits 32
+   deliberately. Directed value, recorded here rather than rounded to 40 or 24
+   without saying so. */
+.card__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-md);
+  margin: 32px 0 0;
+}
+
+/* ONE SOLID CALL PER PANEL, and it belongs to the lead. The ladder shipped
+   with a yellow fill on every card, on the argument that a comparison where
+   only one row can be acted on is not a comparison. That argument was wrong
+   about which part carries it: every card is still actionable, and the second
+   one is an outline button, not an absence. Three identical primaries in one
+   frame is three ways to do the same thing, and the frame's accent is spent
+   once, on the card the panel recommends.
+
+   `--line` is the outline: a bone hairline, bone text, no fill. Same box, same
+   48px, same press. 13.16:1 on surface-warm. */
+.card__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: var(--s-sm) var(--s-lg);
+  border: 1px solid var(--c-accent-ground);
+  border-radius: var(--r-none);
+  background: var(--c-accent-ground);
+  color: var(--c-asphalt); /* 9.46:1 */
+  font-family: var(--font-brand);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-brand);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity var(--d-press) var(--ease-reveal), transform var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card__cta:hover {
+    opacity: var(--hover-opacity);
+    transform: translateY(-1px);
+  }
+}
+
+.card__cta:active {
+  transform: scale(0.97);
+}
+
+/* THE OUTLINE. Bone on the card's own surface rather than a fill, so the row
+   holds one accent and the second choice is still plainly a button. */
+.card__cta--line {
+  border-color: var(--c-bone);
+  background: none;
+  color: var(--c-bone); /* 13.16:1 on surface-warm */
+}
+
+/* ---- What we need to know, on the Custom card --------------------------
+
+   The card says "priced on the call" and the obvious next question is what the
+   call is for. Three rows answer it. They are the SAME construction as a
+   feature row — 44px, hairline above, 6px marker — because they are the same
+   kind of object: a short line in a list, on a card, in this ladder. A
+   second, different row treatment here would be a new component for no reason.
+
+   THE ROWS ARE RESERVED AND THE LINES ARE NOT WRITTEN. `NEEDS` in
+   content/pricing.js holds `null` twelve times and says why. A pending row is
+   VISIBLY pending — the marker drops to a hairline outline and the text is
+   steel-lift in italic — because a placeholder that reads as copy is worse
+   than an empty card. It occupies the height a real line will, so the day the
+   lines land nothing on the page moves. */
+.card__need-h {
+  margin: var(--s-lg) 0 var(--s-sm);
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-steel-lift); /* 6.09:1 on surface-warm */
+}
+
+/* A pending row's marker is an outline, not a filled square: a filled yellow
+   square is the site's "this is here" mark and this line is not here yet. */
+.card__row[data-pending='true'] .card__tick {
+  background: none;
+  box-shadow: inset 0 0 0 1px var(--c-steel-lift);
+}
+
+.card__pending {
+  font-style: italic;
+  color: var(--c-steel-lift); /* 6.09:1 on surface-warm */
+}
+
+/* ---- Marketing and Automation: one card, and it does not run the width ---
+
+   Those two panels have no priced tier, so the Custom card is the whole offer.
+   Full width it was a 1200px banner carrying four short lines, which reads as
+   a section rather than as the card it is in the other two panels. 60%,
+   left-aligned, so it is the same OBJECT the reader met on Branding. */
+.cards--1 {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 900px) {
+  .cards--1 {
+    grid-template-columns: minmax(0, 60%);
+    justify-content: start;
+  }
+}
+
+.card__ask {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 var(--s-xs);
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card__cta:hover,
+  .card__cta:active {
+    transform: none;
+  }
+}

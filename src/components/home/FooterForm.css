@@ -14,7 +14,9 @@
   padding: var(--s-3xl) var(--s-md);
   background: var(--c-asphalt);
   color: var(--c-shop-white); /* 17.77:1 */
-  border-top: 1px solid var(--c-rule-dark);
+/* Section separator REMOVED 2026-09-08: on an all-asphalt page two
+   sections are separated by space, not by a stroke. See DESIGN.md,
+   "Separation on an all-asphalt page". */
 }
 
 .foot__inner {
@@ -151,13 +153,30 @@
   background: var(--c-accent-ground);
   color: var(--c-asphalt); /* 9.46:1 */
   border: 1px solid var(--c-accent-ground);
-  border-radius: var(--r-sm);
-  font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
+  /* Square, and in the brand register at the h3 step — the hero CTA decision,
+     applied to the page's other real call.
+
+     The GROUND is deliberately unchanged. Hero.css records why the hero's
+     primary is shop-white rather than yellow: that frame spends its one accent
+     on the rule under the headline, and it records in the same breath that the
+     footer's submit keeps machine yellow because it is a different frame. That
+     still holds. What was wrong here was the type, not the colour: 12px
+     Satoshi 500 uppercase at 0.12em is the treatment the hero rejected.
+
+     THIS BUTTON KEEPS h3 AND THE HEADER'S DOES NOT, deliberately. The header's
+     call shares a 64px bar with a wordmark and five navigation links, and at
+     1024 that leaves it 169px against the 287px h3 needs; Header.css carries
+     the measurements. This one sits at the end of a form column with nothing
+     beside it: at h3 it renders 142x66 inside a 358px column at 390, the
+     narrowest width on the page, so no step is forced on it. Same decision,
+     same register, same corner, same case — two steps, because the two frames
+     are not the same frame. */
+  border-radius: var(--r-none);
+  font-family: var(--font-brand);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-h3);
   cursor: pointer;
   transition:
     transform var(--d-press) var(--ease-reveal),
@@ -171,6 +190,16 @@
 .foot__status {
   margin: 0;
   min-height: var(--s-lg);
+}
+
+/* Not an error and not a success: a fact about the page. Steel-dark, the
+   same value the form's own labels use, so it reads as part of the form
+   rather than as a warning about it. 5.12:1 on asphalt. */
+.foot__offline {
+  display: block;
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-steel-dark);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -195,7 +224,11 @@
   gap: var(--s-lg);
   margin-top: var(--s-3xl);
   padding-top: var(--s-xl);
-  border-top: 1px solid var(--c-rule-dark);
+/* The meta row's rule REMOVED 2026-09-08. It sat under 96px of margin and
+   40px of padding: 136px of space, more than the ramp's largest step, and
+   a hairline on top of that separated nothing. On the six pages that carry
+   the meta row WITHOUT the form it was worse — two rules 96px apart with
+   nothing between them but padding. */
 }
 
 /* Spans the meta row and sits above it, so the lockup closes the page rather
@@ -210,6 +243,55 @@
 .foot__contact {
   display: grid;
   gap: var(--s-xs);
+}
+
+/* ---- The site map -------------------------------------------------------
+
+   Its own row rather than a fourth column beside the contact blocks. Eight
+   links in a column of the meta row would be twice the height of everything
+   beside them, and the meta row is a row of small print, not a directory.
+
+   Two columns on a phone, four from 768, so the eight always land on a whole
+   number of rows and nothing is stranded on a line of its own. */
+
+.foot__nav {
+  display: grid;
+  gap: var(--s-xs);
+}
+
+.foot__nav-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--s-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.foot__nav-link {
+  display: flex;
+  align-items: center;
+  /* BUILD-LAW: 48px minimum, and this is inside a nav, which the rule names
+     explicitly. Padding is what makes the target; the small step is 20px. */
+  min-height: 48px;
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  text-decoration: none;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .foot__nav-link:hover {
+    opacity: var(--hover-opacity);
+    transform: translateY(-1px);
+  }
+}
+
+.foot__nav-link:active {
+  transform: scale(0.97);
 }
 
 .foot__meta-k {
@@ -236,6 +318,39 @@
 /* The address is one contact line carrying two lines of text. */
 .foot__meta-lines {
   display: grid;
+}
+
+/* The email is the one actionable line in the meta block, so it is an anchor
+   while the others are text. It takes the block's own colour rather than a
+   link treatment: `link-on-light` is deep amber for a LIGHT ground and this
+   block is asphalt, where machine yellow as text would put a second accent in
+   the footer's frame. Shop white at 17.77:1, underlined on hover and focus so
+   the affordance is there without a colour carrying it. */
+.foot__meta-a {
+  /* BUILD-LAW: 48px minimum on a tap target, and this is the one tappable
+     thing in the meta block. Padding makes the target; the line box is 20px,
+     so 14 above and below carries it to 48 without moving the text off the
+     row the icon is aligned to. The negative margin takes the added height
+     back out of the block's own gap, so the contact lines keep their rhythm
+     and only the touch area grew. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  margin: calc(var(--s-md) * -0.875) 0;
+  color: var(--c-shop-white);
+  text-decoration: none;
+  transition: opacity var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .foot__meta-a:hover {
+    opacity: var(--hover-opacity);
+    text-decoration: underline;
+  }
+}
+
+.foot__meta-a:focus-visible {
+  text-decoration: underline;
 }
 
 /* Steel-dark, matching the key above the block. The values are the white; the
@@ -293,6 +408,14 @@
   .foot__brand {
     grid-column: 1 / -1;
     margin-bottom: 0;
+  }
+
+  .foot__nav {
+    grid-column: 1 / -1;
+  }
+
+  .foot__nav-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .foot__legal {

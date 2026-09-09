@@ -40,13 +40,28 @@
 .about {
   padding: var(--s-3xl) var(--s-md);
   background: var(--c-asphalt);
-  border-top: 1px solid var(--c-rule-dark);
+/* Section separator REMOVED 2026-09-08: on an all-asphalt page two
+   sections are separated by space, not by a stroke. See DESIGN.md,
+   "Separation on an all-asphalt page". */
 }
 
 /* Visually hidden, not display:none. It stays in the accessibility tree and
    in the heading outline; it just does not paint. See the note in About.jsx
    for why this section's heading is hidden when no other one is. */
 .about__h {
+  /* The h2 rule, carried explicitly even though this heading does not paint.
+     Without it an unstyled `h2` takes the UA default — `1.5em` and `bold` —
+     which computed to 27px/700 in Satoshi here. 700 is not one of the three
+     declared weights and Satoshi is not the heading register, so the value was
+     wrong even while it was invisible. Declared, so it is right if the heading
+     is ever unhidden and so an audit of the page does not report a face and a
+     weight the system does not own. */
+  font-family: var(--font-brand);
+  font-size: var(--t-h2-size);
+  line-height: var(--t-h2-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-display);
+
   position: absolute;
   width: 1px;
   height: 1px;
@@ -78,15 +93,15 @@
   max-width: 480px;
 }
 
-/* The reserved slot. surface-1 is the sanctioned inset-block tone and the
-   hairline supplies the edge, since the dark tones sit 1.07:1 apart and that
-   alone does not read as one. Same treatment as the work wall's plates, on
-   purpose: two empty image slots on one page should look like the same kind
-   of reservation. */
+/* The reserved slot. surface-warm is the tone for a plane the key falls on and
+   the hairline supplies the edge, since the dark tones sit close enough that
+   value alone does not read as one. Same treatment as the work wall's plates,
+   on purpose: two empty image slots on one page should look like the same kind
+   of reservation, which is also why this one moves when they do. */
 .about__plate {
   display: block;
   aspect-ratio: 4 / 5;
-  background: var(--c-surface-1);
+  background: var(--c-surface-warm);
   border: 1px solid var(--c-rule-dark);
   border-radius: var(--r-md); /* container */
 }

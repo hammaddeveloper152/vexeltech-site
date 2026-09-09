@@ -1,3 +1,45 @@
+/* THE DASHES ARE OUT OF THE SHIPPED TEXT, 2026-09-08.
+
+   Thirteen em dashes were rendering on these two pages, including one in
+   both title tags, which BUILD-LAW.md **Markup** names explicitly. Legal
+   prose is shipped output and is not the one exception the rule allows,
+   which is a verbatim customer quote.
+
+   Each was replaced with the punctuation the sentence already wanted: a
+   colon where a label introduces its definition, commas where a phrase was
+   parenthetical or appositive. NO CLAUSE CHANGED MEANING, which is the bar
+   for touching a contract at all. The dashes left in this file are inside
+   comment banners and are not shipped.
+
+   WHAT IS DELIBERATELY UNTOUCHED: the $150 hourly cancellation rate, the
+   50/50 milestone split and the 1.5% monthly late fee. Those are terms of an
+   agreement rather than published service prices, so the "a URL is kept only
+   while what it says is true" rule does not reach them the way it reached
+   the sub-service pages. They are also unverified by anything in the content
+   answers or the pricing sheet, and that is reported rather than fixed. */
+/* THE EMAIL IS info@vexeltechsolutions.com, given by the user 2026-09-08.
+   Every hello@ address in this file was replaced. It is not a branding
+   change: a published address that nobody reads sends a reader's message
+   nowhere, and on the legal pages it is the address a privacy request or a
+   data subject request is told to use. */
+/* THE VEXEL SCALES REFERENCES IN THIS FILE ARE DELIBERATELY LEFT ALONE.
+
+   CLAUDE.md records, as settled, that no Vexel Scales attribution or parent
+   company line appears anywhere on the site. That decision was applied on
+   2026-09-08 to the legacy footer and the legacy contact card, which are
+   marketing surfaces.
+
+   IT IS NOT APPLIED HERE, AND THAT IS A DECISION FOR THE USER RATHER THAN
+   FOR THIS BUILD. These two pages are the Privacy Policy and the Terms of
+   Service, and in them "Vexel Scales LLC" is not attribution. It is the
+   named data controller, the counterparty to a binding agreement, and the
+   physical mailing address a CAN-SPAM clause commits to including. Removing
+   the entity from a contract to satisfy a branding rule would break the
+   contract, and a legal page that does not say who you are contracting with
+   is worse than one that mentions a name the marketing site does not.
+
+   Flagged rather than resolved. If the entity is to come off these pages
+   too, that is a legal question, not a design one. */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SecondaryLayout from '../components/SecondaryLayout.jsx';
@@ -54,7 +96,7 @@ const PRIVACY = {
       content: [
         {
           sub: 'For Users in the European Economic Area',
-          body: 'If you are located in the EEA, our legal bases for processing your personal data are: (1) Contract Performance — processing necessary to deliver services you have engaged us for; (2) Legitimate Interests — processing necessary for our legitimate business interests such as improving our website and services, provided those interests are not overridden by your data protection rights; (3) Consent — where you have provided explicit consent, such as subscribing to our marketing communications; and (4) Legal Obligation — processing required to comply with applicable law.'
+          body: 'If you are located in the EEA, our legal bases for processing your personal data are: (1) Contract Performance: processing necessary to deliver services you have engaged us for; (2) Legitimate Interests: processing necessary for our legitimate business interests such as improving our website and services, provided those interests are not overridden by your data protection rights; (3) Consent: where you have provided explicit consent, such as subscribing to our marketing communications; and (4) Legal Obligation: processing required to comply with applicable law.'
         }
       ]
     },
@@ -64,7 +106,7 @@ const PRIVACY = {
       content: [
         {
           sub: 'Marketing Emails',
-          body: 'If you subscribe to our email newsletter or marketing communications, we will send you periodic emails containing educational content, company updates, and service information. In accordance with the CAN-SPAM Act: (1) we identify all commercial messages clearly as advertisements; (2) we include our physical mailing address (Vexel Scales LLC, Richmond, TX 77406, USA) in every email; (3) every email includes a clear and functioning unsubscribe mechanism; and (4) we honor all unsubscribe requests within 10 business days. You can unsubscribe at any time by clicking the unsubscribe link in any email or by emailing hello@vexeltechsolutions.com with "Unsubscribe" in the subject line.'
+          body: 'If you subscribe to our email newsletter or marketing communications, we will send you periodic emails containing educational content, company updates, and service information. In accordance with the CAN-SPAM Act: (1) we identify all commercial messages clearly as advertisements; (2) we include our physical mailing address (Vexel Scales LLC, Richmond, TX 77406, USA) in every email; (3) every email includes a clear and functioning unsubscribe mechanism; and (4) we honor all unsubscribe requests within 10 business days. You can unsubscribe at any time by clicking the unsubscribe link in any email or by emailing info@vexeltechsolutions.com with "Unsubscribe" in the subject line.'
         }
       ]
     },
@@ -101,12 +143,12 @@ const PRIVACY = {
       title: '7. Your Privacy Rights (CCPA / GDPR)',
       content: [
         {
-          sub: 'California Residents — CCPA Rights',
-          body: 'Under the California Consumer Privacy Act (CCPA), California residents have the right to: (1) know what personal information we collect and how it is used; (2) request deletion of personal information we have collected about you; (3) opt out of the sale of personal information (note: we do not sell your data); and (4) non-discrimination for exercising your CCPA rights. To submit a CCPA request, contact us at hello@vexeltechsolutions.com or (385) 284-3265.'
+          sub: 'California Residents: CCPA Rights',
+          body: 'Under the California Consumer Privacy Act (CCPA), California residents have the right to: (1) know what personal information we collect and how it is used; (2) request deletion of personal information we have collected about you; (3) opt out of the sale of personal information (note: we do not sell your data); and (4) non-discrimination for exercising your CCPA rights. To submit a CCPA request, contact us at info@vexeltechsolutions.com or (385) 284-3265.'
         },
         {
-          sub: 'EEA / UK Residents — GDPR Rights',
-          body: 'If you are located in the European Economic Area or United Kingdom, you have the right to: access, rectification, erasure ("right to be forgotten"), restriction of processing, data portability, and to object to processing. You also have the right to lodge a complaint with your local data protection supervisory authority. To exercise these rights, contact us at hello@vexeltechsolutions.com. We will respond to verified requests within 30 days.'
+          sub: 'EEA / UK Residents: GDPR Rights',
+          body: 'If you are located in the European Economic Area or United Kingdom, you have the right to: access, rectification, erasure ("right to be forgotten"), restriction of processing, data portability, and to object to processing. You also have the right to lodge a complaint with your local data protection supervisory authority. To exercise these rights, contact us at info@vexeltechsolutions.com. We will respond to verified requests within 30 days.'
         }
       ]
     },
@@ -126,7 +168,7 @@ const PRIVACY = {
       content: [
         {
           sub: 'Age Restriction',
-          body: 'Our services are not directed to individuals under the age of 16. We do not knowingly collect personal information from children under 16. If we become aware that we have collected personal information from a child under 16 without verifiable parental consent, we will take steps to delete that information promptly. If you believe we may have collected information from a child under 16, please contact us at hello@vexeltechsolutions.com.'
+          body: 'Our services are not directed to individuals under the age of 16. We do not knowingly collect personal information from children under 16. If we become aware that we have collected personal information from a child under 16 without verifiable parental consent, we will take steps to delete that information promptly. If you believe we may have collected information from a child under 16, please contact us at info@vexeltechsolutions.com.'
         }
       ]
     },
@@ -146,7 +188,7 @@ const PRIVACY = {
       content: [
         {
           sub: 'Data Controller Information',
-          body: 'The data controller responsible for your personal information is: Vexel Scales LLC (operating as VexelTech Solutions), Richmond, TX 77406, United States. For privacy inquiries, data subject requests, or to exercise any of the rights described in this policy, contact our privacy desk: Email: hello@vexeltechsolutions.com | Phone: (385) 284-3265. We aim to respond to all privacy inquiries within 30 days of receipt.'
+          body: 'The data controller responsible for your personal information is: Vexel Scales LLC (operating as VexelTech Solutions), Richmond, TX 77406, United States. For privacy inquiries, data subject requests, or to exercise any of the rights described in this policy, contact our privacy desk: Email: info@vexeltechsolutions.com | Phone: (385) 284-3265. We aim to respond to all privacy inquiries within 30 days of receipt.'
         }
       ]
     }
@@ -180,7 +222,7 @@ const TERMS = {
         },
         {
           sub: '1.2 Change Orders',
-          body: 'Any requested changes outside the defined scope of work — including additional features, expanded deliverables, platform changes, or material revisions to agreed specifications — will be documented in a written Change Order outlining the additional scope, cost, and timeline impact. Change Orders must be approved in writing by both parties before additional work begins. Verbal approvals for out-of-scope work are not binding.'
+          body: 'Any requested changes outside the defined scope of work, including additional features, expanded deliverables, platform changes, or material revisions to agreed specifications, will be documented in a written Change Order outlining the additional scope, cost, and timeline impact. Change Orders must be approved in writing by both parties before additional work begins. Verbal approvals for out-of-scope work are not binding.'
         },
         {
           sub: '1.3 Client Responsibilities',
@@ -238,11 +280,11 @@ const TERMS = {
       content: [
         {
           sub: '4.1 Included Revision Rounds',
-          body: 'Each project tier includes a defined number of structured revision rounds as specified in the SOW. A revision round consists of a consolidated set of feedback on a specific deliverable stage — not individual, ongoing change requests submitted over time. All revision requests within an included round must be submitted together in a single written communication. VexelTech will not accept revisions submitted in piecemeal fashion across multiple emails or messages as separate revision rounds.'
+          body: 'Each project tier includes a defined number of structured revision rounds as specified in the SOW. A revision round consists of a consolidated set of feedback on a specific deliverable stage, not individual, ongoing change requests submitted over time. All revision requests within an included round must be submitted together in a single written communication. VexelTech will not accept revisions submitted in piecemeal fashion across multiple emails or messages as separate revision rounds.'
         },
         {
           sub: '4.2 Staging Environment Approval',
-          body: 'Prior to final production deployment, Client will be provided access to a live staging environment containing the completed project. Client has an agreed review window (typically 5-10 business days as specified in the SOW) to review the staging environment and submit any final revision requests within the included revision rounds. Client\'s written approval of the staging environment — or silence past the review deadline — constitutes final acceptance of the deliverables.'
+          body: 'Prior to final production deployment, Client will be provided access to a live staging environment containing the completed project. Client has an agreed review window (typically 5-10 business days as specified in the SOW) to review the staging environment and submit any final revision requests within the included revision rounds. Client\'s written approval of the staging environment, or silence past the review deadline, constitutes final acceptance of the deliverables.'
         },
         {
           sub: '4.3 Project Completion and Handover',
@@ -274,7 +316,7 @@ const TERMS = {
         },
         {
           sub: '6.2 Mutual NDA',
-          body: 'Upon Client request, VexelTech will execute a standalone mutual non-disclosure agreement prior to receiving any sensitive business information, proprietary technology details, or trade secrets. Please request this by emailing hello@vexeltechsolutions.com before your initial consultation if required.'
+          body: 'Upon Client request, VexelTech will execute a standalone mutual non-disclosure agreement prior to receiving any sensitive business information, proprietary technology details, or trade secrets. Please request this by emailing info@vexeltechsolutions.com before your initial consultation if required.'
         }
       ]
     },
@@ -302,7 +344,7 @@ const TERMS = {
         },
         {
           sub: '8.2 Exclusion of Consequential Damages',
-          body: 'IN NO EVENT SHALL VEXELTECH BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES — INCLUDING LOSS OF PROFITS, LOSS OF REVENUE, LOSS OF BUSINESS OPPORTUNITY, LOSS OF GOODWILL, OR LOSS OF DATA — EVEN IF VEXELTECH HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. Some jurisdictions do not allow the exclusion or limitation of certain damages, so some of the above limitations may not apply to you.'
+          body: 'IN NO EVENT SHALL VEXELTECH BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES, INCLUDING LOSS OF PROFITS, LOSS OF REVENUE, LOSS OF BUSINESS OPPORTUNITY, LOSS OF GOODWILL, OR LOSS OF DATA, EVEN IF VEXELTECH HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. Some jurisdictions do not allow the exclusion or limitation of certain damages, so some of the above limitations may not apply to you.'
         }
       ]
     },
@@ -344,7 +386,7 @@ const TERMS = {
         },
         {
           sub: 'Contact for Legal Inquiries',
-          body: 'Vexel Scales LLC (VexelTech Solutions) | Richmond, TX 77406, USA | hello@vexeltechsolutions.com | (385) 284-3265'
+          body: 'Vexel Scales LLC (VexelTech Solutions) | Richmond, TX 77406, USA | info@vexeltechsolutions.com | (385) 284-3265'
         }
       ]
     }
@@ -449,7 +491,7 @@ export default function SimplePage({ title }) {
 
   return (
     <SecondaryLayout
-      title={`${data.title} — VexelTech Solutions`}
+      title={`${data.title} | VexelTech Solutions`}
       description={data.subtitle}
     >
 
@@ -492,7 +534,7 @@ export default function SimplePage({ title }) {
               {data.updated}
             </span>
             <span style={{ color: 'rgba(255,255,255,0.2)' }}>|</span>
-            <a href="mailto:hello@vexeltechsolutions.com" style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--beacon)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.1em', textDecoration: 'none' }}>
+            <a href="mailto:info@vexeltechsolutions.com" style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--beacon)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.1em', textDecoration: 'none' }}>
               Legal Questions →
             </a>
           </div>
@@ -597,7 +639,7 @@ export default function SimplePage({ title }) {
               {[
                 { label: 'Registered State', value: 'Texas, United States' },
                 { label: 'Physical Address', value: 'Richmond, TX 77406, USA' },
-                { label: 'Legal & Privacy Desk', value: 'hello@vexeltechsolutions.com', href: 'mailto:hello@vexeltechsolutions.com' },
+                { label: 'Legal & Privacy Desk', value: 'info@vexeltechsolutions.com', href: 'mailto:info@vexeltechsolutions.com' },
                 { label: 'Direct Line', value: '(385) 284-3265', href: 'tel:+13852843265' }
               ].map(item => (
                 <div key={item.label}>

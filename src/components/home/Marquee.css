@@ -9,11 +9,19 @@
    ========================================================================== */
 
 .marquee {
+  position: relative; /* the end cap is positioned against the strip */
   background: var(--c-asphalt);
-  /* A hairline above and below. One pixel, no softening. */
-  border-top: 1px solid var(--c-rule-dark);
-  border-bottom: 1px solid var(--c-rule-dark);
-  padding: var(--s-lg) 0;
+  /* THE TWO HAIRLINES ARE GONE, 2026-09-08.
+
+     They made this an enclosed band, and on a page that had light-ground
+     breaks that was one separator among several. On an all-asphalt page two
+     rules 82px apart were the loudest structure in this part of the document
+     and they were drawing a box around a single line of words.
+
+     What identifies the strip is that it moves and that it is set in the
+     small loud step, neither of which needed an edge. The padding goes from
+     24 to 40 so the band is held by space instead. */
+  padding: var(--s-xl) 0;
   /* Full bleed: no max-width, no horizontal padding, no container. */
   overflow: hidden;
 }
@@ -72,12 +80,18 @@
   color: var(--c-shop-white); /* 17.77:1 on asphalt */
 }
 
+/* Steel-dark, not the accent. This strip carried the frame's yellow until
+   the per-viewport rule landed; the separators keep their job and give up
+   their colour, the same move the failures rail and the process route made.
+   The live value is the one in register.css, which owns where the accent
+   lands; this one is kept in step so no rule anywhere in the tree still
+   claims the separator is the accent. */
 .marquee__sep {
   font-family: var(--font-offer);
   font-size: var(--t-label-size);
   line-height: var(--t-label-line);
   font-weight: var(--t-weight-label);
-  color: var(--c-accent-text-dark); /* 9.46:1 on asphalt */
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
 }
 
 /* Pause on hover, gated. Ungated it sticks on touch and the strip never
@@ -88,6 +102,66 @@
   }
 }
 
+/* The reader's own switch. It holds whatever the pointer is doing, which is
+   the difference between it and the hover rule above: hover is a courtesy
+   that ends when the pointer leaves, this is a decision. */
+.marquee[data-running='false'] .marquee__track {
+  animation-play-state: paused;
+}
+
+/* ---- The control ------------------------------------------------------ */
+
+/* An end cap, not a floating button. It sits on the strip's own asphalt with
+   a hairline down its leading edge, full height, so the track runs up to it
+   and stops rather than passing under a shape hovering over the band. That is
+   also why there is no fade to hide the join: no gradients, ever, so the edge
+   is a line and the line is the whole treatment.
+
+   White on asphalt at 17.77:1. No accent: the strip gave its yellow up, and a
+   control that took it back would be the carrier this section no longer has. */
+.marquee__toggle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* BUILD-LAW: 48px minimum tap target, padding counts toward it. The strip
+     is about 82px tall, so the height is already past the floor and the
+     inline padding is what carries the width. */
+  min-width: 48px;
+  padding: 0 var(--s-lg);
+  background: var(--c-asphalt);
+  border: 0;
+  border-radius: var(--r-none);
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  cursor: pointer;
+  transition:
+    transform var(--d-press) var(--ease-reveal),
+    opacity var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .marquee__toggle:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+/* Steel-dark, 5.12:1 on asphalt. The control is reachable and legible and it
+   does not compete with the slots it sits beside. */
+.marquee__icon {
+  display: block;
+  fill: var(--c-steel-dark);
+}
+
+.marquee__toggle:active {
+  transform: scale(0.97);
+}
+
+/* Focus is a ring from tokens.css, never the hover treatment. */
+
 /* ---- Reduced motion: the strip is static ------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -97,5 +171,19 @@
     /* Held at the start of the loop, so it reads as a composed static band
        rather than an animation caught mid-travel. */
     transform: translate3d(0, 0, 0);
+  }
+
+  /* The control is not rendered under reduced motion, so this only ever
+     matches during the frame between first paint and the media query being
+     read. Kept because the press scale is transform and transform goes. */
+  /* Steel-dark, 5.12:1 on asphalt. The control is reachable and legible and it
+   does not compete with the slots it sits beside. */
+.marquee__icon {
+  display: block;
+  fill: var(--c-steel-dark);
+}
+
+.marquee__toggle:active {
+    transform: none;
   }
 }

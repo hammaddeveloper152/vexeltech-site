@@ -139,7 +139,7 @@ export default function CounterRow() {
 
   return (
     <section
-      className="vt vt--light counters"
+      className="vt counters"
       aria-labelledby="counters-h"
       data-revealed={revealed ? 'true' : 'false'}
       ref={ref}

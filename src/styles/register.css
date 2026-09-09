@@ -1,0 +1,582 @@
+/* ==========================================================================
+   THE LOUD REGISTER, applied to every section below the hero.
+
+   The hero went loud — Monigue uppercase at the size the measure allows, one
+   yellow at scale, type on asphalt with nothing behind it — and one loud
+   section over ten quiet ones is not a look. This sheet takes the whole page
+   into the hero's register in one pass.
+
+   ---- Why one sheet and not eleven edits -----------------------------------
+
+   Each section's own stylesheet owns its LAYOUT: the ledger, the pinned
+   scroller, the zigzag route, the disclosure list. None of that changes here.
+   What changes is the REGISTER — face, size, ground, and where the accent
+   lands — and a register is a page-wide decision, so it lives in one place
+   where the whole system can be read at once. This sheet loads after the
+   sections and wins on source order; nothing in it needs to outrank anything.
+   The hero is not in it. Hero.css is the hero.
+
+   ---- The system, derived from the hero ------------------------------------
+
+   THREE FACES, THREE JOBS. Monigue shouts: every section heading, every
+   statement, every figure and numeral, uppercase. Clash is for controls and
+   only controls: calls, buttons, the questions a reader presses. Satoshi is
+   for reading: body, labels, the sub, the quotes, the first-person statement.
+   A quote is read, so it is Satoshi now, at a size that holds its own; it
+   used to be Clash, and Clash is no longer a statement face.
+
+   ASPHALT EVERYWHERE. The counter row and the FAQ were the two light
+   sections, kept as relief in a page of photographs. On a loud page a light
+   section is the one thing not on asphalt, and by contrast it becomes the
+   loudest element on the page — louder than the yellow. It would take the
+   accent's job away from the accent. So the default is dark, and no section
+   earns the exception: the FAQ, which is the reading section and the nearest
+   candidate, gets its relief from its open row inverting to white instead,
+   which is a panel and not a section.
+
+   ONE YELLOW PER FRAME, AND IT GOES BIG. Each section names the one element
+   that carries the accent and lets it carry it at scale — a statement, a
+   figure, a heading, a call — and every other yellow in that frame comes out.
+   The 5% ceiling is measured on painted colour and every carrier below sits
+   under it; the numbers are in DESIGN.md.
+
+   The sizes are the loud scale in tokens.css, every one of them the hero's
+   own measure divided by a fixed number, so the page scales as one thing.
+   ========================================================================== */
+
+/* ---- Every section heading ------------------------------------------------
+   Monigue, uppercase, display / 2 — 95px at 1280. About's heading stays
+   visually hidden by its own recorded decision (a visible heading above a
+   pull quote is a fifth thing in that frame); the rule is harmless on it. */
+.fail__h,
+.services__h,
+.work__h,
+.about__h,
+.counters__h,
+.process__h,
+.faq__h,
+.foot__h {
+  margin: 0 0 var(--s-xl);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-h);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white); /* 17.77:1 */
+  text-wrap: balance;
+}
+
+/* ---- Failures -----------------------------------------------------------
+   NO CARRIER. It yielded to the hero across the seam between them.
+
+   The lead statement carried the accent at the figure size. It shares a frame
+   with the hero's call for 380px of scroll at 1280 and 280px at 390 — nearly
+   half a screen — and the two together painted 9.38% of that frame yellow,
+   almost double what one frame is allowed. The hero keeps its call because
+   DESIGN.md Components names the primary call as the one job the accent as a
+   FILL exists for, and there is one per frame.
+
+   The statement keeps everything else: the figure size, the lead position,
+   the job of being the one of four the reader meets first. Only the colour
+   goes, which is the move the rail below it already made. It goes to shop
+   white at 17.77:1, which is what the other three statements carry, so the
+   lead is now distinguished by size alone — and a step and a half of size is
+   a clear enough leader without colour.
+
+   That also settles the one frame that was over the ceiling: at 5.28% the
+   lead statement was the only carrier on the page past 5%, and it is not a
+   carrier now. The rail keeps its draw and its stroke token and stays
+   rule-dark. */
+.fail__s {
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-s);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white);
+}
+
+.fail__item--lead .fail__s {
+  font-size: var(--t-loud-fig);
+  line-height: var(--t-loud-line);
+  color: var(--c-shop-white); /* 17.77:1 */
+}
+
+.fail__rail-ahead,
+.fail__rail-passed {
+  background: var(--c-rule-dark);
+}
+
+/* The consequence explains: body, not small. */
+.fail__c {
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+}
+
+/* ---- Services -----------------------------------------------------------
+   Carrier: THE DISCIPLINE NAME on every card, in yellow at the STATEMENT
+   size. The frame is a pinned scroller with at most two cards in view, and
+   at the heading size two yellow disciplines measured over 5% of the frame;
+   at the statement size they are about 2.5%, and the heading above them
+   stays the largest thing in the section. The section had deliberately spent
+   no accent since its numerals came out; it spends it here, on the one word
+   each card exists to say. */
+.services__discipline {
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-s);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-accent-text-dark); /* 9.46:1 */
+}
+
+.services__sub {
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+}
+
+/* The artefact slot, empty, made to look decided: a hairline frame and a
+   ratio label, not an icon standing in for a picture. ASSET: one artefact
+   per discipline at 4:1 — 820x205 at 1280, supply 1640x410. */
+.services__art {
+  position: relative;
+  border: 1px solid var(--c-rule-dark);
+}
+
+.services__art-i {
+  display: none;
+}
+
+.services__art::after {
+  content: '4 : 1';
+  position: absolute;
+  right: var(--s-md);
+  bottom: var(--s-sm);
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  color: var(--c-steel-dark); /* 5.12:1 */
+}
+
+/* ---- Marquee ------------------------------------------------------------
+   NO CARRIER. This section spends nothing, and that is the decision.
+
+   It had one: the separators at the small loud size, 3.4% of the strip's own
+   area. That number was never the problem — the problem is that the strip is
+   about 82px tall and the work grid's heading begins a few hundred pixels
+   below it, so at both 390 and 1280 the two carriers are in the same frame
+   for the whole of the seam. One accent per frame is a rule about what the
+   reader sees at once, and a section is only a proxy for that. Where the
+   proxy and the reader disagree, the reader wins. BUILD-LAW, One accent per
+   frame is per viewport.
+
+   The work grid keeps its heading, because it is the section the seam is
+   travelling towards and the heading is the largest thing in it; a strip of
+   client logos is a passage, not a destination. So the separators keep their
+   job and give up their colour — the same move the failures rail and the
+   process route made when the register went loud — and go to steel-dark at
+   5.12:1, which is what the system already uses for a mark that is present
+   and not to be looked at.
+
+   The slot text stays Monigue in white. ASSET: client logos as mono SVG,
+   36px tall, any width; they inherit currentColor and arrive white. */
+.marquee__slot {
+  height: auto;
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-small);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--c-shop-white); /* 17.77:1 */
+}
+
+.marquee__sep {
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-small);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  color: var(--c-steel-dark); /* 5.12:1 */
+}
+
+/* ---- Work grid ----------------------------------------------------------
+   Carrier: THE HEADING, in yellow. Six plates and none of them may be the
+   carrier — the smallest is 366x366, 13% of the frame on its own.
+
+   NO CARRIER NOW. The heading yielded to the services scroller above it,
+   which holds a frame with it for 80px of scroll at 1280 and 260px at 390.
+   The heading goes back to shop white with every other section heading, by
+   simply not overriding the shared rule at the top of this sheet. The
+   marquee, which gave its separators' colour up to this same heading in the
+   pass before, keeps nothing either: that seam is now silent on both sides,
+   which is the correct outcome of a rule about frames rather than sections.
+
+   The empty plates are made deliberate with an index: a CSS counter, so no
+   copy is invented, set in Monigue at the figure size in steel-dark. It reads
+   as a numbered slot rather than a missing picture. The plates' own ratios
+   change per breakpoint and are measured rather than quoted; the asset list
+   is in src/assets/video/README.md. */
+.work__list {
+  counter-reset: plate;
+}
+
+.work__item {
+  counter-increment: plate;
+}
+
+/* NOT `position: relative`. It was, and it silently cancelled the
+   `position: absolute` this element has in WorkGrid.css, which is what its
+   `inset: 0` depends on: the span collapsed to its own borders and line box
+   and measured 2 x 24px inside a 760 x 475 plate.
+
+   Everything still looked right, which is why it survived. The visible frame
+   around each plate is `.work__link`'s own border, and the CSS-counter index
+   positions against this element wherever it happens to be, which is the top
+   left corner either way. What was actually missing was the surface: every
+   empty plate was painting asphalt rather than surface-1, so the reserved
+   slots read as holes in the page instead of as reserved slots.
+
+   `relative` bought nothing. An absolutely positioned element is already a
+   containing block for the index. Found by measuring the box against the box
+   it is supposed to fill, which is the container-budget test pointed the
+   other way. */
+.work__plate {
+  border: 1px solid var(--c-rule-dark);
+}
+
+.work__plate::before {
+  content: counter(plate, decimal-leading-zero);
+  position: absolute;
+  inset: var(--s-md) auto auto var(--s-md);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-fig);
+  line-height: var(--t-loud-line);
+  color: var(--c-steel-dark); /* 5.12:1 */
+  pointer-events: none;
+}
+
+.work__label-t {
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-small);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+/* ---- About --------------------------------------------------------------
+   NO CARRIER. The link yielded to the counter row below it, which holds a
+   frame with it for 400px of scroll at 1280 and 460px at 390, and measured
+   5.50% of the frame between them at 390 — over the ceiling for a single
+   frame before either of them is counted alone.
+
+   The link stays a solid call at the same size and in the same place. It
+   takes SHOP WHITE as its ground with asphalt text at 17.77:1, which is the
+   treatment DESIGN.md Components already records: "where a frame spends its
+   one accent somewhere else, the primary call takes shop white as its ground
+   with asphalt text." Here the frame spends its accent on the counter row's
+   lead figure. Nothing was invented for this; the permission was written and
+   until now nothing on the page used it.
+
+   The rest of the section is unchanged.
+   The statement is read, not shouted, so it moves from Clash to Satoshi at
+   the quote size, the same register the hero's sub uses. The empty 4:5 panel
+   gets a hairline and its ratio. ASSET: one portrait photograph, 4:5,
+   461x576 at 1280, supply at 2x — no face per the sourcing rule, unless it is
+   the founder's and it is meant. */
+.about__statement {
+  font-family: var(--font-offer);
+  font-weight: var(--t-weight-body);
+  letter-spacing: normal;
+}
+
+.about__plate {
+  position: relative;
+  border: 1px solid var(--c-rule-dark);
+}
+
+.about__plate::after {
+  content: '4 : 5';
+  position: absolute;
+  right: var(--s-md);
+  bottom: var(--s-sm);
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  color: var(--c-steel-dark);
+}
+
+.about__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-sm);
+  min-height: 48px;
+  /* The hero call's own steps: body on a phone, h3 from 768. At h3 on a
+     phone it measured 6.9% of the section, over the ceiling. */
+  padding: var(--s-md) var(--s-lg);
+  background: var(--c-shop-white);
+  border: 1px solid var(--c-shop-white);
+  border-radius: var(--r-none);
+  color: var(--c-asphalt); /* 17.77:1 */
+  font-family: var(--font-brand);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: normal;
+  text-transform: none;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .about__link {
+    padding: var(--s-lg) var(--s-xl);
+    font-size: var(--t-h3-size);
+    line-height: var(--t-h3-line);
+    letter-spacing: var(--t-track-h3);
+  }
+}
+
+/* ---- Counter row --------------------------------------------------------
+   DARK. It was concrete. Carrier: THE LEAD FIGURE, in yellow at the figure
+   size; the other three are white at the same size, and the lit rules that
+   were deep amber on concrete go rule-dark. The figures are the loudest thing
+   in this frame and the heading is its signpost, which is the hierarchy the
+   figure role always wanted and a light ground never let it have. */
+.counters {
+  background: var(--c-asphalt);
+  color: var(--c-shop-white);
+}
+
+/* The three column separators are gone. Four figures at 128px in four equal
+   columns are four things without help; the rules were left over from the
+   concrete ground, where they were the section's drawn accent, and on
+   asphalt they were three vertical hairlines doing nothing.
+
+   `transparent` rather than deleting the elements: the row's draw-on-scroll
+   still runs and still scales them, so the mechanic is intact and only the
+   paint is gone. Give them a colour again and the animation returns with it. */
+.counters__rule,
+.counters__rule-lit {
+  background: transparent;
+}
+
+.counters__n {
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-fig);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--c-shop-white);
+}
+
+.counters__item:first-child .counters__n {
+  color: var(--c-accent-text-dark); /* 9.46:1 */
+}
+
+.counters__l {
+  color: var(--c-steel-dark); /* 5.12:1 */
+}
+
+/* ---- Testimonials -------------------------------------------------------
+   NO CARRIER. This frame spends nothing, and that is the decision.
+
+   It had one: the count, "01 / 04", at the figure size in machine yellow. It
+   reached that by promotion rather than by choice — it was the only yellow in
+   the frame at 12px and the register pass scaled up whatever each section
+   already had — and at the figure size it was the loudest object in a section
+   whose subject is what somebody said. A count is a position in a set. It
+   tells the reader which of four they are on, and making it the section's
+   shout gives the accent to the one element in the frame that says nothing
+   about the work.
+
+   The quotation mark was built as the replacement and measured out. The loud
+   scale is derived on cap height and a quotation mark has no cap height: at
+   the figure size it paints 869 accent pixels at 1280 against the counter
+   figure's 12,665 at the same size, and against the FAQ heading's 15,924 a
+   whole step smaller. 0.09% of the frame. The full measurement and the 390
+   numbers are recorded in Testimonials.css, where the mark lives.
+
+   So the count drops to the small loud size and goes white, the mark goes
+   back to being a texture at white-at-12%, and the frame carries no accent.
+   One accent per frame is a ceiling, not a quota: the work wall, the services
+   scroller and now the marquee all spend nothing. The section still shows the
+   accent in the keyboard state, because the focus ring is machine yellow,
+   which is the accent doing the job it exists for.
+
+   The quote is read, so it is Satoshi at the quote size. */
+.quotes__q p {
+  font-family: var(--font-offer);
+  font-weight: var(--t-weight-body);
+  letter-spacing: normal;
+}
+
+.quotes__count {
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-small);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--c-shop-white); /* 17.77:1 */
+}
+
+/* Every part of the count takes the section's own white. There is no longer a
+   lit half: the whole string is metadata and there is no accent in the frame
+   for it to be the exception to. */
+.quotes__count > * {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+/* ---- Process ------------------------------------------------------------
+   NO CARRIER. The lit numerals yielded to the FAQ heading below them, which
+   they share a frame with for 520px of scroll at 1280 and 500px at 390 —
+   two thirds of a screen, the longest overlap on the page.
+
+   The mechanic is untouched: every step the reader has passed still lights,
+   still at the figure size, still on opacity alone with no colour animated.
+   The lit state goes to SHOP WHITE at 17.77:1 against the muted steel-dark
+   at 5.12:1, which is the pair this section carried before the register pass
+   made it yellow. A numeral going from grey to white still reads as lighting
+   up; that contrast step is 3.5x and it is the thing the eye is watching.
+
+   The route keeps its draw-on-scroll and its stroke token and stays
+   steel-dark. Step titles shout at the small loud size; the descriptions are
+   read. */
+.process__n-muted,
+.process__n-lit {
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-fig);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.process__n-muted {
+  color: var(--c-steel-dark);
+}
+
+.process__n-lit {
+  color: var(--c-shop-white); /* 17.77:1 */
+}
+
+.process__passed,
+.process__lit,
+.process__edge {
+  stroke: var(--c-steel-dark);
+}
+
+.process__t-muted,
+.process__t-lit {
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-small);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+/* ---- FAQ ----------------------------------------------------------------
+   DARK. It was white. Carrier: THE HEADING, in yellow. The open row inverts
+   to WHITE — a panel, not a section — because ground change is the strongest
+   separation the system has and this section's record says so. Every colour
+   inside the open row flips to its light-ground value; the drawn rule under
+   it is a hairline in both states and no longer the accent, because the
+   heading is. Questions are pressed, so they stay Clash. */
+.faq {
+  background: var(--c-asphalt);
+  color: var(--c-shop-white); /* 17.77:1 */
+}
+
+.faq__h {
+  color: var(--c-accent-text-dark); /* 9.46:1 */
+}
+
+.faq__list,
+.faq__item {
+  border-color: var(--c-rule-dark);
+}
+
+.faq__mark {
+  color: var(--c-steel-dark); /* 5.12:1 */
+}
+
+.faq__rule {
+  background: var(--c-rule-dark);
+}
+
+.faq__item[data-open='true'] {
+  background: var(--c-shop-white);
+  border-radius: var(--r-none);
+}
+
+.faq__item[data-open='true'] .faq__q-t {
+  color: var(--c-asphalt); /* 17.77:1 on white */
+}
+
+.faq__item[data-open='true'] .faq__mark,
+.faq__item[data-open='true'] .faq__a {
+  color: var(--c-steel); /* 8.12:1 on white */
+}
+
+.faq__item[data-open='true'] .faq__rule {
+  background: var(--c-line);
+}
+
+/* The open row is the one light surface left on the page, and this rule is
+   the whole of its focus treatment.
+
+   Measured after the register pass: the question's ring was machine yellow
+   straight on shop white at 1.88:1. The ring itself is unchanged — every
+   focusable element on the page gets the same 2px machine yellow outline
+   from `.vt :focus-visible` in tokens.css — and what this adds is the
+   asphalt band behind it, which is what supplies the separation on a light
+   ground. DESIGN.md Components: the band, not the yellow, is what makes
+   focus readable there.
+
+   It used to be described as the row-scoped copy of a `.vt--light`
+   section rule. That rule is deleted: no section carries the class since
+   the register took the page to asphalt, and a dead override is the failure
+   BUILD-LAW's contrast note is about. This one stands on its own and
+   depends on nothing but the base outline. */
+.faq__item[data-open='true'] :focus-visible {
+  box-shadow: 0 0 0 calc(var(--focus-ring) + var(--focus-offset)) var(--c-asphalt);
+}
+
+/* ---- Footer form --------------------------------------------------------
+   Carrier: THE SUBMIT — already the accent, already solid. It steps to the
+   hero call's own sizes so the two calls on the page are one call: body on a
+   phone, h3 from 768, h2 from 1280. Disabled while the form is not live, and
+   disabled is the one state the accent may drop below its floor. */
+.foot__submit {
+  padding: var(--s-md) var(--s-lg);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  letter-spacing: normal;
+}
+
+@media (min-width: 768px) {
+  .foot__submit {
+    padding: var(--s-lg) var(--s-xl);
+    font-size: var(--t-h3-size);
+    line-height: var(--t-h3-line);
+    letter-spacing: var(--t-track-h3);
+  }
+}
+
+@media (min-width: 1280px) {
+  .foot__submit {
+    padding: var(--s-lg) var(--s-2xl);
+    font-size: var(--t-h2-size);
+    line-height: var(--t-h2-line);
+    letter-spacing: var(--t-track-display);
+  }
+}

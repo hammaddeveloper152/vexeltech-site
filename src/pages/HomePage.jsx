@@ -4,6 +4,33 @@ import SiteFooter from '../components/SiteFooter.jsx';
 import homeBody from '../legacy/home-body.html?raw';
 import homeScripts from '../legacy/home-scripts.js?raw';
 
+/* three.js and GSAP used to be three <script defer> tags in index.html. They
+   are here now, because `/` is the rebuild and this page is the only thing on
+   the site that needs them. Leaving them in the document head would have put
+   three cdnjs requests on every page of the rebuild, which is exactly what
+   DESIGN.md's "no third-party request on page load" and its rule about
+   bundling GSAP rather than loading it from a CDN are about.
+
+   The rebuild does not use these copies. It imports gsap and ScrollTrigger
+   from npm and bundles them; `window.gsap` is a separate instance that only
+   the legacy inline script below ever reads. */
+const CDN = [
+  'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',
+];
+
+function loadLegacyVendors() {
+  CDN.forEach((src) => {
+    if (document.querySelector(`script[src="${src}"]`)) return;
+    const s = document.createElement('script');
+    s.src = src;
+    s.async = false; /* ScrollTrigger needs gsap to have run first. */
+    s.dataset.legacy = 'vendor';
+    document.head.appendChild(s);
+  });
+}
+
 function runWhenReady(code, setTimerRef) {
   const run = () => {
     try {
@@ -46,6 +73,8 @@ export default function HomePage() {
     }
     meta.content =
       'Branding, websites, marketing and automation for startups, SMBs and founders. We show up with the work already built. Book a 15-minute call.';
+
+    loadLegacyVendors();
 
     runWhenReady(homeScripts, (t) => {
       timerRef.current = t;

@@ -1,0 +1,165 @@
+/* ==========================================================================
+   THE LIGHT MODEL. Founder directive, 2026-09-09.
+
+   DESIGN.md **Elevation & Depth** is now "asphalt-dominant, LIT" and no longer
+   "flat forever". The ground stays asphalt, the two brand colours stay, and
+   what changes is that the page has a light source and every surface on it is
+   lit by that source.
+
+   ONE KEY, TOP LEFT, MACHINE YELLOW AT VERY LOW INTENSITY, and it does not
+   move from section to section. Everything below is that one source described
+   in a different place: the ground falls away from it, the card top edges
+   catch it, the hero headline glows with it, and the back layer sits behind
+   it out of focus.
+
+   Loaded after agency.css. CSS only — no image, no font, no request.
+
+   Applied to the hero, Failures and Services in this pass.
+   ========================================================================== */
+
+:root {
+  /* The ground, as a pair rather than a value. */
+  --lit-near: #1e1f22; /* nearest the key   */
+  --lit-far: #111214; /* falling away      */
+
+  /* The four properties every lit surface carries. Named once so a card, a
+     plate and a panel cannot drift into three interpretations of the same
+     object. */
+  --lit-edge: rgb(255 255 255 / 8%);
+  --lit-edge-top: rgb(255 255 255 / 14%);
+  --lit-inset: inset 0 1px 0 rgb(255 255 255 / 6%);
+}
+
+/* ---- The ground ---------------------------------------------------------
+
+   Two radials on one plane: the fall from the key, and the key itself at 6%
+   over about 900px. The second is the only place machine yellow touches the
+   ground, and at 6% it is a temperature rather than a colour — the ground
+   still says asphalt. */
+.lit-ground {
+  background-color: var(--lit-far);
+  background-image:
+    radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%),
+    radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
+  background-repeat: no-repeat;
+}
+
+.hero,
+.fail {
+  background-color: var(--lit-far);
+  background-image:
+    radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%),
+    radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
+  background-repeat: no-repeat;
+}
+
+/* ---- Grain, page wide ---------------------------------------------------
+
+   feTurbulence as a data URI, so it is CSS and not an asset. Fixed, so it is a
+   property of the screen rather than of the document; `overlay` so it lifts
+   the lit half and deepens the fallen half instead of greying the whole plane
+   evenly.
+
+   On `html::after` rather than a new element: the markup is untouched.
+
+   It never sits above content in any way that matters — `pointer-events: none`
+   and it does not intercept a click — and it goes off entirely under reduced
+   motion with the rest of the page's texture, which is the condition DESIGN.md
+   already puts on grain. */
+html::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html::after {
+    display: none;
+  }
+}
+
+/* The hero carried its own local grain. One page-wide overlay replaces it;
+   two would be two densities of the same texture stacked on one section. */
+.hero__grain {
+  display: none;
+}
+
+/* ---- Every card, plate and panel ---------------------------------------
+
+   The four properties, together, on one selector list. A surface is lit or it
+   is not; there is no partial version of this.
+
+   `background-clip: padding-box` so the top edge reads as an edge catching the
+   key rather than as a border that happens to be brighter. */
+/* `.fail__c` was in this list and came straight back out. The ledger's
+   consequence lines are TYPE, not a card, plate or panel — boxing them drew
+   four rectangles around four paragraphs that had never been objects. The
+   Failures section takes the ground and the grain and nothing else, because
+   it has no surface to light. */
+.services__card,
+.hero__plate {
+  border: 1px solid var(--lit-edge);
+  border-top-color: var(--lit-edge-top);
+  box-shadow: var(--lit-inset);
+  background-clip: padding-box;
+}
+
+/* One step lighter than the ground under it, and WARM: the section's ground is
+   the key itself, so a card standing on it takes the value of a plane that
+   light reached. agency.css carries the argument and the corner glow. */
+.services__card {
+  background-color: var(--c-surface-warm);
+  box-shadow: var(--lift), var(--lit-inset);
+}
+
+/* ---- Display type: the glow, and only here -----------------------------
+
+   Machine yellow at 12%, 40px. It is the key falling on the largest object on
+   the page and it is the one place on the site that gets it. */
+.hero__headline {
+  text-shadow: 0 0 40px rgb(240 179 35 / 12%);
+}
+
+/* ---- The back layer ----------------------------------------------------
+
+   THERE IS NO BACK LAYER ANY MORE. This carried `filter: blur(2px)
+   brightness(0.8)` on the hero's arc chevron, which was the page's one ambient
+   plane; the chevron is out, so the rule has nothing to push back. The light
+   model's back-layer clause stands in DESIGN.md and applies to the next
+   decorative plane that earns one. */
+
+/* ---- The hero surface ---------------------------------------------------
+
+   Behind the copy, above the ground gradient. The blur is what makes it a
+   SURFACE rather than a graphic: at 1.5px the noise stops resolving into
+   shapes the eye tries to read and becomes something the light is falling on.
+
+   z-index 1 puts it over the section's own background and under `.hero__body`,
+   which is 2. `pointer-events: none` because it is not a control and it covers
+   the whole section. */
+.hero__surface {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: blur(0.75px);
+  pointer-events: none;
+  /* THE SURFACE RUNS THE FULL HEIGHT. It was masked off the copy — full to
+     19% of the section and gone by 39% — because steel-dark at 18px tolerates
+     a ground of only 1.72% luminance and no surface worth having is that dark.
+
+     The mask is gone because the TEXT changed instead. The sub and the note
+     are bone now, which clears 4.5:1 on the surface's own peak, so there is
+     nothing left for the mask to protect. It fades only in the last 12%, into
+     the Failures seam, so the two sections meet on one ground rather than on
+     an edge. */
+  mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
+}

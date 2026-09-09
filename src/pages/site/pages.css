@@ -1,0 +1,773 @@
+/* ==========================================================================
+   Shared furniture for the seven pages that are not the homepage.
+
+   Three components live here and nothing else: the page head, the call band,
+   and the two list shapes the Services and Pricing pages need. They are here
+   rather than in seven stylesheets because a page head that differs between
+   pages is seven decisions where there should be one.
+
+   ---- What this file does NOT own ---------------------------------------
+
+   Face, size, ground and where the accent lands are `register.css` and
+   `tokens.css`. Every value below is a token. There is no hex, no literal
+   pixel type size, and no spacing value off the 4 / 8 / 16 / 24 / 40 / 64 /
+   96 ramp.
+
+   ---- The accent, per page ----------------------------------------------
+
+   ONE CARRIER PER PAGE, AND IT IS THE CALL BAND'S BUTTON. Every one of these
+   pages is a head, some content, and a call. The head spends nothing: its
+   heading is shop white at 17.77:1, the same decision the work grid and the
+   about section already made. The bar's call is white by the rule that
+   exempts the wordmark and keeps the bar carrier-free, and the footer meta
+   has no accent at all.
+
+   That leaves the call band alone with the yellow, in a frame near the
+   bottom of the page, which is `--c-accent-ground` doing the one job
+   DESIGN.md reserves it for: the one primary call per frame, nothing else.
+
+   The seam walk is trivial on these pages and that is why it is safe: there
+   is exactly one carrier on each, so no two carriers can share a viewport by
+   construction. It stops being trivial the moment a second one is added.
+   ========================================================================== */
+
+/* ---- Page head ---------------------------------------------------------
+
+   A page opens with its name and one line under it. No eyebrow anywhere on
+   these pages, so the three-per-page allowance is spent nowhere and the
+   heading is the first thing read.
+
+   ---- THE STEP, RAISED 2026-09-08 --------------------------------------
+
+   It was `--t-loud-h`, the section-heading step, measure / 12.12, 95px at
+   1280. THAT IS EXACTLY HALF THE HERO, and it was the wrong half: a page
+   whose entire content is its heading was opening at the same size as a
+   heading that labels a section inside a page. The seven pages read as
+   abandoned because their one loud element was the quietest loud thing on
+   the site.
+
+   IT IS NOW THE FIGURE STEP, `--t-loud-fig`, measure / 9 — 128px at 1280,
+   64px at 390. Derived from the page's own measure the way the hero's size
+   is, not chosen against the h2 step:
+
+     Display   measure / 6.06    190px    the hero, and nothing else
+     Figure    measure / 9       128px    THE PAGE HEAD, from here
+     Heading   measure / 12.12    95px    a section inside a page
+
+   That puts it nearer the hero than the section heading, which is the
+   relationship a page head should have to both.
+
+   NO SIZE WAS ADDED. This is an existing step taking a new role, which is
+   the only kind of change the scale allows — "if a step is missing, it is
+   missing on purpose". The figure step already carried the counter figures,
+   the process numerals, the failures lead and the testimonial count; it
+   carries page heads now too.
+
+   DISPLAY WAS CONSIDERED AND IS NOT AVAILABLE. It is the hero's, one per
+   site, and it has no floor or ceiling because the hero's string was solved
+   against the full-bleed measure. A page head at 190px would also leave the
+   two full pages nothing above their own section headings. */
+
+.pg__head {
+  padding: var(--s-3xl) var(--inset) var(--s-2xl);
+}
+
+.pg__head-in {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.pg__h {
+  margin: 0;
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-fig); /* measure / 9. See the note above. */
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  text-wrap: balance;
+}
+
+/* The one line under the heading. Satoshi, because it is read rather than
+   shouted, at the hero sub's own step so the two heads relate. */
+.pg__lead {
+  max-width: 60ch;
+  margin: var(--s-lg) 0 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+}
+
+/* DESIGN.md, Pull quote: "A sentence set large is not a heading, and it must
+   not take heading leading." The h3 step's own 32px line is 1.19, which is
+   heading leading and is what the detector flagged. The hero's sub already
+   solved this exact case at this exact size: 27px on 36px, 1.333, still an
+   exact multiple of 4 so the role stays on the baseline. Same number here. */
+@media (min-width: 1024px) {
+  .pg__lead {
+    font-size: var(--t-h3-size);
+    line-height: 36px; /* 1.333, on the 4px baseline */
+  }
+}
+
+/* ---- A section inside a page -------------------------------------------
+
+   ZERO TOP PADDING IS DELIBERATE and the detector reports it. On `/pricing`
+   `cramped-padding` fires five times, once per section: "children flush
+   against bg on top (no inset)".
+
+   READ IN THE STATE THE DETECTOR IS IN, it is a false positive here, and it
+   is the same shape as the recorded `text-occlusion` override. The rule is
+   about text landing on a boundary line — a border, an outline, or a change
+   of ground. Every section on these pages is asphalt, sitting on asphalt,
+   under a section that is also asphalt. There is no boundary to be flush
+   against, and nothing is visible at the seam.
+
+   The space is real and it comes from the section above: each section spends
+   `--s-3xl`, 96px, on its bottom. Adding a top inset as well would put 96
+   plus the inset between every pair, which is a gap nobody chose, and it
+   would come from a rule reading a boundary that is not painted.
+
+   IT STOPS BEING A FALSE POSITIVE THE MOMENT A SECTION CHANGES GROUND. If
+   one of these ever takes surface-1, white or concrete, this finding is real
+   and the section needs its own top inset. */
+
+.pg__section {
+  padding: 0 var(--inset) var(--s-3xl);
+}
+
+.pg__section-in {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+/* Section headings inside a page sit a step below the page's own name, so
+   the page head leads and these are the supporting set. Statement step. */
+.pg__sh {
+  margin: 0 0 var(--s-lg);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-s);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--c-shop-white);
+}
+
+.pg__note {
+  max-width: 60ch;
+  margin: 0 0 var(--s-xl);
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel-dark);
+}
+
+/* ---- The discipline block, Services page ------------------------------- */
+
+/* No rule between disciplines. The block's own name is 58px of Monigue and
+   80px of space stands above it; a hairline as well was the page's loudest
+   horizontal and it separated two things a heading already separates. */
+.disc {
+  padding: var(--s-xl) 0;
+}
+
+@media (min-width: 1024px) {
+  .disc {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--s-2xl);
+    align-items: start;
+  }
+}
+
+/* THE NAME FACE, and the selector is scoped to `.disc` ON PURPOSE. The About
+   page reuses `.disc__name` for "The people", which is a sub-heading and not a
+   product name; Moldie is banned from headings, so it must not reach it. Only
+   a name inside a discipline block takes the face; the size is the loud
+   scale's own and does not change. */
+.disc .disc__name {
+  font-family: var(--font-name);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.disc__name {
+  margin: 0 0 var(--s-md);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-s);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--c-shop-white);
+}
+
+.disc__line {
+  max-width: 46ch;
+  margin: 0 0 var(--s-lg);
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel-dark);
+}
+
+@media (min-width: 1024px) {
+  .disc__line {
+    margin-bottom: 0;
+  }
+}
+
+/* The list is the page's reason to exist, so it is set at body rather than
+   small: these are the services, not metadata about them. Two columns from
+   768 because a twelve-item single column runs past a screen on its own. */
+.disc__list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0 var(--s-xl);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .disc__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* THIRTY-TWO RULES CAME OUT OF THIS ONE SELECTOR, the largest single count
+   on the site. One per service, in two columns, on four blocks.
+
+   They were doing no work. The rows do not align across the two columns —
+   the stationery item carries a second line — so the rules never read as a
+   table, and at 18px on 28px with the padding there is already 32px between
+   one service and the next. Removing them makes nothing read as one thing.
+
+   The padding goes up in their place, which is the trade the register asks
+   for: space is the separator, and it costs the same vertical rhythm the
+   rule was borrowing. */
+.disc__item {
+  padding: var(--s-md) 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-shop-white);
+}
+
+/* A detail belonging to the item above it, not a service of its own. */
+.disc__detail {
+  display: block;
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-steel-dark);
+}
+
+/* ---- Tier cards, Pricing page: REMOVED 2026-09-10 ----------------------
+
+   270 lines of `.tier*` here and 125 more at the end of this file, deleted
+   because nothing rendered a single one of them. The pricing rebuild replaced
+   the tier cards with the three-card ladder in `pricing.css` and
+   `PricingCards.jsx`; these rules stayed behind, and a stylesheet describing a
+   page that no longer exists is the same hazard `surface-2` was — a documented
+   thing with nothing pointing at it.
+
+   `.tiers__route` is NOT part of this and is still below: the route line under
+   each panel is live, rendered by `RouteLine` in PricingPage.jsx.
+
+   The three surfaces these cards were the last thing naming — `--c-surface-1`,
+   `--c-surface-2` and `--c-surface-raised` — left tokens.css in the same pass.
+   Cards and plates are `--c-surface-warm` and `--c-surface-warm-raised`, and
+   nothing else. */
+
+/* ---- The call band -----------------------------------------------------
+
+   One per page, and the page's only accent. */
+
+/* Section separator removed: asphalt against asphalt under 96px of space. */
+.callband {
+  padding: var(--s-3xl) var(--inset);
+}
+
+/* MEASURED 2026-09-08: this band used 43 to 48% of a 1280 frame — the
+   worst offender on the site for the empty right third, and it is on every
+   one of the seven pages. Heading, note and button were all stacked at the
+   left, and the note is capped at 52ch, so half the frame carried nothing.
+
+   The fill is the band's own content rather than a new element: the call
+   moves to the right column and centres against the copy. The accent ends
+   up where the eye finishes a line instead of under the start of one, which
+   is also where a call should be. */
+.callband__in {
+  display: grid;
+  gap: var(--s-lg);
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  justify-items: start;
+}
+
+@media (min-width: 768px) {
+  .callband__in {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: var(--s-2xl);
+  }
+
+  .callband__h,
+  .callband__note {
+    grid-column: 1;
+  }
+
+  .callband__cta {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    justify-self: end;
+  }
+}
+
+.callband__h {
+  margin: 0;
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-s);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--c-shop-white);
+}
+
+.callband__note {
+  max-width: 52ch;
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel-dark);
+}
+
+/* button-primary: asphalt on machine yellow, 9.46:1. Square, sentence case,
+   brand register — the hero call's treatment, at the control step this frame
+   has room for. */
+.callband__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: var(--s-md) var(--s-xl);
+  background: var(--c-accent-ground);
+  border-radius: var(--r-none);
+  font-family: var(--font-brand);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-h3);
+  color: var(--c-asphalt); /* 9.46:1 on machine yellow */
+  text-decoration: none;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .callband__cta:hover {
+    opacity: var(--hover-opacity); /* 0.92, still 8.16:1 */
+    transform: translateY(-1px);
+  }
+}
+
+.callband__cta:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .callband__cta:hover {
+    transform: none;
+  }
+
+  .callband__cta:active {
+    transform: none;
+  }
+}
+
+/* ---- The one-screen pages ---------------------------------------------
+
+   About us, Resources, Portfolio and Case studies. One screen, a heading, a
+   line, a call.
+
+   `100svh` minus the bar, the hero's own arithmetic, so the page fills the
+   frame without the bar pushing its call below the fold. `min-height`, not
+   `height`: at 390 with a long lead the content is allowed to make the page
+   taller rather than be clipped. */
+
+.one {
+  display: grid;
+  align-content: center;
+  gap: var(--s-xl);
+  min-height: calc(100svh - var(--bar-h, 65px));
+  padding: var(--s-3xl) var(--inset);
+}
+
+.one__in {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.one__h {
+  margin: 0;
+  font-family: var(--font-loud);
+  /* The same step as .pg__h, and most obviously right here: on these four
+     pages the heading IS the content. */
+  font-size: var(--t-loud-fig);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--c-shop-white);
+}
+
+.one__lead {
+  max-width: 54ch;
+  margin: var(--s-lg) 0 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel-dark);
+}
+
+/* Same as .pg__lead: the h3 size with body leading, never heading leading. */
+@media (min-width: 1024px) {
+  .one__lead {
+    font-size: var(--t-h3-size);
+    line-height: 36px; /* 1.333, on the 4px baseline */
+  }
+}
+
+/* Says it is a placeholder, in the same voice the FAQ's fourth item uses.
+   Steel-dark and small, because it is a note about the page rather than
+   content of it. */
+/* The left rule is gone. It was marking this as an aside, and the size, the
+   colour and the space already do that; on these three pages there is no
+   lead for it to be confused with, because a page has one or the other. */
+.one__pending {
+  max-width: 54ch;
+  margin: var(--s-lg) 0 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-steel-dark);
+}
+
+.one__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  margin-top: var(--s-xl);
+  padding: var(--s-md) var(--s-xl);
+  background: var(--c-accent-ground);
+  border-radius: var(--r-none);
+  font-family: var(--font-brand);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: var(--t-track-h3);
+  color: var(--c-asphalt);
+  text-decoration: none;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .one__cta:hover {
+    opacity: var(--hover-opacity);
+    transform: translateY(-1px);
+  }
+}
+
+.one__cta:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .one__cta:hover,
+  .one__cta:active {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   THE ABOUT PAGE, 2026-09-08.
+
+   It was a heading, two lines and a button over 400px of empty asphalt.
+   Content answers 1.1, 1.2, 1.3 and 1.5 hold considerably more than that.
+
+   ---- Built from the homepage's own devices, not new ones ---------------
+
+   Two families, each used once, so no family repeats on this page:
+
+     1. THE PULL QUOTE, the About section's own device on the homepage: a
+        statement at the quote step with a supporting paragraph beneath it.
+        `.pgq__*` below is that shape, on a page rather than in a section.
+     2. THE DEFINITION STACK, `.disc`, already on the Services page: a label
+        column against a list column.
+
+   Nothing here is a new layout family and nothing here is invented copy.
+   ========================================================================== */
+
+/* ---- The statement block, the pull-quote device ------------------------ */
+
+.pgq {
+  display: grid;
+  gap: var(--s-xl);
+}
+
+@media (min-width: 1024px) {
+  .pgq {
+    /* The statement takes seven twelfths and the support five, so the
+       support sits IN THE RIGHT THIRD rather than under the statement.
+       That is the empty-right-third problem answered with content the page
+       already had rather than with a new element. */
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--s-2xl);
+    align-items: start;
+  }
+}
+
+/* DESIGN.md Pull quote: display-sized BODY, body leading, never heading
+   leading. Satoshi, because it is read. Same tokens the homepage statement
+   uses. */
+.pgq__statement {
+  margin: 0;
+  max-width: 22ch;
+  font-family: var(--font-offer);
+  font-size: var(--t-quote-size);
+  line-height: var(--t-quote-line);
+  font-weight: var(--t-weight-body);
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  text-wrap: balance;
+}
+
+@media (min-width: 768px) {
+  .pgq__statement {
+    font-size: var(--t-quote-size-lg);
+    line-height: var(--t-quote-line-lg);
+  }
+}
+
+.pgq__support {
+  margin: 0;
+  max-width: 46ch;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+}
+
+.pgq__support + .pgq__support {
+  margin-top: var(--s-lg);
+}
+
+/* ---- A run of names, not a layout family ------------------------------
+
+   Four discipline names and a link. It is one line of text that wraps, not
+   a grid, a row of cards or a stack, so it does not spend a family. */
+
+/* DESIGN.md Layout: body measure caps at 60 to 75 characters. This is one
+   line of text in a 1136px container, so with no cap it ran to about 126.
+   Satoshi's average character is well under its `ch`, so 52ch at 18px is
+   about 70 characters on the page. Measured, not assumed. */
+.runline {
+  max-width: 52ch;
+  margin: var(--s-xl) 0 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel-dark);
+}
+
+.runline strong {
+  font-weight: var(--t-weight-body);
+  color: var(--c-shop-white);
+}
+
+.runline a {
+  /* BUILD-LAW: 48px minimum on a tap target. An inline link inside running
+     prose cannot take a 48px BOX without breaking the paragraph, so the
+     padding makes the target and a matching negative margin takes the height
+     back out of the line box. The line is unchanged and the hit area is not.
+     Same technique as the footer's email link. */
+  display: inline-block;
+  padding-block: 14px;
+  margin-block: -14px;
+  color: var(--c-shop-white);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .runline a:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+/* ==========================================================================
+   PRICING: FOUR TABS, AND ONE CARD IN EACH SET IS THE PICK. 2026-09-09.
+
+   ---- What was wrong, measured -------------------------------------------
+
+   6,123px at 1280 and 8,060px at 390 — 7.7 and 9.5 screens — to show four
+   disciplines and eight cards. And the page painted THREE values: asphalt,
+   surface-1 at 1.065:1 above it, and text in white and steel-dark. Every card
+   was the same rectangle with the same outlined button, so nothing on the page
+   said which one to buy.
+
+   `--c-surface-2` was defined, documented as the panel-on-panel step, and
+   NEVER PAINTED ANYWHERE. It reached the page only under `?tiers=lead`, a
+   preview switch nobody could reach. So the tokens described four surfaces and
+   the page ran on two, and the distance between those two records is why the
+   flatness was never obvious from reading the stylesheet.
+
+   ---- What the route line already got right, and it stays ----------------
+
+   "Something else / Custom scope and pricing" is a ROUTE, not a product. As a
+   card it was a peer of a priced tier and made every row read as "three
+   options" when two were products and one was a door. It is a line under the
+   row and it stays one.
+   ========================================================================== */
+
+.tiers__route {
+  margin: var(--s-lg) 0 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel-dark);
+}
+
+.tiers__route a {
+  /* BUILD-LAW: 48px minimum on a tap target. An inline link inside running
+     prose cannot take a 48px BOX without breaking the paragraph, so the
+     padding makes the target and a matching negative margin takes the height
+     back out of the line box. The line is unchanged and the hit area is not.
+     Same technique as the footer's email link. */
+  display: inline-block;
+  padding-block: 14px;
+  margin-block: -14px;
+  color: var(--c-shop-white);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---- The tabs -----------------------------------------------------------
+
+   Radio inputs and `:checked` siblings. No JavaScript, and that is not only
+   robustness: a radio group is natively arrow-key operable, which is the
+   correct keyboard interaction for a tab set, while the ARIA `role="tablist"`
+   pattern needs script to manage a roving tabindex. The version that needs no
+   JS is also the more accessible one.
+
+   The inputs are off-screen but NOT `display: none` and NOT `visibility:
+   hidden`, either of which takes an element out of the accessibility tree and
+   out of the tab order. Same reasoning as the hero ticker's a11y string. */
+
+.tabs__radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tabs__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+  margin-bottom: var(--s-xl);
+  /* The row sits on a rule rather than in a box: a bordered container around
+     four bordered tabs is two nested rectangles, which DESIGN.md Shapes calls
+     out by name. */
+  border-bottom: 1px solid var(--c-rule-dark);
+}
+
+.tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
+  min-height: 48px;
+  padding: 0 var(--s-md);
+  /* The selected tab is marked by a 2px rule sitting ON the row's hairline, so
+     nothing moves between states. A border that appeared on selection would
+     shift the label by its own width every time the reader changed tab. */
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-family: var(--font-brand);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-brand);
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  cursor: pointer;
+  /* NO TRANSITION. The first draft had `transition: color` here, which is a
+     straight breach of BUILD-LAW Motion — transform and opacity only — and it
+     is the same one CLAUDE.md already records overriding in a vendored skill,
+     a per-word colour transition on a tagline. The hover colour changes
+     instantly, which animates nothing. */
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tabs__tab:hover {
+    color: var(--c-bone);
+  }
+}
+
+/* One rule per tab, because a sibling combinator cannot be parameterised.
+   `:checked` only reaches FORWARD, which is why every input is a sibling of
+   the row and the panels rather than a child of either. */
+/* THE ACTIVE RULE IS WHITE, NOT THE ACCENT, and it was the accent first.
+
+   Walked at 1280: with a yellow rule the tab row is a THIRD accent carrier in
+   frame alongside the lead card's solid call, and it is in frame at every
+   scroll position the panel is. It paints about 226px squared — 0.02% of the
+   frame — and DESIGN.md answers that directly: the wordmark's exemption "is
+   for the identity, not for a size", so a small yellow is not a free one.
+
+   It costs nothing to give up. The selected tab is already the only white
+   label in a row of steel-dark ones, so the colour of the rule under it was
+   saying a second time what the label had said. */
+#tab-branding:checked ~ .tabs__row [for=tab-branding],
+#tab-websites:checked ~ .tabs__row [for=tab-websites],
+#tab-marketing:checked ~ .tabs__row [for=tab-marketing],
+#tab-automation:checked ~ .tabs__row [for=tab-automation] {
+  border-bottom-color: var(--c-shop-white);
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+}
+
+/* Focus lands on the input, so the ring has to be drawn on the label it
+   controls. A different treatment from hover, per BUILD-LAW: hover changes the
+   label colour, focus draws a ring. */
+#tab-branding:focus-visible ~ .tabs__row [for=tab-branding],
+#tab-websites:focus-visible ~ .tabs__row [for=tab-websites],
+#tab-marketing:focus-visible ~ .tabs__row [for=tab-marketing],
+#tab-automation:focus-visible ~ .tabs__row [for=tab-automation] {
+  outline: 2px solid var(--c-accent-ground);
+  outline-offset: 2px;
+}
+
+/* All four panels stay in the DOM. Only visibility switches, so the whole
+   offer is in the document for a crawler and for a reader with CSS off, and
+   nothing is built or fetched on selection. */
+.tabs__panel {
+  display: none;
+}
+
+#tab-branding:checked ~ .tabs__panels [data-tab=branding],
+#tab-websites:checked ~ .tabs__panels [data-tab=websites],
+#tab-marketing:checked ~ .tabs__panels [data-tab=marketing],
+#tab-automation:checked ~ .tabs__panels [data-tab=automation] {
+  display: block;
+}
+
+/* The section is labelled by a heading the tab row cannot supply: a set of
+   controls is not a heading. Clipped rather than hidden, for the same reason
+   the inputs are. */
+.skip-h {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

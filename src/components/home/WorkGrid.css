@@ -12,7 +12,9 @@
 .work {
   padding: var(--s-3xl) var(--s-md);
   background: var(--c-asphalt);
-  border-top: 1px solid var(--c-rule-dark);
+/* Section separator REMOVED 2026-09-08: on an all-asphalt page two
+   sections are separated by space, not by a stroke. See DESIGN.md,
+   "Separation on an all-asphalt page". */
 }
 
 .work__inner {
@@ -68,7 +70,9 @@
      rather than a defect. Reaching for the mechanism the system already names
      answers both. */
   clip-path: inset(0 round var(--r-md));
-  border: 1px solid var(--c-rule-dark);
+  /* No tile border. `.work__plate` inside carries the hairline that reserves
+     the picture, and two nested rectangles per tile was twelve lines drawing
+     six boxes. The plate's frame is the one that means something. */
   border-radius: var(--r-md); /* container */
   text-decoration: none;
   transition:
@@ -76,13 +80,43 @@
     opacity var(--d-press) var(--ease-reveal);
 }
 
-/* The placeholder surface. surface-1 is the sanctioned inset-block tone; the
-   hairline does the separating, since the dark tones sit 1.07:1 apart and
-   that alone does not read as an edge. */
+/* The placeholder surface. surface-warm is the tone for a plane the key falls
+   on; the hairline does the separating, since the dark tones sit close enough
+   that value alone does not read as an edge.
+
+   Rendered only where a plate has NO poster. A plate with one renders
+   `.work__video` in its place, at the same box, so the grid does not move as
+   files arrive. */
 .work__plate {
   position: absolute;
   inset: 0;
-  background: var(--c-surface-1);
+  background: var(--c-surface-warm);
+}
+
+/* The moving surface, and the still that stands in for it. One rule for both,
+   because <video> and <img> have to occupy the identical box: a reader who is
+   refused video must get the same composition, and only the motion missing.
+
+   `object-fit: cover` because the plate ratios change across breakpoints and a
+   clip is one file at one ratio. The supplied ratio per plate is the one that
+   crops least across the three layouts; the arithmetic and the file list are
+   in src/assets/video/README.md.
+
+   The plate's own hairline stays on `.work__link`, so a clip sits inside the
+   same edge the empty state has. Asphalt underneath, not surface-1: the first
+   frame of a clip that has not decoded should be the page, not a lighter
+   rectangle announcing that something is missing. */
+.work__video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--c-asphalt);
+  /* Not a control and not content. The plate is one link and the title
+     beside it is its accessible name. */
+  pointer-events: none;
 }
 
 .work__label {

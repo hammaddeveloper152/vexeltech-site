@@ -30,13 +30,127 @@
   src: url('../assets/fonts/satoshi-variable.woff2') format('woff2');
 }
 
+/* Monigue: the LOUD register. A condensed grotesque, one static style, used
+   UPPERCASE only, on the hero headline and — decided, not yet applied — the
+   eight section headings. Nothing else. It is the third face and DESIGN.md
+   records it as one.
+
+   Licence: Envato Elements, active subscription, confirmed. The file carries
+   no licence text in its name table; its OS/2 fsType is 4 (Preview & Print),
+   which is advisory for a webfont and is recorded here so nobody has to
+   parse the file to learn it. Copyright Zarma Type Foundry.
+
+   Metrics that matter: hhea gives a 1.000em line box, OS/2 typo gives 0.940,
+   so `line-height: normal` is unusable and every use sets it explicitly.
+   Cap height is 0.700em against Clash's 0.670. Static, so the weight is one
+   value and not a range. */
+@font-face {
+  font-family: 'Monigue';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/monigue.woff2') format('woff2');
+}
+
+/* Moldie: THE NAME FACE, and the fourth face on the site. It sets product
+   names and nothing else — discipline names, pricing tier names, About plate
+   titles, work grid numerals. Never a heading, never body, never a call.
+   Monigue stays the system face on every section heading. DESIGN.md records
+   the role and the boundary.
+
+   SERVED FROM /public, NOT BUNDLED, and that is the one thing about it that
+   differs from the other three. The other faces are imported through Vite and
+   come out fingerprinted, which is correct for a file that changes; a preload
+   needs a path that is known before the bundle exists, so this pair is static
+   at `/fonts/`. Only the regular is preloaded — the slanted cut sets two
+   short lines and is not on the critical path.
+
+   Source: `Moldie.otf` and `Moldie Slanted.otf`, subset to Latin
+   (U+0000-00FF plus the standard extras) with `kern` and `liga` kept and the
+   eleven stylistic sets dropped, since nothing here calls one. 13.5 KB and
+   14.2 KB, from 53.7 KB and 54.6 KB of OTF.
+
+   Licence: Envato Elements, the same subscription the Monigue file came from.
+   OS/2 fsType is 4 (Preview & Print), advisory for a webfont, recorded here so
+   nobody has to parse the file to learn it.
+
+   Metrics that matter: cap height is 0.700em, EXACTLY Monigue's, so a Moldie
+   name and a Monigue heading at the same size have the same cap and sit on the
+   same optical line. The hhea line box is 1.294em (1.386 slanted), so
+   `line-height: normal` is unusable and every use sets it, the same rule
+   Monigue carries.
+
+   SLANTED IS A SEPARATE FAMILY, NOT AN ITALIC. Its `italicAngle` is 0.0 and
+   the slant is drawn into the outlines, so registering it as
+   `font-style: italic` on Moldie would let a browser synthesise an oblique
+   over an already-slanted face the moment the file was missing. Its own
+   family, selected by its own token. */
+@font-face {
+  font-family: 'Moldie';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/moldie.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Moldie Slanted';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/moldie-slanted.woff2') format('woff2');
+}
+
+
 :root {
   /* ---- Colour: dark ground (dominant) ---------------------------------- */
   --c-asphalt: #17181a; /* primary, the ground   */
-  /* Derived along asphalt's own hue (220deg), lightness only. surface-2 is a
-     ceiling: one step higher drops steel-dark and error-dark below 4.5:1. */
-  --c-surface-1: #1d1e20; /* panels        */
-  --c-surface-2: #222326; /* panel on panel */
+  /* ---- THE WARM SURFACES: what a plane lit by the key looks like --------
+
+     THREE NEUTRAL SURFACES WERE REMOVED FROM HERE ON 2026-09-10.
+     `--c-surface-1`, `--c-surface-2` and `--c-surface-raised` were asphalt's
+     own 220-degree hue at higher lightnesses. Every card and plate moved to
+     the warm pair, which left all three painting nothing, and the last rules
+     naming them — 395 lines of `.tier*` in pages.css, superseded by the
+     pricing ladder — went in the same pass. DESIGN.md keeps the arithmetic
+     they were derived from and the rule they leave behind: a surface may go
+     as high as the text values it can carry, and every one has to be named.
+
+     WHY THEY WENT. The page's light source is machine yellow, and a card under
+     a yellow key that stays neutral grey is a card no light reached. A neutral
+     step is correct for a plane in SHADOW; nothing on this site is one.
+
+     Same construction as the surfaces they replace — asphalt's LIGHTNESS, one
+     step up, hue pulled round to 40 degrees. Measured: 42.9deg at 12.2%
+     lightness against asphalt's 220deg at 9.6%, and the raised one 45.0deg at
+     14.9%. The saturation carries the warmth, 22.6% against asphalt's 6.1%.
+
+     They sit 1.12:1 and 1.24:1 above asphalt, and 1.11:1 from each other.
+
+     | Text            | surface-warm | warm-raised |
+     |-----------------|--------------|-------------|
+     | shop white      | 15.86        | 14.32       |
+     | bone            | 13.16        | 11.88       |
+     | steel-lift      | 6.09         | 5.50        |
+     | machine yellow  | 8.44         | 7.62        |
+     | steel-dark      | 4.57         | 4.13 FAILS  |
+     | error-dark      | 4.05 FAILS   | 3.66 FAILS  |
+     | success-dark    | 5.23         | 4.73        |
+
+     TWO CONSTRAINTS, and they are the pair rule from DESIGN.md Layered darks.
+
+     1. **steel-dark is banned on both**, and the number that matters is the
+        RAISED one. It clears 4.5 on surface-warm by 0.07 and fails on
+        warm-raised, and a plate that changes surface on hover cannot change
+        its secondary text value at the same time without the text visibly
+        shifting. One value for the pair: steel-lift, 6.09 and 5.50.
+     2. **NO FORM SITS ON EITHER.** error-dark is 4.05 and 3.66. The
+        form-state colours were half of what set the original ceiling and they
+        have never been re-derived, for a neutral surface or a warm one. */
+  /* THE ONLY CARD AND PLATE SURFACES ON THE SITE. There is no third and there
+     is no neutral one. */
+  --c-surface-warm: #262218; /* cards and plates at rest, lit by the key */
+  --c-surface-warm-raised: #2e2a1e; /* marked, open, or hovered */
   /* Machine yellow is the palette identity and is documented in DESIGN.md as
      the tertiary. It is NOT used directly by any component: the three role
      variables below each carry the literal hex rather than referencing it,
@@ -62,6 +176,21 @@
   --c-accent-draw-dark: #f0b323; /* stroke on asphalt.  9.46:1 */
   --c-accent-draw-light: #8a6300; /* stroke on concrete 4.90, white 5.43 */
   --c-steel-dark: #858a92; /* secondary text on asphalt ONLY */
+  /* SECONDARY TEXT ON THE WARM SURFACES, and the only value that may take
+     that job. steel-dark is the GROUND's secondary value and is banned above
+     it: 4.57:1 on surface-warm, which clears the floor by seven hundredths,
+     and 4.13:1 on warm-raised, which does not. A card that changes surface
+     when it opens cannot change its text value at the same moment, so the
+     pair takes one value — steel-lift, 6.09:1 and 5.50:1. It was written as a
+     guard for surface-raised and painted nothing for a while; it paints the
+     pricing marker now. */
+  --c-steel-lift: #9ba1a9; /* secondary text on the WARM surfaces ONLY */
+  /* Body on dark. Pure white was the only body value on the dark grounds and
+     it left the page with three painted values; bone is the fifth, and it
+     clears 11.44:1 on raised and 15.42:1 on asphalt. White is kept for the
+     price and the card name, which are the two things that should be the
+     brightest object in the card. */
+  --c-bone: #e8eaed;
 
   /* ---- Colour: light grounds (relief) ---------------------------------- */
   --c-shop-white: #ffffff; /* surface */
@@ -83,6 +212,16 @@
   /* ---- Type: Plate 03, in pixels --------------------------------------- */
   --font-brand: 'Clash Display', 'Helvetica Neue', Arial, sans-serif;
   --font-offer: Satoshi, 'Helvetica Neue', Arial, sans-serif;
+  /* The loud register. Condensed uppercase: the fallback is a condensed
+     system face where one exists, then plain sans. A failure mode, not a
+     design choice, per CLAUDE.md. */
+  --font-loud: Monigue, 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  /* THE NAME REGISTER. Product names only — see the @font-face note above and
+     DESIGN.md "Moldie, the name face". The fallback is the loud register's
+     own, because a name that loses its face should fall to the site's display
+     stack rather than to a body sans: a failure mode, not a design choice. */
+  --font-name: Moldie, 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  --font-name-slanted: 'Moldie Slanted', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
 
   /* Weights by register. Deviation from Plate 03, which specifies Archivo
      700 and Barlow 400/600; the register split and the never-mix rule are
@@ -123,6 +262,14 @@
      of the string in this typeface and nothing else here survives without
      them. */
   --t-display-size: clamp(2.5rem, 6vw, 8.5rem); /* 40px .. 136px */
+  /* 1.02, and it belongs to Clash Display specifically. Its worst
+     consecutive pair of headline lines needs 0.84em of leading, so this
+     leaves 0.18em of clearance. Measured, and re-verified after the stencil
+     came back out.
+
+     A display face with taller ink needs a different number: Bespoke Stencil
+     needed 1.02 to 1.04em for the same pair and collided at every width on
+     this value. Re-measure whenever the display face changes. */
   --t-display-line: 1.02;
   --t-track-display-lg: -0.03em;
 
@@ -166,6 +313,65 @@
   --t-track-display: -0.02em;
   --t-track-h3: -0.01em;
   --t-track-label: 0.12em;
+
+  /* ---- The LOUD scale, derived from the hero -------------------------------
+
+     The hero headline is (100vw - 2 * inset) / 6.06 — the measure divided by
+     the width of its own binding line. Every loud size below is that same
+     measure divided by a larger number, so the whole scale moves with the
+     viewport as one thing and the ratios between its steps are fixed:
+
+       display   measure / 6.06     the hero, in Hero.css      190px at 1280
+       figure    measure / 9        counter figures, numerals   128px   = display / 1.5
+       heading   measure / 12.12    every section heading        95px   = display / 2
+       statement measure / 20       failure statements etc.      58px   = display / 3.3
+       small     measure / 32       step titles, work titles     36px   = display / 5.3
+
+     Each has a FLOOR so a phone does not shrink it to nothing — the hero is
+     59px at 390 and a heading at half that is a label, not a heading — and a
+     CEILING at the 1280 value, so a wide screen grows the hero and holds the
+     rest. The floors are the old scale's own steps (64 / 48 / 40 / 27), not
+     new numbers. Line height 0.9 throughout: Monigue uppercase, no
+     descenders, cap 0.70em.
+
+     --inset is the section's horizontal padding at each breakpoint and is the
+     one value these share with the hero. Change it in one place. */
+  --inset: 16px;
+  --t-loud-line: 0.9;
+  --t-loud-fig: clamp(64px, calc((100vw - 2 * var(--inset)) / 9), 128px);
+  --t-loud-h: clamp(48px, calc((100vw - 2 * var(--inset)) / 12.12), 96px);
+  --t-loud-s: clamp(40px, calc((100vw - 2 * var(--inset)) / 20), 58px);
+  --t-loud-small: clamp(27px, calc((100vw - 2 * var(--inset)) / 32), 36px);
+
+  /* ---- The name register: Moldie, and it does NOT fluid-scale ------------
+
+     The loud scale is a clamp because a HEADING has to fit a line whose length
+     changes with the viewport. A name does not: it is a short fixed string
+     inside an object whose width is already decided — a card, a tier, a plate,
+     a numeral in a grid cell — so the same size works at both widths and a
+     clamp would only make it smaller for no reason.
+
+     FLAT PER BREAKPOINT, not flat everywhere. Two of the three hold one value
+     at every width because their objects do: a services card and a pricing
+     card carry the same short name in a box whose width is set by the layout,
+     not by the viewport. The NUMERAL is the exception and it is not a taste
+     call — see the note on `--t-name-fig`.
+
+     Line height is the loud register's own 0.9. Moldie's cap is 0.700em,
+     exactly Monigue's, so a name and a heading at the same size share a cap
+     height and sit on the same optical line. Its ink box is 1.386em because
+     of accents and an overhang above the caps; uppercase A-Z sits near 0.75,
+     which is what makes 0.9 safe for the two-line plate titles. */
+  --t-name-l: 40px; /* discipline names on the home cards */
+  --t-name-m: 32px; /* tier names, plate titles           */
+  /* THE NUMERAL STEPS, AND THE CARRIER RULE IS WHY. The work plate is 760 by
+     475 at 1280 and 358 by 269 at 390 — it loses 68% of its area while a flat
+     numeral keeps all of its own. Measured at a flat 96: machine yellow
+     reaches 5.72% of the plate's own surface at 390, over DESIGN.md's 5%
+     ceiling, against 2.65% at 1280. 64px is the loud scale's own step below 96
+     and brings it to well under the ceiling. It is still the second largest
+     object in the section at that width. */
+  --t-name-fig: 64px; /* the work grid numerals            */
 
   /* ---- Spacing: Plate 04. 32 and 48 are deliberately absent ------------- */
   --s-xs: 4px;
@@ -260,6 +466,19 @@
   --focus-offset: 2px;
 }
 
+/* The section inset, shared by the hero and the loud scale. */
+@media (min-width: 768px) {
+  :root {
+    --inset: 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --inset: 64px;
+  }
+}
+
 /* Figure steps. Values, so they belong to the token layer rather than to a
    component's media query. The ratio between lead and rest is held at exactly
    1.5 at every step, and every line height stays a 4px multiple. */
@@ -276,6 +495,14 @@
   :root {
     --t-figure-size-solo: 96px;
     --t-figure-line-solo: 100px;
+  }
+}
+
+/* The work plate goes wide here and the numeral takes its full size. The other
+   two name steps do not move: their objects do not grow. */
+@media (min-width: 1024px) {
+  :root {
+    --t-name-fig: 96px;
   }
 }
 
@@ -298,6 +525,55 @@
   box-sizing: border-box;
 }
 
+/* THE UA'S 8px BODY MARGIN WAS STILL ON EVERY REBUILT PAGE.
+
+   `styles.css` carries a `* { margin: 0 }` reset, and the homepage loads it.
+   Nothing else does: `Shell.jsx` loads tokens and register only, so on all
+   eight site pages `body` kept the user-agent's 8px margin. It is invisible as
+   a strip — the body background propagates to the canvas, so the ground still
+   reaches the edge — and it is why nothing on those pages could ever be
+   full bleed. Every `.vt` section stopped 8px short on both sides, and the
+   About portrait, which is built to run off the right edge of the viewport,
+   ended at 1272 of 1280.
+
+   Zero here rather than in each page's sheet: it is the reset that was
+   missing, not a page's opinion. */
+body {
+  margin: 0;
+}
+
+/* `.vt` is applied per SECTION, not once at the root, so every element above
+   it had no family at all and fell to the UA serif default: `body`, the React
+   root div, and the `.pin-spacer` ScrollTrigger injects between them all
+   computed to Times New Roman 16px. Nothing painted in it, because each
+   section re-establishes the register on the way down, but a banned default
+   was one stray text node away the whole time.
+
+   ONLY the family and weight are set here. The root font-size stays at the UA
+   16px on purpose: `--t-display-size` is a rem clamp, so moving the root size
+   would move the hero headline and every band derived from it. */
+html {
+  font-family: var(--font-offer);
+  font-weight: var(--t-weight-body);
+}
+
+/* Form controls do not inherit the document font in ANY browser — the UA
+   stylesheet sets `font: 400 13.3333px Arial` on them directly, and that beats
+   inheritance. It is why the FAQ's four disclosure buttons computed to Arial
+   13.333px and the footer's `select` sat at `line-height: normal` while every
+   other field was on the baseline.
+
+   This is an inheritance gap, not the `@font-face` fallback stack CLAUDE.md
+   exempts: nothing here is a failure mode waiting on a woff2, it is a face
+   nobody chose arriving because a rule was missing.
+
+   `:where()` holds the specificity at zero, so every component rule still wins
+   without having to outrank the reset. A plain `button` selector here would
+   have outranked `.hero__cta` and taken the CTA's type with it. */
+:where(button, input, select, textarea, optgroup) {
+  font: inherit;
+}
+
 .vt {
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
@@ -310,16 +586,85 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Focus is a ring, never the hover treatment. On light grounds the asphalt
-   offset supplies the separation, since machine yellow on white is 1.88:1. */
+/* Focus is a ring, never the hover treatment.
+
+   One rule, because there is one ground. The register took every section to
+   asphalt, so the ring is machine yellow direct at 9.46:1 and needs no offset
+   band. The `.vt--light` variant that used to sit here carried the asphalt
+   band for light-ground sections; nothing has carried that class since the
+   register pass, and BUILD-LAW records that dead override code has produced
+   near-invisible text on this project before. It is deleted rather than left
+   as a rule waiting for a class.
+
+   The one light surface left on the page is the FAQ's open row, which is a
+   panel and never carried the class. Its ring is banded by a rule of its own
+   in register.css, which is self-contained and does not depend on this one
+   for anything but the outline every focusable element already gets. */
 .vt :focus-visible {
   outline: var(--focus-ring) solid var(--c-accent-draw-dark);
   outline-offset: var(--focus-offset);
 }
 
-.vt--light :focus-visible {
-  outline-color: var(--c-accent-draw-dark);
-  box-shadow: 0 0 0 calc(var(--focus-ring) + var(--focus-offset)) var(--c-asphalt);
+/* The skip link.
+
+   First tab stop on the page. At 1280 the bar puts six links between the top
+   of the document and the first word of the hero, and before this existed a
+   keyboard reader passed all six on the way to any content.
+
+   It is positioned off the screen rather than hidden, because `display: none`
+   and `visibility: hidden` both take an element out of the tab order, which
+   is the one thing this link exists to be in. The move is a transform, which
+   is the only property the motion rule allows to carry an element anywhere,
+   and it is a static position rather than a transition, so there is nothing
+   for reduced motion to switch off.
+
+   Outside `.vt`, so it carries its own ground, its own pair and its own ring
+   rather than inheriting a section's. White on asphalt at 17.77:1. The ring
+   is machine yellow and exists only in the keyboard state, so it never lands
+   in a measured frame and does not count as the frame's carrier. */
+.skip {
+  position: fixed;
+  top: var(--s-sm);
+  left: var(--s-sm);
+  /* Over the bar, which is 10, and over its inner, which is 30. */
+  z-index: 40;
+  transform: translateY(calc(-100% - var(--s-sm) * 2));
+  display: inline-flex;
+  align-items: center;
+  /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
+  min-height: 48px;
+  padding: var(--s-md) var(--s-lg);
+  background: var(--c-asphalt);
+  border: 1px solid var(--c-rule-dark);
+  border-radius: var(--r-sm); /* control */
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  font-family: var(--font-brand); /* it is pressed, so it is Clash */
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-brand);
+  text-decoration: none;
+}
+
+.skip:focus-visible {
+  transform: translateY(0);
+  outline: var(--focus-ring) solid var(--c-accent-draw-dark); /* 9.46:1 */
+  outline-offset: var(--focus-offset);
+}
+
+.skip:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skip:active {
+    transform: none;
+  }
+}
+
+/* The landmark the link lands on. Focused programmatically, so it takes no
+   ring: `:focus-visible` does not match a scripted focus. */
+main:focus {
+  outline: none;
 }
 
 .vt [disabled],

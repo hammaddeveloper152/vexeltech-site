@@ -58,13 +58,19 @@
 }
 
 /* On light grounds the word flips and the accent takes its light-ground
-   value; the mark's fill is a plane and reads on either. */
-.vt--light .wm,
+   value; the mark's fill is a plane and reads on either.
+
+   The modifier is the only carrier. Both rules also matched a `.vt--light`
+   ancestor until the register took every section to asphalt and nothing
+   carried that class any more. A rule that matches nothing is not inert:
+   BUILD-LAW records that dead override code has produced near-invisible
+   text on this project before, and a wordmark rule that silently repaints
+   the word asphalt is that failure exactly. The class is gone; put
+   `wm--on-light` on the lockup where a light panel ever needs it. */
 .wm--on-light {
   color: var(--c-asphalt);
 }
 
-.vt--light .wm__dot,
 .wm--on-light .wm__dot {
   color: var(--c-accent-text-light); /* deep amber, 4.90 on concrete */
 }
