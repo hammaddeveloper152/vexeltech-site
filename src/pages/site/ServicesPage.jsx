@@ -1,7 +1,6 @@
 import React from 'react';
 import Shell from './Shell.jsx';
 import { PageHead, Section, CallBand } from './parts.jsx';
-import HeroSurface from '../../components/home/HeroSurface.jsx';
 import ServicePlates from './ServicePlates.jsx';
 /* Loaded after pages.css so it wins on ground, plate and slot. */
 import '../../styles/services.css';
@@ -119,18 +118,14 @@ export default function ServicesPage() {
       title="Services | VexelTech"
       description="Branding, websites, marketing and automation. The four disciplines in full, from one team."
     >
-      {/* THE SURFACE'S FOURTH MOUNT. 60% of the hero's height, same shader,
-          same clamp, same mask and pause rules — only the box changes. See
-          DESIGN.md: the surface is the brand's recurring device. */}
-      <div className="svc__top">
-        <HeroSurface className="svc__surface" />
-        <div className="svc__top-in">
-          <PageHead
-            title="What we do"
-            lead="Four disciplines and one team. Not four agencies who don't talk to each other, and not four invoices."
-          />
-        </div>
-      </div>
+      {/* NO SURFACE MOUNT. It was here, at 60% of hero height, and it painted
+          a band above the heading and a band below it with nothing behind the
+          words — see services.css. Mount the surface behind the type or do not
+          mount it. */}
+      <PageHead
+        title="What we do"
+        lead="Four disciplines and one team. Not four agencies who don't talk to each other, and not four invoices."
+      />
 
       <Section labelledBy="disciplines-h" title={null}>
         <h2 className="skip-h" id="disciplines-h">

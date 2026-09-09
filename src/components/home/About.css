@@ -101,8 +101,9 @@
 .about__plate {
   display: block;
   aspect-ratio: 4 / 5;
-  background: var(--c-surface-warm);
-  border: 1px solid var(--c-rule-dark);
+  /* A reserved slot: hairline, no fill, no decoration. DESIGN.md. */
+  background: none;
+  border: 1px solid var(--lit-edge-top);
   border-radius: var(--r-md); /* container */
 }
 

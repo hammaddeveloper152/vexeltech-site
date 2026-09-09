@@ -1,4 +1,4 @@
-/* warm.mjs — the warm surfaces, and every text value that lands on one.
+/* warm.mjs — the named surfaces, every text value on one, and the 320px line.
 
    Three questions, all answered off computed style with the ground walked up
    and alphas composited, the same machinery `contrast.mjs` uses:
@@ -12,15 +12,25 @@
         and it is banned above the ground: 4.57:1 on surface-warm and 4.13:1
         on warm-raised, and a plate that raises on hover cannot change its
         text value at the same time.
+     4. THE 320px LINE. A warm surface is for an object under 320px tall; past
+        that the tint stops being light on a plane and becomes a plane of
+        colour, and the object takes lit-near with the glow and the bar
+        carrying the warmth. Both directions are checked: a warm object that
+        has grown past the line, and a lit-near object small enough to have
+        taken the warm one.
 
    Hover and open states do not exist in a resting DOM, so the plates and the
    lead card are opened by script before the walk. */
 import puppeteer from 'puppeteer';
 
 const BASE = 'http://localhost:4179';
-const ROUTES = ['/', '/about-us', '/pricing'];
+const ROUTES = ['/', '/about-us', '/pricing', '/services'];
+/* the small-object pair */
 const WARM = { '38,34,24': 'surface-warm', '46,42,30': 'surface-warm-raised' };
-const COOL = { '29,30,32': 'surface-1', '34,35,38': 'surface-2', '43,45,49': 'surface-raised' };
+/* the large-object pair */
+const LIT = { '30,31,34': 'lit-near', '43,45,49': 'lit-raised' };
+/* deleted 2026-09-10. Anything still standing on one of these is a defect. */
+const GONE = { '29,30,32': 'surface-1', '34,35,38': 'surface-2' };
 
 const b = await puppeteer.launch({ headless: 'new',
   args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader', '--force-color-profile=srgb'] });
@@ -45,7 +55,7 @@ for (const [w, h] of [[1280, 800], [390, 844]]) {
       await new Promise((r) => setTimeout(r, 80));
     }
 
-    const rows = await p.evaluate((WARM, COOL) => {
+    const rows = await p.evaluate((WARM, LIT, GONE) => {
       const px = (s) => (s.match(/[\d.]+/g) || []).map(Number);
       const lin = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; };
       const L = ([r, g, bl]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(bl);
@@ -75,13 +85,25 @@ for (const [w, h] of [[1280, 800], [390, 844]]) {
         const r = el.getBoundingClientRect();
         if (r.width < 2 || r.height < 2) continue;
         const ground = groundOf(el);
-        const name = WARM[key(ground)] || COOL[key(ground)];
+        const k = key(ground);
+        const name = WARM[k] || LIT[k] || GONE[k];
         if (!name) continue;
+        /* the object the text stands on, and its height */
+        let host = el;
+        while (host && host !== document.body) {
+          const c2 = getComputedStyle(host);
+          const v2 = px(c2.backgroundColor);
+          if ((v2.length === 4 ? v2[3] : 1) === 1) break;
+          host = host.parentElement;
+        }
+        const hostH = host ? Math.round(host.getBoundingClientRect().height) : 0;
         const fgv = px(c.color);
         const fg = over([fgv[0], fgv[1], fgv[2]], (fgv.length === 4 ? fgv[3] : 1), ground);
         out.push({
           cls: (el.className || '').toString().split(' ')[0] || el.tagName,
-          ground: name, cool: !WARM[key(ground)],
+          ground: name, gone: !!GONE[k], hostH,
+          /* over the line on warm, or under it on lit */
+          lineBreak: (!!WARM[k] && hostH > 320) || (!!LIT[k] && hostH > 0 && hostH < 320),
           size: Math.round(parseFloat(c.fontSize)),
           fg: `rgb(${fgv.slice(0, 3).join(', ')})`,
           steelDark: fgv[0] === 133 && fgv[1] === 138 && fgv[2] === 146,
@@ -91,21 +113,24 @@ for (const [w, h] of [[1280, 800], [390, 844]]) {
       }
       /* one row per class, not one per element */
       const seen = new Map();
-      for (const r of out) { const k = r.cls + r.ground; if (!seen.has(k)) seen.set(k, r); }
+      for (const r of out) { const k2 = r.cls + r.ground;
+        if (!seen.has(k2) || r.hostH > seen.get(k2).hostH) seen.set(k2, r); }
       return [...seen.values()];
-    }, WARM, COOL);
+    }, WARM, LIT, GONE);
 
     console.log(`\n--- ${route} ---`);
     if (!rows.length) { console.log('  nothing sits on a named surface'); await p.close(); continue; }
     for (const r of rows) {
-      const flag = r.steelDark ? '  STEEL-DARK ON A SURFACE' : r.cool ? '  COOL SURFACE' : '';
+      const flag = r.steelDark ? '  STEEL-DARK ON A SURFACE'
+        : r.gone ? '  DELETED SURFACE'
+        : r.lineBreak ? `  320px LINE: host is ${r.hostH}px` : '';
       if (r.steelDark) banned++;
-      if (r.cool) cool++;
-      console.log(`  ${String(r.ratio).padStart(5)}:1  ${String(r.size).padStart(3)}px  ${r.ground.padEnd(20)} ${r.cls.padEnd(22)} ${r.fg.padEnd(20)} "${r.txt}"${flag}`);
+      if (r.gone || r.lineBreak) cool++;
+      console.log(`  ${String(r.ratio).padStart(5)}:1  ${String(r.size).padStart(3)}px  ${String(r.hostH).padStart(4)}px  ${r.ground.padEnd(12)} ${r.cls.padEnd(22)} ${r.fg.padEnd(20)} "${r.txt}"${flag}`);
     }
     await p.close();
   }
 }
 console.log(`\nsteel-dark on a surface: ${banned}`);
-console.log(`text still on a cool surface: ${cool}`);
+console.log(`objects on a deleted surface or the wrong side of 320px: ${cool}`);
 await b.close();

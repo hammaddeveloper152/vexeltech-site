@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import HeroSurface from '../../components/home/HeroSurface.jsx';
 import { useSmoothScroll } from '../../components/home/smoothScroll.js';
 
 /* THE FOUR DISCIPLINES, AS PLATES.
@@ -37,22 +36,27 @@ import { useSmoothScroll } from '../../components/home/smoothScroll.js';
 
 /* THE ARTEFACT SLOT, and it needs no code change when the files land.
 
-   4:1, the home Services card's own ratio, so one artwork is cropped once for
-   both places it appears. The `<img>` is rendered unconditionally and points
-   at `/assets/services/<id>.webp`. If the file is not there the load fails,
-   `onError` flips one piece of state, and the slot falls back to the page's
-   own surface at half intensity behind a hairline — the About portrait slot's
-   treatment, chosen for the same reason: a lit reservation reads as a slot
-   waiting for its image, and a grey box reads as one that failed.
+   3:2 at 40% of the plate, top-aligned, standing 32px above the plate's top
+   edge and 32px past its right. The `<img>` is rendered unconditionally and
+   points at `/assets/services/<id>.webp`; if the file is not there the load
+   fails, one piece of state flips, and the slot shows what a reservation is
+   allowed to show — its hairline and the discipline's numeral.
 
-   So the day `branding.webp` is dropped into `/public/assets/services/` it
+   NOTHING ELSE. It carried the page's WebGL surface at half intensity, and
+   that is decoration inside a box reserved for a photograph: a reader cannot
+   tell a slot that is waiting from a slot that is finished. DESIGN.md now
+   carries the rule for every reserved slot on the site.
+
+   The day `branding.webp` is dropped into `/public/assets/services/` it
    renders, cover-fit, and nothing in this file changes. */
-function Art({ id, name }) {
+function Art({ id, name, n }) {
   const [missing, setMissing] = useState(false);
   return (
-    <div className="svc__art" aria-hidden={missing ? 'true' : undefined}>
+    <div className="svc__art">
       {missing ? (
-        <HeroSurface className="svc__art-surface" />
+        <span className="svc__art-n" aria-hidden="true">
+          {n}
+        </span>
       ) : (
         <img
           className="svc__art-img"
@@ -91,7 +95,7 @@ function Plate({ d, i, plateRef }) {
           ))}
         </ul>
       </div>
-      <Art id={d.id} name={d.name} />
+      <Art id={d.id} name={d.name} n={String(i + 1).padStart(2, '0')} />
     </article>
   );
 }

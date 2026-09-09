@@ -28,6 +28,63 @@
   --lit-edge: rgb(255 255 255 / 8%);
   --lit-edge-top: rgb(255 255 255 / 14%);
   --lit-inset: inset 0 1px 0 rgb(255 255 255 / 6%);
+
+  /* ---- THE TWO LIGHTS ---------------------------------------------------
+
+     One key was enough to say a surface was lit and not enough to say which
+     way it faced. A single warm radial in one corner reads as a smudge as
+     often as it reads as light, because nothing in the frame disagrees with
+     it. A second light, opposite and a different colour, is what makes the
+     first one legible: the object now has a lit corner AND a shaded one, and
+     the eye reads the gradient between them as a plane in space.
+
+     KEY: warm white, top left, 200px at 14%. The colour is the top stop of the
+     hero shader's own ramp — what this light looks like where it is brightest.
+
+     RIM: arc, bottom right, 240px at 14%. Arc is asphalt's own hue at full
+     chroma (220.2 against 220.0), so the shaded side of an object is the
+     ground's colour intensified rather than a second colour introduced.
+
+     THE KEY WAS 10% AND THE TWO LIGHTS WERE NOT A PAIR. Measured at the two
+     corners against each object's own centre, the rim read +18 to +23 points
+     of blue over red and the key read +5 to +6 of warm — three to four times
+     the amplitude on the light that is supposed to be the primary one. At 10%
+     the key sat close to the floor of what a panel's own dither carries, so
+     the object read as lit from the bottom right by a blue light, with a smudge
+     opposite it. At 14% they are the same declared strength and the key is the
+     one that strikes the surface while the rim grazes it.
+
+     THE RIM IS ALWAYS OPPOSITE THE KEY. Two lights from the same side is one
+     light with a colour problem.
+
+     ARC AT GLOW SCALE ONLY. DESIGN.md is unambiguous — a flat field of arc is
+     a large flat blue field, and the same colour as an edge or a glow reads as
+     depth. A 240px radial inside a clipped box is a glow. Nothing here is a
+     fill, and `.measure/carrier.mjs` measures the painted share to keep it
+     honest. */
+  --lit-key: radial-gradient(200px 200px at 0 0, rgb(255 241 204 / 14%) 0%, transparent 70%);
+  --lit-rim: radial-gradient(240px 240px at 100% 100%, rgb(13 71 189 / 14%) 0%, transparent 70%);
+
+  /* The same pair at page scale, for a dark section's ground. 900px and 5%:
+     the bloom has a whole viewport to cross rather than a card. */
+  --lit-key-page: radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%);
+  --lit-rim-page: radial-gradient(900px 700px at 100% 106%, rgb(13 71 189 / 5%) 0%, transparent 70%);
+
+  /* The edges say the same thing the faces do. The top edge is where the key
+     lands and stays warm; the bottom and right edges are where the rim grazes
+     and take its tint, so an object reads as lit from two sides even at the
+     scale where its faces are one pixel of gradient. */
+  --lit-edge-arc: rgb(13 71 189 / 25%);
+}
+
+/* Every lit object takes this. One declaration, so a card, a plate and a panel
+   cannot drift into three interpretations of the same two lights. */
+.lit-obj {
+  background-image: var(--lit-key), var(--lit-rim);
+  border-color: var(--lit-edge);
+  border-top-color: var(--lit-edge-top);
+  border-right-color: var(--lit-edge-arc);
+  border-bottom-color: var(--lit-edge-arc);
 }
 
 /* ---- The ground ---------------------------------------------------------
@@ -39,7 +96,8 @@
 .lit-ground {
   background-color: var(--lit-far);
   background-image:
-    radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%),
+    var(--lit-key-page),
+    var(--lit-rim-page),
     radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
   background-repeat: no-repeat;
 }
@@ -48,7 +106,8 @@
 .fail {
   background-color: var(--lit-far);
   background-image:
-    radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%),
+    var(--lit-key-page),
+    var(--lit-rim-page),
     radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
   background-repeat: no-repeat;
 }
@@ -109,11 +168,12 @@ html::after {
   background-clip: padding-box;
 }
 
-/* One step lighter than the ground under it, and WARM: the section's ground is
-   the key itself, so a card standing on it takes the value of a plane that
-   light reached. agency.css carries the argument and the corner glow. */
+/* LIT-NEAR. The card is 423px tall and the warm surfaces stop at 320: past
+   that a tint is a plane of colour rather than light on a plane. The glow and
+   the accent carry the warmth. agency.css carries the argument. */
 .services__card {
-  background-color: var(--c-surface-warm);
+  background-color: var(--lit-near);
+  background-image: var(--lit-key), var(--lit-rim);
   box-shadow: var(--lift), var(--lit-inset);
 }
 

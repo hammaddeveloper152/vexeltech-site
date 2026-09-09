@@ -7,7 +7,8 @@
 .pg {
   background-color: var(--lit-far);
   background-image:
-    radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%),
+    var(--lit-key-page),
+    var(--lit-rim-page),
     radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -130,14 +131,18 @@ section:has(> .pg__section-in > .abt__feature) {
      stack takes its light from above and states that on the top edge alone;
      this one runs off the side of the viewport and its job is to be a visible
      reservation, so the edge holds one value the whole way round. */
-  border: 1px solid rgb(255 255 255 / 14%);
+  /* THE TWO LIGHTS. The left-edge arc glow is gone: arc has one station on an
+     object now, the rim at bottom right, and a glow on the opposite edge said
+     the light came from both sides. */
+  border: 1px solid var(--lit-edge);
+  border-top-color: var(--lit-edge-top);
+  border-right-color: var(--lit-edge-arc);
+  border-bottom-color: var(--lit-edge-arc);
   border-radius: var(--r-md);
-  background: var(--c-surface-warm);
-  box-shadow:
-    /* the arc, 32px, rising from the left edge — the home About's own
-       construction at its own strength */
-    inset 32px 0 32px -32px rgb(13 71 189 / 10%),
-    var(--lit-inset);
+  /* LIT-NEAR: it is 638px tall and the warm surfaces stop at 320. */
+  background-color: var(--lit-near);
+  background-image: var(--lit-key), var(--lit-rim);
+  box-shadow: var(--lit-inset);
 }
 
 @media (min-width: 1024px) {
@@ -153,22 +158,19 @@ section:has(> .pg__section-in > .abt__feature) {
   }
 }
 
-/* THE SLOT IS LIT, NOT EMPTY. The home page's reservation was a surface-1
-   plate with a hairline and a ratio label, and on a saturated ground it read
-   as an image that had failed to load. This one carries the page's own surface
-   at half intensity: a slot that is clearly waiting rather than broken. */
-.abt__portrait-surface {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  opacity: 0.5;
-  filter: blur(0.75px);
-  pointer-events: none;
-}
+/* THE SLOT IS A HAIRLINE AND NOTHING ELSE.
 
-/* ---- 4. The seam under the concrete band -------------------------------
+   It carried the page's own surface at half intensity, on the argument that a
+   lit reservation reads as waiting where a grey box reads as broken. The
+   argument was half right and the fix was wrong: DECORATION IN A RESERVATION
+   READS AS CONTENT. A reader cannot tell a slot that is still waiting for its
+   photograph from one that has arrived and is simply abstract.
+
+   DESIGN.md now carries it for every reserved slot on the site: a hairline,
+   and a numeral where the object has one. This one has no numeral — it is a
+   portrait, not the third of four — so it is the hairline alone. */
+
+/* ---- 4. The seam under the concrete band/* ---- 4. The seam under the concrete band -------------------------------
 
    The counter row is a ground change and it ends on a hard edge, which is
    correct. What was wrong is that the section beneath it had no top padding at
@@ -218,15 +220,23 @@ section:has(> .pg__section-in > .abt__people) {
   gap: var(--s-sm);
   /* BUILD-LAW: 48px minimum, and this is far past it. */
   min-height: 48px;
-  /* The left padding clears the 3px bar and then some, so the bar is an edge
-     the type stands off rather than a rule the type sits on. */
-  padding: var(--s-xl) var(--s-xl) var(--s-xl) calc(var(--s-xl) + var(--s-xs));
-  border: 1px solid rgb(255 255 255 / 8%);
-  border-top-color: rgb(255 255 255 / 14%);
+  /* 32px, and the left side clears the 3px bar. It was 40, which put the plate
+     at 322px at 390 — two pixels over the line where the warm surfaces stop.
+     THE RULE IS A CONSTRAINT ON THE OBJECT, not only on its colour: a plate
+     that wants the warm surface keeps itself under 320. Tightening the padding
+     is the honest way to hold it there; flipping the ground for two pixels
+     would have made the same object two colours at two widths. 306px now. */
+  padding: 32px 32px 32px calc(32px + var(--s-xs));
+  /* THE TWO LIGHTS: key top left, rim bottom right, edges to match. */
+  border: 1px solid var(--lit-edge);
+  border-top-color: var(--lit-edge-top);
+  border-right-color: var(--lit-edge-arc);
+  border-bottom-color: var(--lit-edge-arc);
   border-radius: var(--r-md);
-  /* WARM, because the key is yellow. A neutral grey plate under a yellow key
-     is a plate no light reached. tokens.css carries the derivation. */
-  background: var(--c-surface-warm);
+  /* WARM, because it is 306px at its tallest and the warm surfaces run to
+     320. tokens.css carries the derivation. */
+  background-color: var(--c-surface-warm);
+  background-image: var(--lit-key), var(--lit-rim);
   box-shadow: var(--lit-inset);
   text-align: left;
   cursor: pointer;
@@ -236,31 +246,16 @@ section:has(> .pg__section-in > .abt__people) {
     background-color var(--d-drop) var(--ease-reveal);
 }
 
-/* The key, in the top-left corner, clipped by the card: 200px of warm white at
-   10%, the one glow value on the site.
-
-   IT WAS MACHINE YELLOW AT 16%, AND THAT WAS THE OLIVE BAND AGAIN. Yellow at a
-   partial opacity over a warm surface composites to the dark bronze DESIGN.md
-   bans as a resting value — the fourth arrival, from a direction nobody was
-   watching. #FFF1CC is the top stop of the hero shader's own ramp, which is
-   what this key looks like where it is brightest, and it lands above the band
-   instead of inside it. 200px rather than 160 because a radial whose peak sits
-   inside the panel's own dither is not a soft glow, it is an absent one. */
-.plate::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background: radial-gradient(200px 200px at 0 0, rgb(255 241 204 / 10%) 0%, transparent 70%);
-  pointer-events: none;
-}
+/* The glow was a `::before` carrying one light. It is two now, on the element
+   itself — `--lit-key` and `--lit-rim` in lit.css. */
 
 /* THE BAR. 3px, machine yellow at 100%, the full height of the plate, one per
-   plate. It replaces a 6px square in the title: a square before a word is a
-   bullet, and a bullet on a two-line title is a list marker on something that
-   is not a list. An edge is a different claim — it says which object this is
-   without saying anything about the words. 100% is the only strength yellow
-   takes on a dark ground at this scale; DESIGN.md bans the mid-ramp. */
+   plate, and it is the only carrier on the object — the two lights say which
+   way the plane faces and say nothing about what to act on.
+
+   It was deleted by accident when the `::before` glow came out: the two
+   pseudo-elements sat in one block and the block went as a unit. Caught in the
+   capture, not in a stylesheet read. */
 .plate::after {
   content: '';
   position: absolute;
@@ -280,7 +275,7 @@ section:has(> .pg__section-in > .abt__people) {
 .plate[data-open='true'],
 .plate[data-side='right'][data-open='true'] {
   transform: rotate(0deg) translateY(-4px);
-  background: var(--c-surface-warm-raised);
+  background-color: var(--c-surface-warm-raised);
 }
 
 .plate:active {

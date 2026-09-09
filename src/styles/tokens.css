@@ -149,8 +149,38 @@
         have never been re-derived, for a neutral surface or a warm one. */
   /* THE ONLY CARD AND PLATE SURFACES ON THE SITE. There is no third and there
      is no neutral one. */
-  --c-surface-warm: #262218; /* cards and plates at rest, lit by the key */
-  --c-surface-warm-raised: #2e2a1e; /* marked, open, or hovered */
+  --c-surface-warm: #262218; /* cards and plates UNDER 320px, at rest */
+  --c-surface-warm-raised: #2e2a1e; /* the same, marked or open */
+
+  /* ---- THE LARGE-OBJECT GROUND -----------------------------------------
+
+     A warm surface stops working at scale. Under about 320px of height the
+     tint reads as light falling across a plane; above it the same tint is a
+     plane OF COLOUR, and a 749px pricing card or a 1134px services plate in
+     #262218 is a brown rectangle rather than a lit one. DESIGN.md carries the
+     rule and this page's plates are the evidence.
+
+     So a large object takes `--lit-near`, the page ground's own near value,
+     and the warmth is carried by the two things that do not scale with area:
+     the warm-white corner glow and the 3px machine yellow bar.
+
+     `--c-lit-raised` is the marked state, 1.19:1 above lit-near — the same
+     separation the pricing lead card had before. It is the hex the deleted
+     `--c-surface-raised` used, and it is back under a new name because it now
+     has a call site: the lead card. That is the whole difference between this
+     and the surface-2 defect.
+
+     | Text            | lit-near | lit-raised |
+     |-----------------|----------|------------|
+     | shop white      | 16.48    | 13.79      |
+     | bone            | 13.67    | 11.44      |
+     | steel-lift      | 6.33     | 5.30       |
+     | machine yellow  | 8.77     | 7.34       |
+     | error-dark      | 4.21 F   | 3.52 F     |
+
+     Same two constraints as the warm pair: steel-dark is the GROUND's value
+     and stays there, and NO FORM SITS ON EITHER. */
+  --c-lit-raised: #2b2d31;
   /* Machine yellow is the palette identity and is documented in DESIGN.md as
      the tertiary. It is NOT used directly by any component: the three role
      variables below each carry the literal hex rather than referencing it,

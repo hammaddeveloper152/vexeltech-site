@@ -138,29 +138,55 @@
   line-height: var(--t-body-line);
 }
 
-/* The artefact slot, empty, made to look decided: a hairline frame and a
-   ratio label, not an icon standing in for a picture. ASSET: one artefact
-   per discipline at 4:1 — 820x205 at 1280, supply 1640x410. */
+/* THE ARTEFACT SLOT: a hairline and a numeral, and nothing else.
+
+   It was a hairline plus a ratio label — "4 : 1" — which is a note to whoever
+   supplies the file, printed on the page for every reader. The ratio belongs
+   in the asset spec, not in the composition. DESIGN.md: a reserved slot shows
+   a hairline and a numeral, never decoration and never a spec.
+
+   ASSET: one artefact per discipline at 3:2 — 348x232 at a 870px card, supply
+   1044x696. */
+/* 3:2 AT 40% OF THE CARD, which is the same relative size the services page's
+   plates give it — one artwork, one ratio, one proportion, cropped once for
+   both places it appears.
+
+   The width matters as much as the ratio here. At the card's full width a 3:2
+   slot is 495px tall and the card becomes 765px, which does not fit a pinned
+   section in a 900px viewport; at 40% it is 211px and the card is 440px, which
+   is where it was. Below 768 the card is a single narrow column and the slot
+   takes the width it has. */
 .services__art {
   position: relative;
-  border: 1px solid var(--c-rule-dark);
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border: 1px solid var(--lit-edge-top);
+  background: none;
+}
+
+@media (min-width: 768px) {
+  .services__art {
+    width: 40%;
+  }
 }
 
 .services__art-i {
   display: none;
 }
 
+/* The discipline's number, the same numeral the services page's index and its
+   own slots carry, so one object has one name everywhere. 96px Moldie,
+   steel-lift, 6.33:1 on lit-near. */
 .services__art::after {
-  content: '4 : 1';
-  position: absolute;
-  right: var(--s-md);
-  bottom: var(--s-sm);
-  font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  color: var(--c-steel-dark); /* 5.12:1 */
+  content: attr(data-n);
+  font-family: var(--font-name);
+  font-size: 96px;
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--c-steel-lift);
 }
 
 /* ---- Marquee ------------------------------------------------------------

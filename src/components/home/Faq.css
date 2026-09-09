@@ -84,12 +84,19 @@
 
    Not animated. A background is neither transform nor opacity, so it changes
    when the row changes and the motion budget stays on the panel's contents. */
+/* THE OPEN ROW IS A LIT OBJECT. It is the one dark plane on a white page, so
+   it is the one place on this section where the two lights have anything to
+   describe — key top left, arc rim bottom right, on the row's own box.
+
+   The band is still its own boundary: a light hairline under it would read as
+   a seam at 13.72:1, so the bottom edge takes the rim's arc tint rather than
+   a white one, which is an edge the band owns rather than a rule between it
+   and the row below. */
 .faq__item[data-open='true'] {
-  background: var(--c-asphalt);
+  background-color: var(--c-asphalt);
+  background-image: var(--lit-key), var(--lit-rim);
   border-radius: var(--r-md); /* container */
-  /* The band is its own boundary. A light hairline under it would read as a
-     seam, at 13.72:1 against the band. */
-  border-bottom-color: transparent;
+  border-bottom-color: var(--lit-edge-arc);
 }
 
 /* Everything inside the band flips to its dark-ground value. */

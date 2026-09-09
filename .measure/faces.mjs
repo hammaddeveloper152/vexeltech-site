@@ -88,7 +88,7 @@ const EXPECT = [
   /* The Services index. A plate's number is that plate's name — it is what
      identifies the object in a list of four — which is the same job the work
      grid numerals do, and the same face. */
-  ['svc__index-n', 'Moldie'],
+  ['svc__index-n', 'Moldie'], ['svc__art-n', 'Moldie'],
   /* the slanted cut */
   ['plate__title', 'Moldie Slanted'], ['card__caption', 'Moldie Slanted'],
 ];

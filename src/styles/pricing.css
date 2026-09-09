@@ -16,7 +16,8 @@
 .pg {
   background-color: var(--lit-far);
   background-image:
-    radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%),
+    var(--lit-key-page),
+    var(--lit-rim-page),
     radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -53,7 +54,7 @@
   border: 0;
   border-radius: 999px;
   margin: 0;
-  color: var(--c-bone); /* 13.16:1 on surface-warm */
+  color: var(--c-bone); /* 13.67:1 on lit-near */
 }
 
 #tab-branding:checked ~ .tabs__row [for=tab-branding],
@@ -107,60 +108,41 @@
   display: flex;
   flex-direction: column;
   padding: var(--s-xl);
-  border: 1px solid rgb(255 255 255 / 8%);
-  border-top-color: rgb(255 255 255 / 14%);
+  /* THE TWO LIGHTS. Key top left, rim bottom right, and the edges say the
+     same thing: warm where the key lands, arc-tinted where the rim grazes. */
+  border: 1px solid var(--lit-edge);
+  border-top-color: var(--lit-edge-top);
+  border-right-color: var(--lit-edge-arc);
+  border-bottom-color: var(--lit-edge-arc);
   border-radius: var(--r-md);
-  /* WARM, because the key is yellow. tokens.css carries the derivation and
-     the two constraints the pair comes with. */
-  background: var(--c-surface-warm);
+  /* LIT-NEAR. These run 573 to 749px and the warm surfaces stop at 320 — see
+     DESIGN.md. */
+  background-color: var(--lit-near);
+  background-image: var(--lit-key), var(--lit-rim);
   box-shadow: var(--lit-inset);
 }
 
-/* THE CORNER GLOW: WARM WHITE AT 10%, 200px, AND IT IS THE KEY ON EVERY CARD.
-
-   It was arc at 7% on the cards that are not the pick and yellow at 9% on the
-   one that is, which made the glow carry the recommendation. That is two jobs
-   for one device: the light source is not a label. The pick is the RAISED
-   surface and the brighter top edge; the glow is identical on every card,
-   because there is one key and it does not change depending on which plane it
-   lands on.
-
-   THE COLOUR IS #FFF1CC, NOT MACHINE YELLOW. Machine yellow at 16% over a warm
-   surface composites into the olive band — the exact value DESIGN.md bans as a
-   resting one, arrived at for the fourth time and from a new direction. The
-   warm-white stop is the top of the hero shader's own ramp, which is what the
-   key looks like where it is brightest, and at 10% it lands above the band
-   rather than inside it. See DESIGN.md: a glow uses the warm-white stop, never
-   yellow at partial opacity.
-
-   200px, not 160, because a radial whose peak sits inside the panel's own
-   dither is not a soft glow, it is an absent one. */
-.card::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  top: -56px;
-  left: -56px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  filter: blur(28px);
-  background: rgb(255 241 204 / 10%);
-  pointer-events: none;
-}
+/* The glow was a `::before` carrying one light. It is two now and they are on
+   the element itself — see `--lit-key` and `--lit-rim` in lit.css — which
+   removes a pseudo-element, a negative z-index and the stacking context that
+   had to exist to contain them. */
 
 .card--lead {
-  background: var(--c-surface-warm-raised);
+  /* The pick, one step above the card on the same neutral ramp: 1.19:1, which
+     is the separation it had before the grounds changed. The two lights come
+     with it; only the plane underneath them changes. */
+  background-color: var(--c-lit-raised);
   border-top-color: rgb(255 255 255 / 18%);
   /* 12px higher and 24px taller than its neighbours: the lift is the row's,
      the height is the card's own padding. */
   margin-top: -12px;
   padding-top: calc(var(--s-xl) + 12px);
   padding-bottom: calc(var(--s-xl) + 12px);
-  box-shadow:
-    /* the 32px arc glow rising from the left edge, About's construction */
-    inset 32px 0 32px -32px rgb(13 71 189 / 30%),
-    var(--lit-inset);
+  /* The left-edge arc glow is GONE. Arc now has a fixed station on every
+     object — the rim, bottom right — and a second arc glow on the opposite
+     side of the pick contradicted it: two rims, one of them where the key is
+     supposed to be. The pick is the raised plane and the brighter top edge. */
+  box-shadow: var(--lit-inset);
 }
 
 /* ---- Inside the card ---------------------------------------------------- */
@@ -175,8 +157,8 @@
   font-weight: var(--t-weight-label);
   letter-spacing: var(--t-track-label);
   text-transform: uppercase;
-  /* STEEL-LIFT, NOT STEEL-DARK. steel-dark is 4.13:1 on warm-raised and it is
-     banned on a surface; it is the ground's secondary value. 5.50:1 here. */
+  /* STEEL-LIFT, NOT STEEL-DARK. steel-dark is banned above the ground and it is
+     banned on a surface; it is the ground's secondary value. 5.30:1 here. */
   color: var(--c-steel-lift);
 }
 
@@ -217,7 +199,7 @@
   font-size: var(--t-loud-small);
   line-height: var(--t-loud-line);
   text-transform: uppercase;
-  color: var(--c-bone); /* 13.16:1 on surface-warm */
+  color: var(--c-bone); /* 13.67:1 on lit-near */
 }
 
 /* The live price is a button. The cursor and the underline only appear where
@@ -261,7 +243,7 @@
   font-weight: var(--t-weight-label);
   letter-spacing: var(--t-track-label);
   text-transform: uppercase;
-  color: var(--c-accent-text-dark); /* 7.62:1 on warm-raised */
+  color: var(--c-accent-text-dark); /* 7.34:1 on the pick */
   opacity: 0;
   transition: opacity var(--d-drop) var(--ease-reveal);
 }
@@ -314,7 +296,7 @@
   font-family: var(--font-offer);
   font-size: 14px;
   line-height: 20px;
-  color: var(--c-bone); /* 13.16:1 on surface-warm, 11.88:1 on warm-raised */
+  color: var(--c-bone); /* 13.67:1 on lit-near, 11.44:1 on the pick */
   transition: color var(--d-drop) var(--ease-reveal);
 }
 
@@ -333,7 +315,7 @@
 }
 
 .card__row[data-lit='true'] {
-  color: var(--c-accent-text-dark); /* 7.62:1 on warm-raised */
+  color: var(--c-accent-text-dark); /* 7.34:1 on the pick */
 }
 
 /* ---- The calls ---------------------------------------------------------- */
@@ -364,7 +346,7 @@
    once, on the card the panel recommends.
 
    `--line` is the outline: a bone hairline, bone text, no fill. Same box, same
-   48px, same press. 13.16:1 on surface-warm. */
+   48px, same press. 13.67:1 on lit-near. */
 .card__cta {
   display: inline-flex;
   align-items: center;
@@ -400,7 +382,7 @@
 .card__cta--line {
   border-color: var(--c-bone);
   background: none;
-  color: var(--c-bone); /* 13.16:1 on surface-warm */
+  color: var(--c-bone); /* 13.67:1 on lit-near */
 }
 
 /* ---- What we need to know, on the Custom card --------------------------
@@ -425,7 +407,7 @@
   font-weight: var(--t-weight-label);
   letter-spacing: var(--t-track-label);
   text-transform: uppercase;
-  color: var(--c-steel-lift); /* 6.09:1 on surface-warm */
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
 }
 
 /* A pending row's marker is an outline, not a filled square: a filled yellow
@@ -437,7 +419,7 @@
 
 .card__pending {
   font-style: italic;
-  color: var(--c-steel-lift); /* 6.09:1 on surface-warm */
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
 }
 
 /* ---- Marketing and Automation: one card, and it does not run the width ---

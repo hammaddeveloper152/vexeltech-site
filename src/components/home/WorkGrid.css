@@ -11,7 +11,10 @@
 
 .work {
   padding: var(--s-3xl) var(--s-md);
-  background: var(--c-asphalt);
+  background-color: var(--c-asphalt);
+  /* The two lights at page scale: the key top left, the arc rim bottom
+     right. lit.css carries the pair and the argument. */
+  background-image: var(--lit-key-page), var(--lit-rim-page);
 /* Section separator REMOVED 2026-09-08: on an all-asphalt page two
    sections are separated by space, not by a stroke. See DESIGN.md,
    "Separation on an all-asphalt page". */
@@ -80,9 +83,10 @@
     opacity var(--d-press) var(--ease-reveal);
 }
 
-/* The placeholder surface. surface-warm is the tone for a plane the key falls
-   on; the hairline does the separating, since the dark tones sit close enough
-   that value alone does not read as an edge.
+/* THE PLACEHOLDER IS A HAIRLINE AND A NUMERAL. No fill: the plate is 475px at
+   1280, past the line where a warm surface works, and it is a RESERVED SLOT,
+   which DESIGN.md holds to a hairline and a numeral and nothing else. The page
+   ground shows through it and the border does the separating.
 
    Rendered only where a plate has NO poster. A plate with one renders
    `.work__video` in its place, at the same box, so the grid does not move as
@@ -90,7 +94,7 @@
 .work__plate {
   position: absolute;
   inset: 0;
-  background: var(--c-surface-warm);
+  background: none;
 }
 
 /* The moving surface, and the still that stands in for it. One rule for both,

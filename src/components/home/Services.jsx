@@ -197,10 +197,17 @@ export default function Services() {
               >
                 <span className="services__discipline">{discipline}</span>
 
-                {/* Artwork slot. Fixed ratio, holds the pillar artifact at
-                    artwork scale when it arrives. Decorative: the discipline
-                    is already written directly above it. */}
-                <span className="services__art" aria-hidden="true">
+                {/* Artwork slot, 3:2, holding the pillar artefact when it
+                    arrives. Until then it shows its hairline and the
+                    discipline's numeral and nothing else — DESIGN.md, a
+                    reserved slot is never decoration. Decorative in the
+                    accessibility sense too: the discipline is written directly
+                    above it. */}
+                <span
+                  className="services__art"
+                  data-n={String(i + 1).padStart(2, '0')}
+                  aria-hidden="true"
+                >
                   <Icon className="i i--lg services__art-i" />
                 </span>
 

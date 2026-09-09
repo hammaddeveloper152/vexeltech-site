@@ -13,78 +13,27 @@
 .pg {
   background-color: var(--lit-far);
   background-image:
-    radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%),
+    var(--lit-key-page),
+    var(--lit-rim-page),
     radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
 
-/* ---- 2. The heading block, over the surface ----------------------------
+/* ---- 2. The heading block: NO SURFACE MOUNT ---------------------------
 
-   The About page's mount, at the same 60% of the hero's height and derived
-   from the same tokens rather than typed, so the two cannot drift. DESIGN.md
-   records the surface as the brand's recurring device; this is its fourth
-   mount and it carries every rule the others do. */
-.svc__top {
-  position: relative;
-  isolation: isolate;
-  overflow: clip;
-  min-height: calc((100svh - (48px + 2 * var(--s-sm) + 1px)) * 0.6);
-  display: grid;
-  align-content: center;
-}
+   It had one, at 60% of hero height like the About page's, and it came out.
 
-.svc__surface {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  filter: blur(0.75px);
-  pointer-events: none;
-  /* Eased over the last 24%, not linear over the last 12%. See the About
-     page's note and DESIGN.md: a 60px linear ramp is not enough room for a
-     crease at 13% luminance to reach the ground, and it reads as an edge. */
-  mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 76%,
-    rgb(0 0 0 / 72%) 85%,
-    rgb(0 0 0 / 32%) 93%,
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 76%,
-    rgb(0 0 0 / 72%) 85%,
-    rgb(0 0 0 / 32%) 93%,
-    transparent 100%
-  );
-}
+   THE MOUNT IS FOR A HEADING THAT SITS ON IT. On About the surface runs behind
+   the heading and the lead, and both were re-measured against it — 5.71:1 and
+   4.75:1 off painted pixels. Here the block was 60svh tall with the heading
+   centred in it, so the surface painted a band above the heading and a band
+   below it and nothing behind the words. That is not a lit heading. It is a
+   decorative stripe with a heading parked between two halves of it.
 
-.svc__top-in {
-  position: relative;
-  z-index: 1;
-}
-
-/* The page head restates its two values against the surface rather than
-   against the flat ground they were written for. Both measured off painted
-   pixels; the DOM cannot see a sibling canvas. */
-.svc__top .pg__h {
-  color: var(--c-shop-white);
-}
-
-.svc__top .pg__lead {
-  color: var(--c-bone);
-}
-
-/* No two mounts touch: 48px of ground between the heading block and the first
-   plate's own surface. DESIGN.md carries the minimum. */
-section:has(> .pg__section-in > .svc) {
-  padding-top: 48px;
-}
+   The rule it leaves: mount the surface behind the type or do not mount it.
+   A surface that the heading does not stand on is decoration, and this page
+   has a glow, a bar and four plates already doing that job. */
 
 /* ---- 3. The index rail and the plate column ---------------------------- */
 
@@ -207,11 +156,20 @@ section:has(> .pg__section-in > .svc) {
   isolation: isolate;
   display: grid;
   gap: var(--s-xl);
-  padding: var(--s-2xl) var(--s-2xl) var(--s-2xl) calc(var(--s-2xl) + var(--s-xs));
-  border: 1px solid rgb(255 255 255 / 8%);
-  border-top-color: rgb(255 255 255 / 14%);
+  /* 40px, and the left side clears the 3px bar. The plate is its content plus
+     80 now rather than its content plus 128: at 64px the padding was a fifth
+     of a 618px plate, which is a frame, not a margin. */
+  padding: var(--s-xl) var(--s-xl) var(--s-xl) calc(var(--s-xl) + var(--s-xs));
+  /* THE TWO LIGHTS: key top left, rim bottom right, edges to match. */
+  border: 1px solid var(--lit-edge);
+  border-top-color: var(--lit-edge-top);
+  border-right-color: var(--lit-edge-arc);
+  border-bottom-color: var(--lit-edge-arc);
   border-radius: var(--r-md);
-  background: var(--c-surface-warm);
+  /* LIT-NEAR, NOT WARM. These are 350 to 1183px tall and the warm surfaces
+     stop at 320 — see DESIGN.md. */
+  background-color: var(--lit-near);
+  background-image: var(--lit-key), var(--lit-rim);
   box-shadow: var(--lit-inset);
   /* The resting state. Alternating, so the four read as a stack that was set
      down rather than as one shape repeated. */
@@ -230,20 +188,9 @@ section:has(> .pg__section-in > .svc) {
   transform: rotate(0deg) translateY(-4px);
 }
 
-/* The key, in the top-left corner. Warm white at 10% over 200px, the one glow
-   value on the site — never yellow at a partial opacity, which composites
-   into the banned olive band. */
-.svc__plate::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(200px 200px at 0 0, rgb(255 241 204 / 10%) 0%, transparent 70%);
-  pointer-events: none;
-}
+/* The glow was a `::before` carrying one light. It is two now, on the element
+   itself — `--lit-key` and `--lit-rim` in lit.css. */
 
-/* The bar: 3px, machine yellow at 100%, full height, one per plate. */
 .svc__plate::after {
   content: '';
   position: absolute;
@@ -271,7 +218,7 @@ section:has(> .pg__section-in > .svc) {
 
      Measured at 1280: a 1048px plate, a 419px slot, 40.0%. */
   .svc__plate {
-    grid-template-columns: minmax(0, 1fr) calc(40% - 0.2 * var(--s-2xl) - 24px);
+    grid-template-columns: minmax(0, 1fr) calc(40% - 0.2 * var(--s-xl) - 32px);
     gap: var(--s-2xl);
     align-items: start;
   }
@@ -297,53 +244,71 @@ section:has(> .pg__section-in > .svc) {
 }
 
 .svc__plate .disc__line {
-  color: var(--c-bone); /* 13.16:1 on surface-warm */
+  color: var(--c-bone); /* 13.67:1 on lit-near */
   margin-bottom: var(--s-lg);
 }
 
 .svc__plate .disc__detail {
-  color: var(--c-steel-lift); /* 6.09:1 on surface-warm */
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
 }
 
 /* ---- 5. The artefact slot ---------------------------------------------
 
-   4:1, the home Services card's own ratio, so one artwork is cropped once for
-   both places it appears. It BLEEDS 24px past the plate's right edge, which is
-   what makes it read as an object standing on the plate rather than a panel
-   set into it — the plate is the ground and the artefact is on top of it. */
+   3:2 at 40% of the plate's border box, TOP-ALIGNED, and it stands 32px above
+   the plate's top edge as well as 32px past its right edge. Two bleeds rather
+   than one: a panel that only escapes sideways still reads as let into the
+   plate, and lifting it over the top edge is what makes it an object resting
+   ON the plate.
+
+   The column is solved back from the number that was asked for, because a
+   percentage resolves against the CONTENT box and the slot's rendered width
+   includes the padding it crosses and the 32px it stands past:
+
+     col + (padding + 32) = 0.4 * (content + 2 * padding)
+     col = 40% - 0.2 * padding - 32px
+*/
 .svc__art {
   position: relative;
-  isolation: isolate;
+  z-index: 2;
+  display: grid;
+  place-items: center;
   overflow: hidden;
-  aspect-ratio: 4 / 1;
-  border: 1px solid rgb(255 255 255 / 14%);
+  aspect-ratio: 3 / 2;
+  /* The edges take the two lights; the FACE does not. A reserved slot is a
+     hairline and a numeral — see DESIGN.md — and a glow painted inside it is
+     the decoration that rule removed. Light on the edge is not content. */
+  border: 1px solid var(--lit-edge);
+  border-top-color: var(--lit-edge-top);
+  border-right-color: var(--lit-edge-arc);
+  border-bottom-color: var(--lit-edge-arc);
   border-radius: var(--r-md);
-  background: var(--c-surface-warm);
-  box-shadow: var(--lit-inset);
+  background: none;
 }
 
 @media (min-width: 1024px) {
   .svc__art {
-    /* Out past the plate's own padding and 24px beyond its edge. The plate
-       does not clip — only its `::before` glow is bounded, and that is a
-       pseudo-element with its own box. */
-    margin-right: calc((var(--s-2xl) + 24px) * -1);
+    margin-top: calc((var(--s-xl) + 32px) * -1);
+    margin-right: calc((var(--s-xl) + 32px) * -1);
   }
 }
 
-/* THE SLOT IS LIT, NOT EMPTY, while the file does not exist. The page's own
-   surface at half intensity behind a hairline: a slot that is clearly waiting
-   rather than one that failed to load. Same treatment, same reason, as the
-   About portrait. */
-.svc__art-surface {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  opacity: 0.5;
-  filter: blur(0.75px);
-  pointer-events: none;
+/* THE NUMERAL IS THE PLACEHOLDER, and it is the only thing in the slot.
+
+   It was the page's own WebGL surface at half intensity. That is decoration in
+   a box that is reserved for a photograph, and decoration in a reservation
+   reads as content — a reader cannot tell a slot that is waiting from a slot
+   that is finished. DESIGN.md: a reserved slot shows a hairline and a numeral,
+   never decoration.
+
+   96px Moldie, steel-lift, 6.33:1 on lit-near. The same numeral the index
+   carries, so the slot and the rail name the same object. */
+.svc__art-n {
+  font-family: var(--font-name);
+  font-size: 96px;
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--c-steel-lift);
 }
 
 /* Cover-fit, so the ratio above is the crop and the file's own dimensions do
