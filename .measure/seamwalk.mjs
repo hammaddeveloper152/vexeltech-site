@@ -20,10 +20,10 @@ import { PNG } from 'pngjs';
 
 const W = Number(process.argv[2]) || 1280;
 const H = W === 1280 ? 800 : 844;
-const FROM = '.hero';
-const TO = '.services';
+const FROM = process.argv[3] || '.hero';
+const TO = process.argv[4] || '.services';
 /* what a frame is allowed to hold, and what it is not */
-const WATCH = ['.hero__cta', '.svc__plate', '.services__head', '.fail'];
+const WATCH = ['.hero__cta', '.svc__plate', '.services__head', '.fail', '.process__step', '.quotes', '.work__item'];
 
 const yellow = (r, g, b) =>
   Math.abs(r - 240) < 24 && Math.abs(g - 179) < 26 && Math.abs(b - 35) < 34;
@@ -126,7 +126,15 @@ for (let y = span[0]; y <= span[1] - H / 2; y += H / 2) {
                      r.top <= bx[1] + 2 && r.bottom >= bx[3] - 2;
       if (!covers) continue;
       const a = r.width * r.height;
-      if (!hit || a < hitA) { hit = (e.className || e.tagName).toString().split(' ')[0]; hitA = a; }
+      if (!hit || a < hitA) {
+        /* An SVG element's `className` is an SVGAnimatedString, and calling
+           toString on it prints `[object SVGAnimatedString]` — which is how a
+           blob owned by the process route reported itself as `[object`. */
+        const c = e.className;
+        const name = (typeof c === 'string' ? c : (c && c.baseVal) || '') || e.tagName;
+        hit = String(name).split(' ')[0];
+        hitA = a;
+      }
     }
     return hit;
   }, bestBox) : null;

@@ -371,7 +371,12 @@ export default function Process() {
                       {title}
                     </span>
                   </h3>
-                  <p className="process__d">{body}</p>
+                  <p className="process__d">
+                    <span className="process__d-muted">{body}</span>
+                    <span className="process__d-lit" aria-hidden="true">
+                      {body}
+                    </span>
+                  </p>
                 </div>
               </li>
             ))}

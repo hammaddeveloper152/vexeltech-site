@@ -83,30 +83,43 @@
 }
 
 /* The route. A mark rather than an edge, so it takes the drawn weight. */
-.process__lit,
 .process__passed,
 .process__edge,
 .process__strike {
   stroke-width: var(--stroke-drawn);
 }
 
-/* Steel-dark, not the accent. The register pass took the drawn route's colour
-   off it and left this rule claiming the accent underneath; the two disagreed
-   for the whole build, decided only by load order. BUILD-LAW Contrast: dead
-   override code has produced near-invisible text on this project before, and
-   a stroke that repaints itself machine yellow the day these two sheets swap
-   order is the same defect. register.css owns where the accent lands; this is
-   kept in step with it. */
-/* Ahead of the reader: drawn, but not yet arrived at. */
+/* ---- THE ROUTE IS TWO LINES, AND THE READER IS THE JOIN ----------------
+
+   AHEAD: steel-dark at 1px. A hairline, because a line you have not reached
+   is the shape of the thing rather than the thing — it says where the route
+   goes and claims nothing.
+
+   BEHIND: MACHINE YELLOW AT 3px, and this reverses a recorded decision. The
+   register pass took the accent off this route and left it steel-dark, on the
+   argument that a 3px stroke is hairline scale and could not be a frame's
+   carrier at scale. The argument was about SCALE and it was answering the
+   wrong question: the route is not competing to be the carrier here, it IS
+   the carrier — the only one in the section — and what a reader needs from it
+   is to see how far they have come. Steel-dark behind and steel-dark ahead
+   said nothing about that. Yellow behind and a hairline ahead says all of it.
+
+   The old rule's real content survives twice over. Nothing else in this
+   section is yellow, and a stroke is the one form the accent takes at this
+   width — DESIGN.md: machine yellow on a dark ground is 100%, a stroke, or a
+   knee. And the colour is declared in register.css, not here, because that is
+   where it was declared before: two sheets claiming one stroke disagree
+   silently and are settled by load order. */
 .process__lit {
   stroke: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  stroke-width: 1;
   opacity: var(--ahead-opacity);
 }
 
 /* Behind the reader: full strength, and it holds at the last step reached
    rather than tracking the scroll, so the route reads as ground covered. */
 .process__passed {
-  stroke: var(--c-steel-dark);
+  stroke: var(--c-accent-draw-dark); /* machine yellow, 9.46:1 on asphalt */
 }
 
 /* The card's edge, lit with its own step rather than when the route happens
@@ -150,9 +163,57 @@
   gap: var(--s-md) var(--s-lg);
 }
 
+/* THE RIM, BEHIND THE NUMERAL. A 240px deep arc radial at 18%, centred a
+   little below and right of the glyph, clipped to the step.
+
+   It is the two-light model arriving on an object that has no plane: a numeral
+   is a glyph, not a card, so there is no surface to light and no edge to tint.
+   What it can have is the rim — the shaded side — sitting behind it where a
+   plane would be if there were one. The numeral stays shop white: the light
+   behind a thing does not change the thing.
+
+   THE ONLY OBJECT-SCALE ARC IN THIS SECTION, and worth stating precisely
+   because the section already carries arc at PAGE scale: `--lit-rim-page`, the
+   bloom every dark section takes bottom-right. That is the ground. This is the
+   only arc on anything standing on it. */
+/* THE CLIP IS THE RIM'S, NOT THE NUMERAL'S.
+
+   `overflow: clip` alone cut the glyphs in half. The numeral is translated 25%
+   past the step's own edge on purpose — it hangs over the card, which is the
+   whole reason it reads as a marker on the route rather than a label inside a
+   box — and clipping the step clips that too.
+
+   `overflow-clip-margin` is the difference between the two: 24px covers the
+   21.47px overhang in both directions (the numerals alternate sides), so the
+   glyph is whole and the 240px rim is still bounded by the step. */
+.process__step {
+  overflow: clip;
+  overflow-clip-margin: 24px;
+}
+
+.process__n::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 240px;
+  height: 240px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-38%, -34%);
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgb(8 48 127 / 18%) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
 /* The numeral, at figure scale per Plate 04. The two copies stack in one
    grid cell so the crossfade costs no layout. */
 .process__n {
+  position: relative;
+  isolation: isolate;
   display: grid;
   font-family: var(--font-brand);
   font-size: var(--t-figure-size-solo);
@@ -225,8 +286,12 @@
   grid-area: 1 / 1;
 }
 
+/* AHEAD: steel-lift, not steel-dark. The title ahead of the route is a step
+   the reader has not reached, not a secondary line — steel-lift is 6.82:1 on
+   asphalt against steel-dark's 5.12, and the gap to white is what carries the
+   state rather than the dimness of the ahead value. */
 .process__t-muted {
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  color: var(--c-steel-lift); /* 6.82:1 on asphalt */
 }
 
 .process__t-lit {
@@ -242,12 +307,43 @@
   opacity: 1;
 }
 
+/* THE BODY FOLLOWS THE ROUTE TOO, and it could not before.
+
+   It held at steel-dark throughout, on a finding that is in this file: a
+   blanket opacity took it to 1.5:1, because steel-dark is already at 5.12 and
+   the arithmetic leaves nowhere to go. That was true of FADING it. Stacking
+   two spans and crossfading between steel-dark and bone is a different
+   operation — both ends are legal values, 5.12 and 14.74, and nothing is ever
+   painted at a fraction of either. The same construction the numeral and the
+   title have always used, extended to the line that was left out of it. */
 .process__d {
   margin: 0;
+  display: grid;
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
   text-wrap: pretty;
+}
+
+.process__d-muted,
+.process__d-lit {
+  grid-area: 1 / 1;
+}
+
+.process__d-muted {
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+}
+
+.process__d-lit {
+  color: var(--c-bone); /* 14.74:1 on asphalt */
+  opacity: 0;
+}
+
+.process__step[data-lit='true'] .process__d-muted {
+  opacity: 0;
+}
+
+.process__step[data-lit='true'] .process__d-lit {
+  opacity: 1;
 }
 
 /* ---- Illumination -------------------------------------------------------
@@ -265,17 +361,23 @@
      at 5.12:1, and the arithmetic leaves nowhere to go. Steel-dark stops
      passing below 0.92 opacity, which is not a state anyone could see anyway.
 
-     So the lift is carried by the two elements that can afford it, each
-     crossfading between two colours that both clear their bar rather than
-     one colour being faded out: the numeral and the title, steel-dark to
-     white. The body copy holds at its normal strength throughout, because
-     there is no legal state beneath it.
+     So the lift is carried by crossfading between two colours that both clear
+     their bar, rather than by fading one colour out. THE BODY COPY IS IN IT
+     NOW: it used to hold at steel-dark throughout, because there was no legal
+     state beneath it to fade toward — but crossfading up to bone is not a
+     fade, it is two legal values swapping, 5.12 and 14.74, with nothing ever
+     painted at a fraction of either.
 
      The card's edge lights on the same flag, so the whole step still turns
      over as one thing. */
+  /* OPACITY ONLY, 250ms. `--d-drop`, not `--d-panel`: the step is not a panel
+     opening, it is a state following the route, and the route's own held
+     stretch already moves at the panel duration. */
   .process__t-muted,
-  .process__t-lit {
-    transition: opacity var(--d-panel) var(--ease-reveal);
+  .process__t-lit,
+  .process__d-muted,
+  .process__d-lit {
+    transition: opacity var(--d-drop) var(--ease-reveal);
   }
 
   /* The settle rides with the crossfade. The reveal curve overshoots nothing
@@ -303,6 +405,16 @@
   .process__step {
     opacity: 1;
     transform: none;
+  }
+
+  /* The route is fully drawn and yellow, and every step is at its reached
+     state: title white, body bone. The diagram is finished, not paused. */
+  .process__d-muted {
+    opacity: 0;
+  }
+
+  .process__d-lit {
+    opacity: 1;
   }
 
   /* Nothing settles, nothing draws. The diagram is simply complete. */

@@ -494,7 +494,22 @@
   color: var(--c-shop-white); /* 17.77:1 */
 }
 
-.process__passed,
+/* THE PASSED ROUTE IS MACHINE YELLOW AND IT IS OWNED HERE.
+
+   This rule used to paint all three strokes steel-dark, and Process.css
+   carried a note saying so — that register.css owns where the accent lands and
+   the section sheet is kept in step with it. That is still the arrangement,
+   and the answer changed: the route behind the reader is the accent now, a 3px
+   stroke, the section's only carrier. The line ahead and the card edges stay
+   steel-dark.
+
+   Written in one place for the reason the old note gave: two sheets claiming
+   one stroke disagree silently and are decided by load order, which is how a
+   route can repaint itself the day somebody reorders an import. */
+.process__passed {
+  stroke: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
+}
+
 .process__lit,
 .process__edge {
   stroke: var(--c-steel-dark);
