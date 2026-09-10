@@ -10,15 +10,9 @@
    pricing ladder — the same three pages now share one ground, which is the
    point of it being a model rather than a treatment. */
 
-.pg {
-  background-color: var(--lit-far);
-  background-image:
-    var(--lit-key-page),
-    var(--lit-rim-page),
-    radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
+/* The page ground is the rig's, declared once in lit.css. This carried its own
+   copy of the colour, the fall and both blooms — and `.vt` then painted asphalt
+   over the lot of it on every section. */
 
 /* ---- 2. The heading block: NO SURFACE MOUNT ---------------------------
 
@@ -77,7 +71,7 @@
     position: sticky;
     /* Clear of the sticky bar, which is 48px of content plus its own padding
        and hairline — the same expression the heading block derives from. */
-    top: calc(48px + 2 * var(--s-sm) + 1px + var(--s-xl));
+    top: calc(48px + 2 * var(--s-sm) + var(--s-xl));
     align-self: start;
   }
 }

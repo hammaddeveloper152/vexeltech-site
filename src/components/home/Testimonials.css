@@ -11,8 +11,8 @@
    ========================================================================== */
 
 .quotes {
-  padding: var(--s-3xl) var(--s-md);
-  background: var(--c-asphalt);
+  /* Transparent. The ground and both blooms are the page rig's, declared once
+     in lit.css — see the audit note there. */  padding: var(--s-3xl) var(--s-md);
 /* Section separator REMOVED 2026-09-08: on an all-asphalt page two
    sections are separated by space, not by a stroke. See DESIGN.md,
    "Separation on an all-asphalt page". */

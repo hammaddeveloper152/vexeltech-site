@@ -40,8 +40,14 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  /* THE BAR KEEPS ITS GROUND AND LOSES ITS HAIRLINE.
+
+     It is chrome, not a section: it is sticky, content scrolls under it, and
+     it has to stay opaque or the type behind it reads through. So the asphalt
+     stays — and it is now the one thing on the page that is a different value
+     from the rig, which is the separation the hairline was drawing. A line as
+     well would be saying it twice. */
   background: var(--c-asphalt);
-  border-bottom: 1px solid var(--c-rule-dark);
 }
 
 .bar__inner {

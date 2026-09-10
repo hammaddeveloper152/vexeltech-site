@@ -574,7 +574,12 @@ html {
   /* Explicit: Satoshi is variable and its default instance is 900. */
   font-weight: var(--t-weight-body);
   color: var(--c-shop-white);
-  background: var(--c-asphalt);
+  /* NO GROUND. `.vt` painted asphalt on every section it touched, which is
+     every section on the site — 41 of them, all opaque, three pages' worth of
+     them sitting on top of their own lighting rig. The ground is the rig's,
+     declared once in lit.css. A section that wants to change it is a concrete
+     band and says so with a class. */
+  background: transparent;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

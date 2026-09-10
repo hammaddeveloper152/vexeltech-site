@@ -34,8 +34,10 @@
   --faq-bleed: min(var(--s-lg), var(--faq-pad));
 
   padding: var(--s-3xl) var(--faq-pad);
-  background: var(--c-shop-white);
-  color: var(--c-asphalt); /* 17.77:1 on white */
+  /* CONCRETE, NOT WHITE. Concrete bands are the only ground change on the
+     site, and a second light ground is a second exception. The band itself is
+     `.band-concrete` in lit.css. */
+  color: var(--c-asphalt); /* 16.01:1 on concrete */
 }
 
 .faq__inner {

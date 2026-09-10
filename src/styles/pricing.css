@@ -13,15 +13,9 @@
    900px from the top left, then the fall from #1E1F22 to #111214. The
    page-wide grain overlay on `html::after` already sits over this; one
    overlay, not one per page. */
-.pg {
-  background-color: var(--lit-far);
-  background-image:
-    var(--lit-key-page),
-    var(--lit-rim-page),
-    radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
+/* The page ground is the rig's, declared once in lit.css. This carried its own
+   copy of the colour, the fall and both blooms — and `.vt` then painted asphalt
+   over the lot of it on every section. */
 
 /* ---- The tabs become a pill group --------------------------------------
 

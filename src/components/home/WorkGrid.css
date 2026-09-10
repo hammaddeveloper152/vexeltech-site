@@ -10,11 +10,8 @@
    ========================================================================== */
 
 .work {
-  padding: var(--s-3xl) var(--s-md);
-  background-color: var(--c-asphalt);
-  /* The two lights at page scale: the key top left, the arc rim bottom
-     right. lit.css carries the pair and the argument. */
-  background-image: var(--lit-key-page), var(--lit-rim-page);
+  /* Transparent. The ground and both blooms are the page rig's, declared once
+     in lit.css — see the audit note there. */  padding: var(--s-3xl) var(--s-md);
 /* Section separator REMOVED 2026-09-08: on an all-asphalt page two
    sections are separated by space, not by a stroke. See DESIGN.md,
    "Separation on an all-asphalt page". */

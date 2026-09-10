@@ -9,11 +9,8 @@
    ========================================================================== */
 
 .marquee {
-  position: relative; /* the end cap is positioned against the strip */
-  background-color: var(--c-asphalt);
-  /* The two lights at page scale: the key top left, the arc rim bottom
-     right. lit.css carries the pair and the argument. */
-  background-image: var(--lit-key-page), var(--lit-rim-page);
+  /* Transparent. The ground and both blooms are the page rig's, declared once
+     in lit.css — see the audit note there. */  position: relative;
   /* THE TWO HAIRLINES ARE GONE, 2026-09-08.
 
      They made this an enclosed band, and on a page that had light-ground

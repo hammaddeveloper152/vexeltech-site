@@ -4,15 +4,9 @@
 
 /* ---- 1. The page ground, lit ------------------------------------------- */
 
-.pg {
-  background-color: var(--lit-far);
-  background-image:
-    var(--lit-key-page),
-    var(--lit-rim-page),
-    radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
+/* The page ground is the rig's, declared once in lit.css. This carried its own
+   copy of the colour, the fall and both blooms — and `.vt` then painted asphalt
+   over the lot of it on every section. */
 
 /* ---- 2. The heading block, over the surface ----------------------------
 
@@ -23,7 +17,7 @@
   position: relative;
   isolation: isolate;
   overflow: clip;
-  min-height: calc((100svh - (48px + 2 * var(--s-sm) + 1px)) * 0.6);
+  min-height: calc((100svh - (48px + 2 * var(--s-sm))) * 0.6);
   display: grid;
   align-content: center;
 }

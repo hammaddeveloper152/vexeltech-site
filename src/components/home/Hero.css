@@ -35,7 +35,8 @@
    ========================================================================== */
 
 .hero {
-  position: relative;
+  /* Transparent. The ground and both blooms are the page rig's, declared once
+     in lit.css — see the audit note there. */  position: relative;
   display: grid;
   align-content: center;
   isolation: isolate;
@@ -46,14 +47,17 @@
      frame and centring in it; a headline that fills the frame does not. The
      bar's height is derived here from the same tokens that build it rather
      than typed as 65, so the two cannot drift apart. */
-  min-height: calc(100svh - (48px + 2 * var(--s-sm) + 1px));
+/* THE BAR IS 64px, NOT 65. The `+ 1px` was its bottom hairline, and the
+   hairline is gone with every other section edge — see Header.css. Corrected
+   here rather than left to drift: the whole point of deriving this from the
+   bar's own tokens was that the two could not disagree. */
+  min-height: calc(100svh - (48px + 2 * var(--s-sm)));
   /* The inset IS the measure now. There is no plate to supply one, so the
      section carries it, and the headline size below is derived from exactly
      this number at each width: 16 on a phone, 40 at tablet, 64 at desktop.
      Change one and the other has to be re-derived. */
   padding: var(--s-lg) var(--s-md);
   overflow: clip;
-  background: var(--c-asphalt);
 }
 
 /* ---- Grain -------------------------------------------------------------- */

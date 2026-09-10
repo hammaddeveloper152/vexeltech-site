@@ -81,9 +81,7 @@
    It goes on `html` rather than `body` so overscroll at either end of the
    document is asphalt too, which is what a reader on a trackpad actually
    sees. */
-html {
-  background: var(--c-asphalt);
-}
+/* The document ground and the rig are lit.css's, declared once. */
 
 :root {
   --c-arc: #0d47bd;
@@ -125,16 +123,11 @@ html {
    failures radial, the work plates' offset and the footer's radial are all
    untouched. What is gone is one decorative plane in one section. */
 
-/* A warm rise out of the bottom left, under everything. It is the only
-   gradient on an asphalt ground and it is there so the hero has a light
-   source at all — the ground used to be one flat value corner to corner. */
-.hero {
-  background-image: radial-gradient(
-    120% 80% at 8% 100%,
-    rgb(240 179 35 / 10%) 0%,
-    transparent 60%
-  );
-}
+/* The hero's own warm rise is GONE. It was written when "the ground used to be
+   one flat value corner to corner" and it was the only gradient on the page;
+   there is a rig now, and a second key rising from the opposite corner of the
+   one section that already carries a WebGL surface is a third light in a room
+   built for two. */
 
 /* ==========================================================================
    2. FAILURES — asphalt, and the section finally spends something
@@ -145,13 +138,6 @@ html {
    and reads as two accidents rather than a palette.
    ========================================================================== */
 
-.fail {
-  background-image: radial-gradient(
-    90% 60% at 100% 0%,
-    rgb(13 71 189 / 22%) 0%,
-    transparent 70%
-  );
-}
 
 /* THE LEAD STATEMENT GIVES ITS YELLOW BACK, and the reason is the seam walk
    rather than a change of mind.
@@ -223,8 +209,10 @@ html {
    ========================================================================== */
 
 .marquee {
-  border-top: 1px solid var(--c-rule-dark);
-  border-bottom: 1px solid var(--c-rule-dark);
+  /* NO EDGES. The strip drew a hairline top and bottom, which is the one
+     thing a section may not do now: on a single rig, a section is separated by
+     what it is made of and by the space around it, not by a line telling the
+     reader where it stops. */
 }
 
 .marquee__sep {
@@ -308,10 +296,6 @@ html {
    the rim, bottom right, opposite the key. A left-rising arc glow under a
    top-left key put both lights on the same side, which is one light with a
    colour problem. Same colour, same scale, correct station. */
-.about {
-  background-color: var(--c-asphalt);
-  background-image: var(--lit-key-page), var(--lit-rim-page);
-}
 
 /* THE STATEMENT IS MONIGUE, at the statement tier, like every other statement
    on the site.
@@ -475,15 +459,8 @@ html {
    onto a light ground would be 2.4:1.
    ========================================================================== */
 
-.counters {
-  background-color: var(--c-concrete);
-  background-image:
-    /* Arc rising from the RIGHT edge at 8%: the About glow's construction,
-       mirrored. Arc at glow scale, never as a field. */
-    radial-gradient(90% 70% at 100% 40%, rgb(13 71 189 / 8%) 0%, transparent 68%),
-    radial-gradient(120% 120% at 0% 0%, #f4f3f0 0%, #eceae5 62%);
-  background-repeat: no-repeat;
-}
+/* The one concrete band on the home page. The ground itself is `.band-concrete`
+   in lit.css — the only class on the site that lays down a colour. */
 
 .counters__h {
   color: var(--c-asphalt); /* 17.10:1 on concrete */
@@ -513,9 +490,6 @@ html {
    8. TESTIMONIALS — asphalt, and the quote mark goes very large
    ========================================================================== */
 
-.quotes {
-  background-image: var(--lit-key-page), var(--lit-rim-page);
-}
 
 .quotes__mark {
   color: var(--c-accent-text-dark);
@@ -534,23 +508,22 @@ html {
    1.88:1 and is never text on a light ground.
    ========================================================================== */
 
-.faq {
-  background: var(--c-shop-white);
-  background-image: none;
-}
 
+/* Restated against concrete. The section was shop white and is a concrete band
+   now — the only ground change the site allows — so every value on it is
+   measured against #F4F3F0 rather than #FFFFFF. */
 .faq__h,
 .faq__q,
 .faq__q-t {
-  color: var(--c-asphalt); /* 17.77:1 */
+  color: var(--c-asphalt); /* 16.01:1 on concrete */
 }
 
 .faq__a {
-  color: var(--c-steel); /* 8.12:1 on white */
+  color: var(--c-steel); /* 7.32:1 on concrete */
 }
 
 .faq__mark {
-  color: var(--c-accent-text-light); /* deep amber, 5.43:1 */
+  color: var(--c-accent-text-light); /* deep amber, 4.90:1 on concrete */
 }
 
 .faq__rule {
@@ -613,7 +586,6 @@ html {
   position: relative;
   overflow: clip;
   /* The two lights at page scale, the same pair every dark section carries. */
-  background-image: var(--lit-key-page), var(--lit-rim-page);
 }
 
 /* THE MARK IS A STROKE, NOT A FILL, and that is the rule rather than a

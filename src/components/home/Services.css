@@ -11,14 +11,10 @@
    ========================================================================== */
 
 .services {
-  /* Content plus 96px, top and bottom. The section is its content now; it has
+  /* Transparent. The ground and both blooms are the page rig's, declared once
+     in lit.css — see the audit note there. */  /* Content plus 96px, top and bottom. The section is its content now; it has
      no height of its own to hold. */
   padding: var(--s-3xl) var(--inset);
-  /* Asphalt under the two lights at page scale, the same ground Failures
-     carries directly above it. The machine yellow field is gone — see
-     Services.jsx for why it went and what went with it. */
-  background-color: var(--c-asphalt);
-  background-image: var(--lit-key-page), var(--lit-rim-page);
 }
 
 .services__in {

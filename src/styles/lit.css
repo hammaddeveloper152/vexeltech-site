@@ -123,79 +123,77 @@
   border-bottom-color: var(--lit-edge-arc);
 }
 
-/* ---- The ground ---------------------------------------------------------
+/* ---- THE RIG. ONE PER PAGE, NOT ONE PER SECTION ------------------------
 
-   Two radials on one plane: the fall from the key, and the key itself at 6%
-   over about 900px. The second is the only place machine yellow touches the
-   ground, and at 6% it is a temperature rather than a colour — the ground
-   still says asphalt. */
-.lit-ground {
-  background-color: var(--lit-far);
-  background-image:
-    var(--lit-key-page),
-    var(--lit-rim-page),
-    radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
-  background-repeat: no-repeat;
+   The audit that produced this: **41 sections, 41 painting a ground, 18
+   carrying gradient layers.** Every section on the site laid down its own
+   colour, and eighteen of them carried their own copy of the same two blooms.
+   That is eighteen light sources for one light model, and on the three lit
+   pages it was worse than redundant — `.vt` painted asphalt on every section,
+   so `/services`, `/pricing` and `/about-us` were covering their own lighting
+   rig with their own sections.
+
+   ONE RIG, ON A FIXED LAYER. The colour, the fall and the two blooms are
+   declared once here and nowhere else. The rig has to be anchored to the
+   VIEWPORT rather than to the page box — one light in the room, which is what
+   a light model is; a page-length gradient puts the key somewhere different on
+   every screenful, which is the per-section problem with extra steps.
+
+   IT IS A POSITIONED LAYER, NOT `background-attachment: fixed`, AND THAT IS
+   NOT A STYLE PREFERENCE. iOS Safari does not honour a fixed attachment: it
+   is ignored, or the gradient is sized to the full document instead of the
+   viewport, and either way the blooms land somewhere other than where they
+   were placed — on the phones most of this site's visitors are holding. A
+   `position: fixed` pseudo-element is viewport-anchored by a mechanism every
+   engine implements the same way, and it costs one element that paints and
+   does nothing else.
+
+   `z-index: -1` puts it behind every section without any of them needing to
+   declare a stacking position, `pointer-events: none` keeps it out of hit
+   testing, and `body` keeps the far value as a plain background colour so a
+   failure of the layer is a dark page rather than a white one.
+
+   EVERY SECTION IS TRANSPARENT OVER IT. The only exception is a concrete
+   band — see below — and there is no third case. */
+html {
+  background-color: var(--c-asphalt);
 }
 
-.hero,
-.fail {
+body {
+  /* The floor under the rig. If the layer never paints, this is what shows. */
   background-color: var(--lit-far);
-  background-image:
-    var(--lit-key-page),
-    var(--lit-rim-page),
-    radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
-  background-repeat: no-repeat;
 }
 
-/* ---- Grain, page wide ---------------------------------------------------
-
-   feTurbulence as a data URI, so it is CSS and not an asset. Fixed, so it is a
-   property of the screen rather than of the document; `overlay` so it lifts
-   the lit half and deepens the fallen half instead of greying the whole plane
-   evenly.
-
-   On `html::after` rather than a new element: the markup is untouched.
-
-   It never sits above content in any way that matters — `pointer-events: none`
-   and it does not intercept a click — and it goes off entirely under reduced
-   motion with the rest of the page's texture, which is the condition DESIGN.md
-   already puts on grain. */
-html::after {
+body::before {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: 9999;
-  opacity: 0.04;
-  mix-blend-mode: overlay;
+  z-index: -1;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-color: var(--lit-far);
+  background-image:
+    var(--lit-key-page),
+    var(--lit-rim-page),
+    radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
+  background-repeat: no-repeat;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html::after {
-    display: none;
-  }
+/* ---- CONCRETE BANDS, AND THEY ARE THE ONLY GROUND CHANGE ---------------
+
+   A section may stop being transparent for exactly one reason: it is a
+   concrete band. Nothing else on the site lays down a colour of its own.
+
+   The band keeps its own arc glow because a light surface is not lit by the
+   rig behind it — the rig is a dark ground and a concrete band is opaque over
+   it, so the band carries the one glow it needs at its own scale. */
+.band-concrete {
+  background-color: var(--c-concrete);
+  background-image:
+    radial-gradient(90% 70% at 100% 40%, rgb(8 48 127 / 8%) 0%, transparent 68%),
+    radial-gradient(120% 120% at 0% 0%, #f4f3f0 0%, #eceae5 62%);
+  background-repeat: no-repeat;
 }
 
-/* The hero carried its own local grain. One page-wide overlay replaces it;
-   two would be two densities of the same texture stacked on one section. */
-.hero__grain {
-  display: none;
-}
-
-/* ---- Every card, plate and panel ---------------------------------------
-
-   The four properties, together, on one selector list. A surface is lit or it
-   is not; there is no partial version of this.
-
-   `background-clip: padding-box` so the top edge reads as an edge catching the
-   key rather than as a border that happens to be brighter. */
-/* `.fail__c` was in this list and came straight back out. The ledger's
-   consequence lines are TYPE, not a card, plate or panel — boxing them drew
-   four rectangles around four paragraphs that had never been objects. The
-   Failures section takes the ground and the grain and nothing else, because
-   it has no surface to light. */
 .services__card,
 .hero__plate {
   border: 1px solid var(--lit-edge);
