@@ -17,7 +17,12 @@
   position: relative;
   isolation: isolate;
   overflow: clip;
-  min-height: calc((100svh - (48px + 2 * var(--s-sm))) * 0.6);
+  /* 40% of the hero, down from 60. At 60 the block was most of a screen of
+     surface with a heading floating in the middle of it, which reads as a
+     second hero rather than as a page head. The heading and the lead are
+     centred on it — `align-content: center` below — so the mount is exactly as
+     tall as it needs to be to carry them and no taller. */
+  min-height: calc((100svh - (48px + 2 * var(--s-sm))) * 0.4);
   display: grid;
   align-content: center;
 }
@@ -30,6 +35,11 @@
   width: 100%;
   height: 100%;
   filter: blur(0.75px);
+  /* 60% INTENSITY. The surface is a page head's ground here, not the hero's
+     own subject: at full strength in a 40% block its creases compete with the
+     128px heading standing on them. Opacity rather than a second shader — one
+     file, one ramp, one knee, and the mount decides how much of it it wants. */
+  opacity: 0.6;
   pointer-events: none;
   /* THE FADE IS EASED, AND IT IS LONGER THAN A LINEAR ONE CAN BE.
 
@@ -93,9 +103,15 @@ section:has(> .pg__section-in > .abt__feature) {
 }
 
 @media (min-width: 1024px) {
-  /* The panel leaves the measure and runs off the right edge, which is the
+  /* Two columns ONLY WHEN THERE IS A SLOT. The portrait is not rendered unless
+     `VITE_SHOW_RESERVED=1`, and a two-column grid with nothing in its second
+     column is a statement set in half the width for a reason the reader cannot
+     see. `:has()` asks the layout question the way it should be asked — of the
+     content, not of a flag the stylesheet cannot read.
+
+     The panel leaves the measure and runs off the right edge, which is the
      home page's About family — the same structure mirrored, not a new one. */
-  .abt__feature {
+  .abt__feature:has(.abt__portrait) {
     grid-template-columns: minmax(0, 1fr) min(42%, 560px);
     align-items: center;
     gap: var(--s-3xl);

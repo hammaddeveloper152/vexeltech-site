@@ -148,13 +148,23 @@ export function AboutPage() {
             </div>
           </div>
 
-          {/* 922 x 1152, one ratio at every width. While the photograph does
-              not exist the slot carries the SURFACE at low intensity behind a
-              hairline — a lit reservation rather than an empty grey box, which
-              is what the home page's slot was and why it came out. */}
-          <div className="abt__portrait" aria-hidden="true">
-            <HeroSurface className="abt__portrait-surface" />
-          </div>
+          {/* 922 x 1152, one ratio at every width — AND IT IS NOT RENDERED
+              UNTIL THERE IS SOMETHING TO PUT IN IT.
+
+              It used to carry the page's own surface at low intensity behind a
+              hairline. The surface came out when reserved slots went to a
+              hairline and a numeral, but the `<HeroSurface>` did not: its
+              stylesheet rule was deleted and the component was left, so it
+              rendered a bare canvas at its intrinsic size in the slot's
+              top-left corner. A fragment of a shader in the corner of an empty
+              box, for weeks, because half a change looks like no change.
+
+              The slot itself follows the site's rule now: reservations are
+              shown only when `VITE_SHOW_RESERVED=1`, and otherwise there is
+              nothing here and the statement takes the full width. */}
+          {import.meta.env.VITE_SHOW_RESERVED === '1' ? (
+            <div className="abt__portrait" aria-hidden="true" />
+          ) : null}
         </div>
 
         <p className="runline">
