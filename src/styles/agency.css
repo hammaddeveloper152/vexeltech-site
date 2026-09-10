@@ -459,31 +459,35 @@
    onto a light ground would be 2.4:1.
    ========================================================================== */
 
-/* The one concrete band on the home page. The ground itself is `.band-concrete`
+/* The one marble band on the home page. The ground itself is `.band-marble`
    in lit.css — the only class on the site that lays down a colour. */
 
 .counters__h {
-  color: var(--c-asphalt); /* 17.10:1 on concrete */
+  color: var(--c-shop-white);
 }
 
+/* INVERTED FOR THE MARBLE. The band was concrete and its values were
+   light-ground ones; it is black marble under a scrim now, so the figures are
+   white, the labels steel-lift and the hairlines white at 12%. */
 .counters .counters__item .counters__n {
-  color: var(--c-asphalt); /* 17.10:1 on concrete */
+  color: var(--c-shop-white);
 }
 
 .counters__l {
-  color: var(--c-steel); /* 7.81:1 on concrete — steel, not steel-dark */
+  color: var(--c-steel-lift);
 }
 
-/* Hairlines take the light-ground rule. `--c-rule-dark` is white at 12% and
-   would be invisible here. */
 .counters__rule,
 .counters__rule-lit {
-  background: var(--c-line);
+  background: rgb(255 255 255 / 12%);
   opacity: 1;
 }
 
+/* The lit stretch of each rule is the one place the band spends anything: it
+   is the figure's own progress and it takes the accent, which the marble's
+   gold veins already agree with. */
 .counters__rule-lit {
-  background: var(--c-asphalt);
+  background: var(--c-accent-draw-dark);
 }
 
 /* ==========================================================================
@@ -509,21 +513,28 @@
    ========================================================================== */
 
 
-/* Restated against concrete. The section was shop white and is a concrete band
-   now — the only ground change the site allows — so every value on it is
-   measured against #F4F3F0 rather than #FFFFFF. */
+/* RESTATED AGAINST THE MARBLE. The band was shop white, then concrete, and is
+   black marble under a 40% asphalt scrim now — a dark ground — so every value
+   on it inverts. Headings white, body bone, labels steel-lift, hairlines white
+   at 12%. Measured over the image's BRIGHTEST region, which is the only region
+   that can fail. */
 .faq__h,
 .faq__q,
 .faq__q-t {
-  color: var(--c-asphalt); /* 16.01:1 on concrete */
+  color: var(--c-shop-white);
 }
 
 .faq__a {
-  color: var(--c-steel); /* 7.32:1 on concrete */
+  color: var(--c-bone);
 }
 
 .faq__mark {
-  color: var(--c-accent-text-light); /* deep amber, 4.90:1 on concrete */
+  color: var(--c-steel-lift);
+}
+
+.faq__rule,
+.band-marble .counters__rule {
+  background: rgb(255 255 255 / 12%);
 }
 
 .faq__rule {

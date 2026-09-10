@@ -29,7 +29,7 @@
 .counters {
   padding: var(--s-3xl) var(--s-md);
   background: var(--c-concrete);
-  color: var(--c-asphalt); /* 16.01:1 on concrete */
+  color: var(--c-shop-white);
 }
 
 .counters__inner {
@@ -84,7 +84,7 @@
 
 .counters__rule {
   position: absolute;
-  background: var(--c-line); /* the light-ground hairline. 1px, no softening */
+  background: rgb(255 255 255 / 12%);
   /* Horizontal, spanning the stat, sitting in the row gap above it. */
   top: calc(var(--s-2xl) / -2);
   right: 0;
@@ -103,7 +103,7 @@
   width: 25%;
   /* Deep amber, not machine yellow. Machine yellow as a stroke measures
      1.69:1 on concrete, which is not a line, it is a rumour of one. */
-  background: var(--c-accent-draw-light);
+  background: rgb(255 255 255 / 12%);
   transform-origin: left;
 }
 
@@ -130,7 +130,7 @@
   font-weight: var(--t-weight-label);
   letter-spacing: var(--t-track-label);
   text-transform: uppercase;
-  color: var(--c-steel); /* steel on light, 7.7:1 on concrete */
+  color: var(--c-steel-lift);
 }
 
 /* ---- Illumination ------------------------------------------------------

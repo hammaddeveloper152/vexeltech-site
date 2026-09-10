@@ -36,8 +36,8 @@
   padding: var(--s-3xl) var(--faq-pad);
   /* CONCRETE, NOT WHITE. Concrete bands are the only ground change on the
      site, and a second light ground is a second exception. The band itself is
-     `.band-concrete` in lit.css. */
-  color: var(--c-asphalt); /* 16.01:1 on concrete */
+     `.band-marble` in lit.css. */
+  color: var(--c-shop-white);
 }
 
 .faq__inner {
@@ -71,7 +71,9 @@
   /* Matches the list's bleed exactly, so the question text lines up with the
      section heading at every width. */
   padding-inline: var(--faq-bleed);
-  border-bottom: 1px solid var(--c-line);
+  /* White at 12%: the band is dark marble, and `--c-line` is a light-ground
+     value that would be invisible on it. */
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
 }
 
 /* The open row takes asphalt and inverts, so it reads as a struck band
@@ -95,7 +97,7 @@
    a white one, which is an edge the band owns rather than a rule between it
    and the row below. */
 .faq__item[data-open='true'] {
-  background-color: var(--c-asphalt);
+  background-color: var(--c-shop-white);
   background-image: var(--lit-key), var(--lit-rim);
   border-radius: var(--r-md); /* container */
   border-bottom-color: var(--lit-edge-arc);
@@ -119,7 +121,7 @@
    and this one had the accent one sheet away from landing at 1.88:1 on white.
    register.css owns where the accent lands; this is kept in step with it. */
 .faq__item[data-open='true'] .faq__rule {
-  background: var(--c-line); /* hairline on white */
+  background: rgb(255 255 255 / 12%);
 }
 
 /* Sits exactly on the static hairline and draws over it from the left. A
@@ -201,7 +203,7 @@
      The icon inside takes currentColor from here, which is what keeps the
      open row's flip to steel-dark working without a second rule. */
   display: block;
-  color: var(--c-steel); /* 8.12:1 on white */
+  color: var(--c-steel-lift);
   /* The panel's own duration and curve, not the mark's. The rotation and the
      answer arriving are one event, and giving them different timings is what
      makes an accordion feel like two things happening near each other. */
@@ -293,7 +295,7 @@
   max-width: 60ch;
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel); /* 8.12:1 on white */
+  color: var(--c-steel-lift);
   text-wrap: pretty;
 }
 

@@ -178,21 +178,69 @@ body::before {
   background-repeat: no-repeat;
 }
 
-/* ---- CONCRETE BANDS, AND THEY ARE THE ONLY GROUND CHANGE ---------------
+/* ---- THE MARBLE BAND, AND IT IS THE ONLY GROUND CHANGE -----------------
 
-   A section may stop being transparent for exactly one reason: it is a
-   concrete band. Nothing else on the site lays down a colour of its own.
+   A section may stop being transparent for exactly one reason: it is a marble
+   band. Nothing else on the site lays down a ground of its own.
 
-   The band keeps its own arc glow because a light surface is not lit by the
-   rig behind it — the rig is a dark ground and a concrete band is opaque over
-   it, so the band carries the one glow it needs at its own scale. */
-.band-concrete {
-  background-color: var(--c-concrete);
-  background-image:
-    radial-gradient(90% 70% at 100% 40%, rgb(8 48 127 / 8%) 0%, transparent 68%),
-    radial-gradient(120% 120% at 0% 0%, #f4f3f0 0%, #eceae5 62%);
+   THE LIGHT BANDS ARE GONE. Concrete was the second material and it was a
+   value rather than a material — a lighter grey with a gradient on it, which
+   is what a dark page looks like when you turn the lights up rather than when
+   you change what the floor is made of. The second material is BLACK MARBLE:
+   a photograph, cover-fit and centred, with its own depth and its own veins.
+
+   TWO BANDS PER PAGE, MAXIMUM. A band is a change of material and a page that
+   changes material three times has no material. The home page has two — the
+   figures and the questions — and About has one.
+
+   IT TAKES NO YELLOW BLOOM. The marble carries its own gold veining, which is
+   the accent arriving as a fact about the stone rather than as a light thrown
+   at it. A bloom on top would be the page's key competing with veins that are
+   already the right colour and already in the right places.
+
+   THE SCRIM IS WHAT MAKES IT A GROUND. A photograph is not a surface to set
+   type on: it has its own bright regions and they move with the crop. Asphalt
+   at 40% over the whole image flattens the range enough for a text value to
+   hold anywhere on it, and the walk that sets that number measures the
+   BRIGHTEST region rather than the average — see the record in DESIGN.md. */
+.band-marble {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--c-asphalt);
+  background-image: url('/assets/marble-01.webp');
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
 }
+
+.band-marble::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  /* 85%, AND THE NUMBER WAS WALKED RATHER THAN CHOSEN.
+
+     It started at 40 and rose in 5% steps until every text pair on both bands
+     cleared its bar over the BRIGHTEST region of the image — not the average,
+     because the average is not where type breaks. The binding pair is the
+     counter labels at 390: steel-lift over the brightest patch a label can sit
+     on, 4.24:1 at 80% and 4.73:1 at 85.
+
+     It is a heavy scrim and the stone is subdued under it. That is the cost of
+     setting type on a photograph, and the alternative — a lighter scrim with
+     the labels moved to white — trades the band's whole value structure for
+     the picture. The material is still doing the work: the veins read, the
+     depth reads, and nothing on it is a flat field. */
+  background: rgb(23 24 26 / var(--scrim, 85%));
+  pointer-events: none;
+}
+
+/* Everything in the band sits above the scrim. */
+.band-marble > * {
+  position: relative;
+  z-index: 0;
+}
+
 
 .services__card,
 .hero__plate {
