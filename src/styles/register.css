@@ -373,9 +373,17 @@
    size; the other three are white at the same size, and the lit rules that
    were deep amber on concrete go rule-dark. The figures are the loudest thing
    in this frame and the heading is its signpost, which is the hierarchy the
-   figure role always wanted and a light ground never let it have. */
+   figure role always wanted and a light ground never let it have.
+
+   NO GROUND HERE. This row mounts twice. On home it is the site's one marble
+   band and `.band-marble` paints it; on About it is transparent over the page
+   rig. The asphalt that was here survived the rig audit because that pass
+   swept agency.css and the component sheets and never came into the register -
+   and it was invisible on home, where the band overrides it, which is the only
+   reason it lasted. On About it was a section painting its own ground on a
+   page built around one rig, which is the exact defect the audit existed to
+   find. */
 .counters {
-  background: var(--c-asphalt);
   color: var(--c-shop-white);
 }
 
@@ -526,15 +534,19 @@
 }
 
 /* ---- FAQ ----------------------------------------------------------------
-   DARK. It was white. Carrier: THE HEADING, in yellow. The open row inverts
-   to WHITE — a panel, not a section — because ground change is the strongest
-   separation the system has and this section's record says so. Every colour
-   inside the open row flips to its light-ground value; the drawn rule under
-   it is a hairline in both states and no longer the accent, because the
-   heading is. Questions are pressed, so they stay Clash. */
+   DARK, AND NO GROUND. Carrier: THE HEADING, in yellow. Questions are pressed,
+   so they stay Clash.
+
+   Its ground has been four things: white, concrete, marble, and asphalt from
+   this rule underneath all of them. The asphalt is out with the rest - the
+   section is transparent over the page rig - and the open row is a lit plane
+   on lit-near rather than the inverted white panel this rule described. See
+   agency.css section 10.
+
+   The drawn rule under a question is a hairline in both states and no longer
+   the accent, because the heading is. */
 .faq {
-  background: var(--c-asphalt);
-  color: var(--c-shop-white); /* 17.77:1 */
+  color: var(--c-shop-white);
 }
 
 .faq__h {
@@ -554,10 +566,11 @@
   background: var(--c-rule-dark);
 }
 
-.faq__item[data-open='true'] {
-  background: var(--c-shop-white);
-  border-radius: var(--r-none);
-}
+/* The open row's ground and radius are agency.css's - lit-near, both lights,
+   `--r-md`. What is left here is nothing: the pair that was here set shop
+   white and squared the corners, and both were reversed one sheet later.
+   Kept as a note rather than a rule, because a declaration that never lands is
+   a second opinion the next reader has to resolve. */
 
 .faq__item[data-open='true'] .faq__q-t {
   color: var(--c-asphalt); /* 17.77:1 on white */

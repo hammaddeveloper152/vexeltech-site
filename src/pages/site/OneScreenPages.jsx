@@ -174,8 +174,10 @@ export function AboutPage() {
         </p>
       </Section>
 
-      {/* The home page's counter row, mounted as built. Concrete, the light
-          model, the same four placeholders, and it keeps its own count. */}
+      {/* The home page's counter row, mounted as built - WITHOUT the band.
+          The marble is one band on the whole site and home has it, so this
+          mount is transparent over the page rig like every other section
+          here. Same light model, same four placeholders, its own count. */}
       <CounterRow />
 
       <Section

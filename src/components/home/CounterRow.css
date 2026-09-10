@@ -28,7 +28,11 @@
 
 .counters {
   padding: var(--s-3xl) var(--s-md);
-  background: var(--c-concrete);
+  /* NO GROUND HERE. The one that was here was concrete, left behind when the
+     band turned over, and it was dead on the home page only because lit.css
+     loads after this sheet. On About - where this same component mounts
+     WITHOUT the band - it would have painted a light band nobody asked for,
+     under type that had already inverted for a dark one. */
   color: var(--c-shop-white);
 }
 

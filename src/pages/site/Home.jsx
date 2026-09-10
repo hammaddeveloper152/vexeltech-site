@@ -85,7 +85,7 @@ export default function Home() {
         <Marquee />
         <WorkGrid />
         <About />
-        <CounterRow />
+        <CounterRow band />
         <Testimonials />
         <Process />
         <Faq />

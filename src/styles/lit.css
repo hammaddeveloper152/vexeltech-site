@@ -153,8 +153,8 @@
    testing, and `body` keeps the far value as a plain background colour so a
    failure of the layer is a dark page rather than a white one.
 
-   EVERY SECTION IS TRANSPARENT OVER IT. The only exception is a concrete
-   band — see below — and there is no third case. */
+   EVERY SECTION IS TRANSPARENT OVER IT. The only exception is the marble
+   band — see below — and there is exactly one of those on the site. */
 html {
   background-color: var(--c-asphalt);
 }
@@ -189,9 +189,15 @@ body::before {
    you change what the floor is made of. The second material is BLACK MARBLE:
    a photograph, cover-fit and centred, with its own depth and its own veins.
 
-   TWO BANDS PER PAGE, MAXIMUM. A band is a change of material and a page that
-   changes material three times has no material. The home page has two — the
-   figures and the questions — and About has one.
+   A MATERIAL APPEARS ON EXACTLY ONE BAND ON THE WHOLE SITE. Not one per page —
+   one, total. The home page's counter row is it.
+
+   This replaced "two bands per page, maximum", which was the right instinct
+   counted at the wrong scale. The home page had two bands of THE SAME STONE,
+   the figures and the questions, with four sections between them; the second
+   one did not read as a second change of material, it read as the first
+   material carrying on underneath and surfacing twice. One material, one
+   appearance. A second band is a second stone or it is not a band.
 
    IT TAKES NO YELLOW BLOOM. The marble carries its own gold veining, which is
    the accent arriving as a fact about the stone rather than as a light thrown
@@ -200,7 +206,7 @@ body::before {
 
    THE SCRIM IS WHAT MAKES IT A GROUND. A photograph is not a surface to set
    type on: it has its own bright regions and they move with the crop. Asphalt
-   at 40% over the whole image flattens the range enough for a text value to
+   at 85% over the whole image flattens the range enough for a text value to
    hold anywhere on it, and the walk that sets that number measures the
    BRIGHTEST region rather than the average — see the record in DESIGN.md. */
 .band-marble {

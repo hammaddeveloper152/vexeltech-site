@@ -459,16 +459,22 @@
    onto a light ground would be 2.4:1.
    ========================================================================== */
 
-/* The one marble band on the home page. The ground itself is `.band-marble`
-   in lit.css — the only class on the site that lays down a colour. */
+/* THE ONE MARBLE BAND ON THE SITE. The ground itself is `.band-marble` in
+   lit.css - the only class here that lays down a ground of its own - and the
+   home page's counter row is the only mount that takes it. The same component
+   on About mounts without it.
+
+   The values below are dark-ground values and they hold either way: marble
+   under an 85% scrim and the page rig are both dark. That is why the band is a
+   prop rather than a fork - one set of type, two grounds it is correct on. */
 
 .counters__h {
   color: var(--c-shop-white);
 }
 
 /* INVERTED FOR THE MARBLE. The band was concrete and its values were
-   light-ground ones; it is black marble under a scrim now, so the figures are
-   white, the labels steel-lift and the hairlines white at 12%. */
+   light-ground ones; it is black marble under an 85% scrim now, so the figures
+   are white, the labels steel-lift and the hairlines white at 12%. */
 .counters .counters__item .counters__n {
   color: var(--c-shop-white);
 }
@@ -505,19 +511,21 @@
    ========================================================================== */
 
 /* ==========================================================================
-   10. FAQ — SHOP WHITE. The reading section, and the one light ground.
+   10. FAQ — NO GROUND. The reading section, transparent over the page rig.
 
-   Every pair flips: asphalt on white is 17.77, steel is 8.12, and the accent
-   as text becomes deep amber at 5.43 because machine yellow on white is
-   1.88:1 and is never text on a light ground.
-   ========================================================================== */
+   IT WAS THE SECOND MARBLE BAND AND IT IS NOT A BAND AT ALL NOW. A material
+   appears on exactly ONE band on the whole site. Two bands of the same stone
+   on one page reads as one material interrupted by the sections between them,
+   not as two changes of material - and the counter row above has the stone.
 
+   Its history in one line: shop white, then concrete, then marble, now the
+   rig. Every one of those was the section reaching for relief that the page
+   ground was not giving it, and the rig gives it: the FAQ sits low on the
+   home page, where the fall has taken the ground well away from the key.
 
-/* RESTATED AGAINST THE MARBLE. The band was shop white, then concrete, and is
-   black marble under a 40% asphalt scrim now — a dark ground — so every value
-   on it inverts. Headings white, body bone, labels steel-lift, hairlines white
-   at 12%. Measured over the image's BRIGHTEST region, which is the only region
-   that can fail. */
+   The values below stay exactly as the marble left them. Both grounds are
+   dark, so nothing needed restating - which is the argument for the whole
+   ladder being dark in the first place. */
 .faq__h,
 .faq__q,
 .faq__q-t {
@@ -532,26 +540,30 @@
   color: var(--c-steel-lift);
 }
 
-.faq__rule,
-.band-marble .counters__rule {
+/* WHITE AT 12%, AND NOTHING AFTER IT SETS `--c-line`. There were two rules
+   here, in this order: this one, and then a second `.faq__rule` putting the
+   light-ground hairline back. The second won, so the drawn rule under every
+   question was a value meant for concrete, on a dark section, doing nothing a
+   reader could see. It survived because a hairline that fails is invisible and
+   a hairline that is absent is also invisible. */
+.faq__rule {
   background: rgb(255 255 255 / 12%);
 }
 
-.faq__rule {
-  background: var(--c-line);
-}
+/* THE OPEN ROW IS A LIT OBJECT ON LIT-NEAR, with the two lights on its own
+   box. It is a plane raised toward the key, not a change of ground: the row
+   that has been opened is nearer than the three that have not.
 
-/* The open row inverted to white on a dark page. The page is white here, so
-   it inverts the other way: an open answer stands on asphalt — and it is the
-   one dark plane in the section, so it is the one place here the two lights
-   have anything to describe.
+   It stood on asphalt while the section was white, then stayed asphalt while
+   the section was marble - where asphalt under an 85% scrim is nearly the band
+   itself, so the open row separated from the closed ones by almost nothing.
 
    `background-color`, NOT `background`. The shorthand resets background-image,
    and this rule sits after Faq.css in the cascade: written as `background` it
    silently removed both lights from the row while every other object on the
    site had them. */
 .faq__item[data-open='true'] {
-  background-color: var(--c-asphalt);
+  background-color: var(--lit-near);
   background-image: var(--lit-key), var(--lit-rim);
   border-radius: var(--r-md);
   box-shadow: var(--lift-sm);
@@ -565,8 +577,11 @@
   color: var(--c-bone);
 }
 
+/* Steel-lift, not the accent. The mark is a control's state indicator and the
+   carrier rule spends the frame's yellow once - on this section that is the
+   counter row's lit rule above, not four plus signs. */
 .faq__item[data-open='true'] .faq__mark {
-  color: var(--c-accent-text-dark); /* back to machine yellow on asphalt */
+  color: var(--c-steel-lift);
 }
 
 .faq__item[data-open='true'] .faq__rule {

@@ -120,7 +120,15 @@ function Counter({ value, label, index, run, reduced, landed, onLanded }) {
   );
 }
 
-export default function CounterRow() {
+/* THE BAND IS A PROP, AND IT IS SET ON EXACTLY ONE MOUNT.
+
+   A material appears on one band on the whole site. This component mounts
+   twice - home and About - and when it carried the band class itself, one
+   change of stone became two bands of the same stone, which is one material
+   interrupted rather than two materials. Home passes `band`; About does not,
+   and its counter row is transparent over the page rig like every other
+   section on that page. */
+export default function CounterRow({ band = false }) {
   const reduced = useReducedMotion();
   const [ref, revealed] = useReveal();
   const [landed, setLanded] = useState(() => COUNTERS.map(() => false));
@@ -139,7 +147,7 @@ export default function CounterRow() {
 
   return (
     <section
-      className="vt counters band-marble"
+      className={band ? 'vt counters band-marble' : 'vt counters'}
       aria-labelledby="counters-h"
       data-revealed={revealed ? 'true' : 'false'}
       ref={ref}

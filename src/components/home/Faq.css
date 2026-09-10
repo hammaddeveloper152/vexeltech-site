@@ -1,11 +1,12 @@
 /* ==========================================================================
    Section 8 — the quiet one.
 
-   Layout family: stacked disclosure list on a light ground. Used once.
+   Layout family: stacked disclosure list. Used once.
 
-   White rather than concrete. The counter row is the other light section and
-   it is concrete, so the two reliefs are not the same relief, and there is a
-   dark section between them either way.
+   NO GROUND. This section was shop white, then concrete, then a marble band,
+   and it is transparent over the page rig now. A material appears on exactly
+   one band on the whole site and the counter row has it: two bands of the same
+   stone on one page is not two materials, it is one material interrupted.
 
    ---- How the collapse works, and why it is not animated -----------------
 
@@ -34,9 +35,8 @@
   --faq-bleed: min(var(--s-lg), var(--faq-pad));
 
   padding: var(--s-3xl) var(--faq-pad);
-  /* CONCRETE, NOT WHITE. Concrete bands are the only ground change on the
-     site, and a second light ground is a second exception. The band itself is
-     `.band-marble` in lit.css. */
+  /* Transparent. The ground and both blooms are the page rig's, declared once
+     in lit.css. */
   color: var(--c-shop-white);
 }
 
@@ -71,54 +71,53 @@
   /* Matches the list's bleed exactly, so the question text lines up with the
      section heading at every width. */
   padding-inline: var(--faq-bleed);
-  /* White at 12%: the band is dark marble, and `--c-line` is a light-ground
-     value that would be invisible on it. */
+  /* White at 12%: the section sits on the rig, and `--c-line` is a
+     light-ground value that would be invisible on it. */
   border-bottom: 1px solid rgb(255 255 255 / 12%);
 }
 
-/* The open row takes asphalt and inverts, so it reads as a struck band
-   against the white section rather than a slightly different white.
+/* THE OPEN ROW IS A LIT OBJECT - the standard one, on lit-near, with the key
+   top left and the arc rim bottom right. It is a raised plane on the rig, not
+   a ground change: the row lifts toward the light rather than switching what
+   it is made of, which is the difference between an object and a band.
 
-   Concrete was the first attempt and it was too quiet: concrete against white
-   is 1.11:1, which is the separation a card is meant to have when it is one
-   of many on a page, not the separation one open row needs from three closed
-   ones. Asphalt against white is 17.77:1. Ground change is the strongest
-   separation the system has, and this is the strongest ground change
-   available on a light section.
+   It was SHOP WHITE while this section was a marble band, and the values under
+   it were never restated: the question text was shop white on shop white. Half
+   a change looks like no change - the band inverted and the open row did not
+   follow it - and a conditional state is exactly where that hides, because a
+   contrast walk only sees the states it opens.
+
+   The row keeps its own boundary: a light hairline under a raised plane reads
+   as a seam, so the bottom edge takes the rim's arc tint, which is an edge the
+   row owns rather than a rule between it and the row below.
 
    Not animated. A background is neither transform nor opacity, so it changes
    when the row changes and the motion budget stays on the panel's contents. */
-/* THE OPEN ROW IS A LIT OBJECT. It is the one dark plane on a white page, so
-   it is the one place on this section where the two lights have anything to
-   describe — key top left, arc rim bottom right, on the row's own box.
-
-   The band is still its own boundary: a light hairline under it would read as
-   a seam at 13.72:1, so the bottom edge takes the rim's arc tint rather than
-   a white one, which is an edge the band owns rather than a rule between it
-   and the row below. */
 .faq__item[data-open='true'] {
-  background-color: var(--c-shop-white);
+  background-color: var(--lit-near);
   background-image: var(--lit-key), var(--lit-rim);
   border-radius: var(--r-md); /* container */
   border-bottom-color: var(--lit-edge-arc);
 }
 
-/* Everything inside the band flips to its dark-ground value. */
+/* The row is a lit plane, so its values are the dark-ground set - the same
+   ones the closed rows already carry, restated here because a value correct by
+   inheritance is one edit away from being wrong by inheritance. */
 .faq__item[data-open='true'] .faq__q-t {
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  color: var(--c-shop-white);
 }
 
-.faq__item[data-open='true'] .faq__mark,
 .faq__item[data-open='true'] .faq__a {
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  color: var(--c-bone);
 }
 
-/* The open row inverts to shop white, so its drawn rule takes `line`, the
-   light-ground hairline. It claimed `accent-draw-dark` until now — machine
-   yellow, a DARK-ground token, on a white row — and only load order kept it
-   off the page, because register.css sets the same pair. BUILD-LAW Contrast:
-   dead override code has produced near-invisible text on this project before,
-   and this one had the accent one sheet away from landing at 1.88:1 on white.
+.faq__item[data-open='true'] .faq__mark {
+  color: var(--c-steel-lift);
+}
+
+/* The open row is a dark plane, so its drawn rule is the dark-ground hairline
+   at the raised weight. It claimed `accent-draw-dark` once - machine yellow on
+   what was then a white row - and only load order kept it off the page.
    register.css owns where the accent lands; this is kept in step with it. */
 .faq__item[data-open='true'] .faq__rule {
   background: rgb(255 255 255 / 12%);
@@ -140,7 +139,7 @@
   bottom: -1px;
   left: var(--faq-bleed);
   height: 1px;
-  /* Closed rows sit on asphalt, so the dark-ground divider. Deep amber was
+  /* Closed rows sit on the rig, so the dark-ground divider. Deep amber was
      the value here while this section had a light ground; the register took
      the section to asphalt and register.css has set rule-dark ever since,
      with this line disagreeing underneath it. Same class as the open-row
@@ -348,8 +347,7 @@
   transform: scale(0.97);
 }
 
-/* Focus is a ring from tokens.css. On light grounds the asphalt offset is
-   what makes it visible, since machine yellow on white is 1.88:1 on its own. */
+/* Focus is a ring from tokens.css. */
 
 /* ---- Reduced motion ----------------------------------------------------
    The panel still opens and closes, it just arrives rather than travels. The

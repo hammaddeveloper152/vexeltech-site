@@ -180,12 +180,17 @@ section:has(> .pg__section-in > .abt__feature) {
    and a numeral where the object has one. This one has no numeral — it is a
    portrait, not the third of four — so it is the hairline alone. */
 
-/* ---- 4. The seam under the concrete band/* ---- 4. The seam under the concrete band -------------------------------
+/* ---- 4. The seam under the counter row --------------------------------
 
-   The counter row is a ground change and it ends on a hard edge, which is
-   correct. What was wrong is that the section beneath it had no top padding at
-   all, so "Who we work with" started on the band's last pixel and read as
-   clipped by it. 96px above, matching the band's own padding.
+   The counter row on THIS page is not a band - the marble appears once on the
+   site and the home page has it - so this seam is not a ground change any
+   more. The padding stays: the section beneath had none at all, so "Who we
+   work with" started on the row's last pixel and read as clipped by it. 96px
+   above, matching the row's own padding.
+
+   *The heading here read "the concrete band", twice, with the second copy
+   opening a comment inside the first. Harmless CSS and a dead giveaway that
+   the line was patched rather than rewritten when the ground changed.*
 
    Nothing below: the closing call carries its own 96px, and two paddings
    meeting is what put most of a viewport of empty ground between the people
