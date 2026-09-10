@@ -51,7 +51,7 @@ export default function Marquee() {
 
   return (
     <section
-      className="vt marquee"
+      className="vt marquee band-rays"
       aria-label="Client slots"
       data-running={running ? 'true' : 'false'}
     >

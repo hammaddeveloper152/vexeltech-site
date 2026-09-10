@@ -67,7 +67,7 @@ export default function Shell({ title, description, meta = true, children }) {
             SCREENSHOT CAUGHT IT, which is the second time on this project
             that a passing measurement has been wrong about paint. */}
         {meta ? (
-          <footer className="vt foot">
+          <footer className="vt foot scratched">
             <div className="foot__inner">
               <FooterMeta />
             </div>

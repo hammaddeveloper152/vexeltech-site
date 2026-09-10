@@ -3,6 +3,10 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import './styles/tokens.css';
 import App from './App.jsx';
+/* A band's photograph is fetched when the band is nearly on screen, not when
+   the page loads. There is no lazy loading for a CSS background, so this is the
+   thing that does it. See styles/bands.js. */
+import { startBands } from './styles/bands.js';
 import PageTransition from './components/site/PageTransition.jsx';
 
 /* PageTransition wraps the routes rather than sitting beside them because it
@@ -21,3 +25,5 @@ createRoot(document.getElementById('root')).render(
     </PageTransition>
   </BrowserRouter>
 );
+
+startBands();

@@ -178,73 +178,312 @@ body::before {
   background-repeat: no-repeat;
 }
 
-/* ---- THE MARBLE BAND, AND IT IS THE ONLY GROUND CHANGE -----------------
+/* ---- THE MATERIALS. ONE BAND EACH --------------------------------------
 
-   A section may stop being transparent for exactly one reason: it is a marble
-   band. Nothing else on the site lays down a ground of its own.
+   A section may stop being transparent for exactly one reason: it is a band,
+   and a band is a MATERIAL. Nothing else on the site lays down a ground.
+
+   A MATERIAL APPEARS ON EXACTLY ONE BAND ON THE WHOLE SITE. Not one per page —
+   one, total. Six materials, six bands, and the list below is all of them:
+
+     marble    the home counter row     the figures stand on stone
+     burst     the closing call         every route, the page's one accent
+     cubes     the home FAQ             the reading section
+     glass     the home Failures        the cost of not deciding
+     rays      the marquee strip        the one that is not a scrim
+     scratches the overlay              the one that is not a band
 
    THE LIGHT BANDS ARE GONE. Concrete was the second material and it was a
    value rather than a material — a lighter grey with a gradient on it, which
    is what a dark page looks like when you turn the lights up rather than when
-   you change what the floor is made of. The second material is BLACK MARBLE:
-   a photograph, cover-fit and centred, with its own depth and its own veins.
+   you change what the floor is made of. Every material here is a photograph
+   with its own depth, and every one of them is dark, so the page's values hold
+   on all of them and the light model behind them is never covered by something
+   brighter than itself.
 
-   A MATERIAL APPEARS ON EXACTLY ONE BAND ON THE WHOLE SITE. Not one per page —
-   one, total. The home page's counter row is it.
+   "ONE PER PAGE" WAS THE WRONG SCALE, and this is the rule that replaced it.
+   The home page once had two bands of THE SAME STONE with four sections
+   between them; the second did not read as a second change of material, it
+   read as the first carrying on underneath and surfacing twice. A second band
+   is a second stone or it is not a band. Home now carries four bands and they
+   are four materials, which is the distinction the old count could not make.
 
-   This replaced "two bands per page, maximum", which was the right instinct
-   counted at the wrong scale. The home page had two bands of THE SAME STONE,
-   the figures and the questions, with four sections between them; the second
-   one did not read as a second change of material, it read as the first
-   material carrying on underneath and surfacing twice. One material, one
-   appearance. A second band is a second stone or it is not a band.
+   THE SCRIM IS WHAT MAKES A PHOTOGRAPH A GROUND. A photograph is not a surface
+   to set type on: it has bright regions, they move with the crop, and a value
+   that holds over the dark half fails over the light half — which is the half
+   that decides. Every scrim below started at 45% and rose in 5% steps until
+   every pair on that band cleared its bar at 1280 and 390, measured over the
+   BRIGHTEST region inside each text element's own box. `.measure/scrim.mjs`.
 
-   IT TAKES NO YELLOW BLOOM. The marble carries its own gold veining, which is
-   the accent arriving as a fact about the stone rather than as a light thrown
-   at it. A bloom on top would be the page's key competing with veins that are
-   already the right colour and already in the right places.
-
-   THE SCRIM IS WHAT MAKES IT A GROUND. A photograph is not a surface to set
-   type on: it has its own bright regions and they move with the crop. Asphalt
-   at 85% over the whole image flattens the range enough for a text value to
-   hold anywhere on it, and the walk that sets that number measures the
-   BRIGHTEST region rather than the average — see the record in DESIGN.md. */
-.band-marble {
+   NONE OF THEM TAKES A YELLOW BLOOM. Each carries its own light — gold veins,
+   orange sparks, a blue flash, a specular edge — and a bloom on top would be
+   the page's key competing with light that is already in the picture and
+   already in the right place. */
+.band {
   position: relative;
   isolation: isolate;
   background-color: var(--c-asphalt);
-  background-image: url('/assets/marble-01.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-.band-marble::before {
+/* THE PHOTOGRAPH IS NOT FETCHED UNTIL THE BAND IS NEARLY ON SCREEN.
+
+   There is no lazy loading for a CSS background: it is fetched as soon as the
+   box carrying it is in the render tree, wherever that box is on the page. With
+   five materials on the home page that was 2100 KB before the reader had
+   scrolled a pixel, against 268 KB before this pass — for sections most of them
+   will never reach.
+
+   `data-near` is set by styles/bands.js at a viewport and a half of warning. A
+   band that never gets it is asphalt under its own scrim, which is the value
+   the rest of the site already uses, so no-JS degrades to a plain section
+   rather than to a broken one. */
+.band:not([data-near='true']),
+.band-rays:not([data-near='true'])::before,
+.scratched:not([data-near='true'])::after {
+  background-image: none;
+}
+
+.band::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
-  /* 85%, AND THE NUMBER WAS WALKED RATHER THAN CHOSEN.
-
-     It started at 40 and rose in 5% steps until every text pair on both bands
-     cleared its bar over the BRIGHTEST region of the image — not the average,
-     because the average is not where type breaks. The binding pair is the
-     counter labels at 390: steel-lift over the brightest patch a label can sit
-     on, 4.24:1 at 80% and 4.73:1 at 85.
-
-     It is a heavy scrim and the stone is subdued under it. That is the cost of
-     setting type on a photograph, and the alternative — a lighter scrim with
-     the labels moved to white — trades the band's whole value structure for
-     the picture. The material is still doing the work: the veins read, the
-     depth reads, and nothing on it is a flat field. */
   background: rgb(23 24 26 / var(--scrim, 85%));
   pointer-events: none;
 }
 
-/* Everything in the band sits above the scrim. */
-.band-marble > * {
+/* Everything in a band sits above its scrim. */
+.band > * {
   position: relative;
   z-index: 0;
+}
+
+/* MARBLE — the home counter row. Scrim 85%.
+
+   It started at 40 and rose to 85 because the binding pair is the counter
+   labels at 390: steel-lift over the brightest patch a label can sit on,
+   4.24:1 at 80% and 4.73:1 at 85. It is a heavy scrim and the stone is subdued
+   under it. That is the cost of setting type on a photograph, and the
+   alternative — a lighter scrim with the labels moved to white — trades the
+   band's whole value structure for the picture.
+
+   The gold veining is the accent arriving as a fact about the stone rather
+   than as a light thrown at it. */
+.band-marble {
+  background-image: url('/assets/marble-01.webp');
+  --scrim: 85%;
+}
+
+/* ---- THE VALUES ON A BAND ----------------------------------------------
+
+   STEEL-DARK IS AN ASPHALT-ONLY TOKEN and its own declaration says so. It is
+   5.12:1 on asphalt with no headroom, and a band is not asphalt: it is a
+   photograph under a scrim, and the scrim flattens the range without taking it
+   all the way down. Over the burst it reached 4.47:1 at a 95% scrim — three
+   hundredths short of the bar at the point where the scrim has all but deleted
+   the picture. That is not a scrim problem, it is the wrong token.
+
+   SO SECONDARY TEXT ON A BAND IS BONE. It clears every band at the scrim the
+   walk chose for the material, which is the right order: the material sets the
+   scrim, and the type is stated for the material.
+
+   `.fail__h` stays steel-dark deliberately. It is a heading that is not meant
+   to be the loudest thing in its section — the statements are — and at h2 it
+   is large text against a 3.0 bar, which it clears. That decision is recorded
+   in Failures.css and this does not reverse it. */
+.band .callband__note,
+.band .fail__c {
+  color: var(--c-bone);
+}
+
+/* BURST — the closing call, on every route.
+
+   The one band that repeats, because the call repeats: it is the same block on
+   seven pages and it is each page's only accent, so it is the one place a
+   material can appear more than once without being a second material. An
+   explosion of orange sparks, which is the accent's own hue arriving as a
+   photograph rather than as a fill.
+
+   THE BURST CENTRE SITS BEHIND THE HEADING. `background-position` is derived,
+   not eyeballed: `.measure/bandpos.mjs` solves for the percentage that lands
+   the image's bright centroid on the heading's box at each width, and the two
+   values below are what it returned. Centred, the brightest part of the frame
+   would sit under the empty middle of a band whose content is a heading at the
+   left and a button at the right. */
+.band-burst {
+  background-image: url('/assets/bands/burst.webp');
+  /* 90%, AND CONTRAST ONLY ASKED FOR 65.
+
+     The contrast walk cleared this band at 65: the binding pair is the note at
+     1280, bone over the brightest spark a line of it can sit on, 3.87:1 at 60%
+     and 4.56:1 at 65. Walked on three routes, because this is the one band that
+     repeats and each page's copy is a different length over a different part of
+     the burst.
+
+     THE CARRIER RULE TOOK IT TO 90. At 65 the sparks covered 56% of the band at
+     1280 and 30% at 390 in machine yellow's own hue — and this band's carrier is
+     the BUTTON, the one thing on seven pages the reader is meant to act on. A
+     yellow control on an orange field is exactly the failure the one-carrier
+     ceiling names, whether the orange was declared or photographed. At 90 the
+     yellow on the band falls to 3.35% at 1280, and what is left at 390 is the
+     button itself.
+
+     The sparks still read. This is a scrim heavy enough to make them a texture
+     rather than a subject, which is the correct weight for a ground under the
+     page's single most important control. */
+  --scrim: 90%;
+  /* NOT `cover`, AND THAT IS THE WHOLE PROBLEM WITH `cover` HERE.
+
+     This band is wide and short. Cover scales a landscape image to exactly the
+     band's width, which leaves NO horizontal slack — every percentage resolves
+     to the same picture and the burst is stuck at the band's centre, which is
+     the one part of this band with nothing in it. Doubling the layer buys the
+     slack back and the position becomes a placement again.
+
+     200% of the width also covers at every width the call band appears at: the
+     image is 1.43:1, so the layer is 1.4 x the band's width tall, and the band
+     is never taller than that. Below 768 it is 460 tall on a 390 band against
+     546 of layer. */
+  background-size: 200% auto;
+  /* Stacked layout: the heading is near the top of a tall band. */
+  background-position: 51% 100%;
+}
+
+@media (min-width: 768px) {
+  /* Two columns, heading left, button right. Solved at 768, 1024 and 1280 —
+     71%, 74% and 75% — so one value carries all three within 21px. */
+  .band-burst {
+    background-position: 73% 48%;
+  }
+}
+
+/* CUBES — the home FAQ. A field of metallic cubes: no centre, no subject, an
+   even chaos at a constant density. That is what this section needs and the
+   others do not. Four questions in a stack are a list, and a list wants a
+   ground that does not compete for a reading position — a burst under a
+   four-row accordion would put its brightest point under one arbitrary row. */
+.band-cubes {
+  background-image: url('/assets/bands/cubes.webp');
+  /* 75%, AND THE PLUS MARK IS WHAT SET IT.
+
+     The type cleared at 50: the heading at 1280 failed at 45 with 2.93:1 and
+     passed at 50 with 3.37. It shipped at 50 for about an hour, and it was
+     wrong, because the scrim walk selected elements with a TEXT NODE and the
+     FAQ's plus mark is a span with an SVG in it. The mark was landing on a
+     specular cube edge at 1.38:1 against a 3.0 bar and nothing reported it.
+
+     A control's affordance is a contrast pair whether or not it is made of
+     letters. With icons in the walk this band binds on the mark at 1280 and
+     needs 75: 2.83:1 at 70, 3.26:1 at 75.
+
+     An even field has no bright core to hold down, only highlights — and
+     highlights are exactly what a small icon lands on. A subject would have
+     been easier here than a texture. */
+  --scrim: 75%;
+}
+
+/* GLASS — the home Failures section. A shattered flash, centred behind "What
+   it costs you".
+
+   ITS SCRIM HAS A FLOOR OF 70 AND THAT IS NOT A CONTRAST NUMBER. The image is
+   an arc-blue flash and the arc field rule says arc is a rim and an edge, never
+   a field. Under a heavy scrim the flash reads as a moment — a flare behind the
+   heading — and the blue stays where light is. Under a light one it becomes a
+   blue ground, which is arc doing the ground's job, which is the rule. The
+   floor is the rule; the walk can only take it higher. */
+.band-glass {
+  background-image: url('/assets/bands/glass.webp');
+  /* 90%, AND NEITHER CONTRAST NOR THE FLOOR SET IT. THE ARC FIELD RULE DID.
+
+     Contrast cleared this band at 70 on the first pass — the tightest pair is
+     the consequence line at 390 at 5.47:1 against a 4.5 bar — and would have
+     allowed 45. The stated floor was 70, so that is where it shipped first.
+
+     THE WALK SAID IT WAS STILL A FIELD. Arc covered 64% of the frame at 1280
+     and 42% at 390 at a 70% scrim: not a flash behind a heading, a blue
+     section. Raising it barely moved the number until 85, then fell off a
+     cliff — 55% at 85, 20.5% at 90 — because what a scrim removes first is the
+     wash and what it keeps longest is the core. That is the shape the rule
+     wants: at 90 the flare behind the heading survives and the blue everywhere
+     else does not.
+
+     The floor was a guess at where a flash becomes a field. The walk found it,
+     and it was 20 points higher. A rule that names a threshold has to be
+     measured against, not set by hand and assumed. */
+  --scrim: 90%;
+  /* The opposite problem to the burst band's. This section is TALL, so cover
+     scales to the height and leaves no VERTICAL slack — and the heading it has
+     to sit behind is near the top. 200% of the height, and the flash can be
+     placed.
+
+     One value carries both widths here: 49% 79% lands the flash within 22px of
+     the heading's centre at 1280 and 27px at 390. `.measure/bandpos.mjs`. */
+  background-size: auto 200%;
+  background-position: 49% 79%;
+}
+
+/* RAYS — the marquee strip, and THE ONE THAT IS NOT A SCRIM.
+
+   It is a cut-out: black comic radial lines on transparency, so there is no
+   ground to scrim. The material IS the ink. At 35% over the rig it darkens
+   rather than lightens, which is the opposite of every other band here, and it
+   is right for the one section that is already in motion: a swirl centred
+   under a strip that travels sideways gives the movement something to move
+   against without adding a second thing to read.
+
+   `--scrim` is not declared and `.band` is not on it, because there is nothing
+   to put a scrim over. */
+.band-rays {
+  position: relative;
+  isolation: isolate;
+}
+
+.band-rays::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: url('/assets/bands/rays.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* SCRATCHES — THE ONE THAT IS NOT A BAND.
+
+   An overlay, not a ground: white scratches on black at 6%, screen-blended, so
+   only the scratches land and the black does nothing. It is wear, and wear is
+   a property of a surface rather than a surface of its own — which is why it
+   is the one material allowed on top of another one.
+
+   THREE SURFACES CARRY IT AND NOTHING ELSE DOES: the marble band, the cubes
+   band, and the footer. The two bands are the site's two largest flat stretches
+   of photographed ground, where a little wear is what stops a photograph
+   reading as a wallpaper; the footer is the page's last frame and the one place
+   the ground is asked to feel like an object rather than a backdrop. On a
+   section that is transparent over the rig it would be scratches on the page
+   itself, which is a different claim entirely.
+
+   `::after`, NOT `::before`. The scrim is on `::before`, and the wear has to
+   land ON the scrimmed ground rather than under it. That is also why the
+   footer's mark moved to `::before` — see agency.css. */
+.scratched::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: url('/assets/bands/scratches.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.06;
+  mix-blend-mode: screen;
+  pointer-events: none;
 }
 
 

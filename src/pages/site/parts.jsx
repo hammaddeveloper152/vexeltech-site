@@ -56,7 +56,7 @@ export function Section({ title, note, children, labelledBy }) {
 /* The page's one accent. See the accent note at the top of pages.css. */
 export function CallBand({ heading, note }) {
   return (
-    <section className="vt callband" aria-labelledby="callband-h">
+    <section className="vt callband band band-burst" aria-labelledby="callband-h">
       <div className="callband__in">
         <h2 className="callband__h" id="callband-h">
           {heading}

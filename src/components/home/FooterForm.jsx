@@ -124,7 +124,7 @@ export default function FooterForm() {
   const sending = status === 'sending';
 
   return (
-    <footer className="vt foot">
+    <footer className="vt foot scratched">
       <div className="foot__inner">
         <h2 className="foot__h" id="foot-h">
           Get in touch

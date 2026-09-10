@@ -211,7 +211,7 @@ export default function Failures() {
   }, []);
 
   return (
-    <section className="vt fail" aria-labelledby="fail-h" ref={revealRef}>
+    <section className="vt fail band band-glass" aria-labelledby="fail-h" ref={revealRef}>
       <div className="fail__inner">
         {/* Deliberately not the loudest thing in the section. It is set in
             steel-dark rather than white so it separates from the statements

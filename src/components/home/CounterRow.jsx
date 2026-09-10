@@ -147,7 +147,7 @@ export default function CounterRow({ band = false }) {
 
   return (
     <section
-      className={band ? 'vt counters band-marble' : 'vt counters'}
+      className={band ? 'vt counters band band-marble scratched' : 'vt counters'}
       aria-labelledby="counters-h"
       data-revealed={revealed ? 'true' : 'false'}
       ref={ref}

@@ -630,8 +630,16 @@
 
    An inline data URI rather than a clip-path: a clip gives a silhouette and
    there is no way to stroke one. No request, no file. `non-scaling-stroke`
-   keeps the line 2px whatever the element scales to. */
-.foot::after {
+   keeps the line 2px whatever the element scales to.
+
+   `::before`, AND IT WAS `::after`. The scratches overlay is `::after` on
+   every surface that carries it, and a device that changes pseudo-element
+   depending on what else the element happens to have is a device nobody can
+   apply without reading the target first. The mark moved; the overlay is
+   uniform. The mark still paints above it - `::after` at z-index -1, the mark
+   at 0 - so the wear is under the mark, which is the right order for a scratch
+   on a surface and a mark drawn on top of one. */
+.foot::before {
   content: '';
   position: absolute;
   z-index: 0;

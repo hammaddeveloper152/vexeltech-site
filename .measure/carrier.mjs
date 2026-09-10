@@ -37,6 +37,34 @@ const arcish = (r, g, b) => (b - r) > 12 && b > 24;
      whether it has become a field: the share of the frame, and of the object's
      own surface, carrying arc ABOVE what the plane already has. */
 const FRAMES = [
+  /* THE BANDS ARE HERE BECAUSE THEY PAINT LIGHT THE PAGE DID NOT PUT THERE.
+
+     Four of the five new materials are photographs of light: orange sparks, a
+     blue flash, specular edges on metal, gold veins. Every one of those lands
+     in one of the two counters below without a single declaration naming the
+     accent or the arc, which is exactly the case a DOM walk cannot see and the
+     reason this one counts pixels.
+
+     The glass band is the one the rule was re-walked for. It is an arc-blue
+     flash across a whole section, and the question is not whether arc appears
+     - it does, that is the picture - but whether it has stopped being a moment
+     and become the ground. */
+  ['/', '.fail', 'failures, glass band', '.fail__item'],
+  ['/', '.faq', 'faq, cubes band', '.faq__item'],
+  ['/', '.counters', 'counters, marble band', '.counters__item'],
+  ['/', '.marquee', 'marquee, rays', '.marquee__track'],
+  /* THE OBJECT HERE IS THE BAND, NOT `.callband__in`. The rule is a share of
+     THE SURFACE THE CARRIER SITS ON, and the carrier is the button: measuring
+     it against the inner content box measures the button against a box it is
+     itself half of, which reports 7.78% at every scrim value and is a fact
+     about the grid rather than about the ground.
+
+     Against the band, with the burst at 90%: 3.35% at 1280 and 8.24% at 390.
+     With the image switched off entirely: 3.26% and 7.98%. The ground's own
+     contribution is a quarter of a point — the rest is the button, and at 390
+     a 48px full-width control on a 460px band is 8% by geometry before
+     anything is painted. */
+  ['/about-us', '.callband', 'call band, burst', '.callband'],
   ['/', '.services__grid', 'home services plates', '.svc__plate'],
   ['/', '.work__list', 'work grid', '.work__plate'],
   ['/about-us', '.plates', 'about plates, at rest', '.plate'],
