@@ -18,8 +18,8 @@ const SHOTS = [
   ['/', '.counters', 'band-counters', 'marble, and the scratches overlay'],
   ['/', '.marquee', 'band-marquee', 'rays at 35%'],
   ['/', '.fail', 'band-failures', 'glass'],
-  ['/', '.faq', 'band-faq', 'cubes, and the scratches overlay'],
-  ['/about-us', '.callband', 'band-call', 'burst'],
+  ['/', '.faq', 'band-faq', 'no ground, the rig'],
+  ['/about-us', '.callband', 'band-call', 'burst on a black scrim'],
   ['/about-us', 'footer.foot', 'band-footer', 'the scratches overlay on the rig'],
 ];
 
@@ -31,6 +31,38 @@ let last = null, p = null;
 for (const [route, sel, name, note] of SHOTS) {
   if (route !== last) {
     if (p) await p.close();
+
+/* ---- the seams, cropped across the join --------------------------------
+
+   A band's gap is a number the eye reads as one thing or another: a run of
+   plain ground, or the previous section growing a floor. The rule says 96px at
+   1280 from the last object to the band's edge, so the crop starts 96px above
+   that object and ends 96px into the band, and the join sits in the middle of
+   the frame with the measurement either side of it. */
+for (const [route, sel, name] of [['/services', '.band-burst', 'seam-services'],
+                                  ['/', '.band-marble', 'seam-counters']]) {
+  const sp = await b.newPage();
+  await sp.setViewport({ width: W, height: 900 });
+  await sp.goto('http://localhost:4179' + route, { waitUntil: 'domcontentloaded' });
+  await new Promise((r) => setTimeout(r, 2400));
+  await sp.evaluate(() => document.querySelectorAll('[class*="band-"], .scratched')
+    .forEach((e) => { e.dataset.near = 'true'; }));
+  const tot = await sp.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < tot; y += 400) {
+    await sp.evaluate((v) => window.scrollTo(0, v), y);
+    await new Promise((r) => setTimeout(r, 90));
+  }
+  await sp.evaluate(() => window.scrollTo(0, 0));
+  await new Promise((r) => setTimeout(r, 400));
+  const clip = await sp.evaluate((s) => {
+    const r = document.querySelector(s).getBoundingClientRect();
+    const top = r.top + scrollY;
+    return { x: 0, y: Math.round(top - 220), width: innerWidth, height: 420 };
+  }, sel);
+  await sp.screenshot({ path: `${OUT}/${name}.png`, clip });
+  console.log(`  ${(name + '.png').padEnd(22)} ${clip.width}x${clip.height}   the join, 220px either side`);
+  await sp.close();
+}
     p = await b.newPage();
     await p.setViewport({ width: W, height: 900 });
     await p.goto('http://localhost:4179' + route, { waitUntil: 'domcontentloaded' });

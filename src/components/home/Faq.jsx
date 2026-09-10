@@ -107,7 +107,7 @@ export default function Faq() {
   }, [openId]);
 
   return (
-    <section className="vt faq band band-cubes scratched" aria-labelledby="faq-h">
+    <section className="vt faq" aria-labelledby="faq-h">
       <div className="faq__inner">
         <h2 className="faq__h" id="faq-h">
           Questions

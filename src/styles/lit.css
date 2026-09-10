@@ -184,11 +184,10 @@ body::before {
    and a band is a MATERIAL. Nothing else on the site lays down a ground.
 
    A MATERIAL APPEARS ON EXACTLY ONE BAND ON THE WHOLE SITE. Not one per page —
-   one, total. Six materials, six bands, and the list below is all of them:
+   one, total. Five materials, and the list below is all of them:
 
      marble    the home counter row     the figures stand on stone
      burst     the closing call         every route, the page's one accent
-     cubes     the home FAQ             the reading section
      glass     the home Failures        the cost of not deciding
      rays      the marquee strip        the one that is not a scrim
      scratches the overlay              the one that is not a band
@@ -206,7 +205,27 @@ body::before {
    between them; the second did not read as a second change of material, it
    read as the first carrying on underneath and surfacing twice. A second band
    is a second stone or it is not a band. Home now carries four bands and they
-   are four materials, which is the distinction the old count could not make.
+   are three materials plus an overlay, which is the distinction the old count
+   could not make.
+
+   THE CUBES ARE NOT A BAND CANDIDATE, and this is the rule that took them out.
+   A MATERIAL WITH STRONG SPECULAR GEOMETRY IS AN OBJECT, NOT A GROUND. The
+   metallic cubes were a field of hard-edged solids, each one throwing its own
+   highlight — which means the picture is full of small bright shapes at
+   readable scale, and small bright shapes at readable scale are what the page
+   uses for OBJECTS. A ground has to recede, and a surface made of things that
+   each look like a plate cannot.
+
+   It failed in three separate ways and they were all the same failure. Its
+   scrim had to climb to 75% to keep a 24px icon off a highlight, at which point
+   the material it was chosen for was gone. The type sat on a field of edges
+   competing with the edges of the type. And the rows of a list read as one more
+   set of rectangles among several hundred.
+
+   The test is not whether an image is dark. Marble is dark and so is the glass
+   flash, and both recede: marble because its structure is veins at a scale
+   nothing on the page uses, and glass because its structure is a gradient with
+   one core. **If the picture contains objects, it is not a ground.**
 
    THE SCRIM IS WHAT MAKES A PHOTOGRAPH A GROUND. A photograph is not a surface
    to set type on: it has bright regions, they move with the crop, and a value
@@ -246,12 +265,23 @@ body::before {
   background-image: none;
 }
 
+/* THE SCRIM COLOUR IS A VARIABLE, AND ITS DEFAULT IS ASPHALT.
+
+   Asphalt is the page's own ground, so a scrim made of it takes a photograph
+   toward the value the rest of the site already sits at. That is right for a
+   material whose light is not the accent's — the marble's gold reads as gold
+   at any depth of asphalt, and the glass flash is meant to cool as it sinks.
+
+   IT IS WRONG FOR THE BURST. Asphalt is a warm-neutral grey, and 90% of it over
+   orange sparks pulls them grey before it pulls them dark: the band lost the
+   gold and kept the brightness, which is the opposite of what a scrim is for.
+   Pure black takes value without taking hue. See `.band-burst`. */
 .band::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgb(23 24 26 / var(--scrim, 85%));
+  background: rgb(var(--scrim-rgb, 23 24 26) / var(--scrim, 85%));
   pointer-events: none;
 }
 
@@ -259,6 +289,100 @@ body::before {
 .band > * {
   position: relative;
   z-index: 0;
+}
+
+/* ---- THE SPACE EITHER SIDE OF A BAND ----------------------------------
+
+   A BAND STARTS 96px AFTER THE PREVIOUS SECTION'S LAST OBJECT AND ENDS 96px
+   BEFORE THE NEXT ONE'S FIRST. 64px at 390.
+
+   Object to edge, not padding to padding. A band is a change of material and
+   the eye needs a run of plain ground on either side to read it as one: too
+   little and the band looks like the previous section grew a floor, too much
+   and the page has a hole in it with a picture at the bottom.
+
+   THE BAND OWNS THE GAP, WHICH MEANS THE NEIGHBOURS GIVE UP THEIR HALF OF IT.
+   Left to the sections, the number is whatever their two paddings happen to
+   add up to — and measured, that was every value between -4px and 192px on
+   four routes. The `/services` plates ended FOUR PIXELS PAST the call band's
+   top edge, because that section has no bottom padding and the plates bleed;
+   the footer sat 192px below every call band, because both were paying for the
+   same gap. Neither is a decision anybody made.
+
+   So the facing padding comes off both neighbours and the band carries a
+   margin. The gap is then one number in one place instead of a sum of three. */
+:root {
+  --band-gap: 64px;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --band-gap: 96px;
+  }
+}
+
+/* `:is` AND A DOUBLED CLASS, NOT `:where`. Written with `:where` these two
+   rules carry the specificity of their argument alone — (0,1,0) for the sibling
+   rule, and `:has` takes its most specific argument — which ties with `.foot`,
+   `.pg__section` and every other single-class padding on the site, and a tie is
+   settled by source order. Half of them won and half lost, which measured as a
+   footer sitting 192px below every call band while the section above it moved
+   correctly. The doubled class puts these one step above any of them. */
+:is(section, footer, article, aside, div):has(+ .band.band, + .band-rays.band-rays) {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+/* THE MARGIN AS WELL AS THE PADDING, and leaving it out cost 32px on three
+   routes. `main` is a block container, so the band's bottom margin COLLAPSES
+   with the next section's top margin and the larger of the two wins. The footer
+   carried 96px of its own, so at 1280 it looked correct by coincidence — 96
+   against a 96 target — and at 390 the band asked for 64, the footer's 96 won
+   the collapse, and the seam was half as tight again as the rule. A rule that
+   is right at one width by accident is not right. */
+.band.band + :is(section, footer, article, aside, div),
+.band-rays.band-rays + :is(section, footer, article, aside, div) {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+/* AND THE MARGIN TWO LEVELS IN, because a block box with no top padding does
+   not stop its first child's top margin — it collapses THROUGH and becomes the
+   box's own.
+
+   That is what the footer was doing. `.foot__meta` carries 96px of margin, it
+   collapsed out through `.foot__inner` and the footer to the seam, and it won
+   the collapse against the band's 64. The seam read 96 at both widths: right at
+   1280 for the wrong reason, and half again too loose at 390.
+
+   Containing it with `flow-root` was the wrong fix — it kept the 96 and moved
+   it inside the footer, so the gap became 192. The margin is not a gap the
+   footer needs when a band is above it; the band owns that space. */
+:is(.band.band, .band-rays.band-rays) + :is(section, footer, article, aside, div) > :first-child,
+:is(.band.band, .band-rays.band-rays) + :is(section, footer, article, aside, div) > :first-child > :first-child {
+  margin-top: 0;
+}
+
+/* The same, on the way in. Nothing has needed it yet — every section before a
+   band ends on padding rather than on a margin — and it is here so that the two
+   sides of a seam are governed by one rule rather than by one rule and a
+   coincidence. */
+:is(section, footer, article, aside, div):has(+ .band.band, + .band-rays.band-rays) > :last-child,
+:is(section, footer, article, aside, div):has(+ .band.band, + .band-rays.band-rays) > :last-child > :last-child {
+  margin-bottom: 0;
+}
+
+.band,
+.band-rays {
+  margin-block: var(--band-gap);
+}
+
+/* A band against the top or bottom of the document keeps the page's own edge,
+   not a second one: `main` has no padding there and a margin would be the only
+   thing between the bar and the material. */
+.band:first-child,
+.band-rays:first-child {
+  margin-top: 0;
 }
 
 /* MARBLE — the home counter row. Scrim 85%.
@@ -315,75 +439,75 @@ body::before {
    left and a button at the right. */
 .band-burst {
   background-image: url('/assets/bands/burst.webp');
-  /* 90%, AND CONTRAST ONLY ASKED FOR 65.
+  /* PURE BLACK, NOT ASPHALT, AND THE SPARKS ARE WHY.
 
-     The contrast walk cleared this band at 65: the binding pair is the note at
-     1280, bone over the brightest spark a line of it can sit on, 3.87:1 at 60%
-     and 4.56:1 at 65. Walked on three routes, because this is the one band that
-     repeats and each page's copy is a different length over a different part of
-     the burst.
+     Asphalt is a warm-neutral grey. Ninety per cent of it over an orange
+     explosion desaturates before it darkens: the sparks went grey and stayed
+     bright, so the band read as a dusty photograph rather than as gold at
+     depth. Black removes value and leaves hue alone, which is what a scrim over
+     the accent's own colour has to do. */
+  --scrim-rgb: 0 0 0;
+  /* 60%, RE-WALKED FROM 45 AGAINST THE BLACK SCRIM.
 
-     THE CARRIER RULE TOOK IT TO 90. At 65 the sparks covered 56% of the band at
-     1280 and 30% at 390 in machine yellow's own hue — and this band's carrier is
-     the BUTTON, the one thing on seven pages the reader is meant to act on. A
-     yellow control on an orange field is exactly the failure the one-carrier
-     ceiling names, whether the orange was declared or photographed. At 90 the
-     yellow on the band falls to 3.35% at 1280, and what is left at 390 is the
-     button itself.
+     The binding pair is the note at 1280, bone over the brightest spark a line
+     of it can sit on: 3.93:1 at 55% and 4.76:1 at 60. Walked on three routes,
+     because this is the one band that repeats and each page's copy is a
+     different length over a different part of the burst.
 
-     The sparks still read. This is a scrim heavy enough to make them a texture
-     rather than a subject, which is the correct weight for a ground under the
-     page's single most important control. */
-  --scrim: 90%;
+     IT SHIPPED AT 90 AGAINST AN ASPHALT SCRIM AND THAT IS A REVERSAL. The
+     carrier rule took it there: at 65% asphalt the sparks covered 56% of the
+     band in machine yellow's own hue, and this band's carrier is the button. A
+     yellow control on an orange field is what the one-carrier ceiling names.
+
+     The black scrim does not answer that objection — it sharpens it, because
+     the sparks keep their gold instead of going grey. What changed is the
+     decision, not the measurement: this band is the page's one accent and the
+     accent is allowed to be the picture here. The carrier walk still reports
+     the number and it is still over the ceiling; see the record in DESIGN.md,
+     where the ceiling now names its exception rather than being quietly
+     ignored on one band. */
+  --scrim: 60%;
   /* NOT `cover`, AND THAT IS THE WHOLE PROBLEM WITH `cover` HERE.
 
-     This band is wide and short. Cover scales a landscape image to exactly the
-     band's width, which leaves NO horizontal slack — every percentage resolves
-     to the same picture and the burst is stuck at the band's centre, which is
-     the one part of this band with nothing in it. Doubling the layer buys the
-     slack back and the position becomes a placement again.
+     Cover scales the image to fill the band, which means it leaves NO SLACK in
+     whichever axis it filled — and a percentage position does not place a
+     point, it distributes slack. On the wide short band above 768 that axis is
+     horizontal: every horizontal percentage resolves to the same picture and
+     the core is stuck at the band's centre, which is the one part of this band
+     with nothing in it. Below 768 the band is tall and the trapped axis is the
+     other one. So each takes the layer oversized in the axis it needs.
 
-     200% of the width also covers at every width the call band appears at: the
-     image is 1.43:1, so the layer is 1.4 x the band's width tall, and the band
-     is never taller than that. Below 768 it is 460 tall on a 390 band against
-     546 of layer. */
-  background-size: 200% auto;
-  /* Stacked layout: the heading is near the top of a tall band. */
-  background-position: 51% 100%;
+     THE POSITION IS SOLVED AGAINST THE PAINTED BAND, NOT THE FILE. The first
+     pass solved it from the image's own luminance centroid and shipped 73% 48%,
+     which put the core 136px right of the heading and 64px below it. The file's
+     centroid is a claim about the file: it is computed over the whole frame,
+     including scattered highlights the band's crop never shows, and the scrim
+     is not linear in luminance.
+
+     `.measure/bandpos.mjs` now renders the band with its type hidden and
+     measures the centroid of WHAT IS ACTUALLY PAINTED. The correction is linear
+     in the position, so the delta pushes straight back through the same
+     formula — but it took TWO passes, because moving the layer changes which
+     slice of the image the band is cropping, which moves the painted centroid
+     again. 136px out, then 77, then 17.
+
+     Where it lands now, against the heading's centre:
+
+       390   off by  7, 6px       1024  off by  8, 17px
+       768   off by 14, 21px      1280  off by 17, 15px  */
+  background-size: auto 200%;
+  background-position: 55% 80%;
 }
 
 @media (min-width: 768px) {
-  /* Two columns, heading left, button right. Solved at 768, 1024 and 1280 —
-     71%, 74% and 75% — so one value carries all three within 21px. */
+  /* Two columns, heading left, button right. One value carries 768, 1024 and
+     1280 within 21px in either axis. */
   .band-burst {
-    background-position: 73% 48%;
+    background-size: 200% auto;
+    background-position: 84% 56%;
   }
 }
 
-/* CUBES — the home FAQ. A field of metallic cubes: no centre, no subject, an
-   even chaos at a constant density. That is what this section needs and the
-   others do not. Four questions in a stack are a list, and a list wants a
-   ground that does not compete for a reading position — a burst under a
-   four-row accordion would put its brightest point under one arbitrary row. */
-.band-cubes {
-  background-image: url('/assets/bands/cubes.webp');
-  /* 75%, AND THE PLUS MARK IS WHAT SET IT.
-
-     The type cleared at 50: the heading at 1280 failed at 45 with 2.93:1 and
-     passed at 50 with 3.37. It shipped at 50 for about an hour, and it was
-     wrong, because the scrim walk selected elements with a TEXT NODE and the
-     FAQ's plus mark is a span with an SVG in it. The mark was landing on a
-     specular cube edge at 1.38:1 against a 3.0 bar and nothing reported it.
-
-     A control's affordance is a contrast pair whether or not it is made of
-     letters. With icons in the walk this band binds on the mark at 1280 and
-     needs 75: 2.83:1 at 70, 3.26:1 at 75.
-
-     An even field has no bright core to hold down, only highlights — and
-     highlights are exactly what a small icon lands on. A subject would have
-     been easier here than a texture. */
-  --scrim: 75%;
-}
 
 /* GLASS — the home Failures section. A shattered flash, centred behind "What
    it costs you".

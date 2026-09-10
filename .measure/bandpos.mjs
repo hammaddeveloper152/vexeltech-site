@@ -25,6 +25,7 @@
    both. When it is not, the output says so and the rule takes a breakpoint.
 */
 import puppeteer from 'puppeteer';
+import { PNG } from 'pngjs';
 
 const ROUTE = process.argv[2] || '/';
 const BAND = process.argv[3] || '.band-burst';
@@ -46,6 +47,12 @@ const b = await puppeteer.launch({ headless: 'new',
 /* ---- 1. the image's bright centroid, as a fraction of its own box ------- */
 const probe = await b.newPage();
 await probe.goto('http://localhost:4179' + ROUTE, { waitUntil: 'domcontentloaded' });
+/* THE BANDS ARE GATED ON `data-near` NOW, so at load their computed
+   `background-image` is `none` and there is no URL to read. Every band is
+   marked near before anything is measured. */
+await probe.evaluate(() => document.querySelectorAll('[class*="band-"], .scratched')
+  .forEach((e) => { e.dataset.near = 'true'; }));
+await new Promise((r) => setTimeout(r, 600));
 const src = IMG || await probe.evaluate((sel) => {
   const bg = getComputedStyle(document.querySelector(sel)).backgroundImage;
   return (bg.match(/url\(["']?([^"')]+)/) || [])[1];
@@ -89,6 +96,10 @@ for (const [W, H] of WIDTHS) {
   await p.setViewport({ width: W, height: H });
   await p.goto('http://localhost:4179' + ROUTE, { waitUntil: 'domcontentloaded' });
   await new Promise((r) => setTimeout(r, 2200));
+
+  await p.evaluate(() => document.querySelectorAll('[class*="band-"], .scratched')
+    .forEach((e) => { e.dataset.near = 'true'; }));
+  await new Promise((r) => setTimeout(r, 400));
 
   const geo = await p.evaluate((bandSel, tSel) => {
     const band = document.querySelector(bandSel);
@@ -148,5 +159,60 @@ if (solved.length === 2) {
       ` off by ${Math.round(Math.abs(landX - s.T[0]))},${Math.round(Math.abs(landY - s.T[1]))}px)`
     );
   }
+}
+/* ---- 4. WHERE IT ACTUALLY LANDS, OFF THE PAINTED BAND ------------------
+
+   Everything above is arithmetic on the image's own centroid. That is a claim
+   about the file, not about the section, and the two can disagree: the scrim
+   is not linear in luminance, the band crops a slice of the image, and a
+   fourth-power centroid over the WHOLE frame is pulled by scattered highlights
+   that the crop may not even include.
+
+   So the band is rendered with its type hidden and the centroid of what is
+   actually painted is measured, in the band's own coordinates, against the
+   heading's box. If this disagrees with the solve, this is the one that is
+   right — and the correction is linear, so the delta can be pushed straight
+   back through the same formula. */
+console.log(`
+  as painted:`);
+for (const [W, H] of WIDTHS) {
+  const p = await b.newPage();
+  await p.setViewport({ width: W, height: H });
+  await p.goto('http://localhost:4179' + ROUTE, { waitUntil: 'domcontentloaded' });
+  await new Promise((r) => setTimeout(r, 2200));
+  await p.evaluate(() => document.querySelectorAll('[class*="band-"], .scratched')
+    .forEach((e) => { e.dataset.near = 'true'; }));
+  const box = await p.evaluate((bandSel) => {
+    const el = document.querySelector(bandSel);
+    el.scrollIntoView({ block: 'center' });
+    const r = el.getBoundingClientRect();
+    /* the type would dominate any luminance measure of a band */
+    el.querySelectorAll('*').forEach((e) => { e.style.visibility = 'hidden'; });
+    return [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)];
+  }, BAND);
+  const tgt = await p.evaluate((tSel, bandSel) => {
+    const t = document.querySelector(tSel).getBoundingClientRect();
+    const br = document.querySelector(bandSel).getBoundingClientRect();
+    return [Math.round(t.left + t.width / 2 - br.left), Math.round(t.top + t.height / 2 - br.top)];
+  }, TARGET, BAND);
+  await new Promise((r) => setTimeout(r, 500));
+  const png = PNG.sync.read(await p.screenshot({ type: 'png' }));
+  await p.close();
+
+  const [bx, by, bw, bh] = box;
+  let sx = 0, sy = 0, sw = 0;
+  for (let j = Math.max(0, by); j < Math.min(png.height, by + bh); j++) {
+    for (let i = Math.max(0, bx); i < Math.min(png.width, bx + bw); i++) {
+      const k = (j * png.width + i) * 4;
+      const l = (0.2126 * png.data[k] + 0.7152 * png.data[k + 1] + 0.0722 * png.data[k + 2]) / 255;
+      const wt = l ** 4;
+      sx += (i - bx) * wt; sy += (j - by) * wt; sw += wt;
+    }
+  }
+  const cx = sx / sw, cy = sy / sw;
+  console.log(
+    `    ${String(W).padStart(4)}  painted core at ${Math.round(cx)},${Math.round(cy)}` +
+    `  target ${tgt[0]},${tgt[1]}  off by ${Math.round(cx - tgt[0])},${Math.round(cy - tgt[1])}px`
+  );
 }
 await b.close();
