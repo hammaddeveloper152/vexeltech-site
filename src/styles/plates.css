@@ -38,17 +38,12 @@
      element share that element's opacity. A light whose intensity moves needs
      a box of its own. The rim's intensity does not move, so it stays.
 
-     The layer is 400px square with the gradient centred in it, rather than a
-     200px gradient pinned `at 100% 100%`, because only a POSITIONED layer can
-     be transitioned. `at` is not an animatable coordinate. */
-  background-image: var(--lit-rim-moving);
-  background-repeat: no-repeat;
-  background-size: 480px 480px;
-  /* Station: the centre on the bottom-right corner. A background-position
-     percentage aligns the image's p% with the container's p%, so 100% puts the
-     layer's right edge on the container's — plus half the layer to bring its
-     centre back out to the corner. */
-  background-position: calc(100% + 240px) calc(100% + 240px);
+     THE RIM NO LONGER MOVES. It was a positioned layer so it could swing to
+     the point opposite the pointer; the spotlight holds it at its station, so
+     it goes back to the plain corner-pinned gradient every other lit object on
+     the site uses. One fewer moving part, and one fewer place for this plate
+     to differ from a card. */
+  background-image: var(--lit-rim);
   box-shadow: var(--lit-inset);
   /* The resting state. Alternating, so the four read as a stack that was set
      down rather than as one shape repeated. */
@@ -56,7 +51,7 @@
   perspective: 800px;
   transition:
     transform var(--d-drop) var(--ease-reveal),
-    background-position 400ms var(--ease-reveal);
+    background-color 400ms var(--ease-reveal);
 }
 
 /* THE KEY, on its own box so its strength can move. 22% in the gradient and
@@ -72,57 +67,68 @@
   background-repeat: no-repeat;
   background-size: 400px 400px;
   background-position: -200px -200px;
-  opacity: 0.636;
+  /* Declared at 24% and carried at 0.583: the 14% station. */
+  opacity: 0.583;
   pointer-events: none;
   transition:
     background-position 400ms var(--ease-reveal),
+    background-size 400ms var(--ease-reveal),
     opacity 400ms var(--ease-reveal);
 }
 
-/* ---- THE SECOND HOVER DEVICE ------------------------------------------
+/* ---- THE SPOTLIGHT ----------------------------------------------------
 
-   Light follows the pointer, the object rises to meet it.
+   This REPLACES the two-moving-lights version, which moved the key under the
+   pointer and swung the rim to the opposite corner in the same gesture.
 
-   Gated twice. The media query stops a touch device painting any of this, and
-   `usePointerLight` refuses any pointer that is not a mouse — both are needed,
-   because a stylus satisfies neither `hover` nor `fine` reliably and would
-   otherwise write coordinates no query would clear.
+   Two lights moving at once was one idea too many. The rim is the object's
+   shaded side — a fact about which way the plane faces — and swinging it
+   around the plate every time the pointer moved meant the object appeared to
+   be rotating in place rather than being lit. The rim holds its station now.
+   Only the key moves, and it stops being a corner glow while it does: it
+   becomes a SPOT, 260px at 28%, centred on the cursor.
 
-   ON THE WAY IN, 120ms. ON THE WAY OUT, 400ms. The light should keep up with
-   the pointer and then take its time going home; equal durations make the
-   return read as a second, unasked-for movement. The return is on the resting
-   rule above, so a plate the pointer has left eases back from wherever the
-   light actually was rather than snapping to the corner first. */
+   AND THE PLANE UNDER IT DROPS A STEP, lit-near to lit-far, over 200ms. That
+   is the half that makes it a spotlight rather than a brighter glow. A light
+   is only as bright as what surrounds it, and doubling the key's alpha on an
+   unchanged plane reads as a smudge getting bigger; dropping the plane makes
+   the same spot read as a beam. The two move together and neither works alone.
+
+   80ms FOLLOW, 400ms RETURN. The spot is under the pointer, not trailing it,
+   so it is the fastest transition on the site — 120ms was already a visible
+   lag once the light became a hard-edged spot rather than a soft corner. The
+   way back is unhurried for the same reason it always was: a fast return reads
+   as a second, unasked-for movement.
+
+   Gated twice: the media query stops a touch device painting any of this, and
+   `usePointerLight` refuses any pointer that is not a mouse. */
 @media (hover: hover) and (pointer: fine) {
   .svc__plate[data-lit='true'] {
-    /* The rim goes to the point opposite the pointer. Two lights on the same
-       side is one light with a colour problem — that holds while they move. */
-    background-position:
-      calc((100 - var(--mx, 100)) / 100 * var(--pw, 0px) - 240px)
-      calc((100 - var(--my, 100)) / 100 * var(--ph, 0px) - 240px);
+    /* The plane drops so the spot has something to read against. */
+    background-color: var(--lit-far);
     transition:
       transform var(--d-drop) var(--ease-reveal),
-      background-position 120ms linear;
+      background-color 200ms var(--ease-reveal);
   }
 
   .svc__plate[data-lit='true']::before {
-    /* The key goes under the pointer. `--mx` is a percentage and the maths is
-       here rather than in the hook: see usePointerLight for why a
-       background-position percentage cannot track a cursor. */
+    /* 200px station to a 300px spot: the layer is 400px carrying a 200px
+       radius, so scaling it to 600 scales the radius to 300. `background-size`
+       is animatable where the gradient's own radius is not. */
+    background-size: 600px 600px;
     background-position:
-      calc(var(--mx, 0) / 100 * var(--pw, 0px) - 200px)
-      calc(var(--my, 0) / 100 * var(--ph, 0px) - 200px);
-    /* 14% to 22%: the plane brightens where the reader is. */
+      calc(var(--mx, 0) / 100 * var(--pw, 0px) - 300px)
+      calc(var(--my, 0) / 100 * var(--ph, 0px) - 300px);
+    /* 14% to 24%: declared at 24 and carried at 0.583 for the station. */
     opacity: 1;
     transition:
-      background-position 120ms linear,
-      opacity 120ms linear;
+      background-position 80ms linear,
+      background-size 80ms linear,
+      opacity 80ms linear;
   }
 
-  /* THE OBJECT RISES TO MEET THE LIGHT. Transform only — a 6px lift and two
-     degrees of tilt toward the pointer, on the plate's own 800px perspective.
-     The tilt is derived from the same two percentages, so the slot leans the
-     way the light came from. */
+  /* THE OBJECT RISES TO MEET THE LIGHT, unchanged. A 6px lift and two degrees
+     of tilt toward the pointer, on the plate's own 800px perspective. */
   .svc__plate[data-lit='true'] .svc__art {
     transform:
       translateY(-6px)
@@ -130,8 +136,7 @@
       rotateX(calc((50 - var(--my, 50)) / 50 * 2deg));
   }
 
-  /* PRESS IS THE WHOLE PLATE, not the slot. The reader is pressing an object,
-     and 160ms is BUILD-LAW's pinned press duration. */
+  /* PRESS IS THE WHOLE PLATE. 160ms is BUILD-LAW's pinned press duration. */
   .svc__plate:active {
     transform: rotate(0deg) translateY(-4px) scale(0.985);
     transition-duration: var(--d-press);
@@ -158,6 +163,12 @@
   .svc__plate[data-lit='true']::before,
   .svc__art {
     transition: none;
+  }
+
+  /* The plane does not drop either: the drop is half the spotlight and the
+     spotlight is movement. */
+  .svc__plate[data-lit='true'] {
+    background-color: var(--lit-near);
   }
 
   .svc__plate[data-lit='true'] .svc__art,
@@ -291,6 +302,22 @@
 
    96px Moldie, steel-lift, 6.33:1 on lit-near. The same numeral the index
    carries, so the slot and the rail name the same object. */
+/* THE PLATE'S NUMBER, top right. 11px mono in steel-lift — small enough to be
+   an index and not a label, and it is on the plate whether the slot is there
+   or not, because it names the plate rather than standing in for artwork. */
+.svc__n {
+  position: absolute;
+  z-index: 2;
+  top: var(--s-md);
+  right: var(--s-md);
+  font-family: var(--font-offer);
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+}
+
 .svc__art-n {
   font-family: var(--font-name);
   font-size: 96px;

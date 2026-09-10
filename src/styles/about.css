@@ -220,22 +220,25 @@ section:has(> .pg__section-in > .abt__people) {
   gap: var(--s-sm);
   /* BUILD-LAW: 48px minimum, and this is far past it. */
   min-height: 48px;
-  /* 32px, and the left side clears the 3px bar. It was 40, which put the plate
-     at 322px at 390 — two pixels over the line where the warm surfaces stop.
-     THE RULE IS A CONSTRAINT ON THE OBJECT, not only on its colour: a plate
-     that wants the warm surface keeps itself under 320. Tightening the padding
-     is the honest way to hold it there; flipping the ground for two pixels
-     would have made the same object two colours at two widths. 306px now. */
+  /* 32px, and the left side clears the 3px bar. It was 40, and came down to
+     hold the plate under a 320px line that no longer exists — the warm
+     surfaces and their height rule are both withdrawn. It stays at 32
+     because the plate reads better tight; the reason it was chosen is gone,
+     the value earned its place, and that is worth saying rather than leaving
+     a number nobody can account for. */
   padding: 32px 32px 32px calc(32px + var(--s-xs));
-  /* THE TWO LIGHTS: key top left, rim bottom right, edges to match. */
+  /* THE TWO LIGHTS: warm-white key top left, deep arc rim bottom right, edges
+     to match. Identical to the Services plates — the same declarations, the
+     same tokens, the same stations. */
   border: 1px solid var(--lit-edge);
   border-top-color: var(--lit-edge-top);
   border-right-color: var(--lit-edge-arc);
   border-bottom-color: var(--lit-edge-arc);
   border-radius: var(--r-md);
-  /* WARM, because it is 306px at its tallest and the warm surfaces run to
-     320. tokens.css carries the derivation. */
-  background-color: var(--c-surface-warm);
+  /* LIT-NEAR. It was `--c-surface-warm`, on a height rule that is withdrawn:
+     with two lights on the plane the tint under them reads as mud at any size.
+     See tokens.css. */
+  background-color: var(--lit-near);
   background-image: var(--lit-key), var(--lit-rim);
   box-shadow: var(--lit-inset);
   text-align: left;
@@ -275,7 +278,7 @@ section:has(> .pg__section-in > .abt__people) {
 .plate[data-open='true'],
 .plate[data-side='right'][data-open='true'] {
   transform: rotate(0deg) translateY(-4px);
-  background-color: var(--c-surface-warm-raised);
+  background-color: var(--c-lit-raised);
 }
 
 .plate:active {
@@ -293,7 +296,7 @@ section:has(> .pg__section-in > .abt__people) {
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  /* 15.86:1 on surface-warm, 14.32:1 on warm-raised */
+  /* 16.48:1 on lit-near, 13.79:1 on lit-raised */
   color: var(--c-shop-white);
 }
 
@@ -303,7 +306,7 @@ section:has(> .pg__section-in > .abt__people) {
   font-family: var(--font-offer);
   font-size: var(--t-small-size);
   line-height: var(--t-small-line);
-  /* 13.16:1 on surface-warm, 11.88:1 on warm-raised */
+  /* 13.67:1 on lit-near, 11.44:1 on lit-raised */
   color: var(--c-bone);
 }
 
@@ -315,13 +318,13 @@ section:has(> .pg__section-in > .abt__people) {
   font-family: var(--font-offer);
   font-size: var(--t-small-size);
   line-height: var(--t-small-line);
-  color: var(--c-bone); /* 11.88:1 on warm-raised */
+  color: var(--c-bone); /* 11.44:1 on lit-raised */
   opacity: 0;
   transition: opacity var(--d-drop) var(--ease-reveal);
 }
 
 .plate__reveal-lead {
-  color: var(--c-accent-text-dark); /* 7.62:1 on warm-raised */
+  color: var(--c-accent-text-dark); /* 7.34:1 on lit-raised */
 }
 
 .plate[data-open='true'] .plate__reveal {

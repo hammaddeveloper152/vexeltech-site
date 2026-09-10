@@ -3,8 +3,9 @@
    Three questions, all answered off computed style with the ground walked up
    and alphas composited, the same machinery `contrast.mjs` uses:
 
-     1. WHERE do the two warm surfaces actually paint? A token with a role and
-        no element is the surface-2 defect DESIGN.md records.
+     1. WHERE do the named surfaces actually paint? A token with a role and no
+        element is the surface-2 defect DESIGN.md records — and a DELETED
+        surface still painting somewhere is the same defect inverted.
      2. WHAT sits on them, and at what ratio? The rule is title white, body
         bone, detail steel-lift, and every value restated against the surface
         it is on rather than against the one it was written for.
@@ -12,12 +13,10 @@
         and it is banned above the ground: 4.57:1 on surface-warm and 4.13:1
         on warm-raised, and a plate that raises on hover cannot change its
         text value at the same time.
-     4. THE 320px LINE. A warm surface is for an object under 320px tall; past
-        that the tint stops being light on a plane and becomes a plane of
-        colour, and the object takes lit-near with the glow and the bar
-        carrying the warmth. Both directions are checked: a warm object that
-        has grown past the line, and a lit-near object small enough to have
-        taken the warm one.
+     4. THE 320px LINE IS WITHDRAWN. It said a warm surface was for an object
+        under 320px tall. The warm pair is deleted — with two lights on a plane
+        the tint under them reads as mud at any size — so there is no line left
+        to check and the height column is reported for information only.
 
    Hover and open states do not exist in a resting DOM, so the plates and the
    lead card are opened by script before the walk. */
@@ -25,12 +24,18 @@ import puppeteer from 'puppeteer';
 
 const BASE = 'http://localhost:4179';
 const ROUTES = ['/', '/about-us', '/pricing', '/services'];
-/* the small-object pair */
-const WARM = { '38,34,24': 'surface-warm', '46,42,30': 'surface-warm-raised' };
-/* the large-object pair */
+/* THE ONLY TWO SURFACES. Every card and plate on the site is one of these. */
 const LIT = { '30,31,34': 'lit-near', '43,45,49': 'lit-raised' };
-/* deleted 2026-09-10. Anything still standing on one of these is a defect. */
-const GONE = { '29,30,32': 'surface-1', '34,35,38': 'surface-2' };
+/* Kept empty ON PURPOSE. The warm pair used to live here; it is deleted, and
+   the check that mattered — is anything still standing on one — now runs
+   through GONE below. A pair with no members is the correct state and the
+   walk says so rather than dropping the row. */
+const WARM = {};
+/* Deleted surfaces. Anything still standing on one of these is a defect. */
+const GONE = {
+  '29,30,32': 'surface-1', '34,35,38': 'surface-2',
+  '38,34,24': 'surface-warm', '46,42,30': 'surface-warm-raised',
+};
 
 const b = await puppeteer.launch({ headless: 'new',
   args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader', '--force-color-profile=srgb'] });
@@ -103,7 +108,7 @@ for (const [w, h] of [[1280, 800], [390, 844]]) {
           cls: (el.className || '').toString().split(' ')[0] || el.tagName,
           ground: name, gone: !!GONE[k], hostH,
           /* over the line on warm, or under it on lit */
-          lineBreak: (!!WARM[k] && hostH > 320) || (!!LIT[k] && hostH > 0 && hostH < 320),
+          lineBreak: false, /* the 320px rule is withdrawn; see the header */
           size: Math.round(parseFloat(c.fontSize)),
           fg: `rgb(${fgv.slice(0, 3).join(', ')})`,
           steelDark: fgv[0] === 133 && fgv[1] === 138 && fgv[2] === 146,

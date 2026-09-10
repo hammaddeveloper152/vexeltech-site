@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import usePointerLight from '../home/usePointerLight.js';
 
@@ -15,31 +15,109 @@ import usePointerLight from '../home/usePointerLight.js';
    mounts is the grid around it and the number of items handed to it, and both
    of those belong to the mount. */
 
-/* THE ARTEFACT SLOT, and it needs no code change when the files land.
+/* THE ARTEFACT SLOT, AND IT IS NOT THERE UNTIL THE FILE IS.
 
-   3:2 at 40% of the plate, top-aligned, standing 32px above the plate's top
-   edge and 32px past its right. The `<img>` is rendered unconditionally and
-   points at `/assets/services/<id>.webp`; if the file is not there the load
-   fails, one piece of state flips, and the slot shows what a reservation is
-   allowed to show — its hairline and the discipline's numeral. Nothing else:
-   DESIGN.md holds every reserved slot on the site to a hairline and a numeral,
-   because decoration inside a reservation reads as content. */
-function Art({ id, name, n }) {
-  const [missing, setMissing] = useState(false);
-  return (
-    <div className="svc__art">
-      {missing ? (
+   A reservation used to render whatever happened: a hairline, a numeral, a
+   3:2 box bleeding past the plate. That is right in a workshop and wrong on a
+   shipped page. A reader does not know a photograph is coming — they see an
+   empty bordered box with a number in it and read it as a component that
+   failed. **An empty slot is removed, not marked.**
+
+   So the slot is asked for rather than assumed. `/assets/services/<id>.webm`
+   and `<id>.webp` are probed with a HEAD request; whichever resolves is what
+   renders, motion preferred, and if neither does the slot is not in the DOM at
+   all. The plate keeps a small mono index in its top-right corner instead —
+   the plate's own number, not a placeholder for anything.
+
+   THE RESERVATION IS BEHIND A FLAG, and the flag is OFF everywhere by
+   default — in dev as well as in a build. `VITE_SHOW_RESERVED=1` is what turns
+   it on, for whoever is supplying the files and needs to see the box, its
+   ratio and its bleed.
+
+   It was `import.meta.env.DEV`, which is the wrong switch: it ties "show me
+   what is missing" to "are you running the dev server", and those are
+   different questions. Everyone who opens the dev server is not producing
+   artwork, and someone producing artwork may well want to see the slots in a
+   preview build. One environment variable, asked for explicitly, off unless
+   somebody asks.
+
+   TWO REQUESTS PER PLATE WHILE NOTHING EXISTS, and they are same-origin 404s.
+   There is no way to know a file exists without asking, and the alternative —
+   render the slot and remove it on error — flashes a box on every load of a
+   page that has no files. Probing first costs a request and shifts nothing.
+   The day a file lands its plate makes one request instead of two. */
+function Art({ id, name, n, lit }) {
+  const [src, setSrc] = useState(undefined); // undefined = still asking
+
+  useEffect(() => {
+    let live = true;
+    /* 200 IS NOT PROOF THE FILE EXISTS. This is a single-page app, so the
+       server answers an unknown path with `index.html` and a 200 — every probe
+       "resolved", and four plates rendered a <video> pointing at a page of
+       HTML. The status says the request succeeded; the CONTENT TYPE says what
+       came back. A webm has to be video/*, a webp image/*, and the SPA
+       fallback is text/html, which is what tells them apart. */
+    const head = (u, kind) =>
+      fetch(u, { method: 'HEAD' })
+        .then((r) => {
+          const t = r.headers.get('content-type') || '';
+          return r.ok && t.startsWith(kind) ? u : null;
+        })
+        .catch(() => null);
+    Promise.all([
+      head(`/assets/services/${id}.webm`, 'video/'),
+      head(`/assets/services/${id}.webp`, 'image/'),
+    ]).then(([webm, webp]) => {
+      if (live) setSrc(webm || webp || null);
+    });
+    return () => {
+      live = false;
+    };
+  }, [id]);
+
+  if (src === undefined) return null;
+
+  if (src === null) {
+    /* Nothing to show. In dev, show what is reserved; in a build, show
+       nothing at all. */
+    if (import.meta.env.VITE_SHOW_RESERVED !== '1') return null;
+    return (
+      <div className="svc__art" data-reserved="true">
         <span className="svc__art-n" aria-hidden="true">
           {n}
         </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="svc__art">
+      {src.endsWith('.webm') ? (
+        /* Rests on its first frame and plays while the pointer is on the
+           plate. `muted` and `playsInline` because it is decoration with no
+           soundtrack and must not take over a phone screen; the plate's own
+           lit state drives it, so nothing here watches the pointer twice. */
+        <video
+          className="svc__art-img"
+          src={src}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          ref={(el) => {
+            if (!el) return;
+            if (lit) el.play().catch(() => {});
+            else el.pause();
+          }}
+        />
       ) : (
         <img
           className="svc__art-img"
-          src={`/assets/services/${id}.webp`}
+          src={src}
           alt={`${name} work by VexelTech`}
           loading="lazy"
           decoding="async"
-          onError={() => setMissing(true)}
         />
       )}
     </div>
@@ -65,6 +143,7 @@ export default function DisciplinePlate({
   href,
 }) {
   const lit = usePointerLight();
+  const [hot, setHot] = useState(false);
 
   /* AN ARTICLE, OR A LINK, AND THE MOUNT DECIDES.
 
@@ -85,7 +164,18 @@ export default function DisciplinePlate({
       aria-labelledby={`svc-${id}`}
       {...nav}
       {...lit}
+      onPointerEnter={(e) => e.pointerType === 'mouse' && setHot(true)}
+      onPointerLeave={(e) => {
+        lit.onPointerLeave(e);
+        setHot(false);
+      }}
     >
+      {/* THE PLATE'S OWN NUMBER, top right, and it is not a placeholder. The
+          same numeral the /services index rail carries, so one object has one
+          name wherever it appears. */}
+      <span className="svc__n" aria-hidden="true">
+        {n}
+      </span>
       <div className="svc__body">
         <Heading className="disc__name" id={`svc-${id}`}>
           {name}
@@ -100,7 +190,7 @@ export default function DisciplinePlate({
           ))}
         </ul>
       </div>
-      <Art id={id} name={name} n={n} />
+      <Art id={id} name={name} n={n} lit={hot} />
     </Tag>
   );
 }

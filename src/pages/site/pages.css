@@ -276,8 +276,9 @@
 
    The three surfaces these cards were the last thing naming — `--c-surface-1`,
    `--c-surface-2` and `--c-surface-raised` — left tokens.css in the same pass.
-   Cards and plates are `--c-surface-warm` and `--c-surface-warm-raised`, and
-   nothing else. */
+   Cards and plates are `--lit-near` and `--c-lit-raised`, and nothing else.
+   The warm pair that replaced these went the same way on 2026-09-10, for the
+   same reason in a different direction: a token nothing paints. */
 
 /* ---- The call band -----------------------------------------------------
 

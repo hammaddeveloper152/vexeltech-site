@@ -105,70 +105,33 @@
 :root {
   /* ---- Colour: dark ground (dominant) ---------------------------------- */
   --c-asphalt: #17181a; /* primary, the ground   */
-  /* ---- THE WARM SURFACES: what a plane lit by the key looks like --------
+  /* ---- THE WARM SURFACES ARE GONE, AND SO IS THE 320px RULE -------------
 
-     THREE NEUTRAL SURFACES WERE REMOVED FROM HERE ON 2026-09-10.
-     `--c-surface-1`, `--c-surface-2` and `--c-surface-raised` were asphalt's
-     own 220-degree hue at higher lightnesses. Every card and plate moved to
-     the warm pair, which left all three painting nothing, and the last rules
-     naming them — 395 lines of `.tier*` in pages.css, superseded by the
-     pricing ladder — went in the same pass. DESIGN.md keeps the arithmetic
-     they were derived from and the rule they leave behind: a surface may go
-     as high as the text values it can carry, and every one has to be named.
+     `--c-surface-warm #262218` and `--c-surface-warm-raised #2E2A1E` were the
+     card and plate surfaces for objects under 320px tall, on the argument that
+     a plane the yellow key falls on should carry some of that key in its own
+     value. Both are deleted, and the height rule with them.
 
-     WHY THEY WENT. The page's light source is machine yellow, and a card under
-     a yellow key that stays neutral grey is a card no light reached. A neutral
-     step is correct for a plane in SHADOW; nothing on this site is one.
+     WHY IT WAS WRONG, AND THE ABOUT PLATES ARE THE EVIDENCE. The warm pair was
+     derived when there was one light. There are two now, and the lights carry
+     the warmth: a warm-white key on one corner, a deep arc rim on the other,
+     and edges tinted to match. With those on the plane, the tint underneath
+     them is not warmth, it is MUD — a brown cast that reads as a dirty grey
+     rather than as a lit surface, and it reads that way at 214px exactly as it
+     did at 749. The size was never the variable. The number of lights was.
 
-     Same construction as the surfaces they replace — asphalt's LIGHTNESS, one
-     step up, hue pulled round to 40 degrees. Measured: 42.9deg at 12.2%
-     lightness against asphalt's 220deg at 9.6%, and the raised one 45.0deg at
-     14.9%. The saturation carries the warmth, 22.6% against asphalt's 6.1%.
+     So the height rule is withdrawn rather than adjusted: there is no
+     threshold at which a tinted plane becomes right again, because the thing
+     that made it wrong is now on every object. Every card and plate on the
+     site is `--lit-near`, raised to `--c-lit-raised`, with the two lights
+     doing the work the tint was hired for.
 
-     They sit 1.12:1 and 1.24:1 above asphalt, and 1.11:1 from each other.
+     ---- THE TWO SURFACES THAT ARE LEFT ---------------------------------
 
-     | Text            | surface-warm | warm-raised |
-     |-----------------|--------------|-------------|
-     | shop white      | 15.86        | 14.32       |
-     | bone            | 13.16        | 11.88       |
-     | steel-lift      | 6.09         | 5.50        |
-     | machine yellow  | 8.44         | 7.62        |
-     | steel-dark      | 4.57         | 4.13 FAILS  |
-     | error-dark      | 4.05 FAILS   | 3.66 FAILS  |
-     | success-dark    | 5.23         | 4.73        |
-
-     TWO CONSTRAINTS, and they are the pair rule from DESIGN.md Layered darks.
-
-     1. **steel-dark is banned on both**, and the number that matters is the
-        RAISED one. It clears 4.5 on surface-warm by 0.07 and fails on
-        warm-raised, and a plate that changes surface on hover cannot change
-        its secondary text value at the same time without the text visibly
-        shifting. One value for the pair: steel-lift, 6.09 and 5.50.
-     2. **NO FORM SITS ON EITHER.** error-dark is 4.05 and 3.66. The
-        form-state colours were half of what set the original ceiling and they
-        have never been re-derived, for a neutral surface or a warm one. */
-  /* THE ONLY CARD AND PLATE SURFACES ON THE SITE. There is no third and there
-     is no neutral one. */
-  --c-surface-warm: #262218; /* cards and plates UNDER 320px, at rest */
-  --c-surface-warm-raised: #2e2a1e; /* the same, marked or open */
-
-  /* ---- THE LARGE-OBJECT GROUND -----------------------------------------
-
-     A warm surface stops working at scale. Under about 320px of height the
-     tint reads as light falling across a plane; above it the same tint is a
-     plane OF COLOUR, and a 749px pricing card or a 1134px services plate in
-     #262218 is a brown rectangle rather than a lit one. DESIGN.md carries the
-     rule and this page's plates are the evidence.
-
-     So a large object takes `--lit-near`, the page ground's own near value,
-     and the warmth is carried by the two things that do not scale with area:
-     the warm-white corner glow and the 3px machine yellow bar.
-
-     `--c-lit-raised` is the marked state, 1.19:1 above lit-near — the same
-     separation the pricing lead card had before. It is the hex the deleted
-     `--c-surface-raised` used, and it is back under a new name because it now
-     has a call site: the lead card. That is the whole difference between this
-     and the surface-2 defect.
+     `--lit-near` is the plane. `--c-lit-raised` is the marked state, 1.19:1
+     above it — the separation the pricing lead card has always had. It is the
+     hex the deleted `--c-surface-raised` carried, back under a new name
+     because it has a call site: the lead card and the open About plate.
 
      | Text            | lit-near | lit-raised |
      |-----------------|----------|------------|
@@ -176,11 +139,13 @@
      | bone            | 13.67    | 11.44      |
      | steel-lift      | 6.33     | 5.30       |
      | machine yellow  | 8.77     | 7.34       |
+     | steel-dark      | 4.75     | 3.97 FAILS |
      | error-dark      | 4.21 F   | 3.52 F     |
 
-     Same two constraints as the warm pair: steel-dark is the GROUND's value
-     and stays there, and NO FORM SITS ON EITHER. */
+     Two constraints, unchanged by the warm pair's deletion: steel-dark is the
+     GROUND's value and stays there, and NO FORM SITS ON EITHER. */
   --c-lit-raised: #2b2d31;
+
   /* Machine yellow is the palette identity and is documented in DESIGN.md as
      the tertiary. It is NOT used directly by any component: the three role
      variables below each carry the literal hex rather than referencing it,
@@ -206,15 +171,13 @@
   --c-accent-draw-dark: #f0b323; /* stroke on asphalt.  9.46:1 */
   --c-accent-draw-light: #8a6300; /* stroke on concrete 4.90, white 5.43 */
   --c-steel-dark: #858a92; /* secondary text on asphalt ONLY */
-  /* SECONDARY TEXT ON THE WARM SURFACES, and the only value that may take
-     that job. steel-dark is the GROUND's secondary value and is banned above
-     it: 4.57:1 on surface-warm, which clears the floor by seven hundredths,
-     and 4.13:1 on warm-raised, which does not. A card that changes surface
-     when it opens cannot change its text value at the same moment, so the
-     pair takes one value — steel-lift, 6.09:1 and 5.50:1. It was written as a
-     guard for surface-raised and painted nothing for a while; it paints the
-     pricing marker now. */
-  --c-steel-lift: #9ba1a9; /* secondary text on the WARM surfaces ONLY */
+  /* SECONDARY TEXT ON A LIT SURFACE, and the only value that may take that
+     job. steel-dark is the GROUND's secondary value and is banned above it:
+     4.75:1 on lit-near, a value that only ever just clears the floor, and it
+     fails outright a step higher. An object that raises when it opens cannot
+     change its text value at the same moment, so the pair takes one value —
+     steel-lift, 6.33:1 on lit-near and 5.30:1 on lit-raised. */
+  --c-steel-lift: #9ba1a9; /* secondary text on lit-near and lit-raised */
   /* Body on dark. Pure white was the only body value on the dark grounds and
      it left the page with three painted values; bone is the fifth, and it
      clears 11.44:1 on raised and 15.42:1 on asphalt. White is kept for the

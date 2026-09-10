@@ -37,7 +37,7 @@ const arcish = (r, g, b) => (b - r) > 12 && b > 24;
      whether it has become a field: the share of the frame, and of the object's
      own surface, carrying arc ABOVE what the plane already has. */
 const FRAMES = [
-  ['/', '.services__card', 'services cards', '.services__card'],
+  ['/', '.services__grid', 'home services plates', '.svc__plate'],
   ['/', '.work__list', 'work grid', '.work__plate'],
   ['/about-us', '.plates', 'about plates, at rest', '.plate'],
   ['/about-us', '.plates', 'about plates, one open', '.plate', true],
