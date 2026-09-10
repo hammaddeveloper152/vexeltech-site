@@ -3,6 +3,7 @@ import Shell from './Shell.jsx';
 import { PageHead, Section, CallBand } from './parts.jsx';
 import ServicePlates from './ServicePlates.jsx';
 /* Loaded after pages.css so it wins on ground, plate and slot. */
+import '../../styles/plates.css';
 import '../../styles/services.css';
 
 /* THE SERVICES PAGE. The four disciplines at full length.

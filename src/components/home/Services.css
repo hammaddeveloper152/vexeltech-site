@@ -1,320 +1,121 @@
 /* ==========================================================================
-   Section 5 — the four disciplines, pinned.
+   SECTION 5 — WHAT WE DO. Four plates on asphalt, no pin.
 
-   Layout family: pinned horizontal scroller. Used once on this page.
+   Everything the pinned rail needed went with it: the viewport, the track, the
+   870px card, the horizontal tween, the focus-into-view helper and the
+   `data-arrived` stagger. What is left is a heading, a lead, and a grid.
 
-   Ground: asphalt, with no ground change on the cards. DESIGN.md is explicit
-   that on asphalt a card takes no ground change at all and is separated by
-   space; the hairline is the edge, and the space does the rest.
+   The plate itself is not described here. It is `plates.css`, shared with
+   `/services`, because two stylesheets describing one component is how a
+   component drifts.
    ========================================================================== */
 
 .services {
-  padding: var(--s-3xl) var(--s-md);
-  background: var(--c-asphalt);
-/* Section separator REMOVED 2026-09-08: on an all-asphalt page two
-   sections are separated by space, not by a stroke. See DESIGN.md,
-   "Separation on an all-asphalt page". */
+  /* Content plus 96px, top and bottom. The section is its content now; it has
+     no height of its own to hold. */
+  padding: var(--s-3xl) var(--inset);
+  /* Asphalt under the two lights at page scale, the same ground Failures
+     carries directly above it. The machine yellow field is gone — see
+     Services.jsx for why it went and what went with it. */
+  background-color: var(--c-asphalt);
+  background-image: var(--lit-key-page), var(--lit-rim-page);
 }
 
-/* The heading sits above the track and holds still while the cards move. It
-   is inside the pinned section, so it holds by construction rather than by a
-   counter-translate. */
-.services__head {
-  width: min(100%, 1200px);
-  margin: 0 auto var(--s-xl);
-}
-
-.services__h {
-  margin: 0;
-  font-family: var(--font-brand);
-  font-size: var(--t-h2-size);
-  line-height: var(--t-h2-line);
-  font-weight: var(--t-weight-brand);
-  letter-spacing: var(--t-track-display);
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
-  text-wrap: balance;
-}
-
-/* ---- Stacked by default ------------------------------------------------
-   This is the 390 layout and the reduced-motion layout, and it is the state
-   the markup renders in before any JavaScript runs. The pin is the
-   enhancement, never the baseline. */
-
-.services__viewport {
+.services__in {
   width: min(100%, 1200px);
   margin: 0 auto;
 }
 
-.services__track {
+/* ---- The head ---------------------------------------------------------- */
+
+.services__head {
+  position: relative;
+  /* Clears the 3px bar and stands the type off it, the same relation the
+     plates give their own bar. */
+  padding-left: var(--s-md);
+  margin-bottom: var(--s-2xl);
+}
+
+/* THE BAR, on the section heading. Same 3px, same machine yellow at 100%, same
+   full height as every plate carries — which is what makes the heading and the
+   four objects under it read as one set rather than a title above a grid.
+
+   It is the section's only carrier besides the plate bars, and all five
+   together are hairline scale. */
+.services__head::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: var(--c-accent-ground);
+}
+
+/* Monigue, white, left. The heading tier, unchanged; only the ground under it
+   moved, so the value is restated against asphalt rather than against the
+   yellow field it used to stand on. */
+.services__h {
+  margin: 0;
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-h);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+}
+
+.services__lead {
+  max-width: 62ch;
+  margin: var(--s-md) 0 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone); /* 13.84:1 on asphalt */
+}
+
+/* ---- The grid ---------------------------------------------------------- */
+
+.services__grid {
   display: grid;
   gap: var(--s-xl);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.services__card {
-  min-width: 0;
-}
-
-.services__link {
-  display: grid;
-  gap: var(--s-md);
-  /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
-  min-height: 48px;
-  padding: var(--s-lg);
-  /* No card border. The artefact slot inside carries its own hairline frame,
-     so the card was a second rectangle around a rectangle. The cards are
-     separated by the track's gap and by the slot frame each one holds. */
-  border-radius: var(--r-md); /* container */
-  color: var(--c-shop-white);
-  text-decoration: none;
-  transition:
-    transform var(--d-press) var(--ease-reveal),
-    opacity var(--d-press) var(--ease-reveal);
-}
-
-/* Two things used to sit here and both are gone.
-
-   The failure line is the section above now, at heading scale rather than
-   label scale. See Failures.css.
-
-   The 01 to 04 numerals are gone outright and nothing replaced them.
-   Structural devices have to encode something true about the content, and
-   these did not: branding, websites, marketing and automation are four
-   disciplines, not four steps, so the order carried no information the
-   reader needed and the numbering only looked like it did. The process
-   steps keep theirs because those genuinely are a sequence.
-
-   ---- This frame now carries NO accent, deliberately ----------------------
-
-   The numerals were the section's one accent, so removing them left the
-   accent unspent, and it stays unspent. DESIGN.md's "one accent per frame"
-   is a ceiling, not a quota: the work wall and the about section already
-   carry none.
-
-   The alternatives were considered and each fought a rule. The accent on
-   the discipline name would put a 58px yellow word well past the 5% of
-   surface limit, and this is a pinned track where one card leads with the
-   next peeking, so two of them would be in frame through every transition.
-   The card hairline going accent contradicts what a hairline is here, an
-   edge whose job is to separate without being looked at, and lighting it
-   means animating border-color, which BUILD-LAW allows for nothing. It
-   would also borrow the drawn-route language that the process route and the
-   failures rail share on purpose, where an accent line lighting on arrival
-   means a route the reader is travelling. A card scroller is not a route.
-
-   The section is not accent-free in the keyboard state: the focus ring is
-   machine yellow, which is the accent doing the job it exists for. */
-
-.services__discipline {
-  font-family: var(--font-brand);
-  font-size: var(--t-h2-size);
-  line-height: var(--t-h2-line);
-  font-weight: var(--t-weight-brand);
-  letter-spacing: var(--t-track-display);
-  color: var(--c-shop-white);
-}
-
-/* The artwork slot. Empty until the pillar artifact lands; a fixed-ratio
-   container so the card does not change size when it does. surface-1 is the
-   sanctioned inset-block tone and the hairline supplies the edge, since the
-   dark tones sit 1.07:1 apart and that alone does not read as one. */
-/* The slot keeps its reservation and loses its frame.
-
-   The box was drawn as a bordered surface-1 panel while it was honestly
-   empty, so the reserved area read as deliberate rather than as a mistake.
-   That stops being true the moment something is in it: measured at the
-   breakpoints, the icon is 3.1% of the slot at 1024 and 2.1% at 1280, and a
-   64px mark centred in a bordered 820x237 panel does not read as artwork, it
-   reads as an image that failed to load.
-
-   No station fixes this. 96px, the top of the ramp, is still under 5% of the
-   slot; the slot is sized for the pillar artifact and the artifact is what
-   fills it. Until it lands, the mark sits in open space instead of inside a
-   frame around emptiness, which is the difference between a card with a
-   symbol on it and a card with a hole in it. The reservation is unchanged, so
-   the artwork still drops in at the same size. */
-.services__art {
-  display: grid;
-  /* Centred down the slot, aligned to the text edge across it. The artwork
-     will fill this box, so the alignment only governs the interim icon, and a
-     centred icon in a left-aligned card reads as a stray mark. */
-  place-items: center start;
-  /* 3:1, and this is the reservation.
-
-     It was 16:10, which at a 870px card is a 512px tall box. That does not
-     fit a pinned section alongside the heading and the sub-services, which is
-     why the desktop rule replaced the ratio with `flex: 1` and let the slot
-     absorb whatever height was left. That produced the bug this replaces: a
-     64px icon centred in 301px of nothing, with the sub-services pushed to
-     the floor of the card.
-
-     4:1, and the criterion matters. The first attempt used 3:1, derived as
-     the tallest slot that still fits the tightest viewport. That is the wrong
-     test for a slot whose artwork does not exist yet: it maximises the empty
-     space the interim icon sits in, which is the bug being fixed.
-
-     So it is derived from the card's own type instead. The heading is 64px
-     and the sub-services 76px; at 4:1 the slot is 205px at a 1280 card, which
-     is substantial against both without dominating either. It also fits with
-     real room everywhere, 382px of card in a 491px viewport at 1024x768
-     against 437px at 3:1. One ratio at every width, so the artwork is cropped
-     once. */
-  aspect-ratio: 4 / 1;
-}
-
-/* Steel-dark, not white and not the accent. The card already spends its
-   emphasis on the discipline at h2 scale, and an icon that matches it for
-   strength is a second thing competing to be read first.
-
-   Still not the accent now that the numerals are gone and the accent is
-   unspent. An icon is the weakest thing on this card to spend it on, and a
-   frame with no accent is a decision this section is allowed to make. */
-.services__art-i {
-  color: var(--c-steel-dark);
-}
-
-.services__subs {
-  display: grid;
-  gap: var(--s-sm);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.services__sub {
-  font-size: var(--t-small-size);
-  line-height: var(--t-small-line);
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
-}
-
-/* ---- Hover, gated to real pointers ------------------------------------- */
-
-@media (hover: hover) and (pointer: fine) {
-  .services__link:hover {
-    opacity: var(--hover-opacity);
-    transform: translateY(-1px);
-  }
-}
-
-.services__link:active {
-  transform: scale(0.97);
-}
-
-/* Focus is a ring from tokens.css, never the hover treatment. */
-
-/* ---- Pinned horizontal, 768 and up, motion allowed ---------------------
-   The media condition here must stay identical to the one in gsap.matchMedia
-   in Services.jsx. If they drift, the track lays out horizontally with no
-   tween to move it, or pins with nothing to scroll. */
-
-@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
-  /* A pinned section MUST fit the viewport it is pinned to. While the pin
-     holds, anything past the fold is unreachable: the page is not scrolling,
-     so there is no way for a reader to get to it. At 1024x768 the card ran
-     past the bottom edge and its sub-services were stranded there. So the
-     section is exactly one viewport tall and the card fits inside it. */
-  .services {
-    display: flex;
-    flex-direction: column;
-    min-height: 100svh;
-    padding: var(--s-xl) var(--s-xl) var(--s-2xl);
-  }
-
-  .services__viewport {
-    width: 100%;
-    /* clip rather than hidden: a clipped box cannot be scrolled, so the
-       browser never quietly scrolls a focused off-screen card sideways and
-       fights the focus handler for the same pixels. */
-    overflow: clip;
-    flex: 1;
-    min-height: 0;
-    display: flex;
-  }
-
-  .services__track {
-    display: flex;
-    /* Centred, not stretched. The card is as tall as its content and sits in
-       the middle of the pinned viewport, with the air above and below it
-       rather than inside it. */
-    align-items: center;
-    gap: var(--s-2xl);
-    width: max-content;
-    will-change: transform;
-  }
-
-  .services__card {
-    /* One card leads at any moment, with the next one peeking. Four cards of
-       equal size are never on screen together, so the density law is
-       satisfied by the composition rather than by the card sizes.
-
-       The cap is 1200, the same measured column the hero and the other
-       sections use. A tighter cap looks identical up to 1280 and then starts
-       fitting a third card on wide screens, which is exactly the row of three
-       near-equal things the law exists to prevent. */
-    width: min(68vw, 1200px);
-    display: flex;
-  }
-
-  /* The card is sized by its content. It used to be stretched to the pinned
-     viewport: the track stretched the card, the card stretched the link, and
-     the artwork slot absorbed everything left over. Three elements each
-     passing height down to the next, and a 64px icon at the end of it. */
-  .services__link {
-    /* flex: 1 is for WIDTH. The card is a row flex container, so this is what
-       makes the link fill it; without it the link shrinks to its own content
-       and the artwork slot collapses with it. The height stretch that caused
-       the bug came from the TRACK stretching the card, which is now centred
-       instead. Two different axes, one property, and only one of them was
-       wrong. */
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-md);
-    padding: var(--s-lg);
-  }
-
-  .services__discipline {
-    font-size: var(--t-h1-size);
-    line-height: var(--t-h1-line);
-  }
-
-  /* Sub-services stagger in as their own card arrives. Hidden only inside
-     this block, so the stacked layouts never depend on a tween that is not
-     running there. */
-  .services__sub {
-    opacity: 0;
-    transform: translateY(var(--s-sm));
-    transition:
-      opacity var(--d-panel) var(--ease-reveal),
-      transform var(--d-panel) var(--ease-reveal);
-    transition-delay: calc(var(--i) * var(--stagger));
-  }
-
-  .services__card[data-arrived='true'] .services__sub {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @media (min-width: 1024px) {
-  .services {
-    padding: var(--s-3xl) var(--s-2xl);
+  /* 2x2, 40px apart. The artefact slot bleeds 32px past its plate's right
+     edge, which crosses into this gap and leaves 8px of it — measured, and the
+     reason the gap is not smaller. Below 1024 it is one column and the slot
+     does not bleed at all. */
+  .services__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* 72px between ROWS, 40px between columns. The artefact slot stands 32px
+       above its own plate, and at a 40px row gap it cleared the plate above by
+       8px — enough to not overlap and not enough to read as clear of it. The
+       column gap is untouched: nothing bleeds upward into it. */
+    gap: 72px var(--s-xl);
   }
 }
 
-/* ---- Reduced motion ----------------------------------------------------
-   The pin is released and the cards are a plain stack, which the base layout
-   above already is. Nothing to undo but the interaction transforms. */
+/* THE ITEM LIST IS ONE COLUMN HERE, and this is the only thing about the plate
+   that differs between its two mounts.
 
-@media (prefers-reduced-motion: reduce) {
-  .services__link:hover {
-    opacity: var(--hover-opacity);
-    transform: none;
-  }
+   `plates.css` runs `.disc__list` in two columns from 768 up, which is right
+   for a 1048px plate on `/services` holding nine to twelve items. In this grid
+   a plate is 556px at 1280 and its copy column is about 300, and three items
+   split across two columns of 150px is a table of one-and-a-bit words. The
+   plate is the same object; the column count is the mount's business. */
+.services__grid .disc__list {
+  grid-template-columns: minmax(0, 1fr);
+}
 
-  .services__link:active {
-    transform: none;
-  }
+/* THE PLATE IS A LINK HERE, so it takes the link colour off and lets its own
+   type values stand. */
+.services__grid .svc__plate {
+  text-decoration: none;
+}
+
+/* The three items are a summary, not the offer — the whole list is on
+   `/services` — so they sit at the body size rather than the plate's own. */
+.services__grid .disc__item {
+  padding: var(--s-sm) 0;
 }

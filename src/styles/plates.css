@@ -1,0 +1,313 @@
+/* ==========================================================================
+   THE DISCIPLINE PLATE. One rule set, two mounts.
+
+   It was written for `/services` and the home page's Services section now uses
+   the same object — not a copy of it, the same rules. That is why these came
+   out of services.css: two stylesheets describing one component is the
+   two-records defect this project keeps finding, and a plate that drifts on
+   one page is exactly the kind of drift nobody notices until a screenshot.
+
+   The class names keep the `svc__` prefix. They mean "services plate", and
+   both mounts are services plates.
+   ========================================================================== */
+
+/* ---- The plate ------------------------------------------------------ */
+
+.svc__plate {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  gap: var(--s-xl);
+  /* 40px, and the left side clears the 3px bar. The plate is its content plus
+     80 now rather than its content plus 128: at 64px the padding was a fifth
+     of a 618px plate, which is a frame, not a margin. */
+  padding: var(--s-xl) var(--s-xl) var(--s-xl) calc(var(--s-xl) + var(--s-xs));
+  /* THE TWO LIGHTS: key top left, rim bottom right, edges to match. */
+  border: 1px solid var(--lit-edge);
+  border-top-color: var(--lit-edge-top);
+  border-right-color: var(--lit-edge-arc);
+  border-bottom-color: var(--lit-edge-arc);
+  border-radius: var(--r-md);
+  /* LIT-NEAR, NOT WARM. These are 350 to 1183px tall and the warm surfaces
+     stop at 320 — see DESIGN.md. */
+  background-color: var(--lit-near);
+  /* THE RIM LIVES HERE AND THE KEY LIVES ON `::before`.
+
+     Both were on the element, which was simpler and is no longer possible: the
+     key's strength changes on hover, 14% to 22%, and background layers on one
+     element share that element's opacity. A light whose intensity moves needs
+     a box of its own. The rim's intensity does not move, so it stays.
+
+     The layer is 400px square with the gradient centred in it, rather than a
+     200px gradient pinned `at 100% 100%`, because only a POSITIONED layer can
+     be transitioned. `at` is not an animatable coordinate. */
+  background-image: var(--lit-rim-moving);
+  background-repeat: no-repeat;
+  background-size: 480px 480px;
+  /* Station: the centre on the bottom-right corner. A background-position
+     percentage aligns the image's p% with the container's p%, so 100% puts the
+     layer's right edge on the container's — plus half the layer to bring its
+     centre back out to the corner. */
+  background-position: calc(100% + 240px) calc(100% + 240px);
+  box-shadow: var(--lit-inset);
+  /* The resting state. Alternating, so the four read as a stack that was set
+     down rather than as one shape repeated. */
+  transform: rotate(-1.5deg);
+  perspective: 800px;
+  transition:
+    transform var(--d-drop) var(--ease-reveal),
+    background-position 400ms var(--ease-reveal);
+}
+
+/* THE KEY, on its own box so its strength can move. 22% in the gradient and
+   0.636 opacity at rest, which is 14.0% — the station value — so hovering is
+   one opacity transition rather than a second gradient swapped in. */
+.svc__plate::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background-image: var(--lit-key-moving);
+  background-repeat: no-repeat;
+  background-size: 400px 400px;
+  background-position: -200px -200px;
+  opacity: 0.636;
+  pointer-events: none;
+  transition:
+    background-position 400ms var(--ease-reveal),
+    opacity 400ms var(--ease-reveal);
+}
+
+/* ---- THE SECOND HOVER DEVICE ------------------------------------------
+
+   Light follows the pointer, the object rises to meet it.
+
+   Gated twice. The media query stops a touch device painting any of this, and
+   `usePointerLight` refuses any pointer that is not a mouse — both are needed,
+   because a stylus satisfies neither `hover` nor `fine` reliably and would
+   otherwise write coordinates no query would clear.
+
+   ON THE WAY IN, 120ms. ON THE WAY OUT, 400ms. The light should keep up with
+   the pointer and then take its time going home; equal durations make the
+   return read as a second, unasked-for movement. The return is on the resting
+   rule above, so a plate the pointer has left eases back from wherever the
+   light actually was rather than snapping to the corner first. */
+@media (hover: hover) and (pointer: fine) {
+  .svc__plate[data-lit='true'] {
+    /* The rim goes to the point opposite the pointer. Two lights on the same
+       side is one light with a colour problem — that holds while they move. */
+    background-position:
+      calc((100 - var(--mx, 100)) / 100 * var(--pw, 0px) - 240px)
+      calc((100 - var(--my, 100)) / 100 * var(--ph, 0px) - 240px);
+    transition:
+      transform var(--d-drop) var(--ease-reveal),
+      background-position 120ms linear;
+  }
+
+  .svc__plate[data-lit='true']::before {
+    /* The key goes under the pointer. `--mx` is a percentage and the maths is
+       here rather than in the hook: see usePointerLight for why a
+       background-position percentage cannot track a cursor. */
+    background-position:
+      calc(var(--mx, 0) / 100 * var(--pw, 0px) - 200px)
+      calc(var(--my, 0) / 100 * var(--ph, 0px) - 200px);
+    /* 14% to 22%: the plane brightens where the reader is. */
+    opacity: 1;
+    transition:
+      background-position 120ms linear,
+      opacity 120ms linear;
+  }
+
+  /* THE OBJECT RISES TO MEET THE LIGHT. Transform only — a 6px lift and two
+     degrees of tilt toward the pointer, on the plate's own 800px perspective.
+     The tilt is derived from the same two percentages, so the slot leans the
+     way the light came from. */
+  .svc__plate[data-lit='true'] .svc__art {
+    transform:
+      translateY(-6px)
+      rotateY(calc((var(--mx, 50) - 50) / 50 * 2deg))
+      rotateX(calc((50 - var(--my, 50)) / 50 * 2deg));
+  }
+
+  /* PRESS IS THE WHOLE PLATE, not the slot. The reader is pressing an object,
+     and 160ms is BUILD-LAW's pinned press duration. */
+  .svc__plate:active {
+    transform: rotate(0deg) translateY(-4px) scale(0.985);
+    transition-duration: var(--d-press);
+  }
+}
+
+/* The slot's resting transform and its curve. Outside the hover query, because
+   an element that is only given a transform inside a media query has nothing
+   to transition back to when the query stops matching. */
+.svc__art {
+  transform: translateY(0);
+  transform-style: preserve-3d;
+  transition: transform var(--d-drop) var(--ease-reveal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* NO TRANSITIONS. Not slower ones: every part of this device is movement,
+     and the lit stations are the whole of what it has to say when it cannot
+     move. The lights sit where they always sit, the object does not rise, and
+     the press does not scale. */
+  .svc__plate,
+  .svc__plate::before,
+  .svc__plate[data-lit='true'],
+  .svc__plate[data-lit='true']::before,
+  .svc__art {
+    transition: none;
+  }
+
+  .svc__plate[data-lit='true'] .svc__art,
+  .svc__plate:active {
+    transform: none;
+  }
+}
+
+.svc__plate[data-side='right'] {
+  transform: rotate(1.5deg);
+}
+
+/* Arrived: straight, and lifted 4px. One transform, one curve, one duration —
+   the About plate's mechanic exactly, on a different trigger. */
+.svc__plate[data-in='true'],
+.svc__plate[data-side='right'][data-in='true'] {
+  transform: rotate(0deg) translateY(-4px);
+}
+
+/* The glow was a `::before` carrying one light. It is two now, on the element
+   itself — `--lit-key` and `--lit-rim` in lit.css. */
+
+.svc__plate::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: var(--c-accent-ground);
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  /* Left column the copy, right column the artefact at 40% OF THE PLATE — of
+     its border box, not of the content box a percentage resolves against.
+
+     Those are different numbers and the bleed is why. The slot's rendered
+     width is its column plus the 64px of padding it crosses plus the 24px it
+     stands past the edge, so a plain `40%` rendered at 43% of the plate. The
+     column is solved back from the number that was asked for:
+
+       col + (padding + bleed) = 0.4 * (content + 2 * padding)
+       col = 40% + 0.8 * padding - padding - 24px
+           = 40% - 0.2 * padding - 24px
+
+     Measured at 1280: a 1048px plate, a 419px slot, 40.0%. */
+  .svc__plate {
+    grid-template-columns: minmax(0, 1fr) calc(40% - 0.2 * var(--s-xl) - 32px);
+    gap: var(--s-2xl);
+    align-items: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc__plate,
+  .svc__plate[data-side='right'],
+  .svc__plate[data-in='true'],
+  .svc__plate[data-side='right'][data-in='true'] {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* The copy column. `.disc__name`, `.disc__line`, `.disc__list` and
+   `.disc__item` are the page's existing rules and are untouched — the plate is
+   a new container around the same blocks, not a new set of type rules. The one
+   thing that changes is the line's value: it was steel-dark on the flat
+   ground, and steel-dark is banned on a surface. */
+.svc__body {
+  min-width: 0;
+}
+
+.svc__plate .disc__line {
+  color: var(--c-bone); /* 13.67:1 on lit-near */
+  margin-bottom: var(--s-lg);
+}
+
+.svc__plate .disc__detail {
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+}
+
+/* ---- 5. The artefact slot ---------------------------------------------
+
+   3:2 at 40% of the plate's border box, TOP-ALIGNED, and it stands 32px above
+   the plate's top edge as well as 32px past its right edge. Two bleeds rather
+   than one: a panel that only escapes sideways still reads as let into the
+   plate, and lifting it over the top edge is what makes it an object resting
+   ON the plate.
+
+   The column is solved back from the number that was asked for, because a
+   percentage resolves against the CONTENT box and the slot's rendered width
+   includes the padding it crosses and the 32px it stands past:
+
+     col + (padding + 32) = 0.4 * (content + 2 * padding)
+     col = 40% - 0.2 * padding - 32px
+*/
+.svc__art {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  /* The edges take the two lights; the FACE does not. A reserved slot is a
+     hairline and a numeral — see DESIGN.md — and a glow painted inside it is
+     the decoration that rule removed. Light on the edge is not content. */
+  border: 1px solid var(--lit-edge);
+  border-top-color: var(--lit-edge-top);
+  border-right-color: var(--lit-edge-arc);
+  border-bottom-color: var(--lit-edge-arc);
+  border-radius: var(--r-md);
+  background: none;
+}
+
+@media (min-width: 1024px) {
+  .svc__art {
+    margin-top: calc((var(--s-xl) + 32px) * -1);
+    margin-right: calc((var(--s-xl) + 32px) * -1);
+  }
+}
+
+/* THE NUMERAL IS THE PLACEHOLDER, and it is the only thing in the slot.
+
+   It was the page's own WebGL surface at half intensity. That is decoration in
+   a box that is reserved for a photograph, and decoration in a reservation
+   reads as content — a reader cannot tell a slot that is waiting from a slot
+   that is finished. DESIGN.md: a reserved slot shows a hairline and a numeral,
+   never decoration.
+
+   96px Moldie, steel-lift, 6.33:1 on lit-near. The same numeral the index
+   carries, so the slot and the rail name the same object. */
+.svc__art-n {
+  font-family: var(--font-name);
+  font-size: 96px;
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--c-steel-lift);
+}
+
+/* Cover-fit, so the ratio above is the crop and the file's own dimensions do
+   not move the layout. */
+.svc__art-img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+

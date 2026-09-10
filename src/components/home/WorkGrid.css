@@ -97,6 +97,55 @@
   background: none;
 }
 
+/* ---- THE SECOND HOVER DEVICE, minus one third of it -------------------
+
+   Light follows the pointer, the object rises to meet it. The work tile takes
+   THE RISE AND THE PRESS and does not take the moving light, and that is a
+   limit rather than an omission: it has no face to light.
+
+   The tile's box is either a RESERVED SLOT — a hairline and a numeral, which
+   DESIGN.md holds to exactly that and nothing else — or a clip filling it edge
+   to edge. A glow painted inside the first is the decoration that rule
+   removed; a glow under the second is a glow under an opaque video. There is
+   no third state where a plane exists to be lit.
+
+   So the tile rises 6px and tilts two degrees toward the pointer on the grid's
+   own 800px perspective, and presses at 160ms, which is the part of the device
+   that applies to an object regardless of what its face is made of. The four
+   discipline plates carry the whole of it; see plates.css. */
+.work__item {
+  perspective: 800px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .work__link[data-lit='true'] {
+    transform:
+      translateY(-6px)
+      rotateY(calc((var(--mx, 50) - 50) / 50 * 2deg))
+      rotateX(calc((50 - var(--my, 50)) / 50 * 2deg));
+  }
+
+  .work__link:active {
+    transform: scale(0.985);
+    transition-duration: var(--d-press);
+  }
+}
+
+.work__link {
+  transform: translateY(0);
+  transform-style: preserve-3d;
+  transition: transform var(--d-drop) var(--ease-reveal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work__link,
+  .work__link[data-lit='true'],
+  .work__link:active {
+    transform: none;
+    transition: none;
+  }
+}
+
 /* The moving surface, and the still that stands in for it. One rule for both,
    because <video> and <img> have to occupy the identical box: a reader who is
    refused video must get the same composition, and only the motion missing.
@@ -189,16 +238,23 @@
     transform: translateY(0);
   }
 
-  /* The lift. DESIGN.md states: opacity 0.92 plus 1px. */
-  .work__link:hover {
-    opacity: var(--hover-opacity);
-    transform: translateY(-1px);
-  }
+  /* THE 1px LIFT AND THE 0.92 DIM ARE GONE, and this is the device replacing
+     a rule rather than breaking it.
+
+     DESIGN.md's standard hover is opacity 0.92 plus 1px, and it is the right
+     default for a control that has nothing else to say. This tile now carries
+     the second hover device — the object rises to meet the light — and a 6px
+     rise with a 1px rise declared under it is two answers to one gesture. The
+     dim goes with it: the plates do not dim, and a device that behaves
+     differently on one of the objects that carries it is not a device. */
 }
 
-/* Press feedback on every pressable element. */
+/* Press feedback on every pressable element. `scale(0.985)` at 160ms is the
+   device's press and it supersedes the 0.97 this carried, for the same reason
+   the lift did: one gesture, one answer, across every object that carries it.
+   See the hover block above. */
 .work__link:active {
-  transform: scale(0.97);
+  transform: scale(0.985);
 }
 
 /* Focus is a ring, never the hover treatment: the ring comes from tokens.css

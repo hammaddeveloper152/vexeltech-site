@@ -178,103 +178,32 @@ html {
 }
 
 /* ==========================================================================
-   3. SERVICES — MACHINE YELLOW, full bleed, asphalt plates standing on it
+   3. SERVICES — ASPHALT, AND THE YELLOW GROUND IS GONE
 
-   The loudest statement the page can make about what this company sells, and
-   it is the section that says it. Every pair on the yellow is asphalt at
-   9.46:1; anything that has to be white stands on its own plate.
+   It was the one full-bleed field of the accent on the page, and the whole
+   section was rebuilt around it: a pinned rail, an 870px card, and every value
+   inside chosen to survive a yellow field. All of it is out. See
+   Services.jsx.
+
+   THE TWO RULES THE FIELD FORCED GO WITH IT.
+
+   The first was the names. They were machine yellow on an asphalt card, which
+   is legal at 9.46:1 and was right while the section stood on a dark ground;
+   on the yellow they became a second carrier in a viewport whose ground was
+   already the carrier, AND type the same colour as the field behind their own
+   card, which reads as a hole punched through the plate rather than as a name.
+   So they went bone. The ground is asphalt again — but they stay bone, for a
+   reason that has nothing to do with the old one: they are Moldie now, and the
+   name register is not an accent register. The one carrier on a plate is its
+   bar.
+
+   The second was the carrier table. DESIGN.md listed this section as a ground
+   that IS the carrier, which is why it was the only frame on the page allowed
+   to spend 43% of itself on the accent. It spends 0.2% now.
+
+   Nothing else here is a section rule any more. The plates are `plates.css`,
+   shared with /services; the grid, the head and the ground are Services.css.
    ========================================================================== */
-
-/* THE ONLY YELLOW GROUND ON THE PAGE, now the counter row has gone to
-   concrete. Lit like every other surface: the key is top left, so the ground
-   rises to #F5BC33 there and falls to #E6A81C at bottom right. Page-wide grain
-   at 4% already sits over it — one overlay, not one per section. */
-.services {
-  background-color: #e6a81c;
-  background-image: radial-gradient(120% 120% at 0% 0%, #f5bc33 0%, #e6a81c 62%);
-  background-repeat: no-repeat;
-}
-
-.services__h,
-.services .services__head {
-  color: var(--c-asphalt); /* 9.46:1 on machine yellow */
-}
-
-/* The cards are objects: plates standing on the yellow rather than tinting it,
-   and lit like every other surface — the 1px edge, the brighter top edge where
-   the key strikes, the 24px arc glow down the left edge at 10%, and the key's
-   own 200px corner glow at 16%.
-
-   THE GROUND IS surface-warm, NOT ASPHALT, and this is the section where the
-   reason is plainest: the card is standing ON the key. A plate the colour of
-   the page's shadow, sitting in the middle of a machine yellow field, is a
-   hole in the field. Warm, it is an object the same light reached. */
-.services__card {
-  /* LIT-NEAR: the card is 423px at 1280 and the warm surfaces stop at 320.
-     The glow and the accent carry the warmth. DESIGN.md has the rule. */
-  background-color: var(--lit-near);
-  /* THE TWO LIGHTS. The left-edge arc glow that used to run down this card is
-     gone with them: arc has one station on an object now, the rim at bottom
-     right, and a glow on the opposite edge said the light came from both. */
-  background-image: var(--lit-key), var(--lit-rim);
-  border: 1px solid var(--lit-edge);
-  border-top-color: var(--lit-edge-top);
-  border-right-color: var(--lit-edge-arc);
-  border-bottom-color: var(--lit-edge-arc);
-  border-radius: var(--r-md);
-  box-shadow: var(--lift), var(--lit-inset);
-}
-
-/* THE DISCIPLINE NAMES ARE BONE, NOT YELLOW, and this is the seam walk again.
-
-   They were machine yellow on the asphalt card, which is legal at 9.46:1 and
-   was right while the section stood on a dark ground. On a yellow ground it is
-   two problems at once: it is a second yellow carrier in a viewport whose
-   ground is already the carrier, and it is type the SAME COLOUR as the field
-   behind the card, which reads as a hole punched through the plate rather than
-   as a name.
-
-   The section's yellow is the ground. The names are bone on asphalt, 13.84:1,
-   and the card does the tying rather than the colour. */
-/* THE NAME FACE. This is a product name — one of the four disciplines — and
-   Moldie is the face for those and for nothing else. 40px flat at both widths:
-   see the name register in tokens.css. */
-.services__discipline {
-  font-family: var(--font-name);
-  font-size: var(--t-name-l);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--c-bone); /* 13.16:1 on surface-warm */
-}
-
-/* Services.css raises the name to the h1 step inside the pinned rail. The name
-   register does not scale, so that override is cancelled here rather than
-   left to fight the cascade at one breakpoint. */
-@media (min-width: 861px) {
-  .services__discipline {
-    font-size: var(--t-name-l);
-    line-height: var(--t-loud-line);
-  }
-}
-
-.services__sub,
-.services__link {
-  color: var(--c-bone); /* 13.67:1 on lit-near */
-}
-
-/* The icon was steel-dark, which is the GROUND's secondary value and is 4.57:1
-   on a warm surface and 4.75:1 here — a value that only ever just clears the
-   floor. steel-lift is the large-object ground's own value, 6.33:1, and it
-   keeps the icon below the discipline name, which is the whole reason it was
-   not white. */
-.services__art-i {
-  color: var(--c-steel-lift);
-}
-
-.services__art {
-  border-color: rgb(255 255 255 / 14%);
-}
 
 /* ==========================================================================
    4. MARQUEE — asphalt, and IT CARRIES NO YELLOW

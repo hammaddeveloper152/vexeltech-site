@@ -4,6 +4,7 @@ import { useReveal } from './hooks.js';
 import { ArrowUpRight } from '@phosphor-icons/react';
 import { VideoTile, videoAllowed } from './Video.jsx';
 import { clipForPlate } from './workVideo.js';
+import usePointerLight from './usePointerLight.js';
 import './WorkGrid.css';
 
 /* Section 3. The work wall.
@@ -30,6 +31,10 @@ const TILES = [
 ];
 
 export default function WorkGrid() {
+  /* The rise and the press. The tile has no face to light — see
+     WorkGrid.css. */
+  const lit = usePointerLight();
+
   const [ref, revealed] = useReveal();
 
   /* Asked once, after mount, never watched. A connection that changes
@@ -54,7 +59,7 @@ export default function WorkGrid() {
             const clip = clipForPlate(i + 1);
             return (
             <li className="work__item" key={id} style={{ '--i': i }}>
-              <Link className="work__link" /* `/work/<id>` matched no route and fell through to the 404 —
+              <Link className="work__link" {...lit} /* `/work/<id>` matched no route and fell through to the 404 —
                  six tiles linking nowhere. There are no project pages and no
                  projects; `/portfolio` is where the work will live and is a
                  real page today. Re-point these when the plates are filled. */

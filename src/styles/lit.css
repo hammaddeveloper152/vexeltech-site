@@ -65,6 +65,17 @@
   --lit-key: radial-gradient(200px 200px at 0 0, rgb(255 241 204 / 14%) 0%, transparent 70%);
   --lit-rim: radial-gradient(240px 240px at 100% 100%, rgb(13 71 189 / 14%) 0%, transparent 70%);
 
+  /* THE SAME TWO LIGHTS, MOVABLE. `at 0 0` is a coordinate inside the image
+     and it is not animatable; a layer positioned by `background-position` is.
+     So these are the identical radials centred in their own square, sized and
+     positioned by whatever uses them. An object that never moves its lights
+     takes the pair above; one that does takes these. See plates.css.
+
+     The key is declared at 22% and carried at 0.636 opacity for its 14%
+     station, so the hover is one opacity transition rather than a swap. */
+  --lit-key-moving: radial-gradient(200px 200px at 50% 50%, rgb(255 241 204 / 22%) 0%, transparent 70%);
+  --lit-rim-moving: radial-gradient(240px 240px at 50% 50%, rgb(13 71 189 / 14%) 0%, transparent 70%);
+
   /* The same pair at page scale, for a dark section's ground. 900px and 5%:
      the bloom has a whole viewport to cross rather than a card. */
   --lit-key-page: radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%);
