@@ -1,5 +1,14 @@
 /* entrance.mjs — the hero entrance, frozen frame by frame, warm and cold.
 
+   RETIRED, 2026-09-14. The entrance this measured is removed: the hero is a
+   spot, its lines fade up, and there is no strike and no slam to freeze. Run
+   against the current build it throws at `assertTravel`, which is the
+   assertion doing its job — there is no travel. It is kept, not deleted,
+   because the harness README cites the two traps written up below and because
+   the cold-font method in `cold()` is the only place that method is written
+   down as code. A frame of what it measured is in
+   `.measure/evidence/retired-hero-strike-1280.png`.
+
    ONE ENTRANCE, because one shipped. This script drove `?entrance=a|b|c` while
    three characters were in the tree; the slam was taken on 2026-09-09 and the
    other two were removed with the switch, so the loop is gone and the frames

@@ -38,7 +38,7 @@ divided by a fixed number. The page scales as one thing.
 
 | Step | Token | Derivation | Floor / ceiling | 1280 |
 |---|---|---|---|---|
-| Display | in `Hero.css` | measure / 6.06 | none | 190px |
+| Display | in `Hero.css` | measure / 6.227 (the spot's widest two-line half, 6.102em, over 0.98) | none | 185px |
 | Figure | `--t-loud-fig` | measure / 9 | 64 / 128 | 128px |
 | Heading | `--t-loud-h` | measure / 12.12 | 48 / 96 | 95px |
 | Statement | `--t-loud-s` | measure / 20 | 40 / 58 | 58px |
@@ -138,7 +138,10 @@ step only — still button-secondary, transparent, square, sentence case.
   motion honoured everywhere: keep opacity, drop transform; ambient motion
   and grain switch off, held at the start of their loop.
 - The hero runs on one clock (`data-phase` load → ambient) and its motion is
-  scoped; the machine variant's `--d-strike` / `--ease-strike` /
+  scoped. **Superseded 2026-09-14:** the hero is a spot and its clock is the
+  film's own `currentTime` — a line per shot, fading up on its cut and out
+  200ms before the next; the phase, the strike and the slam tokens are gone.
+  The record of what was: the machine variant's `--d-strike` / `--ease-strike` /
   `--stagger-strike` are defined on the hero and exist nowhere else.
 - **THE MARK HAS NO SINGLE ANGLE. Never write "the mark's angle" — name the
   edge.** Measured off the shipped path: long arm outer **66.27°**, long arm
@@ -147,8 +150,11 @@ step only — still button-secondary, transparent, square, sentence case.
   until 2026-09-09; that figure is the SHORT arm's outer edge to within 0.87°
   and is 14° off the long arm. Derive from `.measure/markgeom.mjs`, never from
   memory.
-- **The angle appears in exactly two places and nowhere else.** The hero
-  entrance line, at **51.93°** — the short arm's outer edge, chosen because a
+- **The angle appears in exactly ONE place: the page transition.** The hero
+  entrance line was the second, and it was **removed on 2026-09-14** with the
+  slam it carried: the hero spot's lines fade up 8px over 250ms on the reveal
+  curve, and no line is drawn at any cut. Do not add one back without a
+  record. Its angle was **51.93°**, the short arm's outer edge, chosen because a
   66° line crosses 323px of a 1280 frame against 575px, and because the words'
   horizontal travel factor is **47/60 = 0.78333** off that edge against 0.4394
   off the long arm's. And the page transition, which cuts along the whole outer
@@ -164,10 +170,21 @@ step only — still button-secondary, transparent, square, sentence case.
 ## 5. Layout
 
 - **No layout family twice on one page.** Families in use: full-bleed type
-  hero, hanging-rail ledger, pinned horizontal scroller, horizontal strip,
+  hero (a film under it since 2026-09-14), icon columns (Failures, which was
+  the hanging-rail ledger), pinned horizontal scroller, horizontal strip,
   asymmetric grid, edge-bleed feature, four-across figure row, single-slot
   rotator, zigzag route, disclosure stack, form column. A new section takes a
-  new family or does not get built.
+  new family or does not get built. **Icon-and-text columns and a row of
+  figures are different families** — the user's amendment to BUILD-LAW,
+  2026-09-14; each column of one is read on its own and led by an object, and
+  the other is one comparison.
+- **A colour band is allowed when objects stand on it; an empty saturated
+  field is still banned** (2026-09-14). Two on home: Failures on machine
+  yellow (`--c-accent-field`) with four icons, and About on cream (`--c-cream`)
+  with the mascot. The pricing tabs and ladder stand on a yellow panel. **A
+  ground is not a carrier, and a rendered brand object is not one either**
+  (the mascot, the handset, the icons), like the wordmark. Every text value on
+  a band is restated for it — asphalt on both, and the focus ring asphalt too.
 - Spacing ramp 4 / 8 / 16 / 24 / 40 / 64 / 96 — 32 and 48 are absent on
   purpose. 4px baseline; every fixed line height is a multiple of 4.
 - Radius 0 by default, 4 on controls, 8 on containers; calls are square.
@@ -360,10 +377,21 @@ grounds down one page was one-accent-per-frame broken twelve times.
 settled; the slot draws a hairline frame reading FIGURE PENDING at the
 figure's own height, so nothing moves when the numbers land.
 
-**Open:** the global motion register (the strike is scoped to the hero);
-whether the machine variant ships; the figure role's wording; **whether six
-silent frames on eleven is too quiet**; the six clips and posters, and whether
-the 900 KB clip budget rises so the loops can run 6s rather than 4s.
+**Open:** the global motion register (the strike is gone with the hero spot,
+2026-09-14); whether the machine variant ships; the figure role's wording;
+**whether six silent frames on eleven is too quiet**; the six clips and posters,
+and whether the 900 KB clip budget rises so the loops can run 6s rather than 4s.
+**The work grid's Branding tags share every work frame with the plates' yellow
+numerals** — counted as carriers by the user's decision, reported 2026-09-14,
+decision open. **The hero spot fell back to the shader once at 390** under the
+measurement harness and never reproduced; `.measure/spotwalk.mjs` logs every
+media event so a repeat names its cause.
+
+**Settled 2026-09-14:** the hero is a spot (film, four lines fading up on their
+cuts, the final line staying, the copy plate's scrim walked to 70%); a colour
+band with objects on it is allowed (yellow Failures with four icons, cream
+About with the mascot, a yellow panel under the pricing ladder); grounds and
+rendered brand objects are not carriers; the mascot is `character.png`.
 
 **THE PRICE IS SETTLED, 2026-09-08: $700 for a website, ONE tier**, carrying
 the custom feature list. Branding $299 / $449, bundle **$999** for a $150

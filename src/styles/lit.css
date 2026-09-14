@@ -418,8 +418,9 @@ body::before {
    to be the loudest thing in its section — the statements are — and at h2 it
    is large text against a 3.0 bar, which it clears. That decision is recorded
    in Failures.css and this does not reverse it. */
-.band .callband__note,
-.band .fail__c {
+/* `.band .fail__c` came out with the glass band, 2026-09-14: Failures is a
+   flat yellow band with asphalt type, and a bone value there would be 1.12:1. */
+.band .callband__note {
   color: var(--c-bone);
 }
 
@@ -509,45 +510,12 @@ body::before {
 }
 
 
-/* GLASS — the home Failures section. A shattered flash, centred behind "What
-   it costs you".
-
-   ITS SCRIM HAS A FLOOR OF 70 AND THAT IS NOT A CONTRAST NUMBER. The image is
-   an arc-blue flash and the arc field rule says arc is a rim and an edge, never
-   a field. Under a heavy scrim the flash reads as a moment — a flare behind the
-   heading — and the blue stays where light is. Under a light one it becomes a
-   blue ground, which is arc doing the ground's job, which is the rule. The
-   floor is the rule; the walk can only take it higher. */
-.band-glass {
-  background-image: url('/assets/bands/glass.webp');
-  /* 90%, AND NEITHER CONTRAST NOR THE FLOOR SET IT. THE ARC FIELD RULE DID.
-
-     Contrast cleared this band at 70 on the first pass — the tightest pair is
-     the consequence line at 390 at 5.47:1 against a 4.5 bar — and would have
-     allowed 45. The stated floor was 70, so that is where it shipped first.
-
-     THE WALK SAID IT WAS STILL A FIELD. Arc covered 64% of the frame at 1280
-     and 42% at 390 at a 70% scrim: not a flash behind a heading, a blue
-     section. Raising it barely moved the number until 85, then fell off a
-     cliff — 55% at 85, 20.5% at 90 — because what a scrim removes first is the
-     wash and what it keeps longest is the core. That is the shape the rule
-     wants: at 90 the flare behind the heading survives and the blue everywhere
-     else does not.
-
-     The floor was a guess at where a flash becomes a field. The walk found it,
-     and it was 20 points higher. A rule that names a threshold has to be
-     measured against, not set by hand and assumed. */
-  --scrim: 90%;
-  /* The opposite problem to the burst band's. This section is TALL, so cover
-     scales to the height and leaves no VERTICAL slack — and the heading it has
-     to sit behind is near the top. 200% of the height, and the flash can be
-     placed.
-
-     One value carries both widths here: 49% 79% lands the flash within 22px of
-     the heading's centre at 1280 and 27px at 390. `.measure/bandpos.mjs`. */
-  background-size: auto 200%;
-  background-position: 49% 79%;
-}
+/* GLASS — DELETED, 2026-09-14. Failures was its one band, and Failures is a
+   flat machine yellow band now with four objects standing on it. Proved dead
+   before it came out: `.measure/dead.mjs ".band-glass, ..."` found no element
+   carrying the class on any route, at either width, in any state. The file
+   stays in /assets/bands/ as a material with no band, and what its scrim walk
+   learned — the arc field rule took it from 70 to 90 — is in DESIGN.md. */
 
 /* RAYS — the marquee strip, and THE ONE THAT IS NOT A SCRIM.
 

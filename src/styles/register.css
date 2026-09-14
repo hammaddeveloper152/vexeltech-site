@@ -68,26 +68,21 @@
 }
 
 /* ---- Failures -----------------------------------------------------------
-   NO CARRIER. It yielded to the hero across the seam between them.
+   A MACHINE YELLOW BAND, 2026-09-14, and every value on it is ASPHALT.
 
-   The lead statement carried the accent at the figure size. It shares a frame
-   with the hero's call for 380px of scroll at 1280 and 280px at 390 — nearly
-   half a screen — and the two together painted 9.38% of that frame yellow,
-   almost double what one frame is allowed. The hero keeps its call because
-   DESIGN.md Components names the primary call as the one job the accent as a
-   FILL exists for, and there is one per frame.
+   The band's ground is in Failures.css. This sheet sets the type, and it
+   loads after that one, so the colour is restated here with its ratio: the
+   heading rule above would otherwise hand the section white type, which on
+   yellow is 1.88:1. A ground change restates its own text values; DESIGN.md.
 
-   The statement keeps everything else: the figure size, the lead position,
-   the job of being the one of four the reader meets first. Only the colour
-   goes, which is the move the rail below it already made. It goes to shop
-   white at 17.77:1, which is what the other three statements carry, so the
-   lead is now distinguished by size alone — and a step and a half of size is
-   a clear enough leader without colour.
+   No carrier and no lead. The band is a ground, which is not a carrier, and
+   the four statements are peers in four columns from 1024 up, led by the
+   section heading. The lead statement's figure size and the rail's strokes
+   went with the ledger they belonged to. */
+.fail__h {
+  color: var(--c-asphalt); /* 9.46:1 on the yellow band */
+}
 
-   That also settles the one frame that was over the ceiling: at 5.28% the
-   lead statement was the only carrier on the page past 5%, and it is not a
-   carrier now. The rail keeps its draw and its stroke token and stays
-   rule-dark. */
 .fail__s {
   font-family: var(--font-loud);
   font-size: var(--t-loud-s);
@@ -95,24 +90,22 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--c-shop-white);
-}
-
-.fail__item--lead .fail__s {
-  font-size: var(--t-loud-fig);
-  line-height: var(--t-loud-line);
-  color: var(--c-shop-white); /* 17.77:1 */
-}
-
-.fail__rail-ahead,
-.fail__rail-passed {
-  background: var(--c-rule-dark);
+  color: var(--c-asphalt); /* 9.46:1 */
 }
 
 /* The consequence explains: body, not small. */
 .fail__c {
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
+  color: var(--c-asphalt); /* 9.46:1 */
+}
+
+/* Four columns take the small loud step, so no statement runs past two lines
+   in a column a quarter of the measure wide. */
+@media (min-width: 1024px) {
+  .fail__s {
+    font-size: var(--t-loud-small);
+  }
 }
 
 /* ---- Services -----------------------------------------------------------
@@ -295,49 +288,13 @@
 }
 
 /* ---- About --------------------------------------------------------------
-   NO CARRIER. The link yielded to the counter row below it, which holds a
-   frame with it for 400px of scroll at 1280 and 460px at 390, and measured
-   5.50% of the frame between them at 390 — over the ceiling for a single
-   frame before either of them is counted alone.
+   A CREAM BAND, 2026-09-14. No carrier: the call is ASPHALT, by the user's
+   decision, and its colours are agency.css's, restated there for the light
+   ground. This sets only the call's size, which is the hero call's own
+   steps.
 
-   The link stays a solid call at the same size and in the same place. It
-   takes SHOP WHITE as its ground with asphalt text at 17.77:1, which is the
-   treatment DESIGN.md Components already records: "where a frame spends its
-   one accent somewhere else, the primary call takes shop white as its ground
-   with asphalt text." Here the frame spends its accent on the counter row's
-   lead figure. Nothing was invented for this; the permission was written and
-   until now nothing on the page used it.
-
-   The rest of the section is unchanged.
-   The statement is read, not shouted, so it moves from Clash to Satoshi at
-   the quote size, the same register the hero's sub uses. The empty 4:5 panel
-   gets a hairline and its ratio. ASSET: one portrait photograph, 4:5,
-   461x576 at 1280, supply at 2x — no face per the sourcing rule, unless it is
-   the founder's and it is meant. */
-.about__statement {
-  font-family: var(--font-offer);
-  font-weight: var(--t-weight-body);
-  letter-spacing: normal;
-}
-
-.about__plate {
-  position: relative;
-  border: 1px solid var(--c-rule-dark);
-}
-
-.about__plate::after {
-  content: '4 : 5';
-  position: absolute;
-  right: var(--s-md);
-  bottom: var(--s-sm);
-  font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  color: var(--c-steel-dark);
-}
-
+   The 4:5 portrait plate and its ratio label are gone from the markup — the
+   mascot stands in the section instead — so their rules went with them. */
 .about__link {
   display: inline-flex;
   align-items: center;
@@ -346,10 +303,8 @@
   /* The hero call's own steps: body on a phone, h3 from 768. At h3 on a
      phone it measured 6.9% of the section, over the ceiling. */
   padding: var(--s-md) var(--s-lg);
-  background: var(--c-shop-white);
-  border: 1px solid var(--c-shop-white);
+  border: 1px solid transparent;
   border-radius: var(--r-none);
-  color: var(--c-asphalt); /* 17.77:1 */
   font-family: var(--font-brand);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);

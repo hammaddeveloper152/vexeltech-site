@@ -42,8 +42,10 @@ const BANDS = [
     at: [['/about-us', '.callband'], ['/services', '.callband'], ['/pricing', '.callband']] },
   { key: 'cubes', cls: 'band-cubes', start: 45, floor: 0,
     at: [['/', '.faq']] },
-  { key: 'glass', cls: 'band-glass', start: 45, floor: 70,
-    at: [['/', '.fail']] },
+  /* GLASS came out, 2026-09-14: Failures is a flat yellow band with no
+     photograph and no scrim, and its asphalt type is walked by contrast.mjs.
+     It was { key: 'glass', cls: 'band-glass', start: 45, floor: 70 } on
+     ['/', '.fail']. */
 ];
 
 const only = process.argv[2];

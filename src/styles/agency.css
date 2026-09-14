@@ -139,29 +139,10 @@
    ========================================================================== */
 
 
-/* THE LEAD STATEMENT GIVES ITS YELLOW BACK, and the reason is the seam walk
-   rather than a change of mind.
-
-   It was machine yellow at 128px, which was the loudest legal thing the
-   section could do once the 5% ceiling was withdrawn. But this section sits
-   between the hero's yellow call above it and the machine yellow services
-   ground below it, and the walk found it sharing a viewport with BOTH — the
-   call for 600px of scroll and the yellow ground for another 400. Three
-   yellow carriers in one frame at the worst position.
-
-   It is the one section on the page that cannot afford a yellow carrier,
-   because of where it sits rather than because of what it is. White at
-   17.77:1, and the section's yellow is the rail alone. */
-.fail__item--lead .fail__s {
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
-}
-
-/* The rail the reader has passed goes yellow with it. It was a 12% white
-   hairline, which is a rule that has been read rather than a route that has
-   been travelled. */
-.fail__rail-passed {
-  background: var(--c-accent-draw-dark);
-}
+/* FAILURES HAS NOTHING HERE, 2026-09-14. The lead statement's white and the
+   passed rail's yellow were both answers to a dark ledger; the section is a
+   yellow band of four peers now, with no lead and no rail. Its ground is in
+   Failures.css and its asphalt type in register.css. */
 
 /* ==========================================================================
    3. SERVICES — ASPHALT, AND THE YELLOW GROUND IS GONE
@@ -268,49 +249,31 @@
 }
 
 /* ==========================================================================
-   6. ABOUT — ASPHALT. ARC IS REJECTED AS A GROUND.
+   6. ABOUT — A CREAM BAND, 2026-09-14, WITH THE MASCOT STANDING ON IT.
 
-   This section was a full-bleed field of arc and it is asphalt again. The
-   finding is recorded in DESIGN.md and it is worth stating here too, because
-   it is the kind of thing that gets tried again:
+   It was asphalt, with its portrait slot hidden and the statement across the
+   whole measure at the heading tier. It is a cream band now, edge to edge,
+   with the site's mascot at 40% of the width: a colour band with an object on
+   it, which DESIGN.md now allows. What it still bans is the thing this block
+   used to record — a flat saturated field with nothing standing on it. Arc as
+   a ground stays rejected on exactly those terms.
 
-     ARC WORKS AS AN ACCENT AND FAILS AS A GROUND. A flat field of it with no
-     image on it is a large flat blue field. The same colour at EDGE or GLOW
-     scale — a radial, an offset, a rule — reads as depth.
+   A LIGHT GROUND, SO EVERY VALUE ON IT IS RESTATED HERE WITH ITS RATIO. All
+   asphalt: the statement, the body, and the call's fill. The call's arc offset
+   is gone, because arc is the dark sections' rim and an arc edge on cream is
+   the third colour doing a job no light on this page gives it. The focus ring
+   is restated as well: machine yellow on cream is 1.66:1, which is not a
+   visible focus state.
 
-   Nothing else from that pass moves. The 95px Monigue statement across three
-   lines, the two full-width bands, the dropped image slot and the section's
-   own restated secondary text all stay; they were fixes to the composition and
-   the composition was never the problem.
-
-   Arc keeps its four working uses — the Failures radial, the work plates'
-   offset, the footer radial, and the glow below — and this section keeps it at
-   that scale rather than losing it entirely.
+   The layout is About.css's. This block owns colour and nothing else.
    ========================================================================== */
 
-/* THE PAGE PAIR, and it supersedes this section's own arc glow.
+.about {
+  background: var(--c-cream);
+  color: var(--c-asphalt); /* 15.7:1 on cream */
+}
 
-   That glow rose from the LEFT at 30% and it was a recorded decision — the
-   remains of the rejected arc ground, kept at the scale arc works at. The
-   two-light model gives arc one station on every object and every section:
-   the rim, bottom right, opposite the key. A left-rising arc glow under a
-   top-left key put both lights on the same side, which is one light with a
-   colour problem. Same colour, same scale, correct station. */
-
-/* THE STATEMENT IS MONIGUE, at the statement tier, like every other statement
-   on the site.
-
-   It was Satoshi — the BODY face — in the one section where the company speaks
-   as itself. That is not a small slip: register.css assigns Monigue to "every
-   section heading, every statement, every figure", and then About.css set this
-   one in Clash and register.css overrode it to Satoshi, so the page's most
-   personal line ended up in the face reserved for reading. Two sheets each
-   made a local decision and the tier was lost between them.
-
-   `--t-loud-s` is the statement tier: 58px at 1280, 40 at 390, the hero's own
-   measure over 20. Uppercase, because that is what the tier is — the four
-   failure statements and the four service disciplines are set exactly this
-   way, and this line is now one of them. */
+/* The statement tier, beside the mascot rather than across the measure. */
 .about__statement {
   font-family: var(--font-loud);
   font-size: var(--t-loud-s);
@@ -318,133 +281,41 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  color: var(--c-asphalt); /* 15.7:1 on cream */
 }
 
-/* ---- THE SLOT IS OUT, AND THE SECTION TAKES THE WHOLE FRAME -------------
-
-   The 4:5 portrait slot is dropped from the layout until the photograph
-   exists. On asphalt an empty hairline plate read as a RESERVATION — the same
-   treatment the work plates and the services artefact slot use, so a reader
-   met the same kind of empty box three times and understood it. On arc blue
-   it stopped being that: a black rectangle with a "4 : 5" label on a saturated
-   ground reads as an image that failed to load, not as a space being kept.
-
-   The markup stays. `.about__media` is hidden, not deleted, so the photograph
-   drops back into a slot that still exists — and CLAUDE.md's open-slot table
-   is corrected in the same pass, because a reservation nobody can see is not
-   a reservation.
-
-   Everything else here follows from that. With the plate gone the section had
-   a statement strip across the top of an empty field, so:
-
-   THE STATEMENT GOES UP A TIER, from statement (58px) to heading (95px at
-   1280). At 58px across the full measure it set two thin lines with 300px of
-   nothing under them; at 95px across the same measure it sets three and
-   becomes the object the section is about.
-
-   THE RIGHT THIRD IS NOW USED. The supporting paragraph and the link share the
-   band beneath the statement, so both bands run edge to edge instead of
-   stopping two thirds across. */
-
-/* THE SECTION RESTATES ITS OWN SECONDARY TEXT, and it keeps doing so now that
-   the ground is asphalt again. It is bone rather than steel-dark by choice —
-   13.84:1 against 5.12 — because this is the one section that speaks in the
-   first person and its supporting line should not read as caption-grey.
-
-   The rule that produced this is recorded in DESIGN.md and it outlives the arc
-   ground that exposed it: EVERY GROUND CHANGE RESTATES ITS OWN SECONDARY TEXT.
-   Rewriting this block once deleted the line and the paragraph fell back to
-   steel-dark, which is 2.28:1 on arc, and nothing caught it until a contrast
-   walk ran. */
 .about__support {
-  color: var(--c-bone); /* 13.84:1 on asphalt */
+  color: var(--c-asphalt); /* 15.7:1 on cream */
 }
 
-/* The link is a white plate on asphalt, and its offset is arc — the colour at
-   edge scale, which is the scale it works at. */
+/* ASPHALT, by the user's decision. The label is 17.77:1 on its own fill and
+   the fill's edge is 15.7:1 against the cream. White would lose its edge at
+   1.13:1; yellow would be 1.66:1 at the edge and a second carrier beside the
+   counter row's lead figure. */
 .about__link {
-  color: var(--c-asphalt); /* 17.77:1 on its own white plate */
-  box-shadow: 8px 8px 0 var(--c-arc);
+  background: var(--c-asphalt);
+  border-color: var(--c-asphalt);
+  color: var(--c-shop-white); /* 17.77:1 on its fill */
+  box-shadow: none;
 }
 
 .about__go {
-  color: var(--c-steel); /* 8.12:1 on white */
+  color: var(--c-shop-white); /* 17.77:1 on the call's fill */
 }
 
-.about__statement {
-  font-size: var(--t-loud-h);
+.about :focus-visible {
+  outline-color: var(--c-asphalt); /* 15.7:1 on cream; yellow is 1.66:1 */
 }
 
-/* AT EVERY WIDTH, not from 1024 up. The first cut scoped this to the desktop
-   layout and left the black plate standing on a phone, where it is worse: it
-   takes a whole screen of arc blue before the reader reaches a word. The
-   reason the slot goes is the ground, and the ground does not change with the
-   viewport. */
-.about__media {
-  display: none;
-}
-
-@media (min-width: 1024px) {
-  .about__inner {
-    display: block;
-  }
-
-  /* TWO FULL-WIDTH BANDS, not two columns.
-
-     The first cut of this put the statement in an 8-of-13 column with the
-     paragraph and link beside it, and two things went wrong that only showed
-     in the render: the statement took FOUR lines in 650px instead of the two
-     or three it wanted, and the link — 27px Clash plus its padding and arrow —
-     needed about 400px in a 437px column and wrapped to "How we work with /
-     you", which reads as broken rather than as a button.
-
-     The arithmetic says they cannot both have what they need: three lines of
-     this string at 95px needs 754px, the link needs 400, and with a gap that
-     is 1,218 in a 1,152 frame. So they stop competing for the same row. The
-     statement takes the whole width and sets two lines; the paragraph and the
-     link share the band beneath it. Both bands run edge to edge, which is the
-     point — nothing is left holding a third of the frame. */
-  .about__body {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    column-gap: var(--s-2xl);
-    row-gap: var(--s-2xl);
-    align-items: end;
-    max-width: none;
-    padding: 0;
-  }
-
-  .about__statement {
-    grid-column: 1 / -1;
-    margin: 0;
-  }
-
-  .about__support {
-    grid-column: 1;
-    max-width: 68ch;
-    margin: 0;
-  }
-
-  /* The button sizes to its own content in an `auto` track, so it cannot wrap
-     however narrow the paragraph beside it gets. */
-  .about__link {
-    grid-column: 2;
-    justify-self: end;
-    white-space: nowrap;
-  }
-}
-
-@media (min-width: 1280px) {
-  .about {
-    padding: var(--s-3xl) var(--s-2xl);
-  }
-
-  .about__inner {
-    width: min(100%, 1200px);
-    margin: 0 auto;
-  }
-}
+/* THE ARC RECORD, kept because it is the kind of thing that gets tried again:
+   ARC WORKS AS AN ACCENT AND FAILS AS A GROUND. A flat field of it with no
+   image on it is a large flat blue field. The same colour at EDGE or GLOW
+   scale — a radial, an offset, a rule — reads as depth. What follows in this
+   section was written for the asphalt About and is superseded above; it is
+   removed rather than left to fight the cream band's layout. */
+/* ==========================================================================
+   (end of the About block)
+   ========================================================================== */
 
 /* ==========================================================================
    7. COUNTERS — CONCRETE. The page's second light ground.

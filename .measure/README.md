@@ -87,7 +87,7 @@ statement it backs rather than the file it writes.
 
 | Script | What it proves |
 |---|---|
-| `entrance.mjs` | **the hero entrance, frozen frame by frame.** Asserts the composite travel is 51.93° before it writes a frame, so the words cannot arrive on a path the line does not describe. Carries two traps it fell into: `getAnimations()` drops a finished `backwards`-fill animation, so a pause installed after load reaches nothing; and at document-start there is no `documentElement` to inject into yet |
+| `entrance.mjs` | **RETIRED 2026-09-14: the strike entrance it measured is removed, and against the current build it throws at its travel assertion.** Kept for the traps below and its cold-font method. It was: **the hero entrance, frozen frame by frame.** Asserts the composite travel is 51.93° before it writes a frame, so the words cannot arrive on a path the line does not describe. Carries two traps it fell into: `getAnimations()` drops a finished `backwards`-fill animation, so a pause installed after load reaches nothing; and at document-start there is no `documentElement` to inject into yet |
 | `wipe.mjs` | **the page transition.** Frames, the share of the frame that is machine yellow at the instant the route swaps, the delay the destination waits, and first-load LCP with the component in the bundle. Also carries the false-positive write-up: a stale DOM node held across a navigation reproduces the exact signature of BUILD-LAW's cached-document defect |
 
 ### Layout, type and the container budget
@@ -180,5 +180,6 @@ a committed script, and these do not.
 | `rejected-wipe-strike-1280.png` | the transition as a V drawn from its vertex and held. The most legible of the three as the mark, and rejected on two measured costs: a 247ms hold on every route change, buying 14.0% cover at 1280 |
 | `rejected-entrance-punch-1280.png` | the hero entrance punching each word up through its own line box. Masked, so the visible travel is one line-height whatever the amplitude says |
 | `rejected-entrance-sweep-1280.png` | the same, in sequence along the diagonal at an 18ms stagger |
+| `retired-hero-strike-1280.png` | the shipped hero entrance at 300ms, captured 2026-09-09 while the line was machine yellow: the strike drawn across the frame at 51.93° and the words slamming in along it. It ran at every cut of the hero spot, in white, for a few hours of 2026-09-14 and was removed outright; the spot's lines fade up |
 
 `DESIGN.md` carries what each one measured and why it was not taken.

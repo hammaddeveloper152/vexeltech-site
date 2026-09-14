@@ -70,7 +70,10 @@ function validate(id, value) {
   return '';
 }
 
-export default function FooterForm() {
+/* `handset`: the contact page's floating handset above the heading,
+   2026-09-14. A prop rather than always on, because this component also ends
+   the home page, and the object belongs to the page whose subject it is. */
+export default function FooterForm({ handset = false }) {
   const [values, setValues] = useState({
     name: '', email: '', company: '', budget: '', message: '',
   });
@@ -126,6 +129,18 @@ export default function FooterForm() {
   return (
     <footer className="vt foot scratched">
       <div className="foot__inner">
+        {/* Decorative: the heading under it says what the page is for. A brand
+            object, exempt from the carrier count. */}
+        {handset ? (
+          <img
+            className="foot__handset float"
+            src="/assets/objects/handset.webp"
+            alt=""
+            width="734"
+            height="1600"
+            decoding="async"
+          />
+        ) : null}
         <h2 className="foot__h" id="foot-h">
           Get in touch
         </h2>

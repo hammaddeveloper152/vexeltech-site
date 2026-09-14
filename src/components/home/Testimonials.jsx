@@ -5,16 +5,24 @@ import './Testimonials.css';
 
 /* Section 6. One quote at a time.
 
-   Obviously synthetic. BUILD-LAW.md Truth: a testimonial is a claim about the
-   work made in someone else's voice, which is the last thing that may be
-   invented here. Names and companies are placeholders for the same reason.
+   SWITCHED OFF UNTIL A QUOTE EXISTS, 2026-09-14. Every quote below is a
+   placeholder and is marked as one, and the section renders nothing while no
+   quote is real: a carousel of four sentences saying they are placeholders is
+   a section telling the reader there is no proof yet, in the one place proof
+   is supposed to go. Replace a placeholder with a real quote, delete its
+   `placeholder` flag, and the section returns with no other change.
 
-   The quotes are written at roughly the length a real one runs, so the slot is
-   sized by something honest rather than by a short stand-in that collapses
-   when the real copy lands. */
-const QUOTES = [
+   BUILD-LAW.md Truth: a testimonial is a claim about the work made in someone
+   else's voice, which is the last thing that may be invented here. Names and
+   companies are placeholders for the same reason.
+
+   The placeholders are written at roughly the length a real one runs, so the
+   slot is sized by something honest rather than by a short stand-in that
+   collapses when the real copy lands. */
+const ALL_QUOTES = [
   {
     id: 'one',
+    placeholder: true,
     quote:
       'Placeholder quote one. This sentence holds the shape of a real testimonial until one arrives, and says nothing about the work.',
     name: 'Placeholder name one',
@@ -22,6 +30,7 @@ const QUOTES = [
   },
   {
     id: 'two',
+    placeholder: true,
     quote:
       'Placeholder quote two. It runs to about the length a real quote runs, so the slot is sized by something honest rather than by a short stand-in.',
     name: 'Placeholder name two',
@@ -29,6 +38,7 @@ const QUOTES = [
   },
   {
     id: 'three',
+    placeholder: true,
     quote:
       'Placeholder quote three. Nothing here is a claim, and nothing here should survive to a deploy.',
     name: 'Placeholder name three',
@@ -36,12 +46,16 @@ const QUOTES = [
   },
   {
     id: 'four',
+    placeholder: true,
     quote:
       'Placeholder quote four. The longest of the set, so the stage is tall enough to hold the worst case without the layout moving when the quote changes.',
     name: 'Placeholder name four',
     company: 'Placeholder company four',
   },
 ];
+
+/* Only real quotes are shown, so a set with one real quote shows one. */
+const QUOTES = ALL_QUOTES.filter((q) => !q.placeholder);
 
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -60,7 +74,8 @@ export default function Testimonials() {
   const [manual, setManual] = useState(false);
   const sectionRef = useRef(null);
 
-  const rotating = !reduced && !manual && !paused;
+  /* One quote does not rotate, and none is not a section. */
+  const rotating = QUOTES.length > 1 && !reduced && !manual && !paused;
 
   useEffect(() => {
     if (!rotating) return undefined;
@@ -68,6 +83,9 @@ export default function Testimonials() {
     const t = setInterval(() => setIndex((i) => (i + 1) % QUOTES.length), dwell);
     return () => clearInterval(t);
   }, [rotating]);
+
+  /* After every hook, so the hook order never changes between renders. */
+  if (!QUOTES.length) return null;
 
   const go = (delta) => {
     setManual(true);
@@ -115,13 +133,7 @@ export default function Testimonials() {
             >
               {/* Behind the quote, one per slide. Decorative twice over: the
                   element is already a blockquote, and a quotation mark that
-                  announced itself would say "quote" before every quote.
-
-                  It was tried as this frame's carrier — the mark as type, in
-                  Monigue at the figure size, in machine yellow — and measured
-                  out. See Testimonials.css. It is back to what it was: a
-                  texture at the strength this system uses for something
-                  present and not to be looked at. */}
+                  announced itself would say "quote" before every quote. */}
               <Quotes className="i i--lg quotes__mark" aria-hidden="true" />
 
               <blockquote className="quotes__q">
@@ -135,41 +147,35 @@ export default function Testimonials() {
           ))}
         </div>
 
-        <div className="quotes__controls">
-          {/* Still text, now by choice rather than because iconography was
-              unassigned. These two are the only content of their controls, and
-              a word says which direction it goes without the reader having to
-              resolve a glyph first. */}
-          <button
-            className="quotes__btn"
-            type="button"
-            onClick={() => go(-1)}
-            aria-label="Previous testimonial"
-          >
-            Prev
-          </button>
+        {/* The controls exist only when there is somewhere to go. */}
+        {QUOTES.length > 1 ? (
+          <div className="quotes__controls">
+            <button
+              className="quotes__btn"
+              type="button"
+              onClick={() => go(-1)}
+              aria-label="Previous testimonial"
+            >
+              Prev
+            </button>
 
-          {/* Metadata, not the carrier. It says which of four the reader is
-              on, which is a thing a control row says quietly, and it sits at
-              the small loud size in white beside the two words it belongs
-              with. It used to be this frame's accent at the figure size, and
-              a count is the wrong thing for a section to shout: it is the one
-              element in the frame that carries no meaning about the work. */}
-          <span className="quotes__count">
-            <span className="quotes__count-n">{pad(index + 1)}</span>
-            <span aria-hidden="true"> / </span>
-            <span className="quotes__count-t">{pad(QUOTES.length)}</span>
-          </span>
+            {/* Metadata, not the carrier: which of the set the reader is on. */}
+            <span className="quotes__count">
+              <span className="quotes__count-n">{pad(index + 1)}</span>
+              <span aria-hidden="true"> / </span>
+              <span className="quotes__count-t">{pad(QUOTES.length)}</span>
+            </span>
 
-          <button
-            className="quotes__btn"
-            type="button"
-            onClick={() => go(1)}
-            aria-label="Next testimonial"
-          >
-            Next
-          </button>
-        </div>
+            <button
+              className="quotes__btn"
+              type="button"
+              onClick={() => go(1)}
+              aria-label="Next testimonial"
+            >
+              Next
+            </button>
+          </div>
+        ) : null}
       </div>
     </section>
   );

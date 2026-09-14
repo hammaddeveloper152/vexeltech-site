@@ -652,3 +652,58 @@
     transition: none;
   }
 }
+
+/* ---- THE YELLOW PANEL, 2026-09-14 ---------------------------------------
+
+   The tab row and the ladder stand on a machine yellow panel. A colour band
+   with objects on it, which DESIGN.md now allows: the dark track and the dark
+   cards stand on it unchanged, and nothing is set directly on the yellow, so
+   no text value needs restating for it.
+
+   A GROUND, not a carrier. --c-accent-field, not the call's fill. The lead
+   card's solid call and the active tab's pill are still carriers, and they
+   sit on dark objects rather than on this.
+
+   THE PRICING PAGE WAS FROZEN BY THE FOUNDER, and this is the user lifting
+   the freeze for this change, not a drift. 48px of padding and a 12px radius
+   are both off the recorded scales — 48 is one of the two steps the spacing
+   ramp skips on purpose, and 12 is above the 8px container radius — and both
+   are the user's figures, recorded as given.
+
+   24px BELOW 768, and that is a deviation from the brief, not a reading of
+   it. At 390 the page's content box is 358px; 48px a side would leave the
+   cards 262px, narrower than a card's price line and call. The panel keeps
+   its ground and its radius at every width. */
+.tabs {
+  padding: var(--s-lg);
+  border-radius: 12px;
+  background: var(--c-accent-field);
+}
+
+@media (min-width: 768px) {
+  .tabs {
+    padding: 48px;
+  }
+}
+
+/* THE ONE LINE THAT STANDS ON THE YELLOW ITSELF, and the walk found it.
+
+   The note above said nothing is set directly on the panel, and that was
+   wrong: each tab's route line — "Branding that is not on this list? Tell us
+   what you need" — sits under the cards, on the panel, not on a card. It
+   carried the dark ground's values from pages.css: steel-dark at 1.85:1 and a
+   shop white link at 1.88:1 on machine yellow. Both are asphalt here, and the
+   link's focus ring with them, because a machine yellow ring on a machine
+   yellow panel is no ring. `.tabs` scoped, so the same line anywhere else keeps
+   the dark-ground values it was written for. */
+.tabs .tiers__route {
+  color: var(--c-asphalt); /* 9.46:1 on the panel */
+}
+
+.tabs .tiers__route a {
+  color: var(--c-asphalt); /* 9.46:1; the underline carries the link signal */
+}
+
+.tabs .tiers__route a:focus-visible {
+  outline-color: var(--c-asphalt); /* 9.46:1; yellow on yellow is 1:1 */
+}

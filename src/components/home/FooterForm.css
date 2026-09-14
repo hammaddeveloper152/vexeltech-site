@@ -24,6 +24,17 @@
   margin: 0 auto;
 }
 
+/* The contact page's handset, 2026-09-14. Centred above the heading, 280px
+   wide at 1280 — 21.875vw — capped there, and never under 160px on a phone.
+   A brand object: exempt from the carrier count, and floating on `.float`
+   from tokens.css, which does not run under reduced motion. */
+.foot__handset {
+  display: block;
+  width: clamp(160px, 21.875vw, 280px);
+  height: auto;
+  margin: 0 auto var(--s-xl);
+}
+
 .foot__h {
   margin: 0 0 var(--s-xl);
   font-family: var(--font-brand);

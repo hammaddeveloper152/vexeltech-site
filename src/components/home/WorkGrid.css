@@ -1,20 +1,19 @@
 /* ==========================================================================
    Section 3 — the work wall.
 
-   Layout family: asymmetric content grid. Used once on this page. Distinct
-   from TileWall, which is a vertically travelling background of equal
-   columns, and from the four-across Pillars row.
+   Layout family: asymmetric content grid. Used once on this page.
 
    The density law drives the spans: tile one leads on area at every width by
    a clear margin, and no row is ever three things of nearly equal size.
+
+   DARK FRAMES, 2026-09-14. Each tile is a frame — the lit card surface, the
+   same four properties every object on the site carries — holding the plate
+   at its breakpoint ratio, and under it the name and two tags. The label no
+   longer slides up over the plate on hover; it sits under it in every state.
    ========================================================================== */
 
 .work {
-  /* Transparent. The ground and both blooms are the page rig's, declared once
-     in lit.css — see the audit note there. */  padding: var(--s-3xl) var(--s-md);
-/* Section separator REMOVED 2026-09-08: on an all-asphalt page two
-   sections are separated by space, not by a stroke. See DESIGN.md,
-   "Separation on an all-asphalt page". */
+  padding: var(--s-3xl) var(--s-md);
 }
 
 .work__inner {
@@ -37,10 +36,8 @@
   display: grid;
   grid-template-columns: 1fr; /* 390: one column */
   gap: var(--s-lg);
-  /* Not stretch. A stretched grid item overrides its own aspect-ratio to fill
-     the row, which would silently break the fixed-ratio promise the plates
-     depend on: the tile must be exactly the box the screenshot arrives into.
-     The ragged row bottoms are the asymmetry, not a gap to close. */
+  /* Not stretch: a stretched item would override the plate's ratio. The
+     ragged row bottoms are the asymmetry, not a gap to close. */
   align-items: start;
   margin: 0;
   padding: 0;
@@ -50,69 +47,143 @@
 /* ---- The tile ---------------------------------------------------------- */
 
 .work__item {
-  /* Set per breakpoint below. The ratio lives on the item so the plate and
-     the future <img> share one source of truth. */
+  /* Set per breakpoint below, read by the plate. */
   --ar: 16 / 10;
   min-width: 0;
+  perspective: 800px;
 }
 
+/* THE FRAME. A card: the plane one step above the ground, the 1px edge, the
+   brighter top edge where the key strikes, the arc on the bottom and right,
+   and the inset highlight. Every text value inside it is restated against
+   --lit-near. */
 .work__link {
+  position: relative;
+  display: grid;
+  gap: var(--s-md);
+  padding: var(--s-md);
+  border: 1px solid var(--lit-edge);
+  border-top-color: var(--lit-edge-top);
+  border-right-color: var(--lit-edge-arc);
+  border-bottom-color: var(--lit-edge-arc);
+  border-radius: var(--r-md); /* container */
+  background-color: var(--lit-near);
+  box-shadow: var(--lit-inset);
+  color: var(--c-shop-white);
+  text-decoration: none;
+  transform: translateY(0);
+  transform-style: preserve-3d;
+  transition: transform var(--d-drop) var(--ease-reveal);
+}
+
+/* The plate. It carries the breakpoint ratio and clips what is in it, with
+   clip-path rather than overflow for the compositing-boundary reason
+   BUILD-LAW records. A control radius, one step inside the frame's. */
+.work__media {
   position: relative;
   display: block;
   aspect-ratio: var(--ar);
-  /* Masks the label until it slides up. clip-path rather than overflow
-     hidden, for two reasons that point the same way: DESIGN.md names
-     clip-path as the mechanism when a mask is what is wanted, and the
-     detector's clipped-overflow-container rule fires on an overflow clip
-     wrapping an absolutely positioned child. That rule is about tooltips and
-     menus that need to escape their container. This label is the opposite
-     case, a caption that must be clipped, so the finding was a false positive
-     rather than a defect. Reaching for the mechanism the system already names
-     answers both. */
-  clip-path: inset(0 round var(--r-md));
-  /* No tile border. `.work__plate` inside carries the hairline that reserves
-     the picture, and two nested rectangles per tile was twelve lines drawing
-     six boxes. The plate's frame is the one that means something. */
-  border-radius: var(--r-md); /* container */
-  text-decoration: none;
-  transition:
-    transform var(--d-press) var(--ease-reveal),
-    opacity var(--d-press) var(--ease-reveal);
+  clip-path: inset(0 round var(--r-sm));
+  border-radius: var(--r-sm);
+  background: var(--c-asphalt);
 }
 
-/* THE PLACEHOLDER IS A HAIRLINE AND A NUMERAL. No fill: the plate is 475px at
-   1280, past the line where a warm surface works, and it is a RESERVED SLOT,
-   which DESIGN.md holds to a hairline and a numeral and nothing else. The page
-   ground shows through it and the border does the separating.
-
-   Rendered only where a plate has NO poster. A plate with one renders
-   `.work__video` in its place, at the same box, so the grid does not move as
-   files arrive. */
+/* THE PLACEHOLDER IS A HAIRLINE AND A NUMERAL, rendered only where a plate
+   has no poster. Its edge and numeral are register.css's and agency.css's. */
 .work__plate {
   position: absolute;
   inset: 0;
   background: none;
 }
 
-/* ---- THE SECOND HOVER DEVICE, minus one third of it -------------------
-
-   Light follows the pointer, the object rises to meet it. The work tile takes
-   THE RISE AND THE PRESS and does not take the moving light, and that is a
-   limit rather than an omission: it has no face to light.
-
-   The tile's box is either a RESERVED SLOT — a hairline and a numeral, which
-   DESIGN.md holds to exactly that and nothing else — or a clip filling it edge
-   to edge. A glow painted inside the first is the decoration that rule
-   removed; a glow under the second is a glow under an opaque video. There is
-   no third state where a plane exists to be lit.
-
-   So the tile rises 6px and tilts two degrees toward the pointer on the grid's
-   own 800px perspective, and presses at 160ms, which is the part of the device
-   that applies to an object regardless of what its face is made of. The four
-   discipline plates carry the whole of it; see plates.css. */
-.work__item {
-  perspective: 800px;
+.work__video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--c-asphalt);
+  pointer-events: none;
 }
+
+/* ---- The label, under the plate ---------------------------------------- */
+
+.work__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-md);
+}
+
+.work__label-x {
+  display: grid;
+  gap: var(--s-sm);
+  min-width: 0;
+}
+
+.work__label-t {
+  color: var(--c-shop-white); /* 16.48:1 on lit-near */
+}
+
+.work__go {
+  flex: none;
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+}
+
+.work__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+}
+
+/* A tag is a chip, so the control radius. Label type, asphalt on both. */
+.work__tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 var(--s-sm);
+  border-radius: var(--r-sm);
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-asphalt);
+}
+
+/* AN OUTLINE, NOT A FILL, 2026-09-14, and the numerals keep the carrier.
+
+   The Branding tag was machine yellow and it was counted as a carrier. The
+   rhythm walk found it sharing every work-grid frame with the plates' yellow
+   numerals — 7 frames at 1280 and 11 at 390, up to 1.75% plus 2.08% of a
+   frame — and the user's rule for that case was: the tag goes to an outline,
+   1px border and text in one colour with no fill, and the numerals keep it.
+
+   THE COLOUR IS SHOP WHITE, NOT THE ASPHALT THE RULE NAMED, and that is a
+   measurement rather than a preference. The tag stands on the frame's own
+   plane, --lit-near #1E1F22, not on a light ground: asphalt on it is 1.07:1,
+   which is no tag at all, against a 4.5:1 floor for 12px label text. Shop white
+   is the value the frame's title already uses, 16.48:1 on the same plane — on a
+   dark surface it is what asphalt is on a light one. The user asked for this to
+   be decided on the measurement and reported, and DESIGN.md records it.
+
+   --c-accent-tag, the fill's token, is deleted: a token with no call site is
+   deleted, not kept for later. If the numerals ever give their yellow up and
+   the fill comes back, it comes back with its own token again. */
+.work__tag--branding {
+  background: none;
+  border: 1px solid var(--c-shop-white);
+  color: var(--c-shop-white); /* 16.48:1 on lit-near; asphalt would be 1.07:1 */
+}
+
+.work__tag--websites {
+  background: var(--c-cream);
+  color: var(--c-asphalt); /* 15.7:1 */
+}
+
+/* ---- The second hover device, minus its light ------------------------- */
 
 @media (hover: hover) and (pointer: fine) {
   .work__link[data-lit='true'] {
@@ -121,17 +192,12 @@
       rotateY(calc((var(--mx, 50) - 50) / 50 * 2deg))
       rotateX(calc((50 - var(--my, 50)) / 50 * 2deg));
   }
-
-  .work__link:active {
-    transform: scale(0.985);
-    transition-duration: var(--d-press);
-  }
 }
 
-.work__link {
-  transform: translateY(0);
-  transform-style: preserve-3d;
-  transition: transform var(--d-drop) var(--ease-reveal);
+/* Press feedback on every pressable element: the device's own press. */
+.work__link:active {
+  transform: scale(0.985);
+  transition-duration: var(--d-press);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -143,119 +209,7 @@
   }
 }
 
-/* The moving surface, and the still that stands in for it. One rule for both,
-   because <video> and <img> have to occupy the identical box: a reader who is
-   refused video must get the same composition, and only the motion missing.
-
-   `object-fit: cover` because the plate ratios change across breakpoints and a
-   clip is one file at one ratio. The supplied ratio per plate is the one that
-   crops least across the three layouts; the arithmetic and the file list are
-   in src/assets/video/README.md.
-
-   The plate's own hairline stays on `.work__link`, so a clip sits inside the
-   same edge the empty state has. Asphalt underneath, not surface-1: the first
-   frame of a clip that has not decoded should be the page, not a lighter
-   rectangle announcing that something is missing. */
-.work__video {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background: var(--c-asphalt);
-  /* Not a control and not content. The plate is one link and the title
-     beside it is its accessible name. */
-  pointer-events: none;
-}
-
-.work__label {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  /* Text stack, then the arrow hard against the right edge. The arrow is
-     inside the band rather than floating on the plate, so it travels with the
-     label and never becomes type over artwork. */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-md);
-  padding: var(--s-md);
-  /* Opaque band, not type over art. This is what keeps the label off the
-     detector's text-occlusion rule once a screenshot is behind it. */
-  background: var(--c-asphalt);
-  /* Touch default: already visible, no transform to strand. */
-  transform: translateY(0);
-}
-
-.work__label-x {
-  display: grid;
-  gap: var(--s-xs);
-  min-width: 0;
-}
-
-/* Steel-dark, the same secondary the meta line already uses. White would put
-   the arrow level with the title, and the title is what the reader is meant
-   to land on first. */
-.work__go {
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
-}
-
-.work__label-t {
-  font-family: var(--font-brand);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  font-weight: var(--t-weight-brand);
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
-}
-
-.work__label-m {
-  font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
-}
-
-/* ---- Hover, gated to real pointers ------------------------------------- */
-
-@media (hover: hover) and (pointer: fine) {
-  /* Only on a real pointer is the label parked off the bottom edge. Touch
-     never reaches this block, so it never has a label to reveal. */
-  .work__label {
-    transform: translateY(100%);
-    transition: transform var(--d-drop) var(--ease-drawer);
-  }
-
-  .work__link:hover .work__label,
-  .work__link:focus-visible .work__label {
-    transform: translateY(0);
-  }
-
-  /* THE 1px LIFT AND THE 0.92 DIM ARE GONE, and this is the device replacing
-     a rule rather than breaking it.
-
-     DESIGN.md's standard hover is opacity 0.92 plus 1px, and it is the right
-     default for a control that has nothing else to say. This tile now carries
-     the second hover device — the object rises to meet the light — and a 6px
-     rise with a 1px rise declared under it is two answers to one gesture. The
-     dim goes with it: the plates do not dim, and a device that behaves
-     differently on one of the objects that carries it is not a device. */
-}
-
-/* Press feedback on every pressable element. `scale(0.985)` at 160ms is the
-   device's press and it supersedes the 0.97 this carried, for the same reason
-   the lift did: one gesture, one answer, across every object that carries it.
-   See the hover block above. */
-.work__link:active {
-  transform: scale(0.985);
-}
-
-/* Focus is a ring, never the hover treatment: the ring comes from tokens.css
-   and the label reveal above is what a keyboard user gets in addition. */
+/* Focus is a ring from tokens.css, never the hover treatment. */
 
 /* ---- Reveal. Six things to read, so 70ms per item ---------------------- */
 
@@ -273,8 +227,6 @@
   }
 }
 
-/* Reduced motion: keep the fade, drop the travel, and drop the stagger with
-   it. The stagger goes with the movement, not with the opacity. */
 @media (prefers-reduced-motion: reduce) {
   .work__list[data-revealed='false'] .work__item {
     opacity: 0;
@@ -283,27 +235,11 @@
   .work__item {
     transition: opacity var(--d-panel) var(--ease-reveal);
   }
-
-  .work__label {
-    transform: none;
-    transition: none;
-  }
-
-  .work__link:hover {
-    opacity: var(--hover-opacity);
-    transform: none;
-  }
-
-  .work__link:active {
-    transform: none;
-  }
 }
 
 /* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------ */
 
-/* 390. One column. Tile one leads by being the tallest: 4/3 against 16/10 at
-   the same width is a taller box, so the ratios invert from the wide layouts
-   to keep the same tile in front. */
+/* 390. One column. Tile one leads by being the tallest. */
 .work__item:nth-child(1) {
   --ar: 4 / 3;
 }
@@ -321,9 +257,7 @@
     grid-template-columns: repeat(6, 1fr);
   }
 
-  /* Rows: [6] [3 3] [3 3] [6]. Tile one is full bleed at 16/10 and tile six
-     is full bleed at 21/9, so one is clearly the taller of the two and the
-     leader is unambiguous. */
+  /* Rows: [6] [3 3] [3 3] [6]. */
   .work__item:nth-child(1) {
     --ar: 16 / 10;
     grid-column: span 6;
@@ -348,8 +282,7 @@
     padding: var(--s-3xl) var(--s-2xl);
   }
 
-  /* Rows: [4 2] [3 3] [2 4]. Woven rather than stacked, no row of three, and
-     tile one holds roughly 1.5 times the area of the next largest. */
+  /* Rows: [4 2] [3 3] [2 4]. */
   .work__item:nth-child(1) {
     --ar: 16 / 10;
     grid-column: span 4;

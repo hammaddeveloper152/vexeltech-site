@@ -51,7 +51,9 @@ const EXPECT = [
   ['wm__word', 'Clash'], ['wm__dot', 'Clash'],
 
   /* ---- DISPLAY, HEADINGS, STATEMENTS, FIGURES: Monigue ------------------ */
-  ['hero__headline', 'Monigue'], ['hero__word', 'Monigue'], ['ticker__word', 'Monigue'],
+  /* The spot's line, 2026-09-14. `hero__word` and `ticker__word` went with the
+     slam and the ticker; a selector that matches nothing passes silently. */
+  ['hero__headline', 'Monigue'], ['hero__line', 'Monigue'],
   ['pg__h', 'Monigue'], ['sec__h', 'Monigue'], ['pg__sh', 'Monigue'],
   ['one__h', 'Monigue'], ['callband__h', 'Monigue'],
   /* `.disc__name` is TWO things. Inside a `.disc` block on /services it is a

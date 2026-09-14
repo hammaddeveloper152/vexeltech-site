@@ -165,6 +165,19 @@
   --c-accent-text-dark: #f0b323; /* machine yellow on asphalt.  9.46:1 */
   --c-accent-text-light: #8a6300; /* deep amber on white 5.43, concrete 4.90 */
   --c-accent-ground: #f0b323; /* as a fill: the one primary call per frame  */
+  /* AS A GROUND, 2026-09-14: a colour band that objects stand on (the home
+     Failures band) and the pricing panel. A ground is not a carrier. The literal
+     value, not a reference to --c-accent-ground, so the call's fill and the
+     band's ground can move apart without either one dragging the other. An
+     empty saturated field is still banned; see DESIGN.md. */
+  --c-accent-field: #f0b323;
+  /* Cream, the home About band's ground, 2026-09-14. Asphalt on it is 15.7:1.
+     A light ground, so every value on it is restated where it is used. */
+  --c-cream: #f4f1ea;
+  /* `--c-accent-tag` existed for a few hours of 2026-09-14 as the work grid's
+     Branding tag fill, and went when the tag became an outline: it shared every
+     work frame with the plates' yellow numerals, and the numerals keep the
+     carrier. A token with no call site is deleted, not kept for later. */
   /* The draw role splits by ground for the same reason the text role does.
      Machine yellow as a stroke measures 9.46:1 on asphalt and 1.69:1 on
      concrete, which is not a line, it is a rumour of one. */
@@ -442,10 +455,11 @@
 
   /* ---- Motion: content rotation ------------------------------------------
      A dwell, not a duration: how long one piece of content holds the slot
-     before the next replaces it. Set by reading time, so a swapped phrase and
-     a full sentence are two different numbers. Rotation always yields to the
-     reader: hover, focus, and any use of a control stop it. */
-  --d-rotate-phrase: 2400ms;
+     before the next replaces it. Set by reading time. Rotation always yields
+     to the reader: hover, focus, and any use of a control stop it.
+     `--d-rotate-phrase` (2400ms) came out with the hero ticker on 2026-09-14:
+     the headline is timed by the spot's cuts now, and it was the last call
+     site. */
   --d-rotate-quote: 7000ms;
 
   /* ---- Interaction ------------------------------------------------------ */
@@ -663,6 +677,35 @@ html {
    ring: `:focus-visible` does not match a scripted focus. */
 main:focus {
   outline: none;
+}
+
+/* THE FLOAT, 2026-09-14. A brand object standing on a band rises 6px and
+   settles on a 4-second loop: the mascot on the home About band and the
+   handset on the contact page. One keyframe set for both, so they cannot
+   drift apart.
+
+   --ease-move, because this is an object already on screen moving in place,
+   which is that curve's recorded job. 4s is far under the 64s floor DESIGN.md
+   sets for ambient motion, and that is the user's figure, recorded there:
+   the 64s floor is about a surface a reader should not watch, and these are
+   objects standing on a band.
+
+   Transform only. Under reduced motion the class does nothing and the object
+   stands still where it is. */
+@media (prefers-reduced-motion: no-preference) {
+  .float {
+    animation: vt-float 4s var(--ease-move) infinite;
+  }
+}
+
+@keyframes vt-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 .vt [disabled],

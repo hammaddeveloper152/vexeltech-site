@@ -49,7 +49,12 @@ const FRAMES = [
      flash across a whole section, and the question is not whether arc appears
      - it does, that is the picture - but whether it has stopped being a moment
      and become the ground. */
-  ['/', '.fail', 'failures, glass band', '.fail__item'],
+  /* FAILURES IS NOT WALKED HERE, 2026-09-14. It is a machine yellow GROUND now,
+     so this counter would report most of its frame as accent, which is the
+     ground doing its job rather than a carrier. Carriers on and around it are
+     attributed element by element in `.measure/rhythm.mjs`, which knows a
+     ground from a carrier. It was ['/', '.fail', 'failures, glass band',
+     '.fail__item']. */
   ['/', '.faq', 'faq, cubes band', '.faq__item'],
   ['/', '.counters', 'counters, marble band', '.counters__item'],
   ['/', '.marquee', 'marquee, rays', '.marquee__track'],
