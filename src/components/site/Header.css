@@ -68,10 +68,14 @@
    transform only. The hairline belongs to the solid layer, so it arrives with
    it. The sticky bar keeps its place in flow and gives its height back with a
    negative margin, so the hero starts under it. */
+/* THE TOP STOP IS 85%, WALKED FROM THE BRIEF'S 55. Over the film's last
+   frame, PRICING read 3.67:1 at 55% against 4.5, and the stop rose in 5% steps
+   until every nav item passed on all ten frames: 85%, PRICING 4.62:1. The menu
+   glyph at 390 passes at 55 (16.54:1); the value is the worst width's. */
 .bar[data-over='true'] {
   background: none;
   margin-bottom: calc(-1 * (48px + 2 * var(--s-sm)));
-  --bar-shade: 55%;
+  --bar-shade: 85%;
 }
 
 .bar[data-over='true']::before,

@@ -361,7 +361,7 @@ form is not live; four headline devices failed and the line carries none;
 the page has one `<main>`, a skip link ahead of the bar's six links, and the
 strike ticker keeps the strip's pause control (WCAG 2.2.2); the bar is solid asphalt on every route
 EXCEPT over a film or surface hero (home, About), where since 2026-09-15 it is
-a gradient (asphalt 55% at its top to 0) until 80px of scroll, then the solid
+a gradient (asphalt 85% at its top to 0, walked up from the brief's 55) until 80px of scroll, then the solid
 bar with its hairline, 250ms each way, and the hero runs up under it; the video capability is mounted on the work grid, six
 plates and six clips, four gates intact.
 
