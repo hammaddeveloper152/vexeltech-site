@@ -182,45 +182,10 @@
   color: var(--c-steel-lift);
 }
 
-/* ---- Marquee ------------------------------------------------------------
-   NO CARRIER. This section spends nothing, and that is the decision.
-
-   It had one: the separators at the small loud size, 3.4% of the strip's own
-   area. That number was never the problem — the problem is that the strip is
-   about 82px tall and the work grid's heading begins a few hundred pixels
-   below it, so at both 390 and 1280 the two carriers are in the same frame
-   for the whole of the seam. One accent per frame is a rule about what the
-   reader sees at once, and a section is only a proxy for that. Where the
-   proxy and the reader disagree, the reader wins. BUILD-LAW, One accent per
-   frame is per viewport.
-
-   The work grid keeps its heading, because it is the section the seam is
-   travelling towards and the heading is the largest thing in it; a strip of
-   client logos is a passage, not a destination. So the separators keep their
-   job and give up their colour — the same move the failures rail and the
-   process route made when the register went loud — and go to steel-dark at
-   5.12:1, which is what the system already uses for a mark that is present
-   and not to be looked at.
-
-   The slot text stays Monigue in white. ASSET: client logos as mono SVG,
-   36px tall, any width; they inherit currentColor and arrive white. */
-.marquee__slot {
-  height: auto;
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-small);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--c-shop-white); /* 17.77:1 */
-}
-
-.marquee__sep {
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-small);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  color: var(--c-steel-dark); /* 5.12:1 */
-}
+/* ---- The strike ticker ----------------------------------------------------
+   Its rules are Marquee.css. The client strip's slot and separator rules went
+   with the client slots on 2026-09-15. The ticker's 3px strike is exempt from
+   the carrier count as a ticker; DESIGN.md records the mechanic. */
 
 /* ---- Work grid ----------------------------------------------------------
    Carrier: THE HEADING, in yellow. Six plates and none of them may be the

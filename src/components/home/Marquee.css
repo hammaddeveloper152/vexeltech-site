@@ -1,125 +1,196 @@
 /* ==========================================================================
-   Section 2 — the strip. Full bleed, edge to edge, no container.
+   Section 2 — THE STRIKE TICKER. Full bleed, edge to edge, no container.
 
    Layout family: horizontal scroller. Used once on this page.
 
-   Motion is transform only, composited on the GPU. The loop duplicates the
-   set and translates across exactly one set length, so it is continuous
-   rather than a reset, per the same idiom as TileWall.
+   Motion is transform and opacity only: each phrase is translated by the
+   conveyor in Marquee.jsx, the strike scales from its left end, the fix fades
+   and drops. The rays material under the strip is unchanged (lit.css).
    ========================================================================== */
 
-.marquee {
-  /* Transparent. The ground and both blooms are the page rig's, declared once
-     in lit.css — see the audit note there. */  position: relative;
-  /* THE TWO HAIRLINES ARE GONE, 2026-09-08.
-
-     They made this an enclosed band, and on a page that had light-ground
-     breaks that was one separator among several. On an all-asphalt page two
-     rules 82px apart were the loudest structure in this part of the document
-     and they were drawing a box around a single line of words.
-
-     What identifies the strip is that it moves and that it is set in the
-     small loud step, neither of which needed an edge. The padding goes from
-     24 to 40 so the band is held by space instead. */
-  padding: var(--s-xl) 0;
-  /* Full bleed: no max-width, no horizontal padding, no container. */
+.ticker {
+  position: relative;
   overflow: hidden;
+  /* 64px at 1280, 40px at 390, straight between, held at both ends. */
+  --tick-size: clamp(40px, calc(40px + (100vw - 390px) * 24 / 890), 64px);
+  padding-block: var(--s-xl);
 }
 
-.marquee__track {
-  display: flex;
-  /* Sized by content so the -50% travel is exactly one set. */
-  width: max-content;
-  will-change: transform;
-  /* Ambient, not an interaction. One element in play, so the fastest
-     station. */
-  animation: marquee-run var(--d-ambient-1) linear infinite;
+/* The row is one line of problems with a line of fixes over it: two lines at
+   the loud register's 0.9 plus the 8px between them. The items are absolutely
+   placed, so the height is declared rather than grown. */
+.ticker__view {
+  position: relative;
+  height: calc(var(--tick-size) * 1.8 + 8px);
+  font-size: var(--tick-size);
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
 }
 
-/* One set length is 50% of the doubled track. */
-@keyframes marquee-run {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
+.ticker__view:active {
+  cursor: grabbing;
 }
 
-.marquee__set {
-  display: flex;
-  align-items: center;
-  gap: var(--s-xl);
-  /* The trailing gap belongs to the set, not to the track. A gap on the track
-     would make one set length and half the track length disagree, and the
-     loop would drift by that difference on every pass. */
-  padding: 0 var(--s-xl) 0 0;
+.ticker__row {
   margin: 0;
+  padding: 0;
   list-style: none;
 }
 
-.marquee__item {
-  display: flex;
-  align-items: center;
-  gap: var(--s-xl);
+.ticker__proxy {
+  position: absolute;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.tick {
+  position: absolute;
+  left: 0;
+  bottom: 0;
   white-space: nowrap;
-}
-
-/* The slot. Fixed height, so an <img> at height 100% drops in later without
-   changing the band. */
-.marquee__slot {
-  display: flex;
-  align-items: center;
-  height: var(--s-lg);
-  font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
+  will-change: transform;
+  font-family: var(--font-loud);
+  font-size: var(--tick-size);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
   text-transform: uppercase;
+}
+
+/* THE PROBLEM, OUTLINED. A 1.5px white stroke and no fill: it is the thing
+   being crossed out, and a hollow letter reads as not yet solid. */
+.tick__problem {
+  position: relative;
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--c-shop-white);
+}
+
+/* THE FIX, SOLID, 8px above, left-aligned with its problem. It drops in: 8px
+   of travel down and the fade, 250ms on the reveal curve. */
+.tick__fix {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
   color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity var(--d-drop) var(--ease-reveal),
+    transform var(--d-drop) var(--ease-reveal);
 }
 
-/* Steel-dark, not the accent. This strip carried the frame's yellow until
-   the per-viewport rule landed; the separators keep their job and give up
-   their colour, the same move the failures rail and the process route made.
-   The live value is the one in register.css, which owns where the accent
-   lands; this one is kept in step so no rule anywhere in the tree still
-   claims the separator is the accent. */
-.marquee__sep {
-  font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
-  font-weight: var(--t-weight-label);
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+/* THE STRIKE. 3px, machine yellow's stroke value, through the caps' middle,
+   the whole width of the phrase. Its two ends are cut at 51.93 degrees, the
+   short arm's outer edge of the mark: over a 3px line the cut runs
+   3 / tan(51.93deg) = 2.35px, and both ends lean the same way, as a
+   parallelogram does. Drawn left to right by scaleX from its left end.
+
+   THROUGH THE CAPS' MIDDLE, WHICH IS NOT THE BOX'S. Monigue sits high in its
+   0.9em line box: `.measure/ticker.mjs` found the painted caps' middle at
+   40.6% of the box at 390, where 50% put the strike 3.4px low. A proportion
+   of the box, so it holds at every size the clamp gives. */
+.tick__strike {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 40.6%;
+  height: var(--stroke-drawn);
+  margin-top: calc(var(--stroke-drawn) / -2);
+  background: var(--c-accent-draw-dark);
+  clip-path: polygon(2.35px 0, 100% 0, calc(100% - 2.35px) 100%, 0 100%);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform var(--d-drop) var(--ease-reveal);
 }
 
-/* Pause on hover, gated. Ungated it sticks on touch and the strip never
-   moves again. */
-@media (hover: hover) and (pointer: fine) {
-  .marquee:hover .marquee__track {
-    animation-play-state: paused;
+.tick[data-struck='true'] .tick__strike {
+  transform: scaleX(1);
+}
+
+.tick[data-struck='true'] .tick__fix {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* A phrase moved to the far end of the row takes its new state at once: it is
+   off screen, and a strike un-drawing or drawing out there is work nobody
+   sees. */
+.tick[data-snap='true'] .tick__strike,
+.tick[data-snap='true'] .tick__fix {
+  transition: none;
+}
+
+/* ---- Reduced motion: a static set, every problem struck ------------------ */
+
+.ticker[data-static='true'] .ticker__view {
+  height: auto;
+  cursor: auto;
+  touch-action: auto;
+  padding-inline: var(--inset);
+}
+
+.ticker[data-static='true'] .ticker__row {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1em;
+  row-gap: var(--s-lg);
+}
+
+/* The fix is IN FLOW here, 8px above its problem. Absolutely placed, it could
+   only be as wide as its problem and wrapped when it was longer: PAYING FOR
+   CUSTOMERS. over PAYING FOR CLICKS. broke onto a second line and sat on the
+   phrase below. In flow, the item is as wide as its wider line. */
+.ticker[data-static='true'] .tick {
+  position: relative;
+  white-space: normal;
+  will-change: auto;
+}
+
+/* A STATIC PHRASE WRAPS, SO ITS STRIKE IS A LINE-THROUGH. At 390 the longest
+   problem, ANSWERING THE PHONE YOURSELF., is wider than the frame at 40px,
+   and a nowrap row cut it off at the edge. Wrapped, a positioned strike could
+   only cross the first line.
+
+   So the static strike is a 3px BAND drawn on every line fragment
+   (`box-decoration-break: clone`), 0.40em below the fragment's top: the
+   caps' middle, from Monigue's own metrics (ascent 0.76em, cap height 0.72em).
+   A line-through was tried first and sat 6 to 8px low, because it uses the
+   font's strikeout position and CSS cannot move it. Its ends are square: over
+   3px the 51.93-degree cut is 2.35px, and it stays on the moving strike. */
+.ticker[data-static='true'] .tick__strike {
+  display: none;
+}
+
+.ticker[data-static='true'] .tick__problem {
+  display: inline;
+  background-image: linear-gradient(var(--c-accent-draw-dark), var(--c-accent-draw-dark));
+  background-repeat: no-repeat;
+  background-size: 100% var(--stroke-drawn);
+  background-position: 0 calc(0.4em - var(--stroke-drawn) / 2);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.ticker[data-static='true'] .tick__fix {
+  position: static;
+  display: block;
+  margin-bottom: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tick__strike,
+  .tick__fix {
+    transition: none;
   }
-}
-
-/* The reader's own switch. It holds whatever the pointer is doing, which is
-   the difference between it and the hover rule above: hover is a courtesy
-   that ends when the pointer leaves, this is a decision. */
-.marquee[data-running='false'] .marquee__track {
-  animation-play-state: paused;
 }
 
 /* ---- The control ------------------------------------------------------ */
 
-/* An end cap, not a floating button. It sits on the strip's own asphalt with
-   a hairline down its leading edge, full height, so the track runs up to it
-   and stops rather than passing under a shape hovering over the band. That is
-   also why there is no fade to hide the join: no gradients, ever, so the edge
-   is a line and the line is the whole treatment.
-
-   White on asphalt at 17.77:1. No accent: the strip gave its yellow up, and a
-   control that took it back would be the carrier this section no longer has. */
-.marquee__toggle {
+/* An end cap on the strip's own asphalt, full height, 48px minimum target. */
+.ticker__toggle {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -128,15 +199,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* BUILD-LAW: 48px minimum tap target, padding counts toward it. The strip
-     is about 82px tall, so the height is already past the floor and the
-     inline padding is what carries the width. */
   min-width: 48px;
   padding: 0 var(--s-lg);
   background: var(--c-asphalt);
   border: 0;
   border-radius: var(--r-none);
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  color: var(--c-shop-white);
   cursor: pointer;
   transition:
     transform var(--d-press) var(--ease-reveal),
@@ -144,46 +212,17 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .marquee__toggle:hover {
+  .ticker__toggle:hover {
     opacity: var(--hover-opacity);
   }
 }
 
-/* Steel-dark, 5.12:1 on asphalt. The control is reachable and legible and it
-   does not compete with the slots it sits beside. */
-.marquee__icon {
+/* Steel-dark, 5.12:1 on asphalt. */
+.ticker__icon {
   display: block;
   fill: var(--c-steel-dark);
 }
 
-.marquee__toggle:active {
+.ticker__toggle:active {
   transform: scale(0.97);
-}
-
-/* Focus is a ring from tokens.css, never the hover treatment. */
-
-/* ---- Reduced motion: the strip is static ------------------------------- */
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee__track {
-    animation: none;
-    will-change: auto;
-    /* Held at the start of the loop, so it reads as a composed static band
-       rather than an animation caught mid-travel. */
-    transform: translate3d(0, 0, 0);
-  }
-
-  /* The control is not rendered under reduced motion, so this only ever
-     matches during the frame between first paint and the media query being
-     read. Kept because the press scale is transform and transform goes. */
-  /* Steel-dark, 5.12:1 on asphalt. The control is reachable and legible and it
-   does not compete with the slots it sits beside. */
-.marquee__icon {
-  display: block;
-  fill: var(--c-steel-dark);
-}
-
-.marquee__toggle:active {
-    transform: none;
-  }
 }

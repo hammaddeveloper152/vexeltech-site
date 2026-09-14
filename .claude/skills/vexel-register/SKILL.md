@@ -87,8 +87,9 @@ step only — still button-secondary, transparent, square, sentence case.
   carriers**, walked at 390 and 1280 by painted pixel.
   **Five carriers survive on eleven frames** — the hero's call, the services
   discipline names, the counter row's lead figure, the FAQ heading, the
-  footer's submit. **Six frames spend nothing**: failures, marquee, work grid,
-  about, testimonials, process. One per frame is a ceiling, not a quota.
+  footer's submit. **Six frames spend nothing**: failures, the strip, work grid,
+  about, testimonials, process. The strip is the strike ticker since
+  2026-09-15: its 3px yellow strikes are exempt from the count as a ticker. One per frame is a ceiling, not a quota.
   **That six is more than half the page and it is a live question**, not a
   settled state: nobody chose to halve the accent, it fell out of a pairwise
   rule. See DESIGN.md.
@@ -150,7 +151,11 @@ step only — still button-secondary, transparent, square, sentence case.
   until 2026-09-09; that figure is the SHORT arm's outer edge to within 0.87°
   and is 14° off the long arm. Derive from `.measure/markgeom.mjs`, never from
   memory.
-- **The angle appears in exactly ONE place: the page transition.** The hero
+- **The angle appears in TWO places: the page transition, and the strike
+  ticker's line, whose two ends are cut at 51.93°** (added 2026-09-15, briefed
+  as "the mark's angle, 52.8"; the user chose the measured edge). The ticker's
+  line runs flat through each phrase, because at 51.93° a line cannot cross a
+  900px phrase; the angle is in the cut. The hero
   entrance line was the second, and it was **removed on 2026-09-14** with the
   slam it carried: the hero spot's lines fade up 8px over 250ms on the reveal
   curve, and no line is drawn at any cut. Do not add one back without a
@@ -325,10 +330,13 @@ invented copy. Every placeholder string says it is a placeholder. The form is
 disabled with a visible line until it has an endpoint; a success message is
 a claim.
 
-Asset slots: services artefacts **1:1, filled** (four generated tiles, 1600px
-webp; 40% of the plate bleeding 32 up and right from 1024, 60% above the copy
-below; empty alt, because they are illustrations and not client work); about panel 4:5; marquee logos mono SVG
-at 36px; wall tiles 16:10 (unmounted).
+Asset slots: services artefacts **filled** (four generated 1:1 tiles, 1600px
+webp, empty alt because they are illustrations and not client work). **A slot
+bleed is for objects; a scene is the card** (2026-09-15): on home each tile is
+the whole 1:1 card with the copy on a shade that holds under it then fades; on
+/services it is the right half of a 50/50 plate at full height, 3:2 on top
+below 1024. About panel 4:5; wall tiles 16:10 (unmounted). **The client slots
+are deleted**: the strip is the strike ticker.
 
 **The work plates take video and their spec is MEASURED, not quoted.** Their
 ratios change per breakpoint, and the six-plate lists in DESIGN.md and
@@ -349,7 +357,7 @@ texture, but text inside generated artwork is its content and allowed, the
 Services tiles first; no repeats; no single genre); the
 form is not live; four headline devices failed and the line carries none;
 the page has one `<main>`, a skip link ahead of the bar's six links, and the
-strip has a pause control; the bar is asphalt at every scroll position with no
+strike ticker keeps the strip's pause control (WCAG 2.2.2); the bar is asphalt at every scroll position with no
 transparent state; the video capability is mounted on the work grid, six
 plates and six clips, four gates intact.
 

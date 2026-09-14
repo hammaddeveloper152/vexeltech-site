@@ -46,8 +46,9 @@ import './Services.css';
    entries from 1.1's development list. Both halves of each are the user's.
 
    THE ICONS ARE GONE. They stood in the artefact slot while it was 4:1 and
-   empty. The slot is 1:1 now and holds one generated tile per discipline,
-   `/assets/services/<id>.webp`, found by the plate's own probe. */
+   empty. Each plate is an image card now, 2026-09-15: one generated tile per
+   discipline fills it, `/assets/services/<id>.webp`, and the name and the
+   three items sit on a gradient bottom-left. See `plates.css`, CARD. */
 
 const CARDS = [
   {
@@ -99,6 +100,7 @@ export default function Services() {
               n={String(i + 1).padStart(2, '0')}
               side={i % 2 === 0 ? 'left' : 'right'}
               as="h3"
+              variant="card"
               plateRef={plateRef(i)}
               href={`/services#${id}`}
             />

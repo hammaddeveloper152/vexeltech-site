@@ -54,6 +54,9 @@ const EXEMPT = [
   ['img[src*="/assets/objects/"]', 'brand object', 'within'],
   ['.hero__spot', 'the hero film, recorded exception', 'within'],
   ['.svc__art-img', 'Services tile, generated artwork (BUILD-LAW 2026-09-15)', 'within'],
+  /* The whole ticker, not the strike: mid-draw and at its anti-aliased edges
+     the strike's pixels resolve to the phrase or the view as their painter. */
+  ['.ticker', 'the strike ticker, exempt as a ticker (DESIGN 2026-09-15)', 'within'],
   ['.wm', 'the wordmark', 'within'],
 ];
 

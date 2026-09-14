@@ -56,7 +56,13 @@ for (const [w,h] of [[1280,800],[390,844]]) {
       if (r.width < 2 || r.height < 2) continue;
       const op = parseFloat(c.opacity);
       if (op < 0.05) continue;
-      const fgv = px(c.color);
+      /* OUTLINED TYPE IS READ BY ITS STROKE. The strike ticker's problems
+         have a transparent fill and a 1.5px white stroke; their colour is
+         rgba(0,0,0,0) and the pair used to read 1:1. */
+      let fgv = px(c.color);
+      if ((fgv.length === 4 ? fgv[3] : 1) === 0 && parseFloat(c.webkitTextStrokeWidth) > 0) {
+        fgv = px(c.webkitTextStrokeColor);
+      }
       const fa = (fgv.length === 4 ? fgv[3] : 1) * op;
       const ground = groundOf(el);
       const fg = over([fgv[0],fgv[1],fgv[2]], fa, ground);

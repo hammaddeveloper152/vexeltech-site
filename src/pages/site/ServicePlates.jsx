@@ -112,6 +112,7 @@ export default function ServicePlates({ disciplines }) {
             n={String(i + 1).padStart(2, '0')}
             side={i % 2 === 0 ? 'left' : 'right'}
             as="h2"
+            variant="split"
             plateRef={plateRef(i)}
           />
         ))}

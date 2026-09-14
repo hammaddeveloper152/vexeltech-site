@@ -173,32 +173,12 @@
    ========================================================================== */
 
 /* ==========================================================================
-   4. MARQUEE — asphalt, and IT CARRIES NO YELLOW
+   4. THE STRIKE TICKER — its rules are Marquee.css
 
-   The separators were machine yellow and the strip had a 2px yellow rule top
-   and bottom. Both are gone and neither comes back; DESIGN.md carries the rule.
-
-   The reason is position, not taste. The strip sits directly between the
-   machine yellow services ground above it and the work grid's yellow numerals
-   below, and it is only 116px tall — so anything yellow in it is in frame with
-   one or the other at every scroll position there is. A seam walk found it
-   sharing a viewport with plates 01 and 02 for 400px of scroll at 1280 and 700
-   at 390.
-
-   A marquee is a passage. It is the one section on the page a reader is always
-   leaving, and the recorded rule for a seam is that the passage yields.
+   The client strip carried no yellow and no edges, and both rules went with
+   its slots on 2026-09-15. The ticker's strike is a 3px machine yellow line,
+   exempt from the carrier count as a ticker; DESIGN.md records the mechanic.
    ========================================================================== */
-
-.marquee {
-  /* NO EDGES. The strip drew a hairline top and bottom, which is the one
-     thing a section may not do now: on a single rig, a section is separated by
-     what it is made of and by the space around it, not by a line telling the
-     reader where it stops. */
-}
-
-.marquee__sep {
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
-}
 
 /* ==========================================================================
    5. WORK — asphalt, and the plates get an edge that reads as an object

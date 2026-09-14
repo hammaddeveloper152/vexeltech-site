@@ -1,62 +1,42 @@
 /* ==========================================================================
-   THE DISCIPLINE PLATE. One rule set, two mounts.
+   THE DISCIPLINE PLATE. One rule set, two mounts, two variants.
 
-   It was written for `/services` and the home page's Services section now uses
-   the same object — not a copy of it, the same rules. That is why these came
-   out of services.css: two stylesheets describing one component is the
-   two-records defect this project keeps finding, and a plate that drifts on
-   one page is exactly the kind of drift nobody notices until a screenshot.
+   card   home Services. 1:1 from 1024, the tile edge to edge under a gradient,
+          the name and three items bottom-left on it.
+   split  /services. Copy left on lit-near, tile right at full plate height.
+
+   THE BLEEDING SLOT IS WITHDRAWN, 2026-09-15. It stood 32px off the plate's
+   top and right edges, which is how an OBJECT rests on a surface. The tiles
+   are scenes, and a scene is the card: DESIGN.md, "A slot bleed is for
+   objects, a scene is the card".
 
    The class names keep the `svc__` prefix. They mean "services plate", and
    both mounts are services plates.
    ========================================================================== */
 
-/* ---- The plate ------------------------------------------------------ */
+/* ---- What both variants share ---------------------------------------- */
 
 .svc__plate {
   position: relative;
   isolation: isolate;
   display: grid;
-  gap: var(--s-xl);
-  /* 40px, and the left side clears the 3px bar. The plate is its content plus
-     80 now rather than its content plus 128: at 64px the padding was a fifth
-     of a 618px plate, which is a frame, not a margin. */
-  padding: var(--s-xl) var(--s-xl) var(--s-xl) calc(var(--s-xl) + var(--s-xs));
-  /* THE TWO LIGHTS: key top left, rim bottom right, edges to match. */
   border: 1px solid var(--lit-edge);
   border-top-color: var(--lit-edge-top);
   border-right-color: var(--lit-edge-arc);
   border-bottom-color: var(--lit-edge-arc);
   border-radius: var(--r-md);
-  /* LIT-NEAR, NOT WARM. These are 350 to 1183px tall and the warm surfaces
-     stop at 320 — see DESIGN.md. */
   background-color: var(--lit-near);
-  /* THE RIM LIVES HERE AND THE KEY LIVES ON `::before`.
-
-     Both were on the element, which was simpler and is no longer possible: the
-     key's strength changes on hover, 14% to 22%, and background layers on one
-     element share that element's opacity. A light whose intensity moves needs
-     a box of its own. The rim's intensity does not move, so it stays.
-
-     THE RIM NO LONGER MOVES. It was a positioned layer so it could swing to
-     the point opposite the pointer; the spotlight holds it at its station, so
-     it goes back to the plain corner-pinned gradient every other lit object on
-     the site uses. One fewer moving part, and one fewer place for this plate
-     to differ from a card. */
   background-image: var(--lit-rim);
   box-shadow: var(--lit-inset);
-  /* The resting state. Alternating, so the four read as a stack that was set
-     down rather than as one shape repeated. */
+  /* The resting state, alternating, straightened on arrival. */
   transform: rotate(-1.5deg);
-  perspective: 800px;
   transition:
     transform var(--d-drop) var(--ease-reveal),
     background-color 400ms var(--ease-reveal);
 }
 
-/* THE KEY, on its own box so its strength can move. 22% in the gradient and
-   0.636 opacity at rest, which is 14.0% — the station value — so hovering is
-   one opacity transition rather than a second gradient swapped in. */
+/* THE KEY, on its own box so its strength can move: declared at 24% and
+   carried at 0.583, the 14% station. */
 .svc__plate::before {
   content: '';
   position: absolute;
@@ -67,7 +47,6 @@
   background-repeat: no-repeat;
   background-size: 400px 400px;
   background-position: -200px -200px;
-  /* Declared at 24% and carried at 0.583: the 14% station. */
   opacity: 0.583;
   pointer-events: none;
   transition:
@@ -76,35 +55,13 @@
     opacity 400ms var(--ease-reveal);
 }
 
-/* ---- THE SPOTLIGHT ----------------------------------------------------
+/* ---- THE SPOTLIGHT, as built -------------------------------------------
 
-   This REPLACES the two-moving-lights version, which moved the key under the
-   pointer and swung the rim to the opposite corner in the same gesture.
-
-   Two lights moving at once was one idea too many. The rim is the object's
-   shaded side — a fact about which way the plane faces — and swinging it
-   around the plate every time the pointer moved meant the object appeared to
-   be rotating in place rather than being lit. The rim holds its station now.
-   Only the key moves, and it stops being a corner glow while it does: it
-   becomes a SPOT, 260px at 28%, centred on the cursor.
-
-   AND THE PLANE UNDER IT DROPS A STEP, lit-near to lit-far, over 200ms. That
-   is the half that makes it a spotlight rather than a brighter glow. A light
-   is only as bright as what surrounds it, and doubling the key's alpha on an
-   unchanged plane reads as a smudge getting bigger; dropping the plane makes
-   the same spot read as a beam. The two move together and neither works alone.
-
-   80ms FOLLOW, 400ms RETURN. The spot is under the pointer, not trailing it,
-   so it is the fastest transition on the site — 120ms was already a visible
-   lag once the light became a hard-edged spot rather than a soft corner. The
-   way back is unhurried for the same reason it always was: a fast return reads
-   as a second, unasked-for movement.
-
-   Gated twice: the media query stops a touch device painting any of this, and
-   `usePointerLight` refuses any pointer that is not a mouse. */
+   The key becomes a 300px spot under the pointer and the plane drops a step,
+   lit-near to lit-far: the two together are what make it a beam rather than a
+   bigger glow. 80ms follow, 400ms return. Gated here and in usePointerLight. */
 @media (hover: hover) and (pointer: fine) {
   .svc__plate[data-lit='true'] {
-    /* The plane drops so the spot has something to read against. */
     background-color: var(--lit-far);
     transition:
       transform var(--d-drop) var(--ease-reveal),
@@ -112,14 +69,10 @@
   }
 
   .svc__plate[data-lit='true']::before {
-    /* 200px station to a 300px spot: the layer is 400px carrying a 200px
-       radius, so scaling it to 600 scales the radius to 300. `background-size`
-       is animatable where the gradient's own radius is not. */
     background-size: 600px 600px;
     background-position:
       calc(var(--mx, 0) / 100 * var(--pw, 0px) - 300px)
       calc(var(--my, 0) / 100 * var(--ph, 0px) - 300px);
-    /* 14% to 24%: declared at 24 and carried at 0.583 for the station. */
     opacity: 1;
     transition:
       background-position 80ms linear,
@@ -127,13 +80,12 @@
       opacity 80ms linear;
   }
 
-  /* THE OBJECT RISES TO MEET THE LIGHT, unchanged. A 6px lift and two degrees
-     of tilt toward the pointer, on the plate's own 800px perspective. */
-  .svc__plate[data-lit='true'] .svc__art {
-    transform:
-      translateY(-6px)
-      rotateY(calc((var(--mx, 50) - 50) / 50 * 2deg))
-      rotateX(calc((50 - var(--my, 50)) / 50 * 2deg));
+  /* THE SCENE MOVES IN ITS FRAME, NOT THE FRAME. The tile used to lift 6px and
+     tilt toward the pointer, which is what an object on a plate does. A scene
+     that fills its card has no edge to lift, so the picture scales to 1.04
+     inside the clip over 400ms on the reveal curve. */
+  .svc__plate[data-lit='true'] .svc__art-img {
+    transform: scale(1.04);
   }
 
   /* PRESS IS THE WHOLE PLATE. 160ms is BUILD-LAW's pinned press duration. */
@@ -143,110 +95,38 @@
   }
 }
 
-/* The slot's resting transform and its curve. Outside the hover query, because
-   an element that is only given a transform inside a media query has nothing
-   to transition back to when the query stops matching. */
-.svc__art {
-  transform: translateY(0);
-  transform-style: preserve-3d;
-  transition: transform var(--d-drop) var(--ease-reveal);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  /* NO TRANSITIONS. Not slower ones: every part of this device is movement,
-     and the lit stations are the whole of what it has to say when it cannot
-     move. The lights sit where they always sit, the object does not rise, and
-     the press does not scale. */
-  .svc__plate,
-  .svc__plate::before,
-  .svc__plate[data-lit='true'],
-  .svc__plate[data-lit='true']::before,
-  .svc__art {
-    transition: none;
-  }
-
-  /* The plane does not drop either: the drop is half the spotlight and the
-     spotlight is movement. */
-  .svc__plate[data-lit='true'] {
-    background-color: var(--lit-near);
-  }
-
-  .svc__plate[data-lit='true'] .svc__art,
-  .svc__plate:active {
-    transform: none;
-  }
-}
-
 .svc__plate[data-side='right'] {
   transform: rotate(1.5deg);
 }
 
-/* Arrived: straight, and lifted 4px. One transform, one curve, one duration —
-   the About plate's mechanic exactly, on a different trigger. */
 .svc__plate[data-in='true'],
 .svc__plate[data-side='right'][data-in='true'] {
   transform: rotate(0deg) translateY(-4px);
 }
 
-/* The glow was a `::before` carrying one light. It is two now, on the element
-   itself — `--lit-key` and `--lit-rim` in lit.css. */
-
-.svc__plate::after {
-  content: '';
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 3px;
-  background: var(--c-accent-ground);
-  pointer-events: none;
-}
-
-@media (min-width: 1024px) {
-  /* Left column the copy, right column the artefact at 40% OF THE PLATE — of
-     its border box, not of the content box a percentage resolves against.
-
-     Those are different numbers and the bleed is why. The slot's rendered
-     width is its column plus the 64px of padding it crosses plus the 24px it
-     stands past the edge, so a plain `40%` rendered at 43% of the plate. The
-     column is solved back from the number that was asked for:
-
-     THE BORDER AND THE UNEVEN PADDING COUNT. The left padding is 44 (it
-     clears the bar) and the right is 40, and the plate has a 1px border. The
-     first version solved against one padding and no border, and measured 31px
-     of bleed and 39.6% at 1280. Solved properly, with pl and pr the two
-     paddings and b the border:
-
-       col + pr + b + 32 = 0.4 * (content + pl + pr + 2b)
-       col = 40% + 0.4 * pl - 0.6 * pr - 0.2 * b - 32px
-
-     Measured at 1280: the /services plate is 1048px, and the home plate is
-     556px. */
-  .svc__plate {
-    grid-template-columns:
-      minmax(0, 1fr)
-      calc(40% + 0.4 * (var(--s-xl) + var(--s-xs)) - 0.6 * var(--s-xl) - 0.2px - 32px);
-    gap: var(--s-2xl);
-    align-items: start;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
+  .svc__plate,
+  .svc__plate::before,
+  .svc__plate[data-lit='true'],
+  .svc__plate[data-lit='true']::before,
+  .svc__art-img {
+    transition: none;
+  }
+
+  .svc__plate[data-lit='true'] {
+    background-color: var(--lit-near);
+  }
+
   .svc__plate,
   .svc__plate[data-side='right'],
   .svc__plate[data-in='true'],
-  .svc__plate[data-side='right'][data-in='true'] {
+  .svc__plate[data-side='right'][data-in='true'],
+  .svc__plate:active,
+  .svc__plate[data-lit='true'] .svc__art-img {
     transform: none;
-    transition: none;
   }
 }
 
-/* The copy column. `.disc__name`, `.disc__line`, `.disc__list` and
-   `.disc__item` are the page's existing rules and are untouched — the plate is
-   a new container around the same blocks, not a new set of type rules. The one
-   thing that changes is the line's value: it was steel-dark on the flat
-   ground, and steel-dark is banned on a surface. */
 .svc__body {
   min-width: 0;
 }
@@ -260,84 +140,31 @@
   color: var(--c-steel-lift); /* 6.33:1 on lit-near */
 }
 
-/* ---- 5. The artefact slot ---------------------------------------------
+/* ---- The artefact -------------------------------------------------------- */
 
-   1:1 — the four Services tiles are square, supplied 2026-09-15, so the slot
-   is square and cover-fit crops nothing. It was 3:2 while it was a
-   reservation. At 40% of the plate's border box, TOP-ALIGNED, and it stands 32px above
-   the plate's top edge as well as 32px past its right edge. Two bleeds rather
-   than one: a panel that only escapes sideways still reads as let into the
-   plate, and lifting it over the top edge is what makes it an object resting
-   ON the plate.
-
-   The column is solved back from the number that was asked for, because a
-   percentage resolves against the CONTENT box and the slot's rendered width
-   includes the padding it crosses and the 32px it stands past:
-
-     col + (padding + 32) = 0.4 * (content + 2 * padding)
-     col = 40% - 0.2 * padding - 32px
-*/
 .svc__art {
   position: relative;
-  z-index: 2;
+  overflow: hidden;
+}
+
+/* Cover-fit: the box is the crop and the file's dimensions move nothing. */
+.svc__art-img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform var(--d-panel) var(--ease-reveal);
+}
+
+/* The reservation, flag-gated: a numeral in the name face, steel-lift. */
+.svc__art[data-reserved='true'] {
   display: grid;
   place-items: center;
-  overflow: hidden;
-  aspect-ratio: 1 / 1;
-  /* The edges take the two lights; the FACE does not. A reserved slot is a
-     hairline and a numeral — see DESIGN.md — and a glow painted inside it is
-     the decoration that rule removed. Light on the edge is not content. */
+  min-height: 160px;
   border: 1px solid var(--lit-edge);
-  border-top-color: var(--lit-edge-top);
-  border-right-color: var(--lit-edge-arc);
-  border-bottom-color: var(--lit-edge-arc);
-  border-radius: var(--r-md);
-  background: none;
-}
-
-@media (min-width: 1024px) {
-  .svc__art {
-    /* Padding, the plate's 1px border, then the 32px past it. */
-    margin-top: calc((var(--s-xl) + 1px + 32px) * -1);
-    margin-right: calc((var(--s-xl) + 1px + 32px) * -1);
-  }
-}
-
-/* BELOW 1024 THE TILE LEADS. One column, so there is no side for it to stand
-   on and nothing for it to bleed past: it goes above the copy, at 60% of the
-   plate's content width, inside the padding. `order` moves it rather than the
-   markup, because above 1024 the copy has to come first in the grid. */
-@media (max-width: 1023px) {
-  .svc__art {
-    order: -1;
-    width: 60%;
-  }
-}
-
-/* THE NUMERAL IS THE PLACEHOLDER, and it is the only thing in the slot.
-
-   It was the page's own WebGL surface at half intensity. That is decoration in
-   a box that is reserved for a photograph, and decoration in a reservation
-   reads as content — a reader cannot tell a slot that is waiting from a slot
-   that is finished. DESIGN.md: a reserved slot shows a hairline and a numeral,
-   never decoration.
-
-   96px Moldie, steel-lift, 6.33:1 on lit-near. The same numeral the index
-   carries, so the slot and the rail name the same object. */
-/* THE PLATE'S NUMBER, top right. 11px mono in steel-lift — small enough to be
-   an index and not a label, and it is on the plate whether the slot is there
-   or not, because it names the plate rather than standing in for artwork. */
-.svc__n {
-  position: absolute;
-  z-index: 2;
-  top: var(--s-md);
-  right: var(--s-md);
-  font-family: var(--font-offer);
-  font-size: 11px;
-  line-height: 14px;
-  font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
 }
 
 .svc__art-n {
@@ -349,14 +176,147 @@
   color: var(--c-steel-lift);
 }
 
-/* Cover-fit, so the ratio above is the crop and the file's own dimensions do
-   not move the layout. */
-.svc__art-img {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+/* ==========================================================================
+   CARD — home Services
+   ========================================================================== */
+
+/* 1:1, and a floor rather than a lock: `aspect-ratio` with the default
+   `min-height: auto` lets the card grow if its copy ever outgrows the square,
+   instead of pushing the name off the top of the picture. 32px padding and a
+   12px radius, both from the brief; the clip is `clip-path` with overflow as
+   the fallback, because the picture scales inside it and overflow alone fails
+   silently across a compositing boundary. */
+.svc__plate[data-variant='card'] {
+  aspect-ratio: 1 / 1;
+  align-content: end;
+  padding: 32px;
+  border-radius: 12px;
+  overflow: hidden;
+  clip-path: inset(0 round 12px);
 }
 
+/* NO YELLOW BAR on the card: the tiles carry the colour. */
+
+/* The layers, bottom to top: the tile, the spotlight, the gradient, the copy.
+   The spot is UNDER the gradient so the light can never lift the ground the
+   copy was measured on. */
+.svc__plate[data-variant='card'] .svc__art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.svc__plate[data-variant='card']::before {
+  z-index: 1;
+}
+
+/* THE SHADE HOLDS, THEN FADES. 2026-09-15, chosen by the user after the
+   briefed gradient failed: asphalt from 85% at the bottom edge to nothing at
+   55% of the height could not carry the copy at any bottom stop. At 100%,
+   16 pairs failed at 1280 (the name BRANDING 2.19:1), 4 at 768, and 24 at 390,
+   where the names sat ABOVE the gradient's start on the tiles' white letters,
+   1.01 to 1.12:1. A ramp tied to the card's height does not know where the
+   copy is; this is tied to the copy.
+
+   So the shade hangs off the copy block, not the card: flat at `--card-shade`
+   from the card's bottom edge to 24px above the name, then to nothing over
+   the next 64px. It moves with the copy at every width, and the top of the
+   picture is clear. Walked by `.measure/svccards.mjs`. */
+.svc__plate[data-variant='card'] .svc__body {
+  position: relative;
+  z-index: 2;
+}
+
+.svc__plate[data-variant='card'] .svc__body::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: calc(-24px - 64px);
+  right: -32px;
+  bottom: -32px;
+  left: -32px;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgb(23 24 26 / var(--card-shade, 85%)) 0,
+    rgb(23 24 26 / var(--card-shade, 85%)) calc(100% - 64px),
+    rgb(23 24 26 / 0%) 100%
+  );
+}
+
+/* Moldie, the name face, at the home card step. White. */
+.svc__plate[data-variant='card'] .disc__name {
+  margin: 0 0 var(--s-sm);
+  font-family: var(--font-name);
+  font-size: var(--t-name-l);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white);
+}
+
+.svc__plate[data-variant='card'] .disc__item {
+  color: var(--c-bone);
+}
+
+/* ==========================================================================
+   SPLIT — /services
+   ========================================================================== */
+
+/* Flush: no padding on the plate, the padding belongs to the copy column. The
+   clip rounds the tile's two OUTER corners with the plate; its inner edge is
+   square because it is a grid line, not a corner. */
+.svc__plate[data-variant='split'] {
+  overflow: hidden;
+  clip-path: inset(0 round var(--r-md));
+}
+
+/* The bar stays on /services, on the copy side. */
+.svc__plate[data-variant='split']::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: var(--c-accent-ground);
+  pointer-events: none;
+}
+
+/* 24px on a phone, 48px from 768 as briefed: 48px of a 358px plate is a
+   frame, not a margin. */
+.svc__plate[data-variant='split'] .svc__body {
+  padding: var(--s-lg);
+}
+
+/* BELOW 1024: the tile on top at full width, 3:2. It covers the plate's own
+   hairline on its three outer sides (-1px), and sits above the bar. */
+.svc__plate[data-variant='split'] .svc__art {
+  order: -1;
+  z-index: 2;
+  aspect-ratio: 3 / 2;
+  margin: -1px -1px 0;
+}
+
+@media (min-width: 768px) {
+  .svc__plate[data-variant='split'] .svc__body {
+    padding: 48px;
+  }
+}
+
+/* FROM 1024: 50/50. The tile has no height of its own (the image is absolute
+   inside it), so the row is the copy column's height, which is its content
+   plus 96px, and the tile stretches to it. */
+@media (min-width: 1024px) {
+  .svc__plate[data-variant='split'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .svc__plate[data-variant='split'] .svc__art {
+    order: 0;
+    aspect-ratio: auto;
+    margin: -1px -1px -1px 0;
+  }
+}

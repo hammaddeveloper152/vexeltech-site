@@ -78,17 +78,12 @@
 }
 
 @media (min-width: 1024px) {
-  /* 2x2, 40px apart. The artefact slot bleeds 32px past its plate's right
-     edge, which crosses into this gap and leaves 8px of it — measured, and the
-     reason the gap is not smaller. Below 1024 it is one column and the slot
-     does not bleed at all. */
+  /* 2x2, 40px apart both ways. The row gap was 72px while the artefact slot
+     stood 32px above its plate; the cards hold their pictures inside their
+     own edges now, so nothing crosses a gap and one number does. */
   .services__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    /* 72px between ROWS, 40px between columns. The artefact slot stands 32px
-       above its own plate, and at a 40px row gap it cleared the plate above by
-       8px — enough to not overlap and not enough to read as clear of it. The
-       column gap is untouched: nothing bleeds upward into it. */
-    gap: 72px var(--s-xl);
+    gap: var(--s-xl);
   }
 }
 
