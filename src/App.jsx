@@ -52,8 +52,8 @@ import Home from './pages/site/Home.jsx';
 import ServicesPage from './pages/site/ServicesPage.jsx';
 import PricingPage from './pages/site/PricingPage.jsx';
 import ContactPage from './pages/site/ContactPage.jsx';
+import AboutPage from './pages/site/AboutPage.jsx';
 import {
-  AboutPage,
   PortfolioPage,
   CaseStudiesPage,
   ResourcesPage,

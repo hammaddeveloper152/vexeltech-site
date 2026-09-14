@@ -40,8 +40,14 @@ export default function Shell({ title, description, meta = true, barOver = false
       }
       meta.content = description;
     }
-    /* A route change is not a scroll, so nothing restores the position. */
-    window.scrollTo(0, 0);
+    /* A route change is not a scroll, so nothing restores the position.
+       EXCEPT A FRAGMENT, 2026-09-15: the About cards link to
+       `/services#<id>`, and scrolling to the top threw the fragment away. The
+       target's own `scroll-margin-top` clears the sticky bar. */
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    const target = id ? document.getElementById(id) : null;
+    if (target) requestAnimationFrame(() => target.scrollIntoView());
+    else window.scrollTo(0, 0);
   }, [title, description]);
 
   return (

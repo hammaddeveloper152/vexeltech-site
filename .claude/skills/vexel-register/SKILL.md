@@ -337,7 +337,9 @@ bleed is for objects; a scene is the card** (2026-09-15): on home each tile is
 the whole 1:1 card with the copy on a shade that holds under it then fades; on
 /services each discipline is a full section with its tile at 45% beside the
 name, sides alternating, 4:3, above the name below 1024. The 404 carries the
-mark render, `vmark.webp`, 1200px shown at 480. About panel 4:5; wall tiles 16:10 (unmounted). **The client slots
+mark render, `vmark.webp`, 1200px shown at 480. About (rebuilt 2026-09-15): the portrait slot is gone, and Plate 00
+(`plate-00.webp`) stands in a lit frame; a mascot band and a framed exhibit
+are different families by amendment; wall tiles 16:10 (unmounted). **The client slots
 are deleted**: the strip is the strike ticker.
 
 **The work plates take video and their spec is MEASURED, not quoted.** Their
@@ -360,7 +362,8 @@ Services tiles first; no repeats; no single genre); the
 form is not live; four headline devices failed and the line carries none;
 the page has one `<main>`, a skip link ahead of the bar's six links, and the
 strike ticker keeps the strip's pause control (WCAG 2.2.2); the bar is solid asphalt on every route
-EXCEPT over a film or surface hero (home, About), where since 2026-09-15 it is
+EXCEPT over a film or surface hero (home; About was one until its 2026-09-15
+rebuild onto a cream band, and keeps the solid bar), where since 2026-09-15 it is
 a gradient (asphalt 85% at its top to 0, walked up from the brief's 55) until 80px of scroll, then the solid
 bar with its hairline, 250ms each way, and the hero runs up under it; the video capability is mounted on the work grid, six
 plates and six clips, four gates intact.

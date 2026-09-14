@@ -53,11 +53,29 @@ export function Section({ title, note, children, labelledBy }) {
   );
 }
 
-/* The page's one accent. See the accent note at the top of pages.css. */
-export function CallBand({ heading, note }) {
+/* The page's one accent. See the accent note at the top of pages.css.
+
+   `handset`: the contact handset floating beside the call, 2026-09-15, on the
+   About page. A brand object, exempt from the carrier count. */
+export function CallBand({ heading, note, handset = false }) {
   return (
-    <section className="vt callband band band-burst" aria-labelledby="callband-h">
+    <section
+      className="vt callband band band-burst"
+      aria-labelledby="callband-h"
+      data-handset={handset ? 'true' : 'false'}
+    >
       <div className="callband__in">
+        {handset ? (
+          <img
+            className="callband__handset float"
+            src="/assets/objects/handset.webp"
+            alt=""
+            width="734"
+            height="1600"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : null}
         <h2 className="callband__h" id="callband-h">
           {heading}
         </h2>

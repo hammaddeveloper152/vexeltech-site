@@ -1,0 +1,432 @@
+/* ==========================================================================
+   THE ABOUT PAGE, REBUILT 2026-09-15. Five sections of its own; the plates
+   ("Who we work with") are about.css, as built, and the call band is pages.css.
+   ========================================================================== */
+
+/* ---- 1. Hero: a cream band with the mascot on it -------------------------
+
+   Edge to edge, 96px top and bottom, the site's inset at the sides. Left 60%:
+   the statement at the HEADING step (the user's decision; the hero clamp
+   would have run it to ten lines), Body 1 and 2, and the asphalt call. Right
+   40%: the mascot at the full column width, floating. Every value on the band
+   is asphalt, 15.7:1 on cream, the home About band's own values. */
+.ab-hero {
+  background: var(--c-cream);
+  color: var(--c-asphalt);
+  padding: var(--s-3xl) var(--inset);
+}
+
+.ab-hero__in {
+  display: grid;
+  gap: var(--s-2xl);
+  align-items: center;
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.ab-hero__text {
+  display: grid;
+  gap: var(--s-lg);
+  align-content: start;
+  min-width: 0;
+}
+
+.ab-hero__h {
+  margin: 0 0 var(--s-sm);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-h);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-asphalt); /* 15.7:1 on cream */
+  text-wrap: balance;
+}
+
+.ab-hero__p {
+  max-width: 38rem;
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-asphalt); /* 15.7:1 on cream */
+  text-wrap: pretty;
+}
+
+/* ASPHALT, the home About band's call: white on its asphalt fill, 17.77:1,
+   and the fill's edge 15.7:1 on cream. */
+.ab-hero__call {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: var(--s-sm);
+  min-height: 48px;
+  margin-top: var(--s-sm);
+  padding: var(--s-md) var(--s-lg);
+  background: var(--c-asphalt);
+  border-radius: var(--r-none);
+  font-family: var(--font-brand);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-brand);
+  color: var(--c-shop-white);
+  text-decoration: none;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+.ab-hero :focus-visible {
+  outline-color: var(--c-asphalt); /* the yellow ring is 1.66:1 on cream */
+}
+
+/* Below 1024 the mascot sits under the type, capped so it stays a character
+   standing on the band. */
+.ab-hero__art {
+  width: min(100%, 360px);
+  justify-self: center;
+}
+
+.ab-hero__character {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .ab-hero__call {
+    padding: var(--s-lg) var(--s-xl);
+    font-size: var(--t-h3-size);
+    line-height: var(--t-h3-line);
+    letter-spacing: var(--t-track-h3);
+  }
+}
+
+@media (min-width: 1024px) {
+  /* 60 / 40 of the row, the gap taken from both in proportion. */
+  .ab-hero__in {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    column-gap: var(--s-2xl);
+  }
+
+  .ab-hero__art {
+    width: 100%;
+    justify-self: stretch;
+  }
+}
+
+/* ---- 2. The disciplines strip ------------------------------------------- */
+
+.ab-strip {
+  /* The cards' shade, walked by `.measure/aboutpage.mjs shade`. */
+  --card-shade: 85%;
+  padding: var(--s-3xl) var(--inset);
+}
+
+.ab-strip__in {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.ab-strip__h {
+  margin: 0 0 var(--s-xl);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-h);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white); /* 17.77:1 */
+}
+
+/* Four in a row from 1024, 2x2 below. */
+.ab-strip__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 1024px) {
+  .ab-strip__cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--s-lg);
+  }
+}
+
+/* A square card, the tile edge to edge under a 12px clip and a hairline. */
+.ab-card {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-content: end;
+  aspect-ratio: 1 / 1;
+  padding: var(--s-md);
+  overflow: hidden;
+  border: 1px solid var(--lit-edge);
+  border-radius: 12px;
+  clip-path: inset(0 round 12px);
+  color: var(--c-shop-white);
+  text-decoration: none;
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.ab-card__img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform var(--d-panel) var(--ease-reveal);
+}
+
+/* The home cards' shade: flat under the name from the card's bottom edge to
+   24px above it, then to nothing over 64px. */
+.ab-card__body {
+  position: relative;
+  z-index: 1;
+}
+
+.ab-card__body::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: calc(-24px - 64px);
+  right: calc(-1 * var(--s-md));
+  bottom: calc(-1 * var(--s-md));
+  left: calc(-1 * var(--s-md));
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgb(23 24 26 / var(--card-shade)) 0,
+    rgb(23 24 26 / var(--card-shade)) calc(100% - 64px),
+    rgb(23 24 26 / 0%) 100%
+  );
+}
+
+/* Moldie, the name face, at the tier-name step. White. */
+.ab-card__name {
+  display: block;
+  font-family: var(--font-name);
+  font-size: var(--t-name-m);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white);
+}
+
+@media (min-width: 1024px) {
+  .ab-card {
+    padding: var(--s-lg);
+  }
+
+  .ab-card__body::before {
+    right: calc(-1 * var(--s-lg));
+    bottom: calc(-1 * var(--s-lg));
+    left: calc(-1 * var(--s-lg));
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ab-card:hover .ab-card__img {
+    transform: scale(1.04);
+  }
+}
+
+.ab-card:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ab-card,
+  .ab-card__img {
+    transition: none;
+  }
+
+  .ab-card:hover .ab-card__img,
+  .ab-card:active {
+    transform: none;
+  }
+}
+
+/* ---- 3. Origin: Plate 00 in a lit frame ---------------------------------
+
+   Two columns from 1024: the plate at 40% in a hairline frame with the arc
+   rim (the lit surfaces' two tinted edges and the rim radial), the heading
+   and the body beside it. Below 1024 the plate goes first, capped at 480px. */
+.ab-origin {
+  padding: var(--s-3xl) var(--inset);
+}
+
+.ab-origin__in {
+  display: grid;
+  gap: var(--s-2xl);
+  align-items: center;
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.ab-origin__frame {
+  width: min(100%, 480px);
+  margin: 0;
+  padding: var(--s-md);
+  border: 1px solid var(--lit-edge);
+  border-top-color: var(--lit-edge-top);
+  border-right-color: var(--lit-edge-arc);
+  border-bottom-color: var(--lit-edge-arc);
+  border-radius: var(--r-md);
+  background-color: var(--lit-near);
+  background-image: var(--lit-rim);
+  background-repeat: no-repeat;
+  box-shadow: var(--lit-inset);
+}
+
+.ab-origin__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ab-origin__text {
+  min-width: 0;
+}
+
+.ab-origin__h {
+  margin: 0 0 var(--s-lg);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-h);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white);
+  text-wrap: balance;
+}
+
+.ab-origin__p {
+  max-width: 38rem;
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone); /* 13.84:1 on asphalt */
+}
+
+@media (min-width: 1024px) {
+  .ab-origin__in {
+    grid-template-columns: 40% minmax(0, 1fr);
+    column-gap: var(--s-2xl);
+  }
+
+  .ab-origin__frame {
+    width: 100%;
+  }
+}
+
+/* ---- 4. What we refuse: a machine yellow band with three objects ----------
+
+   A GROUND, not a carrier, exactly as the home Failures band: a colour band is
+   allowed when objects stand on it. Asphalt type, 9.46:1. Three rows below
+   1024, three columns from 1024 with each object above its lines. */
+.ab-refuse {
+  background: var(--c-accent-field);
+  color: var(--c-asphalt);
+  padding: var(--s-3xl) var(--inset);
+}
+
+.ab-refuse__in {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.ab-refuse__h {
+  margin: 0 0 var(--s-2xl);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-h);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-asphalt); /* 9.46:1 on the band */
+}
+
+.ab-refuse__items {
+  display: grid;
+  row-gap: var(--s-2xl);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ab-refuse__item {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  column-gap: var(--s-lg);
+  row-gap: var(--s-sm);
+  align-items: start;
+  min-width: 0;
+}
+
+.ab-refuse__icon {
+  grid-row: span 2;
+  display: block;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
+
+.ab-refuse__t {
+  margin: 0;
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-small);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-asphalt);
+}
+
+.ab-refuse__b {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-asphalt);
+  text-wrap: pretty;
+}
+
+.ab-refuse :focus-visible {
+  outline-color: var(--c-asphalt);
+}
+
+@media (min-width: 1024px) {
+  .ab-refuse__items {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: var(--s-xl);
+    row-gap: 0;
+  }
+
+  .ab-refuse__item {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--s-lg);
+  }
+
+  .ab-refuse__icon {
+    grid-row: auto;
+    width: 96px;
+    height: 96px;
+  }
+}
+
+/* The page section after the band carries no top padding of its own (pages.css),
+   because on these pages the section above spends it. The band is a ground
+   change, so the space is restated. */
+.ab-refuse + .pg__section {
+  padding-top: var(--s-3xl);
+}
