@@ -112,10 +112,16 @@ function Art({ id, name, n, lit }) {
           }}
         />
       ) : (
+        /* EMPTY ALT, and not by accident. The tiles are generated
+           illustrations: "work by VexelTech" would tell a screen reader they
+           are client work, which is a claim BUILD-LAW Truth does not allow.
+           The words inside them are the artwork's own (BUILD-LAW, sourcing
+           rule, 2026-09-15), and the discipline is already named by the
+           heading beside them. */
         <img
           className="svc__art-img"
           src={src}
-          alt={`${name} work by VexelTech`}
+          alt=""
           loading="lazy"
           decoding="async"
         />

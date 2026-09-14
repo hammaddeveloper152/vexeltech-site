@@ -325,7 +325,9 @@ invented copy. Every placeholder string says it is a placeholder. The form is
 disabled with a visible line until it has an endpoint; a success message is
 a claim.
 
-Asset slots: services artefacts 4:1; about panel 4:5; marquee logos mono SVG
+Asset slots: services artefacts **1:1, filled** (four generated tiles, 1600px
+webp; 40% of the plate bleeding 32 up and right from 1024, 60% above the copy
+below; empty alt, because they are illustrations and not client work); about panel 4:5; marquee logos mono SVG
 at 36px; wall tiles 16:10 (unmounted).
 
 **The work plates take video and their spec is MEASURED, not quoted.** Their
@@ -342,7 +344,9 @@ clip. Never re-derive it from a document.
 Clash for controls only; asphalt everywhere; the carrier per frame and the
 window it is measured in; the anti-alias threshold; a frame is a viewport;
 the tile ladder and its rule; the video capability and its four gates; the
-sourcing rule (no faces, no legible words, no repeats, no single genre); the
+sourcing rule (no faces in photographs, mascots allowed; no legible words in
+texture, but text inside generated artwork is its content and allowed, the
+Services tiles first; no repeats; no single genre); the
 form is not live; four headline devices failed and the line carries none;
 the page has one `<main>`, a skip link ahead of the bar's six links, and the
 strip has a pause control; the bar is asphalt at every scroll position with no

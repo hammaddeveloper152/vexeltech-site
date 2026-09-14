@@ -46,9 +46,8 @@ import './Services.css';
    entries from 1.1's development list. Both halves of each are the user's.
 
    THE ICONS ARE GONE. They stood in the artefact slot while it was 4:1 and
-   empty; the slot is 3:2 with a numeral now, and DESIGN.md holds every
-   reserved slot on the site to a hairline and a numeral. An icon in there is
-   the decoration that rule removed. */
+   empty. The slot is 1:1 now and holds one generated tile per discipline,
+   `/assets/services/<id>.webp`, found by the plate's own probe. */
 
 const CARDS = [
   {

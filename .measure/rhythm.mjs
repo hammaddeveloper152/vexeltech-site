@@ -53,6 +53,7 @@ const EXEMPT = [
   ['.tabs', 'ground: the pricing panel', 'self'],
   ['img[src*="/assets/objects/"]', 'brand object', 'within'],
   ['.hero__spot', 'the hero film, recorded exception', 'within'],
+  ['.svc__art-img', 'Services tile, generated artwork (BUILD-LAW 2026-09-15)', 'within'],
   ['.wm', 'the wordmark', 'within'],
 ];
 

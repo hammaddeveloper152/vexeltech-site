@@ -212,13 +212,21 @@
      stands past the edge, so a plain `40%` rendered at 43% of the plate. The
      column is solved back from the number that was asked for:
 
-       col + (padding + bleed) = 0.4 * (content + 2 * padding)
-       col = 40% + 0.8 * padding - padding - 24px
-           = 40% - 0.2 * padding - 24px
+     THE BORDER AND THE UNEVEN PADDING COUNT. The left padding is 44 (it
+     clears the bar) and the right is 40, and the plate has a 1px border. The
+     first version solved against one padding and no border, and measured 31px
+     of bleed and 39.6% at 1280. Solved properly, with pl and pr the two
+     paddings and b the border:
 
-     Measured at 1280: a 1048px plate, a 419px slot, 40.0%. */
+       col + pr + b + 32 = 0.4 * (content + pl + pr + 2b)
+       col = 40% + 0.4 * pl - 0.6 * pr - 0.2 * b - 32px
+
+     Measured at 1280: the /services plate is 1048px, and the home plate is
+     556px. */
   .svc__plate {
-    grid-template-columns: minmax(0, 1fr) calc(40% - 0.2 * var(--s-xl) - 32px);
+    grid-template-columns:
+      minmax(0, 1fr)
+      calc(40% + 0.4 * (var(--s-xl) + var(--s-xs)) - 0.6 * var(--s-xl) - 0.2px - 32px);
     gap: var(--s-2xl);
     align-items: start;
   }
@@ -254,7 +262,9 @@
 
 /* ---- 5. The artefact slot ---------------------------------------------
 
-   3:2 at 40% of the plate's border box, TOP-ALIGNED, and it stands 32px above
+   1:1 — the four Services tiles are square, supplied 2026-09-15, so the slot
+   is square and cover-fit crops nothing. It was 3:2 while it was a
+   reservation. At 40% of the plate's border box, TOP-ALIGNED, and it stands 32px above
    the plate's top edge as well as 32px past its right edge. Two bleeds rather
    than one: a panel that only escapes sideways still reads as let into the
    plate, and lifting it over the top edge is what makes it an object resting
@@ -273,7 +283,7 @@
   display: grid;
   place-items: center;
   overflow: hidden;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 1 / 1;
   /* The edges take the two lights; the FACE does not. A reserved slot is a
      hairline and a numeral — see DESIGN.md — and a glow painted inside it is
      the decoration that rule removed. Light on the edge is not content. */
@@ -287,8 +297,20 @@
 
 @media (min-width: 1024px) {
   .svc__art {
-    margin-top: calc((var(--s-xl) + 32px) * -1);
-    margin-right: calc((var(--s-xl) + 32px) * -1);
+    /* Padding, the plate's 1px border, then the 32px past it. */
+    margin-top: calc((var(--s-xl) + 1px + 32px) * -1);
+    margin-right: calc((var(--s-xl) + 1px + 32px) * -1);
+  }
+}
+
+/* BELOW 1024 THE TILE LEADS. One column, so there is no side for it to stand
+   on and nothing for it to bleed past: it goes above the copy, at 60% of the
+   plate's content width, inside the padding. `order` moves it rather than the
+   markup, because above 1024 the copy has to come first in the grid. */
+@media (max-width: 1023px) {
+  .svc__art {
+    order: -1;
+    width: 60%;
   }
 }
 
