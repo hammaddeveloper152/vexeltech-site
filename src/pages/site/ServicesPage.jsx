@@ -1,115 +1,126 @@
 import React from 'react';
 import Shell from './Shell.jsx';
 import { PageHead, Section, CallBand } from './parts.jsx';
-import ServicePlates from './ServicePlates.jsx';
-/* Loaded after pages.css so it wins on ground, plate and slot. */
-import '../../styles/plates.css';
+import ServiceSections from './ServiceSections.jsx';
 import '../../styles/services.css';
 
-/* THE SERVICES PAGE. The four disciplines at full length.
+/* THE SERVICES PAGE, REBUILT 2026-09-15. Four discipline SECTIONS, not plates.
 
-   This is where content answer 1.1's lists belong. The homepage carries
-   three per discipline because a pinned card at the statement size holds
-   three lines and reads as a summary; a reader who wants the whole offer
-   comes here, and here it is complete.
+   ALL COPY IS THE FOUNDER'S, from VEXELTECH-SERVICES-COPY.md in the design
+   repo, which says every fact in it already appears on /pricing or in the FAQ.
+   Each section has the same five parts in the file's order: name and promise,
+   the tile, what you get (grouped), how it goes (numbered), and the facts with
+   a call.
 
-   EVERY ITEM IS THE USER'S. Sources per block:
+   ---- Edits to the file, all recorded ------------------------------------
 
-   | Block      | Lists from        | Line from |
-   |---|---|---|
-   | Branding   | 1.1 and 2.1       | 2.1       |
-   | Websites   | 1.1 and 2.2       | 2.2       |
-   | Marketing  | 1.1               | 2.3       |
-   | Automation | 1.1               | 2.4       |
+   1. The text after each group title is capitalised: "The mark: custom logo
+      design" is a group title "The mark" over "Custom logo design, ...". Only
+      the first letter moved, the same normalisation the page's old lists took.
+   2. Each step's first sentence is its title: "A call." is set apart from the
+      rest of the step. The words are unchanged.
+   3. "See pricing." on the price lines of Branding and Websites is a link to
+      /pricing. Marketing and Automation have no such line in the file.
+   4. The fact labels are the file's keys, "Price line" shortened to "Price".
 
-   ---- Four edits to the source lists, all recorded ----------------------
-
-   1. "Ecommerce stores" and "E commerce websites" are consecutive entries in
-      1.1 and are the same offering spelled two ways. They are ONE item here.
-      Shipping both would read as a mistake in the copy, and merging two
-      spellings of one thing is normalisation, not invention.
-
-   2. Capitalisation and spacing normalised: "Ui Ux Design" to "UI and UX
-      design", "Saas Products" to "SaaS products", "Ai Agents" to "AI
-      agents", "Chat bots" to "Chatbots", "Work Flow automations" to
-      "Workflow automation". The words are the user's; only the shape of
-      them moved. AEO is left as the acronym it was given as.
-
-   3. The stationery detail from 2.1 is a sub-line under the stationery item
-      rather than four more services, because that is what it is.
-
-   4. THE WEBSITE TIMELINE IS FOUR BUSINESS DAYS, and it is in the websites
-      block. It was held out of this page while 7.2's four business days and
-      2.2 and 3.5's "within weeks" were unreconciled. The user settled it on
-      2026-09-08 in favour of 7.2: four business days, and "within weeks" is
-      not used anywhere on this site.
-
-   ---- The asymmetry is the source's ------------------------------------
-
-   Marketing has twelve items and automation has three. That is what 1.1
-   gives, and padding automation to match would be inventing capabilities.
-   The layout does not force a count. */
+   The old lists (1.1's sub-services) are gone from this page because the file
+   replaces them: "What you get" is the founder's grouped version of the same
+   offer. */
 
 const DISCIPLINES = [
   {
     id: 'branding',
     name: 'Branding',
-    line: 'The name people remember after the job is done. Drawn and shown to you before you owe anything.',
-    items: [
-      { t: 'Brand visuals and identity' },
-      { t: 'Custom logo design' },
-      { t: 'Brand creation' },
-      { t: 'Brand guidelines' },
-      {
-        t: 'Stationery design',
-        dt: 'Business cards, envelope design, email signature, letterhead design',
-      },
-      { t: 'Social media kit' },
-      { t: 'Social media creative' },
-      { t: 'Graphic design' },
-      { t: 'Digital assets' },
+    promise:
+      'The name people remember after the job is done. Drawn and shown to you before you owe anything.',
+    get: [
+      { g: 'The mark', t: 'Custom logo design, 5 concepts (Basic) or 8 (Advance), colour variations, logo sizes for social.' },
+      { g: 'The rules', t: 'A brand guideline so every future job looks like the same company.' },
+      { g: 'The kit', t: 'Business card, letterhead, envelope, email signature, favicon; social media kit, banners and cover profiles.' },
     ],
+    steps: [
+      ['A call.', 'You tell us the business, the customers, and what already exists that has to survive.'],
+      ['Concepts.', 'You see five or eight directions, drawn, before anything is paid for.'],
+      ['Revisions.', 'Unlimited until you say stop.'],
+      ['Files.', 'Every format, delivered in one or two business days depending on package.'],
+    ],
+    price: 'From $299. Advance at $449.',
+    pricing: true,
+    turnaround: '1 to 2 business days.',
+    fit: "You have a business and no mark, or a mark you're not proud of.",
+    notFit: "You want a template with your name typed in. We don't make those.",
+    call: { label: 'Get a custom quote', primary: true },
   },
   {
     id: 'websites',
     name: 'Websites',
-    line:
-      "A site that sells while you sleep. Built for you rather than picked off a shelf, in four business days, with 30 days of maintenance and a dedicated team you can actually reach.",
-    items: [
-      { t: 'Custom websites' },
-      { t: 'Web apps' },
-      { t: 'Ecommerce stores and websites' },
-      { t: 'UI and UX design' },
-      { t: 'CRM development' },
-      { t: 'SaaS products' },
-      { t: 'Mobile applications' },
-      { t: 'Maintenance' },
+    promise:
+      'A site that sells while you sleep. Built for you rather than picked off a shelf, in four business days, with 30 days of maintenance and a dedicated team you can actually reach.',
+    get: [
+      { g: 'The build', t: 'Custom design up to 6 pages, custom UI and UX, custom backend, payment gateway integration.' },
+      { g: 'The reach', t: 'SEO-friendly content, mobile first, live on your own domain.' },
+      { g: 'The cover', t: "30 days of maintenance included, then it's a conversation, not a retainer." },
+      { g: 'Also', t: 'Web apps, ecommerce stores, CRM development, SaaS products, mobile applications.' },
     ],
+    steps: [
+      ['A call.', 'Pages, what the site connects to (booking, payments, CRM, forms), where visitors come from.'],
+      ['Design.', 'UI and UX first, shown to you.'],
+      ['Build and test.', 'Four business days. You look at it and tell us what to change, as many times as it takes.'],
+      ['Handover.', 'It moves to your hosting. Files, domain, credentials and code under your name.'],
+    ],
+    price: '$700, one tier.',
+    pricing: true,
+    turnaround: '4 business days from the day we have your content.',
+    fit: "You have no site, or a site nobody finds, or a site that doesn't ring the phone.",
+    notFit: "You want to keep paying monthly for something you don't own.",
+    call: { label: 'Get a custom quote', primary: true },
   },
   {
     id: 'marketing',
     name: 'Marketing',
-    line: 'Full stack marketing, pointed at one thing. Not impressions, not reach. Whether the phone rings.',
-    items: [
-      { t: 'SEO' },
-      { t: 'AEO' },
-      { t: 'Google ads' },
-      { t: 'Meta ads' },
-      { t: 'Paid ads' },
-      { t: 'Campaign management' },
-      { t: 'Performance marketing' },
-      { t: 'CRO' },
-      { t: 'Lead generation' },
-      { t: 'Social media management' },
-      { t: 'Organic content creation' },
-      { t: 'Social media reels' },
+    promise:
+      'Full stack marketing, pointed at one thing. Not impressions, not reach. Whether the phone rings.',
+    get: [
+      { g: 'Search', t: 'SEO and AEO, so the search that should find you finds you.' },
+      { g: 'Paid', t: 'Google ads, Meta ads, campaign management, performance marketing, lead generation.' },
+      { g: 'Conversion', t: 'CRO, so the clicks you pay for become calls.' },
+      { g: 'Social', t: 'Social media management, organic content creation, reels.' },
     ],
+    steps: [
+      ['A call.', "Your market, who you're up against, the monthly budget range, what's been tried and what it returned."],
+      ['The page first.', 'Ad spend goes to a page that converts before another dollar goes to ads.'],
+      ['Launch and measure.', 'Campaigns run, numbers reported in plain language.'],
+      ['Adjust.', "What works gets more; what doesn't gets cut."],
+    ],
+    price: 'Priced on the call, in writing before any work starts.',
+    pricing: false,
+    turnaround: 'Campaigns live within the first week after the page is ready.',
+    fit: "You're spending on marketing and not getting the leads, or you've never spent and don't know where to start.",
+    notFit: 'You want impressions on a report and nothing else.',
+    call: { label: 'Ask a question first', primary: false },
   },
   {
     id: 'automation',
     name: 'Automation',
-    line: 'The jobs that eat your week, done without you. Complicated tasks made simple, and workflows that hold.',
-    items: [{ t: 'Workflow automation' }, { t: 'AI agents' }, { t: 'Chatbots' }],
+    promise:
+      'The jobs that eat your week, done without you. Complicated tasks made simple, and workflows that hold.',
+    get: [
+      { g: 'Workflows', t: 'The repeated tasks (quotes, follow-ups, invoices, reminders) run on their own.' },
+      { g: 'Agents', t: 'AI agents that answer, book, and route, on your rules.' },
+      { g: 'Chatbots', t: 'On your site and your channels, answering the questions you answer ten times a day.' },
+    ],
+    steps: [
+      ['A call.', 'The tools you already use, the workflow that eats the most hours each week, the volume it has to handle.'],
+      ['Map it.', 'We draw the workflow before we build it, and you approve the drawing.'],
+      ['Build and test.', 'It runs alongside you first, then without you.'],
+      ['Handover.', 'Documented, under your accounts, yours.'],
+    ],
+    price: 'Priced on the call, in writing before any work starts.',
+    pricing: false,
+    turnaround: 'Scoped per workflow on the call.',
+    fit: 'You or your staff answer the same message, send the same quote, or chase the same invoice every day.',
+    notFit: 'The job changes every time. Automation needs a pattern.',
+    call: { label: 'Ask a question first', primary: false },
   },
 ];
 
@@ -119,22 +130,13 @@ export default function ServicesPage() {
       title="Services | VexelTech"
       description="Branding, websites, marketing and automation. The four disciplines in full, from one team."
     >
-      {/* NO SURFACE MOUNT. It was here, at 60% of hero height, and it painted
-          a band above the heading and a band below it with nothing behind the
-          words — see services.css. Mount the surface behind the type or do not
-          mount it. */}
       <PageHead
         title="What we do"
         lead="Four disciplines and one team. Not four agencies who don't talk to each other, and not four invoices."
       />
 
-      <Section labelledBy="disciplines-h" title={null}>
-        <h2 className="skip-h" id="disciplines-h">
-          The four disciplines
-        </h2>
-        {/* Four plates and a sticky index. Every word of every list is the
-            same string it was; only the container around them changed. */}
-        <ServicePlates disciplines={DISCIPLINES} />
+      <Section title={null}>
+        <ServiceSections disciplines={DISCIPLINES} />
       </Section>
 
       <CallBand

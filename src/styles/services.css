@@ -48,14 +48,10 @@
   }
 }
 
-.svc__plates {
+/* The four discipline sections, 96px apart. See section 4 below. */
+.svc2 {
   display: grid;
-  /* 40px between plates, and it is the ramp's own step. */
-  gap: var(--s-xl);
-  /* The artefact bleeds 24px past the plate's right edge, so the column has
-     to stop clipping it and the page has to not grow a scrollbar for it. The
-     plate itself keeps `overflow: hidden` for the glow; the bleed is on a
-     child that sits outside that box. */
+  gap: var(--s-3xl);
   min-width: 0;
 }
 
@@ -153,17 +149,279 @@ section:has(> .pg__section-in > .svc) {
   padding-bottom: 0;
 }
 
-/* The last plate is LIFTED 4px once it arrives, and the call's 96px is
-   measured from the layout box, which the lift does not move. Left alone the
-   reader sees 100px. The 4px comes back here so the gap on screen is the gap
-   that was asked for. */
-.svc__plates {
-  margin-bottom: -4px;
+/* ---- 4. The discipline sections, 2026-09-15 ----------------------------
+
+   A full section per discipline, not a plate. Sides alternate, tile right on
+   01 and 03, left on 02 and 04. The layout family is the ALTERNATING STACK,
+   once on this page; the three-column panel is that component's second row
+   and repeats with it, the way the plates' two-column lists did. */
+
+.svc2__d {
+  display: grid;
+  gap: var(--s-xl);
+  scroll-margin-top: calc(48px + 2 * var(--s-sm) + var(--s-lg));
+}
+
+/* ---- Row one: name, promise, tile ---- */
+
+.svc2__top {
+  display: grid;
+  gap: var(--s-lg);
+  align-items: center;
+}
+
+/* 45% of the section at 1024 and up, cover-fit, 12px radius, with the lit
+   surfaces' hairline. 4:3: the files are square, and a square at 45% of a
+   1048px section is 470px of picture beside a two-line promise. Below 1024 the
+   tile goes above the name, full width. */
+.svc2__tile {
+  position: relative;
+  order: -1;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--lit-edge);
+  border-radius: 12px;
+  clip-path: inset(0 round 12px);
+}
+
+.svc2__tile img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Moldie at the statement step: 57.6px at 1280, the step the brief's 57px
+   names. The name face's permission already covers the discipline headings on
+   this page. */
+.svc2__name {
+  margin: 0 0 var(--s-md);
+  font-family: var(--font-name);
+  font-size: var(--t-loud-s);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white);
+}
+
+/* SATOSHI 22px ON 32px, BONE. A size the scale does not carry, set by the
+   brief for this one role: the promise is read, and at body 18 it sat level
+   with the columns below it. 32px keeps it on the 4px baseline. */
+.svc2__promise {
+  max-width: 40ch;
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: 22px;
+  line-height: 32px;
+  color: var(--c-bone); /* 13.84:1 on asphalt */
+}
+
+@media (min-width: 1024px) {
+  .svc2__top {
+    grid-template-columns: minmax(0, 1fr) 45%;
+    gap: var(--s-2xl);
+  }
+
+  .svc2__tile {
+    order: 0;
+  }
+
+  .svc2__d[data-side='left'] .svc2__top {
+    grid-template-columns: 45% minmax(0, 1fr);
+  }
+
+  .svc2__d[data-side='left'] .svc2__tile {
+    order: -1;
+  }
+}
+
+/* ---- Row two: the lit panel in three columns ---- */
+
+/* Lit-near with both lights and the four tinted edges, the lit surfaces'
+   construction. The columns are split by hairlines, which is what earns them
+   here: three blocks of text on one plane read as one block without them. */
+.svc2__panel {
+  display: grid;
+  border: 1px solid var(--lit-edge);
+  border-top-color: var(--lit-edge-top);
+  border-right-color: var(--lit-edge-arc);
+  border-bottom-color: var(--lit-edge-arc);
+  border-radius: var(--r-md);
+  background-color: var(--lit-near);
+  background-image: var(--lit-key), var(--lit-rim);
+  background-repeat: no-repeat;
+  box-shadow: var(--lit-inset);
+}
+
+.svc2__col {
+  min-width: 0;
+  padding: var(--s-lg);
+}
+
+.svc2__col + .svc2__col {
+  border-top: 1px solid var(--c-rule-dark);
+}
+
+/* THE DENSITY LAW: three things of nearly equal size must have one that
+   leads. "What you get" leads on width, 1.3 to 1 to 1. */
+@media (min-width: 1024px) {
+  .svc2__panel {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .svc2__col {
+    padding: var(--s-xl);
+  }
+
+  .svc2__col + .svc2__col {
+    border-top: 0;
+    border-left: 1px solid var(--c-rule-dark);
+  }
+}
+
+/* Column heads: Monigue at the small loud step. */
+.svc2__ch {
+  margin: 0 0 var(--s-lg);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-small);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--c-shop-white);
+}
+
+.svc2__groups,
+.svc2__facts {
+  display: grid;
+  gap: var(--s-lg);
+  margin: 0;
+}
+
+/* THE GROUP TITLES "IN MONO" are the label style, the system's mono role:
+   Satoshi 500, 12px, uppercase at 0.12em. There is no monospace face in the
+   system, and DESIGN.md calls the label the mono index. Steel-lift, 6.33:1 on
+   lit-near. */
+.svc2__gt {
+  margin: 0 0 var(--s-xs);
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-steel-lift);
+}
+
+.svc2__gd {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone); /* 13.67:1 on lit-near */
+}
+
+.svc2__steps {
+  display: grid;
+  gap: var(--s-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.svc2__step {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  column-gap: var(--s-md);
+  align-items: baseline;
+}
+
+/* THE STEP NUMERALS, MOLDIE IN WHITE. Briefed in yellow, and yellow put two
+   carriers in one frame: the numerals and the primary call share the facts
+   panel on Branding and Websites, at 1280 for 600px of scroll in each, and the
+   Automation numerals shared a frame with the call band. The user chose white,
+   2026-09-15: the call is the frame's one accent. The name step, 32px.
+   Moldie's permission is extended to these numerals; DESIGN.md records it. */
+.svc2__sn {
+  font-family: var(--font-name);
+  font-size: var(--t-name-m);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  color: var(--c-shop-white); /* 16.48:1 on lit-near */
+}
+
+.svc2__st {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone);
+}
+
+.svc2__st strong {
+  font-weight: var(--t-weight-label);
+  color: var(--c-shop-white);
+}
+
+.svc2__inline {
+  color: var(--c-shop-white);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* THE CALLS. Branding and Websites: button-primary, asphalt on machine
+   yellow, square, sentence case. Marketing and Automation: an underlined
+   link in the brand register. */
+.svc2__cta,
+.svc2__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  margin-top: var(--s-xl);
+  font-family: var(--font-brand);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-brand);
+  letter-spacing: normal;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+.svc2__cta {
+  padding: var(--s-sm) var(--s-lg);
+  background: var(--c-accent-ground);
+  border-radius: var(--r-none);
+  color: var(--c-asphalt); /* 9.46:1 on machine yellow */
+  text-decoration: none;
+}
+
+.svc2__link {
+  color: var(--c-shop-white);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .svc2__cta:hover,
+  .svc2__link:hover {
+    opacity: var(--hover-opacity);
+    transform: translateY(-1px);
+  }
+}
+
+.svc2__cta:active,
+.svc2__link:active {
+  transform: scale(0.97);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* No lift, so nothing to give back. */
-  .svc__plates {
-    margin-bottom: 0;
+  .svc2__cta:hover,
+  .svc2__link:hover,
+  .svc2__cta:active,
+  .svc2__link:active {
+    transform: none;
   }
 }

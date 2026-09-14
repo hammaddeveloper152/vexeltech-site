@@ -1,0 +1,49 @@
+/* ==========================================================================
+   The not-found page. One centred column on the page rig: the render, the
+   heading, one line, the call. The heading and the call are the one-screen
+   pages' own (`.one__h`, `.one__cta`), so nothing here is a new type rule.
+   ========================================================================== */
+
+.nf {
+  display: grid;
+  align-content: center;
+  min-height: calc(100svh - (48px + 2 * var(--s-sm)));
+  padding: var(--s-2xl) var(--inset) var(--s-3xl);
+}
+
+.nf__in {
+  display: grid;
+  justify-items: center;
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* 480px wide at 1280, never wider than the frame. */
+.nf__mark {
+  display: block;
+  width: min(480px, 100%);
+  height: auto;
+  margin-bottom: var(--s-xl);
+}
+
+.nf__h {
+  text-wrap: balance;
+}
+
+/* Bone, 13.84:1 on asphalt, at the lead's step. */
+.nf__lead {
+  max-width: 54ch;
+  margin: var(--s-lg) 0 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone);
+}
+
+@media (min-width: 1024px) {
+  .nf__lead {
+    font-size: var(--t-h3-size);
+    line-height: 36px;
+  }
+}

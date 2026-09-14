@@ -50,6 +50,67 @@
   background: var(--c-asphalt);
 }
 
+/* ---- OVER A HERO, 2026-09-15 ---------------------------------------------
+
+   On a route with a film or surface hero (home, About) the bar stands OVER the
+   hero rather than above it. At the top: asphalt from `--bar-shade` at its top
+   edge to nothing at its bottom, and no hairline. After 80px of scroll: the
+   solid asphalt bar with its hairline. 250ms on the reveal curve each way.
+
+   It reverses "no transparent state", which was right for a hero with no
+   picture: a transparent bar then put white navigation on a white headline.
+   The hero is a film now, its headline starts below the bar's 64px, and the
+   gradient is walked over the film's brightest top strip across ten frames
+   (`.measure/barwalk.mjs`).
+
+   THE TWO GROUNDS ARE TWO LAYERS, and the change is their opacity. A gradient
+   cannot transition to a flat colour, and BUILD-LAW moves opacity and
+   transform only. The hairline belongs to the solid layer, so it arrives with
+   it. The sticky bar keeps its place in flow and gives its height back with a
+   negative margin, so the hero starts under it. */
+.bar[data-over='true'] {
+  background: none;
+  margin-bottom: calc(-1 * (48px + 2 * var(--s-sm)));
+  --bar-shade: 55%;
+}
+
+.bar[data-over='true']::before,
+.bar[data-over='true']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity var(--d-drop) var(--ease-reveal);
+}
+
+.bar[data-over='true']::before {
+  background: linear-gradient(to bottom, rgb(23 24 26 / var(--bar-shade)) 0%, rgb(23 24 26 / 0%) 100%);
+  opacity: 1;
+}
+
+.bar[data-over='true']::after {
+  background: var(--c-asphalt);
+  border-bottom: 1px solid var(--c-rule-dark);
+  opacity: 0;
+}
+
+.bar[data-over='true'][data-solid='true']::before {
+  opacity: 0;
+}
+
+.bar[data-over='true'][data-solid='true']::after {
+  opacity: 1;
+}
+
+/* Reduced motion: the state swaps, nothing fades. */
+@media (prefers-reduced-motion: reduce) {
+  .bar[data-over='true']::before,
+  .bar[data-over='true']::after {
+    transition: none;
+  }
+}
+
 .bar__inner {
   position: relative;
   /* Above the ground layer, and above the open panel. The button that opens

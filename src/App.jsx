@@ -58,6 +58,7 @@ import {
   CaseStudiesPage,
   ResourcesPage,
 } from './pages/site/OneScreenPages.jsx';
+import NotFoundPage from './pages/site/NotFoundPage.jsx';
 
 /* The legacy tree. Lazy, and every one of them wrapped in LegacyShell.
 
@@ -75,7 +76,6 @@ const LegacyContact = lazy(() => import('./pages/Contact.jsx'));
 const LegacyBlog = lazy(() => import('./pages/Blog.jsx'));
 const LegacySimple = lazy(() => import('./pages/SimplePage.jsx'));
 const LegacyThanks = lazy(() => import('./pages/ThanksPage.jsx'));
-const LegacyNotFound = lazy(() => import('./pages/NotFound.jsx'));
 
 /* Nothing visible while a legacy chunk arrives. A spinner here would be a
    loading state DESIGN.md has not specified, and inventing one is inventing
@@ -205,7 +205,11 @@ export default function App() {
           harmful, and pointless is not a reason to delete a URL. */}
       <Route path="/legacy/contact" element={legacy(<LegacyContact />)} />
 
-      <Route path="*" element={legacy(<LegacyNotFound />)} />
+      {/* THE NOT-FOUND ROUTE IS THE REBUILD'S, 2026-09-15. It was the legacy
+          NotFound in the legacy shell; `/404` names it and `*` catches the
+          rest. */}
+      <Route path="/404" element={<NotFoundPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

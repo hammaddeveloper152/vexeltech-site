@@ -26,7 +26,9 @@ import '../../styles/register.css';
    `register.css` is imported LAST, exactly as it is on the homepage, so it
    wins on source order over any section stylesheet a page brings with it. */
 
-export default function Shell({ title, description, meta = true, children }) {
+/* `barOver`: the page opens on a film or surface hero, and the bar stands over
+   it (Header.css, 2026-09-15). */
+export default function Shell({ title, description, meta = true, barOver = false, children }) {
   useEffect(() => {
     if (title) document.title = title;
     if (description) {
@@ -47,7 +49,7 @@ export default function Shell({ title, description, meta = true, children }) {
       <a className="skip" href="#main">
         Skip to content
       </a>
-      <Header />
+      <Header over={barOver} />
       <main id="main" tabIndex={-1}>
         {children}
         {/* The Contact page passes meta={false}: it ends in FooterForm,

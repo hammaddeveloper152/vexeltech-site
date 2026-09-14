@@ -178,7 +178,8 @@ step only — still button-secondary, transparent, square, sentence case.
   hero (a film under it since 2026-09-14), icon columns (Failures, which was
   the hanging-rail ledger), pinned horizontal scroller, horizontal strip,
   asymmetric grid, edge-bleed feature, four-across figure row, single-slot
-  rotator, zigzag route, disclosure stack, form column. A new section takes a
+  rotator, zigzag route, disclosure stack, form column, alternating stack (the
+  /services discipline sections, 2026-09-15). A new section takes a
   new family or does not get built. **Icon-and-text columns and a row of
   figures are different families** — the user's amendment to BUILD-LAW,
   2026-09-14; each column of one is read on its own and led by an object, and
@@ -334,8 +335,9 @@ Asset slots: services artefacts **filled** (four generated 1:1 tiles, 1600px
 webp, empty alt because they are illustrations and not client work). **A slot
 bleed is for objects; a scene is the card** (2026-09-15): on home each tile is
 the whole 1:1 card with the copy on a shade that holds under it then fades; on
-/services it is the right half of a 50/50 plate at full height, 3:2 on top
-below 1024. About panel 4:5; wall tiles 16:10 (unmounted). **The client slots
+/services each discipline is a full section with its tile at 45% beside the
+name, sides alternating, 4:3, above the name below 1024. The 404 carries the
+mark render, `vmark.webp`, 1200px shown at 480. About panel 4:5; wall tiles 16:10 (unmounted). **The client slots
 are deleted**: the strip is the strike ticker.
 
 **The work plates take video and their spec is MEASURED, not quoted.** Their
@@ -357,8 +359,10 @@ texture, but text inside generated artwork is its content and allowed, the
 Services tiles first; no repeats; no single genre); the
 form is not live; four headline devices failed and the line carries none;
 the page has one `<main>`, a skip link ahead of the bar's six links, and the
-strike ticker keeps the strip's pause control (WCAG 2.2.2); the bar is asphalt at every scroll position with no
-transparent state; the video capability is mounted on the work grid, six
+strike ticker keeps the strip's pause control (WCAG 2.2.2); the bar is solid asphalt on every route
+EXCEPT over a film or surface hero (home, About), where since 2026-09-15 it is
+a gradient (asphalt 55% at its top to 0) until 80px of scroll, then the solid
+bar with its hairline, 250ms each way, and the hero runs up under it; the video capability is mounted on the work grid, six
 plates and six clips, four gates intact.
 
 **THE ROUTE SWAP IS DONE, 2026-09-08.** `/` serves the rebuild.

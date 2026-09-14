@@ -72,7 +72,8 @@ export default function Home() {
         Skip to content
       </a>
 
-      <Header />
+      {/* Over the film: transparent at the top, solid after 80px. */}
+      <Header over />
 
       {/* The one main landmark. tabIndex -1 makes it a focus target without
           putting it in the tab order: without it the browser moves the

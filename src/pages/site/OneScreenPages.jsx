@@ -103,6 +103,7 @@ export function AboutPage() {
     <Shell
       title="About us | VexelTech"
       description="One team for branding, websites, marketing and automation, from the logo through to the automation."
+      barOver
     >
       {/* THE SURFACE'S SECOND MOUNT. 60% of the hero's height, same shader,
           same clamp, same mask and pause rules — only the box changes. See

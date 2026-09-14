@@ -55,7 +55,11 @@
    hairline is gone with every other section edge — see Header.css. Corrected
    here rather than left to drift: the whole point of deriving this from the
    bar's own tokens was that the two could not disagree. */
-  min-height: calc(100svh - (48px + 2 * var(--s-sm)));
+  /* THE BAR STANDS OVER THE HERO since 2026-09-15 (Header.css): the hero is
+     the whole screen and the film runs up under the bar. The bar's height
+     goes back on as top padding, so the copy's content box does not move. */
+  --bar-h: calc(48px + 2 * var(--s-sm));
+  min-height: 100svh;
   /* The inset IS the measure now. There is no plate to supply one, so the
      section carries it, and the headline size below is derived from exactly
      this number at each width: 16 on a phone, 40 at tablet, 64 at desktop.
@@ -73,7 +77,7 @@
      the headline size never binds: its worst is 6.50:1 against 3.0. The full
      table is in DESIGN.md, "The hero is a spot". */
   --scrim: 70%;
-  padding: var(--s-lg) var(--hero-inset);
+  padding: calc(var(--s-lg) + var(--bar-h)) var(--hero-inset) var(--s-lg);
   overflow: clip;
 }
 
@@ -443,7 +447,7 @@
 @media (min-width: 768px) {
   .hero {
     --hero-inset: var(--s-xl);
-    padding: var(--s-xl) var(--hero-inset);
+    padding: calc(var(--s-xl) + var(--bar-h)) var(--hero-inset) var(--s-xl);
   }
 
   .hero__headline {
@@ -473,7 +477,7 @@
      what keeps the note above the fold with the call. */
   .hero {
     --hero-inset: var(--s-2xl);
-    padding: var(--s-lg) var(--hero-inset);
+    padding: calc(var(--s-lg) + var(--bar-h)) var(--hero-inset) var(--s-lg);
   }
 
   .hero__headline {

@@ -64,8 +64,39 @@ const CTA = 'Let’s Talk';
 const FOCUSABLE =
   'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
-export default function Header() {
+/* `over`: the route has a film or surface hero, and the bar stands over it.
+   Home (the film) and About (the surface mount) pass it; every other route
+   keeps the solid bar. */
+const SOLID_AFTER = 80; // px of scroll
+
+export default function Header({ over = false }) {
   const [open, setOpen] = useState(false);
+  const [solid, setSolid] = useState(!over);
+
+  /* OVER A HERO THE BAR HAS TWO STATES, 2026-09-15, by the user. At the top
+     it is a gradient over the picture; after 80px of scroll it is the solid
+     bar with its hairline, and back on return. One passive listener, read
+     once per frame. */
+  useEffect(() => {
+    if (!over) {
+      setSolid(true);
+      return undefined;
+    }
+    let raf = 0;
+    const read = () => {
+      raf = 0;
+      setSolid(window.scrollY > SOLID_AFTER);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(read);
+    };
+    read();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, [over]);
   const panelRef = useRef(null);
   const triggerRef = useRef(null);
   const panelId = useId();
@@ -135,12 +166,16 @@ export default function Header() {
     };
   }, [open]);
 
-  /* No ground state. The bar is asphalt with a hairline at every scroll
-     position, because the hero it sits over carries no photography any more
-     and the transparent state was putting white navigation on a white
-     headline. See Header.css. */
+  /* The ground state is back, over heroes only. It was deleted when the hero
+     carried no photography and a transparent bar put white navigation on a
+     white headline. The hero is a film now, the headline sits below the bar's
+     band, and the gradient's strength is walked over the film. See Header.css. */
   return (
-    <header className="vt bar">
+    <header
+      className="vt bar"
+      data-over={over ? 'true' : 'false'}
+      data-solid={solid ? 'true' : 'false'}
+    >
       <div className="bar__inner">
         <Link className="bar__brand" to="/" aria-label="Vexeltech, home">
           <Wordmark size="md" />

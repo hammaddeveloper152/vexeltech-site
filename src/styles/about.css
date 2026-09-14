@@ -22,9 +22,13 @@
      second hero rather than as a page head. The heading and the lead are
      centred on it — `align-content: center` below — so the mount is exactly as
      tall as it needs to be to carry them and no taller. */
-  min-height: calc((100svh - (48px + 2 * var(--s-sm))) * 0.4);
+  min-height: calc((100svh - (48px + 2 * var(--s-sm))) * 0.4 + (48px + 2 * var(--s-sm)));
   display: grid;
   align-content: center;
+  /* THE BAR STANDS OVER THIS BLOCK since 2026-09-15 (Header.css): the
+     surface runs up under it, and the bar's height comes back as padding so
+     the heading sits where it did. */
+  padding-top: calc(48px + 2 * var(--s-sm));
 }
 
 .abt__surface {
