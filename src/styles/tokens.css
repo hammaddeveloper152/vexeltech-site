@@ -49,7 +49,9 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('../assets/fonts/monigue.woff2') format('woff2');
+  /* /fonts, not src/assets, since 2026-09-16: a stable path, so index.html
+     can preload it. See the preload's note there. */
+  src: url('/fonts/monigue.woff2') format('woff2');
 }
 
 /* Moldie: THE NAME FACE, and the fourth face on the site. It sets product
@@ -579,6 +581,58 @@ html {
    have outranked `.hero__cta` and taken the CTA's type with it. */
 :where(button, input, select, textarea, optgroup) {
   font: inherit;
+}
+
+/* NO ONE-WORD LAST LINES, 2026-09-16. The viewer audit found them in the
+   /services cards and panels, the call headings at 390, the page leads and the
+   pricing rows: "invoices.", "signature.", "most", "need". `pretty` moves a
+   word down to keep the last line company without balancing the whole block,
+   so a paragraph keeps its measure and only its end changes.
+
+   `:where()` holds the specificity at zero, so a component's own `balance`
+   (the page heads) still wins. h1 is left out on purpose: the home hero's
+   lines are composed. Browsers without `pretty` ignore it and nothing moves. */
+:where(p, li, dd, dt, blockquote, figcaption, h2, h3, h4) {
+  text-wrap: pretty;
+}
+
+/* THE WORDMARK LINKS AND THE FOOTER EMAIL PRESS, viewer audit 2026-09-16.
+   BUILD-LAW pins a 160ms press on every pressable element and these three had
+   none: the bar's lockup, the footer's lockup and the mailto. The wordmarks
+   take the site's hover as well, which they also lacked. */
+.bar__brand,
+.foot__brand,
+.foot__email {
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal),
+    color var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bar__brand:hover,
+  .foot__brand:hover {
+    opacity: var(--hover-opacity);
+    transform: translateY(-1px);
+  }
+}
+
+.bar__brand:active,
+.foot__brand:active,
+.foot__email:active,
+.skip:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar__brand:hover,
+  .foot__brand:hover,
+  .bar__brand:active,
+  .foot__brand:active,
+  .foot__email:active,
+  .skip:active {
+    transform: none;
+  }
 }
 
 .vt {

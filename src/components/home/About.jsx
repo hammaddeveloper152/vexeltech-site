@@ -38,12 +38,15 @@ export default function About() {
   const [ref, revealed] = useReveal();
 
   return (
-    <section className="vt about" aria-labelledby="about-h" ref={ref}>
+    <section className="vt about" aria-labelledby="about-h">
       <h2 className="about__h" id="about-h">
         Placeholder section name
       </h2>
 
-      <div className="about__inner" data-revealed={revealed ? 'true' : 'false'}>
+      {/* The observer is on what moves, not on the section (viewer audit,
+          2026-09-16): from the section the reveal fired before the block was
+          on screen. */}
+      <div className="about__inner" data-revealed={revealed ? 'true' : 'false'} ref={ref}>
         {/* The reveal moves this wrapper and the float moves the image inside
             it, so the two transforms never compete for one element. */}
         <div className="about__mascot" style={{ '--i': 0 }}>

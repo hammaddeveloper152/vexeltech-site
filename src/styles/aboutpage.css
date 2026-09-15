@@ -32,6 +32,10 @@
   letter-spacing: 0;
   text-transform: uppercase;
   color: var(--c-shop-white); /* 17.77:1 */
+  /* "$700." sat alone on the last line at 1280 (viewer audit, 2026-09-16).
+     The base rule leaves h1 out for the home hero's composed lines; this one
+     is not composed, so it takes `pretty` itself. */
+  text-wrap: pretty;
 }
 
 .ab3-hero__p {

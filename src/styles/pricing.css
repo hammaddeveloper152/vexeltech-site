@@ -468,6 +468,21 @@
   color: var(--c-bone);
   text-decoration: underline;
   text-underline-offset: 3px;
+  /* Hover and press, viewer audit 2026-09-16: this link had neither, and
+     BUILD-LAW pins a 160ms press on everything pressable. */
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card__ask:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+.card__ask:active {
+  transform: scale(0.97);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -702,6 +717,30 @@
 
 .tabs .tiers__route a {
   color: var(--c-asphalt); /* 9.46:1; the underline carries the link signal */
+  /* Hover and press, viewer audit 2026-09-16: it had neither. Opacity, not a
+     colour change: asphalt on machine yellow is the pair this line was
+     measured on. */
+  display: inline-block;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tabs .tiers__route a:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+.tabs .tiers__route a:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tabs .tiers__route a:active,
+  .card__ask:active {
+    transform: none;
+  }
 }
 
 .tabs .tiers__route a:focus-visible {

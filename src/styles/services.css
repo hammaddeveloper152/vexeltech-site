@@ -464,10 +464,33 @@ section:has(> .pg__section-in > .svc) {
   color: var(--c-shop-white);
 }
 
+/* THE INLINE LINK GETS A TARGET AND A PRESS, viewer audit 2026-09-16. It sat
+   at 89x22 on a phone with no press feedback. The padding is vertical only and
+   the margin takes it back out, so the hit area reaches 48px while the line it
+   sits in does not move. */
 .svc2__inline {
   color: var(--c-shop-white);
   text-decoration: underline;
   text-underline-offset: 3px;
+  padding-block: 13px;
+  margin-block: -13px;
+  transition: opacity var(--d-press) var(--ease-reveal), transform var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .svc2__inline:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+.svc2__inline:active {
+  display: inline-block;
+  transform: scale(0.97);
+}
+
+/* The index numerals are buttons and had no press. */
+.svc__index-n:active {
+  transform: scale(0.97);
 }
 
 /* THE CALLS. Branding and Websites: button-primary, asphalt on machine

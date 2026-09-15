@@ -54,14 +54,17 @@ export default function WorkGrid() {
   useEffect(() => setAllow(videoAllowed()), []);
 
   return (
-    <section className="vt work" aria-labelledby="work-h" ref={ref}>
+    <section className="vt work" aria-labelledby="work-h">
       <div className="work__inner">
         <h2 className="work__h" id="work-h">
           Selected work
         </h2>
 
-        {/* Six separate things to read, so the 70ms stagger applies. */}
-        <ul className="work__list" data-revealed={revealed ? 'true' : 'false'}>
+        {/* Six separate things to read, so the 70ms stagger applies. The
+            observer watches the list itself, not the section: from the
+            section it fired with the list still below the fold (viewer
+            audit, 2026-09-16). */}
+        <ul className="work__list" data-revealed={revealed ? 'true' : 'false'} ref={ref}>
           {TILES.map(({ id, title }, i) => {
             /* Plates are numbered from one, in grid order. */
             const clip = clipForPlate(i + 1);

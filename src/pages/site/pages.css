@@ -137,6 +137,14 @@
   padding: 0 var(--inset) var(--s-3xl);
 }
 
+/* THE CONTACT PAGE'S FORM FOLLOWS THE HEAD DIRECTLY, and it carried its own
+   96px top on top of the head's 64: 156px from the lead to the handset,
+   where every other page head is followed at 64. Viewer audit, 2026-09-16.
+   The head owns that space; the footer's top padding goes. */
+.pg__head + .foot {
+  padding-top: 0;
+}
+
 .pg__section-in {
   width: min(100%, 1200px);
   margin: 0 auto;

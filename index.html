@@ -19,6 +19,14 @@
          origin: fonts are fetched in CORS mode, and a preload without it is a
          second, unused download rather than a warm cache entry. -->
     <link rel="preload" href="/fonts/moldie.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- THE LOUD FACE, preloaded, 2026-09-16. Monigue sets every page heading
+         and the hero, and the page is rendered by script, so the face was only
+         discovered once the app had mounted: headings painted in the fallback
+         and moved when Monigue arrived, 12 to 18px, and rewrapped the About
+         hero at 390 (viewer audit). Preloaded from the HTML it is in the cache
+         before the first heading is laid out. The same first-paint test the
+         Moldie note applies: every page's heading is above the fold. -->
+    <link rel="preload" href="/fonts/monigue.woff2" as="font" type="font/woff2" crossorigin />
     <!-- STRUCTURED DATA IS A PUBLISHED CLAIM, held to the same bar as the
          page. Both `telephone` and `address` came out on 2026-09-08 while
          neither was confirmed, because asserting to a crawler what the page

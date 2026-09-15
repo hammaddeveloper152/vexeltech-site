@@ -65,17 +65,20 @@ const FAILURES = [
 
 export default function Failures() {
   /* Four separate things to read, so they arrive one after another on the
-     70ms stagger as the section enters, and once. */
+     70ms stagger as the LIST enters, and once. The observer watched the
+     section until 2026-09-16, and the section's top reaches the trigger line
+     with the heading: the list was still 147px below the fold at 1280, so the
+     stagger ran out of sight (viewer audit). It watches what moves now. */
   const [ref, revealed] = useReveal();
 
   return (
-    <section className="vt fail" aria-labelledby="fail-h" ref={ref}>
+    <section className="vt fail" aria-labelledby="fail-h">
       <div className="fail__inner">
         <h2 className="fail__h" id="fail-h">
           What it costs you
         </h2>
 
-        <ul className="fail__items" data-revealed={revealed ? 'true' : 'false'}>
+        <ul className="fail__items" data-revealed={revealed ? 'true' : 'false'} ref={ref}>
           {FAILURES.map(({ id, statement, consequence, icon }, i) => (
             <li className="fail__item" key={id} style={{ '--i': i }}>
               {/* Decorative. The statement beside it says what it means, and
