@@ -337,9 +337,10 @@ bleed is for objects; a scene is the card** (2026-09-15): on home each tile is
 the whole 1:1 card with the copy on a shade that holds under it then fades; on
 /services each discipline is a full section with its tile at 45% beside the
 name, sides alternating, 4:3, above the name below 1024. The 404 carries the
-mark render, `vmark.webp`, 1200px shown at 480. About (third version, 2026-09-15): four sections of six are built, with no
-images; the hero and the pricing band are held for `about-hero.webp` and
-`about-price.webp`. A route drawn in code counts as a band's object. A mascot
+mark render, `vmark.webp`, 1200px shown at 480. About (third version): all six sections, no images; the hero is the
+site's SECOND display use (the home hero's clamp), and the pricing band's
+$700 figure at 200px is its object. A route drawn in code and a typographic
+figure both count as a band's object. A mascot
 band, a framed exhibit and a plain image-beside-text split are three different
 families by amendment; wall tiles 16:10 (unmounted). Social (2026-09-16): six rendered platform
 tiles, an Iconography exception, 36px in the footer and 48px under Contact's
