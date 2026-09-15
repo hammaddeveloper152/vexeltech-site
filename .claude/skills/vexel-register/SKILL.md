@@ -416,7 +416,15 @@ measurement harness and never reproduced; `.measure/spotwalk.mjs` logs every
 media event so a repeat names its cause.
 
 **Settled 2026-09-14:** the hero is a spot (film, four lines fading up on their
-cuts, the final line staying, the copy plate's scrim walked to 70%); a colour
+cuts, the final line staying). **The film is never dimmed edge to edge;
+contrast is bought under the copy, not over the picture**: the film covers the
+section with no fade, two ZONED shades carry the copy, never a full-frame
+plate. The headline zone ramps from 768 up and holds then fades below; the copy
+zone holds across the copy then fades over 64px, with its fade-in above the
+block. Soft shadows stay. Left edges are walked per width by
+`.measure/spotshade.mjs zones`: 55% and 65% on a phone, 85% and 75% from 768
+(1280 walked before the bar stood over the hero; 768 to 1023 not walked, both
+open). The 70% copy plate is withdrawn; a colour
 band with objects on it is allowed (yellow Failures with four icons, cream
 About with the mascot, a yellow panel under the pricing ladder); grounds and
 rendered brand objects are not carriers; the mascot is `character.png`.

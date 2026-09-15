@@ -9,33 +9,48 @@
    solid. The yellow inside the footage is a recorded exception; see
    DESIGN.md, "The hero is a spot".
 
+   ---- THE FILM IS NEVER DIMMED EDGE TO EDGE ----------------------------------
+
+   Contrast is bought UNDER THE COPY, not over the picture. There was a copy
+   plate — flat asphalt at 70% across the whole copy block — and the user took
+   it out: it dimmed the film in the one frame on the site that exists to show
+   it. What replaced it is a ZONED shade, two layers each under its own part of
+   the copy, and a soft shadow under the text. Never a full-frame plate.
+
+     the headline zone   top of the copy block to the headline's baseline,
+                         falling to nothing at the headline's right edge + 24px
+     the copy zone       the headline's baseline to the copy block's bottom,
+                         holding across the copy's width, then falling to
+                         nothing over 64px past it
+
+   Below 768 the headline zone holds and fades too. Both zones' left edges are
+   walked per width: 55 and 65 on a phone, 85 and 75 from 768.
+
+   Below the headline the right of the frame is clear, and that is where the
+   picture is: the lamp, the lit building, the phone. A single shade ending at
+   62% could not reach the headline, which runs to x 1190 at 1280; a single
+   shade reaching the headline would have covered the picture below it. See
+   `.hero__headline::before` and `.hero__support::before`.
+
    ---- Asphalt stays, and that is what makes this ours ------------------------
 
-   The reference competitor is loud in many colours on white. One accent on a
-   black ground is a harsher, more confident loud, and it cannot be mistaken
-   for theirs. That is the reason the ground does not move: not habit, and not
-   the palette record, but the fact that the same loudness on white would be
-   somebody else's. DESIGN.md carries this. The spot is a night film on a
-   dark set, and it sits under an asphalt scrim.
+   One accent on a black ground is a harsher, more confident loud than the
+   reference competitor's many colours on white, and it cannot be mistaken for
+   theirs. DESIGN.md carries this. The spot is a night film on a dark set.
 
    ---- What came out, and why it is still in the tree -----------------------
 
-   The copy plate existed to hold contrast over photographs, and there is a
-   photograph again, so it is back as a scrim behind the copy: see
-   `.hero__body::before`. The tile wall, the bench arrangement and the
-   responsive ladder are still in the tree, unmounted — TileWall.jsx,
-   bench.js, videoTiles.js. The video gates are shared from Video.jsx.
-
-   The strike and the slam are NOT in the tree. They were removed on
-   2026-09-14 and their record is in DESIGN.md, with a frame of the strike in
-   `.measure/evidence/`.
+   The tile wall, the bench arrangement and the responsive ladder are still in
+   the tree, unmounted — TileWall.jsx, bench.js, videoTiles.js. The video gates
+   are shared from Video.jsx. The strike and the slam are NOT in the tree; they
+   were removed on 2026-09-14 and their record is in DESIGN.md.
 
    Every value resolves through tokens.css. Motion is transform and opacity
    only, per BUILD-LAW.md, on the site's own reveal curve.
 
    Content is visible by default. Every hidden-at-rest state lives inside
    `prefers-reduced-motion: no-preference`, so if animation never runs the
-   hero still reads. Motion enhances the entrance; it never gates it.
+   hero still reads.
    ========================================================================== */
 
 .hero {
@@ -44,39 +59,29 @@
   display: grid;
   align-content: center;
   isolation: isolate;
-  /* BUILD-LAW: the hero fits one phone screen. ONE SCREEN INCLUDES THE BAR.
-     The bar is sticky and in flow, 65px tall — the 48px target plus s-sm
-     above and below plus its 1px rule — so a hero at 100svh always has its
-     last 65px below the fold. The plate hid that by being shorter than the
-     frame and centring in it; a headline that fills the frame does not. The
-     bar's height is derived here from the same tokens that build it rather
-     than typed as 65, so the two cannot drift apart. */
-/* THE BAR IS 64px, NOT 65. The `+ 1px` was its bottom hairline, and the
-   hairline is gone with every other section edge — see Header.css. Corrected
-   here rather than left to drift: the whole point of deriving this from the
-   bar's own tokens was that the two could not disagree. */
-  /* THE BAR STANDS OVER THE HERO since 2026-09-15 (Header.css): the hero is
-     the whole screen and the film runs up under the bar. The bar's height
-     goes back on as top padding, so the copy's content box does not move. */
+  /* BUILD-LAW: the hero fits one phone screen, and it includes the bar.
+     THE BAR STANDS OVER THE HERO since 2026-09-15 (Header.css), so the hero is
+     the whole screen and the film runs up under the bar. The copy does not
+     move: the bar's height goes back on as top padding, so the content box is
+     where it was, 32px + half the screen down. The bar's height is derived
+     from the same tokens that build it. */
   --bar-h: calc(48px + 2 * var(--s-sm));
   min-height: 100svh;
-  /* The inset IS the measure now. There is no plate to supply one, so the
-     section carries it, and the headline size below is derived from exactly
+  /* The inset IS the measure. The headline size below is derived from exactly
      this number at each width: 16 on a phone, 40 at tablet, 64 at desktop.
-     Change one and the other has to be re-derived. The copy plate's full
-     bleed reads the same variable, so it reaches the section's edge at every
-     width without restating the ramp. */
+     The shade zones read it too, so they reach the section's own left edge. */
   --hero-inset: var(--s-md);
-  /* THE COPY PLATE'S SCRIM. Walked, not chosen: see `.hero__body::before`.
-
-     70%, and every pair clears its bar at both widths on every one of the 289
-     frames, rendered, 2026-09-14. The binding pair is the SUB AT 390 — bone
-     at 18px, 5.39:1 against a 4.5 bar, over the city in shot 2 at frame 45 —
-     with the note at 390 beside it at 5.40:1. At 65% that sub rendered at
-     4.50 and fell a rounding short, which is why this is not 65. The line at
-     the headline size never binds: its worst is 6.50:1 against 3.0. The full
-     table is in DESIGN.md, "The hero is a spot". */
-  --scrim: 70%;
+  /* THE TWO ZONES' LEFT EDGES. Asphalt at these opacities at x = 0. Walked, not
+     chosen: `.measure/spotshade.mjs zones` steps each zone's left edge in 5%
+     from 55 against its own pairs, with the soft shadows drawn and read in a
+     ring around the glyphs, and these are the lowest passing steps. The record
+     is in DESIGN.md. */
+  /* PER WIDTH. Walked at 390, 2026-09-16, on the bar-over-hero layout:
+     headline 55% (the lowest step, every pair passing), copy 65% (60 failed:
+     sub 4.27:1, note 4.40:1). Binding pair at 65: the sub, 4.97:1. The 1280
+     values are set from 768 below. */
+  --shade-head: 55%;
+  --shade-copy: 65%;
   padding: calc(var(--s-lg) + var(--bar-h)) var(--hero-inset) var(--s-lg);
   overflow: clip;
 }
@@ -84,8 +89,7 @@
 /* ---- Grain -------------------------------------------------------------- */
 
 /* Above the ground, below every piece of content. Fixed so it reads as a
-   property of the surface rather than of the section. Texture on asphalt;
-   the only thing between the ground and the type. */
+   property of the surface rather than of the section. */
 .hero__grain {
   position: fixed;
   inset: 0;
@@ -105,14 +109,15 @@
 
 /* ---- The film ------------------------------------------------------------
 
-   The spot, or in the still mode its last frame. Where the surface sat: over
-   the rig, under the copy. Cover-fit, so the 16:9 cut and the 9:16 cut both
-   fill whatever box the hero is at that width; the tall cut is what keeps a
-   phone from cropping two thirds of a landscape frame away.
+   The spot, or in the still mode its last frame. IT COVERS THE HERO: the
+   section's full width and full height at every width, cover-fit, so a
+   section taller than 16:9 allows crops the film and never letterboxes it.
+   Measured on the build: the element's box is the section's box, 1280×736 at
+   1280 and 390×780 at 390.
 
-   It fades into the Failures seam over the last 12% exactly as the surface
-   does, so the section still ends on the page's ground rather than on the
-   bottom edge of a picture. */
+   NO FADE AT THE BOTTOM, and it had one: the film faded over its last 12%, and
+   with the copy plate's own edges it read as bars above and below the picture.
+   The user corrected both on 2026-09-14. */
 .hero__spot {
   position: absolute;
   inset: 0;
@@ -122,51 +127,144 @@
   height: 100%;
   object-fit: cover;
   pointer-events: none;
-  mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
 }
 
 /* ---- Copy --------------------------------------------------------------- */
 
-/* The copy block. It spans the section and keeps its own vertical padding,
-   which is also the depth of the plate behind it. */
+/* The copy block. It spans the section; there is no plate behind it. Its
+   stacking context at z 2 is what puts the two shade zones — z -1 inside it —
+   above the film and under the words. */
 .hero__body {
   position: relative;
   z-index: 2;
   align-self: center;
   width: 100%;
-  /* No horizontal padding. The first build had 16px a side here on top of
-     the section's inset, which took the 1280 measure from 1152 to 1120 and
-     the ratio to 5.89em — under the 5.94em phrase line — so every width
-     wrapped to three lines. The section's inset IS the measure; nothing may
-     sit between it and the headline. */
+  /* No horizontal padding. The section's inset IS the measure. */
   padding: var(--s-md) 0;
 }
 
-/* ---- The copy plate -------------------------------------------------------
+/* ---- The headline zone ------------------------------------------------------
 
-   A scrim behind the copy, full bleed across the section and as tall as the
-   copy block. It exists for one reason: the film is a photograph, and type
-   on a photograph is measured against its brightest pixel, not its average.
-   Flat asphalt at an alpha, square, no edge and no gradient.
+   From the TOP OF THE COPY BLOCK — the body's padding above the headline — to
+   the headline's baseline, which is the bottom of its box: the line box is caps
+   only, and no glyph in any of the four lines descends.
 
-   --scrim is WALKED, never chosen. `.measure/spotwalk.mjs` hides the copy,
-   holds the film on every frame, reads the brightest ground inside each
-   line's own box across ITS OWN shot, and inside the sub, the link and the
-   note across all four, and raises the scrim in 5% steps from 30 until every
-   pair clears its bar at 1280 and 390. The call is not in the walk: it paints
-   its own ground.
+   Across: from the section's own left edge to the HEADLINE'S RIGHT EDGE PLUS
+   24px. Which right edge is a real question, because the line changes at every
+   cut, and a zone that followed each line would jump with it. So it is the
+   widest line's, which the size derivation fixes exactly: the binding line is
+   6.102em at a size of measure / 6.227, so it is 98% of the measure. At 1280
+   the zone ends at x 1217; at 390 it reaches the frame's edge.
 
-   Not in the surface mode. The shader's ceiling was solved for the copy
-   standing on it directly, and a scrim over it would be the mask cut around
-   the copy that DESIGN.md forbids, by another name. */
-.hero:not([data-mode='surface']) .hero__body::before {
+   A light falling off, not a fill: one colour at an alpha that says where the
+   headline is. Not in the surface mode, whose ceiling was solved for copy
+   standing on it directly. */
+/* ZONES NEVER END ON A HARD EDGE, 2026-09-14, by the user. The copy zone's
+   bottom showed as a horizontal line across the picture at 390, where the shade
+   stopped and the film went back to full strength. Every edge a zone has inside
+   the frame is a 64px fade now:
+
+     the headline zone   fades IN over 64px above the copy block's top, and
+                         fades OUT over 64px below the headline's baseline
+     the copy zone       fades IN over those same 64px from the baseline, so
+                         the two cross over rather than stacking into a step,
+                         and fades OUT over 64px below the copy block
+
+   The fades are ADDED to each zone rather than cut out of it: the zone's full
+   strength still covers everything it covered, and the 64px sit outside it. A
+   mask, not a second gradient, so each zone keeps one colour at one ramp and
+   only its visibility falls off. The zone's left edge is the frame's own and
+   its right edge is already a ramp to nothing. */
+.hero:not([data-mode='surface']) .hero__headline::before {
   content: '';
   position: absolute;
-  inset: 0 calc(-1 * var(--hero-inset));
   z-index: -1;
-  background: rgb(23 24 26 / var(--scrim));
+  top: calc(-1 * var(--s-md) - 64px);
+  bottom: -64px;
+  left: calc(-1 * var(--hero-inset));
+  width: calc(var(--hero-inset) + 98% + 24px);
+  background: linear-gradient(to right, rgb(23 24 26 / var(--shade-head)) 0%, rgb(23 24 26 / 0%) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%);
   pointer-events: none;
+}
+
+/* BELOW 768 THE HEADLINE ZONE HOLDS, THEN FADES. 2026-09-15, chosen by the
+   user. The headline spans nearly the whole frame at 390, so a ramp to nothing
+   at its right edge left the right half of every row almost unshaded: line 3
+   over the screen wall read 2.39:1 at a 100% left edge. Here the zone holds
+   across the headline rows to their right edge and falls to nothing over the
+   64px past it, which is the copy zone's construction. */
+@media (max-width: 767px) {
+  .hero:not([data-mode='surface']) .hero__headline::before {
+    width: calc(var(--hero-inset) + 98% + 64px);
+    background: linear-gradient(to right, rgb(23 24 26 / var(--shade-head)) 0, rgb(23 24 26 / var(--shade-head)) calc(100% - 64px), rgb(23 24 26 / 0%) 100%);
+  }
+}
+
+/* ---- The copy zone ---------------------------------------------------------
+
+   From the headline's baseline — the headline's bottom margin, taken back —
+   to the copy block's bottom padding, plus its 64px fade-out. It fades in over
+   its first 64px while the headline zone fades out over the same band: the two
+   zones blend at the baseline instead of one stopping where the other starts.
+
+   ACROSS, IT HOLDS AND THEN FADES, and it was a ramp to nothing at 62%. That
+   ramp could not carry the sub and the note at 1280 at any strength: they end
+   near x 760 and the ramp ended at 794, so the right ends of their lines sat
+   under a few percent of shade, on the city's brightest lights — 1.48:1 and
+   1.38:1 at a 100% left edge, against 4.5. The user's correction: the zone
+   holds its opacity across the copy's own width and fades to nothing over the
+   64px past the copy's right edge. The right of the frame below the copy is
+   still clear, and it is still where the picture is.
+
+   THE COPY'S RIGHT EDGE IS THE COPY'S OWN BOX. The support stack takes
+   `width: fit-content`, so its box is as wide as its widest piece — the sub
+   and the note each carry a max-width already — and nothing moves, because
+   everything in it is already left aligned. The layer runs from the section's
+   left edge to that box's right edge plus 64px. */
+.hero:not([data-mode='surface']) .hero__support {
+  position: relative;
+  width: fit-content;
+}
+
+.hero:not([data-mode='surface']) .hero__support::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  /* THE FADE-IN SITS ABOVE THE COPY, NOT ON IT. It started at the copy
+     block's top, so its 64px fade-in lay across the sub's first line exactly
+     where the headline zone fades out. Two zones fading past each other
+     multiply to a dip: at 390 the sub read 4.18:1 under a 100% hold. The
+     64px move above the block's top, and full strength starts at it. Only
+     ever darker than before, so the values walked at 1280 stand. */
+  top: calc(-1 * var(--s-md) - 64px);
+  bottom: calc(-1 * var(--s-md) - 64px);
+  left: calc(-1 * var(--hero-inset));
+  width: calc(100% + var(--hero-inset) + 64px);
+  background: linear-gradient(to right, rgb(23 24 26 / var(--shade-copy)) 0, rgb(23 24 26 / var(--shade-copy)) calc(100% - 64px), rgb(23 24 26 / 0%) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 64px, #000 calc(100% - 64px), transparent 100%);
+  pointer-events: none;
+}
+
+/* ---- The soft shadow under the copy --------------------------------------
+
+   On the headline the user's own, 0 2px 24px at 60% black; on the sub, the link
+   and the note a smaller one in the same proportion. Soft only: a tight shadow
+   at every glyph's edge was measured at double full strength and still failed,
+   because the film's near-white lights sit right beside the letters, and it came
+   out when the shade was zoned.
+
+   In the film modes these replace the headline's machine yellow glow from
+   lit.css, which over a photograph is an olive fringe on every glyph. The
+   surface mode keeps the glow. */
+.hero:not([data-mode='surface']) .hero__headline {
+  text-shadow: 0 2px 24px rgb(0 0 0 / 60%);
+}
+
+.hero:not([data-mode='surface']) :is(.hero__sub, .hero__note, .hero__cta--line) {
+  text-shadow: 0 1px 12px rgb(0 0 0 / 60%);
 }
 
 /* ---- The headline ---------------------------------------------------------
@@ -174,48 +272,37 @@
    THE WHOLE HERO. Monigue, uppercase, full bleed, as large as the measure
    allows at every width.
 
-   The size is derived from the STRING against the VIEWPORT, not from the old
-   display clamp. That clamp was solved for a half-width plate that no longer
-   exists, so it is void here; --t-display-size is not referenced.
-
-   The derivation, measured in Monigue at tracking 0, is over FOUR strings
-   now, one per shot. Each is set on its best two-line split, and the wider
-   half is what binds it:
+   The derivation, measured in Monigue at tracking 0, is over FOUR strings, one
+   per shot. Each is set on its best two-line split, and the wider half is what
+   binds it:
 
      NOBODY'S / CALLING.                              2.918em
      THEY CAN'T / FIND YOU. YET.                      4.257em
      WE BUILD THE THING / THAT FINDS THEM.            6.101em
      NOT A PROPOSAL. / THE FINISHED THING.            6.102em   <- binding
 
-   THE FINISHED THING measured 5.944em while it was the rotating headline, and
-   the full stop the spot's copy gives it is 0.158em. At the old 6.06 divisor
-   lines 3 and 4 set THREE lines at every width, and at 1280 that put the call
-   below the fold. BUILD-LAW caps the headline at two, so the divisor is the
-   binding line over 0.98, the same 2% of slack as before:
+   The divisor is the binding line over 0.98, the same 2% of slack as before:
 
      font-size = (100vw - 2 * inset) / 6.227
 
    57.5px at 390, 110.5 at 768, 143.9 at 1024, 185 at 1280, 210.7 at 1440 and
-   287.8 at 1920: 2.7% under the rotating headline at every width. There is
-   still no floor and no ceiling. A new line whose best two-line split is
-   wider than 6.102em reopens this; `.measure/spotdivisor.mjs` re-derives it.
+   287.8 at 1920. There is no floor and no ceiling. A new line whose best
+   two-line split is wider than 6.102em reopens this, and the headline zone's
+   98% with it; `.measure/spotdivisor.mjs` re-derives it.
 
-   Line height 0.88. Uppercase, and no glyph in any of the four lines
-   descends, so the box only has to hold the caps: 0.70em of cap in an 0.88em
-   line. Monigue's hhea and typo metrics disagree by 6%, so `normal` would be
-   a different box in different engines; this is explicit for that reason. */
+   Line height 0.88. Uppercase, and no glyph in any of the four lines descends.
+   Monigue's hhea and typo metrics disagree by 6%, so `normal` would be a
+   different box in different engines; this is explicit for that reason. */
 .hero__headline {
-  /* Positioned for the accessible name, which is clipped to a box inside it. */
+  /* Positioned for the accessible name and for the headline zone. */
   position: relative;
   /* s-md, not s-lg: the sub's own 36px leading supplies the air below the
-     headline at 1024 and up, and the 8px this saves is what keeps the note
-     above the fold at 1280x800 once the sub stepped up. */
+     headline at 1024 and up. The copy zone takes this margin back. */
   margin: 0 0 var(--s-md);
   font-family: var(--font-loud);
-  /* min() of the width-derived size and a height guard. Two lines at 0.88
-     plus the sub, the call, the link and the note need about 360px under the
-     headline; the guard keeps the call above the fold on a short, wide
-     viewport (a 1920x700 laptop lid). Width binds at every width tested. */
+  /* min() of the width-derived size and a height guard that keeps the call
+     above the fold on a short, wide viewport. Width binds at every width
+     tested. */
   font-size: min(calc((100vw - 2 * var(--s-md)) / 6.227), calc((100svh - 360px) / 1.76));
   line-height: 0.88;
   font-weight: 400;
@@ -223,10 +310,8 @@
   text-transform: uppercase;
   text-wrap: balance;
   color: var(--c-shop-white);
-  /* TWO LINES TALL WHATEVER LINE IS IN IT. Every line is two lines or fewer
-     by the derivation above, so the box never has to grow, and a one-line
-     shot sits on the same bottom edge as a two-line one: the sub, the calls
-     and the note under it do not move across a cut. */
+  /* TWO LINES TALL WHATEVER LINE IS IN IT, so the sub, the calls and the note
+     under it do not move across a cut. */
   display: grid;
   align-content: end;
   height: calc(2 * 0.88em);
@@ -235,14 +320,9 @@
 /* ---- The line, and its exit ----------------------------------------------
 
    One line per shot, keyed by the shot, so a cut mounts a new line and its
-   fade-up runs again. One run of text: no mask per word, because the masks
-   only ever existed to carry the slam, and the slam is gone.
-
-   The exit is opacity only, 200ms on the reveal curve, and it starts 200ms
-   before the next cut. That is EXIT_MS in heroSpot.js, the number the clip
-   clock uses: one value in two files, and they move together. It has no
-   rise, so a line leaves where it stands and the next cut is the only thing
-   that moves the frame. */
+   fade-up runs again. The exit is opacity only, 200ms on the reveal curve,
+   starting 200ms before the next cut: EXIT_MS in heroSpot.js, one value in two
+   files. */
 .hero__line {
   display: block;
   transition: opacity 200ms var(--ease-reveal);
@@ -253,8 +333,7 @@
 }
 
 /* The accessible name, which is the final line. Clipped to a 1px box rather
-   than hidden: `display: none` and `visibility: hidden` both take an element
-   out of the accessibility tree, and the h1 would have no name. */
+   than hidden, so the h1 keeps its name. */
 .hero__a11y {
   position: absolute;
   width: 1px;
@@ -266,44 +345,28 @@
 
 /* ---- The support stack, sized against the headline -----------------------
 
-   The sub and the note were the plate's stack surviving in a frame with no
-   plate: 18px and 14px under a 190px headline is a ratio of 10.6:1 and reads
-   as a footnote. They step with the headline now, and every step is a size
-   the system already has:
+     width      headline    sub        note
+     390        57.5px      18 / 28    18 / 28
+     1024       143.9px     27 / 36    18 / 28
+     1280       185px       27 / 36    18 / 28
+     1920       287.8px     40 / 52    18 / 28
 
-     width      headline    sub        ratio     note
-     390        59px        18 / 28    3.3       18 / 28
-     1024       148px       27 / 36    5.5       18 / 28
-     1280       190px       27 / 36    7.0       18 / 28
-     1440       217px       27 / 36    8.0       18 / 28
-     1920       296px       40 / 52    7.4       18 / 28
-
-   Seven-to-one at 1280 is the target: the sub holds its own without
-   competing. Forty at 1280 (4.8:1) was rendered and competes — three lines
-   of Satoshi at quote size under the headline is a second statement. The
-   note goes from small to body at every width and stays there; it is the
-   footnote and it should read as one, just not as a caption.
-
-   Satoshi, still: the sub EXPLAINS. Putting it in Clash at the h3 step would
-   make it a heading. The offer register does not have a 27 or a 40 step of
-   its own, so these borrow the brand register's h3 and quote sizes with body
-   leading — the same move the pull quote role makes in the other direction. */
+   Satoshi: the sub EXPLAINS. */
 .hero__sub {
   margin: 0 0 var(--s-lg);
   max-width: 60ch;
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  /* BONE, and the ground it is restated against is the scrimmed film. The
-     ratio over the brightest frame it sits on is recorded in DESIGN.md with
-     the scrim walk that set it. */
+  /* BONE over the film, with the copy zone and its own shadow under it. The
+     walked ratio is in DESIGN.md. */
   color: var(--c-bone);
   text-wrap: pretty;
 }
 
 /* ---- Actions ------------------------------------------------------------ */
 
-/* One primary, then a link. Not two buttons. The primary is LARGE AND SOLID
-   and it is the frame's accent; the second action is a line. */
+/* One primary, then a link. The primary is LARGE AND SOLID and it is the
+   frame's accent; the second action is a line. */
 .hero__actions {
   display: grid;
   justify-items: start;
@@ -311,31 +374,16 @@
   margin-bottom: var(--s-lg);
 }
 
-/* MACHINE YELLOW, at scale. The accent as a fill has exactly one recorded
-   job in this system — "the one primary call per frame, nothing else" — and
-   this is it. It went white when the frame spent its accent on the rule
-   under the phrase; the rule is gone and the accent comes home.
-
-   Measured at 1280, the call paints about 24,000px^2 of a 1,024,000px^2
-   frame: 2.3%, under the 5% ceiling with room, and roughly 16x the accent
-   this frame carried before. A yellow rotating phrase at the same size would
-   have painted 5-6% of the frame in ink alone — over the ceiling — and would
-   have been the fifth device on the headline. A full-bleed block is capped by
-   the same 5% to a 40px band, which is a rule, not a block.
-
-   The brand register at the h2 step: bigger than the h3 the hero call took
-   before, because the headline it sits under went from 77px to 190. Square,
-   sentence case from the copy. Asphalt on machine yellow, 9.46:1. */
+/* MACHINE YELLOW, at scale: "the one primary call per frame, nothing else".
+   Square, sentence case from the copy. Asphalt on machine yellow, 9.46:1. It
+   paints its own ground, so no shade or shadow reaches it. */
 .hero__cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
   min-height: 48px;
-  /* Body step at 390, h3 from 768, h2 from 1280 — the call is sized against
-     the headline it sits under (59px, 114px, 190px) and against the 5% rule.
-     At the h2 step on a phone the label wrapped to two lines and the button
-     painted 18% of the frame. See the breakpoints. */
+  /* Body step at 390, h3 from 768, h2 from 1280. */
   padding: var(--s-md) var(--s-lg);
   border: 1px solid var(--c-accent-ground);
   border-radius: var(--r-none);
@@ -353,9 +401,7 @@
 }
 
 /* The second action is a LINK, not a quieter button. Underlined, in the offer
-   register, because that is what the system already uses to mark a link and
-   it needs no new affordance. It keeps the 48px target through padding: the
-   underline is the signal, the box is not. */
+   register. It keeps the 48px target through padding. */
 .hero__cta--line {
   min-height: 48px;
   padding: 0;
@@ -390,42 +436,23 @@
   max-width: 60ch; /* detector: 96 chars/line at 1280 without this */
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* over the scrimmed film; the walked ratio is in DESIGN.md */
+  color: var(--c-bone); /* over the film, the copy zone and its shadow; DESIGN.md */
 }
 
 /* ==========================================================================
    THE ENTRANCE — a fade-up, once per shot.
 
    Each line fades up over 250ms (--d-drop) on the reveal curve, rising
-   --s-sm, 8px, which is the rise every scroll reveal on the rebuilt site
-   uses. It is measured from the moment the line mounts, which is its cut. It
-   leaves on the 200ms fade in `.hero__line` above, and the final line stays.
-   The sub, the calls and the note are not in it: they are on screen from the
-   first frame and never move.
+   --s-sm, 8px, the rise every scroll reveal on the rebuilt site uses. It is
+   measured from the moment the line mounts, which is its cut. It leaves on the
+   200ms fade in `.hero__line` above, and the final line stays.
 
-   ---- What this replaced, and it is recorded rather than kept ---------------
-
-   The spot shipped for a few hours with the hero's signature entrance at
-   every cut: a 3px line drawn across the frame at 51.93 degrees, the short
-   arm's outer edge, and the words slamming in along it, unmasked, 2.2em over
-   220ms on cubic-bezier(.25,.5,.85,.85). It went white first, because the
-   call is on screen from the first frame and BUILD-LAW's transient-accent
-   clause only exempted a yellow line that never shared a frame with it. Then
-   the user removed it outright on 2026-09-14: no drawn line at any cut.
-
-   Everything that existed only to carry it went with it — the strike, the
-   --d-strike, --ease-strike and --hit tokens, the mask per word and the rule
-   that released it, and the opacity step the slam spent. The three rules this
-   entrance used to set aside (the reveal curve, the stagger, a travel bounded
-   by a mask) are no longer set aside: this is a reveal, on the reveal curve,
-   with nothing staggered. DESIGN.md carries the record; a frame of the strike
-   is in `.measure/evidence/retired-hero-strike-1280.png`.
+   The strike and the slam this replaced are recorded in DESIGN.md, with a
+   frame of the strike in `.measure/evidence/retired-hero-strike-1280.png`.
    ========================================================================== */
 @media (prefers-reduced-motion: no-preference) {
-  /* `backwards`, never `forwards`: the from-state holds for no delay at all
-     and the line is handed back to its own style when the rise ends, so no
-     transform is left pinned on it and the exit's opacity transition is not
-     fighting a filled animation for the same property. */
+  /* `backwards`, never `forwards`: nothing is left pinned on the line, and the
+     exit's opacity transition is not fighting a filled animation. */
   .hero__line {
     animation: hero-line-in var(--d-drop) var(--ease-reveal) backwards;
   }
@@ -440,13 +467,18 @@
 
 /* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------
 
-   Only the INSET changes, and the headline size changes with it because it
-   is derived from it. Nothing else here is width-dependent: no plate, no
-   measure cap, no layout family switch. */
+   Only the INSET changes, and the headline size changes with it because it is
+   derived from it. */
 
 @media (min-width: 768px) {
   .hero {
     --hero-inset: var(--s-xl);
+    /* Walked at 1280, 2026-09-15: headline 85%, copy 75% (binding: the sub,
+       3.03:1 on its 3.0 bar). Carried from 768, where the headline zone is a
+       ramp again. NOT WALKED: 768 to 1023, and 1280 since the bar began
+       standing over the hero and the film box grew 64px. Both are open. */
+    --shade-head: 85%;
+    --shade-copy: 75%;
     padding: calc(var(--s-xl) + var(--bar-h)) var(--hero-inset) var(--s-xl);
   }
 
@@ -455,8 +487,6 @@
   }
 
   /* The call steps up with the headline. h3 here; h2 from 1280. */
-  /* :not(--line): the link shares the class for its target size and its
-     hover, and must not take the primary's step. */
   .hero__cta:not(.hero__cta--line) {
     padding: var(--s-lg) var(--s-xl);
     font-size: var(--t-h3-size);
@@ -472,9 +502,6 @@
     line-height: 36px; /* 1.333, on the 4px baseline */
   }
 
-  /* s-lg vertically, not s-xl. The plate needed air around it; a headline
-     that fills the width does not, and at 1280x800 the 32px this saves is
-     what keeps the note above the fold with the call. */
   .hero {
     --hero-inset: var(--s-2xl);
     padding: calc(var(--s-lg) + var(--bar-h)) var(--hero-inset) var(--s-lg);
@@ -486,13 +513,8 @@
 }
 
 @media (min-width: 1280px) {
-  /* h2, and the full s-2xl padding. Measured at 1280x800 the call paints
-     498x94 = 46,800px^2 of a 1,024,000px^2 frame, 4.6%: at scale, and under
-     the 5% ceiling. At 1024 and 768 the same button is 6% of a smaller frame
-     and at 390 it wraps to two lines and paints 18%, which is why it steps.
-     The ceiling is measured on the painted colour, per DESIGN.md. */
-  /* :not(--line): the link shares the class for its target size and its
-     hover, and must not take the primary's step. */
+  /* h2, and the full s-2xl padding. At 1280x800 the call paints 4.6% of the
+     frame: at scale, and under the 5% ceiling. */
   .hero__cta:not(.hero__cta--line) {
     padding: var(--s-lg) var(--s-2xl);
     font-size: var(--t-h2-size);

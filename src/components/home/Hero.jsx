@@ -238,25 +238,31 @@ export default function Hero() {
           ) : null}
         </h1>
 
-        <p className="hero__sub">
-          One team for branding, websites, marketing and automation. Not four agencies
-          who don't talk to each other.
-        </p>
+        {/* The support stack, in one box so its shade zone has one to stand
+            in: the copy zone runs from the headline's bottom edge to the copy
+            block's bottom, and falls to nothing at 62% of the width. See
+            `.hero__support::before`. Nothing about the stack's layout changes. */}
+        <div className="hero__support">
+          <p className="hero__sub">
+            One team for branding, websites, marketing and automation. Not four agencies
+            who don't talk to each other.
+          </p>
 
-        {/* Sentence case in the SOURCE, not a text-transform. Case is copy. */}
-        <div className="hero__actions">
-          <Link className="hero__cta" to="/contact-us">
-            Get a custom quote
-          </Link>
-          <Link className="hero__cta hero__cta--line" to="/contact-us">
-            Ask a question first
-          </Link>
+          {/* Sentence case in the SOURCE, not a text-transform. Case is copy. */}
+          <div className="hero__actions">
+            <Link className="hero__cta" to="/contact-us">
+              Get a custom quote
+            </Link>
+            <Link className="hero__cta hero__cta--line" to="/contact-us">
+              Ask a question first
+            </Link>
+          </div>
+
+          <p className="hero__note">
+            You'll see the work before you owe us anything. Ten seconds to decide, not
+            ten meetings.
+          </p>
         </div>
-
-        <p className="hero__note">
-          You'll see the work before you owe us anything. Ten seconds to decide, not
-          ten meetings.
-        </p>
       </div>
     </section>
   );
