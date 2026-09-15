@@ -230,53 +230,86 @@
 
 /* ---- Meta --------------------------------------------------------------- */
 
+/* THE FOOTER, REBUILT 2026-09-16. See FooterMeta.jsx for the order and whose
+   each value is. No space rule here is new: 96 above on the form pages (and
+   taken by lit.css's band seam where a band is above), 40 around each hairline,
+   16 under the email. */
 .foot__meta {
-  display: grid;
-  gap: var(--s-lg);
   margin-top: var(--s-3xl);
-  padding-top: var(--s-xl);
-/* The meta row's rule REMOVED 2026-09-08. It sat under 96px of margin and
-   40px of padding: 136px of space, more than the ramp's largest step, and
-   a hairline on top of that separated nothing. On the six pages that carry
-   the meta row WITHOUT the form it was worse — two rules 96px apart with
-   nothing between them but padding. */
 }
 
-/* Spans the meta row and sits above it, so the lockup closes the page rather
-   than becoming a fourth column of small print. */
-.foot__brand {
+/* ---- The email: the footer's object -------------------------------------
+
+   A DERIVED SIZE, by the user's choice, not a step. The figure step would set
+   it at 128px, and at 128 the string is 1,281px wide in a 1,152px measure. The
+   string measures 10.008 of its own font size in Monigue, so the largest size
+   that holds one line is the measure over 10.1 (the 0.9% is the renderer's
+   rounding margin): 114.06px at 1280, 35.45px at 390, capped at 115px where
+   the footer's 1,200px column stops growing. The measure is `--inset`'s, which
+   is what the footer's own padding is at 390, 768 and 1024.
+
+   `nowrap` is a guard, not the fit: the size fits, and a font that failed to
+   load would overflow visibly rather than break the address across two lines. */
+.foot__email {
   display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  /* BUILD-LAW 48px: the line box is 31.5px at 390. */
   min-height: 48px;
-  margin-bottom: var(--s-lg);
+  font-family: var(--font-loud);
+  font-size: min(115px, calc((100vw - 2 * var(--inset)) / 10.1));
+  line-height: var(--t-loud-line);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--c-shop-white); /* 17.77:1 */
   text-decoration: none;
 }
 
-.foot__contact {
-  display: grid;
-  gap: var(--s-xs);
+/* Yellow on hover and on focus: the pointer is on the object, so the object
+   takes the accent. Colour does not animate (transform and opacity only); it
+   switches. Hover yellow is not a carrier, it is a state nobody is in until
+   they point at it. */
+@media (hover: hover) and (pointer: fine) {
+  .foot__email:hover {
+    color: var(--c-accent-text-dark); /* 9.46:1 */
+  }
 }
 
-/* ---- The site map -------------------------------------------------------
-
-   Its own row rather than a fourth column beside the contact blocks. Eight
-   links in a column of the meta row would be twice the height of everything
-   beside them, and the meta row is a row of small print, not a directory.
-
-   Two columns on a phone, four from 768, so the eight always land on a whole
-   number of rows and nothing is stranded on a line of its own. */
-
-.foot__nav {
-  display: grid;
-  gap: var(--s-xs);
+.foot__email:focus-visible {
+  color: var(--c-accent-text-dark);
 }
 
-/* FIVE PAGES since 2026-09-16 (the founder's footer block). One column on a
-   phone, five across from 768, so none is ever stranded on a row alone: two
-   columns would leave "Contact us" by itself. */
+.foot__lead-p {
+  margin: var(--s-md) 0 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone); /* 13.84:1 */
+}
+
+/* TWO HAIRLINES, by the brief, and both pass the removal test: without the
+   first, the pages row reads as more of the line under the email; without the
+   second, the 11px base reads as a second row of pages. */
+.foot__rule {
+  margin: var(--s-xl) 0;
+  border: 0;
+  border-top: 1px solid var(--c-rule-dark);
+}
+
+/* ---- Pages and social ---------------------------------------------------- */
+
+.foot__row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-md);
+}
+
+/* Five pages, stacked on a phone, one row from 768. */
 .foot__nav-list {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  column-gap: var(--s-md);
+  display: flex;
+  flex-direction: column;
+  column-gap: var(--s-lg);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -308,80 +341,68 @@
   transform: scale(0.97);
 }
 
-.foot__meta-k {
+/* The social glyphs: Phosphor logos at the 24px station in a 48px target,
+   steel-lift, machine yellow on hover. None render until a URL is supplied. */
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 calc(var(--s-md) * -0.75);
+  padding: 0;
+  list-style: none;
+}
+
+.social__a {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  color: var(--c-steel-lift); /* 7.4:1 on asphalt */
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .social__a:hover {
+    color: var(--c-accent-text-dark);
+  }
+}
+
+.social__a:focus-visible {
+  color: var(--c-accent-text-dark);
+}
+
+.social__a:active {
+  transform: scale(0.97);
+}
+
+/* ---- The base -----------------------------------------------------------
+
+   "Mono" in the brief is the label register, as it was on About's pricing
+   band: the system has no monospace face. 11px, the label floor, steel-lift. */
+.foot__base {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-xs);
   font-family: var(--font-offer);
-  font-size: var(--t-label-size);
+  font-size: 11px;
   line-height: var(--t-label-line);
   font-weight: var(--t-weight-label);
   letter-spacing: var(--t-track-label);
   text-transform: uppercase;
-  color: var(--c-steel-dark);
+  color: var(--c-steel-lift); /* 7.4:1 on asphalt */
 }
 
-.foot__meta-v {
-  /* Icon then text, with the icon held at the first line's cap rather than
-     centred against a block that may run to two lines. */
-  display: flex;
-  align-items: flex-start;
-  gap: var(--s-sm);
-  font-size: var(--t-small-size);
-  line-height: var(--t-small-line);
-  color: var(--c-shop-white);
-}
-
-/* The address is one contact line carrying two lines of text. */
-.foot__meta-lines {
-  display: grid;
-}
-
-/* The email is the one actionable line in the meta block, so it is an anchor
-   while the others are text. It takes the block's own colour rather than a
-   link treatment: `link-on-light` is deep amber for a LIGHT ground and this
-   block is asphalt, where machine yellow as text would put a second accent in
-   the footer's frame. Shop white at 17.77:1, underlined on hover and focus so
-   the affordance is there without a colour carrying it. */
-.foot__meta-a {
-  /* BUILD-LAW: 48px minimum on a tap target, and this is the one tappable
-     thing in the meta block. Padding makes the target; the line box is 20px,
-     so 14 above and below carries it to 48 without moving the text off the
-     row the icon is aligned to. The negative margin takes the added height
-     back out of the block's own gap, so the contact lines keep their rhythm
-     and only the touch area grew. */
+.foot__brand {
   display: inline-flex;
   align-items: center;
   min-height: 48px;
-  margin: calc(var(--s-md) * -0.875) 0;
-  color: var(--c-shop-white);
   text-decoration: none;
-  transition: opacity var(--d-press) var(--ease-reveal);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .foot__meta-a:hover {
-    opacity: var(--hover-opacity);
-    text-decoration: underline;
-  }
-}
-
-.foot__meta-a:focus-visible {
-  text-decoration: underline;
-}
-
-/* Steel-dark, matching the key above the block. The values are the white; the
-   marks are the quieter thing that tells you which value you are looking at,
-   and two whites at the same strength would make the reader choose. */
-.foot__meta-i {
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
-  /* Nudged onto the first line's optical centre. Half the difference between
-     the small line box and the icon, so it stays true if either changes. */
-  margin-top: calc((var(--t-small-line) - var(--icon-sm)) / 2);
-}
-
-.foot__legal {
+.foot__addr,
+.foot__legal,
+.foot__phone {
   margin: 0;
-  font-size: var(--t-small-size);
-  line-height: var(--t-small-line);
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
 }
 
 /* ---- Reduced motion ----------------------------------------------------- */
@@ -413,26 +434,35 @@
     grid-column: 1 / -1;
   }
 
-  .foot__meta {
-    grid-template-columns: repeat(2, 1fr) auto;
-    align-items: start;
-    gap: var(--s-xl);
-  }
-
-  .foot__brand {
-    grid-column: 1 / -1;
-    margin-bottom: 0;
-  }
-
-  .foot__nav {
-    grid-column: 1 / -1;
+  .foot__row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .foot__nav-list {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
-  .foot__legal {
+  /* Wordmark left, address centre, legal right: three columns with equal outer
+     tracks, so the address is centred on the footer and not on what is left. */
+  .foot__base {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--s-lg);
+  }
+
+  .foot__addr {
+    grid-column: 2;
+    text-align: center;
+  }
+
+  .foot__legal,
+  .foot__phone {
+    grid-column: 3;
+    justify-self: end;
     text-align: right;
   }
 }
@@ -440,81 +470,5 @@
 @media (min-width: 1024px) {
   .foot {
     padding: var(--s-3xl) var(--s-2xl);
-  }
-}
-
-/* ---- Social, 2026-09-16 --------------------------------------------------
-
-   Six rendered tiles, THE FACE ONLY since 2026-09-16 (re-cut without the
-   reflection). 48px in the meta row and 56px under the form on Contact, 16px
-   between them. The tile is its own target now: 48px meets BUILD-LAW's minimum
-   with no padding. Hover lifts 2px; press is the site's scale. The tiles are
-   artwork, exempt from the accent and carrier counts by the user's decision. */
-.foot__social {
-  display: grid;
-  gap: var(--s-xs);
-}
-
-/* THREE BY TWO ON A PHONE, one row from 768. Six tiles at 48px with 16px
-   between need 368px and the phone's content box is 358, so a flex row wrapped
-   and stranded YouTube on a line of its own. Three across is 176px at 48 and
-   200px at 56, and six split three and three. */
-.social {
-  display: grid;
-  grid-template-columns: repeat(3, var(--social-size));
-  gap: var(--s-md);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  --social-size: 48px;
-}
-
-@media (min-width: 768px) {
-  .social {
-    grid-template-columns: repeat(6, var(--social-size));
-  }
-}
-
-.social--lg {
-  --social-size: 56px;
-}
-
-.social__a {
-  display: block;
-  border-radius: var(--r-sm);
-  transition: transform var(--d-press) var(--ease-reveal);
-}
-
-.social__img {
-  display: block;
-  width: var(--social-size);
-  height: var(--social-size);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .social__a:hover {
-    transform: translateY(-2px);
-  }
-}
-
-.social__a:active {
-  transform: scale(0.97);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .social__a:hover,
-  .social__a:active {
-    transform: none;
-  }
-}
-
-/* Contact: under the form, above the meta row. */
-.foot__social-under {
-  margin-top: var(--s-xl);
-}
-
-@media (min-width: 768px) {
-  .foot__social {
-    grid-column: 1 / -1;
   }
 }

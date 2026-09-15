@@ -342,13 +342,18 @@ site's SECOND display use (the home hero's clamp), and the pricing band's
 $700 figure at 200px is its object. A route drawn in code and a typographic
 figure both count as a band's object. A mascot
 band, a framed exhibit and a plain image-beside-text split are three different
-families by amendment; wall tiles 16:10 (unmounted). Social (2026-09-16): six rendered platform
-tile FACES (no reflection), an Iconography exception, 48px in the footer and
-56px under Contact's form, 16px apart, 3x2 on a phone. Colours are exempt as
-artwork, and the URLs are placeholders (each platform's home page) until the
-accounts are supplied. The footer
-carries the founder's five pages; the phone and legal lines are hidden until
-supplied. **The client slots
+families by amendment; wall tiles 16:10 (unmounted). The footer (rebuilt
+2026-09-16, every route, under the form on home and Contact): the email
+"info@vexeltechsolutions.com" is its object, Monigue white one line at a
+DERIVED size, `min(115px, measure / 10.1)` (114px at 1280, 35px at 390), a
+mailto that goes yellow on hover; a bone line; a hairline; the five pages in
+Satoshi 14px left and Phosphor social logos right at the 24px station
+(steel-lift, yellow on hover, and ONLY a platform with a real URL renders;
+none do); a hairline; the base at 11px label register ("mono" in a brief means
+this) in steel-lift, with the wordmark small left, the address centre, and the
+legal line with the year right. The phone and legal lines are hidden until
+supplied. Everything stacks on a phone. The stroked V in the footer corner and
+the social tiles are gone. **The client slots
 are deleted**: the strip is the strike ticker.
 
 **The work plates take video and their spec is MEASURED, not quoted.** Their

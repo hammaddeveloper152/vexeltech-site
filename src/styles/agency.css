@@ -465,45 +465,10 @@
   /* The two lights at page scale, the same pair every dark section carries. */
 }
 
-/* THE MARK IS A STROKE, NOT A FILL, and that is the rule rather than a
-   treatment for this one shape.
-
-   It was a translucent yellow fill at 14%, then a translucent arc fill at 10%,
-   and both were wrong for the same reason: MACHINE YELLOW AT LOW ALPHA ON
-   ASPHALT IS A MUDDY BRONZE. It stops being the accent and becomes a colour
-   the palette does not contain — 14% yellow over asphalt composites to about
-   #3f3620, which is neither yellow nor ground.
-
-   So yellow on dark is 100% or it is a stroke. A 2px line at 35% still reads
-   as machine yellow because a stroke is thin enough that the eye reads the
-   colour rather than the composite, and it draws the mark instead of blocking
-   it in.
-
-   An inline data URI rather than a clip-path: a clip gives a silhouette and
-   there is no way to stroke one. No request, no file. `non-scaling-stroke`
-   keeps the line 2px whatever the element scales to.
-
-   `::before`, AND IT WAS `::after`. The scratches overlay is `::after` on
-   every surface that carries it, and a device that changes pseudo-element
-   depending on what else the element happens to have is a device nobody can
-   apply without reading the target first. The mark moved; the overlay is
-   uniform. The mark still paints above it - `::after` at z-index -1, the mark
-   at 0 - so the wear is under the mark, which is the right order for a scratch
-   on a surface and a mark drawn on top of one. */
-.foot::before {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  left: -14vw;
-  bottom: -22vh;
-  width: 56vh;
-  height: 56vh;
-  opacity: 0.35;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M7 33 29 25 50 60 78 6 94 2 54 93Z' fill='none' stroke='%23F0B323' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  pointer-events: none;
-}
+/* THE STROKED V IS GONE FROM THE FOOTER'S CORNER, 2026-09-16, by the user:
+   the email is the footer's object now. It was a 2px machine yellow outline of
+   the mark at 35%, 56vh square, off the bottom left. Its rule that yellow on
+   dark is 100% or a stroke, never a low-alpha fill, still stands in DESIGN.md. */
 
 /* Everything in the footer sits above it. */
 .foot__inner {

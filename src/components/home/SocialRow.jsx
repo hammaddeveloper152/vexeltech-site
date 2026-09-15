@@ -1,45 +1,47 @@
 import React from 'react';
+import {
+  FacebookLogo,
+  InstagramLogo,
+  LinkedinLogo,
+  TiktokLogo,
+  XLogo,
+  YoutubeLogo,
+} from '@phosphor-icons/react';
 
-/* THE SOCIAL ROW, 2026-09-16. Six rendered tile faces, one anchor each, in the
-   footer's meta row at 48px on every page, and under the form at 56px on
-   Contact (where the footer's own row is not repeated), 16px apart.
+/* THE SOCIAL GLYPHS, 2026-09-16. Phosphor's platform logos, at the medium
+   station (24px, the user's choice over a 20px fourth station), steel-lift,
+   machine yellow on hover, in one row at the right of the footer's pages row.
 
-   ---- The user's decisions, recorded in DESIGN.md and BUILD-LAW.md ---------
+   ONLY A PLATFORM WITH A REAL URL RENDERS. No account has been supplied, so
+   every `href` is null and the row renders nothing. This replaces the rendered
+   tiles with placeholder URLs: an icon linking to a platform's home page is a
+   link to nowhere of ours, and BUILD-LAW's pre-flight exception for it is gone.
+   Fill a URL in here and that platform appears.
 
-   - PLACEHOLDER URLS UNTIL THE REAL ONES ARRIVE. The footer used to record
-     social icons as not built because no account was given. The user chose to
-     ship the row now: each anchor points at the platform's own home page, and
-     the six are replaced here, in one list, when the accounts are supplied.
-   - RENDERED TILES, AN EXCEPTION TO ICONOGRAPHY. Not Phosphor and not inline
-     SVG: `social.png`'s tiles, cut to alpha at 240px. Artwork standing in for a
-     link, so each anchor carries its platform's name as its accessible label
-     and the image is decorative.
-   - THEIR COLOURS ARE EXEMPT, as generated artwork, like the Services tiles. */
+   `VITE_SOCIAL_PREVIEW=1` fills every row with the platform's home page, for a
+   check build only, so the glyphs can be measured before an account exists. It
+   is off in every shipped build, the same way `VITE_SHOW_RESERVED` is. */
+
+const PREVIEW = import.meta.env.VITE_SOCIAL_PREVIEW === '1';
 
 export const SOCIALS = [
-  { id: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/' },
-  { id: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/' },
-  { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/' },
-  { id: 'x', label: 'X', href: 'https://x.com/' },
-  { id: 'tiktok', label: 'TikTok', href: 'https://www.tiktok.com/' },
-  { id: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/' },
+  { id: 'instagram', label: 'Instagram', href: null, preview: 'https://www.instagram.com/', Icon: InstagramLogo },
+  { id: 'facebook', label: 'Facebook', href: null, preview: 'https://www.facebook.com/', Icon: FacebookLogo },
+  { id: 'linkedin', label: 'LinkedIn', href: null, preview: 'https://www.linkedin.com/', Icon: LinkedinLogo },
+  { id: 'x', label: 'X', href: null, preview: 'https://x.com/', Icon: XLogo },
+  { id: 'tiktok', label: 'TikTok', href: null, preview: 'https://www.tiktok.com/', Icon: TiktokLogo },
+  { id: 'youtube', label: 'YouTube', href: null, preview: 'https://www.youtube.com/', Icon: YoutubeLogo },
 ];
 
-export default function SocialRow({ size = 'sm', className = '' }) {
+export default function SocialRow() {
+  const live = SOCIALS.map((s) => ({ ...s, url: s.href || (PREVIEW ? s.preview : null) })).filter((s) => s.url);
+  if (!live.length) return null;
   return (
-    <ul className={`social social--${size} ${className}`.trim()}>
-      {SOCIALS.map(({ id, label, href }) => (
+    <ul className="social" aria-label="Social">
+      {live.map(({ id, label, url, Icon }) => (
         <li key={id}>
-          <a className="social__a" href={href} aria-label={label}>
-            <img
-              className="social__img"
-              src={`/assets/objects/social-${id}.webp`}
-              alt=""
-              width="240"
-              height="240"
-              loading="lazy"
-              decoding="async"
-            />
+          <a className="social__a" href={url} aria-label={label}>
+            <Icon className="i i--md" aria-hidden="true" />
           </a>
         </li>
       ))}

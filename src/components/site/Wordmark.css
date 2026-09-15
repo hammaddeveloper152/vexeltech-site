@@ -41,6 +41,12 @@
 
 /* ---- Sizes -------------------------------------------------------------- */
 
+/* Footer base, 2026-09-16. Small, in the row of 11px meta: the page is signed
+   by the email above it now, not by the lockup. */
+.wm--sm {
+  font-size: var(--t-body-size);
+}
+
 /* Header. Normal logo scale, not the cover treatment. */
 .wm--md {
   font-size: var(--t-h3-size);

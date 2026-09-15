@@ -44,8 +44,7 @@ export default function ContactPage() {
       />
       {/* The handset floats above "Get in touch", centred. On this page only:
           the same form ends the home page, where it does not take it. */}
-      {/* The social row at 48px under the form, and not again in the footer. */}
-      <FooterForm handset socialUnderForm />
+      <FooterForm handset />
     </Shell>
   );
 }
