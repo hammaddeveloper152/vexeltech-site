@@ -1,8 +1,8 @@
 import React from 'react';
 
-/* THE SOCIAL ROW, 2026-09-16. Six rendered tiles, one anchor each, in the
-   footer's meta row at 36px on every page, and under the form at 48px on
-   Contact (where the footer's own row is not repeated).
+/* THE SOCIAL ROW, 2026-09-16. Six rendered tile faces, one anchor each, in the
+   footer's meta row at 48px on every page, and under the form at 56px on
+   Contact (where the footer's own row is not repeated), 16px apart.
 
    ---- The user's decisions, recorded in DESIGN.md and BUILD-LAW.md ---------
 

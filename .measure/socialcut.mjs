@@ -55,9 +55,58 @@ const tiles = runs.map(([x0, x1]) => {
   return { x0, x1, w, top, tileBottom, tileH: tileBottom - top + 1, reflBottom, reflH: reflBottom - tileBottom };
 });
 
+/* THE FACE, 2026-09-16: the tile without its reflection. Between the tile's
+   bottom edge and the top of its reflection there is a dark seam; the face
+   ends at the first row, well below the top, where under 15% of the tile's
+   columns are still bright. */
+for (const t of tiles) {
+  let faceBottom = t.tileBottom;
+  for (let y = t.top + 150; y < t.tileBottom; y++) {
+    let n = 0;
+    for (let x = t.x0; x <= t.x1; x += 2) if (mx(x, y) > 80) n++;
+    if (n < t.w * 0.5 * 0.15) { faceBottom = y - 1; break; }
+  }
+  t.faceBottom = faceBottom;
+  t.faceH = faceBottom - t.top + 1;
+}
+
 if (mode === 'measure') {
+  tiles.forEach((t, i) => console.log(`  ${NAMES[i] || i}: face y ${t.top}-${t.faceBottom} (${t.faceH}px tall, ${t.w}px wide)`));
   console.log(`source ${W}x${H}; tile row starts at y ${top}; ${tiles.length} tiles`);
   tiles.forEach((t, i) => console.log(`  ${NAMES[i] || i}: x ${t.x0}-${t.x1} (${t.w}px), tile y ${t.top}-${t.tileBottom} (${t.tileH}px), reflection to y ${t.reflBottom} (${t.reflH}px below the tile)`));
+}
+
+/* FACE: a square on the tile face only, no reflection, alpha outside the
+   tile: every row below the face and every near-black pixel is transparent. */
+if (mode === 'face') {
+  const FF = process.env.FFMPEG;
+  const tmp = '.measure/out/social';
+  fs.mkdirSync(tmp, { recursive: true });
+  const pad = 4;
+  tiles.forEach((t, i) => {
+    const side = Math.max(t.w, t.faceH) + pad * 2;
+    const cx = Math.round((t.x0 + t.x1) / 2);
+    const cy = Math.round((t.top + t.faceBottom) / 2);
+    const sx = cx - Math.floor(side / 2);
+    const sy = cy - Math.floor(side / 2);
+    const out = new PNG({ width: side, height: side });
+    for (let y = 0; y < side; y++) {
+      for (let x = 0; x < side; x++) {
+        const X = sx + x, Y = sy + y;
+        const o = (y * side + x) * 4;
+        if (X < 0 || Y < 0 || X >= W || Y >= H || Y > t.faceBottom || X < t.x0 - pad || X > t.x1 + pad) { out.data[o + 3] = 0; continue; }
+        const k = (Y * W + X) * 4;
+        const m = Math.max(data[k], data[k + 1], data[k + 2]);
+        const a = m <= 6 ? 0 : m >= 22 ? 255 : Math.round(((m - 6) / 16) * 255);
+        out.data[o] = data[k]; out.data[o + 1] = data[k + 1]; out.data[o + 2] = data[k + 2]; out.data[o + 3] = a;
+      }
+    }
+    const png = `${tmp}/${NAMES[i]}-face.png`;
+    fs.writeFileSync(png, PNG.sync.write(out));
+    const webp = `public/assets/objects/social-${NAMES[i]}.webp`;
+    execFileSync(FF, ['-v', 'error', '-y', '-i', png, '-vf', 'scale=240:240:flags=lanczos', '-c:v', 'libwebp', '-pix_fmt', 'yuva420p', '-quality', '90', '-compression_level', '6', '-frames:v', '1', webp]);
+    console.log(`  ${NAMES[i]}: face ${t.w}x${t.faceH} in a ${side}px square -> ${webp} ${(fs.statSync(webp).size / 1024).toFixed(1)} KB`);
+  });
 }
 
 if (mode === 'cut') {

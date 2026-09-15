@@ -270,9 +270,12 @@
   gap: var(--s-xs);
 }
 
+/* FIVE PAGES since 2026-09-16 (the founder's footer block). One column on a
+   phone, five across from 768, so none is ever stranded on a row alone: two
+   columns would leave "Contact us" by itself. */
 .foot__nav-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   column-gap: var(--s-md);
   margin: 0;
   padding: 0;
@@ -426,7 +429,7 @@
   }
 
   .foot__nav-list {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .foot__legal {
@@ -442,32 +445,42 @@
 
 /* ---- Social, 2026-09-16 --------------------------------------------------
 
-   Six rendered tiles. 36px in the meta row, 48px under the form on Contact,
-   12px between them. BUILD-LAW's 48px target is carried by 6px of padding on
-   each anchor, so the targets meet edge to edge and the tiles still stand 12px
-   apart. Hover lifts 2px; press is the site's scale. The tiles are artwork,
-   exempt from the accent and carrier counts by the user's decision. */
+   Six rendered tiles, THE FACE ONLY since 2026-09-16 (re-cut without the
+   reflection). 48px in the meta row and 56px under the form on Contact, 16px
+   between them. The tile is its own target now: 48px meets BUILD-LAW's minimum
+   with no padding. Hover lifts 2px; press is the site's scale. The tiles are
+   artwork, exempt from the accent and carrier counts by the user's decision. */
 .foot__social {
   display: grid;
   gap: var(--s-xs);
 }
 
+/* THREE BY TWO ON A PHONE, one row from 768. Six tiles at 48px with 16px
+   between need 368px and the phone's content box is 358, so a flex row wrapped
+   and stranded YouTube on a line of its own. Three across is 176px at 48 and
+   200px at 56, and six split three and three. */
 .social {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -6px;
+  display: grid;
+  grid-template-columns: repeat(3, var(--social-size));
+  gap: var(--s-md);
+  margin: 0;
   padding: 0;
   list-style: none;
-  --social-size: 36px;
+  --social-size: 48px;
+}
+
+@media (min-width: 768px) {
+  .social {
+    grid-template-columns: repeat(6, var(--social-size));
+  }
 }
 
 .social--lg {
-  --social-size: 48px;
+  --social-size: 56px;
 }
 
 .social__a {
   display: block;
-  padding: 6px;
   border-radius: var(--r-sm);
   transition: transform var(--d-press) var(--ease-reveal);
 }

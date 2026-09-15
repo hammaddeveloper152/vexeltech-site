@@ -46,16 +46,28 @@ import './FooterForm.css';
    SocialRow.jsx when the accounts arrive. `social={false}` drops the row where
    the page carries its own (Contact, under the form). */
 
+/* THE FOOTER BLOCK FROM VEXELTECH-COPY.md, applied 2026-09-16.
+
+   Pages: Home, Services, Pricing, About us, Contact us. RESOURCES, PORTFOLIO
+   AND CASE STUDIES ARE OFF THE FOOTER until those routes are live, per the
+   founder's copy. The routes still exist: Portfolio stays linked from the bar
+   and the work grid; Resources and Case studies are reachable by URL only.
+
+   The phone and the legal line are HIDDEN until supplied. They were visible
+   placeholders ("Placeholder phone number", "Placeholder legal line"); the
+   copy file marks both as facts only the founder can give, to be left out of
+   the build until filled. Set them here when they arrive. */
 const PAGES = [
   { id: 'home', label: 'Home', href: '/' },
   { id: 'services', label: 'Services', href: '/services' },
   { id: 'pricing', label: 'Pricing', href: '/pricing' },
   { id: 'about', label: 'About us', href: '/about-us' },
   { id: 'contact', label: 'Contact us', href: '/contact-us' },
-  { id: 'resources', label: 'Resources', href: '/resources' },
-  { id: 'portfolio', label: 'Portfolio', href: '/portfolio' },
-  { id: 'cases', label: 'Case studies', href: '/case-studies' },
 ];
+
+/* null until supplied; the line does not render while it is null. */
+const PHONE = null;
+const LEGAL = null;
 
 export default function FooterMeta({ social = true }) {
   return (
@@ -105,10 +117,12 @@ export default function FooterMeta({ social = true }) {
             info@vexeltechsolutions.com
           </a>
         </span>
-        <span className="foot__meta-v">
-          <Phone className="i i--sm foot__meta-i" aria-hidden="true" />
-          <span>Placeholder phone number</span>
-        </span>
+        {PHONE ? (
+          <span className="foot__meta-v">
+            <Phone className="i i--sm foot__meta-i" aria-hidden="true" />
+            <span>{PHONE}</span>
+          </span>
+        ) : null}
       </div>
 
       <div className="foot__contact">
@@ -125,7 +139,7 @@ export default function FooterMeta({ social = true }) {
         </span>
       </div>
 
-      <p className="foot__legal">Placeholder legal line, entity name and year.</p>
+      {LEGAL ? <p className="foot__legal">{LEGAL}</p> : null}
     </div>
   );
 }

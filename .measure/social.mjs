@@ -45,11 +45,24 @@ for (const [w, h] of [[1280, 900], [390, 844]]) {
     const under = await read(p, '.foot__social-under');
     const contact = route === '/contact-us';
     const row = contact ? under : meta;
-    const size = contact ? 48 : 36;
-    const gaps = row.slice(1).map((x, i) => +(x.left - row[i].right).toFixed(1));
-    const sameLine = row.every((x) => near(x.top, row[0].top, 1));
+    const size = contact ? 56 : 48;
+    /* Gaps are measured between neighbours ON THE SAME ROW, and no row may hold
+       a single tile: a wrapped YouTube on a line of its own passed before. */
+    const rows = [];
+    for (const x of row) { const r = rows.find((g) => near(g[0].top, x.top, 1)); if (r) r.push(x); else rows.push([x]); }
+    const gaps = rows.flatMap((g) => g.slice(1).map((x, i) => +(x.left - g[i].right).toFixed(1)));
+    const sameLine = true;
+    check(rows.every((g) => g.length >= 2), `${w} ${route.padEnd(11)} rows of tiles: ${rows.map((g) => g.length).join(' + ')}`);
     const ok = row.length === 6 && row.every((x, i) => x.src.endsWith(`social-${ORDER[i]}.webp`) && x.natural === 240 && near(x.w, size, 0.5) && x.tw >= 48 && x.th >= 48 && x.label && x.href.startsWith('https://'))
-      && (!sameLine || gaps.every((g) => near(g, 12, 0.5)));
+      && (!sameLine || gaps.every((g) => near(g, 16, 0.5)));
+    /* The founder's footer block: five pages, and no phone or legal line. */
+    const foot = await p.evaluate(() => ({
+      pages: [...document.querySelectorAll('.foot__nav-link')].map((a) => a.textContent.trim()),
+      phone: [...document.querySelectorAll('.foot__meta-v')].some((v) => /phone/i.test(v.textContent)),
+      legal: !!document.querySelector('.foot__legal'),
+    }));
+    check(foot.pages.join() === 'Home,Services,Pricing,About us,Contact us' && !foot.phone && !foot.legal,
+      `${w} ${route.padEnd(11)} footer pages ${foot.pages.join(' / ')}; phone line ${foot.phone ? 'shown' : 'hidden'}; legal line ${foot.legal ? 'shown' : 'hidden'}`);
     check(ok, `${w} ${route.padEnd(11)} ${contact ? 'under the form' : 'footer'}: ${row.length} tiles at ${row[0] && row[0].w}px, gaps ${gaps.join('/')}, targets ${row[0] && row[0].tw}x${row[0] && row[0].th}, ${row.map((x) => x.label).join(' ')}`);
     if (contact) check(meta.length === 0, `${w} contact: footer row ${meta.length ? 'present' : 'absent'}`);
     if (contact && w === 1280) {
