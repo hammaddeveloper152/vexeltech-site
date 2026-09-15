@@ -69,7 +69,11 @@ const FRAMES = [
      contribution is a quarter of a point — the rest is the button, and at 390
      a 48px full-width control on a 460px band is 8% by geometry before
      anything is painted. */
-  ['/about-us', '.callband', 'call band, burst', '.callband'],
+  /* Since 2026-09-16 the burst is Pricing's call only, About's call is the
+     spotlight, and Services closes on the plain dark call. */
+  ['/pricing', '.callband', 'call band, burst', '.callband'],
+  ['/about-us', '.callband', 'call band, spot', '.callband'],
+  ['/services', '.callband', 'call band, plain', '.callband'],
   ['/', '.services__grid', 'home services plates', '.svc__plate'],
   ['/', '.work__list', 'work grid', '.work__plate'],
   ['/about-us', '.plates', 'about plates, at rest', '.plate'],

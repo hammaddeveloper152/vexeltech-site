@@ -184,10 +184,12 @@ body::before {
    and a band is a MATERIAL. Nothing else on the site lays down a ground.
 
    A MATERIAL APPEARS ON EXACTLY ONE BAND ON THE WHOLE SITE. Not one per page —
-   one, total. Five materials, and the list below is all of them:
+   one, total. The list below is all of them (glass and cubes are gone; spot
+   joined 2026-09-16):
 
      marble    the home counter row     the figures stand on stone
-     burst     the closing call         every route, the page's one accent
+     burst     Pricing's closing call   the page's one accent
+     spot      About's closing call     a stage under one yellow light
      glass     the home Failures        the cost of not deciding
      rays      the marquee strip        the one that is not a scrim
      scratches the overlay              the one that is not a band
@@ -328,7 +330,12 @@ body::before {
    settled by source order. Half of them won and half lost, which measured as a
    footer sitting 192px below every call band while the section above it moved
    correctly. The doubled class puts these one step above any of them. */
-:is(section, footer, article, aside, div):has(+ .band.band, + .band-rays.band-rays) {
+/* `.callband.callband` IS IN EVERY SEAM RULE, 2026-09-16. Services closes on
+   the plain dark call, which carries no band class, and without it the seam
+   went back to the sum of paddings: 25px above the call at 390 and the footer
+   192px below it at both widths. The call owns its gap whether it has a
+   material or not. */
+:is(section, footer, article, aside, div):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) {
   padding-bottom: 0;
   margin-bottom: 0;
 }
@@ -341,7 +348,8 @@ body::before {
    the collapse, and the seam was half as tight again as the rule. A rule that
    is right at one width by accident is not right. */
 .band.band + :is(section, footer, article, aside, div),
-.band-rays.band-rays + :is(section, footer, article, aside, div) {
+.band-rays.band-rays + :is(section, footer, article, aside, div),
+.callband.callband + :is(section, footer, article, aside, div) {
   padding-top: 0;
   margin-top: 0;
 }
@@ -358,8 +366,8 @@ body::before {
    Containing it with `flow-root` was the wrong fix — it kept the 96 and moved
    it inside the footer, so the gap became 192. The margin is not a gap the
    footer needs when a band is above it; the band owns that space. */
-:is(.band.band, .band-rays.band-rays) + :is(section, footer, article, aside, div) > :first-child,
-:is(.band.band, .band-rays.band-rays) + :is(section, footer, article, aside, div) > :first-child > :first-child {
+:is(.band.band, .band-rays.band-rays, .callband.callband) + :is(section, footer, article, aside, div) > :first-child,
+:is(.band.band, .band-rays.band-rays, .callband.callband) + :is(section, footer, article, aside, div) > :first-child > :first-child {
   margin-top: 0;
 }
 
@@ -367,13 +375,14 @@ body::before {
    band ends on padding rather than on a margin — and it is here so that the two
    sides of a seam are governed by one rule rather than by one rule and a
    coincidence. */
-:is(section, footer, article, aside, div):has(+ .band.band, + .band-rays.band-rays) > :last-child,
-:is(section, footer, article, aside, div):has(+ .band.band, + .band-rays.band-rays) > :last-child > :last-child {
+:is(section, footer, article, aside, div):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) > :last-child,
+:is(section, footer, article, aside, div):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) > :last-child > :last-child {
   margin-bottom: 0;
 }
 
 .band,
-.band-rays {
+.band-rays,
+.callband {
   margin-block: var(--band-gap);
 }
 
@@ -424,13 +433,13 @@ body::before {
   color: var(--c-bone);
 }
 
-/* BURST — the closing call, on every route.
+/* BURST — Pricing's closing call, and only Pricing's, since 2026-09-16.
 
-   The one band that repeats, because the call repeats: it is the same block on
-   seven pages and it is each page's only accent, so it is the one place a
-   material can appear more than once without being a second material. An
-   explosion of orange sparks, which is the accent's own hue arriving as a
-   photograph rather than as a fill.
+   It was the one band that repeated, on every route's call. About's call took
+   the spotlight and Services closes on the plain dark call, so the burst is
+   one band like every other material. An explosion of orange sparks, which is
+   the accent's own hue arriving as a photograph rather than as a fill. Its
+   position below was solved on the call band's geometry, which Pricing shares.
 
    THE BURST CENTRE SITS BEHIND THE HEADING. `background-position` is derived,
    not eyeballed: `.measure/bandpos.mjs` solves for the percentage that lands
@@ -506,6 +515,56 @@ body::before {
   .band-burst {
     background-size: 200% auto;
     background-position: 84% 56%;
+  }
+}
+
+/* SPOT — About's closing call, 2026-09-16, by the user. A black stage under a
+   single machine yellow spotlight: a cone from a lamp at the top and a lit
+   pool on the floor. `about-call.webp`, 2560 square, 395 KB.
+
+   THE POOL SITS BEHIND THE HEADING, and the layer is OVERSIZED to allow it.
+   The image is square and the band is not, so `cover` leaves no slack in the
+   axis that matters: the pool landed 66,51px off the heading's centre at 768
+   and 242px below it at 390, behind the button. The target is the floor pool's
+   own centroid (41.2%, 79.1% of the file, fourth-power luminance below 66% of
+   its height), not the whole frame's, which the cone pulls up to 57.6%. Solved
+   by `.measure/bandpos.mjs` on the painted band.
+
+   The pool is in the accent's own hue and it is a GROUND, exempt from the
+   carrier count by the user as the burst is. The scrim is black for the burst's
+   reason, value without hue.
+
+   60%, WALKED FROM 30 IN 5% STEPS. The binding pair is the note at 1280, bone
+   over the brightest part of the pool a line of it sits on: 4.49:1 at 55% and
+   5.38:1 at 60. The heading cleared at 45.
+
+   Where the pool lands, off the heading's centre, as painted:
+
+     390   -4, -5px     1024   16, 14px
+     768    2,  1px     1280  -13,-15px
+
+   At 390 the layer is 335% of the band's height (auto width), which crops to
+   the lit floor; from 768 it is 200% of the band's width. Two passes: the
+   first landed 43 to 63px high from 768 up, because moving the layer moves the
+   crop. 1024 and 1280 share one value, split between them. */
+.band-spot {
+  background-image: url('/assets/bands/about-call.webp');
+  --scrim-rgb: 0 0 0;
+  --scrim: 60%;
+  background-size: auto 335%;
+  background-position: 39% 100%;
+}
+
+@media (min-width: 768px) {
+  .band-spot {
+    background-size: 200% auto;
+    background-position: 50% 87%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .band-spot {
+    background-position: 44% 82.75%;
   }
 }
 

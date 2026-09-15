@@ -14,7 +14,7 @@
                two 13px label lines under it; four refusals; two columns from
                1024, stacked below
      std       three columns with hairlines from 1024, stacked below
-     call      the burst call band with the yellow Let's Talk, no object
+     call      the spotlight call band (2026-09-16) with the yellow Let's Talk
    Full page at 1280 to .measure/out/about/about-v4.png. */
 import puppeteer from 'puppeteer';
 import fs from 'node:fs';

@@ -133,8 +133,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 6. THE CALL. */}
+      {/* 6. THE CALL, on the spotlight: About's closing material. */}
       <CallBand
+        material="spot"
         heading="Tell us about your business and get a quote the same day."
         note="Fifteen minutes on the phone and we'll tell you what we'd fix first. It isn't always the expensive one."
       />

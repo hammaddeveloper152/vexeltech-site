@@ -46,7 +46,7 @@ const b = await puppeteer.launch({ headless: 'new',
 
 /* ---- 1. the image's bright centroid, as a fraction of its own box ------- */
 const probe = await b.newPage();
-await probe.goto('http://localhost:4179' + ROUTE, { waitUntil: 'domcontentloaded' });
+await probe.goto((process.env.BASE || 'http://localhost:4179') + ROUTE, { waitUntil: 'domcontentloaded' });
 /* THE BANDS ARE GATED ON `data-near` NOW, so at load their computed
    `background-image` is `none` and there is no URL to read. Every band is
    marked near before anything is measured. */
@@ -94,7 +94,7 @@ const WIDTHS = (process.env.WIDTHS || '1280,390').split(',')
 for (const [W, H] of WIDTHS) {
   const p = await b.newPage();
   await p.setViewport({ width: W, height: H });
-  await p.goto('http://localhost:4179' + ROUTE, { waitUntil: 'domcontentloaded' });
+  await p.goto((process.env.BASE || 'http://localhost:4179') + ROUTE, { waitUntil: 'domcontentloaded' });
   await new Promise((r) => setTimeout(r, 2200));
 
   await p.evaluate(() => document.querySelectorAll('[class*="band-"], .scratched')
@@ -178,7 +178,7 @@ console.log(`
 for (const [W, H] of WIDTHS) {
   const p = await b.newPage();
   await p.setViewport({ width: W, height: H });
-  await p.goto('http://localhost:4179' + ROUTE, { waitUntil: 'domcontentloaded' });
+  await p.goto((process.env.BASE || 'http://localhost:4179') + ROUTE, { waitUntil: 'domcontentloaded' });
   await new Promise((r) => setTimeout(r, 2200));
   await p.evaluate(() => document.querySelectorAll('[class*="band-"], .scratched')
     .forEach((e) => { e.dataset.near = 'true'; }));

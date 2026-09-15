@@ -208,6 +208,7 @@ export default function PricingPage() {
       </Section>
 
       <CallBand
+        material="burst"
         heading="Not sure which one you need"
         note="Tell us what is going wrong and we will say which of these we would start with. Sometimes it is the cheapest one on this page."
       />

@@ -19,7 +19,8 @@ const SHOTS = [
   ['/', '.marquee', 'band-marquee', 'rays at 35%'],
   ['/', '.fail', 'band-failures', 'glass'],
   ['/', '.faq', 'band-faq', 'no ground, the rig'],
-  ['/about-us', '.callband', 'band-call', 'burst on a black scrim'],
+  ['/about-us', '.callband', 'band-call-about', 'spot on a black scrim'],
+  ['/pricing', '.callband', 'band-call-pricing', 'burst on a black scrim'],
   ['/about-us', 'footer.foot', 'band-footer', 'the scratches overlay on the rig'],
 ];
 
@@ -39,11 +40,12 @@ for (const [route, sel, name, note] of SHOTS) {
    1280 from the last object to the band's edge, so the crop starts 96px above
    that object and ends 96px into the band, and the join sits in the middle of
    the frame with the measurement either side of it. */
-for (const [route, sel, name] of [['/services', '.band-burst', 'seam-services'],
+for (const [route, sel, name] of [['/pricing', '.band-burst', 'seam-pricing'],
+                                  ['/about-us', '.band-spot', 'seam-about'],
                                   ['/', '.band-marble', 'seam-counters']]) {
   const sp = await b.newPage();
   await sp.setViewport({ width: W, height: 900 });
-  await sp.goto('http://localhost:4179' + route, { waitUntil: 'domcontentloaded' });
+  await sp.goto((process.env.BASE || 'http://localhost:4179') + route, { waitUntil: 'domcontentloaded' });
   await new Promise((r) => setTimeout(r, 2400));
   await sp.evaluate(() => document.querySelectorAll('[class*="band-"], .scratched')
     .forEach((e) => { e.dataset.near = 'true'; }));
@@ -65,7 +67,7 @@ for (const [route, sel, name] of [['/services', '.band-burst', 'seam-services'],
 }
     p = await b.newPage();
     await p.setViewport({ width: W, height: 900 });
-    await p.goto('http://localhost:4179' + route, { waitUntil: 'domcontentloaded' });
+    await p.goto((process.env.BASE || 'http://localhost:4179') + route, { waitUntil: 'domcontentloaded' });
     await new Promise((r) => setTimeout(r, 2400));
     await p.evaluate(() => document.fonts.ready);
     /* one walk so every reveal, every count and every rail draw has run */
@@ -107,7 +109,7 @@ await audit.setViewport({ width: W, height: 900 });
 const seen = {};
 for (const route of ['/', '/services', '/pricing', '/about-us', '/contact-us',
                      '/portfolio', '/case-studies', '/resources']) {
-  await audit.goto('http://localhost:4179' + route, { waitUntil: 'domcontentloaded' });
+  await audit.goto((process.env.BASE || 'http://localhost:4179') + route, { waitUntil: 'domcontentloaded' });
   await new Promise((r) => setTimeout(r, 1600));
   const found = await audit.evaluate(() => {
     const out = {};

@@ -38,8 +38,13 @@ const CR = (a, b) => { const l1 = Math.max(a, b), l2 = Math.min(a, b); return (l
 const BANDS = [
   { key: 'marble', cls: 'band-marble', start: 45, floor: 0,
     at: [['/', '.counters'], ['/about-us', '.counters']] },
+  /* Pricing only since 2026-09-16: About's call took the spotlight and
+     Services closes on the plain dark call. */
   { key: 'burst', cls: 'band-burst', start: 45, floor: 0,
-    at: [['/about-us', '.callband'], ['/services', '.callband'], ['/pricing', '.callband']] },
+    at: [['/pricing', '.callband']] },
+  /* The spotlight, About's call. Walked from 30 by the user's brief. */
+  { key: 'spot', cls: 'band-spot', start: 30, floor: 0,
+    at: [['/about-us', '.callband']] },
   { key: 'cubes', cls: 'band-cubes', start: 45, floor: 0,
     at: [['/', '.faq']] },
   /* GLASS came out, 2026-09-14: Failures is a flat yellow band with no
@@ -58,7 +63,7 @@ async function walk(band, scrim) {
     for (const [w, h] of [[1280, 900], [390, 844]]) {
       const p = await b.newPage();
       await p.setViewport({ width: w, height: h });
-      await p.goto('http://localhost:4179' + route, { waitUntil: 'domcontentloaded' });
+      await p.goto((process.env.BASE || 'http://localhost:4179') + route, { waitUntil: 'domcontentloaded' });
       await new Promise((r) => setTimeout(r, 2200));
       await p.addStyleTag({ content: `.${band.cls} { --scrim: ${scrim}% }` });
       await new Promise((r) => setTimeout(r, 300));
