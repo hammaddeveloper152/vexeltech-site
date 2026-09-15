@@ -612,14 +612,20 @@ body::before {
    and 75,98 at 1280. */
 .band-glass {
   background-image: url('/assets/bands/glass.webp');
-  /* 95%, SET BY THE ARC FIELD RULE, NOT THE TYPE. Walked from 60 in 5% steps
-     at the shipped crop: every text pair passed at 60 (the route's line at
-     1280 binds, 4.66:1). The arc share of the worst frame across the section
-     stayed over the 20.5% ceiling until 90 at 1280 (18.34%) and 95 at 390
-     (14.68%; 35.54% at 90). Glass at 60 is a field of blue shards over the
-     whole band, 88% of a frame; at 95 it is a faint texture on asphalt. The
-     user's rule decides, and it decides 95. */
-  --scrim: 95%;
+  /* 90% AT 390, 80% AT 1280, by the user, 2026-09-16, replacing the 95 the
+     arc walk had set everywhere.
+
+     THE ARC FIELD CEILING NO LONGER BINDS A PHOTOGRAPH. The brief set 80 at
+     1280 and kept the ceiling there; the two disagree, because at 80 the worst
+     frame at 1280 measures 86.96% blue against a 20.5% ceiling and only clears
+     it at 90. Asked, the user withdrew the ceiling for photographic materials
+     at every width: a scrimmed photograph is held to CONTRAST alone. The
+     ceiling still governs what the page itself paints. See DESIGN.md, A
+     PHOTOGRAPH IS HELD TO CONTRAST, NOT TO THE ARC FIELD CEILING.
+
+     Every text pair passes from 60 up, so contrast does not bind either value
+     either: these two are the user's reading of the picture. */
+  --scrim: 90%;
   background-size: auto 280%;
   background-position: 54% 93%;
 }
@@ -639,6 +645,9 @@ body::before {
 @media (min-width: 1280px) {
   .band-glass {
     background-position: 69% 90%;
+    /* The ceiling's own width. 768 and 1024 hold the phone's 90%: neither was
+       walked, and the heavier scrim is the conservative one. */
+    --scrim: 80%;
   }
 }
 
