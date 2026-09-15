@@ -48,8 +48,8 @@ import './Header.css';
    choose between them before they know the difference. In the footer it sits
    next to Portfolio where that comparison is cheap.
 
-   Social icons, also 10.4: NOT built. No account or URL was given, and a
-   social icon linking nowhere is an invented capability. */
+   Social icons, also 10.4: in the FOOTER since 2026-09-16, not the bar. See
+   SocialRow.jsx for the user's decision to ship them with placeholder URLs. */
 const NAV = [
   { id: 'services', label: 'Services', href: '/services' },
   { id: 'pricing', label: 'Pricing', href: '/pricing' },

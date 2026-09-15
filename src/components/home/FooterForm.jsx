@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PaperPlaneTilt } from '@phosphor-icons/react';
 import FooterMeta from './FooterMeta.jsx';
+import SocialRow from './SocialRow.jsx';
 import { budgetBands } from '../../content/pricing.js';
 import './FooterForm.css';
 
@@ -73,7 +74,10 @@ function validate(id, value) {
 /* `handset`: the contact page's floating handset above the heading,
    2026-09-14. A prop rather than always on, because this component also ends
    the home page, and the object belongs to the page whose subject it is. */
-export default function FooterForm({ handset = false }) {
+/* `socialUnderForm`: the social row at 48px under the form, Contact only,
+   2026-09-16; the meta row's own 36px row is dropped there so the six tiles
+   appear once. */
+export default function FooterForm({ handset = false, socialUnderForm = false }) {
   const [values, setValues] = useState({
     name: '', email: '', company: '', budget: '', message: '',
   });
@@ -284,7 +288,9 @@ export default function FooterForm({ handset = false }) {
           </div>
         </form>
 
-        <FooterMeta />
+        {socialUnderForm ? <SocialRow size="lg" className="foot__social-under" /> : null}
+
+        <FooterMeta social={!socialUnderForm} />
       </div>
     </footer>
   );

@@ -341,7 +341,10 @@ mark render, `vmark.webp`, 1200px shown at 480. About (third version, 2026-09-15
 images; the hero and the pricing band are held for `about-hero.webp` and
 `about-price.webp`. A route drawn in code counts as a band's object. A mascot
 band, a framed exhibit and a plain image-beside-text split are three different
-families by amendment; wall tiles 16:10 (unmounted). **The client slots
+families by amendment; wall tiles 16:10 (unmounted). Social (2026-09-16): six rendered platform
+tiles, an Iconography exception, 36px in the footer and 48px under Contact's
+form, colours exempt as artwork, URLs placeholder (each platform's home page)
+until the accounts are supplied. **The client slots
 are deleted**: the strip is the strike ticker.
 
 **The work plates take video and their spec is MEASURED, not quoted.** Their

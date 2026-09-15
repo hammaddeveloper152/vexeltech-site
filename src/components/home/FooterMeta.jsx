@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Envelope, MapPin, Phone } from '@phosphor-icons/react';
 import Wordmark from '../site/Wordmark.jsx';
+import SocialRow from './SocialRow.jsx';
 import './FooterForm.css';
 
 /* The meta row, split out of FooterForm so the eight pages share ONE
@@ -37,8 +38,13 @@ import './FooterForm.css';
 
    The site map is NOT placeholder. It is all eight destinations from content
    answer 10.1, in the user's order, because 10.4 says the footer carries all
-   the website pages. Social icons, also 10.4, are not built: no account or
-   URL was given, and an icon linking nowhere is an invented capability. */
+   the website pages.
+
+   SOCIAL, also 10.4, IS BUILT SINCE 2026-09-16, by the user's decision. It was
+   held back because no account or URL was given; the user chose to ship the
+   six tiles now with each linking to its platform's home page, replaced in
+   SocialRow.jsx when the accounts arrive. `social={false}` drops the row where
+   the page carries its own (Contact, under the form). */
 
 const PAGES = [
   { id: 'home', label: 'Home', href: '/' },
@@ -51,7 +57,7 @@ const PAGES = [
   { id: 'cases', label: 'Case studies', href: '/case-studies' },
 ];
 
-export default function FooterMeta() {
+export default function FooterMeta({ social = true }) {
   return (
     <div className="foot__meta">
       {/* The lockup closes the page. Larger than the bar's, because this
@@ -75,6 +81,13 @@ export default function FooterMeta() {
           ))}
         </ul>
       </nav>
+
+      {social ? (
+        <div className="foot__social">
+          <span className="foot__meta-k">Social</span>
+          <SocialRow size="sm" />
+        </div>
+      ) : null}
 
       {/* One icon per contact line, at the small station. All decorative:
           the line beside each one already says what it is, and the block is

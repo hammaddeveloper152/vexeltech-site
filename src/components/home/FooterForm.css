@@ -439,3 +439,69 @@
     padding: var(--s-3xl) var(--s-2xl);
   }
 }
+
+/* ---- Social, 2026-09-16 --------------------------------------------------
+
+   Six rendered tiles. 36px in the meta row, 48px under the form on Contact,
+   12px between them. BUILD-LAW's 48px target is carried by 6px of padding on
+   each anchor, so the targets meet edge to edge and the tiles still stand 12px
+   apart. Hover lifts 2px; press is the site's scale. The tiles are artwork,
+   exempt from the accent and carrier counts by the user's decision. */
+.foot__social {
+  display: grid;
+  gap: var(--s-xs);
+}
+
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -6px;
+  padding: 0;
+  list-style: none;
+  --social-size: 36px;
+}
+
+.social--lg {
+  --social-size: 48px;
+}
+
+.social__a {
+  display: block;
+  padding: 6px;
+  border-radius: var(--r-sm);
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.social__img {
+  display: block;
+  width: var(--social-size);
+  height: var(--social-size);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .social__a:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.social__a:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social__a:hover,
+  .social__a:active {
+    transform: none;
+  }
+}
+
+/* Contact: under the form, above the meta row. */
+.foot__social-under {
+  margin-top: var(--s-xl);
+}
+
+@media (min-width: 768px) {
+  .foot__social {
+    grid-column: 1 / -1;
+  }
+}
