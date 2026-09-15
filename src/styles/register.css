@@ -443,6 +443,20 @@
   stroke: var(--c-steel-dark);
 }
 
+/* ON THE GLASS BAND THE MUTED STATE IS STEEL-LIFT, 2026-09-16, by the user.
+   Steel-dark is an asphalt-only token (5.12:1 with no headroom) and a band is
+   not asphalt. The muted numerals, the muted bodies and the route ahead take
+   steel-lift, the value the muted titles already use; the crossfade to white
+   and bone is unchanged. Declared here, where the process colours live. */
+.band-glass .process__n-muted,
+.band-glass .process__d-muted {
+  color: var(--c-steel-lift);
+}
+
+.band-glass .process__lit {
+  stroke: var(--c-steel-lift);
+}
+
 .process__t-muted,
 .process__t-lit {
   font-family: var(--font-loud);

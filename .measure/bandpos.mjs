@@ -182,6 +182,19 @@ for (const [W, H] of WIDTHS) {
   await new Promise((r) => setTimeout(r, 2200));
   await p.evaluate(() => document.querySelectorAll('[class*="band-"], .scratched')
     .forEach((e) => { e.dataset.near = 'true'; }));
+  /* SCRIM=60 measures at a scrim other than the shipped one. A band shipped
+     under a heavy scrim can be too faint to locate, and then the centroid
+     follows the room's own lights rather than the picture. */
+  if (process.env.SCRIM) {
+    await p.addStyleTag({ content: `${BAND} { --scrim: ${process.env.SCRIM}% !important }` });
+  }
+  /* Decode the band's own URL before sampling. `data-near` only starts the
+     fetch; this makes the wait explicit rather than a hopeful 500ms. */
+  await p.evaluate(async (bandSel) => {
+    const bg = getComputedStyle(document.querySelector(bandSel)).backgroundImage;
+    const url = (bg.match(/url\(["']?([^"')]+)/) || [])[1];
+    if (url) { const im = new Image(); im.src = url; await im.decode().catch(() => {}); }
+  }, BAND);
   const box = await p.evaluate((bandSel) => {
     const el = document.querySelector(bandSel);
     el.scrollIntoView({ block: 'center' });
@@ -196,10 +209,20 @@ for (const [W, H] of WIDTHS) {
     return [Math.round(t.left + t.width / 2 - br.left), Math.round(t.top + t.height / 2 - br.top)];
   }, TARGET, BAND);
   await new Promise((r) => setTimeout(r, 500));
-  const png = PNG.sync.read(await p.screenshot({ type: 'png' }));
+  /* THE WHOLE BAND, NOT THE VIEWPORT, 2026-09-16. This took a viewport
+     screenshot of a band centred in it. A band taller than the viewport loses
+     its top and bottom, and the sticky bar covers the top again, so the
+     centroid was pulled away from the edge the heading sits on. On the glass
+     band (1100px tall in a 900px viewport) it reported the core 138 to 181px
+     under the heading at every position tried; the whole band, clipped beyond
+     the viewport with the bar hidden, put it 60 to 100px away. */
+  await p.evaluate(() => document.querySelectorAll('.bar, header').forEach((e) => { e.style.visibility = 'hidden'; }));
+  const docTop = await p.evaluate((bandSel) => document.querySelector(bandSel).getBoundingClientRect().top + scrollY, BAND);
+  const png = PNG.sync.read(await p.screenshot({ type: 'png', captureBeyondViewport: true,
+    clip: { x: box[0], y: docTop, width: box[2], height: box[3] } }));
   await p.close();
 
-  const [bx, by, bw, bh] = box;
+  const bx = 0, by = 0, bw = box[2], bh = box[3];
   let sx = 0, sy = 0, sw = 0;
   for (let j = Math.max(0, by); j < Math.min(png.height, by + bh); j++) {
     for (let i = Math.max(0, bx); i < Math.min(png.width, bx + bw); i++) {

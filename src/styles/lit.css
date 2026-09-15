@@ -335,7 +335,13 @@ body::before {
    went back to the sum of paddings: 25px above the call at 390 and the footer
    192px below it at both widths. The call owns its gap whether it has a
    material or not. */
-:is(section, footer, article, aside, div):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) {
+/* `:not(.band)` ON EVERY NEIGHBOUR RULE, 2026-09-16. These rules take the
+   facing padding off a PLAIN section beside a band. When glass went on Process,
+   directly under the marble counter row, they took it off the bands too: the
+   counter row lost its bottom padding, Process lost its top padding and
+   margin, and "How it works" sat on the band's top edge. Two bands keep their
+   own padding, and their margins collapse to one --band-gap of plain ground. */
+:is(section, footer, article, aside, div):not(.band):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) {
   padding-bottom: 0;
   margin-bottom: 0;
 }
@@ -347,9 +353,9 @@ body::before {
    against a 96 target — and at 390 the band asked for 64, the footer's 96 won
    the collapse, and the seam was half as tight again as the rule. A rule that
    is right at one width by accident is not right. */
-.band.band + :is(section, footer, article, aside, div),
-.band-rays.band-rays + :is(section, footer, article, aside, div),
-.callband.callband + :is(section, footer, article, aside, div) {
+.band.band + :is(section, footer, article, aside, div):not(.band),
+.band-rays.band-rays + :is(section, footer, article, aside, div):not(.band),
+.callband.callband + :is(section, footer, article, aside, div):not(.band) {
   padding-top: 0;
   margin-top: 0;
 }
@@ -366,8 +372,8 @@ body::before {
    Containing it with `flow-root` was the wrong fix — it kept the 96 and moved
    it inside the footer, so the gap became 192. The margin is not a gap the
    footer needs when a band is above it; the band owns that space. */
-:is(.band.band, .band-rays.band-rays, .callband.callband) + :is(section, footer, article, aside, div) > :first-child,
-:is(.band.band, .band-rays.band-rays, .callband.callband) + :is(section, footer, article, aside, div) > :first-child > :first-child {
+:is(.band.band, .band-rays.band-rays, .callband.callband) + :is(section, footer, article, aside, div):not(.band) > :first-child,
+:is(.band.band, .band-rays.band-rays, .callband.callband) + :is(section, footer, article, aside, div):not(.band) > :first-child > :first-child {
   margin-top: 0;
 }
 
@@ -375,8 +381,8 @@ body::before {
    band ends on padding rather than on a margin — and it is here so that the two
    sides of a seam are governed by one rule rather than by one rule and a
    coincidence. */
-:is(section, footer, article, aside, div):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) > :last-child,
-:is(section, footer, article, aside, div):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) > :last-child > :last-child {
+:is(section, footer, article, aside, div):not(.band):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) > :last-child,
+:is(section, footer, article, aside, div):not(.band):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) > :last-child > :last-child {
   margin-bottom: 0;
 }
 
@@ -569,12 +575,72 @@ body::before {
 }
 
 
-/* GLASS — DELETED, 2026-09-14. Failures was its one band, and Failures is a
-   flat machine yellow band now with four objects standing on it. Proved dead
-   before it came out: `.measure/dead.mjs ".band-glass, ..."` found no element
-   carrying the class on any route, at either width, in any state. The file
-   stays in /assets/bands/ as a material with no band, and what its scrim walk
-   learned — the arc field rule took it from 70 to 90 — is in DESIGN.md. */
+/* GLASS — home's Process section, 2026-09-16, by the user. The blue flash,
+   unassigned since Failures became the yellow band on 2026-09-14, is Process's
+   ground now, and that is its one band.
+
+   THE FLASH SITS BEHIND "HOW IT WORKS". The layer is oversized so the solver
+   has slack in both axes; `.measure/bandpos.mjs` solves the position on the
+   painted band.
+
+   THE SCRIM IS ASPHALT, the default: the flash is meant to cool as it sinks.
+   Walked from 60 in 5% steps until every text pair passes AND the arc share of
+   every frame across the section stays under 20.5%, the value glass shipped at
+   on Failures and the ceiling the user set for it. `.measure/scrim.mjs` walks
+   the type and `.measure/arcwalk.mjs` the arc.
+
+   The route's yellow is still the section's only carrier. On this band the
+   muted states take steel-lift, not steel-dark, in register.css. */
+/* The target is the heading's TEXT box, not the h2's: the h2 is a full-width
+   block and its centre is the middle of the column, 360px right of the words
+   at 1280. The band's height moves with its copy, so the position takes each
+   breakpoint.
+
+   280% OF THE BAND'S HEIGHT. The heading is 96px into a band about 1100px
+   tall, and the glass as painted is brightest about 63% of the way down the
+   layer (the file's own centroid says 46.5%; the crop and the scrim move it).
+   At 200% and at 240% the solve asked for a position past 100% at 390 and
+   768, so the layer could not rise far enough to reach the heading. Measured
+   over the whole band with its type and the bar hidden, at 60% so the glass is
+   visible to measure.
+
+   GLASS HAS NO SINGLE CORE, and the position is recorded as measured rather
+   than as landed. It is a field of shards, lighter towards the heading, and
+   its brightest-region centroid barely tracks the layer: changing size and
+   position together moved it 11px. At 280% it sits right of and below the
+   heading's text centre by 56,100px at 390, 119,113 at 768, 91,104 at 1024
+   and 75,98 at 1280. */
+.band-glass {
+  background-image: url('/assets/bands/glass.webp');
+  /* 95%, SET BY THE ARC FIELD RULE, NOT THE TYPE. Walked from 60 in 5% steps
+     at the shipped crop: every text pair passed at 60 (the route's line at
+     1280 binds, 4.66:1). The arc share of the worst frame across the section
+     stayed over the 20.5% ceiling until 90 at 1280 (18.34%) and 95 at 390
+     (14.68%; 35.54% at 90). Glass at 60 is a field of blue shards over the
+     whole band, 88% of a frame; at 95 it is a faint texture on asphalt. The
+     user's rule decides, and it decides 95. */
+  --scrim: 95%;
+  background-size: auto 280%;
+  background-position: 54% 93%;
+}
+
+@media (min-width: 768px) {
+  .band-glass {
+    background-position: 63% 95%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .band-glass {
+    background-position: 66% 91%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .band-glass {
+    background-position: 69% 90%;
+  }
+}
 
 /* RAYS — the marquee strip, and THE ONE THAT IS NOT A SCRIM.
 

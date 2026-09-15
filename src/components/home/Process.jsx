@@ -275,7 +275,9 @@ export default function Process() {
   }, []);
 
   return (
-    <section className="vt process" aria-labelledby="process-h">
+    /* THE GLASS BAND, 2026-09-16: glass is the Process material. See
+       `.band-glass` in lit.css. */
+    <section className="vt process band band-glass" aria-labelledby="process-h">
       <div className="process__inner">
         <h2 className="process__h" id="process-h">
           How it works

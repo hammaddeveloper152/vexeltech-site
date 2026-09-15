@@ -42,6 +42,10 @@ const BANDS = [
      Services closes on the plain dark call. */
   { key: 'burst', cls: 'band-burst', start: 45, floor: 0,
     at: [['/pricing', '.callband']] },
+  /* Glass, home's Process section since 2026-09-16. Walked from 60 by the
+     user's brief; the arc field share is carrier.mjs's, held under 20.5%. */
+  { key: 'glass', cls: 'band-glass', start: 60, floor: 0,
+    at: [['/', '.process']] },
   /* The spotlight, About's call. Walked from 30 by the user's brief. */
   { key: 'spot', cls: 'band-spot', start: 30, floor: 0,
     at: [['/about-us', '.callband']] },
@@ -122,6 +126,11 @@ async function walk(band, scrim) {
       }, sel);
 
       await p.evaluate((s2) => {
+        /* THE STICKY BAR IS NOT THE BAND'S GROUND. Scrolled to its top, a band
+           sits under the bar, and a heading near that edge read the bar's white
+           nav as its brightest ground: 1:1 at every scrim, on Process's glass
+           band, 2026-09-16. Only the band's own pixels are sampled. */
+        document.querySelectorAll('.bar, header').forEach((e) => { e.style.visibility = 'hidden'; });
         document.querySelectorAll(s2 + ' *').forEach((e) => {
           if ([...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())
               || e.querySelector(':scope > svg'))

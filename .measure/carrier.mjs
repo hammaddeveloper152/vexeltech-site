@@ -55,6 +55,9 @@ const FRAMES = [
      attributed element by element in `.measure/rhythm.mjs`, which knows a
      ground from a carrier. It was ['/', '.fail', 'failures, glass band',
      '.fail__item']. */
+  /* Glass on Process since 2026-09-16. The frame-by-frame arc share against
+     the 20.5% ceiling is `.measure/arcwalk.mjs`; this row reads one position. */
+  ['/', '.process', 'process, glass band', '.process'],
   ['/', '.faq', 'faq, cubes band', '.faq__item'],
   ['/', '.counters', 'counters, marble band', '.counters__item'],
   ['/', '.marquee', 'marquee, rays', '.marquee__track'],
@@ -91,7 +94,7 @@ for (const [w, h] of [[1280, 800], [390, 844]]) {
   for (const [route, sel, label, objSel, open] of FRAMES) {
     const p = await b.newPage();
     await p.setViewport({ width: w, height: h });
-    await p.goto('http://localhost:4179' + route, { waitUntil: 'domcontentloaded' });
+    await p.goto((process.env.BASE || 'http://localhost:4179') + route, { waitUntil: 'domcontentloaded' });
     await new Promise((r) => setTimeout(r, 2200));
     const found = await p.evaluate((s) => {
       const e = document.querySelector(s);
