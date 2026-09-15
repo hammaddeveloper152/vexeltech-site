@@ -162,36 +162,11 @@ section:has(> .pg__section-in > .svc) {
   scroll-margin-top: calc(48px + 2 * var(--s-sm) + var(--s-lg));
 }
 
-/* ---- Row one: name, promise, tile ---- */
+/* ---- Row one: name and promise ----
 
-.svc2__top {
-  display: grid;
-  gap: var(--s-lg);
-  align-items: center;
-}
-
-/* 45% of the section at 1024 and up, cover-fit, 12px radius, with the lit
-   surfaces' hairline. 4:3: the files are square, and a square at 45% of a
-   1048px section is 470px of picture beside a two-line promise. Below 1024 the
-   tile goes above the name, full width. */
-.svc2__tile {
-  position: relative;
-  order: -1;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border: 1px solid var(--lit-edge);
-  border-radius: 12px;
-  clip-path: inset(0 round 12px);
-}
-
-.svc2__tile img {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+   THE TILE IS GONE, 2026-09-16, by the user. The sub-service cards took its
+   place under the name and promise, so row one is the two of them alone and
+   the sides no longer alternate. */
 
 /* Moldie at the statement step: 57.6px at 1280, the step the brief's 57px
    names. The name face's permission already covers the discipline headings on
@@ -219,26 +194,74 @@ section:has(> .pg__section-in > .svc) {
   color: var(--c-bone); /* 13.84:1 on asphalt */
 }
 
-@media (min-width: 1024px) {
-  .svc2__top {
-    grid-template-columns: minmax(0, 1fr) 45%;
-    gap: var(--s-2xl);
-  }
+/* ---- Row two: the sub-service cards, 2026-09-16 ----
 
-  .svc2__tile {
-    order: 0;
-  }
+   Six per discipline. One across below 768, two from 768, three from 1024:
+   six always land on whole rows, so no card is stranded. Lit-near with the two
+   lights and the four tinted edges (`.lit-obj`'s construction), the container
+   radius, and the ramp's 16px between them. */
+.svc2__cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 
-  .svc2__d[data-side='left'] .svc2__top {
-    grid-template-columns: 45% minmax(0, 1fr);
-  }
-
-  .svc2__d[data-side='left'] .svc2__tile {
-    order: -1;
+@media (min-width: 768px) {
+  .svc2__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/* ---- Row two: the lit panel in three columns ---- */
+@media (min-width: 1024px) {
+  .svc2__cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.svc2__card {
+  display: grid;
+  align-content: start;
+  gap: var(--s-sm);
+  padding: var(--s-lg);
+  border: 1px solid var(--lit-edge);
+  border-top-color: var(--lit-edge-top);
+  border-right-color: var(--lit-edge-arc);
+  border-bottom-color: var(--lit-edge-arc);
+  border-radius: var(--r-md);
+  background-color: var(--lit-near);
+  background-image: var(--lit-key), var(--lit-rim);
+  background-repeat: no-repeat;
+  box-shadow: var(--lit-inset);
+  color: var(--c-shop-white); /* the icon inherits it: 16.48:1 on lit-near */
+}
+
+/* The 24px station, top left. Colour inherited from the card, by the user's
+   decision: machine yellow would share frames with the primary calls. */
+.svc2__ci {
+  margin-bottom: var(--s-sm);
+}
+
+.svc2__ct {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-label);
+  color: var(--c-shop-white); /* 16.48:1 on lit-near */
+}
+
+.svc2__cl {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-bone); /* 13.67:1 on lit-near */
+}
+
+/* ---- Row three: the lit panel in three columns ---- */
 
 /* Lit-near with both lights and the four tinted edges, the lit surfaces'
    construction. The columns are split by hairlines, which is what earns them

@@ -6,8 +6,11 @@
 
    SERVICES, at 1280 and 390:
      sections   four, 96px apart
-     row one    tile 45% of the section from 1024, sides alternating right,
-                left, right, left; below 1024 the tile above the name
+     row one    name and promise; NO TILE since 2026-09-16
+     cards      six per section under the promise, 3 across from 1024, 2 from
+                768, 1 below; lit-near with the two lights; a 24px icon top
+                left in shop white, aria-hidden; title Satoshi 18px white; one
+                line in bone; order intro, cards, panel
      type       name in Moldie at the statement step, promise Satoshi 22px bone
      panel      three columns side by side from 1024, stacked below; hairlines
      numerals   Moldie in the accent's text value
@@ -50,11 +53,24 @@ if (mode === 'services') {
     const s = await p.evaluate(() => [...document.querySelectorAll('.svc2__d')].map((d) => {
       const R = (el) => { const r = el.getBoundingClientRect(); return { l: r.left, t: r.top + scrollY, w: r.width, h: r.height, b: r.bottom + scrollY, r: r.right }; };
       const cs = (el) => getComputedStyle(el);
-      const tile = d.querySelector('.svc2__tile');
       const cols = [...d.querySelectorAll('.svc2__col')];
       return {
-        id: d.id, side: d.dataset.side, S: R(d), T: R(tile), I: R(d.querySelector('.svc2__intro')), top: R(d.querySelector('.svc2__top')),
-        tileRadius: cs(tile).borderTopLeftRadius, fit: cs(tile.querySelector('img')).objectFit, decoded: tile.querySelector('img').naturalWidth,
+        id: d.id, S: R(d), I: R(d.querySelector('.svc2__intro')), G: R(d.querySelector('.svc2__cards')), P: R(d.querySelector('.svc2__panel')),
+        hasTile: !!d.querySelector('.svc2__tile, img'),
+        cards: [...d.querySelectorAll('.svc2__card')].map((c) => {
+          const cb = c.getBoundingClientRect();
+          const ic = c.querySelector('svg');
+          const ib = ic ? ic.getBoundingClientRect() : null;
+          const t = c.querySelector('.svc2__ct');
+          const l = c.querySelector('.svc2__cl');
+          return {
+            top: Math.round(cb.top),
+            icon: ic && { w: Math.round(ib.width), color: cs(ic).color, hidden: ic.getAttribute('aria-hidden'), dx: Math.round(ib.left - cb.left), dy: Math.round(ib.top - cb.top) },
+            title: t && [t.textContent, cs(t).fontFamily.split(',')[0], cs(t).fontSize, cs(t).color],
+            line: l && [l.textContent, cs(l).color],
+            bg: cs(c).backgroundColor, lights: (cs(c).backgroundImage.match(/radial-gradient/g) || []).length,
+          };
+        }),
         name: [cs(d.querySelector('.svc2__name')).fontFamily.split(',')[0], cs(d.querySelector('.svc2__name')).fontSize],
         promise: [cs(d.querySelector('.svc2__promise')).fontFamily.split(',')[0], cs(d.querySelector('.svc2__promise')).fontSize, cs(d.querySelector('.svc2__promise')).color],
         cols: cols.map(R), borders: cols.map((c) => [cs(c).borderLeftWidth, cs(c).borderTopWidth]),
@@ -69,14 +85,22 @@ if (mode === 'services') {
     for (let i = 0; i < s.length; i++) {
       const d = s[i];
       const wide = w >= 1024;
-      const share = (d.T.w / d.top.w) * 100;
       const bad = [];
-      if (wide && !near(share, 45, 0.6)) bad.push(`tile ${share.toFixed(1)}% of the row`);
-      if (wide && d.side === 'right' && !(d.T.l > d.I.l)) bad.push('tile not right');
-      if (wide && d.side === 'left' && !(d.T.l < d.I.l)) bad.push('tile not left');
-      if (d.side !== (i % 2 === 0 ? 'right' : 'left')) bad.push(`side ${d.side}`);
-      if (!wide && !(d.T.b <= d.I.t + 1)) bad.push('tile not above the name');
-      if (d.tileRadius !== '12px' || d.fit !== 'cover' || !d.decoded) bad.push(`tile ${d.tileRadius} ${d.fit} decoded ${d.decoded}`);
+      const rows = new Set(d.cards.map((c) => c.top)).size;
+      const wantRows = w >= 1024 ? 2 : w >= 768 ? 3 : 6;
+      if (d.hasTile) bad.push('a tile or image is still in the section');
+      if (d.cards.length !== 6) bad.push(`${d.cards.length} cards`);
+      if (rows !== wantRows) bad.push(`${rows} card rows, wanted ${wantRows}`);
+      if (!(d.G.t >= d.I.b - 1 && d.P.t >= d.G.b - 1)) bad.push('order is not intro, cards, panel');
+      d.cards.forEach((c, k) => {
+        const e = [];
+        if (!c.icon || c.icon.w !== 24 || c.icon.color !== 'rgb(255, 255, 255)' || c.icon.hidden !== 'true') e.push(`icon ${JSON.stringify(c.icon)}`);
+        else if (c.icon.dx !== 25 || c.icon.dy !== 25) e.push(`icon not top left (${c.icon.dx},${c.icon.dy})`);
+        if (!c.title || c.title[1] !== 'Satoshi' || c.title[2] !== '18px' || c.title[3] !== 'rgb(255, 255, 255)' || !c.title[0]) e.push(`title ${c.title}`);
+        if (!c.line || c.line[1] !== 'rgb(232, 234, 237)' || !c.line[0] || /—|–/.test(c.line[0])) e.push(`line ${c.line}`);
+        if (c.bg !== 'rgb(30, 31, 34)' || c.lights !== 2) e.push(`surface ${c.bg}, ${c.lights} lights`);
+        if (e.length) bad.push(`card ${k + 1}: ${e.join(', ')}`);
+      });
       if (d.name[0] !== 'Moldie') bad.push(`name ${d.name}`);
       if (d.promise[0] !== 'Satoshi' || d.promise[1] !== '22px' || d.promise[2] !== 'rgb(232, 234, 237)') bad.push(`promise ${d.promise}`);
       if (d.cols.length !== 3) bad.push(`${d.cols.length} columns`);
@@ -90,7 +114,7 @@ if (mode === 'services') {
         const gap = s[i + 1].S.t - d.S.b;
         if (!near(gap, 96)) bad.push(`gap to next ${gap.toFixed(1)}`);
       }
-      check(!bad.length, `${d.id.padEnd(10)} ${d.side.padEnd(5)} name ${d.name[1]}, tile ${share.toFixed(1)}%, ${d.steps} steps, ${d.call} "${d.callText}"${bad.length ? ' — ' + bad.join('; ') : ''}`);
+      check(!bad.length, `${d.id.padEnd(10)} name ${d.name[1]}, ${d.cards.length} cards in ${rows} rows, ${d.steps} steps, ${d.call} "${d.callText}"${bad.length ? ' — ' + bad.join('; ') : ''}`);
     }
 
     if (w === 1280) {

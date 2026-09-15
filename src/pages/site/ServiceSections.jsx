@@ -1,23 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSmoothScroll } from '../../components/home/smoothScroll.js';
 
 /* THE FOUR DISCIPLINES ON /services, AS SECTIONS, 2026-09-15.
 
-   Each discipline is a full section, 96px from the next, and the sides
-   alternate: tile right, left, right, left. Two rows.
+   Each discipline is a full section, 96px from the next. Three rows.
 
-     row one   the name in Moldie and the promise, beside the tile at 45% of
-               the width, cover-fit, 12px radius
-     row two   one lit panel in three columns, split by hairlines: what you
+     row one   the name in Moldie and the promise
+     row two   the sub-service cards, 2026-09-16: six per discipline, three
+               across from 1024, two from 768, one below. Lit-near with the two
+               lights, a Phosphor icon at the 24px station top left, the title
+               in Satoshi 18px white, one line in bone
+     row three one lit panel in three columns, split by hairlines: what you
                get, how it goes, the facts and the call
 
-   It replaces the plate stack (ServicePlates and the split DisciplinePlate).
-   The sticky index down the left margin is the one piece carried over, now
-   following these four sections. Below 1024 the index is hidden, the tile goes
-   above the name, and the three columns stack. */
+   THE TILE IS GONE, 2026-09-16, by the user: the cards took its place, so the
+   sides no longer alternate. The sticky index down the left margin follows the
+   four sections. Below 1024 the index is hidden and the three columns stack.
+
+   THE ICONS ARE SHOP WHITE, inherited from the card, by the user's decision:
+   machine yellow would have shared frames with the primary calls on Branding
+   and Websites. Each icon is decorative (`aria-hidden`); the title says the
+   thing. DESIGN.md records the exception to the icon meaning test. */
 
 export default function ServiceSections({ disciplines }) {
   const [active, setActive] = useState(0);
@@ -91,25 +96,27 @@ export default function ServiceSections({ disciplines }) {
             key={d.id}
             id={d.id}
             className="svc2__d"
-            data-side={i % 2 === 0 ? 'right' : 'left'}
             aria-labelledby={`svc-${d.id}`}
             ref={(el) => {
               sections.current[i] = el;
             }}
           >
-            <div className="svc2__top">
-              <div className="svc2__intro">
-                <h2 className="svc2__name" id={`svc-${d.id}`}>
-                  {d.name}
-                </h2>
-                <p className="svc2__promise">{d.promise}</p>
-              </div>
-              {/* The founder's generated tile. Empty alt: an illustration, not
-                  client work, and the heading beside it names it. */}
-              <div className="svc2__tile">
-                <img src={`/assets/services/${d.id}.webp`} alt="" loading="lazy" decoding="async" />
-              </div>
+            <div className="svc2__intro">
+              <h2 className="svc2__name" id={`svc-${d.id}`}>
+                {d.name}
+              </h2>
+              <p className="svc2__promise">{d.promise}</p>
             </div>
+
+            <ul className="svc2__cards">
+              {d.cards.map(({ Icon, title, line }) => (
+                <li className="svc2__card" key={title}>
+                  <Icon className="i i--md svc2__ci" aria-hidden="true" />
+                  <h3 className="svc2__ct">{title}</h3>
+                  <p className="svc2__cl">{line}</p>
+                </li>
+              ))}
+            </ul>
 
             <div className="svc2__panel">
               <div className="svc2__col svc2__col--get">
