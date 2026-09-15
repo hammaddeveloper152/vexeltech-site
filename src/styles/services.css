@@ -236,6 +236,82 @@ section:has(> .pg__section-in > .svc) {
   background-repeat: no-repeat;
   box-shadow: var(--lit-inset);
   color: var(--c-shop-white); /* the icon inherits it: 16.48:1 on lit-near */
+  /* THE LEAVE IS 400ms, THE FILL IS 250, by the user, 2026-09-16. The card
+     returns slower than it fills: an arrival is an event and a departure is
+     not. Colour and transform only. */
+  transition:
+    background-color var(--d-panel) var(--ease-reveal),
+    color var(--d-panel) var(--ease-reveal),
+    border-color var(--d-panel) var(--ease-reveal),
+    transform var(--d-panel) var(--ease-reveal);
+}
+
+/* ---- THE CARD FILLS, 2026-09-16, by the user ----------------------------
+
+   On hover the card becomes machine yellow, its title, line and icon go
+   asphalt (9.46:1, the button's own pair), and it lifts 4px. One card can be
+   filled at a time, so the fill is the frame's carrier while the pointer is on
+   it and the primary call in that frame is exempt for its duration: recorded
+   in BUILD-LAW under the transient accent clause, and in DESIGN.md.
+
+   `:active` is the press, which stays the site's own scale. */
+@media (hover: hover) and (pointer: fine) {
+  .svc2__card:hover {
+    background-color: var(--c-accent-ground);
+    background-image: none;
+    border-color: var(--c-accent-ground);
+    box-shadow: none;
+    color: var(--c-asphalt); /* the icon inherits it */
+    transform: translateY(-4px);
+    transition-duration: var(--d-drop);
+  }
+
+  .svc2__card:hover .svc2__ct,
+  .svc2__card:hover .svc2__cl {
+    color: var(--c-asphalt); /* 9.46:1 on machine yellow */
+  }
+}
+
+/* Touch and keyboard: the same fill, held while the finger is down. These
+   cards are not links (nothing on /services to navigate to from them), so a
+   tap fills and lets go; the home cards carry the 300ms tap before they
+   navigate. */
+.svc2__card:active,
+.svc2__card:focus-visible,
+.svc2__card[data-tap='true'] {
+  background-color: var(--c-accent-ground);
+  background-image: none;
+  border-color: var(--c-accent-ground);
+  color: var(--c-asphalt);
+  transition-duration: var(--d-drop);
+}
+
+.svc2__card:active .svc2__ct,
+.svc2__card:active .svc2__cl,
+.svc2__card:focus-visible .svc2__ct,
+.svc2__card:focus-visible .svc2__cl,
+.svc2__card[data-tap='true'] .svc2__ct,
+.svc2__card[data-tap='true'] .svc2__cl {
+  color: var(--c-asphalt);
+}
+
+.svc2__card:active {
+  transform: scale(0.97); /* BUILD-LAW's press, 160ms */
+  transition-duration: var(--d-press);
+}
+
+/* Reduced motion: the colour swaps and nothing moves. */
+@media (prefers-reduced-motion: reduce) {
+  .svc2__card,
+  .svc2__card:hover,
+  .svc2__card:active,
+  .svc2__card:focus-visible,
+  .svc2__card[data-tap='true'],
+  .svc2__inline:active,
+  .svc__index-n:active {
+    transition: none;
+    transform: none;
+  }
 }
 
 /* The 24px station, top left. Colour inherited from the card, by the user's

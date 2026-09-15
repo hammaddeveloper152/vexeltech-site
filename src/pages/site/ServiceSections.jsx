@@ -110,7 +110,23 @@ export default function ServiceSections({ disciplines }) {
 
             <ul className="svc2__cards">
               {d.cards.map(({ Icon, title, line }) => (
-                <li className="svc2__card" key={title}>
+                <li
+                  className="svc2__card"
+                  key={title}
+                  /* THE TAP HOLDS THE FILL FOR 300ms, 2026-09-16, the same
+                     beat the home cards hold before they navigate. These cards
+                     are not links, so the fill is all a tap does: `:active`
+                     alone lasted as long as the finger and a quick tap painted
+                     nothing. The attribute goes straight on the node, not
+                     through state, so it paints in the frame the finger
+                     lands. */
+                  onPointerDown={(e) => {
+                    if (e.pointerType === 'mouse') return;
+                    const el = e.currentTarget;
+                    el.dataset.tap = 'true';
+                    setTimeout(() => delete el.dataset.tap, 300);
+                  }}
+                >
                   <Icon className="i i--md svc2__ci" aria-hidden="true" />
                   <h3 className="svc2__ct">{title}</h3>
                   <p className="svc2__cl">{line}</p>

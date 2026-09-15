@@ -244,6 +244,131 @@
   );
 }
 
+/* ---- THE CARD FILLS, 2026-09-16, by the user ----------------------------
+
+   Hover, focus or a tap turns the whole card machine yellow: the picture and
+   its shade go, the spotlight goes with them, the name and the items go
+   asphalt (9.46:1), and the card lifts 4px. 250ms in on the reveal curve,
+   400ms back.
+
+   THE PICTURE HAS TO GO FOR THE FILL TO BE A FILL. The tile is the card here,
+   so a yellow plane behind it would not be seen; it fades with the shade over
+   the same 250ms. What the reader gets is the card turning into the accent
+   with its own words on it.
+
+   One card fills at a time, so a filled card is the frame's carrier while the
+   pointer is on it and that frame's primary call is exempt for the duration:
+   BUILD-LAW's transient accent clause, amended by the user for hover. */
+/* The leave: 400ms on the same curve, for the plane, the picture and the
+   words together. Declared before the filled state so the fill's own 250ms
+   wins on the way in. */
+.svc__plate[data-variant='card'] .svc__art,
+.svc__plate[data-variant='card'] .svc__body::before,
+.svc__plate[data-variant='card'] .disc__name,
+.svc__plate[data-variant='card'] .disc__item {
+  transition:
+    opacity var(--d-panel) var(--ease-reveal),
+    color var(--d-panel) var(--ease-reveal);
+}
+
+/* NO `:where()` ON THESE, and that is the whole reason the first build filled
+   the plane and left the words white: `:where()` contributes nothing to
+   specificity, so `.svc__plate[data-variant='card'] .disc__name` (three
+   selectors) outranked a fill written as `:where(:hover) .disc__name` and the
+   name stayed shop white on machine yellow, 1:1. The state is spelled out. */
+/* THE HOVER HALF IS GATED TO A REAL POINTER, and the tap half is not. Ungated,
+   a tap on a phone fired `:hover` and left the card filled and lifted with no
+   pointer to move away — four cards stuck yellow at 390 in the viewer audit,
+   which is the failure BUILD-LAW's gating rule names. Focus and the tap hold
+   their own state and are safe outside the gate. */
+@media (hover: hover) and (pointer: fine) {
+  .svc__plate[data-variant='card']:hover {
+    background-color: var(--c-accent-ground);
+    border-color: var(--c-accent-ground);
+    box-shadow: none;
+    /* -8, because the card already rests at -4 from its arrival. The lift the
+       reader sees is the brief's 4px. */
+    transform: rotate(0deg) translateY(-8px);
+    transition:
+      background-color var(--d-drop) var(--ease-reveal),
+      border-color var(--d-drop) var(--ease-reveal),
+      transform var(--d-drop) var(--ease-reveal);
+  }
+
+  .svc__plate[data-variant='card']:hover .svc__art,
+  .svc__plate[data-variant='card']:hover .svc__body::before,
+  .svc__plate[data-variant='card']:hover::before {
+    opacity: 0;
+    transition: opacity var(--d-drop) var(--ease-reveal);
+  }
+
+  .svc__plate[data-variant='card']:hover .disc__name,
+  .svc__plate[data-variant='card']:hover .disc__item {
+    color: var(--c-asphalt); /* 9.46:1 on machine yellow */
+    transition: color var(--d-drop) var(--ease-reveal);
+  }
+}
+
+.svc__plate[data-variant='card']:focus-visible,
+.svc__plate[data-variant='card'][data-tap='true'] {
+  background-color: var(--c-accent-ground);
+  border-color: var(--c-accent-ground);
+  box-shadow: none;
+  transform: rotate(0deg) translateY(-8px);
+  transition:
+    background-color var(--d-drop) var(--ease-reveal),
+    border-color var(--d-drop) var(--ease-reveal),
+    transform var(--d-drop) var(--ease-reveal);
+}
+
+.svc__plate[data-variant='card']:focus-visible .svc__art,
+.svc__plate[data-variant='card']:focus-visible .svc__body::before,
+.svc__plate[data-variant='card']:focus-visible::before,
+.svc__plate[data-variant='card'][data-tap='true'] .svc__art,
+.svc__plate[data-variant='card'][data-tap='true'] .svc__body::before,
+.svc__plate[data-variant='card'][data-tap='true']::before {
+  opacity: 0;
+  transition: opacity var(--d-drop) var(--ease-reveal);
+}
+
+.svc__plate[data-variant='card']:focus-visible .disc__name,
+.svc__plate[data-variant='card']:focus-visible .disc__item,
+.svc__plate[data-variant='card'][data-tap='true'] .disc__name,
+.svc__plate[data-variant='card'][data-tap='true'] .disc__item {
+  color: var(--c-asphalt); /* 9.46:1 on machine yellow */
+  transition: color var(--d-drop) var(--ease-reveal);
+}
+
+/* The press, on the filled card. Last, so it wins the tie with the fill. */
+.svc__plate[data-variant='card']:active {
+  transform: rotate(0deg) translateY(-8px) scale(0.985);
+  transition-duration: var(--d-press);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The colour swaps; nothing lifts and nothing fades. */
+  .svc__plate[data-variant='card']:hover,
+  .svc__plate[data-variant='card']:focus-visible,
+  .svc__plate[data-variant='card'][data-tap='true'],
+  .svc__plate[data-variant='card']:active {
+    transform: none;
+    transition: none;
+  }
+
+  .svc__plate[data-variant='card']:hover .svc__art,
+  .svc__plate[data-variant='card']:hover .svc__body::before,
+  .svc__plate[data-variant='card']:hover::before,
+  .svc__plate[data-variant='card']:hover .disc__name,
+  .svc__plate[data-variant='card']:hover .disc__item,
+  .svc__plate[data-variant='card'][data-tap='true'] .svc__art,
+  .svc__plate[data-variant='card'][data-tap='true'] .svc__body::before,
+  .svc__plate[data-variant='card'][data-tap='true']::before,
+  .svc__plate[data-variant='card'][data-tap='true'] .disc__name,
+  .svc__plate[data-variant='card'][data-tap='true'] .disc__item {
+    transition: none;
+  }
+}
+
 /* Moldie, the name face, at the home card step. White. */
 .svc__plate[data-variant='card'] .disc__name {
   margin: 0 0 var(--s-sm);

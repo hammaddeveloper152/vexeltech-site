@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import usePointerLight from '../home/usePointerLight.js';
 
 /* THE DISCIPLINE PLATE. One component, two mounts, and since 2026-09-15 two
@@ -113,6 +113,64 @@ export default function DisciplinePlate({
   const lit = usePointerLight();
   const [hot, setHot] = useState(false);
 
+  /* THE TAP FILLS BEFORE IT LEAVES, 2026-09-16, by the user. A pointer fills
+     the card on hover and the reader sees the accent arrive; a finger has no
+     hover, so the tap holds the fill for 300ms and the page then changes. The
+     card is a link only on the home page, so this runs only where there is
+     somewhere to go.
+
+     `data-tap` is the same state the hover rule paints, so the fill is one
+     declaration rather than a touch copy of it. The timer is cleared on
+     unmount: a card tapped as the reader leaves must not navigate after. */
+  const tapped = useRef(false);
+  const tapAt = useRef(0);
+  const tapEl = useRef(null);
+  const timer = useRef(null);
+  const release = useRef(null);
+  const navigate = useNavigate();
+  useEffect(() => () => {
+    clearTimeout(timer.current);
+    clearTimeout(release.current);
+  }, []);
+
+  /* THE ATTRIBUTE IS SET ON THE ELEMENT, NOT THROUGH STATE, and that is the
+     difference between a fill and no fill. Through `useState` the flag was set
+     on pointerdown and the click ran before React had re-rendered, so the card
+     navigated with nothing painted: measured at 0ms of fill. Writing
+     `data-tap` straight onto the node paints it in the same frame the finger
+     lands. */
+  const onPointerDown = (e) => {
+    if (e.pointerType === 'mouse') return;
+    tapped.current = true;
+    tapAt.current = performance.now();
+    tapEl.current = e.currentTarget;
+    e.currentTarget.dataset.tap = 'true';
+    /* THE FILL CLEARS EVEN IF NO CLICK ARRIVES. It used to be cleared by the
+       click handler alone, so a tap that produced no click left the card
+       filled and lifted with nothing to undo it — four cards stuck yellow at
+       390 in the viewer audit. The hold is the same 300ms either way. */
+    clearTimeout(release.current);
+    release.current = setTimeout(() => {
+      if (tapped.current) clearTap();
+    }, 320);
+  };
+
+  const clearTap = () => {
+    tapped.current = false;
+    if (tapEl.current) delete tapEl.current.dataset.tap;
+  };
+
+  const onClick = (e) => {
+    if (!href || !tapped.current) return;
+    e.preventDefault();
+    const left = Math.max(0, 300 - (performance.now() - tapAt.current));
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      clearTap();
+      navigate(href);
+    }, left);
+  };
+
   /* A link on the home page, where the card summarises a discipline and
      pressing it goes to that discipline; an article on /services, where the
      plate IS the section and a link to its own anchor would do nothing. */
@@ -135,6 +193,9 @@ export default function DisciplinePlate({
       {...nav}
       {...lit}
       onPointerEnter={(e) => e.pointerType === 'mouse' && setHot(true)}
+      onPointerDown={onPointerDown}
+      onPointerCancel={clearTap}
+      onClick={onClick}
       onPointerLeave={(e) => {
         lit.onPointerLeave(e);
         setHot(false);
