@@ -387,37 +387,6 @@
   }
 }
 
-/* THE HANDSET BESIDE THE CALL, About only, 2026-09-15. Above the heading on a
-   phone at 120px; from 768 a third column on the band's left, 120px to 160px,
-   the heading and note in the middle, the call on the right. Floats on
-   `.float`, still under reduced motion. */
-.callband__handset {
-  display: block;
-  width: 120px;
-  height: auto;
-}
-
-@media (min-width: 768px) {
-  .callband[data-handset='true'] .callband__in {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-  }
-
-  .callband[data-handset='true'] .callband__handset {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    width: clamp(120px, 12.5vw, 160px);
-  }
-
-  .callband[data-handset='true'] .callband__h,
-  .callband[data-handset='true'] .callband__note {
-    grid-column: 2;
-  }
-
-  .callband[data-handset='true'] .callband__cta {
-    grid-column: 3;
-  }
-}
-
 /* ---- The one-screen pages ---------------------------------------------
 
    About us, Resources, Portfolio and Case studies. One screen, a heading, a

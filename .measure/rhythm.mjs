@@ -55,9 +55,6 @@ const EXEMPT = [
   ['.hero__spot', 'the hero film, recorded exception', 'within'],
   ['.svc__art-img', 'Services tile, generated artwork (BUILD-LAW 2026-09-15)', 'within'],
   ['.svc2__tile', 'Services tile on /services, generated artwork (BUILD-LAW 2026-09-15)', 'within'],
-  ['.ab-card__img', 'About discipline card, generated artwork (BUILD-LAW 2026-09-15)', 'within'],
-  ['.ab-origin__frame', 'Plate 00, identity artwork in its frame', 'within'],
-  ['.ab-refuse', 'ground: the About refuse band', 'self'],
   /* The whole ticker, not the strike: mid-draw and at its anti-aliased edges
      the strike's pixels resolve to the phrase or the view as their painter. */
   ['.ticker', 'the strike ticker, exempt as a ticker (DESIGN 2026-09-15)', 'within'],
