@@ -34,7 +34,9 @@ const near = (a, b, t = 1) => Math.abs(a - b) <= t;
 
 for (const [w, h] of [[1280, 900], [768, 1024], [390, 844]]) {
   const b = await puppeteer.launch({ headless: 'new', args });
-  for (const route of ['/', '/services']) {
+  /* HOME ONLY since 2026-09-15: /services was rebuilt as four sections and has
+     no plates left to measure here; `.measure/svcpage.mjs` checks it. */
+  for (const route of ['/']) {
     const p = await b.newPage();
     await p.setViewport({ width: w, height: h });
     await p.goto(base + route, { waitUntil: 'networkidle0' });
