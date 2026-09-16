@@ -35,6 +35,19 @@ async function load(route, w, h, slow) {
     await cdp.send('Network.enable');
     await cdp.send('Network.emulateNetworkConditions', SLOW_4G);
     await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+    /* THE CONNECTION HAS TO BE EMULATED TOO, and leaving it out measured a
+       page no phone loads. CDP throttles the pipe but does not touch
+       `navigator.connection`, so `videoAllowed()` saw a fast link and the hero
+       fetched its 4.7 MB film over a 400 kbit/s line: LCP 35,080ms, 2,758 KB.
+       With the connection reporting 3g — what a phone on that link reports —
+       the gate fires, the hero renders its surface, and the same page is
+       387 KB with a 7,808ms LCP. The harness was the finding, not the page. */
+    await p.evaluateOnNewDocument(() => {
+      Object.defineProperty(navigator, 'connection', {
+        configurable: true,
+        get: () => ({ effectiveType: '3g', saveData: false, addEventListener() {}, removeEventListener() {} }),
+      });
+    });
   }
   await p.evaluateOnNewDocument(() => {
     window.__lcp = { t: 0, el: '' };
