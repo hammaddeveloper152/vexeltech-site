@@ -46,7 +46,8 @@
 }
 
 /* The founder's cost-1 to cost-4, 2026-09-22: rendered on pure black and
-   exported at 192px square (2x the slot). Screen drops the black into the
+   exported at 192px square (2x the slot), molded by .measure/costprep.mjs
+   (a toe to black and an edge feather). Screen drops the black into the
    drift under the row, so only the drawing stands on the ground. */
 .fail__img .slot__img {
   mix-blend-mode: screen;

@@ -15,7 +15,9 @@ import './Failures.css';
 
    Four rows on the ground, no band: each a 96px 1:1 image slot on the left
    (`/assets/cost-1.webp` to `cost-4.webp`, supplied by the founder) and the
-   statement and consequence on the right. The Phosphor icons came off. A slot
+   statement and consequence on the right. The Phosphor icons came off.
+   cost-1 and cost-2 swapped rows by the founder, 2026-09-22: the pin is on
+   "They cannot find you", the phone on "Not enough are calling". A slot
    is empty and takes no space until its file exists, so a row with no image
    yet is the text alone. */
 const FAILURES = [
@@ -23,13 +25,13 @@ const FAILURES = [
     id: 'find',
     statement: 'They cannot find you',
     consequence: 'No online presence, so the search that should have found you finds nobody.',
-    image: '/assets/cost-1.webp',
+    image: '/assets/cost-2.webp',
   },
   {
     id: 'call',
     statement: 'Not enough are calling',
     consequence: 'The marketing budget goes out every month and the leads do not come back.',
-    image: '/assets/cost-2.webp',
+    image: '/assets/cost-1.webp',
   },
   {
     id: 'miss',
