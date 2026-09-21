@@ -68,6 +68,17 @@
          DESIGN.md: no third-party request on page load. -->
   </head>
   <body>
+    <!-- NETLIFY FORMS DETECTION, 2026-09-22. Netlify finds forms by parsing
+         the deployed HTML, and the Plan Builder on /pricing is rendered by
+         script, so this static twin declares the form and its fields. The
+         builder POSTs to "/" with form-name "plan". Hidden; never shown. -->
+    <form name="plan" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <textarea name="plan"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

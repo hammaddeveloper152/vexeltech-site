@@ -82,12 +82,10 @@ const FRAMES = [
   ['/', '.work__list', 'work grid', '.work__plate'],
   ['/about-us', '.plates', 'about plates, at rest', '.plate'],
   ['/about-us', '.plates', 'about plates, one open', '.plate', true],
-  /* THE BOARD AND THE QUOTE, 2026-09-22: /pricing on an arc ground. The
-     ladder's '.cards' row is gone with the ladder. The founder's pricing
-     exception names the yellow here: the tab underline, the "Most picked"
-     tag, the bundle card, the total strip and "Send this to us". */
-  ['/pricing', '.pb__tabs', 'pricing board, branding', '.pb__card'],
-  ['/pricing', '.pb__quote', 'pricing quote, empty', '.pb__receipt'],
+  /* THE PLAN BUILDER, 2026-09-22: /pricing on the arc ground. Its yellow is
+     the Plan Builder exception (SKILL.md): the progress line, the selected
+     card's border, the total and the one primary button. */
+  ['/pricing', '.plan', 'plan builder, step 1', '.plan__main'],
   ['/services', '.svc__plate', 'services plates', '.svc__plate'],
   ['/services', '.svc__index', 'services index', '.svc__index-n'],
 ];

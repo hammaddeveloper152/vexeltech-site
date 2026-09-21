@@ -1,0 +1,650 @@
+/* ==========================================================================
+   THE PLAN BUILDER, /pricing (2026-09-22). See PlanBuilder.jsx.
+
+   Arc blue #0D47BD edge to edge, no rays, no pin. At 1280 a two-column grid,
+   60/40, 48px gutter, left aligned inside the page measure; single column at
+   390 with the ticket as a sticky bottom bar.
+
+   Values on arc: shop white 7.91:1, bone 6.57:1 (the helper and the labels).
+   On the answer card's veil (6% white over arc) the same values are measured
+   by `.measure/planpairs.mjs`. On cream: asphalt 15.75:1, steel 7.20:1. In
+   the strip: yellow 9.46:1.
+
+   THE PLAN BUILDER EXCEPTION (SKILL.md): the yellow here is the progress
+   line, the selected card's border, the total and the one primary button.
+   ========================================================================== */
+
+.plan {
+  --arc: #0d47bd;
+  position: relative;
+  padding: var(--s-3xl) var(--inset);
+  background: var(--arc);
+  color: var(--c-shop-white);
+}
+
+.plan :focus-visible {
+  outline: var(--focus-ring) solid var(--c-accent-draw-dark); /* 4.21:1 on arc, a ring */
+  outline-offset: 2px;
+}
+
+.plan__in {
+  display: grid;
+  gap: var(--s-2xl);
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .plan__in {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    column-gap: 48px;
+    align-items: start;
+    min-height: 720px;
+  }
+}
+
+.plan__main {
+  position: relative;
+  display: grid;
+  align-content: start;
+  min-width: 0;
+}
+
+/* ---- The progress line ------------------------------------------------- */
+
+.plan__progress {
+  position: relative;
+  height: 12px;
+  margin: 0 6px var(--s-2xl);
+}
+
+.plan__track,
+.plan__fill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+.plan__track {
+  background: var(--c-bone);
+}
+
+.plan__fill {
+  height: 3px;
+  margin-top: -1px;
+  background: var(--c-accent-draw-dark);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+.plan__node {
+  position: absolute;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border-radius: 50%;
+  border: 1px solid var(--c-bone);
+  background: var(--arc);
+}
+
+.plan__node[data-on='true'] {
+  border-color: var(--c-accent-draw-dark);
+  background: var(--c-accent-draw-dark);
+}
+
+/* ---- The question ------------------------------------------------------- */
+
+.plan__q {
+  max-width: 18ch;
+  margin: 0 0 var(--s-md);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-h);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white); /* 7.91:1 */
+  text-wrap: balance;
+}
+
+.plan__q:focus {
+  outline: none;
+}
+
+/* Bone, not steel-lift (3.04:1 on arc): the user's choice of the nearest
+   passing value. */
+.plan__help,
+.plan__why {
+  margin: 0 0 var(--s-xl);
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone); /* 6.57:1 */
+}
+
+.plan__why {
+  max-width: 48ch;
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  color: var(--c-shop-white);
+}
+
+/* ---- Chips (step 1, the tiers) and cards (steps 2, 3) --------------------- */
+
+.plan__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+}
+
+.plan__chip,
+.plan__card {
+  position: relative;
+  border: 1px solid rgb(255 255 255 / 45%);
+  background: rgb(255 255 255 / 6%);
+  color: var(--c-shop-white);
+  cursor: pointer;
+  transition:
+    border-color var(--d-drop) var(--ease-reveal),
+    transform var(--d-drop) var(--ease-reveal);
+}
+
+.plan__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-sm);
+  min-height: 48px;
+  padding: var(--s-sm) var(--s-lg);
+  border-radius: 999px;
+  font-family: var(--font-brand);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-brand);
+}
+
+.plan__chip[aria-pressed='true'] {
+  padding-right: 44px;
+}
+
+.plan__ci {
+  width: var(--icon-md);
+  height: var(--icon-md);
+  flex: none;
+}
+
+.plan__cards {
+  display: grid;
+  gap: var(--s-md);
+}
+
+@media (min-width: 768px) {
+  .plan__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.plan__card {
+  display: grid;
+  align-content: start;
+  gap: var(--s-sm);
+  width: 100%;
+  min-height: 48px;
+  padding: var(--s-lg);
+  border-radius: 12px;
+  text-align: left;
+}
+
+.plan__card-i {
+  width: var(--icon-md);
+  height: var(--icon-md);
+}
+
+.plan__card-t {
+  font-family: var(--font-name);
+  font-size: var(--t-name-m);
+  line-height: var(--t-loud-line);
+  text-transform: uppercase;
+  color: var(--c-shop-white);
+}
+
+.plan__card-l {
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-bone);
+}
+
+/* Hover: lift 4px, the border to yellow. Gated to a real pointer. */
+@media (hover: hover) and (pointer: fine) {
+  .plan__chip:hover,
+  .plan__card:hover {
+    transform: translateY(-4px);
+    border-color: var(--c-accent-draw-dark);
+  }
+}
+
+/* Selected: the yellow border and the Check top right. */
+.plan__chip[aria-pressed='true'],
+.plan__card[aria-pressed='true'] {
+  border: 2px solid var(--c-accent-draw-dark);
+}
+
+.plan__check {
+  position: absolute;
+  top: var(--s-sm);
+  right: var(--s-sm);
+  width: 20px;
+  height: 20px;
+  color: var(--c-shop-white);
+}
+
+.plan__chip .plan__check {
+  top: 50%;
+  right: var(--s-md);
+  margin-top: -10px;
+}
+
+.plan__svc {
+  display: grid;
+  gap: var(--s-sm);
+}
+
+.plan__tiers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+}
+
+/* ---- Step 4: the fields, the site's form style on arc -------------------- */
+
+.plan__fields {
+  display: grid;
+  gap: var(--s-lg);
+  max-width: 34rem;
+}
+
+.plan__field {
+  display: grid;
+  gap: var(--s-sm);
+  margin: 0;
+}
+
+.plan__label {
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-bone); /* 6.57:1 on arc */
+}
+
+.plan__input {
+  min-height: 48px;
+  padding: var(--s-md);
+  border: 1px solid var(--c-shop-white);
+  border-radius: var(--r-sm);
+  background: var(--c-shop-white);
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-asphalt); /* 17.77:1 on white */
+}
+
+/* ---- Navigation ------------------------------------------------------------ */
+
+.plan__nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-lg);
+  margin-top: var(--s-xl);
+}
+
+/* NEXT: the secondary on arc, a WHITE outline and label (7.91:1; asphalt was
+   2.24:1, the user's choice). Disabled: the same outline at full opacity with
+   steel-dark text, never a faded yellow (disabled controls are exempt from
+   the contrast floor). */
+.plan__next {
+  min-height: 48px;
+  padding: var(--s-md) var(--s-xl);
+  border: 1px solid var(--c-shop-white);
+  border-radius: var(--r-none);
+  background: transparent;
+  font-family: var(--font-brand);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-brand);
+  color: var(--c-shop-white);
+  cursor: pointer;
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.plan__next:disabled {
+  opacity: 1;
+  color: var(--c-steel-dark);
+  cursor: default;
+}
+
+.plan__back,
+.plan__again {
+  min-height: 48px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone); /* 6.57:1 */
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+/* The one primary: yellow, asphalt ink, 9.46:1. */
+.plan__send {
+  min-height: 48px;
+  padding: var(--s-md) var(--s-xl);
+  border: 0;
+  border-radius: var(--r-none);
+  background: var(--c-accent-ground);
+  font-family: var(--font-brand);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-brand);
+  color: var(--c-asphalt);
+  cursor: pointer;
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.plan__send:disabled {
+  opacity: 1;
+  cursor: progress;
+}
+
+.plan__next:not(:disabled):active,
+.plan__back:active,
+.plan__again:active,
+.plan__send:active,
+.plan__chip:active,
+.plan__card:active {
+  transform: scale(0.97);
+}
+
+.plan__ok,
+.plan__err {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-shop-white);
+}
+
+/* ---- The object: 480px bottom-left, screen blend, floating ---------------- */
+
+.plan__object {
+  margin-top: var(--s-2xl);
+  animation: plan-fade 0.3s var(--ease-reveal) both;
+}
+
+.plan__object:not(:has(.slot)) {
+  display: none;
+}
+
+@keyframes plan-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.plan__obj {
+  width: 240px;
+  mix-blend-mode: screen;
+}
+
+@media (min-width: 1024px) {
+  .plan__obj {
+    width: 480px;
+  }
+}
+
+/* ---- The ticket: cream, asphalt, 12px, hairline, the warm key only -------- */
+
+.plan__side {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .plan__side {
+    display: block;
+    position: sticky;
+    top: calc(48px + 2 * var(--s-sm) + var(--s-lg));
+  }
+}
+
+.plan__ticket {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid rgb(23 24 26 / 10%);
+  border-radius: 12px;
+  background-color: var(--c-cream);
+  background-image: var(--lit-key);
+  background-repeat: no-repeat;
+  color: var(--c-asphalt); /* 15.75:1 on cream */
+}
+
+.plan__ticket-k {
+  margin: 0;
+  padding: var(--s-xl) var(--s-xl) 0;
+  font-family: var(--font-offer);
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  color: var(--c-steel); /* 7.20:1 */
+}
+
+.plan__ticket-trade {
+  margin: var(--s-xs) 0 0;
+  padding: 0 var(--s-xl);
+  font-family: var(--font-name);
+  font-size: var(--t-name-m);
+  line-height: var(--t-loud-line);
+  text-transform: uppercase;
+}
+
+/* The stage line: steel, not steel-dark (3.08:1 on cream), the user's choice. */
+.plan__ticket-stage {
+  margin: var(--s-sm) 0 0;
+  padding: 0 var(--s-xl);
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel); /* 7.20:1 */
+}
+
+.plan__ticket-lines {
+  display: grid;
+  gap: var(--s-md);
+  margin: var(--s-lg) 0 0;
+  padding: 0 var(--s-xl) var(--s-xl);
+  list-style: none;
+}
+
+.plan__tl {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-md);
+}
+
+.plan__tl-t {
+  display: grid;
+  gap: 2px;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+}
+
+.plan__tl-sub {
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-steel); /* 7.20:1 */
+}
+
+.plan__tl-save {
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+.plan__tl-p {
+  font-family: var(--font-name);
+  font-size: var(--t-name-m);
+  line-height: var(--t-loud-line);
+}
+
+/* The total strip: asphalt, the total in Moldie 72px yellow, 9.46:1. */
+.plan__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-md);
+  margin: 0;
+  padding: var(--s-lg) var(--s-xl);
+  background: var(--c-asphalt);
+}
+
+.plan__total-k {
+  font-family: var(--font-offer);
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-bone); /* 14.74:1 on asphalt */
+}
+
+.plan__total-n {
+  font-family: var(--font-name);
+  font-size: 72px;
+  line-height: var(--t-loud-line);
+  font-variant-numeric: tabular-nums;
+  color: var(--c-accent-text-dark); /* 9.46:1 */
+}
+
+/* ---- 390: the sticky bottom bar and the sheet ------------------------------ */
+
+.plan__bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  margin: var(--s-xl) calc(-1 * var(--inset)) calc(-1 * var(--s-3xl));
+}
+
+@media (min-width: 1024px) {
+  .plan__bar {
+    display: none;
+  }
+}
+
+.plan__bar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 64px;
+  padding: 0 var(--inset);
+  border: 0;
+  border-top: 1px solid rgb(23 24 26 / 10%);
+  background: var(--c-cream);
+  color: var(--c-asphalt);
+  cursor: pointer;
+}
+
+.plan__bar-k {
+  font-family: var(--font-brand);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-brand);
+}
+
+.plan__bar-n {
+  font-family: var(--font-name);
+  font-size: var(--t-name-m);
+  line-height: var(--t-loud-line);
+}
+
+.plan__sheet {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 60;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: var(--s-md) var(--inset) var(--s-xl);
+  border-radius: 12px 12px 0 0;
+  background: var(--c-cream);
+  color: var(--c-asphalt);
+  animation: plan-sheet var(--d-panel) var(--ease-drawer) both;
+}
+
+@keyframes plan-sheet {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+.plan__sheet .plan__ticket {
+  border: 0;
+}
+
+.plan__sheet-close {
+  display: block;
+  min-height: 48px;
+  margin-left: auto;
+  padding: 0 var(--s-md);
+  border: 1px solid var(--c-asphalt);
+  background: transparent;
+  font-family: var(--font-brand);
+  font-size: var(--t-body-size);
+  font-weight: var(--t-weight-brand);
+  color: var(--c-asphalt);
+  cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+  .plan__sheet {
+    display: none;
+  }
+}
+
+/* ---- The board meets the burst call: no strip of the base ----------------- */
+
+.plan + .callband.callband {
+  margin-top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plan__chip,
+  .plan__card,
+  .plan__chip:hover,
+  .plan__card:hover,
+  .plan__next:active,
+  .plan__back:active,
+  .plan__again:active,
+  .plan__send:active {
+    transition: opacity 0.15s linear;
+    transform: none;
+  }
+
+  .plan__sheet {
+    animation: plan-fade 0.15s linear both;
+  }
+}

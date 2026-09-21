@@ -32,11 +32,14 @@ drift runs base to arc-black; asphalt stays as ink on yellow and cream. Home:
 cost-1 to cost-4.webp beside What it costs you, route-1 to route-5.webp on
 the route, promise.webp on the band. What we do stays the storyboard's four
 icon cards (the word tiles are on the "what comes off the site" list).
-Pricing: pricing-banner.webp, then THE BOARD and BUILD YOUR QUOTE on one
-arc ground (#0D47BD, the founder's exception to "arc fails as a ground"),
-then the burst call; the ladder and the four questions are gone. Its yellow
-is the tab underline, the "Most picked" tag, the bundle card, the quote's
-total strip and "Send this to us": the recorded pricing exception. About: about-banner.webp
+Pricing: the head ("What do you need?"), pricing-banner.webp, then THE PLAN
+BUILDER on the arc ground (#0D47BD, no pin), then the burst call. THE PLAN
+BUILDER EXCEPTION: its yellow is the progress line, the selected card's
+border, the total and the one primary button ("Send this plan to us");
+nothing else on /pricing is yellow except the burst call's own button. On
+arc, Next is a white outline, the helper bone; on the cream ticket the stage
+line is steel. Its glyphs are used nowhere else on the site; its Check may
+repeat inside it. It posts the Netlify form "plan" declared in index.html. About: about-banner.webp
 after the hero, CaretDown on the standards, promise-about.webp, and the
 spotlight call again. Every image slot (`Slot`) renders nothing until its
 file exists.
