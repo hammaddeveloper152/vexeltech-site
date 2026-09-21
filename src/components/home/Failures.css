@@ -45,6 +45,13 @@
   aspect-ratio: 1 / 1;
 }
 
+/* The founder's cost-1 to cost-4, 2026-09-22: rendered on pure black and
+   exported at 192px square (2x the slot). Screen drops the black into the
+   drift under the row, so only the drawing stands on the ground. */
+.fail__img .slot__img {
+  mix-blend-mode: screen;
+}
+
 .fail__text {
   display: grid;
   row-gap: var(--s-xs);
