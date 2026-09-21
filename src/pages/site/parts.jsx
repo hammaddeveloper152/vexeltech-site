@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Character from '../../components/site/Character.jsx';
 import './pages.css';
 
 /* The three shapes every non-home page is built from.
@@ -63,19 +62,11 @@ export function Section({ title, note, children, labelledBy }) {
    'burst' on Pricing, 'spot' (the spotlight) on About, and no prop on Services,
    which closes on the plain dark call. A material appears on one band only, so
    this is a prop set per mount, never a default. */
-/* `cast`, 2026-09-21: a character pose standing at the right of the call
-   (P2 on /services, by the storyboard). Renders nothing until the file
-   exists. */
-export function CallBand({ heading, note, material, cast }) {
+export function CallBand({ heading, note, material }) {
   const band = material ? ` band band-${material}` : '';
   return (
     <section className={`vt callband${band}`} aria-labelledby="callband-h">
       <div className="callband__in">
-        {cast ? (
-          <div className="callband__cast">
-            <Character pose={cast} className="callband__char" />
-          </div>
-        ) : null}
         <h2 className="callband__h" id="callband-h">
           {heading}
         </h2>

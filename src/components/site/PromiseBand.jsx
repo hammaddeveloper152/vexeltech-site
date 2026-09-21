@@ -1,5 +1,4 @@
 import React from 'react';
-import Character from './Character.jsx';
 import '../../styles/promise.css';
 
 /* WHAT WE PROMISE: the yellow band with the $700 figure and the four
@@ -7,9 +6,7 @@ import '../../styles/promise.css';
    storyboard pass, 2026-09-21: one component, identical copy, by the user.
 
    The figure is the band's object (a typographic figure counts, by the
-   user's decision of 2026-09-16), and P5 with the keys stands in the band's
-   bottom-right corner, feet on its bottom edge. The slot renders nothing
-   until `character-5.webp` exists.
+   user's decision of 2026-09-16).
 
    EVERY LINE IS THE ABOUT BRIEF'S, which is the user's own copy. */
 
@@ -40,9 +37,6 @@ export default function PromiseBand({ id }) {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="promise__cast">
-          <Character pose={5} className="promise__char" />
         </div>
       </div>
     </section>

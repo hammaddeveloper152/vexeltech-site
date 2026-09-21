@@ -341,52 +341,6 @@
   }
 }
 
-/* ---- A character at the right of the call, 2026-09-21 -------------------
-   320px from 1024 in a third column, spanning the heading, note and call;
-   200px centred above them below. The column exists only while the pose has
-   rendered. */
-.callband__cast {
-  display: grid;
-  justify-items: center;
-  justify-self: stretch;
-}
-
-.callband__cast:empty {
-  display: none;
-}
-
-.callband__char {
-  width: 200px;
-}
-
-/* 768 to 1023: the call is already in a second column, so the pose takes a
-   row of its own above both, and the call moves down with the copy. */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .callband__cast {
-    grid-column: 1 / -1;
-    grid-row: 1;
-  }
-
-  .callband__in:has(.callband__char) .callband__cta {
-    grid-row: 2 / span 2;
-  }
-}
-
-@media (min-width: 1024px) {
-  .callband__in:has(.callband__char) {
-    grid-template-columns: minmax(0, 1fr) auto 320px;
-  }
-
-  .callband__cast {
-    grid-column: 3;
-    grid-row: 1 / span 2;
-  }
-
-  .callband__char {
-    width: 320px;
-  }
-}
-
 .callband__h {
   margin: 0;
   font-family: var(--font-loud);

@@ -71,12 +71,13 @@ function validate(id, value) {
   return '';
 }
 
-/* `cast`: P2, the character on the phone, standing at the left of the form.
-   Home only (storyboard, 2026-09-21: each pose once per page it is on); every
-   other route ends in the same form without him. The slot renders nothing
-   until `character-2.webp` exists. The handset that stood above the heading
-   on Contact came off the site in the same pass. */
-export default function FooterForm({ cast = false }) {
+/* P2, the character on the phone, stands at the left of the form on EVERY
+   route (2026-09-21, the user's final placement, overriding the storyboard's
+   per-page poses): one of the site's two character appearances, with P1 on
+   home's cream band. The slot renders nothing until `character-2.webp`
+   exists. The handset that stood above the heading on Contact came off the
+   site the same day. */
+export default function FooterForm() {
   const [values, setValues] = useState({
     name: '', email: '', company: '', budget: '', message: '',
   });
@@ -136,12 +137,10 @@ export default function FooterForm({ cast = false }) {
           Get in touch
         </h2>
 
-        <div className="foot__stage" data-cast={cast ? 'true' : 'false'}>
-        {cast ? (
+        <div className="foot__stage">
           <div className="foot__cast">
             <Character pose={2} className="foot__char" />
           </div>
-        ) : null}
         <form className="foot__form" onSubmit={onSubmit} noValidate aria-labelledby="foot-h">
           {FIELDS.map(({ id, label, type, autoComplete, required }) => {
             const err = errors[id];

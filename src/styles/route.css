@@ -58,38 +58,6 @@
   text-wrap: balance;
 }
 
-/* ---- The character, standing above its stop ------------------------------
-
-   Below 1024 the route is vertical, so the character stands centred above it
-   at 200px. From 1024 it stands in its stop's own column, 220px, feet on the
-   row of numerals. The slot renders nothing until the pose exists. */
-.route__cast {
-  display: grid;
-  justify-items: center;
-  margin-bottom: var(--s-lg);
-}
-
-.route__cast:empty {
-  display: none;
-}
-
-.route__char {
-  width: 200px;
-}
-
-@media (min-width: 1024px) {
-  .route__cast {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    column-gap: var(--s-lg);
-    justify-items: start;
-  }
-
-  .route__char {
-    grid-column: var(--at);
-    width: min(220px, 100%);
-  }
-}
-
 /* ---- The route ------------------------------------------------------------ */
 
 .route {

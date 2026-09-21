@@ -3,9 +3,11 @@ import '../../styles/character.css';
 
 /* THE CHARACTER SLOT, 2026-09-21, from the storyboard.
 
-   Five poses of the one character. P1 is `character.webp`; P2 to P5 are
-   `character-2.webp` to `character-5.webp` in /public/assets/objects, cut to
-   alpha from the generated PNGs by `.measure/objcut.mjs` when they land.
+   Two appearances site-wide, by the user's final placement (2026-09-21): P1
+   on home's cream band (a plain image there, as built) and P2 at the left of
+   the footer form on every route, through this slot. P2 is
+   `character-2.webp` in /public/assets/objects, cut to alpha from the
+   generated PNG. The other generated poses are unused.
 
    THE SLOT IS EMPTY UNTIL THE FILE IS THERE. The image is probed off-screen
    and only mounted once it has decoded, so a missing pose renders nothing and

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useReveal } from '../home/hooks.js';
-import Character from './Character.jsx';
 import '../../styles/route.css';
 
 /* THE ROUTE, the one route component on the site (storyboard, 2026-09-21).
@@ -15,8 +14,6 @@ import '../../styles/route.css';
    `material` 'glass' puts the dark route on the glass band (home only).
    `lines`    optional, one line under each of the first stops. Home carries
               the four step descriptions from the retired Process here.
-   `cast`     optional `{ pose, at }`: the character standing above stop `at`
-              (1 to 5). Renders nothing until the pose file exists.
 
    THE LINE DRAWS ON SCROLL: it scales from its start to its end on the reveal
    curve when the route arrives (transform only), and the stops follow it at
@@ -32,7 +29,7 @@ const STOPS = [
   ['05', "Thirty days of support, then it's yours"],
 ];
 
-export default function RouteBand({ id, heading, ground = 'cream', material, lines, cast }) {
+export default function RouteBand({ id, heading, ground = 'cream', material, lines }) {
   const [ref, drawn] = useReveal();
   const band = material ? ` band band-${material}` : '';
   const colour = ground === 'cream' ? ' colour-band' : '';
@@ -47,11 +44,6 @@ export default function RouteBand({ id, heading, ground = 'cream', material, lin
           {heading}
         </h2>
 
-        {cast ? (
-          <div className="route__cast" style={{ '--at': cast.at }}>
-            <Character pose={cast.pose} className="route__char" />
-          </div>
-        ) : null}
 
         <ol className="route" ref={ref} data-drawn={drawn ? 'true' : 'false'}>
           {STOPS.map(([n, title], i) => (

@@ -24,12 +24,13 @@
   margin: 0 auto;
 }
 
-/* ---- P2 beside the form, home only, 2026-09-21 --------------------------
+/* ---- P2 beside the form, every route, 2026-09-21 ------------------------
 
-   From 1024 the character stands in a 320px column at the left of the form,
-   top-aligned with it. Below, 200px, centred above the form. The column only
-   exists when the pose has rendered: `:has()` keeps the form full width while
-   the slot is empty. The handset that stood here on Contact is gone. */
+   The user's final placement: at the left of the form, 320px at 1280 and in a
+   200px column from 768 (a 320px column would leave the form 304px at 768);
+   below 768, 200px, centred above the form. The column only exists while the
+   pose has rendered: `:has()` keeps the form full width while the slot is
+   empty. */
 .foot__cast {
   display: grid;
   justify-items: center;
@@ -44,16 +45,23 @@
   width: 200px;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .foot__stage:has(.foot__char) {
     display: grid;
-    grid-template-columns: 320px minmax(0, 1fr);
-    column-gap: var(--s-2xl);
+    grid-template-columns: 200px minmax(0, 1fr);
+    column-gap: var(--s-xl);
     align-items: start;
   }
 
   .foot__cast {
     margin-bottom: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .foot__stage:has(.foot__char) {
+    grid-template-columns: 320px minmax(0, 1fr);
+    column-gap: var(--s-2xl);
   }
 
   .foot__char {

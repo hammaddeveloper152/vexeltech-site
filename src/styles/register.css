@@ -244,8 +244,11 @@
   color: var(--c-shop-white);
 }
 
+/* WHITE, 2026-09-21, ready for when the figures land: the storyboard keeps
+   yellow to buttons, the route line, the hovered card and the yellow band.
+   It was the frame's yellow carrier. */
 .counters__item:first-child .counters__n {
-  color: var(--c-accent-text-dark); /* 9.46:1 */
+  color: var(--c-shop-white); /* 17.77:1 */
 }
 
 .counters__l {

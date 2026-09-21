@@ -110,12 +110,11 @@ export default function Home() {
           ground="dark"
           material="glass"
           lines={STEP_LINES}
-          cast={{ pose: 3, at: 2 }}
         />
         <CounterRow band />
         <PromiseBand id="promise-h" />
         <Faq />
-        <FooterForm cast />
+        <FooterForm />
       </main>
     </IconProvider>
   );

@@ -11,9 +11,8 @@ import '../../styles/aboutpage.css';
                         the paragraph, the asphalt outline call "How we work"
                         jumping to How it goes
      2. What we do      dark, two columns of plain text
-     3. How it goes     dark: the one route, P4 at stop 04
-     4. What we promise yellow: the shared promise band, $700, the refusals,
-                        P5 bottom right
+     3. How it goes     dark: the one route
+     4. What we promise yellow: the shared promise band, $700, the refusals
      5. Our standards   dark, three lines
      6. Tell us         the spotlight call
 
@@ -74,12 +73,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 3. HOW IT GOES. The route on the dark ground, P4 at stop 04. */}
+      {/* 3. HOW IT GOES. The route on the dark ground. */}
       <RouteBand
         id="ab3-how-h"
         heading="Here is exactly how a project runs."
         ground="dark"
-        cast={{ pose: 4, at: 4 }}
       />
 
       {/* 4. PRICING AND REFUSALS. The promise band, shared with home. */}
