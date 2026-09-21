@@ -11,7 +11,8 @@ import '../../styles/board.css';
 
    Four tabs in Clash Display, the active one underlined in machine yellow
    (4.21:1 against arc, a non-text mark). Each tab shows package cards side by
-   side: cream face, asphalt ink (15.75:1), a 12px radius, the two lights.
+   side: cream face, asphalt ink (15.75:1), a 12px radius, the hairline and
+   the warm key only (the arc rim is a dark-surface light).
    Prices in Moldie at 64px, asphalt on cream; yellow on cream is banned.
 
    The lists, the turnarounds and the fit lines are VEXELTECH-SERVICES-COPY.md,
@@ -32,7 +33,9 @@ import '../../styles/board.css';
 
    THE PRICING EXCEPTION, recorded: on this ground the yellow is the tab
    underline, the "Most picked" tag and the bundle card on the board, and only
-   the total strip and "Send this to us" in the quote. */
+   the total strip and "Send this to us" in the quote. With nothing chosen
+   the receipt reads "Your quote starts here.", the strip is hidden, and the
+   button is the white outline secondary "Choose a package first". */
 
 const BRANDING = {
   basic: {
@@ -324,18 +327,27 @@ export default function PricingBoard() {
                     ))}
                   </ul>
                 ) : (
-                  <p className="pb__empty">Nothing chosen yet.</p>
+                  <p className="pb__empty">Your quote starts here.</p>
                 )}
-                <p className="pb__total">
-                  <span className="pb__total-k">Total</span>
-                  <span className="pb__total-n">
-                    {priced || !lines.length ? money(total) : 'On the call'}
-                  </span>
-                </p>
+                {/* The total strip appears with the first line. */}
+                {lines.length ? (
+                  <p className="pb__total">
+                    <span className="pb__total-k">Total</span>
+                    <span className="pb__total-n">{priced ? money(total) : 'On the call'}</span>
+                  </p>
+                ) : null}
               </div>
-              <button type="button" className="pb__send" onClick={send} disabled={!lines.length}>
-                Send this to us
-              </button>
+              {/* IDLE, the white outline secondary (asphalt is 2.24:1 on arc);
+                  the full yellow primary the moment anything is on. */}
+              {lines.length ? (
+                <button type="button" className="pb__send" onClick={send}>
+                  Send this to us
+                </button>
+              ) : (
+                <button type="button" className="pb__send pb__send--idle" disabled>
+                  Choose a package first
+                </button>
+              )}
             </div>
           </div>
         </div>
