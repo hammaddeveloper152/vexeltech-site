@@ -43,9 +43,7 @@ const BANDS = [
   { key: 'burst', cls: 'band-burst', start: 45, floor: 0,
     at: [['/pricing', '.callband']] },
   /* Glass was retired 2026-09-21: its blue is in home's drifting ground. */
-  /* The spotlight, About's call. Walked from 30 by the user's brief. */
-  { key: 'spot', cls: 'band-spot', start: 30, floor: 0,
-    at: [['/about-us', '.callband']] },
+  /* The spotlight was retired 2026-09-21: About's call is plain on the drift. */
   { key: 'cubes', cls: 'band-cubes', start: 45, floor: 0,
     at: [['/', '.faq']] },
   /* GLASS came out, 2026-09-14: Failures is a flat yellow band with no

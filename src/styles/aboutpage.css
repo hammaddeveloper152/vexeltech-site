@@ -5,6 +5,7 @@
 
 .ab3-hero,
 .ab3-what,
+.ab3-how,
 .ab3-std {
   padding: var(--s-3xl) var(--inset);
 }
@@ -125,6 +126,87 @@
     font-size: var(--t-h3-size);
     line-height: 36px;
   }
+}
+
+/* ---- 4. Pricing and refusals: the promise band, `styles/promise.css`,
+   shared with home since the storyboard pass, 2026-09-21. ------------------ */
+
+.ab3__in {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+/* Monigue at the heading step, the loud register's section heading. */
+.ab3__h {
+  margin: 0 0 var(--s-xl);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-h);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white); /* 17.77:1 */
+  text-wrap: balance;
+}
+
+/* ---- 2. What we do: two columns, heading and body ------------------------ */
+
+.ab3-what__in {
+  display: grid;
+  gap: var(--s-xl);
+}
+
+.ab3-what__h {
+  margin: 0;
+}
+
+/* Bone, at the page leads' step: body on a phone, 27 on 36 from 1024. */
+.ab3-what__p {
+  max-width: 38rem;
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone); /* 13.84:1 */
+  text-wrap: pretty;
+}
+
+@media (min-width: 1024px) {
+  .ab3-what__in {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: var(--s-2xl);
+    align-items: start;
+  }
+
+  .ab3-what__p {
+    font-size: var(--t-h3-size);
+    line-height: 36px;
+  }
+}
+
+/* ---- 3. How it goes: four short lines, 2026-09-21 -------------------------
+
+   The route is home's device, by the user; About says how a project runs in
+   the user's one sentence, a clause a line: no numerals, no line, no diagram.
+   Satoshi at the h3 reading size, white on the drift (17.77:1 on asphalt,
+   higher on arc-black). The heading keeps its scroll margin: the hero's "How
+   we work" jumps here. */
+.ab3-how__h {
+  scroll-margin-top: calc(48px + 2 * var(--s-sm) + var(--s-lg));
+}
+
+.ab3-how__lines {
+  display: grid;
+  gap: var(--s-xs);
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  color: var(--c-shop-white);
+}
+
+.ab3-how__line {
+  display: block;
 }
 
 /* ---- 4. Pricing and refusals: the promise band, `styles/promise.css`,

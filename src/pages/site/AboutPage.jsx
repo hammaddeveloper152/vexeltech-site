@@ -1,6 +1,5 @@
 import React from 'react';
 import Shell from './Shell.jsx';
-import RouteBand from '../../components/site/RouteBand.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import { CallBand } from './parts.jsx';
 import '../../styles/aboutpage.css';
@@ -12,13 +11,19 @@ import '../../styles/aboutpage.css';
                         jumping to How it goes. The mascot came off
                         (2026-09-21, the user): P1 appears on home only
      2. What we do      dark, two columns of plain text
-     3. How it goes     dark: the one route
+     3. How it goes     dark: four short lines under the heading, no
+                        numerals, no line (the route is home's device)
      4. What we promise yellow: the shared promise band, $700, the refusals
      5. Our standards   dark, three lines
-     6. Tell us         the spotlight call
+     6. Tell us         the plain call on the drift, as on /services
 
-   The "Four disciplines, one team" plates came off with the storyboard.
+   The "Four disciplines, one team" plates came off with the storyboard. The
+   ground drifts from asphalt to arc-black at How it goes and holds there
+   through the footer (2026-09-21); the spotlight is retired.
    EVERY LINE IS THE BRIEF'S, which is the user's own copy. */
+
+/* How it goes, the user's sentence, one clause a line (2026-09-21). */
+const HOW = ['A call,', 'then concepts you can see,', 'then a build you can test,', "then it's yours."];
 
 const STANDARDS = [
   'You see the work before you owe anything.',
@@ -29,6 +34,7 @@ const STANDARDS = [
 export default function AboutPage() {
   return (
     <Shell
+      driftTo=".ab3-how"
       title="About us | VexelTech"
       description="Branding, websites, marketing and automation for local service businesses across the US. One flat price."
     >
@@ -66,12 +72,21 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 3. HOW IT GOES. The route on the dark ground. */}
-      <RouteBand
-        id="ab3-how-h"
-        heading="Here is exactly how a project runs."
-        ground="dark"
-      />
+      {/* 3. HOW IT GOES. Four short lines, no numerals, no line. */}
+      <section className="vt ab3-how" aria-labelledby="ab3-how-h">
+        <div className="ab3__in">
+          <h2 className="ab3__h ab3-how__h" id="ab3-how-h">
+            Here is exactly how a project runs.
+          </h2>
+          <p className="ab3-how__lines">
+            {HOW.map((line) => (
+              <span className="ab3-how__line" key={line}>
+                {line}
+              </span>
+            ))}
+          </p>
+        </div>
+      </section>
 
       {/* 4. PRICING AND REFUSALS. The promise band, shared with home. */}
       <PromiseBand id="ab3-price-h" />
@@ -92,9 +107,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 6. THE CALL, on the spotlight: About's closing material. */}
+      {/* 6. THE CALL, plain, on the drift: About ends as /services does. */}
       <CallBand
-        material="spot"
         heading="Tell us about your business and get a quote the same day."
         note="Fifteen minutes on the phone and we'll tell you what we'd fix first. It isn't always the expensive one."
       />

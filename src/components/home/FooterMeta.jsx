@@ -6,16 +6,14 @@ import './FooterForm.css';
 
 /* THE FOOTER, REBUILT 2026-09-16; the form on every route since 2026-09-21,
    by the user. This is what follows the form (FooterForm renders it), top to
-   bottom, on asphalt:
+   bottom, on the drift's last stop, arc-black, with no hairlines (2026-09-21):
 
      the email      "info@vexeltechsolutions.com" as a bone link, Satoshi
                     body, directly under the form, and the line under it in
                     bone. It was the footer's object in Monigue up to 115px
                     until the form came to every route
-     a hairline
      pages, social  the five pages left in Satoshi 14px, the social glyphs
                     right (none render until an account URL is supplied)
-     a hairline
      the base       mono 11px steel-lift: the wordmark small at left, the
                     address centre, the legal line and year right; the legal
                     line and the phone are hidden until supplied
@@ -57,8 +55,6 @@ export default function FooterMeta() {
         </p>
       </div>
 
-      <hr className="foot__rule" />
-
       <div className="foot__row">
         {/* A landmark of its own, labelled, so a screen reader can tell it from
             the bar's "Main" navigation. */}
@@ -75,8 +71,6 @@ export default function FooterMeta() {
         </nav>
         <SocialRow />
       </div>
-
-      <hr className="foot__rule" />
 
       <div className="foot__base">
         <Link className="foot__brand" to="/" aria-label="Vexeltech, home">

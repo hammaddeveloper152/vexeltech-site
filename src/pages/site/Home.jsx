@@ -11,6 +11,7 @@ import Faq from '../../components/home/Faq.jsx';
 import RouteBand from '../../components/site/RouteBand.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
+import useDrift, { at } from '../../components/site/useDrift.js';
 import '../../styles/tokens.css';
 /* The loud register, applied to every section below the hero. Imported LAST
    so it wins on source order. See src/styles/register.css. */
@@ -84,38 +85,22 @@ export default function Home() {
     window.scrollTo(0, 0);
   }, []);
 
-  /* THE DRIFT, home's ground (lit.css, 2026-09-21). Its stops are measured
-     in px from the page itself: asphalt halfway to the route, arc-black from
-     the route's top to its bottom, asphalt again by the FAQ. Re-measured
-     whenever the page changes height (fonts landing, a width change, the FAQ
-     opening). Taken off the body when the reader leaves home. */
-  useEffect(() => {
-    const body = document.body;
-    body.dataset.ground = 'drift';
-    const set = () => {
-      const route = document.querySelector('.route-band--open');
-      const faq = document.querySelector('.faq');
-      if (!route || !faq) return;
-      const y = (el) => el.getBoundingClientRect().top + window.scrollY;
-      const top = y(route);
-      const bottom = top + route.offsetHeight;
-      body.style.setProperty('--drift-asphalt', `${Math.round(top / 2)}px`);
-      body.style.setProperty('--drift-deep', `${Math.round(top)}px`);
-      body.style.setProperty('--drift-deep-end', `${Math.round(bottom)}px`);
-      body.style.setProperty('--drift-back', `${Math.round(y(faq))}px`);
-    };
-    set();
-    const ro = new ResizeObserver(set);
-    ro.observe(body);
-    if (document.fonts) document.fonts.ready.then(set);
-    return () => {
-      ro.disconnect();
-      delete body.dataset.ground;
-      ['--drift-asphalt', '--drift-deep', '--drift-deep-end', '--drift-back'].forEach((v) =>
-        body.style.removeProperty(v)
-      );
-    };
-  }, []);
+  /* THE DRIFT, home's ground, the whole page (lit.css, useDrift.js): lit-near
+     at the top, asphalt halfway to the route, arc-black through How it works,
+     the warm near-black from the FAQ through the form, arc-black again from
+     the footer's pages row to the end. */
+  useDrift(() => {
+    const top = at('.route-band--open');
+    return [
+      ['--lit-near', 0],
+      ['--c-asphalt', top === null ? null : Math.round(top / 2)],
+      ['--c-arc-black', top],
+      ['--c-arc-black', at('.route-band--open', 'bottom')],
+      ['--c-warm-black', at('.faq')],
+      ['--c-warm-black', at('.foot__stage', 'bottom')],
+      ['--c-arc-black', at('.foot__row')],
+    ];
+  });
 
   return (
     <IconProvider>
@@ -144,8 +129,6 @@ export default function Home() {
         <RouteBand
           id="how-h"
           heading="How it works"
-          ground="dark"
-          open
           lines={STEP_LINES}
         />
         <CounterRow band />

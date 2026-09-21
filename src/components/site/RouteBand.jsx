@@ -1,31 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../../styles/route.css';
 
-/* THE ROUTE, the one route component on the site. Five stops, VERTICAL at
-   every width since 2026-09-21 (the user's correction): the line runs down
-   the left through the five stops, and beside each stop sits its numeral in
-   Moldie at 96px, its title, and, where the mount gives one, its line.
+/* THE ROUTE, HOME'S DEVICE (2026-09-21, by the user: it appears once on the
+   site). Five stops, vertical: the line runs down the left through the five
+   stops, and beside each sits its numeral in Moldie, its title and its line.
+   It stands on the drift at its darkest with 128px either side and nothing
+   painted. /services and About carried it until the same day; /services now
+   says it in its strips, About in four short lines.
 
-   Home's "How it works" on the drifting ground with nothing painted and
-   128px either side; /services' "How every project runs" on cream; About's
-   "How it goes" on the dark ground.
-
-   `ground`   'cream' or 'dark'. On dark the line is yellow and a numeral is
-              steel-lift at rest and white when reached; on cream the line is
-              asphalt (yellow is 1.66:1 on cream) and a numeral is steel at
-              rest and asphalt when reached.
-   `open`     home: no section edge of its own, 128px above and below.
-   `lines`    optional, one line under each stop's title. Home carries the
-              retired Process's four step descriptions under stops 01 to 04
-              and the user's line under stop 05.
+   A numeral is steel-lift at rest and white when reached; the line and a
+   reached stop are yellow.
 
    THE LINE DRAWS ON SCROLL, scrubbed: its length follows the reading line
    (60% down the viewport) through the route, transform only, and what has
    been drawn stays drawn. A stop is REACHED when its numeral crosses the same
-   line, and stays reached. Reduced
-   motion: the line is drawn in full and every stop is reached.
+   line, and stays reached. Reduced motion: the line is drawn in full and
+   every stop is reached.
 
-   The five stops are the About brief's, the user's own copy. */
+   The five stops are the About brief's, the user's own copy; the five lines
+   are the retired Process's four and the user's line for stop 05. */
 
 const STOPS = [
   ['01', 'A call, not a pitch'],
@@ -37,7 +30,7 @@ const STOPS = [
 
 const READ = 0.6; // the reading line, as a share of the viewport height
 
-export default function RouteBand({ id, heading, ground = 'cream', open = false, lines }) {
+export default function RouteBand({ id, heading, lines }) {
   const listRef = useRef(null);
   const stopRefs = useRef([]);
   const [reached, setReached] = useState(0);
@@ -90,12 +83,9 @@ export default function RouteBand({ id, heading, ground = 'cream', open = false,
     };
   }, []);
 
-  const colour = ground === 'cream' ? ' colour-band' : '';
-  const spacing = open ? ' route-band--open' : '';
-
   return (
     <section
-      className={`vt route-band route-band--${ground}${spacing}${colour}`}
+      className="vt route-band route-band--open"
       aria-labelledby={id}
     >
       <div className="route-band__in">

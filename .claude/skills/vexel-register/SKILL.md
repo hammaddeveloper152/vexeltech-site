@@ -27,10 +27,14 @@ line on dark, asphalt on cream, drawn on scroll), one button pair (yellow
 primary, outline secondary), Phosphor icons, and no object but the
 character: two appearances, P1 on home's cream band and P2 beside the footer
 form on every route (`character-2.webp`, empty until it exists). Since the
-same day's corrections: the route is VERTICAL everywhere (Moldie numerals,
-lit when reached, the line drawn on scroll and kept); home's ground is the
-DRIFT (lit-near, asphalt, arc-black #0E1220 at the route, asphalt by the
-FAQ), the page's second material, and glass is retired; home's disciplines
+same day's corrections: the route is HOME'S DEVICE, once on the site,
+vertical (Moldie numerals, lit when reached, the line drawn on scroll and
+kept); NO ROUTE HAS A FLAT GROUND: every page drifts (home: lit-near,
+asphalt, arc-black #0E1220 through the route, warm #1A1612 through the FAQ
+and form, arc-black from the footer's pages row; /services arc-black from
+Automation; About from How it goes; every other page by its footer), the
+drift is the second material, glass and the spotlight are retired, and the
+footer has no band, overlay or hairline; home's disciplines
 are plain columns under a hairline, not cards; the pricing panel wraps its
 ladder exactly. Yellow lives in buttons, the route line, the hovered
 card and the yellow band only. Where the sections below describe the work

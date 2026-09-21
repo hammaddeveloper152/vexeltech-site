@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import IconProvider from '../../components/site/Icons.jsx';
 import Header from '../../components/site/Header.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
+import useDrift, { at } from '../../components/site/useDrift.js';
 import '../../styles/tokens.css';
 import '../../styles/register.css';
 
@@ -23,7 +24,23 @@ import '../../styles/register.css';
 
 /* `barOver`: the page opens on a film or surface hero, and the bar stands over
    it (Header.css, 2026-09-15). */
-export default function Shell({ title, description, meta = true, barOver = false, children }) {
+/* `driftTo`: the section where this page's drift reaches arc-black and holds
+   through the footer (2026-09-21: no route has a flat ground). Asphalt at the
+   top; the footer by default. Services passes its last discipline, About its
+   How it goes. */
+export default function Shell({
+  title,
+  description,
+  meta = true,
+  barOver = false,
+  driftTo = 'footer.foot',
+  children,
+}) {
+  useDrift(() => [
+    ['--c-asphalt', 0],
+    ['--c-arc-black', at(driftTo)],
+  ]);
+
   useEffect(() => {
     if (title) document.title = title;
     if (description) {

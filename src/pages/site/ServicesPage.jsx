@@ -28,7 +28,6 @@ import {
 import Shell from './Shell.jsx';
 import { PageHead, Section, CallBand } from './parts.jsx';
 import ServiceSections from './ServiceSections.jsx';
-import RouteBand from '../../components/site/RouteBand.jsx';
 import '../../styles/services.css';
 
 /* THE SERVICES PAGE, REBUILT 2026-09-15. Four discipline SECTIONS, not plates.
@@ -39,9 +38,9 @@ import '../../styles/services.css';
    one strip with the price, the turnaround, the fit line and the call.
 
    2026-09-21, by the user: the three-column block (what you get, how it
-   goes, the facts) is gone from every section. "How it goes" is one route
-   band at the foot of the page, "How every project runs", the route as on
-   About. The per-discipline steps, "What you get" groups and "Not a fit if"
+   goes, the facts) is gone from every section. "How every project runs", the
+   route that replaced it, came off the same day: the route is home's device,
+   and the four strips carry the turnaround and the process. The per-discipline steps, "What you get" groups and "Not a fit if"
    lines are removed with the block; the cards carry what you get.
 
    ---- Edits to the file, all recorded ------------------------------------
@@ -141,6 +140,7 @@ const DISCIPLINES = [
 export default function ServicesPage() {
   return (
     <Shell
+      driftTo="#automation"
       title="Services | VexelTech"
       description="Branding, websites, marketing and automation. The four disciplines in full, from one team."
     >
@@ -153,9 +153,6 @@ export default function ServicesPage() {
         <ServiceSections disciplines={DISCIPLINES} />
       </Section>
 
-      {/* HOW EVERY PROJECT RUNS, 2026-09-21: the route as on About, once for
-          the page, before the call. */}
-      <RouteBand id="svc-route-h" heading="How every project runs" />
 
       {/* TALK TO US: the plain dark call. */}
       <CallBand

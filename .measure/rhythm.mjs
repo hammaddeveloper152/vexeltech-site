@@ -56,9 +56,6 @@ const EXEMPT = [
   ['.svc__art-img', 'Services tile, generated artwork (BUILD-LAW 2026-09-15)', 'within'],
   ['.svc2__tile', 'Services tile on /services, generated artwork (BUILD-LAW 2026-09-15)', 'within'],
   ['.ab3-price', 'ground: the About pricing band', 'self'],
-  /* The spotlight is lit in the accent's own hue and it is a GROUND, by the
-     user, 2026-09-16, as the burst is. */
-  ['.band-spot', 'ground: the About call spotlight', 'self'],
   /* The whole ticker, not the strike: mid-draw and at its anti-aliased edges
      the strike's pixels resolve to the phrase or the view as their painter. */
   ['.ticker', 'the strike ticker, exempt as a ticker (DESIGN 2026-09-15)', 'within'],

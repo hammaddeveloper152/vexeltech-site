@@ -536,56 +536,10 @@ body::before {
   }
 }
 
-/* SPOT — About's closing call, 2026-09-16, by the user. A black stage under a
-   single machine yellow spotlight: a cone from a lamp at the top and a lit
-   pool on the floor. `about-call.webp`, 2560 square, 395 KB.
-
-   THE POOL SITS BEHIND THE HEADING, and the layer is OVERSIZED to allow it.
-   The image is square and the band is not, so `cover` leaves no slack in the
-   axis that matters: the pool landed 66,51px off the heading's centre at 768
-   and 242px below it at 390, behind the button. The target is the floor pool's
-   own centroid (41.2%, 79.1% of the file, fourth-power luminance below 66% of
-   its height), not the whole frame's, which the cone pulls up to 57.6%. Solved
-   by `.measure/bandpos.mjs` on the painted band.
-
-   The pool is in the accent's own hue and it is a GROUND, exempt from the
-   carrier count by the user as the burst is. The scrim is black for the burst's
-   reason, value without hue.
-
-   60%, WALKED FROM 30 IN 5% STEPS. The binding pair is the note at 1280, bone
-   over the brightest part of the pool a line of it sits on: 4.49:1 at 55% and
-   5.38:1 at 60. The heading cleared at 45.
-
-   Where the pool lands, off the heading's centre, as painted:
-
-     390   -4, -5px     1024   16, 14px
-     768    2,  1px     1280  -13,-15px
-
-   At 390 the layer is 335% of the band's height (auto width), which crops to
-   the lit floor; from 768 it is 200% of the band's width. Two passes: the
-   first landed 43 to 63px high from 768 up, because moving the layer moves the
-   crop. 1024 and 1280 share one value, split between them. */
-.band-spot {
-  background-image: url('/assets/bands/about-call.webp');
-  --scrim-rgb: 0 0 0;
-  --scrim: 60%;
-  background-size: auto 335%;
-  background-position: 39% 100%;
-}
-
-@media (min-width: 768px) {
-  .band-spot {
-    background-size: 200% auto;
-    background-position: 50% 87%;
-  }
-}
-
-@media (min-width: 1024px) {
-  .band-spot {
-    background-position: 44% 82.75%;
-  }
-}
-
+/* SPOT IS RETIRED, 2026-09-21, by the user. It was About's closing call, a
+   black stage under a single yellow spotlight. About ends as /services does,
+   a plain call on the drift, and the drift is the only ground on About. The
+   class, its position solves and `about-call.webp` are gone. */
 
 /* GLASS IS RETIRED, 2026-09-21, by the user. It was home's Process band, a
    photograph of a blue flash under an 80 to 90% scrim. Its blue is in the
@@ -593,38 +547,32 @@ body::before {
    route stands, and the route stands on it with nothing painted. The file is
    deleted. DESIGN.md records it.
 
-   THE DRIFT, home's ground and the page's second material, 2026-09-21.
+   THE DRIFT, every route's ground and the page's second material,
+   2026-09-21. NO ROUTE HAS A FLAT GROUND.
 
    The rig above is one light in the room, anchored to the VIEWPORT. The drift
    is anchored to the PAGE, because it is a place on the page rather than a
-   light: lit-near at the top, asphalt on the way down, arc-black (#0E1220) by
-   the time the route arrives and held through it, and back to asphalt by the
-   FAQ. It is the body's own background, sized to the document, so iOS's
-   fixed-attachment problem does not apply to it.
+   light. Each route keys it to its own sections through `useDrift`:
 
-   THE STOPS ARE MEASURED, NOT GUESSED. Home sets them in px on `body` from
-   the route's top and bottom and the FAQ's top (Home.jsx), at load, when the
-   fonts land and whenever the page changes height, because every section's
-   height moves with the width.
+     home      lit-near at the top, asphalt, arc-black (#0E1220) through How
+               it works, a warmer near-black (#1A1612) through the FAQ and the
+               form, arc-black again from the footer's pages row
+     services  asphalt, arc-black from the last discipline (Automation)
+               through the call, the form and the footer
+     about     asphalt, arc-black from How it goes through the footer
+     others    asphalt, arc-black by the footer (the form) and held
 
-   The body becomes a stacking context so the rig's fixed layer (z-index -1,
-   the two blooms only on this page) paints ABOVE the drift and below the
-   content. Arc-black is the ground's own hue taken deeper; it is not the arc
-   field that failed as a ground (a flat saturated blue), and DESIGN.md
-   records the distinction. */
+   It is the body's own background, sized to the document, so iOS's
+   fixed-attachment fault does not apply. The body becomes a stacking context
+   so the rig's fixed layer (the two blooms only, under a drift) paints ABOVE
+   it and below the content. Arc-black is the ground's own hue taken deeper,
+   not the arc field that failed as a ground; DESIGN.md records the
+   distinction. */
 body[data-ground='drift'] {
   position: relative;
   z-index: 0;
   background-color: var(--c-asphalt);
-  background-image: linear-gradient(
-    to bottom,
-    var(--lit-near) 0,
-    var(--c-asphalt) var(--drift-asphalt, 20%),
-    var(--c-arc-black) var(--drift-deep, 45%),
-    var(--c-arc-black) var(--drift-deep-end, 60%),
-    var(--c-asphalt) var(--drift-back, 75%),
-    var(--c-asphalt) 100%
-  );
+  background-image: var(--drift-image, none);
   background-repeat: no-repeat;
 }
 
@@ -671,13 +619,11 @@ body[data-ground='drift']::before {
    a property of a surface rather than a surface of its own — which is why it
    is the one material allowed on top of another one.
 
-   THREE SURFACES CARRY IT AND NOTHING ELSE DOES: the marble band, the cubes
-   band, and the footer. The two bands are the site's two largest flat stretches
-   of photographed ground, where a little wear is what stops a photograph
-   reading as a wallpaper; the footer is the page's last frame and the one place
-   the ground is asked to feel like an object rather than a backdrop. On a
-   section that is transparent over the rig it would be scratches on the page
-   itself, which is a different claim entirely.
+   ONE SURFACE CARRIES IT: the marble band (2026-09-21, by the user; the
+   cubes went earlier and the footer came off when it moved onto the drift's
+   last stop with no band and no overlay). On a section that is transparent
+   over the ground it would be scratches on the page itself, which is a
+   different claim entirely.
 
    `::after`, NOT `::before`. The scrim is on `::before`, and the wear has to
    land ON the scrimmed ground rather than under it. That is also why the

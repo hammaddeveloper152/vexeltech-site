@@ -328,13 +328,15 @@
   color: var(--c-bone); /* 13.84:1 */
 }
 
-/* TWO HAIRLINES, by the brief, and both pass the removal test: without the
-   first, the pages row reads as more of the form's email line; without the
-   second, the 11px base reads as a second row of pages. */
-.foot__rule {
-  margin: var(--s-xl) 0;
-  border: 0;
-  border-top: 1px solid var(--c-rule-dark);
+/* NO HAIRLINES, 2026-09-21, by the user. The footer sits on the drift's last
+   stop, arc-black, with no band, no overlay and no rule: the form and the
+   pages row are its only structure. The two hairlines that separated the
+   email line, the pages row and the base are space now, 64px each, which is
+   more than the 81px they spent (40 + 1 + 40) needed to read as a break once
+   nothing else sits between. */
+.foot__row,
+.foot__base {
+  margin-top: var(--s-2xl);
 }
 
 /* ---- Pages and social ---------------------------------------------------- */

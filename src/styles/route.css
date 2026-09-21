@@ -1,53 +1,23 @@
 /* ==========================================================================
-   THE ROUTE. One component on the whole site, VERTICAL since 2026-09-21 (the
-   user's correction): five stops down one drawn line, each numeral in Moldie
-   with its title and line beside it. Home's "How it works" (on the drifting
-   ground, nothing painted, 128px either side), /services' "How every project
-   runs" (cream), About's "How it goes" (dark).
+   THE ROUTE, home's device (2026-09-21): five stops down one drawn line,
+   each numeral in Moldie with its title and line beside it, on the drift at
+   its darkest with 128px above and below and nothing painted: no hairline,
+   plate or panel.
 
-   ON DARK: numerals steel-lift at rest and white when reached; titles white,
-   lines bone; the LINE AND A REACHED STOP are machine yellow, 9.46:1, the one
-   place the storyboard lets yellow live in this section and its carrier.
-
-   ON CREAM: everything asphalt, 15.7:1, the line included (yellow is 1.66:1
-   on cream). A numeral at rest is steel, the recorded muted value on a light
-   ground, and asphalt when reached. The focus ring is restated asphalt.
-
-   NOTHING IS PAINTED BEHIND A STOP: no hairline, plate or panel.
+   Numerals steel-lift at rest and white when reached; titles white, lines
+   bone; the LINE AND A REACHED STOP are machine yellow, 9.46:1 on asphalt and
+   more on arc-black, the section's carrier. The seam rules in lit.css leave
+   `.route-band--open` alone and the ticker gives up its bottom margin to it.
    ========================================================================== */
 
 .route-band {
-  --route-ink: var(--c-asphalt);
-  --route-soft: var(--c-asphalt);
-  --route-line: var(--c-asphalt);
-  --route-rest: var(--c-steel);
-  --route-lit: var(--c-asphalt);
-  padding: var(--s-3xl) var(--inset);
-  color: var(--route-ink);
-}
-
-.route-band--cream {
-  background: var(--c-cream);
-}
-
-.route-band--cream :focus-visible {
-  outline-color: var(--c-asphalt);
-}
-
-.route-band--dark {
-  --route-ink: var(--c-shop-white); /* 17.77:1 on asphalt */
-  --route-soft: var(--c-bone); /* 13.84:1 on asphalt */
-  --route-line: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
+  --route-ink: var(--c-shop-white);
+  --route-soft: var(--c-bone);
+  --route-line: var(--c-accent-draw-dark);
   --route-rest: var(--c-steel-lift);
   --route-lit: var(--c-shop-white);
-}
-
-/* HOME: the route stands straight on the drifting ground. 128px above and
-   below, the user's figure (off the spacing ramp, as given), and no edge of
-   its own. The seam rules in lit.css leave it alone; see `.route-band--open`
-   there. */
-.route-band--open {
-  padding-block: 128px;
+  padding: 128px var(--inset);
+  color: var(--route-ink);
 }
 
 .route-band__in {
@@ -55,8 +25,7 @@
   margin: 0 auto;
 }
 
-/* Monigue at the heading step, in the ground's ink. The scroll margin clears
-   the sticky bar when About's hero call jumps here. */
+/* Monigue at the heading step, white. */
 .route-band__h {
   scroll-margin-top: calc(48px + 2 * var(--s-sm) + var(--s-lg));
   margin: 0 0 var(--s-2xl);

@@ -99,8 +99,6 @@ createRoot(document.getElementById('hero-root')).render(
         <RouteBand
           id="how-h"
           heading="How it works"
-          ground="dark"
-          open
           lines={STEP_LINES}
         />
         <CounterRow band />
