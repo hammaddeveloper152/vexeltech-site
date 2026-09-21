@@ -60,9 +60,10 @@
   gap: var(--s-xl);
 }
 
-/* 2x2 OF TILE CARDS from 1024, 40px apart both ways, as built before the
-   plain columns (restored 2026-09-22). */
 @media (min-width: 1024px) {
+  /* 2x2, 40px apart both ways. The row gap was 72px while the artefact slot
+     stood 32px above its plate; the cards hold their pictures inside their
+     own edges now, so nothing crosses a gap and one number does. */
   .services__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--s-xl);
@@ -71,7 +72,7 @@
 
 /* THE PLATE IS A LINK HERE, so it takes the link colour off and lets its own
    type values stand. The list and its spacing are the plate's own now,
-   `plates.css`. */
+   `plates.css`, shared with the About page's row. */
 .services__grid .svc__plate {
   text-decoration: none;
 }

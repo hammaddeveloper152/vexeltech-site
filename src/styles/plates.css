@@ -1,16 +1,18 @@
 /* ==========================================================================
-   THE DISCIPLINE CARD, home's What we do, RESTORED 2026-09-22 (the founder's
-   restructure): the four word tiles are the card faces again, as built at
-   c711e56. The tile fills the card; the name and three items sit bottom-left
-   on the hold-then-fade shade; hover, focus or a tap fills it machine yellow
-   and lifts it 4px; it tilts and straightens on arrival.
+   THE DISCIPLINE PLATE, an icon plate since 2026-09-21, by the user.
 
-   Left out on purpose, both withdrawn by the user: the pointer-follow light
-   (2026-09-21) and the /services split variant (no longer mounted). The key
-   and rim stand still at their stations under the tile.
+   Lit-near with the two lights at their stations, a Phosphor icon at 24px
+   top left in shop white, the name in Moldie, the three items in bone.
+   Mounted on home Services.
+
+   THE TILES ARE GONE, and with them the 1:1 lock, the hold-then-fade shade
+   and the scale-in-frame hover: all three existed for a picture. The plate is
+   its content plus 32px.
+
+   The class names keep the `svc__` prefix. They mean "services plate".
    ========================================================================== */
 
-/* ---- What both variants share ---------------------------------------- */
+/* ---- The plate --------------------------------------------------------- */
 
 .svc__plate {
   position: relative;
@@ -22,6 +24,8 @@
   border-bottom-color: var(--lit-edge-arc);
   border-radius: var(--r-md);
   background-color: var(--lit-near);
+  /* THE TWO LIGHTS, at their stations: the key top left, the rim bottom
+     right. The key no longer follows the pointer (2026-09-21, storyboard). */
   background-image: var(--lit-key), var(--lit-rim);
   background-repeat: no-repeat;
   box-shadow: var(--lit-inset);
@@ -32,6 +36,10 @@
     background-color 400ms var(--ease-reveal);
 }
 
+/* THE POINTER-FOLLOW LIGHT CAME OFF, 2026-09-21, by the user: the key was a
+   300px spot that tracked the pointer and dropped the plane a step. The
+   storyboard's motion list keeps the fill, the lift and the tilt, not the
+   light. */
 @media (hover: hover) and (pointer: fine) {
   /* PRESS IS THE WHOLE PLATE. 160ms is BUILD-LAW's pinned press duration. */
   .svc__plate:active {
@@ -50,8 +58,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .svc__plate,
-  .svc__art-img {
+  .svc__plate {
     transition: none;
   }
 
@@ -65,140 +72,50 @@
 }
 
 .svc__body {
+  position: relative;
+  z-index: 1;
   min-width: 0;
 }
 
-.svc__plate .disc__line {
-  color: var(--c-bone); /* 13.67:1 on lit-near */
-  margin-bottom: var(--s-lg);
-}
-
-.svc__plate .disc__detail {
-  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
-}
-
-/* ---- The artefact -------------------------------------------------------- */
-
-.svc__art {
-  position: relative;
-  overflow: hidden;
-}
-
-/* Cover-fit: the box is the crop and the file's dimensions move nothing. */
-.svc__art-img {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1);
-  transition: transform var(--d-panel) var(--ease-reveal);
-}
-
-/* The reservation, flag-gated: a numeral in the name face, steel-lift. */
-.svc__art[data-reserved='true'] {
-  display: grid;
-  place-items: center;
-  min-height: 160px;
-  border: 1px solid var(--lit-edge);
-}
-
-.svc__art-n {
-  font-family: var(--font-name);
-  font-size: 96px;
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--c-steel-lift);
-}
-
-/* ==========================================================================
-   CARD — home Services
-   ========================================================================== */
-
-/* 1:1, and a floor rather than a lock: `aspect-ratio` with the default
-   `min-height: auto` lets the card grow if its copy ever outgrows the square,
-   instead of pushing the name off the top of the picture. 32px padding and a
-   12px radius, both from the brief; the clip is `clip-path` with overflow as
-   the fallback, because the picture scales inside it and overflow alone fails
-   silently across a compositing boundary. */
-.svc__plate[data-variant='card'] {
-  aspect-ratio: 1 / 1;
-  align-content: end;
+/* 32px padding and a 12px radius, both from the home card's brief, kept. The
+   clip is `clip-path` with overflow as the fallback, so the moving key never
+   paints past the rounded corner. */
+.svc__plate {
+  align-content: start;
+  gap: var(--s-lg);
   padding: 32px;
   border-radius: 12px;
   overflow: hidden;
   clip-path: inset(0 round 12px);
+  color: var(--c-shop-white); /* the icon inherits it: 16.48:1 on lit-near */
 }
 
-/* NO YELLOW BAR on the card: the tiles carry the colour. */
-
-/* The layers, bottom to top: the tile, the spotlight, the gradient, the copy.
-   The spot is UNDER the gradient so the light can never lift the ground the
-   copy was measured on. */
-.svc__plate[data-variant='card'] .svc__art {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-/* THE SHADE HOLDS, THEN FADES. 2026-09-15, chosen by the user after the
-   briefed gradient failed: asphalt from 85% at the bottom edge to nothing at
-   55% of the height could not carry the copy at any bottom stop. At 100%,
-   16 pairs failed at 1280 (the name BRANDING 2.19:1), 4 at 768, and 24 at 390,
-   where the names sat ABOVE the gradient's start on the tiles' white letters,
-   1.01 to 1.12:1. A ramp tied to the card's height does not know where the
-   copy is; this is tied to the copy.
-
-   So the shade hangs off the copy block, not the card: flat at `--card-shade`
-   from the card's bottom edge to 24px above the name, then to nothing over
-   the next 64px. It moves with the copy at every width, and the top of the
-   picture is clear. Walked by `.measure/svccards.mjs`. */
-.svc__plate[data-variant='card'] .svc__body {
+/* THE ICON, at the 24px station, top left (storyboard: Phosphor only, 24px,
+   inherit colour). It was 64px from 2026-09-21 until the storyboard pass the
+   same day. `currentColor`, so the fill turns it asphalt with the words. */
+.svc__icon {
   position: relative;
-  z-index: 2;
-}
-
-.svc__plate[data-variant='card'] .svc__body::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  top: calc(-24px - 64px);
-  right: -32px;
-  bottom: -32px;
-  left: -32px;
-  pointer-events: none;
-  background: linear-gradient(
-    to top,
-    rgb(11 11 13 / var(--card-shade, 85%)) 0,
-    rgb(11 11 13 / var(--card-shade, 85%)) calc(100% - 64px),
-    rgb(11 11 13 / 0%) 100%
-  );
+  z-index: 1;
+  display: block;
+  width: var(--icon-md);
+  height: var(--icon-md);
 }
 
 /* ---- THE CARD FILLS, 2026-09-16, by the user ----------------------------
 
-   Hover, focus or a tap turns the whole card machine yellow: the picture and
-   its shade go, the spotlight goes with them, the name and the items go
-   asphalt (9.46:1), and the card lifts 4px. 250ms in on the reveal curve,
-   400ms back.
-
-   THE PICTURE HAS TO GO FOR THE FILL TO BE A FILL. The tile is the card here,
-   so a yellow plane behind it would not be seen; it fades with the shade over
-   the same 250ms. What the reader gets is the card turning into the accent
-   with its own words on it.
+   Hover, focus or a tap turns the whole plate machine yellow: the rim and
+   the spotlight go, the icon, the name and the items go asphalt (9.46:1), and
+   the plate lifts 4px. 250ms in on the reveal curve, 400ms back.
 
    One card fills at a time, so a filled card is the frame's carrier while the
    pointer is on it and that frame's primary call is exempt for the duration:
    BUILD-LAW's transient accent clause, amended by the user for hover. */
-/* The leave: 400ms on the same curve, for the plane, the picture and the
+/* The leave: 400ms on the same curve, for the plane, the light and the
    words together. Declared before the filled state so the fill's own 250ms
    wins on the way in. */
-.svc__plate[data-variant='card'] .svc__art,
-.svc__plate[data-variant='card'] .svc__body::before,
-.svc__plate[data-variant='card'] .disc__name,
-.svc__plate[data-variant='card'] .disc__item {
+.svc__plate .svc__icon,
+.svc__plate .disc__name,
+.svc__plate .disc__item {
   transition:
     opacity var(--d-panel) var(--ease-reveal),
     color var(--d-panel) var(--ease-reveal);
@@ -206,7 +123,7 @@
 
 /* NO `:where()` ON THESE, and that is the whole reason the first build filled
    the plane and left the words white: `:where()` contributes nothing to
-   specificity, so `.svc__plate[data-variant='card'] .disc__name` (three
+   specificity, so `.svc__plate .disc__name` (three
    selectors) outranked a fill written as `:where(:hover) .disc__name` and the
    name stayed shop white on machine yellow, 1:1. The state is spelled out. */
 /* THE HOVER HALF IS GATED TO A REAL POINTER, and the tap half is not. Ungated,
@@ -215,7 +132,7 @@
    which is the failure BUILD-LAW's gating rule names. Focus and the tap hold
    their own state and are safe outside the gate. */
 @media (hover: hover) and (pointer: fine) {
-  .svc__plate[data-variant='card']:hover {
+  .svc__plate:hover {
     background-color: var(--c-accent-ground);
     background-image: none;
     border-color: var(--c-accent-ground);
@@ -229,21 +146,16 @@
       transform var(--d-drop) var(--ease-reveal);
   }
 
-  .svc__plate[data-variant='card']:hover .svc__art,
-  .svc__plate[data-variant='card']:hover .svc__body::before {
-    opacity: 0;
-    transition: opacity var(--d-drop) var(--ease-reveal);
-  }
-
-  .svc__plate[data-variant='card']:hover .disc__name,
-  .svc__plate[data-variant='card']:hover .disc__item {
+  .svc__plate:hover .svc__icon,
+  .svc__plate:hover .disc__name,
+  .svc__plate:hover .disc__item {
     color: var(--c-asphalt); /* 9.46:1 on machine yellow */
     transition: color var(--d-drop) var(--ease-reveal);
   }
 }
 
-.svc__plate[data-variant='card']:focus-visible,
-.svc__plate[data-variant='card'][data-tap='true'] {
+.svc__plate:focus-visible,
+.svc__plate[data-tap='true'] {
   background-color: var(--c-accent-ground);
   background-image: none;
   border-color: var(--c-accent-ground);
@@ -255,52 +167,43 @@
     transform var(--d-drop) var(--ease-reveal);
 }
 
-.svc__plate[data-variant='card']:focus-visible .svc__art,
-.svc__plate[data-variant='card']:focus-visible .svc__body::before,
-.svc__plate[data-variant='card'][data-tap='true'] .svc__art,
-.svc__plate[data-variant='card'][data-tap='true'] .svc__body::before {
-  opacity: 0;
-  transition: opacity var(--d-drop) var(--ease-reveal);
-}
-
-.svc__plate[data-variant='card']:focus-visible .disc__name,
-.svc__plate[data-variant='card']:focus-visible .disc__item,
-.svc__plate[data-variant='card'][data-tap='true'] .disc__name,
-.svc__plate[data-variant='card'][data-tap='true'] .disc__item {
+.svc__plate:focus-visible .svc__icon,
+.svc__plate:focus-visible .disc__name,
+.svc__plate:focus-visible .disc__item,
+.svc__plate[data-tap='true'] .svc__icon,
+.svc__plate[data-tap='true'] .disc__name,
+.svc__plate[data-tap='true'] .disc__item {
   color: var(--c-asphalt); /* 9.46:1 on machine yellow */
   transition: color var(--d-drop) var(--ease-reveal);
 }
 
 /* The press, on the filled card. Last, so it wins the tie with the fill. */
-.svc__plate[data-variant='card']:active {
+.svc__plate:active {
   transform: rotate(0deg) translateY(-8px) scale(0.985);
   transition-duration: var(--d-press);
 }
 
 @media (prefers-reduced-motion: reduce) {
   /* The colour swaps; nothing lifts and nothing fades. */
-  .svc__plate[data-variant='card']:hover,
-  .svc__plate[data-variant='card']:focus-visible,
-  .svc__plate[data-variant='card'][data-tap='true'],
-  .svc__plate[data-variant='card']:active {
+  .svc__plate:hover,
+  .svc__plate:focus-visible,
+  .svc__plate[data-tap='true'],
+  .svc__plate:active {
     transform: none;
     transition: none;
   }
-
-  .svc__plate[data-variant='card']:hover .svc__art,
-  .svc__plate[data-variant='card']:hover .svc__body::before,
-  .svc__plate[data-variant='card']:hover .disc__name,
-  .svc__plate[data-variant='card']:hover .disc__item,
-  .svc__plate[data-variant='card'][data-tap='true'] .svc__art,
-  .svc__plate[data-variant='card'][data-tap='true'] .svc__body::before,
-  .svc__plate[data-variant='card'][data-tap='true'] .disc__name,
-  .svc__plate[data-variant='card'][data-tap='true'] .disc__item {
+  .svc__plate:hover .svc__icon,
+  .svc__plate:hover .disc__name,
+  .svc__plate:hover .disc__item,
+  .svc__plate[data-tap='true'] .svc__icon,
+  .svc__plate[data-tap='true'] .disc__name,
+  .svc__plate[data-tap='true'] .disc__item {
     transition: none;
   }
 }
 
 /* Moldie, the name face, at the home card step. White. */
-.svc__plate[data-variant='card'] .disc__name {
+.svc__plate .disc__name {
   margin: 0 0 var(--s-sm);
   font-family: var(--font-name);
   font-size: var(--t-name-l);
@@ -311,12 +214,10 @@
   color: var(--c-shop-white);
 }
 
-.svc__plate[data-variant='card'] .disc__item {
-  color: var(--c-bone);
-}
-
-/* THE LIST, owned here: home does not load pages.css. One column, body
-   size, bone on the shade. */
+/* THE LIST, owned here rather than borrowed from pages.css, because the plate
+   now has two mounts and one of them is the home page, which does not load
+   that sheet. One column: three items are a summary, not the offer, and they
+   sit at body with 8px between them. */
 .svc__plate .disc__list {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -326,8 +227,9 @@
 }
 
 .svc__plate .disc__item {
-  padding: var(--s-xs) 0;
+  padding: var(--s-sm) 0;
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
+  color: var(--c-bone); /* 13.67:1 on lit-near */
 }

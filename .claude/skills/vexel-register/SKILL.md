@@ -29,10 +29,11 @@ every route before it ships.
 
 Asphalt is retired as a GROUND: the base is #0B0B0D (`--c-base`) and the
 drift runs base to arc-black; asphalt stays as ink on yellow and cream. Home:
-cost-1 to cost-4.webp beside What it costs you, the word tiles back as the
-What we do card faces, route-1 to route-5.webp on the route, promise.webp on
-the band. Pricing: pricing-banner.webp above the ladder, and the four
-questions (StartHere) in place of the bundle builder. About: about-banner.webp
+cost-1 to cost-4.webp beside What it costs you, route-1 to route-5.webp on
+the route, promise.webp on the band. What we do stays the storyboard's four
+icon cards (the word tiles are on the "what comes off the site" list).
+Pricing: pricing-banner.webp above the ladder, and the four questions
+(StartHere) in place of the bundle builder. About: about-banner.webp
 after the hero, CaretDown on the standards, promise-about.webp, and the
 spotlight call again. Every image slot (`Slot`) renders nothing until its
 file exists.
