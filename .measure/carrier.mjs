@@ -82,9 +82,12 @@ const FRAMES = [
   ['/', '.work__list', 'work grid', '.work__plate'],
   ['/about-us', '.plates', 'about plates, at rest', '.plate'],
   ['/about-us', '.plates', 'about plates, one open', '.plate', true],
-  /* THE PLAN BUILDER, 2026-09-22: /pricing on the arc ground. Its yellow is
-     the Plan Builder exception (SKILL.md): the progress line, the selected
-     card's border, the total and the one primary button. */
+  /* THE PLAN BUILDER, 2026-09-22: /pricing. Its yellow is the Plan Builder
+     exception (SKILL.md): the progress line, the selected card's border, the
+     total and the one primary button. Its ground is the drift's arc-black
+     (#0E1220) since later that day, not arc: `arcish` counts arc-black too
+     (b - r is 18, over the 12 bar), so this row's arc reads FIELD on the
+     drift's own colour, as it would on home's How it works. */
   ['/pricing', '.plan', 'plan builder, step 1', '.plan__main'],
   ['/services', '.svc__plate', 'services plates', '.svc__plate'],
   ['/services', '.svc__index', 'services index', '.svc__index-n'],

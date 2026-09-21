@@ -26,14 +26,17 @@ import '../../styles/plan.css';
 /* THE PLAN BUILDER, /pricing, 2026-09-22 (the founder's brief). It replaced
    the tabbed package board and the toggle receipt.
 
-   Four steps and a result in one frame on the arc ground (#0D47BD). Left
+   Four steps and a result in one frame, with no ground of its own: the
+   page's drift lands on arc-black (#0E1220) at the builder and holds
+   (2026-09-22; it was flat arc #0D47BD, now the rim light only). Left
    column (60%): the progress line, the question, the helper, the answers, the
    step's object. Right column (40%): the TICKET, a cream work order that
    fills as the reader answers. At 390 the ticket is a sticky bottom bar that
    opens as a sheet.
 
    DECIDED WITH THE USER BEFORE BUILDING, and recorded in DESIGN.md:
-   - Nearest passing colours: Next is a WHITE outline on arc (asphalt was
+   - Nearest passing colours, chosen on the old arc ground and kept: Next is
+     a WHITE outline (asphalt was
      2.24:1); the helper line is bone (steel-lift was 3.04:1); the stage line
      on the ticket is steel (steel-dark was 3.08:1 on cream).
    - BUILD-LAW 0: glyphs used nowhere else on the site. The brief's Wrench,

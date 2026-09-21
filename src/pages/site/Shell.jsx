@@ -27,7 +27,7 @@ import '../../styles/register.css';
 /* `driftTo`: the section where this page's drift reaches arc-black and holds
    through the footer (2026-09-21: no route has a flat ground). The base
    (#0B0B0D) at the top; the footer by default. Services passes its last discipline, About its
-   How it goes. */
+   How it goes, Pricing its Plan Builder. */
 export default function Shell({
   title,
   description,

@@ -8,8 +8,9 @@ import Banner from '../../components/site/Banner.jsx';
 
      1. The head
      2. The banner slot (pricing-banner.webp), empty until the file exists
-     3. The Plan Builder, on the arc blue ground (PlanBuilder, 2026-09-22;
-        it replaced the tabbed board and the toggle receipt)
+     3. The Plan Builder (PlanBuilder, 2026-09-22; it replaced the tabbed
+        board and the toggle receipt). No ground of its own: the drift lands
+        on arc-black at its top (`driftTo`) and holds through the footer.
      4. The burst call, then the form and the footer, as built
 
    The ladder on the yellow panel, the four-question flow and the tabbed
@@ -21,6 +22,7 @@ export default function PricingPage() {
     <Shell
       title="Pricing | VexelTech"
       description="Branding and website packages, marketing and automation scoped to the job."
+      driftTo=".plan"
     >
       <PageHead title="What do you need?" lead="Four questions. Then a plan with a number on it." />
 

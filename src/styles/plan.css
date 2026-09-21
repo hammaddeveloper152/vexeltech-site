@@ -1,13 +1,19 @@
 /* ==========================================================================
    THE PLAN BUILDER, /pricing (2026-09-22). See PlanBuilder.jsx.
 
-   Arc blue #0D47BD edge to edge, no rays, no pin. At 1280 a two-column grid,
+   NO GROUND OF ITS OWN (2026-09-22, the founder): the section is transparent
+   and the page's drift runs through it, landing on arc-black #0E1220 at the
+   builder's top and holding for the whole builder (Shell's `driftTo`, the
+   stop home's route uses). Arc #0D47BD is the rim light only again. No rays,
+   no pin. At 1280 a two-column grid,
    60/40, 48px gutter, left aligned inside the page measure; single column at
    390 with the ticket as a sticky bottom bar.
 
-   Values on arc: shop white 7.91:1, bone 6.57:1 (the helper and the labels).
-   On the answer card's veil (6% white over arc) the same values are measured
-   by `.measure/planpairs.mjs`. On cream: asphalt 15.75:1, steel 7.20:1. In
+   Values on arc-black: shop white 18.65:1, bone 15.47:1 (the helper and the
+   labels), steel-lift 7.16:1, steel-dark 5.37:1 (the disabled Next, the
+   progress hairline), yellow 9.93:1. On the answer card's veil (6% white
+   over arc-black, #1C202D): white 16.23, bone 13.47, steel-dark 4.67.
+   `.measure/planpairs.mjs` walks every pair. On cream: asphalt 15.75:1, steel 7.20:1. In
    the strip: yellow 9.46:1.
 
    THE PLAN BUILDER EXCEPTION (SKILL.md): the yellow here is the progress
@@ -15,15 +21,14 @@
    ========================================================================== */
 
 .plan {
-  --arc: #0d47bd;
   position: relative;
   padding: var(--s-3xl) var(--inset);
-  background: var(--arc);
+  background: transparent; /* the drift, arc-black here */
   color: var(--c-shop-white);
 }
 
 .plan :focus-visible {
-  outline: var(--focus-ring) solid var(--c-accent-draw-dark); /* 4.21:1 on arc, a ring */
+  outline: var(--focus-ring) solid var(--c-accent-draw-dark); /* 9.93:1 on arc-black, a ring */
   outline-offset: 2px;
 }
 
@@ -67,8 +72,9 @@
   height: 1px;
 }
 
+/* The hairline in steel-dark, 5.37:1 on arc-black; the fill in yellow. */
 .plan__track {
-  background: var(--c-bone);
+  background: var(--c-steel-dark);
 }
 
 .plan__fill {
@@ -86,8 +92,8 @@
   height: 12px;
   margin-left: -6px;
   border-radius: 50%;
-  border: 1px solid var(--c-bone);
-  background: var(--arc);
+  border: 1px solid var(--c-steel-dark);
+  background: var(--c-arc-black);
 }
 
 .plan__node[data-on='true'] {
@@ -106,7 +112,7 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--c-shop-white); /* 7.91:1 */
+  color: var(--c-shop-white); /* 18.65:1 */
   text-wrap: balance;
 }
 
@@ -114,15 +120,15 @@
   outline: none;
 }
 
-/* Bone, not steel-lift (3.04:1 on arc): the user's choice of the nearest
-   passing value. */
+/* Bone, the user's choice when steel-lift failed on arc (3.04:1). On
+   arc-black steel-lift passes at 7.16:1; bone is kept until told otherwise. */
 .plan__help,
 .plan__why {
   margin: 0 0 var(--s-xl);
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* 6.57:1 */
+  color: var(--c-bone); /* 15.47:1 */
 }
 
 .plan__why {
@@ -258,7 +264,7 @@
   gap: var(--s-sm);
 }
 
-/* ---- Step 4: the fields, the site's form style on arc -------------------- */
+/* ---- Step 4: the fields, the site's form style on the drift------------------- */
 
 .plan__fields {
   display: grid;
@@ -279,7 +285,7 @@
   font-weight: var(--t-weight-label);
   letter-spacing: var(--t-track-label);
   text-transform: uppercase;
-  color: var(--c-bone); /* 6.57:1 on arc */
+  color: var(--c-bone); /* 15.47:1 on arc-black */
 }
 
 .plan__input {
@@ -304,10 +310,9 @@
   margin-top: var(--s-xl);
 }
 
-/* NEXT: the secondary on arc, a WHITE outline and label (7.91:1; asphalt was
-   2.24:1, the user's choice). Disabled: the same outline at full opacity with
-   steel-dark text, never a faded yellow (disabled controls are exempt from
-   the contrast floor). */
+/* NEXT: the secondary, a WHITE outline and label (18.65:1 on arc-black; the
+   user's choice when asphalt failed on arc). Disabled: the same outline at
+   full opacity with steel-dark text, 5.37:1, now passing outright. */
 .plan__next {
   min-height: 48px;
   padding: var(--s-md) var(--s-xl);
@@ -338,7 +343,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* 6.57:1 */
+  color: var(--c-bone); /* 15.47:1 */
   text-decoration: underline;
   text-underline-offset: 4px;
   cursor: pointer;
