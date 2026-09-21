@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Shell from './Shell.jsx';
 import { PageHead, Section, CallBand, CALL_HREF } from './parts.jsx';
 import PricingCards from './PricingCards.jsx';
+import BundleBuilder from './BundleBuilder.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
 /* The lit ladder. Loaded after pages.css so it wins on ground and card. */
 import '../../styles/pricing.css';
@@ -210,6 +211,9 @@ export default function PricingPage() {
         <RouteLine what="Branding" tab="branding" />
         <RouteLine what="A website" tab="websites" />
       </Section>
+
+      {/* The page's engagement device, 2026-09-21: the bundle builder. */}
+      <BundleBuilder />
 
       <CallBand
         material="burst"

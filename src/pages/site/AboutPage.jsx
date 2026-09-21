@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Shell from './Shell.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import { CallBand } from './parts.jsx';
@@ -14,7 +14,8 @@ import '../../styles/aboutpage.css';
      3. How it goes     dark: four short lines under the heading, no
                         numerals, no line (the route is home's device)
      4. What we promise yellow: the shared promise band, $700, the refusals
-     5. Our standards   dark, three lines
+     5. Our standards   dark, three lines, each revealing how it shows up on
+                        a job: the page's engagement device
      6. Tell us         the plain call on the drift, as on /services
 
    The "Four disciplines, one team" plates came off with the storyboard. The
@@ -25,11 +26,54 @@ import '../../styles/aboutpage.css';
 /* How it goes, the user's sentence, one clause a line (2026-09-21). */
 const HOW = ['A call,', 'then concepts you can see,', 'then a build you can test,', "then it's yours."];
 
+/* THE STANDARDS, TESTED: About's engagement device (2026-09-21, the user's
+   choice; built for this page and used nowhere else, BUILD-LAW 0). Each
+   standard reveals how it shows up on a job: on hover with a mouse, on a tap
+   or Enter anywhere else. The three lines are the user's, verbatim. */
 const STANDARDS = [
-  'You see the work before you owe anything.',
-  'Revisions are unlimited until you say stop.',
-  'The person who decides is the person you talk to.',
+  {
+    id: 'see',
+    line: 'You see the work before you owe anything.',
+    job: "Concepts are drawn and shown on the call. No deposit, no invoice, until you've seen them.",
+  },
+  {
+    id: 'revise',
+    line: 'Revisions are unlimited until you say stop.',
+    job: "There is no round three. You ask, we change it, until it's right.",
+  },
+  {
+    id: 'decides',
+    line: 'The person who decides is the person you talk to.',
+    job: 'No account manager. The person on your call is the person who builds it.',
+  },
 ];
+
+function Standard({ id, line, job }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <li
+      className="ab3-std__col"
+      data-open={open ? 'true' : 'false'}
+      onPointerEnter={(e) => e.pointerType === 'mouse' && setOpen(true)}
+      onPointerLeave={(e) => e.pointerType === 'mouse' && setOpen(false)}
+    >
+      <button
+        type="button"
+        className="ab3-std__line"
+        aria-expanded={open}
+        aria-controls={`std-${id}`}
+        onClick={() => setOpen((o) => !o)}
+      >
+        {line}
+      </button>
+      {/* Held in the layout so nothing moves; hidden from assistive tech
+          until it is open, so it matches `aria-expanded`. */}
+      <p className="ab3-std__job" id={`std-${id}`} aria-hidden={!open}>
+        {job}
+      </p>
+    </li>
+  );
+}
 
 export default function AboutPage() {
   return (
@@ -98,10 +142,8 @@ export default function AboutPage() {
             Our standards are simple and we keep them.
           </h2>
           <ul className="ab3-std__cols">
-            {STANDARDS.map((line) => (
-              <li className="ab3-std__col" key={line}>
-                {line}
-              </li>
+            {STANDARDS.map((st) => (
+              <Standard key={st.id} {...st} />
             ))}
           </ul>
         </div>

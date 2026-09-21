@@ -1,0 +1,225 @@
+/* ==========================================================================
+   THE BUNDLE BUILDER, /pricing only (2026-09-21). See BundleBuilder.jsx.
+
+   On the drift, no panel: two sets of choices left, the sum right from 1024,
+   stacked below. The chosen option takes a WHITE edge, never yellow: the
+   ladder above spends the page's accent. Figures in Moldie, the name face,
+   as the ladder's prices are; labels in Satoshi.
+   ========================================================================== */
+
+.bb {
+  padding: var(--s-3xl) var(--inset);
+  color: var(--c-shop-white);
+}
+
+.bb__in {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+/* Monigue at the heading step, white. */
+.bb__h {
+  margin: 0 0 var(--s-xl);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-h);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+}
+
+.bb__grid {
+  display: grid;
+  gap: var(--s-2xl);
+}
+
+@media (min-width: 1024px) {
+  .bb__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: var(--s-2xl);
+    align-items: start;
+  }
+}
+
+.bb__choose {
+  display: grid;
+  gap: var(--s-xl);
+}
+
+.bb__set {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+/* The label register: Satoshi 500, 12px, uppercase at 0.12em, steel-dark. */
+.bb__legend {
+  margin: 0 0 var(--s-md);
+  padding: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+}
+
+.bb__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+}
+
+/* An option: a 48px control, square, a 1px rule-dark edge at rest and a
+   white edge when chosen. The native input is visually hidden but stays in
+   the tab order and the accessibility tree, so arrow keys move the radio
+   group and Space toggles the website. */
+.bb__opt {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--s-sm);
+  min-height: 48px;
+  padding: 12px var(--s-lg);
+  border: 1px solid var(--c-rule-dark);
+  border-radius: var(--r-none);
+  cursor: pointer;
+  transition:
+    border-color var(--d-drop) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+.bb__opt[data-on='true'] {
+  border-color: var(--c-shop-white);
+  box-shadow: inset 0 0 0 1px var(--c-shop-white);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bb__opt:hover {
+    border-color: var(--c-steel-lift);
+  }
+
+  .bb__opt[data-on='true']:hover {
+    border-color: var(--c-shop-white);
+  }
+}
+
+.bb__opt:active {
+  transform: scale(0.97); /* BUILD-LAW's press, 160ms */
+}
+
+/* The focus ring lands on the option, from the hidden input inside it. */
+.bb__opt:has(.bb__input:focus-visible) {
+  outline: var(--focus-ring) solid var(--c-accent-draw-dark);
+  outline-offset: 2px;
+}
+
+.bb__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bb__opt-t {
+  font-family: var(--font-brand);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-brand);
+  color: var(--c-shop-white); /* 17.77:1 */
+}
+
+.bb__opt-p {
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-bone); /* 13.84:1 */
+}
+
+/* ---- The sum ----------------------------------------------------------- */
+
+.bb__sum {
+  display: grid;
+  gap: var(--s-md);
+}
+
+.bb__lines {
+  display: grid;
+  gap: var(--s-xs);
+  margin: 0;
+}
+
+.bb__lines:empty {
+  display: none;
+}
+
+.bb__line {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-md);
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone); /* 13.84:1 */
+}
+
+.bb__line dt,
+.bb__line dd {
+  margin: 0;
+}
+
+.bb__line--save {
+  font-weight: var(--t-weight-label);
+  color: var(--c-shop-white);
+}
+
+.bb__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-md);
+  margin: 0;
+}
+
+.bb__total-k {
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-steel-dark);
+}
+
+/* Moldie at the figure step, white, tabular so the count does not jitter. */
+.bb__total-n {
+  font-family: var(--font-name);
+  font-size: var(--t-name-fig);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-shop-white); /* 17.77:1 */
+}
+
+.bb__note {
+  margin: 0;
+  max-width: 44ch;
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-bone); /* 13.84:1 */
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bb__opt,
+  .bb__opt:active {
+    transition: none;
+    transform: none;
+  }
+}
