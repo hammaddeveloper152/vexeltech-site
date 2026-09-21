@@ -1,4 +1,5 @@
 import React from 'react';
+import { Browser, Megaphone, PenNib, Robot } from '@phosphor-icons/react';
 import DisciplinePlate from '../site/DisciplinePlate.jsx';
 import usePlateArrival from './usePlateArrival.js';
 import '../../styles/plates.css';
@@ -45,33 +46,39 @@ import './Services.css';
    stationery plus its social media kit, and "Web apps and ecommerce" is two
    entries from 1.1's development list. Both halves of each are the user's.
 
-   THE ICONS ARE GONE. They stood in the artefact slot while it was 4:1 and
-   empty. Each plate is an image card now, 2026-09-15: one generated tile per
-   discipline fills it, `/assets/services/<id>.webp`, and the name and the
-   three items sit on a gradient bottom-left. See `plates.css`, CARD. */
+   THE ICONS ARE BACK, 2026-09-21, by the user, and the tiles are gone. Each
+   plate is an icon plate: lit-near with the two lights, a Phosphor icon at
+   64px top left in white, the name in Moldie, the three items. The tile webps
+   are deleted from `public/`. See `plates.css`. */
 
 const CARDS = [
   {
     id: 'branding',
+    Icon: PenNib,
     discipline: 'Branding',
     subs: ['Custom logo design', 'Brand guidelines', 'Stationery and social kit'],
   },
   {
     id: 'websites',
+    Icon: Browser,
     discipline: 'Websites',
     subs: ['Custom websites', 'Web apps and ecommerce', 'UI and UX design'],
   },
   {
     id: 'marketing',
+    Icon: Megaphone,
     discipline: 'Marketing',
     subs: ['SEO and search ranking', 'Google and Meta ads', 'Lead generation and CRO'],
   },
   {
     id: 'automation',
+    Icon: Robot,
     discipline: 'Automation',
     subs: ['Workflow automation', 'AI agents', 'Chatbots'],
   },
 ];
+
+export { CARDS as DISCIPLINE_CARDS };
 
 export default function Services() {
   const [plateRef] = usePlateArrival(CARDS.length);
@@ -91,16 +98,15 @@ export default function Services() {
         </div>
 
         <div className="services__grid">
-          {CARDS.map(({ id, discipline, subs }, i) => (
+          {CARDS.map(({ id, Icon, discipline, subs }, i) => (
             <DisciplinePlate
               key={id}
               id={id}
+              Icon={Icon}
               name={discipline}
               items={subs.map((t) => ({ t }))}
-              n={String(i + 1).padStart(2, '0')}
               side={i % 2 === 0 ? 'left' : 'right'}
               as="h3"
-              variant="card"
               plateRef={plateRef(i)}
               href={`/services#${id}`}
             />

@@ -87,26 +87,9 @@
   }
 }
 
-/* THE ITEM LIST IS ONE COLUMN HERE, and this is the only thing about the plate
-   that differs between its two mounts.
-
-   `plates.css` runs `.disc__list` in two columns from 768 up, which is right
-   for a 1048px plate on `/services` holding nine to twelve items. In this grid
-   a plate is 556px at 1280 and its copy column is about 300, and three items
-   split across two columns of 150px is a table of one-and-a-bit words. The
-   plate is the same object; the column count is the mount's business. */
-.services__grid .disc__list {
-  grid-template-columns: minmax(0, 1fr);
-}
-
 /* THE PLATE IS A LINK HERE, so it takes the link colour off and lets its own
-   type values stand. */
+   type values stand. The list and its spacing are the plate's own now,
+   `plates.css`, shared with the About page's row. */
 .services__grid .svc__plate {
   text-decoration: none;
-}
-
-/* The three items are a summary, not the offer — the whole list is on
-   `/services` — so they sit at the body size rather than the plate's own. */
-.services__grid .disc__item {
-  padding: var(--s-sm) 0;
 }
