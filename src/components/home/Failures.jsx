@@ -1,5 +1,5 @@
 import React from 'react';
-import { IdentificationBadge, MagnifyingGlass, Megaphone, PhoneX } from '@phosphor-icons/react';
+import { BellSlash, MapPinLine, PhoneSlash, UserMinus } from '@phosphor-icons/react';
 import { useReveal } from './hooks.js';
 import './Failures.css';
 
@@ -17,8 +17,10 @@ import './Failures.css';
    Phosphor icon at the 24px station left of each statement and its
    consequence. The rendered icon objects and the yellow band they stood on
    came off with the storyboard, which allows no object but the character.
-   The icons are the user's choice: MagnifyingGlass, Megaphone, PhoneX,
-   IdentificationBadge.
+   The icons are MapPinLine, PhoneSlash, BellSlash and UserMinus since
+   2026-09-21, by BUILD-LAW 0 (nothing is reused): MagnifyingGlass and
+   Megaphone were also on What we do and /services. None of the four appears
+   anywhere else on the site.
 
    Before this it was a yellow band with four rendered objects (2026-09-14),
    and before that the hanging-rail ledger. */
@@ -27,25 +29,25 @@ const FAILURES = [
     id: 'find',
     statement: 'They cannot find you',
     consequence: 'No online presence, so the search that should have found you finds nobody.',
-    Icon: MagnifyingGlass,
+    Icon: MapPinLine,
   },
   {
     id: 'call',
     statement: 'Not enough are calling',
     consequence: 'The marketing budget goes out every month and the leads do not come back.',
-    Icon: Megaphone,
+    Icon: PhoneSlash,
   },
   {
     id: 'miss',
     statement: 'You miss the ones who do',
     consequence: 'A missed call is a job that goes to whoever picked up instead.',
-    Icon: PhoneX,
+    Icon: BellSlash,
   },
   {
     id: 'remember',
     statement: 'They do not remember you',
     consequence: 'Work with no name on it is work the next customer never hears about.',
-    Icon: IdentificationBadge,
+    Icon: UserMinus,
   },
 ];
 

@@ -16,6 +16,15 @@ say so and fix this file.
 Nothing about VexelTech may be invented. Copy, figures, names, prices, contact
 details: if it is not given, it is a placeholder that says it is a placeholder.
 
+## 00. BUILD-LAW 0: the founder supplies, nothing is reused (2026-09-21)
+
+No icon, image, object, texture or visual device appears twice on the site.
+Two places that need a visual need two different visuals. When one does not
+exist, STOP and ask the founder for it (subject, size, format, background):
+never substitute an existing asset, never generate, never leave a
+placeholder. Reuse is a defect, not a saving. Check every new glyph against
+every route before it ships.
+
 ## 0. The storyboard decides sections, order and placement (2026-09-21)
 
 `VEXELTECH-STORYBOARD.md` in the design repo is the founder's sheet and the
