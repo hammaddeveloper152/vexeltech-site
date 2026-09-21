@@ -548,15 +548,16 @@ body::before {
    deleted. DESIGN.md records it.
 
    THE DRIFT, every route's ground and the page's second material,
-   2026-09-21. NO ROUTE HAS A FLAT GROUND.
+   2026-09-21. NO ROUTE HAS A FLAT GROUND. THE DRIFT HAS TWO COLOURS:
+   asphalt and arc-black (home also starts from lit-near at the very top).
 
    The rig above is one light in the room, anchored to the VIEWPORT. The drift
    is anchored to the PAGE, because it is a place on the page rather than a
    light. Each route keys it to its own sections through `useDrift`:
 
      home      lit-near at the top, asphalt, arc-black (#0E1220) through How
-               it works, a warmer near-black (#1A1612) through the FAQ and the
-               form, arc-black again from the footer's pages row
+               it works, asphalt through the FAQ and the form, arc-black again
+               from the footer's pages row
      services  asphalt, arc-black from the last discipline (Automation)
                through the call, the form and the footer
      about     asphalt, arc-black from How it goes through the footer

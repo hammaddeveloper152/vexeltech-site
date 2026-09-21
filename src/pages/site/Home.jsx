@@ -85,10 +85,10 @@ export default function Home() {
     window.scrollTo(0, 0);
   }, []);
 
-  /* THE DRIFT, home's ground, the whole page (lit.css, useDrift.js): lit-near
-     at the top, asphalt halfway to the route, arc-black through How it works,
-     the warm near-black from the FAQ through the form, arc-black again from
-     the footer's pages row to the end. */
+  /* THE DRIFT, home's ground, the whole page (lit.css, useDrift.js). Two
+     colours, asphalt and arc-black, after lit-near at the very top: asphalt
+     halfway to the route, arc-black through How it works, asphalt from the
+     FAQ through the form, arc-black again from the footer's pages row. */
   useDrift(() => {
     const top = at('.route-band--open');
     return [
@@ -96,8 +96,8 @@ export default function Home() {
       ['--c-asphalt', top === null ? null : Math.round(top / 2)],
       ['--c-arc-black', top],
       ['--c-arc-black', at('.route-band--open', 'bottom')],
-      ['--c-warm-black', at('.faq')],
-      ['--c-warm-black', at('.foot__stage', 'bottom')],
+      ['--c-asphalt', at('.faq')],
+      ['--c-asphalt', at('.foot__stage', 'bottom')],
       ['--c-arc-black', at('.foot__row')],
     ];
   });

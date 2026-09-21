@@ -1,9 +1,9 @@
 /* footwalk.mjs — the footer's text against the ground it is PAINTED on.
 
    Since 2026-09-21 the footer has no ground of its own: it sits on the
-   drift's last stop (arc-black), and on home its form sits on the warm
-   near-black. A DOM walk reads the body's declared colour, not the gradient,
-   so each text element is measured against the pixels under it: the text in
+   drift's last stop (arc-black), and on home its form sits on asphalt. A
+   DOM walk reads the body's declared colour, not the gradient, so each text
+   element is measured against the pixels under it: the text in
    the footer is hidden, the page is captured, and the BRIGHTEST ground pixel
    inside each element's box is the pair's ground (the worst case it can sit
    on). Elements on their own opaque fill (the inputs, the submit) are left
