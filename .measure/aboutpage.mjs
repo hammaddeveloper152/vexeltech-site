@@ -80,7 +80,7 @@ for (const [w, h] of [[1280, 800], [390, 844]]) {
     };
   });
   const wide = w >= 1024;
-  check(r.order.join() === 'ab3-hero,ab3-what,ab3-plates,route-band,ab3-price,ab3-std,callband', `order ${r.order.join(' > ')}`);
+  check(r.order.join() === 'ab3-hero,ab3-what,route-band,ab3-price,ab3-std,callband', `order ${r.order.join(' > ')}`);
   check(r.h1s.length === 1 && r.h1s[0] === 'A website that looks expensive and costs $700.' && r.imgs === 0 && r.bar === 'false/true', `one h1 "${r.h1s[0]}", ${r.imgs} images, bar ${r.bar}`);
   check(r.hero.font === 'Monigue' && near(r.hero.size, r.hero.expected, 0.5) && r.hero.color === 'rgb(255, 255, 255)' && r.hero.pColor === 'rgb(232, 234, 237)',
     `hero Monigue ${r.hero.size.toFixed(2)}px (home clamp ${r.hero.expected.toFixed(2)}), white; ${r.hero.lines} lines, ${r.hero.height}px tall; bone line`);

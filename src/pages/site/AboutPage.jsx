@@ -3,32 +3,22 @@ import Shell from './Shell.jsx';
 import RouteBand from '../../components/site/RouteBand.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import { CallBand } from './parts.jsx';
-import DisciplinePlate from '../../components/site/DisciplinePlate.jsx';
-import usePlateArrival from '../../components/home/usePlateArrival.js';
-import { DISCIPLINES as DISCIPLINE_CARDS } from '../../content/disciplines.js';
-import '../../styles/plates.css';
 import '../../styles/aboutpage.css';
 
-/* THE ABOUT PAGE, THIRD VERSION, 2026-09-15; sections 1 and 4 added
-   2026-09-16; the cream hero restored and the disciplines row added
-   2026-09-21, both by the user.
+/* THE ABOUT PAGE, aligned to the storyboard, 2026-09-21.
 
-     1. Hero               a cream band: the statement at the HEADING step on
-                           the left, the line under it, the mascot on the
-                           right, as built on 2026-09-15. The copy is this
-                           version's; the display-step hero is withdrawn
-     2. What we do         dark, text, two columns
-     2b. Four disciplines  the home page's four icon plates, the same
-                           component and its 2x2, each to its section on
-                           /services
-     3. How it goes        a cream band; the route drawn in code is its object
-     4. Pricing, refusals  a yellow band; the typographic figure, $700, is its
-                           object, recorded beside the route rule
-     5. Standards          dark, three columns with hairlines
-     6. Call               the site's call band
+     1. Who we're for   cream: P1 right, the statement at the heading step,
+                        the paragraph, the asphalt outline call "How we work"
+                        jumping to How it goes
+     2. What we do      dark, two columns of plain text
+     3. How it goes     dark: the one route, P4 at stop 04
+     4. What we promise yellow: the shared promise band, $700, the refusals,
+                        P5 bottom right
+     5. Our standards   dark, three lines
+     6. Tell us         the spotlight call
 
-   EVERY LINE IS THE BRIEF'S, which is the user's own copy. The one image is
-   the mascot, a brand object. */
+   The "Four disciplines, one team" plates came off with the storyboard.
+   EVERY LINE IS THE BRIEF'S, which is the user's own copy. */
 
 const STANDARDS = [
   'You see the work before you owe anything.',
@@ -37,8 +27,6 @@ const STANDARDS = [
 ];
 
 export default function AboutPage() {
-  const [plateRef] = usePlateArrival(DISCIPLINE_CARDS.length);
-
   return (
     <Shell
       title="About us | VexelTech"
@@ -55,6 +43,10 @@ export default function AboutPage() {
               Branding, websites, marketing and automation for plumbers, movers, electricians
               and cleaners across the US. One flat price. No surprises.
             </p>
+            {/* An in-page jump, not a route: nothing is fetched. */}
+            <a className="ab3-hero__call" href="#ab3-how-h">
+              How we work
+            </a>
           </div>
           <div className="ab3-hero__art">
             <img
@@ -82,33 +74,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 2b. FOUR DISCIPLINES, ONE TEAM. The home page's plates. */}
-      <section className="vt ab3-plates" aria-labelledby="ab3-plates-h">
-        <div className="ab3__in">
-          <h2 className="ab3__h" id="ab3-plates-h">
-            Four disciplines, one team
-          </h2>
-          <ul className="ab3-plates__grid">
-            {DISCIPLINE_CARDS.map(({ id, Icon, discipline, subs }, i) => (
-              <li key={id}>
-                <DisciplinePlate
-                  id={`ab-${id}`}
-                  Icon={Icon}
-                  name={discipline}
-                  items={subs.map((t) => ({ t }))}
-                  side={i % 2 === 0 ? 'left' : 'right'}
-                  as="h3"
-                  plateRef={plateRef(i)}
-                  href={`/services#${id}`}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* 3. HOW IT GOES. A cream band; the route is the object standing on it. */}
-      <RouteBand id="ab3-how-h" heading="Here is exactly how a project runs." />
+      {/* 3. HOW IT GOES. The route on the dark ground, P4 at stop 04. */}
+      <RouteBand
+        id="ab3-how-h"
+        heading="Here is exactly how a project runs."
+        ground="dark"
+        cast={{ pose: 4, at: 4 }}
+      />
 
       {/* 4. PRICING AND REFUSALS. The promise band, shared with home. */}
       <PromiseBand id="ab3-price-h" />

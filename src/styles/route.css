@@ -43,8 +43,10 @@
   margin: 0 auto;
 }
 
-/* Monigue at the heading step, in the ground's ink. */
+/* Monigue at the heading step, in the ground's ink. The scroll margin clears
+   the sticky bar when About's hero call jumps here. */
 .route-band__h {
+  scroll-margin-top: calc(48px + 2 * var(--s-sm) + var(--s-lg));
   margin: 0 0 var(--s-xl);
   font-family: var(--font-loud);
   font-size: var(--t-loud-h);
