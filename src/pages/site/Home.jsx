@@ -86,18 +86,19 @@ export default function Home() {
   }, []);
 
   /* THE DRIFT, home's ground, the whole page (lit.css, useDrift.js). Two
-     colours, asphalt and arc-black, after lit-near at the very top: asphalt
-     halfway to the route, arc-black through How it works, asphalt from the
-     FAQ through the form, arc-black again from the footer's pages row. */
+     colours, the base (#0B0B0D) and arc-black, after lit-near at the very
+     top: the base halfway to the route, arc-black through How it works, the
+     base from the FAQ through the form, arc-black again from the footer's
+     pages row. */
   useDrift(() => {
     const top = at('.route-band--open');
     return [
       ['--lit-near', 0],
-      ['--c-asphalt', top === null ? null : Math.round(top / 2)],
+      ['--c-base', top === null ? null : Math.round(top / 2)],
       ['--c-arc-black', top],
       ['--c-arc-black', at('.route-band--open', 'bottom')],
-      ['--c-asphalt', at('.faq')],
-      ['--c-asphalt', at('.foot__stage', 'bottom')],
+      ['--c-base', at('.faq')],
+      ['--c-base', at('.foot__stage', 'bottom')],
       ['--c-arc-black', at('.foot__row')],
     ];
   });
@@ -132,7 +133,7 @@ export default function Home() {
           lines={STEP_LINES}
         />
         <CounterRow band />
-        <PromiseBand id="promise-h" />
+        <PromiseBand id="promise-h" image="/assets/promise.webp" />
         <Faq />
         <FooterForm />
       </main>

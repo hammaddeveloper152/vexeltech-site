@@ -46,10 +46,11 @@ import './Services.css';
    stationery plus its social media kit, and "Web apps and ecommerce" is two
    entries from 1.1's development list. Both halves of each are the user's.
 
-   THE ICONS ARE BACK, 2026-09-21, by the user, and the tiles are gone. Each
-   plate is an icon plate: lit-near with the two lights, a Phosphor icon at
-   64px top left in white, the name in Moldie, the three items. The tile webps
-   are deleted from `public/`. See `plates.css`. */
+   THE TILES ARE THE CARD FACES AGAIN, 2026-09-22, by the founder's
+   restructure: each card is its discipline's word tile edge to edge, the name
+   and three items on the hold-then-fade shade, the yellow fill on hover. The
+   icon plates and the plain columns of 2026-09-21 are withdrawn. See
+   `plates.css`. */
 
 
 export default function Services() {
@@ -70,14 +71,14 @@ export default function Services() {
         </div>
 
         <div className="services__grid">
-          {CARDS.map(({ id, Icon, discipline, subs }, i) => (
+          {CARDS.map(({ id, discipline, subs }, i) => (
             <DisciplinePlate
               key={id}
               id={id}
-              Icon={Icon}
               name={discipline}
               items={subs.map((t) => ({ t }))}
-              index={i}
+              n={String(i + 1).padStart(2, '0')}
+              side={i % 2 === 0 ? 'left' : 'right'}
               as="h3"
               plateRef={plateRef(i)}
               href={`/services#${id}`}

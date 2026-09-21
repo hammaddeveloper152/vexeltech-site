@@ -230,7 +230,10 @@
    under it. It keeps the statement's own type, so the section reads as it did
    until the reader reaches for it. 48px minimum target (the text is taller). */
 .ab3-std__line {
-  display: block;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-md);
   width: 100%;
   min-height: 48px;
   margin: 0;
@@ -251,6 +254,23 @@
 
 .ab3-std__line:active {
   transform: scale(0.97);
+}
+
+/* THE CUE, 2026-09-22: CaretDown at the 24px station, steel-lift at rest
+   (7.55:1 on the base), white and turned half a circle when open. Transform
+   only, 250ms in and 400ms back on the reveal curve. */
+.ab3-std__caret {
+  margin-top: 4px;
+  color: var(--c-steel-lift);
+  transition:
+    transform var(--d-panel) var(--ease-reveal),
+    color var(--d-panel) var(--ease-reveal);
+}
+
+.ab3-std__col[data-open='true'] .ab3-std__caret {
+  color: var(--c-shop-white);
+  transform: rotate(180deg);
+  transition-duration: var(--d-drop);
 }
 
 /* The line: its space is held so nothing moves when it arrives; opacity and
@@ -283,7 +303,8 @@
     transition: opacity var(--d-panel) var(--ease-reveal);
   }
 
-  .ab3-std__line:active {
+  .ab3-std__line:active,
+  .ab3-std__col[data-open='true'] .ab3-std__caret {
     transform: none;
   }
 }

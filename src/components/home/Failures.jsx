@@ -1,5 +1,5 @@
 import React from 'react';
-import { BellSlash, MapPinLine, PhoneSlash, UserMinus } from '@phosphor-icons/react';
+import Slot from '../site/Slot.jsx';
 import { useReveal } from './hooks.js';
 import './Failures.css';
 
@@ -11,43 +11,37 @@ import './Failures.css';
    remembered. Nothing in them is a claim about VexelTech, so BUILD-LAW.md
    Truth is not in play for them.
 
-   ---- FOUR DARK ROWS, 2026-09-21, from the storyboard ----------------
+   ---- FOUR ROWS WITH THE FOUNDER'S IMAGES, 2026-09-22 ----------------
 
-   Dark, no band: it cannot touch the hero. Four short rows at every width, a
-   Phosphor icon at the 24px station left of each statement and its
-   consequence. The rendered icon objects and the yellow band they stood on
-   came off with the storyboard, which allows no object but the character.
-   The icons are MapPinLine, PhoneSlash, BellSlash and UserMinus since
-   2026-09-21, by BUILD-LAW 0 (nothing is reused): MagnifyingGlass and
-   Megaphone were also on What we do and /services. None of the four appears
-   anywhere else on the site.
-
-   Before this it was a yellow band with four rendered objects (2026-09-14),
-   and before that the hanging-rail ledger. */
+   Four rows on the ground, no band: each a 96px 1:1 image slot on the left
+   (`/assets/cost-1.webp` to `cost-4.webp`, supplied by the founder) and the
+   statement and consequence on the right. The Phosphor icons came off. A slot
+   is empty and takes no space until its file exists, so a row with no image
+   yet is the text alone. */
 const FAILURES = [
   {
     id: 'find',
     statement: 'They cannot find you',
     consequence: 'No online presence, so the search that should have found you finds nobody.',
-    Icon: MapPinLine,
+    image: '/assets/cost-1.webp',
   },
   {
     id: 'call',
     statement: 'Not enough are calling',
     consequence: 'The marketing budget goes out every month and the leads do not come back.',
-    Icon: PhoneSlash,
+    image: '/assets/cost-2.webp',
   },
   {
     id: 'miss',
     statement: 'You miss the ones who do',
     consequence: 'A missed call is a job that goes to whoever picked up instead.',
-    Icon: BellSlash,
+    image: '/assets/cost-3.webp',
   },
   {
     id: 'remember',
     statement: 'They do not remember you',
     consequence: 'Work with no name on it is work the next customer never hears about.',
-    Icon: UserMinus,
+    image: '/assets/cost-4.webp',
   },
 ];
 
@@ -67,11 +61,11 @@ export default function Failures() {
         </h2>
 
         <ul className="fail__items" data-revealed={revealed ? 'true' : 'false'} ref={ref}>
-          {FAILURES.map(({ id, statement, consequence, Icon }, i) => (
+          {FAILURES.map(({ id, statement, consequence, image }, i) => (
             <li className="fail__item" key={id} style={{ '--i': i }}>
-              {/* Phosphor at the 24px station, inheriting the row's colour.
-                  Decorative: the statement beside it says what it means. */}
-              <Icon className="i i--md fail__icon" aria-hidden="true" />
+              {/* The founder's image, 96px 1:1, left of the row. Empty until
+                  the file exists. Decorative: the statement says it. */}
+              <Slot src={image} className="fail__img" />
               <div className="fail__text">
                 <h3 className="fail__s">{statement}</h3>
                 <p className="fail__c">{consequence}</p>

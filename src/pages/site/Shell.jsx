@@ -25,8 +25,8 @@ import '../../styles/register.css';
 /* `barOver`: the page opens on a film or surface hero, and the bar stands over
    it (Header.css, 2026-09-15). */
 /* `driftTo`: the section where this page's drift reaches arc-black and holds
-   through the footer (2026-09-21: no route has a flat ground). Asphalt at the
-   top; the footer by default. Services passes its last discipline, About its
+   through the footer (2026-09-21: no route has a flat ground). The base
+   (#0B0B0D) at the top; the footer by default. Services passes its last discipline, About its
    How it goes. */
 export default function Shell({
   title,
@@ -37,7 +37,7 @@ export default function Shell({
   children,
 }) {
   useDrift(() => [
-    ['--c-asphalt', 0],
+    ['--c-base', 0],
     ['--c-arc-black', at(driftTo)],
   ]);
 

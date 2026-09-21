@@ -1,20 +1,91 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-/* THE DISCIPLINE PLATE, AN ICON PLATE SINCE 2026-09-21, by the user.
+/* THE DISCIPLINE CARD, home's What we do, RESTORED 2026-09-22 by the
+   founder's restructure: the four word tiles are the card faces again.
 
-   Lit-near with the two lights, a Phosphor icon at 24px top left in shop
-   white (64px until the storyboard pass, 2026-09-21), the name in Moldie,
-   the three items. The pointer-follow light came off in the same pass. The
-   generated tiles are gone from it and from the build: the plate was a scene card while they filled
-   it, and without them it is an object again.
+   The tile fills the card edge to edge; the name in Moldie and the three
+   items sit bottom-left on the hold-then-fade shade; hover, focus or a tap
+   fills the card machine yellow and lifts it 4px; it tilts 1.5 degrees at
+   rest and straightens on arrival. As built at c711e56, less the
+   pointer-follow light (withdrawn by the user, 2026-09-21) and the /services
+   split variant (no longer mounted). The tiles are the founder's files,
+   `/assets/services/<id>.webp`, restored from git. */
 
-   Mounted on home Services, which hands it an icon, a name and three items
-   and links it to the discipline's section on /services. The About page's
-   row of plates came off with the storyboard, 2026-09-21.
+/* THE ARTEFACT, AND IT IS NOT THERE UNTIL THE FILE IS.
 
-   The icon is decorative (`aria-hidden`), and inherits the plate's colour so
-   the fill turns it asphalt with the words. */
+   `/assets/services/<id>.webm` and `<id>.webp` are probed with a HEAD request;
+   whichever resolves is what renders, motion preferred, and if neither does the
+   art is not in the DOM at all. 200 is not proof: this is a single-page app and
+   an unknown path answers `index.html` with a 200, so the CONTENT TYPE is what
+   tells a file from the fallback.
+
+   The reservation (a hairline and a numeral) is behind `VITE_SHOW_RESERVED=1`
+   and off everywhere by default. */
+function Art({ id, n, lit }) {
+  const [src, setSrc] = useState(undefined); // undefined = still asking
+
+  useEffect(() => {
+    let live = true;
+    const head = (u, kind) =>
+      fetch(u, { method: 'HEAD' })
+        .then((r) => {
+          const t = r.headers.get('content-type') || '';
+          return r.ok && t.startsWith(kind) ? u : null;
+        })
+        .catch(() => null);
+    Promise.all([
+      head(`/assets/services/${id}.webm`, 'video/'),
+      head(`/assets/services/${id}.webp`, 'image/'),
+    ]).then(([webm, webp]) => {
+      if (live) setSrc(webm || webp || null);
+    });
+    return () => {
+      live = false;
+    };
+  }, [id]);
+
+  if (src === undefined) return null;
+
+  if (src === null) {
+    if (import.meta.env.VITE_SHOW_RESERVED !== '1') return null;
+    return (
+      <div className="svc__art" data-reserved="true">
+        <span className="svc__art-n" aria-hidden="true">
+          {n}
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="svc__art">
+      {src.endsWith('.webm') ? (
+        <video
+          className="svc__art-img"
+          src={src}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          ref={(el) => {
+            if (!el) return;
+            if (lit) el.play().catch(() => {});
+            else el.pause();
+          }}
+        />
+      ) : (
+        /* EMPTY ALT. The tiles are generated illustrations: "work by
+           VexelTech" would tell a screen reader they are client work, which
+           BUILD-LAW Truth does not allow. The words inside them are the
+           artwork's own (BUILD-LAW, sourcing rule, 2026-09-15), and the
+           discipline is named by the heading beside them. */
+        <img className="svc__art-img" src={src} alt="" loading="lazy" decoding="async" />
+      )}
+    </div>
+  );
+}
 
 /* `items` is a list of `{ t, dt }`. The home mount passes three, the services
    mount passes the discipline's whole list.
@@ -26,12 +97,13 @@ export default function DisciplinePlate({
   name,
   line,
   items,
-  Icon,
-  index = 0,
+  n,
+  side,
   as: Heading = 'h2',
   plateRef,
   href,
 }) {
+  const [hot, setHot] = useState(false);
 
   /* THE TAP FILLS BEFORE IT LEAVES, 2026-09-16, by the user. A pointer fills
      the card on hover and the reader sees the accent arrive; a finger has no
@@ -91,25 +163,32 @@ export default function DisciplinePlate({
     }, left);
   };
 
-  /* A link where the plate summarises a discipline and pressing it goes to
-     that discipline; an article if a mount ever passes no `href`. */
+  /* A link on the home page, where the card summarises a discipline and
+     pressing it goes to that discipline; an article on /services, where the
+     plate IS the section and a link to its own anchor would do nothing. */
   const Tag = href ? Link : 'article';
   const nav = href ? { to: href } : {};
 
+  /* NO CORNER NUMERAL. It was the plate's index, top right, 11px steel-lift on
+     lit-near. Both variants put the tile in that corner now, and steel on a
+     photograph is not a pair anyone can measure once; /services keeps its
+     numerals on the index rail. */
   return (
     <Tag
       className="svc__plate"
       id={id}
       ref={plateRef}
-      style={{ '--i': index }}
+      data-variant="card"
+      data-side={side}
       data-in="false"
       aria-labelledby={`svc-${id}`}
       {...nav}
+      onPointerEnter={(e) => e.pointerType === 'mouse' && setHot(true)}
       onPointerDown={onPointerDown}
       onPointerCancel={clearTap}
       onClick={onClick}
+      onPointerLeave={(e) => e.pointerType === 'mouse' && setHot(false)}
     >
-      {Icon ? <Icon className="svc__icon" aria-hidden="true" /> : null}
       <div className="svc__body">
         <Heading className="disc__name" id={`svc-${id}`}>
           {name}
@@ -124,6 +203,7 @@ export default function DisciplinePlate({
           ))}
         </ul>
       </div>
+      <Art id={id} n={n} lit={hot} />
     </Tag>
   );
 }

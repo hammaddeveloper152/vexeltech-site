@@ -1,17 +1,16 @@
 /* ==========================================================================
    The four failures. Between the hero and Services.
 
-   FOUR DARK ROWS, 2026-09-21, from the storyboard. Transparent over the page
-   rig: no band, because it cannot touch the hero. Each row is a Phosphor icon
-   at the 24px station, then the statement and its consequence. Rows at every
-   width; the columns and the rendered objects went with the yellow band.
+   FOUR ROWS, 2026-09-22, the founder's restructure. On the ground, no band:
+   each row is a 96px 1:1 image slot (cost-1 to cost-4.webp) and then the
+   statement and its consequence. The Phosphor icons came off.
 
    The TYPE and its colours are in register.css, which loads after this sheet.
    ========================================================================== */
 
 .fail {
   padding: var(--s-3xl) var(--s-md);
-  color: var(--c-shop-white); /* the icon inherits it: 17.77:1 */
+  color: var(--c-shop-white); /* 19.66:1 on the base */
 }
 
 .fail__inner {
@@ -27,18 +26,23 @@
   list-style: none;
 }
 
-/* A row: the icon, then its two lines. The icon's top sits on the statement's
-   cap height rather than its line box. */
+/* A row: the text alone until its image exists; then the 96px image on the
+   left and the two lines beside it, centred on the image. */
 .fail__item {
   display: grid;
-  grid-template-columns: 24px minmax(0, 1fr);
-  column-gap: var(--s-md);
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: var(--s-lg);
+  align-items: center;
   min-width: 0;
 }
 
-.fail__icon {
-  margin-top: 4px;
+.fail__item:has(.fail__img) {
+  grid-template-columns: 96px minmax(0, 1fr);
+}
+
+.fail__img {
+  width: 96px;
+  aspect-ratio: 1 / 1;
 }
 
 .fail__text {

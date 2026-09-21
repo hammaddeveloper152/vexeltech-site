@@ -77,6 +77,30 @@
   align-items: start;
 }
 
+/* THE STOP'S IMAGE, 2026-09-22: 160px 1:1 to the right of the text, floating
+   6px. The column exists only once the file has landed. Below 768 it sits
+   under the text, still 160px: a third column beside a 64px numeral would
+   leave the text too narrow to read. */
+.route__stop:has(.route__img) {
+  grid-template-columns: auto minmax(0, 1fr) 160px;
+}
+
+.route__img {
+  width: 160px;
+  aspect-ratio: 1 / 1;
+}
+
+@media (max-width: 767px) {
+  .route__stop:has(.route__img) {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .route__img {
+    grid-column: 2;
+    margin-top: var(--s-md);
+  }
+}
+
 /* The stop on the line, level with its numeral's centre. Muted at rest, the
    line's colour once reached. */
 .route__stop::before {

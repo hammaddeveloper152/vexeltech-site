@@ -156,12 +156,13 @@
    EVERY SECTION IS TRANSPARENT OVER IT. The only exception is the marble
    band — see below — and there is exactly one of those on the site. */
 html {
-  background-color: var(--c-asphalt);
+  background-color: var(--c-base);
 }
 
 body {
-  /* The floor under the rig. If the layer never paints, this is what shows. */
-  background-color: var(--lit-far);
+  /* The floor under the rig. If the layer never paints, this is what shows.
+     The base since 2026-09-22. */
+  background-color: var(--c-base);
 }
 
 body::before {
@@ -243,7 +244,7 @@ body::before {
 .band {
   position: relative;
   isolation: isolate;
-  background-color: var(--c-asphalt);
+  background-color: var(--c-base);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -283,7 +284,7 @@ body::before {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgb(var(--scrim-rgb, 23 24 26) / var(--scrim, 85%));
+  background: rgb(var(--scrim-rgb, 11 11 13) / var(--scrim, 85%));
   pointer-events: none;
 }
 
@@ -536,10 +537,56 @@ body::before {
   }
 }
 
-/* SPOT IS RETIRED, 2026-09-21, by the user. It was About's closing call, a
-   black stage under a single yellow spotlight. About ends as /services does,
-   a plain call on the drift, and the drift is the only ground on About. The
-   class, its position solves and `about-call.webp` are gone. */
+/* SPOT — About's closing call, 2026-09-16, by the user; RETIRED 2026-09-21
+   and RESTORED 2026-09-22 by the founder's restructure, with its file. A black stage under a
+   single machine yellow spotlight: a cone from a lamp at the top and a lit
+   pool on the floor. `about-call.webp`, 2560 square, 395 KB.
+
+   THE POOL SITS BEHIND THE HEADING, and the layer is OVERSIZED to allow it.
+   The image is square and the band is not, so `cover` leaves no slack in the
+   axis that matters: the pool landed 66,51px off the heading's centre at 768
+   and 242px below it at 390, behind the button. The target is the floor pool's
+   own centroid (41.2%, 79.1% of the file, fourth-power luminance below 66% of
+   its height), not the whole frame's, which the cone pulls up to 57.6%. Solved
+   by `.measure/bandpos.mjs` on the painted band.
+
+   The pool is in the accent's own hue and it is a GROUND, exempt from the
+   carrier count by the user as the burst is. The scrim is black for the burst's
+   reason, value without hue.
+
+   60%, WALKED FROM 30 IN 5% STEPS. The binding pair is the note at 1280, bone
+   over the brightest part of the pool a line of it sits on: 4.49:1 at 55% and
+   5.38:1 at 60. The heading cleared at 45.
+
+   Where the pool lands, off the heading's centre, as painted:
+
+     390   -4, -5px     1024   16, 14px
+     768    2,  1px     1280  -13,-15px
+
+   At 390 the layer is 335% of the band's height (auto width), which crops to
+   the lit floor; from 768 it is 200% of the band's width. Two passes: the
+   first landed 43 to 63px high from 768 up, because moving the layer moves the
+   crop. 1024 and 1280 share one value, split between them. */
+.band-spot {
+  background-image: url('/assets/bands/about-call.webp');
+  --scrim-rgb: 0 0 0;
+  --scrim: 60%;
+  background-size: auto 335%;
+  background-position: 39% 100%;
+}
+
+@media (min-width: 768px) {
+  .band-spot {
+    background-size: 200% auto;
+    background-position: 50% 87%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .band-spot {
+    background-position: 44% 82.75%;
+  }
+}
 
 /* GLASS IS RETIRED, 2026-09-21, by the user. It was home's Process band, a
    photograph of a blue flash under an 80 to 90% scrim. Its blue is in the
@@ -548,20 +595,21 @@ body::before {
    deleted. DESIGN.md records it.
 
    THE DRIFT, every route's ground and the page's second material,
-   2026-09-21. NO ROUTE HAS A FLAT GROUND. THE DRIFT HAS TWO COLOURS:
-   asphalt and arc-black (home also starts from lit-near at the very top).
+   2026-09-21. NO ROUTE HAS A FLAT GROUND. THE DRIFT HAS TWO COLOURS: the
+   base (#0B0B0D since 2026-09-22, when asphalt was retired as a ground) and
+   arc-black (home also starts from lit-near at the very top).
 
    The rig above is one light in the room, anchored to the VIEWPORT. The drift
    is anchored to the PAGE, because it is a place on the page rather than a
    light. Each route keys it to its own sections through `useDrift`:
 
-     home      lit-near at the top, asphalt, arc-black (#0E1220) through How
-               it works, asphalt through the FAQ and the form, arc-black again
-               from the footer's pages row
-     services  asphalt, arc-black from the last discipline (Automation)
+     home      lit-near at the top, the base, arc-black (#0E1220) through How
+               it works, the base through the FAQ and the form, arc-black
+               again from the footer's pages row
+     services  the base, arc-black from the last discipline (Automation)
                through the call, the form and the footer
-     about     asphalt, arc-black from How it goes through the footer
-     others    asphalt, arc-black by the footer (the form) and held
+     about     the base, arc-black from How it goes through the footer
+     others    the base, arc-black by the footer (the form) and held
 
    It is the body's own background, sized to the document, so iOS's
    fixed-attachment fault does not apply. The body becomes a stacking context
@@ -572,7 +620,7 @@ body::before {
 body[data-ground='drift'] {
   position: relative;
   z-index: 0;
-  background-color: var(--c-asphalt);
+  background-color: var(--c-base);
   background-image: var(--drift-image, none);
   background-repeat: no-repeat;
 }

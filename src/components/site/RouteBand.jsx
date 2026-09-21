@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Slot from './Slot.jsx';
 import '../../styles/route.css';
 
 /* THE ROUTE, HOME'S DEVICE (2026-09-21, by the user: it appears once on the
@@ -9,7 +10,9 @@ import '../../styles/route.css';
    says it in its strips, About in four short lines.
 
    A numeral is steel-lift at rest and white when reached; the line and a
-   reached stop are yellow.
+   reached stop are yellow. Each stop has a 160px image slot right of its
+   text, route-1 to route-5.webp, floating 6px (2026-09-22); a slot is empty
+   until its file exists.
 
    THE LINE DRAWS ON SCROLL, scrubbed: its length follows the reading line
    (60% down the viewport) through the route, transform only, and what has
@@ -110,6 +113,9 @@ export default function RouteBand({ id, heading, lines }) {
                 <span className="route__t">{title}</span>
                 {lines && lines[i] ? <span className="route__d">{lines[i]}</span> : null}
               </span>
+              {/* The founder's image for this stop, 160px 1:1, right of the
+                  text, floating. Empty until the file exists. */}
+              <Slot src={`/assets/route-${i + 1}.webp`} className="route__img" float />
             </li>
           ))}
         </ol>

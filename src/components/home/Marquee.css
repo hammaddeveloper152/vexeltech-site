@@ -201,7 +201,7 @@
   justify-content: center;
   min-width: 48px;
   padding: 0 var(--s-lg);
-  background: var(--c-asphalt);
+  background: var(--c-base);
   border: 0;
   border-radius: var(--r-none);
   color: var(--c-shop-white);

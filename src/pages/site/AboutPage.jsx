@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { CaretDown } from '@phosphor-icons/react';
 import Shell from './Shell.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import { CallBand } from './parts.jsx';
+import Banner from '../../components/site/Banner.jsx';
 import '../../styles/aboutpage.css';
 
 /* THE ABOUT PAGE, aligned to the storyboard, 2026-09-21.
@@ -16,7 +18,9 @@ import '../../styles/aboutpage.css';
      4. What we promise yellow: the shared promise band, $700, the refusals
      5. Our standards   dark, three lines, each revealing how it shows up on
                         a job: the page's engagement device
-     6. Tell us         the plain call on the drift, as on /services
+     6. Tell us         the call on the spotlight (about-call.webp), restored
+                        2026-09-22; a banner slot (about-banner.webp) follows
+                        the cream hero
 
    The "Four disciplines, one team" plates came off with the storyboard. The
    ground drifts from asphalt to arc-black at How it goes and holds there
@@ -64,7 +68,10 @@ function Standard({ id, line, job }) {
         aria-controls={`std-${id}`}
         onClick={() => setOpen((o) => !o)}
       >
-        {line}
+        <span className="ab3-std__line-t">{line}</span>
+        {/* The cue that it opens, 2026-09-22, the founder's ruling: CaretDown,
+            used nowhere else on the site, turning when open. Decorative. */}
+        <CaretDown className="i i--md ab3-std__caret" aria-hidden="true" />
       </button>
       {/* Held in the layout so nothing moves; hidden from assistive tech
           until it is open, so it matches `aria-expanded`. */}
@@ -101,6 +108,10 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* The founder's banner after the cream hero, 2026-09-22. Empty until
+          about-banner.webp exists. */}
+      <Banner src="/assets/about-banner.webp" label="About banner" />
+
       {/* 2. WHAT WE DO. */}
       <section className="vt ab3-what" aria-labelledby="ab3-what-h">
         <div className="ab3__in ab3-what__in">
@@ -133,7 +144,7 @@ export default function AboutPage() {
       </section>
 
       {/* 4. PRICING AND REFUSALS. The promise band, shared with home. */}
-      <PromiseBand id="ab3-price-h" />
+      <PromiseBand id="ab3-price-h" image="/assets/promise-about.webp" />
 
       {/* 5. STANDARDS. */}
       <section className="vt ab3-std" aria-labelledby="ab3-std-h">
@@ -149,8 +160,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 6. THE CALL, plain, on the drift: About ends as /services does. */}
+      {/* 6. THE CALL on the spotlight, restored 2026-09-22. */}
       <CallBand
+        material="spot"
         heading="Tell us about your business and get a quote the same day."
         note="Fifteen minutes on the phone and we'll tell you what we'd fix first. It isn't always the expensive one."
       />

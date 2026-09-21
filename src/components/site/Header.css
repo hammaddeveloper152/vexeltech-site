@@ -47,7 +47,7 @@
      stays — and it is now the one thing on the page that is a different value
      from the rig, which is the separation the hairline was drawing. A line as
      well would be saying it twice. */
-  background: var(--c-asphalt);
+  background: var(--c-base);
 }
 
 /* ---- OVER A HERO, 2026-09-15 ---------------------------------------------
@@ -89,12 +89,12 @@
 }
 
 .bar[data-over='true']::before {
-  background: linear-gradient(to bottom, rgb(23 24 26 / var(--bar-shade)) 0%, rgb(23 24 26 / 0%) 100%);
+  background: linear-gradient(to bottom, rgb(11 11 13 / var(--bar-shade)) 0%, rgb(11 11 13 / 0%) 100%);
   opacity: 1;
 }
 
 .bar[data-over='true']::after {
-  background: var(--c-asphalt);
+  background: var(--c-base);
   border-bottom: 1px solid var(--c-rule-dark);
   opacity: 0;
 }
@@ -339,7 +339,7 @@
   align-content: center;
   gap: var(--s-lg);
   padding: var(--s-2xl) var(--s-md);
-  background: var(--c-asphalt);
+  background: var(--c-base);
   overflow-y: auto;
 }
 

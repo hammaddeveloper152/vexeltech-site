@@ -1,4 +1,5 @@
 import React from 'react';
+import Slot from './Slot.jsx';
 import '../../styles/promise.css';
 
 /* WHAT WE PROMISE: the yellow band with the $700 figure and the four
@@ -6,7 +7,8 @@ import '../../styles/promise.css';
    storyboard pass, 2026-09-21: one component, identical copy, by the user.
 
    The figure is the band's object (a typographic figure counts, by the
-   user's decision of 2026-09-16).
+   user's decision of 2026-09-16), and each page's band carries its own image
+   bottom right (2026-09-22).
 
    EVERY LINE IS THE ABOUT BRIEF'S, which is the user's own copy. */
 
@@ -17,7 +19,7 @@ const REFUSALS = [
   "We don't keep your files. Domain, hosting, code and credentials move to your name.",
 ];
 
-export default function PromiseBand({ id }) {
+export default function PromiseBand({ id, image }) {
   return (
     <section className="vt ab3-price promise colour-band" aria-labelledby={id}>
       <div className="promise__in">
@@ -38,6 +40,14 @@ export default function PromiseBand({ id }) {
             ))}
           </ul>
         </div>
+        {/* The founder's image, 240px, bottom right of the band. One file per
+            page (BUILD-LAW 0): promise.webp on home, promise-about.webp on
+            About. Empty until the file exists. */}
+        {image ? (
+          <div className="promise__cast">
+            <Slot src={image} className="promise__img" />
+          </div>
+        ) : null}
       </div>
     </section>
   );

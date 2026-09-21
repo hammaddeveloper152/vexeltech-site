@@ -57,15 +57,15 @@
 
 .services__grid {
   display: grid;
-  gap: var(--s-2xl);
+  gap: var(--s-xl);
 }
 
-/* 2x2 OF PLAIN COLUMNS from 768, 2026-09-21: four columns of type, each under
-   its own hairline, 64px apart both ways. No boxes. */
-@media (min-width: 768px) {
+/* 2x2 OF TILE CARDS from 1024, 40px apart both ways, as built before the
+   plain columns (restored 2026-09-22). */
+@media (min-width: 1024px) {
   .services__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--s-2xl);
+    gap: var(--s-xl);
   }
 }
 

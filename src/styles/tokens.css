@@ -106,7 +106,11 @@
 
 :root {
   /* ---- Colour: dark ground (dominant) ---------------------------------- */
-  --c-asphalt: #17181a; /* primary, the ground   */
+  --c-asphalt: #17181a; /* INK on yellow and cream only since 2026-09-22 */
+  /* THE BASE, 2026-09-22, by the founder: asphalt is retired as a GROUND and
+     near-black takes every ground asphalt was. Asphalt stays as the ink on
+     the light grounds (yellow, cream), where it is measured. */
+  --c-base: #0b0b0d;
   /* ---- THE WARM SURFACES ARE GONE, AND SO IS THE 320px RULE -------------
 
      `--c-surface-warm #262218` and `--c-surface-warm-raised #2E2A1E` were the
@@ -702,7 +706,7 @@ html {
   /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
   min-height: 48px;
   padding: var(--s-md) var(--s-lg);
-  background: var(--c-asphalt);
+  background: var(--c-base);
   border: 1px solid var(--c-rule-dark);
   border-radius: var(--r-sm); /* control */
   color: var(--c-shop-white); /* 17.77:1 on asphalt */

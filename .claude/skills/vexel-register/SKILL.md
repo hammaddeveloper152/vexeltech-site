@@ -25,6 +25,18 @@ never substitute an existing asset, never generate, never leave a
 placeholder. Reuse is a defect, not a saving. Check every new glyph against
 every route before it ships.
 
+## 000. The founder's restructure (2026-09-22) outranks what follows
+
+Asphalt is retired as a GROUND: the base is #0B0B0D (`--c-base`) and the
+drift runs base to arc-black; asphalt stays as ink on yellow and cream. Home:
+cost-1 to cost-4.webp beside What it costs you, the word tiles back as the
+What we do card faces, route-1 to route-5.webp on the route, promise.webp on
+the band. Pricing: pricing-banner.webp above the ladder, and the four
+questions (StartHere) in place of the bundle builder. About: about-banner.webp
+after the hero, CaretDown on the standards, promise-about.webp, and the
+spotlight call again. Every image slot (`Slot`) renders nothing until its
+file exists.
+
 ## 0. The storyboard decides sections, order and placement (2026-09-21)
 
 `VEXELTECH-STORYBOARD.md` in the design repo is the founder's sheet and the

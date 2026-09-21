@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import Shell from './Shell.jsx';
 import { PageHead, Section, CallBand, CALL_HREF } from './parts.jsx';
 import PricingCards from './PricingCards.jsx';
-import BundleBuilder from './BundleBuilder.jsx';
+import StartHere from './StartHere.jsx';
+import Banner from '../../components/site/Banner.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
 /* The lit ladder. Loaded after pages.css so it wins on ground and card. */
 import '../../styles/pricing.css';
@@ -162,6 +163,10 @@ export default function PricingPage() {
         lead="Branding and websites have a price on them. Marketing and automation depend on what they have to do, so those get a number once we have talked."
       />
 
+      {/* The founder's banner above the ladder, 2026-09-22. Empty until
+          pricing-banner.webp exists. */}
+      <Banner src="/assets/pricing-banner.webp" label="Pricing banner" />
+
       <Section labelledBy="pricing-tabs">
         <h2 className="skip-h" id="pricing-tabs">
           Packages by discipline
@@ -212,8 +217,9 @@ export default function PricingPage() {
         <RouteLine what="A website" tab="websites" />
       </Section>
 
-      {/* The page's engagement device, 2026-09-21: the bundle builder. */}
-      <BundleBuilder />
+      {/* The page's engagement device, 2026-09-22: four questions and where
+          we would start. It replaced the bundle builder. */}
+      <StartHere />
 
       <CallBand
         material="burst"
