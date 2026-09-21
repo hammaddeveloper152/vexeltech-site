@@ -26,8 +26,8 @@ export const CALL_LABEL = 'Let’s Talk';
 export const CALL_HREF = '/contact-us';
 
 /* `step`: the storyboard (2026-09-21) opens every page but home at the
-   HEADING step. 'figure' keeps the old step for a page the storyboard pass
-   has not reached: Contact, which is off the sheet and was left as built. */
+   HEADING step. 'figure' keeps the old step for Contact, which is off the
+   sheet and was left as built. */
 export function PageHead({ title, lead, id = 'pg-h', step = 'heading' }) {
   return (
     <header className="vt pg__head">

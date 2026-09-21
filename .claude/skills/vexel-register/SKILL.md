@@ -16,6 +16,21 @@ say so and fix this file.
 Nothing about VexelTech may be invented. Copy, figures, names, prices, contact
 details: if it is not given, it is a placeholder that says it is a placeholder.
 
+## 0. The storyboard decides sections, order and placement (2026-09-21)
+
+`VEXELTECH-STORYBOARD.md` in the design repo is the founder's sheet and the
+source of every page's sections, their order, their grounds and where every
+asset stands. It outranks this file and any earlier record where they differ;
+a change goes on the sheet first. DESIGN.md records it and the amendments
+made the same day. In short: one card (12px), one route (five stops, yellow
+line on dark, asphalt on cream, drawn on scroll), one button pair (yellow
+primary, outline secondary), 24px Phosphor icons, and no object but the
+character (P1 `character.webp`, P2 to P5 `character-N.webp`, each slot empty
+until its file exists). Yellow lives in buttons, the route line, the hovered
+card and the yellow band only. Where the sections below describe the work
+grid, the testimonials, Process, the rendered icons, the handset or the
+index rail, that is history.
+
 ## 1. Three faces, three jobs — never two on one element
 
 | Face | Token | Job | Weight | Case |
