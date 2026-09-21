@@ -48,12 +48,17 @@ import './Header.css';
    choose between them before they know the difference. In the footer it sits
    next to Portfolio where that comparison is cheap.
 
+   PORTFOLIO IS OUT OF THE BAR, 2026-09-21, by the user, at every width and
+   in the phone menu (both render this one list). The work section is still a
+   placeholder, so the bar no longer offers it as evidence. `/portfolio` stays
+   reachable by URL until it is retired with the other legacy routes. The bar
+   holds three; its container budget only gains from the removal.
+
    Social icons, also 10.4: in the FOOTER since 2026-09-16, not the bar. See
    SocialRow.jsx for the user's decision to ship them with placeholder URLs. */
 const NAV = [
   { id: 'services', label: 'Services', href: '/services' },
   { id: 'pricing', label: 'Pricing', href: '/pricing' },
-  { id: 'portfolio', label: 'Portfolio', href: '/portfolio' },
   { id: 'about', label: 'About us', href: '/about-us' },
 ];
 
