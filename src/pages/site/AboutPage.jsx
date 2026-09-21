@@ -1,22 +1,32 @@
 import React from 'react';
 import Shell from './Shell.jsx';
 import { CallBand } from './parts.jsx';
+import DisciplinePlate from '../../components/site/DisciplinePlate.jsx';
+import usePlateArrival from '../../components/home/usePlateArrival.js';
+import { DISCIPLINES as DISCIPLINE_CARDS } from '../../content/disciplines.js';
+import '../../styles/plates.css';
 import '../../styles/aboutpage.css';
 
 /* THE ABOUT PAGE, THIRD VERSION, 2026-09-15; sections 1 and 4 added
-   2026-09-16, TYPOGRAPHIC, with no images.
+   2026-09-16; the cream hero restored and the disciplines row added
+   2026-09-21, both by the user.
 
-     1. Hero               dark: the headline at the DISPLAY step, the home
-                           hero's clamp, recorded as the site's second display
-                           use; the bone line; no object; left, 60% measure
+     1. Hero               a cream band: the statement at the HEADING step on
+                           the left, the line under it, the mascot on the
+                           right, as built on 2026-09-15. The copy is this
+                           version's; the display-step hero is withdrawn
      2. What we do         dark, text, two columns
+     2b. Four disciplines  the home page's four icon plates, the same
+                           component and its 2x2, each to its section on
+                           /services
      3. How it goes        a cream band; the route drawn in code is its object
      4. Pricing, refusals  a yellow band; the typographic figure, $700, is its
                            object, recorded beside the route rule
      5. Standards          dark, three columns with hairlines
      6. Call               the site's call band
 
-   EVERY LINE IS THE BRIEF'S, which is the user's own copy. No images. */
+   EVERY LINE IS THE BRIEF'S, which is the user's own copy. The one image is
+   the mascot, a brand object. */
 
 const STOPS = [
   ['01', 'A call, not a pitch'],
@@ -40,14 +50,16 @@ const STANDARDS = [
 ];
 
 export default function AboutPage() {
+  const [plateRef] = usePlateArrival(DISCIPLINE_CARDS.length);
+
   return (
     <Shell
       title="About us | VexelTech"
       description="Branding, websites, marketing and automation for local service businesses across the US. One flat price."
     >
-      {/* 1. HERO. Type only. */}
+      {/* 1. HERO. A cream band with the mascot standing on it. */}
       <section className="vt ab3-hero" aria-labelledby="ab3-hero-h">
-        <div className="ab3__in">
+        <div className="ab3__in ab3-hero__in">
           <div className="ab3-hero__text">
             <h1 className="ab3-hero__h" id="ab3-hero-h">
               A website that looks expensive and costs $700.
@@ -56,6 +68,14 @@ export default function AboutPage() {
               Branding, websites, marketing and automation for plumbers, movers, electricians
               and cleaners across the US. One flat price. No surprises.
             </p>
+          </div>
+          <div className="ab3-hero__art">
+            <img
+              className="ab3-hero__character float"
+              src="/assets/objects/character.webp"
+              alt=""
+              decoding="async"
+            />
           </div>
         </div>
       </section>
@@ -72,6 +92,31 @@ export default function AboutPage() {
             thing: whether the phone rings. Automation for the jobs that eat your week. One team,
             one invoice, one person who picks up.
           </p>
+        </div>
+      </section>
+
+      {/* 2b. FOUR DISCIPLINES, ONE TEAM. The home page's plates. */}
+      <section className="vt ab3-plates" aria-labelledby="ab3-plates-h">
+        <div className="ab3__in">
+          <h2 className="ab3__h" id="ab3-plates-h">
+            Four disciplines, one team
+          </h2>
+          <ul className="ab3-plates__grid">
+            {DISCIPLINE_CARDS.map(({ id, Icon, discipline, subs }, i) => (
+              <li key={id}>
+                <DisciplinePlate
+                  id={`ab-${id}`}
+                  Icon={Icon}
+                  name={discipline}
+                  items={subs.map((t) => ({ t }))}
+                  side={i % 2 === 0 ? 'left' : 'right'}
+                  as="h3"
+                  plateRef={plateRef(i)}
+                  href={`/services#${id}`}
+                />
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

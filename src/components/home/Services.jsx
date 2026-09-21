@@ -1,5 +1,5 @@
 import React from 'react';
-import { Browser, Megaphone, PenNib, Robot } from '@phosphor-icons/react';
+import { DISCIPLINES as CARDS } from '../../content/disciplines.js';
 import DisciplinePlate from '../site/DisciplinePlate.jsx';
 import usePlateArrival from './usePlateArrival.js';
 import '../../styles/plates.css';
@@ -51,34 +51,6 @@ import './Services.css';
    64px top left in white, the name in Moldie, the three items. The tile webps
    are deleted from `public/`. See `plates.css`. */
 
-const CARDS = [
-  {
-    id: 'branding',
-    Icon: PenNib,
-    discipline: 'Branding',
-    subs: ['Custom logo design', 'Brand guidelines', 'Stationery and social kit'],
-  },
-  {
-    id: 'websites',
-    Icon: Browser,
-    discipline: 'Websites',
-    subs: ['Custom websites', 'Web apps and ecommerce', 'UI and UX design'],
-  },
-  {
-    id: 'marketing',
-    Icon: Megaphone,
-    discipline: 'Marketing',
-    subs: ['SEO and search ranking', 'Google and Meta ads', 'Lead generation and CRO'],
-  },
-  {
-    id: 'automation',
-    Icon: Robot,
-    discipline: 'Automation',
-    subs: ['Workflow automation', 'AI agents', 'Chatbots'],
-  },
-];
-
-export { CARDS as DISCIPLINE_CARDS };
 
 export default function Services() {
   const [plateRef] = usePlateArrival(CARDS.length);

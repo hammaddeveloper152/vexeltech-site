@@ -331,15 +331,19 @@ invented copy. Every placeholder string says it is a placeholder. The form is
 disabled with a visible line until it has an endpoint; a success message is
 a claim.
 
-Asset slots: services artefacts **filled** (four generated 1:1 tiles, 1600px
-webp, empty alt because they are illustrations and not client work). **A slot
+Asset slots: services artefacts **withdrawn 2026-09-21** (the four
+generated tiles are deleted; the plates carry icons). **A slot
 bleed is for objects; a scene is the card** (2026-09-15): on home each tile is
 the whole 1:1 card with the copy on a shade that holds under it then fades; on
 /services each discipline is a full section with its tile at 45% beside the
 name, sides alternating, 4:3, above the name below 1024. The 404 carries the
-mark render, `vmark.webp`, 1200px shown at 480. About (third version): all six sections, no images; the hero is the
-site's SECOND display use (the home hero's clamp), and the pricing band's
-$700 figure at 200px is its object. A route drawn in code and a typographic
+mark render, `vmark.webp`, 1200px shown at 480. About (third version): the hero is the cream band again since
+2026-09-21, the statement at the heading step left and the mascot right, so
+the home hero is the one display use; a "Four disciplines, one team" row of
+the home icon plates follows section 2; the pricing band's $700 figure at
+200px is its object. The home Services cards are icon plates since
+2026-09-21 (64px Phosphor icon, Moldie name, three items) and the four
+tiles are deleted. A route drawn in code and a typographic
 figure both count as a band's object. A mascot
 band, a framed exhibit and a plain image-beside-text split are three different
 families by amendment; wall tiles 16:10 (unmounted). The footer (rebuilt

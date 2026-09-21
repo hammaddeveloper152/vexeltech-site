@@ -1,41 +1,56 @@
 /* ==========================================================================
-   THE ABOUT PAGE, THIRD VERSION, 2026-09-15. Four sections built; the hero and
-   the pricing band are held until their images exist. See AboutPage.jsx.
+   THE ABOUT PAGE, THIRD VERSION, 2026-09-15; the cream hero restored and the
+   disciplines row added 2026-09-21. See AboutPage.jsx.
    ========================================================================== */
 
 .ab3-hero,
 .ab3-what,
+.ab3-plates,
 .ab3-how,
 .ab3-price,
 .ab3-std {
   padding: var(--s-3xl) var(--inset);
 }
 
-/* ---- 1. Hero: type only, at the display step ------------------------------
+/* ---- 1. Hero: a cream band with the mascot on it, 2026-09-21 --------------
 
-   THE SITE'S SECOND DISPLAY USE, by the user, 2026-09-16. The size is the home
-   hero's own clamp, measure / 6.227 with the same height cap and the same
-   inset per breakpoint, so the two display lines are one size at every width.
-   Left aligned in a 60% measure from 1024; the full measure below. Line height
-   0.88, the home hero's. No object. */
+   THE CREAM HERO AS BUILT ON 2026-09-15, restored by the user: the statement
+   at the HEADING step on the left, 60% of the row, the mascot on the right at
+   40%, floating. The display-step hero it replaces was the site's second
+   display use, and that record is withdrawn with it: the home hero is the one
+   display use again. The copy is the third version's, unchanged.
+
+   Every value on the band is asphalt, 15.7:1 on cream, and the focus ring is
+   restated asphalt. The bar stays solid: a cream band is not a film or
+   surface hero, and white navigation over cream would be 1.13:1. */
+.ab3-hero {
+  background: var(--c-cream);
+  color: var(--c-asphalt);
+}
+
+.ab3-hero__in {
+  display: grid;
+  gap: var(--s-2xl);
+  align-items: center;
+}
+
 .ab3-hero__text {
   display: grid;
-  gap: var(--s-xl);
+  gap: var(--s-lg);
+  align-content: start;
+  min-width: 0;
 }
 
 .ab3-hero__h {
   margin: 0;
   font-family: var(--font-loud);
-  font-size: min(calc((100vw - 2 * var(--s-md)) / 6.227), calc((100svh - 360px) / 1.76));
-  line-height: 0.88;
+  font-size: var(--t-loud-h);
+  line-height: var(--t-loud-line);
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--c-shop-white); /* 17.77:1 */
-  /* "$700." sat alone on the last line at 1280 (viewer audit, 2026-09-16).
-     The base rule leaves h1 out for the home hero's composed lines; this one
-     is not composed, so it takes `pretty` itself. */
-  text-wrap: pretty;
+  color: var(--c-asphalt); /* 15.7:1 on cream */
+  text-wrap: balance;
 }
 
 .ab3-hero__p {
@@ -44,28 +59,74 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* 13.84:1 */
+  color: var(--c-asphalt); /* 15.7:1 on cream */
   text-wrap: pretty;
 }
 
-@media (min-width: 768px) {
-  .ab3-hero__h {
-    font-size: min(calc((100vw - 2 * var(--s-xl)) / 6.227), calc((100svh - 360px) / 1.76));
-  }
+.ab3-hero :focus-visible {
+  outline-color: var(--c-asphalt); /* the yellow ring is 1.66:1 on cream */
+}
+
+/* Below 1024 the mascot sits under the type, capped so it stays a character
+   standing on the band. Decorative, a brand object, exempt from the carrier
+   count; it floats on `.float`, and holds still under reduced motion. */
+.ab3-hero__art {
+  width: min(100%, 360px);
+  justify-self: center;
+}
+
+.ab3-hero__character {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 @media (min-width: 1024px) {
-  .ab3-hero__text {
-    max-width: 60%;
+  /* 60 / 40 of the row, the gap taken from both in proportion. */
+  .ab3-hero__in {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    column-gap: var(--s-2xl);
   }
 
-  .ab3-hero__h {
-    font-size: min(calc((100vw - 2 * var(--s-2xl)) / 6.227), calc((100svh - 360px) / 1.76));
+  .ab3-hero__art {
+    width: 100%;
+    justify-self: stretch;
   }
 
   .ab3-hero__p {
     font-size: var(--t-h3-size);
     line-height: 36px;
+  }
+}
+
+/* ---- 2b. Four disciplines, one team: the icon plates, 2026-09-21 ---------
+
+   The home page's plates, the same component and the same stylesheet
+   (`plates.css`), each linking to its section on /services, in the home
+   page's 2x2 from 768 and one column below. The heading is the page's
+   heading step.
+
+   NOT FOUR ACROSS, by the container-budget test: a plate is 281px at 1280,
+   its content box 217px, and AUTOMATION in Moldie at 40px is 233px. It
+   overflows at every width where four fit, and narrower at 1024. */
+.ab3-plates__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ab3-plates__grid .svc__plate {
+  height: 100%;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .ab3-plates__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-xl);
   }
 }
 
