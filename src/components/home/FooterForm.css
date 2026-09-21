@@ -24,15 +24,41 @@
   margin: 0 auto;
 }
 
-/* The contact page's handset, 2026-09-14. Centred above the heading, 280px
-   wide at 1280 — 21.875vw — capped there, and never under 160px on a phone.
-   A brand object: exempt from the carrier count, and floating on `.float`
-   from tokens.css, which does not run under reduced motion. */
-.foot__handset {
-  display: block;
-  width: clamp(160px, 21.875vw, 280px);
-  height: auto;
-  margin: 0 auto var(--s-xl);
+/* ---- P2 beside the form, home only, 2026-09-21 --------------------------
+
+   From 1024 the character stands in a 320px column at the left of the form,
+   top-aligned with it. Below, 200px, centred above the form. The column only
+   exists when the pose has rendered: `:has()` keeps the form full width while
+   the slot is empty. The handset that stood here on Contact is gone. */
+.foot__cast {
+  display: grid;
+  justify-items: center;
+  margin-bottom: var(--s-xl);
+}
+
+.foot__cast:empty {
+  display: none;
+}
+
+.foot__char {
+  width: 200px;
+}
+
+@media (min-width: 1024px) {
+  .foot__stage:has(.foot__char) {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    column-gap: var(--s-2xl);
+    align-items: start;
+  }
+
+  .foot__cast {
+    margin-bottom: 0;
+  }
+
+  .foot__char {
+    width: 320px;
+  }
 }
 
 /* MONIGUE, 2026-09-21, by the user. It was Clash at h2, which the register
@@ -221,7 +247,6 @@
 @media (hover: hover) and (pointer: fine) {
   .foot__submit:hover {
     opacity: var(--hover-opacity); /* 8.16:1, above the 0.64 floor */
-    transform: translateY(-1px);
   }
 }
 
@@ -341,7 +366,6 @@
 @media (hover: hover) and (pointer: fine) {
   .foot__nav-link:hover {
     opacity: var(--hover-opacity);
-    transform: translateY(-1px);
   }
 }
 
@@ -350,7 +374,9 @@
 }
 
 /* The social glyphs: Phosphor logos at the 24px station in a 48px target,
-   steel-lift, machine yellow on hover. None render until a URL is supplied. */
+   steel-lift, shop white on hover and focus (yellow until 2026-09-21: the
+   storyboard keeps yellow off everything but buttons, the route line, the
+   hovered card and the Yellow band). None render until a URL is supplied. */
 .social {
   display: flex;
   flex-wrap: wrap;
@@ -370,12 +396,12 @@
 
 @media (hover: hover) and (pointer: fine) {
   .social__a:hover {
-    color: var(--c-accent-text-dark);
+    color: var(--c-shop-white); /* 17.77:1 */
   }
 }
 
 .social__a:focus-visible {
-  color: var(--c-accent-text-dark);
+  color: var(--c-shop-white);
 }
 
 .social__a:active {

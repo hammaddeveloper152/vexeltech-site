@@ -10,7 +10,7 @@ import '../../styles/register.css';
    THE FORM IS ON EVERY ROUTE, 2026-09-21, by the user: every page ends in
    `FooterForm`, "Get in touch", the form, the email under it, then the pages
    row and the base. The homepage composes it itself (`Home.jsx`); the Contact
-   page passes `meta={false}` and renders its own, with the handset.
+   page passes `meta={false}` and renders its own.
 
    ---- What this shell owns ----------------------------------------------
 
@@ -54,7 +54,7 @@ export default function Shell({ title, description, meta = true, barOver = false
       <main id="main" tabIndex={-1}>
         {children}
         {/* The Contact page passes meta={false}: it renders FooterForm
-            itself, with the handset, and two would be the form twice.
+            itself, and two would be the form twice.
 
             The footer is `vt foot` inside FooterForm, which is load-bearing:
             tokens.css applies the ground per SECTION, and a footer rendered

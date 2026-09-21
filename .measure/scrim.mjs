@@ -45,7 +45,7 @@ const BANDS = [
   /* Glass, home's Process section since 2026-09-16. Walked from 60 by the
      user's brief; the arc field share is carrier.mjs's, held under 20.5%. */
   { key: 'glass', cls: 'band-glass', start: 60, floor: 0,
-    at: [['/', '.process']] },
+    at: [['/', '.route-band.band-glass']] },
   /* The spotlight, About's call. Walked from 30 by the user's brief. */
   { key: 'spot', cls: 'band-spot', start: 30, floor: 0,
     at: [['/about-us', '.callband']] },

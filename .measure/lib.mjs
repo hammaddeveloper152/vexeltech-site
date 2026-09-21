@@ -91,17 +91,19 @@ export async function scrollTo(page, y) {
   await new Promise((r) => setTimeout(r, 220));
 }
 
-/* The eleven frames and the one element each spends its accent on. */
+/* The home sections in storyboard order (2026-09-21) and the one element each
+   spends its accent on at rest. The work grid, the testimonials and Process
+   came off; the counter row is off until its figures exist; the FAQ heading
+   went white. A hovered card is the frame's carrier only while the pointer is
+   on it, so the rest walk lists Services with no carrier. */
 export const FRAMES = [
-  { name: 'Hero',         section: '.hero',     carrier: '.hero__cta:not(.hero__cta--line)' },
-  { name: 'Failures',     section: '.fail',     carrier: '.fail__item--lead .fail__s' },
-  { name: 'Services',     section: '.services', carrier: '.services__discipline' },
-  { name: 'Marquee',      section: '.marquee',  carrier: null },
-  { name: 'Work grid',    section: '.work',     carrier: '.work__h' },
-  { name: 'About',        section: '.about',    carrier: '.about__link' },
-  { name: 'Counter row',  section: '.counters', carrier: '.counters__item:first-child .counters__n' },
-  { name: 'Testimonials', section: '.quotes',   carrier: '.quotes__slide[data-active="true"] .quotes__mark' },
-  { name: 'Process',      section: '.process',  carrier: '.process__step[data-lit="true"] .process__n-lit' },
-  { name: 'FAQ',          section: '.faq',      carrier: '.faq__h' },
-  { name: 'Footer',       section: '.foot',     carrier: '.foot__submit' },
+  { name: 'Hero',         section: '.hero',             carrier: '.hero__cta:not(.hero__cta--line)' },
+  { name: 'Failures',     section: '.fail',             carrier: null },
+  { name: 'About',        section: '.about',            carrier: null },
+  { name: 'Services',     section: '.services',         carrier: null },
+  { name: 'Ticker',       section: '.ticker',           carrier: null },
+  { name: 'Route',        section: '.route-band',       carrier: '.route' },
+  { name: 'Promise',      section: '.promise',          carrier: null },
+  { name: 'FAQ',          section: '.faq',              carrier: null },
+  { name: 'Footer',       section: '.foot',             carrier: '.foot__submit' },
 ];

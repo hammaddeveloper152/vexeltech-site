@@ -1,6 +1,7 @@
 import React from 'react';
 import Shell from './Shell.jsx';
 import RouteBand from '../../components/site/RouteBand.jsx';
+import PromiseBand from '../../components/site/PromiseBand.jsx';
 import { CallBand } from './parts.jsx';
 import DisciplinePlate from '../../components/site/DisciplinePlate.jsx';
 import usePlateArrival from '../../components/home/usePlateArrival.js';
@@ -29,13 +30,6 @@ import '../../styles/aboutpage.css';
    EVERY LINE IS THE BRIEF'S, which is the user's own copy. The one image is
    the mascot, a brand object. */
 
-const REFUSALS = [
-  "We don't sell retainers. Thirty days of support are included, after that it's a conversation.",
-  "We don't use templates. Every build starts from your business.",
-  "We don't hide the price until a call. It's on this site.",
-  "We don't keep your files. Domain, hosting, code and credentials move to your name.",
-];
-
 const STANDARDS = [
   'You see the work before you owe anything.',
   'Revisions are unlimited until you say stop.',
@@ -51,7 +45,7 @@ export default function AboutPage() {
       description="Branding, websites, marketing and automation for local service businesses across the US. One flat price."
     >
       {/* 1. HERO. A cream band with the mascot standing on it. */}
-      <section className="vt ab3-hero" aria-labelledby="ab3-hero-h">
+      <section className="vt ab3-hero colour-band" aria-labelledby="ab3-hero-h">
         <div className="ab3__in ab3-hero__in">
           <div className="ab3-hero__text">
             <h1 className="ab3-hero__h" id="ab3-hero-h">
@@ -116,28 +110,8 @@ export default function AboutPage() {
       {/* 3. HOW IT GOES. A cream band; the route is the object standing on it. */}
       <RouteBand id="ab3-how-h" heading="Here is exactly how a project runs." />
 
-      {/* 4. PRICING AND REFUSALS. A yellow band; the figure is its object. */}
-      <section className="vt ab3-price" aria-labelledby="ab3-price-h">
-        <div className="ab3__in">
-          <h2 className="ab3__h ab3-price__h" id="ab3-price-h">
-            Flat prices, and a short list of things we refuse to do.
-          </h2>
-          <div className="ab3-price__cols">
-            <div className="ab3-price__fig">
-              <p className="ab3-price__n">$700</p>
-              <p className="ab3-price__k">flat, one time</p>
-              <p className="ab3-price__k">$299 to $449 for branding</p>
-            </div>
-            <ul className="ab3-price__refuse">
-              {REFUSALS.map((line) => (
-                <li className="ab3-price__r" key={line}>
-                  {line}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
+      {/* 4. PRICING AND REFUSALS. The promise band, shared with home. */}
+      <PromiseBand id="ab3-price-h" />
 
       {/* 5. STANDARDS. */}
       <section className="vt ab3-std" aria-labelledby="ab3-std-h">

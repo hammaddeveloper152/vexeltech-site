@@ -377,7 +377,6 @@
 @media (hover: hover) and (pointer: fine) {
   .callband__cta:hover {
     opacity: var(--hover-opacity); /* 0.92, still 8.16:1 */
-    transform: translateY(-1px);
   }
 }
 
@@ -485,7 +484,6 @@
 @media (hover: hover) and (pointer: fine) {
   .one__cta:hover {
     opacity: var(--hover-opacity);
-    transform: translateY(-1px);
   }
 }
 

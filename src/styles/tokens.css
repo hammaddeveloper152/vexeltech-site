@@ -613,7 +613,6 @@ html {
   .bar__brand:hover,
   .foot__brand:hover {
     opacity: var(--hover-opacity);
-    transform: translateY(-1px);
   }
 }
 

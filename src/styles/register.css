@@ -50,10 +50,8 @@
    pull quote is a fifth thing in that frame); the rule is harmless on it. */
 .fail__h,
 .services__h,
-.work__h,
 .about__h,
 .counters__h,
-.process__h,
 .faq__h,
 .foot__h {
   margin: 0 0 var(--s-xl);
@@ -68,44 +66,24 @@
 }
 
 /* ---- Failures -----------------------------------------------------------
-   A MACHINE YELLOW BAND, 2026-09-14, and every value on it is ASPHALT.
-
-   The band's ground is in Failures.css. This sheet sets the type, and it
-   loads after that one, so the colour is restated here with its ratio: the
-   heading rule above would otherwise hand the section white type, which on
-   yellow is 1.88:1. A ground change restates its own text values; DESIGN.md.
-
-   No carrier and no lead. The band is a ground, which is not a carrier, and
-   the four statements are peers in four columns from 1024 up, led by the
-   section heading. The lead statement's figure size and the rail's strokes
-   went with the ledger they belonged to. */
-.fail__h {
-  color: var(--c-asphalt); /* 9.46:1 on the yellow band */
-}
-
+   FOUR DARK ROWS, 2026-09-21. The heading is the rule above, white. The
+   statement is Monigue at the small loud step, white; the consequence is body
+   in bone, 13.84:1. No carrier. */
 .fail__s {
   font-family: var(--font-loud);
-  font-size: var(--t-loud-s);
+  font-size: var(--t-loud-small);
   line-height: var(--t-loud-line);
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--c-asphalt); /* 9.46:1 */
+  color: var(--c-shop-white); /* 17.77:1 */
 }
 
 /* The consequence explains: body, not small. */
 .fail__c {
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-asphalt); /* 9.46:1 */
-}
-
-/* Four columns take the small loud step, so no statement runs past two lines
-   in a column a quarter of the measure wide. */
-@media (min-width: 1024px) {
-  .fail__s {
-    font-size: var(--t-loud-small);
-  }
+  color: var(--c-bone); /* 13.84:1 */
 }
 
 /* ---- Services -----------------------------------------------------------
@@ -187,70 +165,7 @@
    with the client slots on 2026-09-15. The ticker's 3px strike is exempt from
    the carrier count as a ticker; DESIGN.md records the mechanic. */
 
-/* ---- Work grid ----------------------------------------------------------
-   Carrier: THE HEADING, in yellow. Six plates and none of them may be the
-   carrier — the smallest is 366x366, 13% of the frame on its own.
-
-   NO CARRIER NOW. The heading yielded to the services scroller above it,
-   which holds a frame with it for 80px of scroll at 1280 and 260px at 390.
-   The heading goes back to shop white with every other section heading, by
-   simply not overriding the shared rule at the top of this sheet. The
-   marquee, which gave its separators' colour up to this same heading in the
-   pass before, keeps nothing either: that seam is now silent on both sides,
-   which is the correct outcome of a rule about frames rather than sections.
-
-   The empty plates are made deliberate with an index: a CSS counter, so no
-   copy is invented, set in Monigue at the figure size in steel-dark. It reads
-   as a numbered slot rather than a missing picture. The plates' own ratios
-   change per breakpoint and are measured rather than quoted; the asset list
-   is in src/assets/video/README.md. */
-.work__list {
-  counter-reset: plate;
-}
-
-.work__item {
-  counter-increment: plate;
-}
-
-/* NOT `position: relative`. It was, and it silently cancelled the
-   `position: absolute` this element has in WorkGrid.css, which is what its
-   `inset: 0` depends on: the span collapsed to its own borders and line box
-   and measured 2 x 24px inside a 760 x 475 plate.
-
-   Everything still looked right, which is why it survived. The visible frame
-   around each plate is `.work__link`'s own border, and the CSS-counter index
-   positions against this element wherever it happens to be, which is the top
-   left corner either way. What was actually missing was the surface: every
-   empty plate was painting asphalt rather than surface-1, so the reserved
-   slots read as holes in the page instead of as reserved slots.
-
-   `relative` bought nothing. An absolutely positioned element is already a
-   containing block for the index. Found by measuring the box against the box
-   it is supposed to fill, which is the container-budget test pointed the
-   other way. */
-.work__plate {
-  border: 1px solid var(--c-rule-dark);
-}
-
-.work__plate::before {
-  content: counter(plate, decimal-leading-zero);
-  position: absolute;
-  inset: var(--s-md) auto auto var(--s-md);
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-fig);
-  line-height: var(--t-loud-line);
-  color: var(--c-steel-dark); /* 5.12:1 */
-  pointer-events: none;
-}
-
-.work__label-t {
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-small);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
-}
+/* ---- Work grid: came off the home page with the storyboard, 2026-09-21. */
 
 /* ---- About --------------------------------------------------------------
    A CREAM BAND, 2026-09-14. No carrier: the call is ASPHALT, by the user's
@@ -337,135 +252,8 @@
   color: var(--c-steel-dark); /* 5.12:1 */
 }
 
-/* ---- Testimonials -------------------------------------------------------
-   NO CARRIER. This frame spends nothing, and that is the decision.
-
-   It had one: the count, "01 / 04", at the figure size in machine yellow. It
-   reached that by promotion rather than by choice — it was the only yellow in
-   the frame at 12px and the register pass scaled up whatever each section
-   already had — and at the figure size it was the loudest object in a section
-   whose subject is what somebody said. A count is a position in a set. It
-   tells the reader which of four they are on, and making it the section's
-   shout gives the accent to the one element in the frame that says nothing
-   about the work.
-
-   The quotation mark was built as the replacement and measured out. The loud
-   scale is derived on cap height and a quotation mark has no cap height: at
-   the figure size it paints 869 accent pixels at 1280 against the counter
-   figure's 12,665 at the same size, and against the FAQ heading's 15,924 a
-   whole step smaller. 0.09% of the frame. The full measurement and the 390
-   numbers are recorded in Testimonials.css, where the mark lives.
-
-   So the count drops to the small loud size and goes white, the mark goes
-   back to being a texture at white-at-12%, and the frame carries no accent.
-   One accent per frame is a ceiling, not a quota: the work wall, the services
-   scroller and now the marquee all spend nothing. The section still shows the
-   accent in the keyboard state, because the focus ring is machine yellow,
-   which is the accent doing the job it exists for.
-
-   The quote is read, so it is Satoshi at the quote size. */
-.quotes__q p {
-  font-family: var(--font-offer);
-  font-weight: var(--t-weight-body);
-  letter-spacing: normal;
-}
-
-.quotes__count {
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-small);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--c-shop-white); /* 17.77:1 */
-}
-
-/* Every part of the count takes the section's own white. There is no longer a
-   lit half: the whole string is metadata and there is no accent in the frame
-   for it to be the exception to. */
-.quotes__count > * {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-  color: inherit;
-}
-
-/* ---- Process ------------------------------------------------------------
-   NO CARRIER. The lit numerals yielded to the FAQ heading below them, which
-   they share a frame with for 520px of scroll at 1280 and 500px at 390 —
-   two thirds of a screen, the longest overlap on the page.
-
-   The mechanic is untouched: every step the reader has passed still lights,
-   still at the figure size, still on opacity alone with no colour animated.
-   The lit state goes to SHOP WHITE at 17.77:1 against the muted steel-dark
-   at 5.12:1, which is the pair this section carried before the register pass
-   made it yellow. A numeral going from grey to white still reads as lighting
-   up; that contrast step is 3.5x and it is the thing the eye is watching.
-
-   The route keeps its draw-on-scroll and its stroke token and stays
-   steel-dark. Step titles shout at the small loud size; the descriptions are
-   read. */
-.process__n-muted,
-.process__n-lit {
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-fig);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-}
-
-.process__n-muted {
-  color: var(--c-steel-dark);
-}
-
-.process__n-lit {
-  color: var(--c-shop-white); /* 17.77:1 */
-}
-
-/* THE PASSED ROUTE IS MACHINE YELLOW AND IT IS OWNED HERE.
-
-   This rule used to paint all three strokes steel-dark, and Process.css
-   carried a note saying so — that register.css owns where the accent lands and
-   the section sheet is kept in step with it. That is still the arrangement,
-   and the answer changed: the route behind the reader is the accent now, a 3px
-   stroke, the section's only carrier. The line ahead and the card edges stay
-   steel-dark.
-
-   Written in one place for the reason the old note gave: two sheets claiming
-   one stroke disagree silently and are decided by load order, which is how a
-   route can repaint itself the day somebody reorders an import. */
-.process__passed {
-  stroke: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
-}
-
-.process__lit,
-.process__edge {
-  stroke: var(--c-steel-dark);
-}
-
-/* ON THE GLASS BAND THE MUTED STATE IS STEEL-LIFT, 2026-09-16, by the user.
-   Steel-dark is an asphalt-only token (5.12:1 with no headroom) and a band is
-   not asphalt. The muted numerals, the muted bodies and the route ahead take
-   steel-lift, the value the muted titles already use; the crossfade to white
-   and bone is unchanged. Declared here, where the process colours live. */
-.band-glass .process__n-muted,
-.band-glass .process__d-muted {
-  color: var(--c-steel-lift);
-}
-
-.band-glass .process__lit {
-  stroke: var(--c-steel-lift);
-}
-
-.process__t-muted,
-.process__t-lit {
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-small);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
-}
+/* ---- Testimonials and Process: came off with the storyboard, 2026-09-21. The
+   route is styles/route.css. */
 
 /* ---- FAQ ----------------------------------------------------------------
    DARK, AND NO GROUND. Carrier: THE HEADING, in yellow. Questions are pressed,
@@ -483,8 +271,11 @@
   color: var(--c-shop-white);
 }
 
+/* WHITE, 2026-09-21. It was the FAQ frame's yellow carrier; the storyboard
+   keeps yellow to buttons, the route line, the hovered card and the Yellow
+   band, and a heading is none of them. */
 .faq__h {
-  color: var(--c-accent-text-dark); /* 9.46:1 */
+  color: var(--c-shop-white); /* 17.77:1 */
 }
 
 .faq__list,

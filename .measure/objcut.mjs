@@ -45,7 +45,6 @@ const HI = 250;
 const LO = 100;
 const CHROMA = 14;
 const PAD = 32;
-const ICONS = ['icon-phone', 'icon-megaphone', 'icon-missed-call', 'icon-name-tag'];
 
 mkdirSync(OUT, { recursive: true });
 const lum8 = (r, g, b) => 0.2126 * r + 0.7152 * g + 0.0722 * b;
@@ -119,42 +118,22 @@ function crop(png, W, H, [x0, y0, x1, y1], name) {
   console.log(`  ${name}.png ${w}x${h} (box ${bx0},${by0} to ${bx1},${by1})`);
 }
 
-/* the two single objects: trimmed to everything with any alpha, so a soft
-   shadow is kept rather than cut at the half-transparent line */
-for (const [file, name] of [['character.png.png', 'character'], ['handset.png.png', 'handset']]) {
+/* THE CHARACTER POSES, 2026-09-21. The storyboard's P2 to P5 are generated on
+   pure white and saved as character-2.png to character-5.png in
+   public/assets/objects. Name them on the command line; each is trimmed to
+   everything with any alpha, so a soft shadow is kept rather than cut at the
+   half-transparent line. With no arguments it cuts P1 from its source.
+
+   The handset and the icon sprite were cut here until the storyboard took
+   them off the site; their branch is gone with their files.
+
+     node .measure/objcut.mjs character-2.png character-3.png
+     ffmpeg -i .measure/out/objects/character-2.png -vf "scale='min(1600,iw)':-2"        -c:v libwebp -quality 90 public/assets/objects/character-2.webp */
+const files = process.argv.slice(2);
+const jobs = files.length
+  ? files.map((f) => [f, f.replace(/\.png(\.png)?$/i, '')])
+  : [['character.png.png', 'character']];
+for (const [file, name] of jobs) {
   const { png, W, H } = cut(file);
   crop(png, W, H, boxOf(png, W, H, (x, y, a) => a > 8), name);
-}
-
-/* the sprite: connected regions of solid alpha, 8-neighbour, the four largest,
-   left to right; each crop then keeps every pixel in its padded box */
-{
-  const { png, W, H } = cut('icons.png.png');
-  const N = W * H;
-  const label = new Int32Array(N).fill(-1);
-  const regions = [];
-  for (let p = 0; p < N; p++) {
-    if (label[p] !== -1 || png.data[p * 4 + 3] < 128) continue;
-    const id = regions.length;
-    let n = 0, x0 = W, y0 = H, x1 = -1, y1 = -1;
-    const st = [p];
-    label[p] = id;
-    while (st.length) {
-      const q = st.pop();
-      const qx = q % W, qy = (q - qx) / W;
-      n++;
-      if (qx < x0) x0 = qx; if (qx > x1) x1 = qx; if (qy < y0) y0 = qy; if (qy > y1) y1 = qy;
-      for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
-        const nx = qx + dx, ny = qy + dy;
-        if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
-        const r = ny * W + nx;
-        if (label[r] === -1 && png.data[r * 4 + 3] >= 128) { label[r] = id; st.push(r); }
-      }
-    }
-    regions.push({ n, box: [x0, y0, x1, y1] });
-  }
-  const big = regions.filter((r) => r.n > N * 0.005).sort((a, b) => a.box[0] - b.box[0]);
-  console.log(`  sprite: ${regions.length} regions, ${big.length} over 0.5% of the image`);
-  if (big.length !== ICONS.length) throw new Error(`expected ${ICONS.length} icons, found ${big.length}`);
-  big.forEach((r, i) => crop(png, W, H, r.box, ICONS[i]));
 }

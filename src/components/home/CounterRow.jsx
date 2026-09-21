@@ -128,6 +128,8 @@ function Counter({ value, label, index, run, reduced, landed, onLanded }) {
    interrupted rather than two materials. Home passes `band`; About does not,
    and its counter row is transparent over the page rig like every other
    section on that page. */
+const FIGURES_REAL = false;
+
 export default function CounterRow({ band = false }) {
   const reduced = useReducedMotion();
   const [ref, revealed] = useReveal();
@@ -144,6 +146,14 @@ export default function CounterRow({ band = false }) {
       return next;
     });
   }, []);
+
+  /* OFF UNTIL THE FOUR FIGURES EXIST (storyboard, 2026-09-21). Every value
+     and label above is a placeholder, and a count-up of placeholder numbers is
+     a claim. Replace all four with real figures and labels, set
+     `FIGURES_REAL` to true, and the section, its marble and its count-up
+     return unchanged. Checked after every hook, so the hook order never
+     changes. */
+  if (!FIGURES_REAL) return null;
 
   return (
     <section

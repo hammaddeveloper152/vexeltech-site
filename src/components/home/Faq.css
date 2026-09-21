@@ -305,7 +305,6 @@
 @media (hover: hover) and (pointer: fine) {
   .faq__btn:hover {
     opacity: var(--hover-opacity);
-    transform: translateY(-1px); /* DESIGN.md states: opacity plus 1px */
   }
 
   .faq__btn:hover .faq__q-t {

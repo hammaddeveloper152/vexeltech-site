@@ -31,16 +31,19 @@ const COPY = {
   statement: 'We know how hard it is to spend your earnings and get nothing for it.',
   support:
     'So we build long-term partnerships instead of treating you as an invoice to be paid. A dedicated team stays on your project, which is why asking for a change here is a conversation and not a negotiation.',
-  link: 'How we work with you',
+  link: 'How we work',
 };
 
 export default function About() {
   const [ref, revealed] = useReveal();
 
   return (
-    <section className="vt about" aria-labelledby="about-h">
+    <section className="vt about colour-band" aria-labelledby="about-h">
+      {/* Visually hidden, and it names the section for a screen reader. It
+          read "Placeholder section name" until 2026-09-16, when the viewer
+          audit found the placeholder being announced; the user named it. */}
       <h2 className="about__h" id="about-h">
-        Placeholder section name
+        Who we are
       </h2>
 
       {/* The observer is on what moves, not on the section (viewer audit,

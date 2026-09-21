@@ -1,10 +1,9 @@
 /* ==========================================================================
    THE DISCIPLINE PLATE, an icon plate since 2026-09-21, by the user.
 
-   Lit-near with the two lights (the rim at rest, the key following the
-   pointer), a Phosphor icon at 64px top left in shop white, the name in
-   Moldie, the three items in bone. Mounted on home Services and on the About
-   page's "Four disciplines, one team" row.
+   Lit-near with the two lights at their stations, a Phosphor icon at 24px
+   top left in shop white, the name in Moldie, the three items in bone.
+   Mounted on home Services.
 
    THE TILES ARE GONE, and with them the 1:1 lock, the hold-then-fade shade
    and the scale-in-frame hover: all three existed for a picture. The plate is
@@ -25,7 +24,10 @@
   border-bottom-color: var(--lit-edge-arc);
   border-radius: var(--r-md);
   background-color: var(--lit-near);
-  background-image: var(--lit-rim);
+  /* THE TWO LIGHTS, at their stations: the key top left, the rim bottom
+     right. The key no longer follows the pointer (2026-09-21, storyboard). */
+  background-image: var(--lit-key), var(--lit-rim);
+  background-repeat: no-repeat;
   box-shadow: var(--lit-inset);
   /* The resting state, alternating, straightened on arrival. */
   transform: rotate(-1.5deg);
@@ -34,51 +36,11 @@
     background-color 400ms var(--ease-reveal);
 }
 
-/* THE KEY, on its own box so its strength can move: declared at 24% and
-   carried at 0.583, the 14% station. */
-.svc__plate::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  border-radius: inherit;
-  background-image: var(--lit-key-moving);
-  background-repeat: no-repeat;
-  background-size: 400px 400px;
-  background-position: -200px -200px;
-  opacity: 0.583;
-  pointer-events: none;
-  transition:
-    background-position 400ms var(--ease-reveal),
-    background-size 400ms var(--ease-reveal),
-    opacity 400ms var(--ease-reveal);
-}
-
-/* ---- THE SPOTLIGHT, as built -------------------------------------------
-
-   The key becomes a 300px spot under the pointer and the plane drops a step,
-   lit-near to lit-far: the two together are what make it a beam rather than a
-   bigger glow. 80ms follow, 400ms return. Gated here and in usePointerLight. */
+/* THE POINTER-FOLLOW LIGHT CAME OFF, 2026-09-21, by the user: the key was a
+   300px spot that tracked the pointer and dropped the plane a step. The
+   storyboard's motion list keeps the fill, the lift and the tilt, not the
+   light. */
 @media (hover: hover) and (pointer: fine) {
-  .svc__plate[data-lit='true'] {
-    background-color: var(--lit-far);
-    transition:
-      transform var(--d-drop) var(--ease-reveal),
-      background-color 200ms var(--ease-reveal);
-  }
-
-  .svc__plate[data-lit='true']::before {
-    background-size: 600px 600px;
-    background-position:
-      calc(var(--mx, 0) / 100 * var(--pw, 0px) - 300px)
-      calc(var(--my, 0) / 100 * var(--ph, 0px) - 300px);
-    opacity: 1;
-    transition:
-      background-position 80ms linear,
-      background-size 80ms linear,
-      opacity 80ms linear;
-  }
-
   /* PRESS IS THE WHOLE PLATE. 160ms is BUILD-LAW's pinned press duration. */
   .svc__plate:active {
     transform: rotate(0deg) translateY(-4px) scale(0.985);
@@ -96,15 +58,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .svc__plate,
-  .svc__plate::before,
-  .svc__plate[data-lit='true'],
-  .svc__plate[data-lit='true']::before {
+  .svc__plate {
     transition: none;
-  }
-
-  .svc__plate[data-lit='true'] {
-    background-color: var(--lit-near);
   }
 
   .svc__plate,
@@ -135,16 +90,15 @@
   color: var(--c-shop-white); /* the icon inherits it: 16.48:1 on lit-near */
 }
 
-/* THE ICON, 64px, top left. Not one of the three icon stations (16/24/40):
-   the user sized it for this object, where it stands in the corner the tile
-   used to fill, and it is the plate's one image. Phosphor regular weight,
-   `currentColor`, so the fill turns it asphalt with the words. */
+/* THE ICON, at the 24px station, top left (storyboard: Phosphor only, 24px,
+   inherit colour). It was 64px from 2026-09-21 until the storyboard pass the
+   same day. `currentColor`, so the fill turns it asphalt with the words. */
 .svc__icon {
   position: relative;
   z-index: 1;
   display: block;
-  width: 64px;
-  height: 64px;
+  width: var(--icon-md);
+  height: var(--icon-md);
 }
 
 /* ---- THE CARD FILLS, 2026-09-16, by the user ----------------------------
@@ -192,11 +146,6 @@
       transform var(--d-drop) var(--ease-reveal);
   }
 
-  .svc__plate:hover::before {
-    opacity: 0;
-    transition: opacity var(--d-drop) var(--ease-reveal);
-  }
-
   .svc__plate:hover .svc__icon,
   .svc__plate:hover .disc__name,
   .svc__plate:hover .disc__item {
@@ -216,12 +165,6 @@
     background-color var(--d-drop) var(--ease-reveal),
     border-color var(--d-drop) var(--ease-reveal),
     transform var(--d-drop) var(--ease-reveal);
-}
-
-.svc__plate:focus-visible::before,
-.svc__plate[data-tap='true']::before {
-  opacity: 0;
-  transition: opacity var(--d-drop) var(--ease-reveal);
 }
 
 .svc__plate:focus-visible .svc__icon,
@@ -249,12 +192,9 @@
     transform: none;
     transition: none;
   }
-
-  .svc__plate:hover::before,
   .svc__plate:hover .svc__icon,
   .svc__plate:hover .disc__name,
   .svc__plate:hover .disc__item,
-  .svc__plate[data-tap='true']::before,
   .svc__plate[data-tap='true'] .svc__icon,
   .svc__plate[data-tap='true'] .disc__name,
   .svc__plate[data-tap='true'] .disc__item {

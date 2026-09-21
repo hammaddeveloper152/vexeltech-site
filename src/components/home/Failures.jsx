@@ -1,4 +1,5 @@
 import React from 'react';
+import { IdentificationBadge, MagnifyingGlass, Megaphone, PhoneX } from '@phosphor-icons/react';
 import { useReveal } from './hooks.js';
 import './Failures.css';
 
@@ -10,56 +11,41 @@ import './Failures.css';
    remembered. Nothing in them is a claim about VexelTech, so BUILD-LAW.md
    Truth is not in play for them.
 
-   ---- A YELLOW BAND WITH FOUR OBJECTS ON IT, 2026-09-14 ------------------
+   ---- FOUR DARK ROWS, 2026-09-21, from the storyboard ----------------
 
-   This was the hanging-rail ledger: four statements down a wide column, their
-   consequences hanging in a narrow one, and a rail drawn between them on the
-   scroll. It is a machine yellow band now, edge to edge, with asphalt type,
-   and each failure stands with one object from the supplied icon set above
-   it. Four rows below 1024 and four columns from 1024 up.
+   Dark, no band: it cannot touch the hero. Four short rows at every width, a
+   Phosphor icon at the 24px station left of each statement and its
+   consequence. The rendered icon objects and the yellow band they stood on
+   came off with the storyboard, which allows no object but the character.
+   The icons are the user's choice: MagnifyingGlass, Megaphone, PhoneX,
+   IdentificationBadge.
 
-   What went with the ledger, because it existed only to carry it: the rail
-   and its three strokes, the scrubbed ScrollTrigger that gated each
-   consequence on the rail, and the lead statement's extra size. A lead was
-   the density law's answer while four statements sat at heading scale in one
-   column; four peers in four columns are a set, and the section heading is
-   what leads, which is where DESIGN.md says to look when a set of peers has
-   no leader.
-
-   Four columns is the layout family the counter row already uses on this
-   page. The user decided on 2026-09-14 that icon-and-text columns and a row of
-   figures are different families, and BUILD-LAW records the amendment.
-
-   ---- The consequences --------------------------------------------------
-
-   Lines one and two come from content answer 1.2, which names a business "not
-   getting enough leads by spending alot on their marketing budget", and one
-   that does "not have any online presence". Lines three and four were given
-   directly on 2026-09-08. */
+   Before this it was a yellow band with four rendered objects (2026-09-14),
+   and before that the hanging-rail ledger. */
 const FAILURES = [
   {
     id: 'find',
     statement: 'They cannot find you',
     consequence: 'No online presence, so the search that should have found you finds nobody.',
-    icon: 'icon-phone',
+    Icon: MagnifyingGlass,
   },
   {
     id: 'call',
     statement: 'Not enough are calling',
     consequence: 'The marketing budget goes out every month and the leads do not come back.',
-    icon: 'icon-megaphone',
+    Icon: Megaphone,
   },
   {
     id: 'miss',
     statement: 'You miss the ones who do',
     consequence: 'A missed call is a job that goes to whoever picked up instead.',
-    icon: 'icon-missed-call',
+    Icon: PhoneX,
   },
   {
     id: 'remember',
     statement: 'They do not remember you',
     consequence: 'Work with no name on it is work the next customer never hears about.',
-    icon: 'icon-name-tag',
+    Icon: IdentificationBadge,
   },
 ];
 
@@ -79,22 +65,11 @@ export default function Failures() {
         </h2>
 
         <ul className="fail__items" data-revealed={revealed ? 'true' : 'false'} ref={ref}>
-          {FAILURES.map(({ id, statement, consequence, icon }, i) => (
+          {FAILURES.map(({ id, statement, consequence, Icon }, i) => (
             <li className="fail__item" key={id} style={{ '--i': i }}>
-              {/* Decorative. The statement beside it says what it means, and
-                  an object that announced "megaphone" before "Not enough are
-                  calling" would say the section twice. A brand object, and
-                  exempt from the carrier count for that reason, like the
-                  wordmark. */}
-              <img
-                className="fail__icon"
-                src={`/assets/objects/${icon}.webp`}
-                alt=""
-                width="96"
-                height="96"
-                loading="lazy"
-                decoding="async"
-              />
+              {/* Phosphor at the 24px station, inheriting the row's colour.
+                  Decorative: the statement beside it says what it means. */}
+              <Icon className="i i--md fail__icon" aria-hidden="true" />
               <div className="fail__text">
                 <h3 className="fail__s">{statement}</h3>
                 <p className="fail__c">{consequence}</p>

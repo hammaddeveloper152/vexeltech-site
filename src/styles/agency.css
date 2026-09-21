@@ -180,53 +180,8 @@
    exempt from the carrier count as a ticker; DESIGN.md records the mechanic.
    ========================================================================== */
 
-/* ==========================================================================
-   5. WORK — asphalt, and the plates get an edge that reads as an object
-   ========================================================================== */
-
-/* The lit card treatment, and NO arc glow: About sits below these and owns
-   the arc in that viewport. The offset stays — an offset is not a glow, and
-   DESIGN.md records it as one of arc's four working uses. */
-/* The edges take the two lights; the FACE does not — a reserved slot is a
-   hairline and a numeral, and light on an edge is not content. */
-.work__plate {
-  border: 1px solid var(--lit-edge);
-  border-top-color: var(--lit-edge-top);
-  border-right-color: var(--lit-edge-arc);
-  border-bottom-color: var(--lit-edge-arc);
-  box-shadow:
-    10px 10px 0 rgb(13 71 189 / 55%),
-    inset 0 1px 0 rgb(255 255 255 / 6%);
-  /* NO GLOW AND NO FILL. This is a RESERVED SLOT — it holds a clip that does
-     not exist yet and shows its numeral until one does — and a reserved slot
-     is a hairline and a numeral, never decoration. The corner glow came off
-     with the surface fill; the offset stays, because an offset is the object's
-     shadow rather than something painted inside it. */
-}
-
-/* FULL MACHINE YELLOW, and one step down the loud scale.
-
-   They were steel-dark — grey on grey, reading as a placeholder rather than as
-   a plate number — and then yellow at 55%, which is the translucent-fill
-   mistake the footer mark made: 55% yellow on surface-1 composites to #8f6e21,
-   a bronze that is not in the palette. Yellow on dark is 100% or it is a
-   stroke.
-
-   At full strength six figures at the FIGURE tier (128px) would be six loud
-   objects in one section, so they drop to the heading tier — 96px at 1280,
-   48 at 390 — which is one step down and still the second largest type in the
-   section. */
-/* THE NAME FACE. A plate number is the plate's name — it is the only thing
-   identifying the object while the poster is missing — and 96px flat, because
-   the plate's box is the same object at both widths and the numeral is two
-   characters either way. */
-.work__plate::before {
-  color: var(--c-accent-text-dark); /* 8.44:1 on surface-warm */
-  font-family: var(--font-name);
-  font-size: var(--t-name-fig);
-  line-height: var(--t-loud-line);
-  letter-spacing: 0;
-}
+/* 5. WORK: the work grid came off the home page with the storyboard,
+   2026-09-21, and its rules with it. */
 
 /* ==========================================================================
    6. ABOUT — A CREAM BAND, 2026-09-14, WITH THE MASCOT STANDING ON IT.
@@ -268,19 +223,18 @@
   color: var(--c-asphalt); /* 15.7:1 on cream */
 }
 
-/* ASPHALT, by the user's decision. The label is 17.77:1 on its own fill and
-   the fill's edge is 15.7:1 against the cream. White would lose its edge at
-   1.13:1; yellow would be 1.66:1 at the edge and a second carrier beside the
-   counter row's lead figure. */
+/* THE ASPHALT OUTLINE, the kit's secondary button, 2026-09-21 (storyboard:
+   one button pair, yellow primary and asphalt outline secondary). Label and
+   edge are asphalt on cream, 15.7:1. */
 .about__link {
-  background: var(--c-asphalt);
+  background: transparent;
   border-color: var(--c-asphalt);
-  color: var(--c-shop-white); /* 17.77:1 on its fill */
+  color: var(--c-asphalt); /* 15.7:1 on cream */
   box-shadow: none;
 }
 
 .about__go {
-  color: var(--c-shop-white); /* 17.77:1 on the call's fill */
+  color: var(--c-asphalt); /* 15.7:1 on cream */
 }
 
 .about :focus-visible {
@@ -347,19 +301,9 @@
   background: var(--c-accent-draw-dark);
 }
 
-/* ==========================================================================
-   8. TESTIMONIALS — asphalt, and the quote mark goes very large
-   ========================================================================== */
-
-
-.quotes__mark {
-  color: var(--c-accent-text-dark);
-  opacity: 1;
-}
-
-/* ==========================================================================
-   9. PROCESS — asphalt, unchanged in ground. The route is already the accent.
-   ========================================================================== */
+/* 8 and 9. TESTIMONIALS and PROCESS came off with the storyboard,
+   2026-09-21: the testimonials section and home's Process, retired into the
+   one route (styles/route.css). */
 
 /* ==========================================================================
    10. FAQ — NO GROUND. The reading section, transparent over the page rig.

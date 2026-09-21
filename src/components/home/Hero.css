@@ -422,7 +422,6 @@
 @media (hover: hover) and (pointer: fine) {
   .hero__cta:hover {
     opacity: var(--hover-opacity); /* 0.92 -> 8.70:1 on the yellow, floor is 0.64 */
-    transform: translateY(-1px);
   }
 }
 

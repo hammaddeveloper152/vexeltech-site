@@ -5,12 +5,11 @@ import Hero from '../../components/home/Hero.jsx';
 import Failures from '../../components/home/Failures.jsx';
 import Services from '../../components/home/Services.jsx';
 import Marquee from '../../components/home/Marquee.jsx';
-import WorkGrid from '../../components/home/WorkGrid.jsx';
 import About from '../../components/home/About.jsx';
 import CounterRow from '../../components/home/CounterRow.jsx';
-import Testimonials from '../../components/home/Testimonials.jsx';
-import Process from '../../components/home/Process.jsx';
 import Faq from '../../components/home/Faq.jsx';
+import RouteBand from '../../components/site/RouteBand.jsx';
+import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import '../../styles/tokens.css';
 /* The loud register, applied to every section below the hero. Imported LAST
@@ -35,7 +34,18 @@ import '../../styles/lit.css';
    are the harness the measurement scripts point at, and pointing those at a
    client-routed page would mean every measurement waiting on the router.
 
-   ---- Ground rhythm ------------------------------------------------------
+   ---- THE STORYBOARD ORDER, 2026-09-21 -----------------------------------
+
+   VEXELTECH-STORYBOARD.md is the source of section order and asset
+   placement from this date, and it outranks the notes below where they
+   differ. Hero (dark), What it costs you (dark rows), Who we are (cream, P1),
+   What we do (dark cards) with the strike ticker under it, How it works (the
+   route on glass, P3 at stop 02), The numbers (marble, off until the four
+   figures exist), What we promise (yellow, P5), Questions (dark), Get in
+   touch (the form, P2). The work grid and the testimonials came off; home's
+   Process was retired into the one route.
+
+   ---- Ground rhythm (before the storyboard) ------------------------------
 
    Asphalt everywhere. The counter row and the FAQ used to be the two light
    sections; on a loud page a light section becomes the loudest thing on the
@@ -52,6 +62,15 @@ import '../../styles/lit.css';
 const TITLE = 'Website Design for Startups & Small Business | VexelTech';
 const DESCRIPTION =
   'Branding, websites, marketing and automation for startups, SMBs and founders. We show up with the work already built. Book a 15-minute call.';
+
+/* The retired Process component's four step descriptions, carried as one
+   line under stops 01 to 04 of the route (the user, 2026-09-21). */
+const STEP_LINES = [
+  "Thirty minutes with a brand strategist. You tell us what's wrong and what you're after, and we listen before we price anything.",
+  'Onboarding and research first, then design starts: the brand work for branding, the UI and UX for the site.',
+  'Four business days to build it, then testing. You look at it and tell us what to change, as many times as it takes.',
+  'It moves to your hosting, with every credential and the ownership under your name. You own everything you paid for.',
+];
 
 export default function Home() {
   useEffect(() => {
@@ -82,15 +101,21 @@ export default function Home() {
       <main id="main" tabIndex={-1}>
         <Hero />
         <Failures />
+        <About />
         <Services />
         <Marquee />
-        <WorkGrid />
-        <About />
+        <RouteBand
+          id="how-h"
+          heading="How it works"
+          ground="dark"
+          material="glass"
+          lines={STEP_LINES}
+          cast={{ pose: 3, at: 2 }}
+        />
         <CounterRow band />
-        <Testimonials />
-        <Process />
+        <PromiseBand id="promise-h" />
         <Faq />
-        <FooterForm />
+        <FooterForm cast />
       </main>
     </IconProvider>
   );

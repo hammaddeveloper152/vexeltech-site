@@ -91,10 +91,10 @@
     opacity var(--d-press) var(--ease-reveal);
 }
 
+/* The hover is opacity alone: the 1px nudge came off, 2026-09-21. */
 @media (hover: hover) and (pointer: fine) {
   .about__link:hover {
     opacity: var(--hover-opacity);
-    transform: translateY(-1px);
   }
 }
 
@@ -108,18 +108,21 @@
   }
 }
 
-/* ---- 1024: the mascot at 40% on the left --------------------------------- */
+/* ---- 1024: the mascot at 40% on the RIGHT, 2026-09-21 ---------------------
+   The storyboard puts P1 right of the statement. The DOM keeps the mascot
+   first so a phone still stacks it above the type; the grid moves it. */
 @media (min-width: 1024px) {
   .about {
     padding: var(--s-3xl) var(--s-2xl);
   }
 
   .about__inner {
-    grid-template-columns: 40% minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) 40%;
     column-gap: var(--s-2xl);
   }
 
   .about__mascot {
+    order: 2;
     width: 100%;
     justify-self: stretch;
   }

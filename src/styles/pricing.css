@@ -387,7 +387,6 @@
 @media (hover: hover) and (pointer: fine) {
   .card__cta:hover {
     opacity: var(--hover-opacity);
-    transform: translateY(-1px);
   }
 }
 

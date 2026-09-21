@@ -377,7 +377,6 @@
   .bar__menu:hover,
   .bar__panel-link:hover {
     opacity: var(--hover-opacity);
-    transform: translateY(-1px);
   }
 }
 

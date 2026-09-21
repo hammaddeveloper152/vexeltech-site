@@ -440,7 +440,6 @@ section:has(> .pg__section-in > .svc) {
   .svc2__cta:hover,
   .svc2__link:hover {
     opacity: var(--hover-opacity);
-    transform: translateY(-1px);
   }
 }
 

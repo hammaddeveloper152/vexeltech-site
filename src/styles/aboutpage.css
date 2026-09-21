@@ -5,8 +5,6 @@
 
 .ab3-hero,
 .ab3-what,
-.ab3-plates,
-.ab3-price,
 .ab3-std {
   padding: var(--s-3xl) var(--inset);
 }
@@ -129,86 +127,8 @@
   }
 }
 
-/* ---- 4. Pricing and refusals: a yellow band, the figure standing on it -----
-
-   THE TYPOGRAPHIC FIGURE IS THE BAND'S OBJECT, by the user, 2026-09-16,
-   recorded beside the route rule. $700 in Monigue at 200px (never wider than
-   30% of the viewport, so it holds on a phone), with two mono lines under it:
-   the label register at 13px, the brief's size. The band is a GROUND, not a
-   carrier. Everything on it is asphalt, 9.46:1, and the focus ring is restated
-   asphalt. */
-.ab3-price {
-  background: var(--c-accent-field);
-  color: var(--c-asphalt);
-}
-
-.ab3-price .ab3__h {
-  color: var(--c-asphalt); /* 9.46:1 on the band */
-}
-
-.ab3-price :focus-visible {
-  outline-color: var(--c-asphalt);
-}
-
-.ab3-price__cols {
-  display: grid;
-  gap: var(--s-2xl);
-}
-
-.ab3-price__fig {
-  display: grid;
-  align-content: start;
-}
-
-.ab3-price__n {
-  margin: 0 0 var(--s-md);
-  font-family: var(--font-loud);
-  font-size: min(200px, 30vw);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--c-asphalt);
-}
-
-.ab3-price__k {
-  margin: var(--s-xs) 0 0;
-  font-family: var(--font-offer);
-  font-size: 13px;
-  line-height: 20px;
-  font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
-  color: var(--c-asphalt);
-}
-
-.ab3-price__refuse {
-  display: grid;
-  gap: var(--s-lg);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.ab3-price__r {
-  font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  color: var(--c-asphalt);
-  text-wrap: pretty;
-}
-
-@media (min-width: 1024px) {
-  .ab3-price__cols {
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-    column-gap: var(--s-2xl);
-    align-items: start;
-  }
-
-  .ab3-price__r {
-    font-size: var(--t-h3-size);
-    line-height: 36px;
-  }
-}
+/* ---- 4. Pricing and refusals: the promise band, `styles/promise.css`,
+   shared with home since the storyboard pass, 2026-09-21. ------------------ */
 
 .ab3__in {
   width: min(100%, 1200px);

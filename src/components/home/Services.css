@@ -25,28 +25,11 @@
 /* ---- The head ---------------------------------------------------------- */
 
 .services__head {
-  position: relative;
-  /* Clears the 3px bar and stands the type off it, the same relation the
-     plates give their own bar. */
-  padding-left: var(--s-md);
   margin-bottom: var(--s-2xl);
 }
 
-/* THE BAR, on the section heading. Same 3px, same machine yellow at 100%, same
-   full height as every plate carries — which is what makes the heading and the
-   four objects under it read as one set rather than a title above a grid.
-
-   It is the section's only carrier besides the plate bars, and all five
-   together are hairline scale. */
-.services__head::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 3px;
-  background: var(--c-accent-ground);
-}
+/* THE HEADING'S 3px YELLOW BAR CAME OFF, 2026-09-21: the storyboard keeps
+   yellow to buttons, the route line, the hovered card and the Yellow band. */
 
 /* Monigue, white, left. The heading tier, unchanged; only the ground under it
    moved, so the value is restated against asphalt rather than against the

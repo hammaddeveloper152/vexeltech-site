@@ -1,22 +1,41 @@
 /* ==========================================================================
-   THE ROUTE BAND. A cream band with the route drawn in code standing on it.
-   Built for About's "How it goes" (2026-09-16) and shared since 2026-09-21
-   with /services, where it is "How every project runs", before the call.
-   ==========================================================================
+   THE ROUTE. One component on the whole site (storyboard, 2026-09-21): five
+   stops on one drawn line. Home's "How it works" (dark, on the glass band),
+   /services' "How every project runs" (cream), About's "How it goes" (dark).
 
-   THE ROUTE IS THE BAND'S OBJECT, by the user's decision: a colour band is
-   allowed when objects stand on it, and a route drawn in code, five stops on
-   one line, is what stands on this one. Everything on the band is asphalt,
-   15.7:1 on cream, and the focus ring is restated asphalt.
+   ON CREAM everything is asphalt, 15.7:1, the line included: machine yellow
+   is 1.66:1 on cream, under the 3:1 a drawn object needs. The focus ring is
+   restated asphalt. A route drawn in code counts as a band's object (the
+   user's decision, 2026-09-15), so the cream band is not an empty field.
 
-   From 1024: five stops in a row with the line under them, a 12px asphalt stop
-   on the line under each. Below: the same route turned vertical, down the
-   left, each stop beside its line. The line is `--stroke-drawn`, the drawn
-   weight, in asphalt: machine yellow is 1.66:1 on cream. */
+   ON DARK the numerals and titles are white, the lines bone, and the LINE AND
+   ITS STOPS ARE MACHINE YELLOW, 9.46:1: the route line is one of the four
+   places the storyboard lets yellow live, and it is the section's carrier.
+
+   From 1024: five stops in a row with the line under them, a 12px stop on the
+   line under each. Below: the same route turned vertical, down the left.
+   ========================================================================== */
+
 .route-band {
+  --route-ink: var(--c-asphalt);
+  --route-line: var(--c-asphalt);
+  --route-soft: var(--c-asphalt);
   padding: var(--s-3xl) var(--inset);
+  color: var(--route-ink);
+}
+
+.route-band--cream {
   background: var(--c-cream);
-  color: var(--c-asphalt);
+}
+
+.route-band--cream :focus-visible {
+  outline-color: var(--c-asphalt);
+}
+
+.route-band--dark {
+  --route-ink: var(--c-shop-white); /* 17.77:1 on asphalt */
+  --route-line: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
+  --route-soft: var(--c-bone); /* 13.84:1 on asphalt */
 }
 
 .route-band__in {
@@ -24,7 +43,7 @@
   margin: 0 auto;
 }
 
-/* Monigue at the heading step, restated asphalt for the band. */
+/* Monigue at the heading step, in the ground's ink. */
 .route-band__h {
   margin: 0 0 var(--s-xl);
   font-family: var(--font-loud);
@@ -33,13 +52,43 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--c-asphalt); /* 15.7:1 on cream */
+  color: var(--route-ink);
   text-wrap: balance;
 }
 
-.route-band :focus-visible {
-  outline-color: var(--c-asphalt);
+/* ---- The character, standing above its stop ------------------------------
+
+   Below 1024 the route is vertical, so the character stands centred above it
+   at 200px. From 1024 it stands in its stop's own column, 220px, feet on the
+   row of numerals. The slot renders nothing until the pose exists. */
+.route__cast {
+  display: grid;
+  justify-items: center;
+  margin-bottom: var(--s-lg);
 }
+
+.route__cast:empty {
+  display: none;
+}
+
+.route__char {
+  width: 200px;
+}
+
+@media (min-width: 1024px) {
+  .route__cast {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    column-gap: var(--s-lg);
+    justify-items: start;
+  }
+
+  .route__char {
+    grid-column: var(--at);
+    width: min(220px, 100%);
+  }
+}
+
+/* ---- The route ------------------------------------------------------------ */
 
 .route {
   position: relative;
@@ -50,7 +99,7 @@
   list-style: none;
 }
 
-/* The line: vertical down the left below 1024. */
+/* The line: vertical down the left below 1024. It draws from its top. */
 .route::before {
   content: '';
   position: absolute;
@@ -58,12 +107,14 @@
   bottom: 6px;
   left: 5px;
   width: var(--stroke-drawn);
-  background: var(--c-asphalt);
+  background: var(--route-line);
+  transform-origin: 50% 0;
 }
 
 .route__stop {
   position: relative;
   display: grid;
+  align-content: start;
   gap: var(--s-xs);
 }
 
@@ -76,7 +127,7 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: var(--c-asphalt);
+  background: var(--route-line);
 }
 
 .route__n {
@@ -84,15 +135,26 @@
   font-size: var(--t-loud-small);
   line-height: var(--t-loud-line);
   font-weight: 400;
-  color: var(--c-asphalt);
+  color: var(--route-ink);
 }
 
 .route__t {
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-asphalt);
+  color: var(--route-ink);
   text-wrap: balance;
+}
+
+/* A stop's one line, where the mount gives one: small, in the ground's soft
+   value. Home carries the retired Process's four step descriptions here. */
+.route__d {
+  margin-top: var(--s-xs);
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--route-soft);
+  text-wrap: pretty;
 }
 
 @media (min-width: 1024px) {
@@ -102,7 +164,8 @@
     padding: 0 0 var(--s-xl);
   }
 
-  /* The line runs under the row, through the five stops. */
+  /* The line runs under the row, through the five stops, and draws from the
+     left. */
   .route::before {
     top: auto;
     bottom: 4.5px;
@@ -110,10 +173,10 @@
     right: 0;
     width: auto;
     height: var(--stroke-drawn);
+    transform-origin: 0 50%;
   }
 
   .route__stop {
-    align-content: start;
     padding-bottom: var(--s-xl);
   }
 
@@ -121,5 +184,48 @@
     top: auto;
     bottom: calc(-1 * var(--s-xl));
     left: 0;
+  }
+}
+
+/* ---- THE DRAW, on arrival ------------------------------------------------
+
+   Transform only. The line scales from its start over 900ms on the reveal
+   curve; each stop fades up 8px at the 70ms stagger behind it. */
+@media (prefers-reduced-motion: no-preference) {
+  .route::before {
+    transition: transform 900ms var(--ease-reveal);
+  }
+
+  .route[data-drawn='false']::before {
+    transform: scaleY(0);
+  }
+
+  .route__stop {
+    transition:
+      opacity var(--d-panel) var(--ease-reveal),
+      transform var(--d-panel) var(--ease-reveal);
+    transition-delay: calc(var(--i) * var(--stagger));
+  }
+
+  .route[data-drawn='false'] .route__stop {
+    opacity: 0;
+    transform: translateY(var(--s-sm));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+  .route[data-drawn='false']::before {
+    transform: scaleX(0);
+  }
+}
+
+/* Reduced motion: the line is drawn from the start; the stops only fade. */
+@media (prefers-reduced-motion: reduce) {
+  .route__stop {
+    transition: opacity var(--d-panel) var(--ease-reveal);
+  }
+
+  .route[data-drawn='false'] .route__stop {
+    opacity: 0;
   }
 }

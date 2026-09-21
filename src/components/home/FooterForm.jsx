@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PaperPlaneTilt } from '@phosphor-icons/react';
 import FooterMeta from './FooterMeta.jsx';
+import Character from '../site/Character.jsx';
 import { budgetBands } from '../../content/pricing.js';
 import './FooterForm.css';
 
@@ -70,10 +71,12 @@ function validate(id, value) {
   return '';
 }
 
-/* `handset`: the contact page's floating handset above the heading,
-   2026-09-14. A prop rather than always on, because this component also ends
-   the home page, and the object belongs to the page whose subject it is. */
-export default function FooterForm({ handset = false }) {
+/* `cast`: P2, the character on the phone, standing at the left of the form.
+   Home only (storyboard, 2026-09-21: each pose once per page it is on); every
+   other route ends in the same form without him. The slot renders nothing
+   until `character-2.webp` exists. The handset that stood above the heading
+   on Contact came off the site in the same pass. */
+export default function FooterForm({ cast = false }) {
   const [values, setValues] = useState({
     name: '', email: '', company: '', budget: '', message: '',
   });
@@ -129,22 +132,16 @@ export default function FooterForm({ handset = false }) {
   return (
     <footer className="vt foot scratched">
       <div className="foot__inner">
-        {/* Decorative: the heading under it says what the page is for. A brand
-            object, exempt from the carrier count. */}
-        {handset ? (
-          <img
-            className="foot__handset float"
-            src="/assets/objects/handset.webp"
-            alt=""
-            width="734"
-            height="1600"
-            decoding="async"
-          />
-        ) : null}
         <h2 className="foot__h" id="foot-h">
           Get in touch
         </h2>
 
+        <div className="foot__stage" data-cast={cast ? 'true' : 'false'}>
+        {cast ? (
+          <div className="foot__cast">
+            <Character pose={2} className="foot__char" />
+          </div>
+        ) : null}
         <form className="foot__form" onSubmit={onSubmit} noValidate aria-labelledby="foot-h">
           {FIELDS.map(({ id, label, type, autoComplete, required }) => {
             const err = errors[id];
@@ -283,6 +280,7 @@ export default function FooterForm({ handset = false }) {
             </p>
           </div>
         </form>
+        </div>
 
         <FooterMeta />
       </div>

@@ -42,9 +42,8 @@ export default function ContactPage() {
         title="Let’s talk"
         lead="Tell us what you do and what is going wrong. Fifteen minutes on the phone is enough for us to say what we would fix first, and there is nothing to pay for the answer."
       />
-      {/* The handset floats above "Get in touch", centred. On this page only:
-          the same form ends the home page, where it does not take it. */}
-      <FooterForm handset />
+      {/* The handset came off the site with the storyboard, 2026-09-21. */}
+      <FooterForm />
     </Shell>
   );
 }

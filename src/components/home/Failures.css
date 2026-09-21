@@ -1,27 +1,17 @@
 /* ==========================================================================
    The four failures. Between the hero and Services.
 
-   A MACHINE YELLOW BAND, edge to edge, 2026-09-14. A colour band is allowed
-   when objects stand on it, and four stand on this one; an empty saturated
-   field is still banned. DESIGN.md records the rule.
+   FOUR DARK ROWS, 2026-09-21, from the storyboard. Transparent over the page
+   rig: no band, because it cannot touch the hero. Each row is a Phosphor icon
+   at the 24px station, then the statement and its consequence. Rows at every
+   width; the columns and the rendered objects went with the yellow band.
 
-   Layout family: icon columns. Four rows below 1024, each object beside its
-   two lines; four columns from 1024 up, each object above them. The counter
-   row's four-across figures are a different family by the user's decision of
-   2026-09-14, recorded in BUILD-LAW.
-
-   The ground is here; the TYPE and its colours are in register.css, which
-   sets every section's type and loads after this sheet. Every value on the
-   band is asphalt, restated there with its ratio.
+   The TYPE and its colours are in register.css, which loads after this sheet.
    ========================================================================== */
 
 .fail {
-  /* The band. A GROUND, not a carrier: BUILD-LAW's one-carrier-per-frame
-     count does not include it. --c-accent-field, not --c-accent-ground, which
-     is the call's fill and stays the call's. */
-  background: var(--c-accent-field);
-  color: var(--c-asphalt); /* 9.46:1 */
   padding: var(--s-3xl) var(--s-md);
+  color: var(--c-shop-white); /* the icon inherits it: 17.77:1 */
 }
 
 .fail__inner {
@@ -31,33 +21,29 @@
 
 .fail__items {
   display: grid;
-  row-gap: var(--s-2xl);
+  row-gap: var(--s-xl);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* A row: the object, then its two lines. */
+/* A row: the icon, then its two lines. The icon's top sits on the statement's
+   cap height rather than its line box. */
 .fail__item {
   display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
-  column-gap: var(--s-lg);
+  grid-template-columns: 24px minmax(0, 1fr);
+  column-gap: var(--s-md);
   align-items: start;
   min-width: 0;
 }
 
-/* Sized by the box, not the file: every icon is a different shape, and
-   `contain` sits each one in the same square so the four read as a set. */
 .fail__icon {
-  display: block;
-  width: 64px;
-  height: 64px;
-  object-fit: contain;
+  margin-top: 4px;
 }
 
 .fail__text {
   display: grid;
-  row-gap: var(--s-sm);
+  row-gap: var(--s-xs);
   min-width: 0;
 }
 
@@ -68,6 +54,7 @@
 }
 
 .fail__c {
+  max-width: 62ch;
   text-wrap: pretty;
 }
 
@@ -77,29 +64,9 @@
   }
 }
 
-/* ---- 1024: four columns --------------------------------------------------
-   The object goes above its two lines and grows to 96px. Top aligned, so a
-   statement that runs two lines does not push its own object down against
-   the one beside it. */
 @media (min-width: 1024px) {
   .fail {
     padding: var(--s-3xl) var(--s-2xl);
-  }
-
-  .fail__items {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: var(--s-xl);
-    row-gap: 0;
-  }
-
-  .fail__item {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: var(--s-lg);
-  }
-
-  .fail__icon {
-    width: 96px;
-    height: 96px;
   }
 }
 

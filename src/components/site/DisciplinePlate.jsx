@@ -1,17 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import usePointerLight from '../home/usePointerLight.js';
 
 /* THE DISCIPLINE PLATE, AN ICON PLATE SINCE 2026-09-21, by the user.
 
-   Lit-near with the two lights, a Phosphor icon at 64px top left in shop
-   white, the name in Moldie, the three items. The generated tiles are gone
-   from it and from the build: the plate was a scene card while they filled
+   Lit-near with the two lights, a Phosphor icon at 24px top left in shop
+   white (64px until the storyboard pass, 2026-09-21), the name in Moldie,
+   the three items. The pointer-follow light came off in the same pass. The
+   generated tiles are gone from it and from the build: the plate was a scene card while they filled
    it, and without them it is an object again.
 
-   One component, two mounts: home Services and the About page's "Four
-   disciplines, one team" row. Both hand it an icon, a name and three items,
-   and both link it to the discipline's section on /services.
+   Mounted on home Services, which hands it an icon, a name and three items
+   and links it to the discipline's section on /services. The About page's
+   row of plates came off with the storyboard, 2026-09-21.
 
    The icon is decorative (`aria-hidden`), and inherits the plate's colour so
    the fill turns it asphalt with the words. */
@@ -32,7 +32,6 @@ export default function DisciplinePlate({
   plateRef,
   href,
 }) {
-  const lit = usePointerLight();
 
   /* THE TAP FILLS BEFORE IT LEAVES, 2026-09-16, by the user. A pointer fills
      the card on hover and the reader sees the accent arrive; a finger has no
@@ -106,7 +105,6 @@ export default function DisciplinePlate({
       data-in="false"
       aria-labelledby={`svc-${id}`}
       {...nav}
-      {...lit}
       onPointerDown={onPointerDown}
       onPointerCancel={clearTap}
       onClick={onClick}

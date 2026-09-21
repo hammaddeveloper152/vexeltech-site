@@ -335,13 +335,18 @@ body::before {
    went back to the sum of paddings: 25px above the call at 390 and the footer
    192px below it at both widths. The call owns its gap whether it has a
    material or not. */
-/* `:not(.band)` ON EVERY NEIGHBOUR RULE, 2026-09-16. These rules take the
+/* `:not(.band, .colour-band)` ON EVERY NEIGHBOUR RULE, 2026-09-16. These rules take the
    facing padding off a PLAIN section beside a band. When glass went on Process,
    directly under the marble counter row, they took it off the bands too: the
    counter row lost its bottom padding, Process lost its top padding and
    margin, and "How it works" sat on the band's top edge. Two bands keep their
-   own padding, and their margins collapse to one --band-gap of plain ground. */
-:is(section, footer, article, aside, div):not(.band):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) {
+   own padding, and their margins collapse to one --band-gap of plain ground.
+
+   A COLOUR BAND KEEPS ITS PADDING TOO, 2026-09-21. The storyboard put the
+   yellow promise band directly under the glass route, and these rules took its
+   top padding: the heading sat on the band's top edge. Cream and yellow bands
+   carry `.colour-band` and are excluded with the photographic ones. */
+:is(section, footer, article, aside, div):not(.band, .colour-band):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) {
   padding-bottom: 0;
   margin-bottom: 0;
 }
@@ -353,9 +358,9 @@ body::before {
    against a 96 target — and at 390 the band asked for 64, the footer's 96 won
    the collapse, and the seam was half as tight again as the rule. A rule that
    is right at one width by accident is not right. */
-.band.band + :is(section, footer, article, aside, div):not(.band),
-.band-rays.band-rays + :is(section, footer, article, aside, div):not(.band),
-.callband.callband + :is(section, footer, article, aside, div):not(.band) {
+.band.band + :is(section, footer, article, aside, div):not(.band, .colour-band),
+.band-rays.band-rays + :is(section, footer, article, aside, div):not(.band, .colour-band),
+.callband.callband + :is(section, footer, article, aside, div):not(.band, .colour-band) {
   padding-top: 0;
   margin-top: 0;
 }
@@ -372,8 +377,8 @@ body::before {
    Containing it with `flow-root` was the wrong fix — it kept the 96 and moved
    it inside the footer, so the gap became 192. The margin is not a gap the
    footer needs when a band is above it; the band owns that space. */
-:is(.band.band, .band-rays.band-rays, .callband.callband) + :is(section, footer, article, aside, div):not(.band) > :first-child,
-:is(.band.band, .band-rays.band-rays, .callband.callband) + :is(section, footer, article, aside, div):not(.band) > :first-child > :first-child {
+:is(.band.band, .band-rays.band-rays, .callband.callband) + :is(section, footer, article, aside, div):not(.band, .colour-band) > :first-child,
+:is(.band.band, .band-rays.band-rays, .callband.callband) + :is(section, footer, article, aside, div):not(.band, .colour-band) > :first-child > :first-child {
   margin-top: 0;
 }
 
@@ -381,8 +386,8 @@ body::before {
    band ends on padding rather than on a margin — and it is here so that the two
    sides of a seam are governed by one rule rather than by one rule and a
    coincidence. */
-:is(section, footer, article, aside, div):not(.band):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) > :last-child,
-:is(section, footer, article, aside, div):not(.band):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) > :last-child > :last-child {
+:is(section, footer, article, aside, div):not(.band, .colour-band):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) > :last-child,
+:is(section, footer, article, aside, div):not(.band, .colour-band):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) > :last-child > :last-child {
   margin-bottom: 0;
 }
 

@@ -8,12 +8,11 @@ import Hero from './components/home/Hero.jsx';
 import Failures from './components/home/Failures.jsx';
 import Services from './components/home/Services.jsx';
 import Marquee from './components/home/Marquee.jsx';
-import WorkGrid from './components/home/WorkGrid.jsx';
 import About from './components/home/About.jsx';
 import CounterRow from './components/home/CounterRow.jsx';
-import Testimonials from './components/home/Testimonials.jsx';
-import Process from './components/home/Process.jsx';
 import Faq from './components/home/Faq.jsx';
+import RouteBand from './components/site/RouteBand.jsx';
+import PromiseBand from './components/site/PromiseBand.jsx';
 import FooterForm from './components/home/FooterForm.jsx';
 /* The loud register, applied to every section below the hero. Imported LAST so
    it wins on source order. See src/styles/register.css. */
@@ -43,6 +42,15 @@ import './styles/lit.css';
    disciplines are the argument and they come before the proof. The section
    numbers in the build brief were a build sequence, not a page order, so do
    not reorder to match them. */
+/* The retired Process component's four step descriptions, carried as one
+   line under stops 01 to 04 of the route (the user, 2026-09-21). */
+const STEP_LINES = [
+  "Thirty minutes with a brand strategist. You tell us what's wrong and what you're after, and we listen before we price anything.",
+  'Onboarding and research first, then design starts: the brand work for branding, the UI and UX for the site.',
+  'Four business days to build it, then testing. You look at it and tell us what to change, as many times as it takes.',
+  'It moves to your hosting, with every credential and the ownership under your name. You own everything you paid for.',
+];
+
 createRoot(document.getElementById('hero-root')).render(
   /* THE HARNESS NEEDS A ROUTER NOW.
 
@@ -82,15 +90,21 @@ createRoot(document.getElementById('hero-root')).render(
             ships and nothing else. */}
         <Hero />
         <Failures />
+        <About />
         <Services />
         <Marquee />
-        <WorkGrid />
-        <About />
-        <CounterRow />
-        <Testimonials />
-        <Process />
+        <RouteBand
+          id="how-h"
+          heading="How it works"
+          ground="dark"
+          material="glass"
+          lines={STEP_LINES}
+          cast={{ pose: 3, at: 2 }}
+        />
+        <CounterRow band />
+        <PromiseBand id="promise-h" />
         <Faq />
-        <FooterForm />
+        <FooterForm cast />
       </main>
     </IconProvider>
     </BrowserRouter>
