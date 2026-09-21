@@ -347,10 +347,11 @@ tiles are deleted. A route drawn in code and a typographic
 figure both count as a band's object. A mascot
 band, a framed exhibit and a plain image-beside-text split are three different
 families by amendment; wall tiles 16:10 (unmounted). The footer (rebuilt
-2026-09-16, every route, under the form on home and Contact): the email
-"info@vexeltechsolutions.com" is its object, Monigue white one line at a
-DERIVED size, `min(115px, measure / 10.1)` (114px at 1280, 35px at 390), a
-mailto that goes yellow on hover; a bone line; a hairline; the five pages in
+2026-09-16; the form on EVERY route since 2026-09-21): "Get in touch" in
+Monigue at the heading step, the form (name, email, company, budget, message,
+Send; still offline, `LIVE = false`, and there is NO Netlify Forms wiring on
+the rebuilt form), then the email "info@vexeltechsolutions.com" as a bone
+Satoshi link with its bone line; a hairline; the five pages in
 Satoshi 14px left and Phosphor social logos right at the 24px station
 (steel-lift, yellow on hover, and ONLY a platform with a real URL renders;
 none do); a hairline; the base at 11px label register ("mono" in a brief means
