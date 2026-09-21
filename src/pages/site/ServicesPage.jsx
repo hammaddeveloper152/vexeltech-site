@@ -155,9 +155,11 @@ export default function ServicesPage() {
 
       {/* HOW EVERY PROJECT RUNS, 2026-09-21: the route as on About, once for
           the page, before the call. */}
-      <RouteBand id="svc-route-h" heading="How every project runs" />
+      <RouteBand id="svc-route-h" heading="How every project runs" cast={{ pose: 3, at: 2 }} />
 
+      {/* TALK TO US: the plain dark call, P2 on the phone at its right. */}
       <CallBand
+        cast={2}
         heading="Which one is costing you most"
         note="Fifteen minutes on the phone and we'll tell you what we'd fix first. It isn't always the expensive one."
       />

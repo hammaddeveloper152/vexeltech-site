@@ -153,6 +153,7 @@ export default function PricingPage() {
       description="Branding and website packages, marketing and automation scoped to the job."
     >
       <PageHead
+        step="figure"
         title="Pricing"
         lead="Branding and websites have a price on them. Marketing and automation depend on what they have to do, so those get a number once we have talked."
       />

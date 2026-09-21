@@ -1,7 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useSmoothScroll } from '../../components/home/smoothScroll.js';
 
 /* THE FOUR DISCIPLINES ON /services, AS SECTIONS, 2026-09-15.
 
@@ -19,8 +17,8 @@ import { useSmoothScroll } from '../../components/home/smoothScroll.js';
                at the foot of the page now, not four sets of steps
 
    THE TILE IS GONE, 2026-09-16, by the user: the cards took its place, so the
-   sides no longer alternate. The sticky index down the left margin follows the
-   four sections. Below 1024 the index is hidden and the strip stacks.
+   sides no longer alternate. The sticky index rail down the left margin came
+   off with the storyboard, 2026-09-21. Below 1024 the strip stacks.
 
    THE ICONS ARE SHOP WHITE, inherited from the card, by the user's decision:
    machine yellow would have shared frames with the primary calls on Branding
@@ -28,81 +26,15 @@ import { useSmoothScroll } from '../../components/home/smoothScroll.js';
    thing. DESIGN.md records the exception to the icon meaning test. */
 
 export default function ServiceSections({ disciplines }) {
-  const [active, setActive] = useState(0);
-  const sections = useRef([]);
-
-  /* ScrollTrigger is registered in smoothScroll.js; calling the hook is how
-     this file says it depends on that. */
-  useSmoothScroll();
-
-  /* The index's active row: which section the reader is ON, in both
-     directions. onEnter and onEnterBack both claim it, and leaving the first
-     section upward hands it back, so the top of the page shows 01. */
-  useEffect(() => {
-    const els = sections.current.filter(Boolean);
-    if (!els.length) return undefined;
-    const marks = els.map((el, i) =>
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 50%',
-        end: 'bottom 50%',
-        onEnter: () => setActive(i),
-        onEnterBack: () => setActive(i),
-        onLeaveBack: () => {
-          if (i === 0) setActive(0);
-        },
-        id: `svc-mark-${i}`,
-      })
-    );
-    return () => marks.forEach((s) => s.kill());
-  }, [disciplines]);
-
-  /* The bar is sticky, so a section scrolled to its own top would land under
-     it; the offset is read off the element. */
-  const goTo = (i) => {
-    const el = sections.current[i];
-    if (!el) return;
-    const bar = document.querySelector('.bar');
-    const off = (bar ? bar.getBoundingClientRect().height : 0) + 24;
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({
-      top: el.getBoundingClientRect().top + window.scrollY - off,
-      behavior: reduce ? 'auto' : 'smooth',
-    });
-  };
-
   return (
     <div className="svc">
-      <nav className="svc__index" aria-label="Disciplines">
-        <ol className="svc__index-list">
-          {disciplines.map((d, i) => (
-            <li key={d.id}>
-              <button
-                type="button"
-                className="svc__index-n"
-                data-active={active === i ? 'true' : 'false'}
-                aria-current={active === i ? 'true' : undefined}
-                onClick={() => goTo(i)}
-              >
-                <span className="svc__index-bar" aria-hidden="true" />
-                {String(i + 1).padStart(2, '0')}
-                <span className="skip-h"> {d.name}</span>
-              </button>
-            </li>
-          ))}
-        </ol>
-      </nav>
-
       <div className="svc2">
-        {disciplines.map((d, i) => (
+        {disciplines.map((d) => (
           <section
             key={d.id}
             id={d.id}
             className="svc2__d"
             aria-labelledby={`svc-${d.id}`}
-            ref={(el) => {
-              sections.current[i] = el;
-            }}
           >
             <div className="svc2__intro">
               <h2 className="svc2__name" id={`svc-${d.id}`}>

@@ -29,23 +29,13 @@
    A surface that the heading does not stand on is decoration, and this page
    has a glow, a bar and four plates already doing that job. */
 
-/* ---- 3. The index rail and the plate column ---------------------------- */
+/* ---- 3. The column --------------------------------------------------------
+
+   THE INDEX RAIL CAME OFF, 2026-09-21, by the user (storyboard: it is not in
+   the motion or component lists). The four sections run down one column. */
 
 .svc {
   display: grid;
-  gap: var(--s-xl);
-}
-
-@media (min-width: 1024px) {
-  /* The index takes a column of its own so it is in the left margin of the
-     CONTENT. The page's own inline padding is 64px at this width and the
-     container is already at its cap, so there is no margin outside it to put
-     a rail in — a column is the honest way to make one. */
-  .svc {
-    grid-template-columns: 40px minmax(0, 1fr);
-    gap: var(--s-2xl);
-    align-items: start;
-  }
 }
 
 /* The four discipline sections, 96px apart. See section 4 below. */
@@ -55,99 +45,12 @@
   min-width: 0;
 }
 
-/* ---- The index -------------------------------------------------------- */
+/* ---- 6. The section's foot ---------------------------------------------
 
-.svc__index {
-  display: none;
-}
-
-@media (min-width: 1024px) {
-  .svc__index {
-    display: block;
-    position: sticky;
-    /* Clear of the sticky bar, which is 48px of content plus its own padding
-       and hairline — the same expression the heading block derives from. */
-    top: calc(48px + 2 * var(--s-sm) + var(--s-xl));
-    align-self: start;
-  }
-}
-
-.svc__index-list {
-  display: grid;
-  gap: var(--s-lg);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-/* A numeral is a name here — which plate this is — so it takes the name face.
-   40px, steel-lift, 6.09:1 on the page ground. */
-.svc__index-n {
-  position: relative;
-  display: flex;
-  align-items: center;
-  /* BUILD-LAW: 48px minimum on a tap target, and this is a control. */
-  min-height: 48px;
-  padding: 0 0 0 var(--s-md);
-  border: 0;
-  background: none;
-  font-family: var(--font-name);
-  font-size: var(--t-name-l);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--c-steel-lift);
-  cursor: pointer;
-  transition: color var(--d-drop) var(--ease-reveal);
-}
-
-/* The active numeral goes white and its bar appears. Two signals rather than
-   one, because colour alone at this size is a value change a reader has to
-   compare against a neighbour to notice. */
-.svc__index-n[data-active='true'] {
-  color: var(--c-shop-white);
-}
-
-/* The same 3px yellow bar the plates carry, at the same full strength, which
-   is what ties the index to the object it indexes. Scale, not opacity: yellow
-   on a dark ground is 100% or it is nothing. */
-.svc__index-bar {
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  left: 0;
-  width: 3px;
-  background: var(--c-accent-ground);
-  transform: scaleY(0);
-  transform-origin: 50% 0;
-  transition: transform var(--d-drop) var(--ease-reveal);
-}
-
-.svc__index-n[data-active='true'] .svc__index-bar {
-  transform: scaleY(1);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .svc__index-n:hover {
-    color: var(--c-shop-white);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .svc__index-bar {
-    transition: none;
-  }
-}
-
-/* ---- 6. The closing call ----------------------------------------------
-
-   96px under the fourth plate and nothing else between them. The section's own
-   bottom padding goes to zero so the gap is one number owned by the call,
-   rather than two paddings meeting and adding up — the same correction the
-   About page needed. */
-section:has(> .pg__section-in > .svc) {
-  padding-bottom: 0;
-}
+   It ended on zero padding so the closing call owned the gap. Since
+   2026-09-21 the cream route band follows it, and a colour band keeps its own
+   padding, so this section keeps its 96px: the fourth strip stood directly on
+   the cream edge while the zero was here. */
 
 /* ---- 4. The discipline sections, 2026-09-15 ----------------------------
 
@@ -230,7 +133,8 @@ section:has(> .pg__section-in > .svc) {
   border-top-color: var(--lit-edge-top);
   border-right-color: var(--lit-edge-arc);
   border-bottom-color: var(--lit-edge-arc);
-  border-radius: var(--r-md);
+  /* 12px, the storyboard's one card radius, 2026-09-21 (it was 8). */
+  border-radius: 12px;
   background-color: var(--lit-near);
   background-image: var(--lit-key), var(--lit-rim);
   background-repeat: no-repeat;
@@ -306,8 +210,7 @@ section:has(> .pg__section-in > .svc) {
   .svc2__card:hover,
   .svc2__card:active,
   .svc2__card:focus-visible,
-  .svc2__card[data-tap='true'],
-  .svc__index-n:active {
+  .svc2__card[data-tap='true'] {
     transition: none;
     transform: none;
   }
@@ -398,14 +301,12 @@ section:has(> .pg__section-in > .svc) {
   text-wrap: pretty;
 }
 
-/* The index numerals are buttons and had no press. */
-.svc__index-n:active {
-  transform: scale(0.97);
-}
-
 /* THE CALLS. Branding and Websites: button-primary, asphalt on machine
-   yellow, square, sentence case. Marketing and Automation: an underlined
-   link in the brand register. */
+   yellow, square, sentence case. Marketing and Automation: the kit's
+   secondary, an outline, since the storyboard pass (2026-09-21); it was an
+   underlined link. On lit-near the outline is the bar's own secondary: a
+   transparent fill, a rule-dark edge brightened to steel-lift so the button
+   reads as one (6.33:1 against lit-near), and a white label. */
 .svc2__cta,
 .svc2__link {
   display: inline-flex;
@@ -431,9 +332,12 @@ section:has(> .pg__section-in > .svc) {
 }
 
 .svc2__link {
-  color: var(--c-shop-white);
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  padding: var(--s-sm) var(--s-lg);
+  background: transparent;
+  border: 1px solid var(--c-steel-lift);
+  border-radius: var(--r-none);
+  color: var(--c-shop-white); /* 16.48:1 on lit-near */
+  text-decoration: none;
 }
 
 @media (hover: hover) and (pointer: fine) {

@@ -39,6 +39,7 @@ export default function ContactPage() {
       meta={false}
     >
       <PageHead
+        step="figure"
         title="Let’s talk"
         lead="Tell us what you do and what is going wrong. Fifteen minutes on the phone is enough for us to say what we would fix first, and there is nothing to pay for the answer."
       />

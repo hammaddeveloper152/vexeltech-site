@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Character from '../../components/site/Character.jsx';
 import './pages.css';
 
 /* The three shapes every non-home page is built from.
@@ -24,11 +25,14 @@ import './pages.css';
 export const CALL_LABEL = 'Let’s Talk';
 export const CALL_HREF = '/contact-us';
 
-export function PageHead({ title, lead, id = 'pg-h' }) {
+/* `step`: the storyboard (2026-09-21) opens every page but home at the
+   HEADING step. 'figure' keeps the old step for a page the storyboard pass
+   has not reached: Contact, which is off the sheet and was left as built. */
+export function PageHead({ title, lead, id = 'pg-h', step = 'heading' }) {
   return (
     <header className="vt pg__head">
       <div className="pg__head-in">
-        <h1 className="pg__h" id={id}>
+        <h1 className="pg__h" id={id} data-step={step}>
           {title}
         </h1>
         {lead ? <p className="pg__lead">{lead}</p> : null}
@@ -59,11 +63,19 @@ export function Section({ title, note, children, labelledBy }) {
    'burst' on Pricing, 'spot' (the spotlight) on About, and no prop on Services,
    which closes on the plain dark call. A material appears on one band only, so
    this is a prop set per mount, never a default. */
-export function CallBand({ heading, note, material }) {
+/* `cast`, 2026-09-21: a character pose standing at the right of the call
+   (P2 on /services, by the storyboard). Renders nothing until the file
+   exists. */
+export function CallBand({ heading, note, material, cast }) {
   const band = material ? ` band band-${material}` : '';
   return (
     <section className={`vt callband${band}`} aria-labelledby="callband-h">
       <div className="callband__in">
+        {cast ? (
+          <div className="callband__cast">
+            <Character pose={cast} className="callband__char" />
+          </div>
+        ) : null}
         <h2 className="callband__h" id="callband-h">
           {heading}
         </h2>
