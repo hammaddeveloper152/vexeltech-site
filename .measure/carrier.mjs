@@ -36,6 +36,7 @@ const arcish = (r, g, b) => (b - r) > 12 && b > 24;
      that arc works as an accent and fails as a ground. So the same walk asks
      whether it has become a field: the share of the frame, and of the object's
      own surface, carrying arc ABOVE what the plane already has. */
+const ONLY = process.env.ONLY || '';
 const FRAMES = [
   /* THE BANDS ARE HERE BECAUSE THEY PAINT LIGHT THE PAGE DID NOT PUT THERE.
 
@@ -81,7 +82,12 @@ const FRAMES = [
   ['/', '.work__list', 'work grid', '.work__plate'],
   ['/about-us', '.plates', 'about plates, at rest', '.plate'],
   ['/about-us', '.plates', 'about plates, one open', '.plate', true],
-  ['/pricing', '.cards', 'pricing, branding', '.card'],
+  /* THE BOARD AND THE QUOTE, 2026-09-22: /pricing on an arc ground. The
+     ladder's '.cards' row is gone with the ladder. The founder's pricing
+     exception names the yellow here: the tab underline, the "Most picked"
+     tag, the bundle card, the total strip and "Send this to us". */
+  ['/pricing', '.pb__tabs', 'pricing board, branding', '.pb__card'],
+  ['/pricing', '.pb__quote', 'pricing quote, empty', '.pb__receipt'],
   ['/services', '.svc__plate', 'services plates', '.svc__plate'],
   ['/services', '.svc__index', 'services index', '.svc__index-n'],
 ];
@@ -91,7 +97,7 @@ const b = await puppeteer.launch({ headless: 'new',
 
 for (const [w, h] of [[1280, 800], [390, 844]]) {
   console.log(`\n=== ${w} ===`);
-  for (const [route, sel, label, objSel, open] of FRAMES) {
+  for (const [route, sel, label, objSel, open] of FRAMES.filter((f) => !ONLY || f[0] === ONLY)) {
     const p = await b.newPage();
     await p.setViewport({ width: w, height: h });
     await p.goto((process.env.BASE || 'http://localhost:4179') + route, { waitUntil: 'domcontentloaded' });

@@ -1,0 +1,470 @@
+/* ==========================================================================
+   /PRICING: THE BOARD AND BUILD YOUR QUOTE (2026-09-22). See PricingBoard.jsx.
+
+   ONE ARC BLUE GROUND, #0D47BD, EDGE TO EDGE. DESIGN.md recorded "no section
+   takes arc as its ground"; the founder overrode it for this page. The cards
+   and the receipt stand on it, so it is a colour band with objects (and
+   `.colour-band`, so the seam rules leave its padding alone).
+
+   Values on arc: shop white 7.91:1, bone 6.57:1, the yellow tab underline
+   4.21:1 (a mark; its bar is 3:1). On cream: asphalt 15.75:1, steel 7.20:1.
+   On yellow: asphalt 9.46:1. In the asphalt strip: yellow 9.46:1.
+
+   THE PRICING EXCEPTION to one accent per frame: the yellow here is the tab
+   underline, the "Most picked" tag and the bundle card on the board, and the
+   total strip and "Send this to us" in the quote. Nothing else is yellow.
+   ========================================================================== */
+
+.pb {
+  --arc: #0d47bd;
+  padding: var(--s-3xl) var(--inset);
+  background: var(--arc);
+  color: var(--c-shop-white);
+}
+
+.pb__in {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.pb :focus-visible {
+  outline: var(--focus-ring) solid var(--c-shop-white); /* yellow is 4.21:1 here */
+  outline-offset: 2px;
+}
+
+/* ---- The tabs ------------------------------------------------------------ */
+
+.pb__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-lg);
+  margin-bottom: var(--s-xl);
+}
+
+.pb__tab {
+  position: relative;
+  min-height: 48px;
+  padding: var(--s-sm) 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-brand);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-brand);
+  color: var(--c-shop-white); /* 7.91:1 on arc */
+  cursor: pointer;
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.pb__tab[aria-selected='false'] {
+  color: var(--c-bone); /* 6.57:1 on arc */
+}
+
+/* The active tab's yellow underline: 3px, the drawn weight. */
+.pb__tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--stroke-drawn);
+  background: var(--c-accent-draw-dark);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform var(--d-drop) var(--ease-reveal);
+}
+
+.pb__tab[aria-selected='true']::after {
+  transform: scaleX(1);
+}
+
+.pb__tab:active {
+  transform: scale(0.97);
+}
+
+/* ---- The cards: cream face, asphalt ink, 12px, two lights ----------------- */
+
+.pb__panel {
+  animation: pb-in var(--d-drop) var(--ease-reveal) both;
+}
+
+@keyframes pb-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--s-sm));
+  }
+}
+
+.pb__cards {
+  display: grid;
+  gap: var(--s-lg);
+}
+
+@media (min-width: 768px) {
+  .pb__cards--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pb__cards--web {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+}
+
+.pb__card {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--s-md);
+  padding: var(--s-xl);
+  border: 1px solid rgb(23 24 26 / 10%);
+  border-radius: 12px;
+  background-color: var(--c-cream);
+  background-image: var(--lit-key), var(--lit-rim);
+  background-repeat: no-repeat;
+  color: var(--c-asphalt); /* 15.75:1 on cream */
+}
+
+.pb__card--yellow {
+  background-color: var(--c-accent-ground);
+  color: var(--c-asphalt); /* 9.46:1 on yellow */
+}
+
+/* "Most picked": a yellow corner tag, asphalt ink, 9.46:1. */
+.pb__tag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: var(--s-xs) var(--s-md);
+  border-radius: 0 12px 0 var(--r-sm);
+  background: var(--c-accent-ground);
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-asphalt);
+}
+
+.pb__name {
+  margin: 0;
+  font-family: var(--font-name);
+  font-size: var(--t-name-m);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+/* Prices: Moldie numerals at 64px, asphalt. */
+.pb__price {
+  margin: 0;
+  font-family: var(--font-name);
+  font-size: 64px;
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.pb__price-k {
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+}
+
+/* "Priced on the call" is words, not a numeral: the name step. */
+.pb__price--call {
+  font-size: var(--t-name-m);
+  text-transform: uppercase;
+}
+
+.pb__turn,
+.pb__fit {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+}
+
+.pb__fit-k {
+  font-weight: var(--t-weight-label);
+}
+
+.pb__list {
+  display: grid;
+  gap: var(--s-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pb__li {
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+}
+
+/* The asphalt outline button, the kit's secondary. */
+.pb__start {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  min-height: 48px;
+  margin-top: var(--s-sm);
+  padding: var(--s-sm) var(--s-lg);
+  border: 1px solid var(--c-asphalt);
+  border-radius: var(--r-none);
+  background: transparent;
+  font-family: var(--font-brand);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-brand);
+  color: var(--c-asphalt);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pb__start:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+.pb__start:active {
+  transform: scale(0.97);
+}
+
+.pb__card :focus-visible {
+  outline-color: var(--c-asphalt);
+}
+
+/* ---- Build your quote ----------------------------------------------------- */
+
+.pb__quote {
+  margin-top: var(--s-3xl);
+}
+
+.pb__h {
+  margin: 0 0 var(--s-xl);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-h);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white); /* 7.91:1 on arc */
+}
+
+.pb__quote-grid {
+  display: grid;
+  gap: var(--s-2xl);
+}
+
+@media (min-width: 1024px) {
+  .pb__quote-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.pb__rows {
+  display: grid;
+  gap: var(--s-lg);
+}
+
+.pb__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-sm);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.pb__row-k {
+  float: left;
+  width: 8.5em;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: 48px;
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-bone); /* 6.57:1 on arc */
+}
+
+/* A chip: Clash Display, a white outline at rest; chosen, a white fill with
+   arc ink (7.91:1). No yellow. */
+.pb__chip {
+  min-height: 48px;
+  padding: var(--s-sm) var(--s-lg);
+  border: 1px solid var(--c-shop-white);
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--font-brand);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: var(--t-weight-brand);
+  color: var(--c-shop-white);
+  cursor: pointer;
+  transition:
+    background-color var(--d-drop) var(--ease-reveal),
+    color var(--d-drop) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+.pb__chip[aria-pressed='true'] {
+  background: var(--c-shop-white);
+  color: var(--arc);
+}
+
+.pb__chip:active {
+  transform: scale(0.97);
+}
+
+/* ---- The receipt ----------------------------------------------------------- */
+
+.pb__receipt-wrap {
+  display: grid;
+  gap: var(--s-lg);
+}
+
+.pb__receipt {
+  display: grid;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--c-cream);
+  color: var(--c-asphalt); /* 15.75:1 */
+}
+
+.pb__lines {
+  display: grid;
+  gap: var(--s-sm);
+  margin: 0;
+  padding: var(--s-xl) var(--s-xl) var(--s-lg);
+  list-style: none;
+}
+
+/* Each line arrives on the reveal curve at the 70ms stagger. */
+.pb__line {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-md);
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  animation: pb-line var(--d-panel) var(--ease-reveal) both;
+  animation-delay: calc(var(--i, 0) * var(--stagger));
+}
+
+@keyframes pb-line {
+  from {
+    opacity: 0;
+    transform: translateY(var(--s-sm));
+  }
+}
+
+.pb__empty {
+  margin: 0;
+  padding: var(--s-xl);
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel); /* 7.20:1 on cream */
+}
+
+/* The total: Moldie 72px, yellow, in an asphalt strip (9.46:1). */
+.pb__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-md);
+  margin: 0;
+  padding: var(--s-lg) var(--s-xl);
+  background: var(--c-asphalt);
+}
+
+.pb__total-k {
+  font-family: var(--font-offer);
+  font-size: var(--t-label-size);
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-bone); /* 14.74:1 on asphalt */
+}
+
+.pb__total-n {
+  font-family: var(--font-name);
+  font-size: 72px;
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  color: var(--c-accent-text-dark); /* 9.46:1 on asphalt */
+  text-align: right;
+}
+
+/* "Send this to us": the quote's one yellow button, asphalt ink, 9.46:1. */
+.pb__send {
+  justify-self: start;
+  min-height: 48px;
+  padding: var(--s-md) var(--s-xl);
+  border: 0;
+  border-radius: var(--r-none);
+  background: var(--c-accent-ground);
+  font-family: var(--font-brand);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-brand);
+  color: var(--c-asphalt);
+  cursor: pointer;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+.pb__send:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pb__send:not(:disabled):hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+.pb__send:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pb__panel,
+  .pb__line {
+    animation-name: pb-fade;
+  }
+
+  @keyframes pb-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .pb__tab::after,
+  .pb__tab:active,
+  .pb__chip:active,
+  .pb__start:active,
+  .pb__send:active {
+    transition: none;
+    transform: none;
+  }
+
+  .pb__tab[aria-selected='true']::after {
+    transform: scaleX(1);
+  }
+}

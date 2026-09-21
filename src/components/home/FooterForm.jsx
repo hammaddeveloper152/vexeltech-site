@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PaperPlaneTilt } from '@phosphor-icons/react';
 import FooterMeta from './FooterMeta.jsx';
 import Character from '../site/Character.jsx';
@@ -85,6 +85,20 @@ export default function FooterForm() {
   const [status, setStatus] = useState('idle'); // idle | sending | sent | failed
 
   const set = (id) => (e) => setValues((v) => ({ ...v, [id]: e.target.value }));
+
+  /* PREFILL FROM THE PRICING QUOTE, 2026-09-22: "Send this to us" on
+     /pricing puts the chosen lines in the message field. It does not send:
+     the form is still offline and says so under its button. */
+  useEffect(() => {
+    const onPrefill = (e) => {
+      const message = e.detail && e.detail.message;
+      if (typeof message !== 'string') return;
+      setValues((v) => ({ ...v, message }));
+      setErrors((prev) => ({ ...prev, message: '' }));
+    };
+    window.addEventListener('vt:prefill', onPrefill);
+    return () => window.removeEventListener('vt:prefill', onPrefill);
+  }, []);
 
   /* On blur, not on every keystroke. Validating as someone types tells them
      their half-finished email address is wrong, which it is, and which they

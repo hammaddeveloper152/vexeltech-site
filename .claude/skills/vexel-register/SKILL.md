@@ -32,8 +32,11 @@ drift runs base to arc-black; asphalt stays as ink on yellow and cream. Home:
 cost-1 to cost-4.webp beside What it costs you, route-1 to route-5.webp on
 the route, promise.webp on the band. What we do stays the storyboard's four
 icon cards (the word tiles are on the "what comes off the site" list).
-Pricing: pricing-banner.webp above the ladder, and the four questions
-(StartHere) in place of the bundle builder. About: about-banner.webp
+Pricing: pricing-banner.webp, then THE BOARD and BUILD YOUR QUOTE on one
+arc ground (#0D47BD, the founder's exception to "arc fails as a ground"),
+then the burst call; the ladder and the four questions are gone. Its yellow
+is the tab underline, the "Most picked" tag, the bundle card, the quote's
+total strip and "Send this to us": the recorded pricing exception. About: about-banner.webp
 after the hero, CaretDown on the standards, promise-about.webp, and the
 spotlight call again. Every image slot (`Slot`) renders nothing until its
 file exists.
