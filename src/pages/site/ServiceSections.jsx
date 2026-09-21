@@ -12,12 +12,15 @@ import { useSmoothScroll } from '../../components/home/smoothScroll.js';
                across from 1024, two from 768, one below. Lit-near with the two
                lights, a Phosphor icon at the 24px station top left, the title
                in Satoshi 18px white, one line in bone
-     row three one lit panel in three columns, split by hairlines: what you
-               get, how it goes, the facts and the call
+     row three one strip on lit-near, 2026-09-21: the price left in Moldie
+               32px, the turnaround and one "Good fit if" line in bone, the
+               call right. It replaced the three-column panel (what you get,
+               how it goes, the facts); how a project runs is one route band
+               at the foot of the page now, not four sets of steps
 
    THE TILE IS GONE, 2026-09-16, by the user: the cards took its place, so the
    sides no longer alternate. The sticky index down the left margin follows the
-   four sections. Below 1024 the index is hidden and the three columns stack.
+   four sections. Below 1024 the index is hidden and the strip stacks.
 
    THE ICONS ARE SHOP WHITE, inherited from the card, by the user's decision:
    machine yellow would have shared frames with the primary calls on Branding
@@ -134,69 +137,19 @@ export default function ServiceSections({ disciplines }) {
               ))}
             </ul>
 
-            <div className="svc2__panel">
-              <div className="svc2__col svc2__col--get">
-                <h3 className="svc2__ch">What you get</h3>
-                <dl className="svc2__groups">
-                  {d.get.map(({ g, t }) => (
-                    <div className="svc2__group" key={g}>
-                      <dt className="svc2__gt">{g}</dt>
-                      <dd className="svc2__gd">{t}</dd>
-                    </div>
-                  ))}
-                </dl>
+            {/* THE STRIP, 2026-09-21: price left in Moldie, turnaround and
+                the fit line in bone, the call right. */}
+            <div className="svc2__strip">
+              <p className="svc2__price">{d.price}</p>
+              <div className="svc2__facts">
+                <p className="svc2__fact">Turnaround: {d.turnaround}</p>
+                <p className="svc2__fact">
+                  Good fit if {d.fit.charAt(0).toLowerCase() + d.fit.slice(1)}
+                </p>
               </div>
-
-              <div className="svc2__col">
-                <h3 className="svc2__ch">How it goes</h3>
-                <ol className="svc2__steps">
-                  {d.steps.map(([title, text], k) => (
-                    <li className="svc2__step" key={title}>
-                      <span className="svc2__sn" aria-hidden="true">
-                        {k + 1}
-                      </span>
-                      <p className="svc2__st">
-                        <strong>{title}</strong> {text}
-                      </p>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-
-              <div className="svc2__col svc2__col--facts">
-                <dl className="svc2__facts">
-                  <div>
-                    <dt className="svc2__gt">Price</dt>
-                    <dd className="svc2__gd">
-                      {d.price}
-                      {d.pricing ? (
-                        <>
-                          {' '}
-                          <Link className="svc2__inline" to="/pricing">
-                            See pricing
-                          </Link>
-                          .
-                        </>
-                      ) : null}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="svc2__gt">Turnaround</dt>
-                    <dd className="svc2__gd">{d.turnaround}</dd>
-                  </div>
-                  <div>
-                    <dt className="svc2__gt">Good fit if</dt>
-                    <dd className="svc2__gd">{d.fit}</dd>
-                  </div>
-                  <div>
-                    <dt className="svc2__gt">Not a fit if</dt>
-                    <dd className="svc2__gd">{d.notFit}</dd>
-                  </div>
-                </dl>
-                <Link className={d.call.primary ? 'svc2__cta' : 'svc2__link'} to="/contact-us">
-                  {d.call.label}
-                </Link>
-              </div>
+              <Link className={d.call.primary ? 'svc2__cta' : 'svc2__link'} to="/contact-us">
+                {d.call.label}
+              </Link>
             </div>
           </section>
         ))}

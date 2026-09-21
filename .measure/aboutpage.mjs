@@ -57,11 +57,11 @@ for (const [w, h] of [[1280, 800], [390, 844]]) {
     const expected = Math.min((window.innerWidth - 2 * bp) / 6.227, (window.innerHeight - 360) / 1.76);
     const h1 = $('.ab3-hero__h');
     const lh = parseFloat(cs(h1).lineHeight);
-    const stops = $$('.ab3-route__stop');
-    const route = $('.ab3-route');
+    const stops = $$('.route__stop');
+    const route = $('.route');
     const cols = $$('.ab3-std__col');
     return {
-      order: $$('main > section').map((s) => s.className.split(' ').find((c) => /^(ab3-|callband)/.test(c))),
+      order: $$('main > section').map((s) => s.className.split(' ').find((c) => /^(ab3-|route-band|callband)/.test(c))),
       /* The page's own sections, not <main>: the footer, with the social
          row's six tiles, is rendered inside <main> by the shell. */
       h1s: $$('h1').map((x) => x.textContent.trim()), imgs: $$('main > section img').length,
@@ -69,7 +69,7 @@ for (const [w, h] of [[1280, 800], [390, 844]]) {
       hero: { size: parseFloat(cs(h1).fontSize), expected, font: cs(h1).fontFamily.split(',')[0], color: cs(h1).color, lines: Math.round(R(h1).h / lh), height: Math.round(R(h1).h),
         text: R($('.ab3-hero__text')), inner: R($('.ab3-hero .ab3__in')), pColor: cs($('.ab3-hero__p')).color, p: $('.ab3-hero__p').textContent.replace(/\s+/g, ' ').trim() },
       what: { h: R($('.ab3-what__h')), p: R($('.ab3-what__p')) },
-      how: { bg: cs($('.ab3-how')).backgroundColor, n: stops.length, row: stops.every((s) => Math.abs(R(s).t - R(stops[0]).t) < 1), line: [cs(route, '::before').width, cs(route, '::before').height] },
+      how: { bg: cs($('.route-band')).backgroundColor, n: stops.length, row: stops.every((s) => Math.abs(R(s).t - R(stops[0]).t) < 1), line: [cs(route, '::before').width, cs(route, '::before').height] },
       price: { bg: cs($('.ab3-price')).backgroundColor, h: $('.ab3-price__h').textContent,
         n: [$('.ab3-price__n').textContent, cs($('.ab3-price__n')).fontFamily.split(',')[0], parseFloat(cs($('.ab3-price__n')).fontSize), cs($('.ab3-price__n')).color],
         k: $$('.ab3-price__k').map((k) => [k.textContent, cs(k).fontSize, cs(k).fontFamily.split(',')[0], cs(k).color]),
@@ -80,7 +80,7 @@ for (const [w, h] of [[1280, 800], [390, 844]]) {
     };
   });
   const wide = w >= 1024;
-  check(r.order.join() === 'ab3-hero,ab3-what,ab3-how,ab3-price,ab3-std,callband', `order ${r.order.join(' > ')}`);
+  check(r.order.join() === 'ab3-hero,ab3-what,ab3-plates,route-band,ab3-price,ab3-std,callband', `order ${r.order.join(' > ')}`);
   check(r.h1s.length === 1 && r.h1s[0] === 'A website that looks expensive and costs $700.' && r.imgs === 0 && r.bar === 'false/true', `one h1 "${r.h1s[0]}", ${r.imgs} images, bar ${r.bar}`);
   check(r.hero.font === 'Monigue' && near(r.hero.size, r.hero.expected, 0.5) && r.hero.color === 'rgb(255, 255, 255)' && r.hero.pColor === 'rgb(232, 234, 237)',
     `hero Monigue ${r.hero.size.toFixed(2)}px (home clamp ${r.hero.expected.toFixed(2)}), white; ${r.hero.lines} lines, ${r.hero.height}px tall; bone line`);

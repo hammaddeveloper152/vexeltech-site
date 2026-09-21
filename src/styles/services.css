@@ -307,7 +307,6 @@ section:has(> .pg__section-in > .svc) {
   .svc2__card:active,
   .svc2__card:focus-visible,
   .svc2__card[data-tap='true'],
-  .svc2__inline:active,
   .svc__index-n:active {
     transition: none;
     transform: none;
@@ -337,13 +336,17 @@ section:has(> .pg__section-in > .svc) {
   color: var(--c-bone); /* 13.67:1 on lit-near */
 }
 
-/* ---- Row three: the lit panel in three columns ---- */
+/* ---- Row three: the strip, 2026-09-21, by the user ----
 
-/* Lit-near with both lights and the four tinted edges, the lit surfaces'
-   construction. The columns are split by hairlines, which is what earns them
-   here: three blocks of text on one plane read as one block without them. */
-.svc2__panel {
+   One strip on lit-near with both lights and the four tinted edges, the lit
+   surfaces' construction, replacing the three-column panel. Price left in
+   Moldie 32px, the turnaround and the fit line in bone, the call right. It
+   stacks below 1024, the call last. */
+.svc2__strip {
   display: grid;
+  gap: var(--s-lg);
+  align-items: center;
+  padding: var(--s-lg);
   border: 1px solid var(--lit-edge);
   border-top-color: var(--lit-edge-top);
   border-right-color: var(--lit-edge-arc);
@@ -355,137 +358,44 @@ section:has(> .pg__section-in > .svc) {
   box-shadow: var(--lit-inset);
 }
 
-.svc2__col {
-  min-width: 0;
-  padding: var(--s-lg);
-}
-
-.svc2__col + .svc2__col {
-  border-top: 1px solid var(--c-rule-dark);
-}
-
-/* THE DENSITY LAW: three things of nearly equal size must have one that
-   leads. "What you get" leads on width, 1.3 to 1 to 1. */
 @media (min-width: 1024px) {
-  .svc2__panel {
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr);
-  }
-
-  .svc2__col {
-    padding: var(--s-xl);
-  }
-
-  .svc2__col + .svc2__col {
-    border-top: 0;
-    border-left: 1px solid var(--c-rule-dark);
+  /* The price takes what it needs up to a third; the facts take the rest; the
+     call sits at its own width on the right. */
+  .svc2__strip {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto;
+    column-gap: var(--s-xl);
+    padding: var(--s-lg) var(--s-xl);
   }
 }
 
-/* Column heads: Monigue at the small loud step. */
-.svc2__ch {
-  margin: 0 0 var(--s-lg);
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-small);
+/* Moldie at the name step, 32px, white: 16.48:1 on lit-near. The price is a
+   name here, the thing the discipline costs, as the tier names are on
+   /pricing. */
+.svc2__price {
+  margin: 0;
+  font-family: var(--font-name);
+  font-size: var(--t-name-m);
   line-height: var(--t-loud-line);
   font-weight: 400;
+  letter-spacing: 0;
   text-transform: uppercase;
   color: var(--c-shop-white);
+  text-wrap: balance;
 }
 
-.svc2__groups,
 .svc2__facts {
   display: grid;
-  gap: var(--s-lg);
-  margin: 0;
+  gap: var(--s-xs);
+  min-width: 0;
 }
 
-/* THE GROUP TITLES "IN MONO" are the label style, the system's mono role:
-   Satoshi 500, 12px, uppercase at 0.12em. There is no monospace face in the
-   system, and DESIGN.md calls the label the mono index. Steel-lift, 6.33:1 on
-   lit-near. */
-.svc2__gt {
-  margin: 0 0 var(--s-xs);
-  font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
-  color: var(--c-steel-lift);
-}
-
-.svc2__gd {
+.svc2__fact {
   margin: 0;
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
   color: var(--c-bone); /* 13.67:1 on lit-near */
-}
-
-.svc2__steps {
-  display: grid;
-  gap: var(--s-lg);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.svc2__step {
-  display: grid;
-  grid-template-columns: 32px minmax(0, 1fr);
-  column-gap: var(--s-md);
-  align-items: baseline;
-}
-
-/* THE STEP NUMERALS, MOLDIE IN WHITE. Briefed in yellow, and yellow put two
-   carriers in one frame: the numerals and the primary call share the facts
-   panel on Branding and Websites, at 1280 for 600px of scroll in each, and the
-   Automation numerals shared a frame with the call band. The user chose white,
-   2026-09-15: the call is the frame's one accent. The name step, 32px.
-   Moldie's permission is extended to these numerals; DESIGN.md records it. */
-.svc2__sn {
-  font-family: var(--font-name);
-  font-size: var(--t-name-m);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  color: var(--c-shop-white); /* 16.48:1 on lit-near */
-}
-
-.svc2__st {
-  margin: 0;
-  font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  color: var(--c-bone);
-}
-
-.svc2__st strong {
-  font-weight: var(--t-weight-label);
-  color: var(--c-shop-white);
-}
-
-/* THE INLINE LINK GETS A TARGET AND A PRESS, viewer audit 2026-09-16. It sat
-   at 89x22 on a phone with no press feedback. The padding is vertical only and
-   the margin takes it back out, so the hit area reaches 48px while the line it
-   sits in does not move. */
-.svc2__inline {
-  color: var(--c-shop-white);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  padding-block: 13px;
-  margin-block: -13px;
-  transition: opacity var(--d-press) var(--ease-reveal), transform var(--d-press) var(--ease-reveal);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .svc2__inline:hover {
-    opacity: var(--hover-opacity);
-  }
-}
-
-.svc2__inline:active {
-  display: inline-block;
-  transform: scale(0.97);
+  text-wrap: pretty;
 }
 
 /* The index numerals are buttons and had no press. */
@@ -500,8 +410,8 @@ section:has(> .pg__section-in > .svc) {
 .svc2__link {
   display: inline-flex;
   align-items: center;
+  justify-self: start;
   min-height: 48px;
-  margin-top: var(--s-xl);
   font-family: var(--font-brand);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);

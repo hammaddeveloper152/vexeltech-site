@@ -1,5 +1,6 @@
 import React from 'react';
 import Shell from './Shell.jsx';
+import RouteBand from '../../components/site/RouteBand.jsx';
 import { CallBand } from './parts.jsx';
 import DisciplinePlate from '../../components/site/DisciplinePlate.jsx';
 import usePlateArrival from '../../components/home/usePlateArrival.js';
@@ -27,14 +28,6 @@ import '../../styles/aboutpage.css';
 
    EVERY LINE IS THE BRIEF'S, which is the user's own copy. The one image is
    the mascot, a brand object. */
-
-const STOPS = [
-  ['01', 'A call, not a pitch'],
-  ['02', 'We design it and show you'],
-  ['03', 'We build and test it'],
-  ['04', 'It goes live on your domain'],
-  ['05', "Thirty days of support, then it's yours"],
-];
 
 const REFUSALS = [
   "We don't sell retainers. Thirty days of support are included, after that it's a conversation.",
@@ -121,23 +114,7 @@ export default function AboutPage() {
       </section>
 
       {/* 3. HOW IT GOES. A cream band; the route is the object standing on it. */}
-      <section className="vt ab3-how" aria-labelledby="ab3-how-h">
-        <div className="ab3__in">
-          <h2 className="ab3__h ab3-how__h" id="ab3-how-h">
-            Here is exactly how a project runs.
-          </h2>
-          <ol className="ab3-route">
-            {STOPS.map(([n, line]) => (
-              <li className="ab3-route__stop" key={n}>
-                <span className="ab3-route__n" aria-hidden="true">
-                  {n}
-                </span>
-                <span className="ab3-route__t">{line}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      <RouteBand id="ab3-how-h" heading="Here is exactly how a project runs." />
 
       {/* 4. PRICING AND REFUSALS. A yellow band; the figure is its object. */}
       <section className="vt ab3-price" aria-labelledby="ab3-price-h">
