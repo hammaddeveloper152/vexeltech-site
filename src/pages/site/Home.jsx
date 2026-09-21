@@ -39,11 +39,12 @@ import '../../styles/lit.css';
    VEXELTECH-STORYBOARD.md is the source of section order and asset
    placement from this date, and it outranks the notes below where they
    differ. Hero (dark), What it costs you (dark rows), Who we are (cream, P1),
-   What we do (dark cards) with the strike ticker under it, How it works (the
-   route on glass, P3 at stop 02), The numbers (marble, off until the four
-   figures exist), What we promise (yellow, P5), Questions (dark), Get in
-   touch (the form, P2). The work grid and the testimonials came off; home's
-   Process was retired into the one route.
+   What we do (plain columns) with the strike ticker under it, How it works
+   (the vertical route on the drift at its darkest), The numbers (marble, off
+   until the four figures exist), What we promise (yellow), Questions (dark),
+   Get in touch (the form, P2 beside it on every route). The work grid and
+   the testimonials came off; home's Process was retired into the one route,
+   and glass was retired into the drift.
 
    ---- Ground rhythm (before the storyboard) ------------------------------
 
@@ -64,12 +65,15 @@ const DESCRIPTION =
   'Branding, websites, marketing and automation for startups, SMBs and founders. We show up with the work already built. Book a 15-minute call.';
 
 /* The retired Process component's four step descriptions, carried as one
-   line under stops 01 to 04 of the route (the user, 2026-09-21). */
+   line under stops 01 to 04 of the route, and the user's line for stop 05
+   (2026-09-21). */
 const STEP_LINES = [
   "Thirty minutes with a brand strategist. You tell us what's wrong and what you're after, and we listen before we price anything.",
   'Onboarding and research first, then design starts: the brand work for branding, the UI and UX for the site.',
   'Four business days to build it, then testing. You look at it and tell us what to change, as many times as it takes.',
   'It moves to your hosting, with every credential and the ownership under your name. You own everything you paid for.',
+  /* Stop 05, the user's line, 2026-09-21. */
+  "It moves to your hosting, with every credential under your name. Thirty days of support included, then it's a conversation, not a contract.",
 ];
 
 export default function Home() {

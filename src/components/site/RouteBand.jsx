@@ -16,8 +16,8 @@ import '../../styles/route.css';
               rest and asphalt when reached.
    `open`     home: no section edge of its own, 128px above and below.
    `lines`    optional, one line under each stop's title. Home carries the
-              retired Process's four step descriptions under stops 01 to 04;
-              stop 05 has no sourced line and takes none.
+              retired Process's four step descriptions under stops 01 to 04
+              and the user's line under stop 05.
 
    THE LINE DRAWS ON SCROLL, scrubbed: its length follows the reading line
    (60% down the viewport) through the route, transform only, and what has
