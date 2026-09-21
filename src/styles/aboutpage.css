@@ -9,13 +9,16 @@
   padding: var(--s-3xl) var(--inset);
 }
 
-/* ---- 1. Hero: a cream band with the mascot on it, 2026-09-21 --------------
+/* ---- 1. Hero: a cream band, TEXT ONLY, 2026-09-21 ---------------------------
 
-   THE CREAM HERO AS BUILT ON 2026-09-15, restored by the user: the statement
-   at the HEADING step on the left, 60% of the row, the mascot on the right at
-   40%, floating. The display-step hero it replaces was the site's second
-   display use, and that record is withdrawn with it: the home hero is the one
-   display use again. The copy is the third version's, unchanged.
+   The statement at the HEADING step, the paragraph and the call, in the left
+   60% of the row from 1024. THE MASCOT CAME OFF, by the user: the site has two
+   character appearances, P1 on home's cream band and P2 beside the footer
+   form. A cream band with type and no object is what the band rule of
+   2026-09-14 called a field; the user chose it knowingly, and DESIGN.md
+   records the exception. The display-step hero before it was the site's
+   second display use, and that record is withdrawn: the home hero is the one
+   display use. The copy is the third version's, unchanged.
 
    Every value on the band is asphalt, 15.7:1 on cream, and the focus ring is
    restated asphalt. The bar stays solid: a cream band is not a film or
@@ -112,30 +115,10 @@
   outline-color: var(--c-asphalt); /* the yellow ring is 1.66:1 on cream */
 }
 
-/* Below 1024 the mascot sits under the type, capped so it stays a character
-   standing on the band. Decorative, a brand object, exempt from the carrier
-   count; it floats on `.float`, and holds still under reduced motion. */
-.ab3-hero__art {
-  width: min(100%, 360px);
-  justify-self: center;
-}
-
-.ab3-hero__character {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 @media (min-width: 1024px) {
-  /* 60 / 40 of the row, the gap taken from both in proportion. */
-  .ab3-hero__in {
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    column-gap: var(--s-2xl);
-  }
-
-  .ab3-hero__art {
-    width: 100%;
-    justify-self: stretch;
+  /* The text holds the left 60%, the measure it had beside the mascot. */
+  .ab3-hero__text {
+    max-width: 60%;
   }
 
   .ab3-hero__p {

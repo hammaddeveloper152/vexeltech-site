@@ -7,9 +7,10 @@ import '../../styles/aboutpage.css';
 
 /* THE ABOUT PAGE, aligned to the storyboard, 2026-09-21.
 
-     1. Who we're for   cream: P1 right, the statement at the heading step,
+     1. Who we're for   cream, text only: the statement at the heading step,
                         the paragraph, the asphalt outline call "How we work"
-                        jumping to How it goes
+                        jumping to How it goes. The mascot came off
+                        (2026-09-21, the user): P1 appears on home only
      2. What we do      dark, two columns of plain text
      3. How it goes     dark: the one route
      4. What we promise yellow: the shared promise band, $700, the refusals
@@ -31,7 +32,7 @@ export default function AboutPage() {
       title="About us | VexelTech"
       description="Branding, websites, marketing and automation for local service businesses across the US. One flat price."
     >
-      {/* 1. HERO. A cream band with the mascot standing on it. */}
+      {/* 1. HERO. A cream band, text only. */}
       <section className="vt ab3-hero colour-band" aria-labelledby="ab3-hero-h">
         <div className="ab3__in ab3-hero__in">
           <div className="ab3-hero__text">
@@ -46,14 +47,6 @@ export default function AboutPage() {
             <a className="ab3-hero__call" href="#ab3-how-h">
               How we work
             </a>
-          </div>
-          <div className="ab3-hero__art">
-            <img
-              className="ab3-hero__character float"
-              src="/assets/objects/character.webp"
-              alt=""
-              decoding="async"
-            />
           </div>
         </div>
       </section>
