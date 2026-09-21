@@ -35,13 +35,18 @@
   margin: 0 auto var(--s-xl);
 }
 
+/* MONIGUE, 2026-09-21, by the user. It was Clash at h2, which the register
+   keeps for controls; "Get in touch" is the footer's section heading, so it
+   takes the loud face at the heading step like every other one. */
 .foot__h {
   margin: 0 0 var(--s-xl);
-  font-family: var(--font-brand);
-  font-size: var(--t-h2-size);
-  line-height: var(--t-h2-line);
-  font-weight: var(--t-weight-brand);
-  letter-spacing: var(--t-track-display);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-h);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white); /* 17.77:1 */
   text-wrap: balance;
 }
 
@@ -235,52 +240,55 @@
    taken by lit.css's band seam where a band is above), 40 around each hairline,
    16 under the email. */
 .foot__meta {
-  margin-top: var(--s-3xl);
+  margin-top: var(--s-xl);
 }
 
-/* ---- The email: the footer's object -------------------------------------
+/* ---- The email: a bone link under the form, 2026-09-21 -----------------
 
-   A DERIVED SIZE, by the user's choice, not a step. The figure step would set
-   it at 128px, and at 128 the string is 1,281px wide in a 1,152px measure. The
-   string measures 10.008 of its own font size in Monigue, so the largest size
-   that holds one line is the measure over 10.1 (the 0.9% is the renderer's
-   rounding margin): 114.06px at 1280, 35.45px at 390, capped at 115px where
-   the footer's 1,200px column stops growing. The measure is `--inset`'s, which
-   is what the footer's own padding is at 390, 768 and 1024.
+   By the user. It was the footer's object, Monigue at a derived size up to
+   115px; the form is on every route now and "Get in touch" heads it, so the
+   address steps down to a link in the reading face, bone, underlined, with
+   the line under it. A 48px target (BUILD-LAW), padding counted. White on
+   hover and focus rather than yellow: the submit is the footer's one accent. */
+.foot__mail {
+  display: grid;
+  gap: var(--s-xs);
+  margin-top: var(--s-xl);
+}
 
-   `nowrap` is a guard, not the fit: the size fits, and a font that failed to
-   load would overflow visibly rather than break the address across two lines. */
 .foot__email {
   display: inline-flex;
   align-items: center;
+  justify-self: start;
   max-width: 100%;
-  /* BUILD-LAW 48px: the line box is 31.5px at 390. */
   min-height: 48px;
-  font-family: var(--font-loud);
-  font-size: min(115px, calc((100vw - 2 * var(--inset)) / 10.1));
-  line-height: var(--t-loud-line);
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: var(--c-shop-white); /* 17.77:1 */
-  text-decoration: none;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  overflow-wrap: anywhere;
+  color: var(--c-bone); /* 13.84:1 */
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color var(--d-press) var(--ease-reveal);
 }
 
-/* Yellow on hover and on focus: the pointer is on the object, so the object
-   takes the accent. Colour does not animate (transform and opacity only); it
-   switches. Hover yellow is not a carrier, it is a state nobody is in until
-   they point at it. */
 @media (hover: hover) and (pointer: fine) {
   .foot__email:hover {
-    color: var(--c-accent-text-dark); /* 9.46:1 */
+    color: var(--c-shop-white);
   }
 }
 
 .foot__email:focus-visible {
-  color: var(--c-accent-text-dark);
+  color: var(--c-shop-white);
+}
+
+.foot__email:active {
+  transform: scale(0.97);
+  transition: transform var(--d-press) var(--ease-reveal);
 }
 
 .foot__lead-p {
-  margin: var(--s-md) 0 0;
+  margin: 0;
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
@@ -288,7 +296,7 @@
 }
 
 /* TWO HAIRLINES, by the brief, and both pass the removal test: without the
-   first, the pages row reads as more of the line under the email; without the
+   first, the pages row reads as more of the form's email line; without the
    second, the 11px base reads as a second row of pages. */
 .foot__rule {
   margin: var(--s-xl) 0;

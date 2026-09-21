@@ -1,21 +1,16 @@
 import React, { useEffect } from 'react';
 import IconProvider from '../../components/site/Icons.jsx';
 import Header from '../../components/site/Header.jsx';
-import FooterMeta from '../../components/home/FooterMeta.jsx';
-import '../../components/home/FooterForm.css';
+import FooterForm from '../../components/home/FooterForm.jsx';
 import '../../styles/tokens.css';
 import '../../styles/register.css';
 
 /* Every rebuilt page except the homepage.
 
-   The homepage keeps its own composition (`Home.jsx`) because it ends in the
-   footer FORM, which is a section of that page rather than a site chrome
-   element. Everything else ends in the meta row alone — the wordmark, the
-   site map, the contact block and the legal line — which is why `FooterMeta`
-   was split out of `FooterForm` rather than copied.
-
-   The Contact page is the exception in the other direction: it is the form,
-   so it composes the two itself.
+   THE FORM IS ON EVERY ROUTE, 2026-09-21, by the user: every page ends in
+   `FooterForm`, "Get in touch", the form, the email under it, then the pages
+   row and the base. The homepage composes it itself (`Home.jsx`); the Contact
+   page passes `meta={false}` and renders its own, with the handset.
 
    ---- What this shell owns ----------------------------------------------
 
@@ -58,29 +53,13 @@ export default function Shell({ title, description, meta = true, barOver = false
       <Header over={barOver} />
       <main id="main" tabIndex={-1}>
         {children}
-        {/* The Contact page passes meta={false}: it ends in FooterForm,
-            which carries the meta row itself, and two of them on one page
-            would be the site map twice.
+        {/* The Contact page passes meta={false}: it renders FooterForm
+            itself, with the handset, and two would be the form twice.
 
-            THE `vt foot` WRAPPER IS LOAD-BEARING AND WAS MISSING. tokens.css
-            applies the ground per SECTION, and on the homepage this row is
-            inside FooterForm's own `<footer className="vt foot">`. Rendered
-            bare into `<main>` it inherited nothing, so it sat on the UA's
-            white body: shop white wordmark, shop white links and steel-dark
-            keys, all on white, on all six pages that use this shell.
-
-            Every measurement passed. The route check read `body` background,
-            saw white, and recorded it as correct because the sections paint
-            over it — which they do, and this row was not one of them. A
-            SCREENSHOT CAUGHT IT, which is the second time on this project
-            that a passing measurement has been wrong about paint. */}
-        {meta ? (
-          <footer className="vt foot scratched">
-            <div className="foot__inner">
-              <FooterMeta />
-            </div>
-          </footer>
-        ) : null}
+            The footer is `vt foot` inside FooterForm, which is load-bearing:
+            tokens.css applies the ground per SECTION, and a footer rendered
+            bare once sat on the UA's white body on six pages. */}
+        {meta ? <FooterForm /> : null}
       </main>
     </IconProvider>
   );

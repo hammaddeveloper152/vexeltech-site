@@ -4,15 +4,14 @@ import Wordmark from '../site/Wordmark.jsx';
 import SocialRow from './SocialRow.jsx';
 import './FooterForm.css';
 
-/* THE FOOTER, REBUILT 2026-09-16. Every route; on home and Contact it sits
-   under the form, by the user's decision. Top to bottom, on asphalt:
+/* THE FOOTER, REBUILT 2026-09-16; the form on every route since 2026-09-21,
+   by the user. This is what follows the form (FooterForm renders it), top to
+   bottom, on asphalt:
 
-     the email      the footer's object: "info@vexeltechsolutions.com" in
-                    Monigue, one line, fitted to the measure (115px at 1280,
-                    35px at 390, the user's choice over the figure step, which
-                    at 128px is 1,281px wide in a 1,152px measure), white,
-                    the whole line a mailto, machine yellow on hover; under
-                    it one line in bone
+     the email      "info@vexeltechsolutions.com" as a bone link, Satoshi
+                    body, directly under the form, and the line under it in
+                    bone. It was the footer's object in Monigue up to 115px
+                    until the form came to every route
      a hairline
      pages, social  the five pages left in Satoshi 14px, the social glyphs
                     right (none render until an account URL is supplied)
@@ -49,7 +48,7 @@ const YEAR = 2026;
 export default function FooterMeta() {
   return (
     <div className="foot__meta">
-      <div className="foot__lead">
+      <div className="foot__mail">
         <a className="foot__email" href={`mailto:${EMAIL}`}>
           {EMAIL}
         </a>
