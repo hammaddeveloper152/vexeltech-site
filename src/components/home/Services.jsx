@@ -77,7 +77,7 @@ export default function Services() {
               Icon={Icon}
               name={discipline}
               items={subs.map((t) => ({ t }))}
-              side={i % 2 === 0 ? 'left' : 'right'}
+              index={i}
               as="h3"
               plateRef={plateRef(i)}
               href={`/services#${id}`}

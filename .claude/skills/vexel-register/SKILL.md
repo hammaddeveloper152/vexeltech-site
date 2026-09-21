@@ -24,9 +24,15 @@ asset stands. It outranks this file and any earlier record where they differ;
 a change goes on the sheet first. DESIGN.md records it and the amendments
 made the same day. In short: one card (12px), one route (five stops, yellow
 line on dark, asphalt on cream, drawn on scroll), one button pair (yellow
-primary, outline secondary), 24px Phosphor icons, and no object but the
-character (P1 `character.webp`, P2 to P5 `character-N.webp`, each slot empty
-until its file exists). Yellow lives in buttons, the route line, the hovered
+primary, outline secondary), Phosphor icons, and no object but the
+character: two appearances, P1 on home's cream band and P2 beside the footer
+form on every route (`character-2.webp`, empty until it exists). Since the
+same day's corrections: the route is VERTICAL everywhere (Moldie numerals,
+lit when reached, the line drawn on scroll and kept); home's ground is the
+DRIFT (lit-near, asphalt, arc-black #0E1220 at the route, asphalt by the
+FAQ), the page's second material, and glass is retired; home's disciplines
+are plain columns under a hairline, not cards; the pricing panel wraps its
+ladder exactly. Yellow lives in buttons, the route line, the hovered
 card and the yellow band only. Where the sections below describe the work
 grid, the testimonials, Process, the rendered icons, the handset or the
 index rail, that is history.

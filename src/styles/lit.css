@@ -335,7 +335,7 @@ body::before {
    went back to the sum of paddings: 25px above the call at 390 and the footer
    192px below it at both widths. The call owns its gap whether it has a
    material or not. */
-/* `:not(.band, .colour-band)` ON EVERY NEIGHBOUR RULE, 2026-09-16. These rules take the
+/* `:not(.band, .colour-band, .route-band--open)` ON EVERY NEIGHBOUR RULE, 2026-09-16. These rules take the
    facing padding off a PLAIN section beside a band. When glass went on Process,
    directly under the marble counter row, they took it off the bands too: the
    counter row lost its bottom padding, Process lost its top padding and
@@ -346,7 +346,7 @@ body::before {
    yellow promise band directly under the glass route, and these rules took its
    top padding: the heading sat on the band's top edge. Cream and yellow bands
    carry `.colour-band` and are excluded with the photographic ones. */
-:is(section, footer, article, aside, div):not(.band, .colour-band):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) {
+:is(section, footer, article, aside, div):not(.band, .colour-band, .route-band--open):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) {
   padding-bottom: 0;
   margin-bottom: 0;
 }
@@ -358,9 +358,9 @@ body::before {
    against a 96 target — and at 390 the band asked for 64, the footer's 96 won
    the collapse, and the seam was half as tight again as the rule. A rule that
    is right at one width by accident is not right. */
-.band.band + :is(section, footer, article, aside, div):not(.band, .colour-band),
-.band-rays.band-rays + :is(section, footer, article, aside, div):not(.band, .colour-band),
-.callband.callband + :is(section, footer, article, aside, div):not(.band, .colour-band) {
+.band.band + :is(section, footer, article, aside, div):not(.band, .colour-band, .route-band--open),
+.band-rays.band-rays + :is(section, footer, article, aside, div):not(.band, .colour-band, .route-band--open),
+.callband.callband + :is(section, footer, article, aside, div):not(.band, .colour-band, .route-band--open) {
   padding-top: 0;
   margin-top: 0;
 }
@@ -377,8 +377,8 @@ body::before {
    Containing it with `flow-root` was the wrong fix — it kept the 96 and moved
    it inside the footer, so the gap became 192. The margin is not a gap the
    footer needs when a band is above it; the band owns that space. */
-:is(.band.band, .band-rays.band-rays, .callband.callband) + :is(section, footer, article, aside, div):not(.band, .colour-band) > :first-child,
-:is(.band.band, .band-rays.band-rays, .callband.callband) + :is(section, footer, article, aside, div):not(.band, .colour-band) > :first-child > :first-child {
+:is(.band.band, .band-rays.band-rays, .callband.callband) + :is(section, footer, article, aside, div):not(.band, .colour-band, .route-band--open) > :first-child,
+:is(.band.band, .band-rays.band-rays, .callband.callband) + :is(section, footer, article, aside, div):not(.band, .colour-band, .route-band--open) > :first-child > :first-child {
   margin-top: 0;
 }
 
@@ -386,8 +386,8 @@ body::before {
    band ends on padding rather than on a margin — and it is here so that the two
    sides of a seam are governed by one rule rather than by one rule and a
    coincidence. */
-:is(section, footer, article, aside, div):not(.band, .colour-band):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) > :last-child,
-:is(section, footer, article, aside, div):not(.band, .colour-band):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) > :last-child > :last-child {
+:is(section, footer, article, aside, div):not(.band, .colour-band, .route-band--open):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) > :last-child,
+:is(section, footer, article, aside, div):not(.band, .colour-band, .route-band--open):has(+ .band.band, + .band-rays.band-rays, + .callband.callband) > :last-child > :last-child {
   margin-bottom: 0;
 }
 
@@ -395,6 +395,13 @@ body::before {
 .band-rays,
 .callband {
   margin-block: var(--band-gap);
+}
+
+/* HOME'S ROUTE OWNS ITS OWN SPACE, 2026-09-21: 128px above and below, the
+   user's figure, measured from the ticker's bottom edge. The ticker gives up
+   its bottom margin to it. */
+.band-rays:has(+ .route-band--open) {
+  margin-bottom: 0;
 }
 
 /* A band against the top or bottom of the document keeps the page's own edge,
@@ -580,80 +587,52 @@ body::before {
 }
 
 
-/* GLASS — home's Process section, 2026-09-16, by the user. The blue flash,
-   unassigned since Failures became the yellow band on 2026-09-14, is Process's
-   ground now, and that is its one band.
+/* GLASS IS RETIRED, 2026-09-21, by the user. It was home's Process band, a
+   photograph of a blue flash under an 80 to 90% scrim. Its blue is in the
+   ground now: the drift below reaches its darkest, coolest value where the
+   route stands, and the route stands on it with nothing painted. The file is
+   deleted. DESIGN.md records it.
 
-   THE FLASH SITS BEHIND "HOW IT WORKS". The layer is oversized so the solver
-   has slack in both axes; `.measure/bandpos.mjs` solves the position on the
-   painted band.
+   THE DRIFT, home's ground and the page's second material, 2026-09-21.
 
-   THE SCRIM IS ASPHALT, the default: the flash is meant to cool as it sinks.
-   Walked from 60 in 5% steps until every text pair passes AND the arc share of
-   every frame across the section stays under 20.5%, the value glass shipped at
-   on Failures and the ceiling the user set for it. `.measure/scrim.mjs` walks
-   the type and `.measure/arcwalk.mjs` the arc.
+   The rig above is one light in the room, anchored to the VIEWPORT. The drift
+   is anchored to the PAGE, because it is a place on the page rather than a
+   light: lit-near at the top, asphalt on the way down, arc-black (#0E1220) by
+   the time the route arrives and held through it, and back to asphalt by the
+   FAQ. It is the body's own background, sized to the document, so iOS's
+   fixed-attachment problem does not apply to it.
 
-   The route's yellow is still the section's only carrier. On this band the
-   muted states take steel-lift, not steel-dark, in register.css. */
-/* The target is the heading's TEXT box, not the h2's: the h2 is a full-width
-   block and its centre is the middle of the column, 360px right of the words
-   at 1280. The band's height moves with its copy, so the position takes each
-   breakpoint.
+   THE STOPS ARE MEASURED, NOT GUESSED. Home sets them in px on `body` from
+   the route's top and bottom and the FAQ's top (Home.jsx), at load, when the
+   fonts land and whenever the page changes height, because every section's
+   height moves with the width.
 
-   280% OF THE BAND'S HEIGHT. The heading is 96px into a band about 1100px
-   tall, and the glass as painted is brightest about 63% of the way down the
-   layer (the file's own centroid says 46.5%; the crop and the scrim move it).
-   At 200% and at 240% the solve asked for a position past 100% at 390 and
-   768, so the layer could not rise far enough to reach the heading. Measured
-   over the whole band with its type and the bar hidden, at 60% so the glass is
-   visible to measure.
-
-   GLASS HAS NO SINGLE CORE, and the position is recorded as measured rather
-   than as landed. It is a field of shards, lighter towards the heading, and
-   its brightest-region centroid barely tracks the layer: changing size and
-   position together moved it 11px. At 280% it sits right of and below the
-   heading's text centre by 56,100px at 390, 119,113 at 768, 91,104 at 1024
-   and 75,98 at 1280. */
-.band-glass {
-  background-image: url('/assets/bands/glass.webp');
-  /* 90% AT 390, 80% AT 1280, by the user, 2026-09-16, replacing the 95 the
-     arc walk had set everywhere.
-
-     THE ARC FIELD CEILING NO LONGER BINDS A PHOTOGRAPH. The brief set 80 at
-     1280 and kept the ceiling there; the two disagree, because at 80 the worst
-     frame at 1280 measures 86.96% blue against a 20.5% ceiling and only clears
-     it at 90. Asked, the user withdrew the ceiling for photographic materials
-     at every width: a scrimmed photograph is held to CONTRAST alone. The
-     ceiling still governs what the page itself paints. See DESIGN.md, A
-     PHOTOGRAPH IS HELD TO CONTRAST, NOT TO THE ARC FIELD CEILING.
-
-     Every text pair passes from 60 up, so contrast does not bind either value
-     either: these two are the user's reading of the picture. */
-  --scrim: 90%;
-  background-size: auto 280%;
-  background-position: 54% 93%;
+   The body becomes a stacking context so the rig's fixed layer (z-index -1,
+   the two blooms only on this page) paints ABOVE the drift and below the
+   content. Arc-black is the ground's own hue taken deeper; it is not the arc
+   field that failed as a ground (a flat saturated blue), and DESIGN.md
+   records the distinction. */
+body[data-ground='drift'] {
+  position: relative;
+  z-index: 0;
+  background-color: var(--c-asphalt);
+  background-image: linear-gradient(
+    to bottom,
+    var(--lit-near) 0,
+    var(--c-asphalt) var(--drift-asphalt, 20%),
+    var(--c-arc-black) var(--drift-deep, 45%),
+    var(--c-arc-black) var(--drift-deep-end, 60%),
+    var(--c-asphalt) var(--drift-back, 75%),
+    var(--c-asphalt) 100%
+  );
+  background-repeat: no-repeat;
 }
 
-@media (min-width: 768px) {
-  .band-glass {
-    background-position: 63% 95%;
-  }
-}
-
-@media (min-width: 1024px) {
-  .band-glass {
-    background-position: 66% 91%;
-  }
-}
-
-@media (min-width: 1280px) {
-  .band-glass {
-    background-position: 69% 90%;
-    /* The ceiling's own width. 768 and 1024 hold the phone's 90%: neither was
-       walked, and the heavier scrim is the conservative one. */
-    --scrim: 80%;
-  }
+/* The rig's two blooms stay, as recorded; its own fall gives way to the
+   drift. */
+body[data-ground='drift']::before {
+  background-color: transparent;
+  background-image: var(--lit-key-page), var(--lit-rim-page);
 }
 
 /* RAYS — the marquee strip, and THE ONE THAT IS NOT A SCRIM.

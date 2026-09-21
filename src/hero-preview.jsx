@@ -97,7 +97,7 @@ createRoot(document.getElementById('hero-root')).render(
           id="how-h"
           heading="How it works"
           ground="dark"
-          material="glass"
+          open
           lines={STEP_LINES}
         />
         <CounterRow band />

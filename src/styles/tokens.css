@@ -176,6 +176,9 @@
   /* Cream, the home About band's ground, 2026-09-14. Asphalt on it is 15.7:1.
      A light ground, so every value on it is restated where it is used. */
   --c-cream: #f4f1ea;
+  /* The drift's deepest value, home's ground at the route (2026-09-21): the
+     ground's own hue taken deeper and cooler. A ground, never a field. */
+  --c-arc-black: #0e1220;
   /* `--c-accent-tag` existed for a few hours of 2026-09-14 as the work grid's
      Branding tag fill, and went when the tag became an outline: it shared every
      work frame with the plates' yellow numerals, and the numerals keep the

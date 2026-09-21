@@ -1,25 +1,27 @@
 /* ==========================================================================
-   THE ROUTE. One component on the whole site (storyboard, 2026-09-21): five
-   stops on one drawn line. Home's "How it works" (dark, on the glass band),
-   /services' "How every project runs" (cream), About's "How it goes" (dark).
+   THE ROUTE. One component on the whole site, VERTICAL since 2026-09-21 (the
+   user's correction): five stops down one drawn line, each numeral in Moldie
+   with its title and line beside it. Home's "How it works" (on the drifting
+   ground, nothing painted, 128px either side), /services' "How every project
+   runs" (cream), About's "How it goes" (dark).
 
-   ON CREAM everything is asphalt, 15.7:1, the line included: machine yellow
-   is 1.66:1 on cream, under the 3:1 a drawn object needs. The focus ring is
-   restated asphalt. A route drawn in code counts as a band's object (the
-   user's decision, 2026-09-15), so the cream band is not an empty field.
+   ON DARK: numerals steel-lift at rest and white when reached; titles white,
+   lines bone; the LINE AND A REACHED STOP are machine yellow, 9.46:1, the one
+   place the storyboard lets yellow live in this section and its carrier.
 
-   ON DARK the numerals and titles are white, the lines bone, and the LINE AND
-   ITS STOPS ARE MACHINE YELLOW, 9.46:1: the route line is one of the four
-   places the storyboard lets yellow live, and it is the section's carrier.
+   ON CREAM: everything asphalt, 15.7:1, the line included (yellow is 1.66:1
+   on cream). A numeral at rest is steel, the recorded muted value on a light
+   ground, and asphalt when reached. The focus ring is restated asphalt.
 
-   From 1024: five stops in a row with the line under them, a 12px stop on the
-   line under each. Below: the same route turned vertical, down the left.
+   NOTHING IS PAINTED BEHIND A STOP: no hairline, plate or panel.
    ========================================================================== */
 
 .route-band {
   --route-ink: var(--c-asphalt);
-  --route-line: var(--c-asphalt);
   --route-soft: var(--c-asphalt);
+  --route-line: var(--c-asphalt);
+  --route-rest: var(--c-steel);
+  --route-lit: var(--c-asphalt);
   padding: var(--s-3xl) var(--inset);
   color: var(--route-ink);
 }
@@ -34,8 +36,18 @@
 
 .route-band--dark {
   --route-ink: var(--c-shop-white); /* 17.77:1 on asphalt */
-  --route-line: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
   --route-soft: var(--c-bone); /* 13.84:1 on asphalt */
+  --route-line: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
+  --route-rest: var(--c-steel-lift);
+  --route-lit: var(--c-shop-white);
+}
+
+/* HOME: the route stands straight on the drifting ground. 128px above and
+   below, the user's figure (off the spacing ramp, as given), and no edge of
+   its own. The seam rules in lit.css leave it alone; see `.route-band--open`
+   there. */
+.route-band--open {
+  padding-block: 128px;
 }
 
 .route-band__in {
@@ -47,7 +59,7 @@
    the sticky bar when About's hero call jumps here. */
 .route-band__h {
   scroll-margin-top: calc(48px + 2 * var(--s-sm) + var(--s-lg));
-  margin: 0 0 var(--s-xl);
+  margin: 0 0 var(--s-2xl);
   font-family: var(--font-loud);
   font-size: var(--t-loud-h);
   line-height: var(--t-loud-line);
@@ -58,9 +70,16 @@
   text-wrap: balance;
 }
 
-/* ---- The route ------------------------------------------------------------ */
+/* ---- The route ------------------------------------------------------------
 
+   The line runs down the left from the first stop's centre to the last's,
+   `--line-end` from the bottom (set by the component, because the last stop's
+   height depends on whether it carries a line). It is scaled by `--drawn`,
+   the reading line's progress through the route: transform only. */
 .route {
+  --dot: 12px;
+  --n-size: var(--t-name-fig); /* 64px, 96px from 1024 */
+  --n-mid: calc(var(--n-size) * 0.9 / 2);
   position: relative;
   display: grid;
   gap: var(--s-xl);
@@ -69,133 +88,109 @@
   list-style: none;
 }
 
-/* The line: vertical down the left below 1024. It draws from its top. */
 .route::before {
   content: '';
   position: absolute;
-  top: 6px;
-  bottom: 6px;
-  left: 5px;
+  top: var(--n-mid);
+  bottom: var(--line-end, var(--n-mid));
+  left: calc((var(--dot) - var(--stroke-drawn)) / 2);
   width: var(--stroke-drawn);
   background: var(--route-line);
+  transform: scaleY(var(--drawn, 0));
   transform-origin: 50% 0;
 }
 
 .route__stop {
   position: relative;
   display: grid;
-  align-content: start;
-  gap: var(--s-xs);
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--s-lg);
+  align-items: start;
 }
 
-/* The stop on the line. */
+/* The stop on the line, level with its numeral's centre. Muted at rest, the
+   line's colour once reached. */
 .route__stop::before {
   content: '';
   position: absolute;
-  top: 4px;
+  top: calc(var(--n-mid) - var(--dot) / 2);
   left: calc(-1 * var(--s-xl));
-  width: 12px;
-  height: 12px;
+  width: var(--dot);
+  height: var(--dot);
   border-radius: 50%;
+  background: var(--route-rest);
+  transition: background-color var(--d-drop) var(--ease-reveal);
+}
+
+.route__stop[data-reached='true']::before {
   background: var(--route-line);
 }
 
+/* Moldie, the name face: a stop's numeral is its name. */
 .route__n {
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-small);
-  line-height: var(--t-loud-line);
+  font-family: var(--font-name);
+  font-size: var(--n-size);
+  line-height: 0.9;
   font-weight: 400;
-  color: var(--route-ink);
+  letter-spacing: 0;
+  color: var(--route-rest);
+  transition: color var(--d-drop) var(--ease-reveal);
+  /* One column width for all five, so every title starts on one line. The
+     widest numeral, 04, measures 1.24em in Moldie. */
+  min-width: 1.3em;
+}
+
+.route__stop[data-reached='true'] .route__n {
+  color: var(--route-lit);
+}
+
+/* The title and its line beside the numeral, the title's first line centred
+   on the numeral. */
+.route__body {
+  display: grid;
+  gap: var(--s-xs);
+  padding-top: calc(var(--n-mid) - var(--t-h3-line) / 2);
+  min-width: 0;
 }
 
 .route__t {
   font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-label);
   color: var(--route-ink);
   text-wrap: balance;
 }
 
-/* A stop's one line, where the mount gives one: small, in the ground's soft
-   value. Home carries the retired Process's four step descriptions here. */
 .route__d {
-  margin-top: var(--s-xs);
+  max-width: 52ch;
   font-family: var(--font-offer);
-  font-size: var(--t-small-size);
-  line-height: var(--t-small-line);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
   color: var(--route-soft);
   text-wrap: pretty;
 }
 
-@media (min-width: 1024px) {
-  .route {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    column-gap: var(--s-lg);
-    padding: 0 0 var(--s-xl);
-  }
-
-  /* The line runs under the row, through the five stops, and draws from the
-     left. */
-  .route::before {
-    top: auto;
-    bottom: 4.5px;
-    left: 0;
-    right: 0;
-    width: auto;
-    height: var(--stroke-drawn);
-    transform-origin: 0 50%;
-  }
-
+/* Below 768 the title steps down to body so it holds beside a 64px numeral in
+   a 358px column. */
+@media (max-width: 767px) {
   .route__stop {
-    padding-bottom: var(--s-xl);
+    column-gap: var(--s-md);
   }
 
-  .route__stop::before {
-    top: auto;
-    bottom: calc(-1 * var(--s-xl));
-    left: 0;
-  }
-}
-
-/* ---- THE DRAW, on arrival ------------------------------------------------
-
-   Transform only. The line scales from its start over 900ms on the reveal
-   curve; each stop fades up 8px at the 70ms stagger behind it. */
-@media (prefers-reduced-motion: no-preference) {
-  .route::before {
-    transition: transform 900ms var(--ease-reveal);
+  .route__t {
+    font-size: var(--t-body-size);
+    line-height: var(--t-body-line);
   }
 
-  .route[data-drawn='false']::before {
-    transform: scaleY(0);
-  }
-
-  .route__stop {
-    transition:
-      opacity var(--d-panel) var(--ease-reveal),
-      transform var(--d-panel) var(--ease-reveal);
-    transition-delay: calc(var(--i) * var(--stagger));
-  }
-
-  .route[data-drawn='false'] .route__stop {
-    opacity: 0;
-    transform: translateY(var(--s-sm));
+  .route__body {
+    padding-top: calc(var(--n-mid) - var(--t-body-line) / 2);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
-  .route[data-drawn='false']::before {
-    transform: scaleX(0);
-  }
-}
-
-/* Reduced motion: the line is drawn from the start; the stops only fade. */
 @media (prefers-reduced-motion: reduce) {
-  .route__stop {
-    transition: opacity var(--d-panel) var(--ease-reveal);
-  }
-
-  .route[data-drawn='false'] .route__stop {
-    opacity: 0;
+  .route__stop::before,
+  .route__n {
+    transition: none;
   }
 }

@@ -1,208 +1,49 @@
 /* ==========================================================================
-   THE DISCIPLINE PLATE, an icon plate since 2026-09-21, by the user.
+   THE DISCIPLINE COLUMN, home's What we do, 2026-09-21 (the user's
+   correction). It was a card; the boxes are gone.
 
-   Lit-near with the two lights at their stations, a Phosphor icon at 24px
-   top left in shop white, the name in Moldie, the three items in bone.
-   Mounted on home Services.
+   A plain column of type on the ground: a Phosphor icon at 32px, the name in
+   Moldie, the three items in bone, and a 1px hairline above it. NOTHING ELSE
+   IS PAINTED: no plane, no edge, no radius, no light, no fill. The section
+   reads as four columns of type, not four boxes.
 
-   THE TILES ARE GONE, and with them the 1:1 lock, the hold-then-fade shade
-   and the scale-in-frame hover: all three existed for a picture. The plate is
-   its content plus 32px.
+   HOVER: the hairline goes machine yellow and the name lifts 4px. Focus does
+   the same, and a tap holds it for 300ms before the page changes (the column
+   is a link to its discipline on /services). One column at a time, so the
+   yellow hairline is the frame's carrier while it is lit, under BUILD-LAW's
+   hovered-card clause.
 
-   The class names keep the `svc__` prefix. They mean "services plate".
+   ARRIVAL: the site's reveal, a fade and an 8px rise at the 70ms stagger.
+   The 1.5 degree tilt-and-straighten came off with the box, by the user.
+
+   The class names keep the `svc__` prefix; they mean "services plate".
    ========================================================================== */
-
-/* ---- The plate --------------------------------------------------------- */
 
 .svc__plate {
   position: relative;
-  isolation: isolate;
   display: grid;
-  border: 1px solid var(--lit-edge);
-  border-top-color: var(--lit-edge-top);
-  border-right-color: var(--lit-edge-arc);
-  border-bottom-color: var(--lit-edge-arc);
-  border-radius: var(--r-md);
-  background-color: var(--lit-near);
-  /* THE TWO LIGHTS, at their stations: the key top left, the rim bottom
-     right. The key no longer follows the pointer (2026-09-21, storyboard). */
-  background-image: var(--lit-key), var(--lit-rim);
-  background-repeat: no-repeat;
-  box-shadow: var(--lit-inset);
-  /* The resting state, alternating, straightened on arrival. */
-  transform: rotate(-1.5deg);
-  transition:
-    transform var(--d-drop) var(--ease-reveal),
-    background-color 400ms var(--ease-reveal);
+  align-content: start;
+  gap: var(--s-md);
+  padding-top: var(--s-lg);
+  border-top: 1px solid var(--c-rule-dark);
+  color: var(--c-shop-white); /* the icon inherits it: 17.77:1 */
+  text-decoration: none;
+  transition: border-top-color var(--d-panel) var(--ease-reveal);
 }
 
-/* THE POINTER-FOLLOW LIGHT CAME OFF, 2026-09-21, by the user: the key was a
-   300px spot that tracked the pointer and dropped the plane a step. The
-   storyboard's motion list keeps the fill, the lift and the tilt, not the
-   light. */
-@media (hover: hover) and (pointer: fine) {
-  /* PRESS IS THE WHOLE PLATE. 160ms is BUILD-LAW's pinned press duration. */
-  .svc__plate:active {
-    transform: rotate(0deg) translateY(-4px) scale(0.985);
-    transition-duration: var(--d-press);
-  }
-}
-
-.svc__plate[data-side='right'] {
-  transform: rotate(1.5deg);
-}
-
-.svc__plate[data-in='true'],
-.svc__plate[data-side='right'][data-in='true'] {
-  transform: rotate(0deg) translateY(-4px);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .svc__plate {
-    transition: none;
-  }
-
-  .svc__plate,
-  .svc__plate[data-side='right'],
-  .svc__plate[data-in='true'],
-  .svc__plate[data-side='right'][data-in='true'],
-  .svc__plate:active {
-    transform: none;
-  }
+/* THE ICON, 32px, top left: the user's figure for the column, and off the
+   three stations on purpose. `currentColor`. Decorative. */
+.svc__icon {
+  display: block;
+  width: 32px;
+  height: 32px;
 }
 
 .svc__body {
-  position: relative;
-  z-index: 1;
   min-width: 0;
 }
 
-/* 32px padding and a 12px radius, both from the home card's brief, kept. The
-   clip is `clip-path` with overflow as the fallback, so the moving key never
-   paints past the rounded corner. */
-.svc__plate {
-  align-content: start;
-  gap: var(--s-lg);
-  padding: 32px;
-  border-radius: 12px;
-  overflow: hidden;
-  clip-path: inset(0 round 12px);
-  color: var(--c-shop-white); /* the icon inherits it: 16.48:1 on lit-near */
-}
-
-/* THE ICON, at the 24px station, top left (storyboard: Phosphor only, 24px,
-   inherit colour). It was 64px from 2026-09-21 until the storyboard pass the
-   same day. `currentColor`, so the fill turns it asphalt with the words. */
-.svc__icon {
-  position: relative;
-  z-index: 1;
-  display: block;
-  width: var(--icon-md);
-  height: var(--icon-md);
-}
-
-/* ---- THE CARD FILLS, 2026-09-16, by the user ----------------------------
-
-   Hover, focus or a tap turns the whole plate machine yellow: the rim and
-   the spotlight go, the icon, the name and the items go asphalt (9.46:1), and
-   the plate lifts 4px. 250ms in on the reveal curve, 400ms back.
-
-   One card fills at a time, so a filled card is the frame's carrier while the
-   pointer is on it and that frame's primary call is exempt for the duration:
-   BUILD-LAW's transient accent clause, amended by the user for hover. */
-/* The leave: 400ms on the same curve, for the plane, the light and the
-   words together. Declared before the filled state so the fill's own 250ms
-   wins on the way in. */
-.svc__plate .svc__icon,
-.svc__plate .disc__name,
-.svc__plate .disc__item {
-  transition:
-    opacity var(--d-panel) var(--ease-reveal),
-    color var(--d-panel) var(--ease-reveal);
-}
-
-/* NO `:where()` ON THESE, and that is the whole reason the first build filled
-   the plane and left the words white: `:where()` contributes nothing to
-   specificity, so `.svc__plate .disc__name` (three
-   selectors) outranked a fill written as `:where(:hover) .disc__name` and the
-   name stayed shop white on machine yellow, 1:1. The state is spelled out. */
-/* THE HOVER HALF IS GATED TO A REAL POINTER, and the tap half is not. Ungated,
-   a tap on a phone fired `:hover` and left the card filled and lifted with no
-   pointer to move away — four cards stuck yellow at 390 in the viewer audit,
-   which is the failure BUILD-LAW's gating rule names. Focus and the tap hold
-   their own state and are safe outside the gate. */
-@media (hover: hover) and (pointer: fine) {
-  .svc__plate:hover {
-    background-color: var(--c-accent-ground);
-    background-image: none;
-    border-color: var(--c-accent-ground);
-    box-shadow: none;
-    /* -8, because the card already rests at -4 from its arrival. The lift the
-       reader sees is the brief's 4px. */
-    transform: rotate(0deg) translateY(-8px);
-    transition:
-      background-color var(--d-drop) var(--ease-reveal),
-      border-color var(--d-drop) var(--ease-reveal),
-      transform var(--d-drop) var(--ease-reveal);
-  }
-
-  .svc__plate:hover .svc__icon,
-  .svc__plate:hover .disc__name,
-  .svc__plate:hover .disc__item {
-    color: var(--c-asphalt); /* 9.46:1 on machine yellow */
-    transition: color var(--d-drop) var(--ease-reveal);
-  }
-}
-
-.svc__plate:focus-visible,
-.svc__plate[data-tap='true'] {
-  background-color: var(--c-accent-ground);
-  background-image: none;
-  border-color: var(--c-accent-ground);
-  box-shadow: none;
-  transform: rotate(0deg) translateY(-8px);
-  transition:
-    background-color var(--d-drop) var(--ease-reveal),
-    border-color var(--d-drop) var(--ease-reveal),
-    transform var(--d-drop) var(--ease-reveal);
-}
-
-.svc__plate:focus-visible .svc__icon,
-.svc__plate:focus-visible .disc__name,
-.svc__plate:focus-visible .disc__item,
-.svc__plate[data-tap='true'] .svc__icon,
-.svc__plate[data-tap='true'] .disc__name,
-.svc__plate[data-tap='true'] .disc__item {
-  color: var(--c-asphalt); /* 9.46:1 on machine yellow */
-  transition: color var(--d-drop) var(--ease-reveal);
-}
-
-/* The press, on the filled card. Last, so it wins the tie with the fill. */
-.svc__plate:active {
-  transform: rotate(0deg) translateY(-8px) scale(0.985);
-  transition-duration: var(--d-press);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  /* The colour swaps; nothing lifts and nothing fades. */
-  .svc__plate:hover,
-  .svc__plate:focus-visible,
-  .svc__plate[data-tap='true'],
-  .svc__plate:active {
-    transform: none;
-    transition: none;
-  }
-  .svc__plate:hover .svc__icon,
-  .svc__plate:hover .disc__name,
-  .svc__plate:hover .disc__item,
-  .svc__plate[data-tap='true'] .svc__icon,
-  .svc__plate[data-tap='true'] .disc__name,
-  .svc__plate[data-tap='true'] .disc__item {
-    transition: none;
-  }
-}
-
-/* Moldie, the name face, at the home card step. White. */
+/* Moldie, the name face, at the home step. White. */
 .svc__plate .disc__name {
   margin: 0 0 var(--s-sm);
   font-family: var(--font-name);
@@ -211,13 +52,12 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--c-shop-white);
+  color: var(--c-shop-white); /* 17.77:1 */
+  transition: transform var(--d-panel) var(--ease-reveal);
 }
 
-/* THE LIST, owned here rather than borrowed from pages.css, because the plate
-   now has two mounts and one of them is the home page, which does not load
-   that sheet. One column: three items are a summary, not the offer, and they
-   sit at body with 8px between them. */
+/* The list is the column's own, not borrowed from pages.css: one column,
+   body size, 8px between items. */
 .svc__plate .disc__list {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -227,9 +67,85 @@
 }
 
 .svc__plate .disc__item {
-  padding: var(--s-sm) 0;
+  padding: var(--s-xs) 0;
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* 13.67:1 on lit-near */
+  color: var(--c-bone); /* 13.84:1 */
+}
+
+/* ---- The lit state: hover (a real pointer only), focus, and a tap --------
+
+   In at 250ms, back at 400ms (declared above), on the reveal curve. */
+@media (hover: hover) and (pointer: fine) {
+  /* `[data-in]` so the lit state outranks the arrival rule's timing. */
+  .svc__plate[data-in]:hover {
+    border-top-color: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
+    transition-duration: var(--d-drop);
+  }
+
+  .svc__plate[data-in]:hover .disc__name {
+    transform: translateY(-4px);
+    transition-duration: var(--d-drop);
+  }
+}
+
+.svc__plate[data-in]:focus-visible,
+.svc__plate[data-in][data-tap='true'] {
+  border-top-color: var(--c-accent-draw-dark);
+  transition-duration: var(--d-drop);
+}
+
+.svc__plate:focus-visible .disc__name,
+.svc__plate[data-tap='true'] .disc__name {
+  transform: translateY(-4px);
+  transition-duration: var(--d-drop);
+}
+
+/* THE PRESS, BUILD-LAW's 160ms. */
+.svc__plate[data-in]:active {
+  transform: scale(0.97);
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+/* ---- Arrival: the reveal -------------------------------------------------
+
+   `data-in` is set by usePlateArrival as each column reaches the viewport. */
+@media (prefers-reduced-motion: no-preference) {
+  .svc__plate[data-in='false'] {
+    opacity: 0;
+    transform: translateY(var(--s-sm));
+  }
+
+  .svc__plate[data-in='true'] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--d-panel) var(--ease-reveal),
+      transform var(--d-panel) var(--ease-reveal),
+      border-top-color var(--d-panel) var(--ease-reveal);
+    transition-delay: calc(var(--i, 0) * var(--stagger)), calc(var(--i, 0) * var(--stagger)), 0ms;
+  }
+}
+
+/* Reduced motion: the colour changes, nothing moves, arrival is a fade. */
+@media (prefers-reduced-motion: reduce) {
+  .svc__plate[data-in='false'] {
+    opacity: 0;
+  }
+
+  .svc__plate {
+    transition:
+      opacity var(--d-panel) var(--ease-reveal),
+      border-top-color var(--d-panel) var(--ease-reveal);
+  }
+
+  .svc__plate .disc__name,
+  .svc__plate:hover .disc__name,
+  .svc__plate:focus-visible .disc__name,
+  .svc__plate[data-tap='true'] .disc__name,
+  .svc__plate:active {
+    transform: none;
+    transition: none;
+  }
 }

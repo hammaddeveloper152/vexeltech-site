@@ -27,7 +27,7 @@ export default function DisciplinePlate({
   line,
   items,
   Icon,
-  side,
+  index = 0,
   as: Heading = 'h2',
   plateRef,
   href,
@@ -101,7 +101,7 @@ export default function DisciplinePlate({
       className="svc__plate"
       id={id}
       ref={plateRef}
-      data-side={side}
+      style={{ '--i': index }}
       data-in="false"
       aria-labelledby={`svc-${id}`}
       {...nav}

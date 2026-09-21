@@ -80,6 +80,39 @@ export default function Home() {
     window.scrollTo(0, 0);
   }, []);
 
+  /* THE DRIFT, home's ground (lit.css, 2026-09-21). Its stops are measured
+     in px from the page itself: asphalt halfway to the route, arc-black from
+     the route's top to its bottom, asphalt again by the FAQ. Re-measured
+     whenever the page changes height (fonts landing, a width change, the FAQ
+     opening). Taken off the body when the reader leaves home. */
+  useEffect(() => {
+    const body = document.body;
+    body.dataset.ground = 'drift';
+    const set = () => {
+      const route = document.querySelector('.route-band--open');
+      const faq = document.querySelector('.faq');
+      if (!route || !faq) return;
+      const y = (el) => el.getBoundingClientRect().top + window.scrollY;
+      const top = y(route);
+      const bottom = top + route.offsetHeight;
+      body.style.setProperty('--drift-asphalt', `${Math.round(top / 2)}px`);
+      body.style.setProperty('--drift-deep', `${Math.round(top)}px`);
+      body.style.setProperty('--drift-deep-end', `${Math.round(bottom)}px`);
+      body.style.setProperty('--drift-back', `${Math.round(y(faq))}px`);
+    };
+    set();
+    const ro = new ResizeObserver(set);
+    ro.observe(body);
+    if (document.fonts) document.fonts.ready.then(set);
+    return () => {
+      ro.disconnect();
+      delete body.dataset.ground;
+      ['--drift-asphalt', '--drift-deep', '--drift-deep-end', '--drift-back'].forEach((v) =>
+        body.style.removeProperty(v)
+      );
+    };
+  }, []);
+
   return (
     <IconProvider>
       {/* First tab stop on the page. At 1280 the bar puts four links and a
@@ -108,7 +141,7 @@ export default function Home() {
           id="how-h"
           heading="How it works"
           ground="dark"
-          material="glass"
+          open
           lines={STEP_LINES}
         />
         <CounterRow band />

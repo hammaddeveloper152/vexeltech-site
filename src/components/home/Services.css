@@ -57,22 +57,21 @@
 
 .services__grid {
   display: grid;
-  gap: var(--s-xl);
+  gap: var(--s-2xl);
 }
 
-@media (min-width: 1024px) {
-  /* 2x2, 40px apart both ways. The row gap was 72px while the artefact slot
-     stood 32px above its plate; the cards hold their pictures inside their
-     own edges now, so nothing crosses a gap and one number does. */
+/* 2x2 OF PLAIN COLUMNS from 768, 2026-09-21: four columns of type, each under
+   its own hairline, 64px apart both ways. No boxes. */
+@media (min-width: 768px) {
   .services__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--s-xl);
+    gap: var(--s-2xl);
   }
 }
 
 /* THE PLATE IS A LINK HERE, so it takes the link colour off and lets its own
    type values stand. The list and its spacing are the plate's own now,
-   `plates.css`, shared with the About page's row. */
+   `plates.css`. */
 .services__grid .svc__plate {
   text-decoration: none;
 }

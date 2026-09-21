@@ -135,9 +135,13 @@ function useSlidingPill(tabs) {
 
 /* The route line. "Something else" is a door, not a product, and a card made
    it a peer of a priced tier. See `.tiers__route` in pages.css. */
-function RouteLine({ what }) {
+/* UNDER THE PANEL since 2026-09-21, by the user: the panel is the tab row and
+   the ladder, and this line stands on the dark ground below it with its
+   dark-ground values. One per tab that has one; `:has()` on the panel shows
+   the line for the checked tab (pricing.css). */
+function RouteLine({ what, tab }) {
   return (
-    <p className="tiers__route">
+    <p className="tiers__route" data-tab={tab}>
       {what} that is not on this list? <Link to={CALL_HREF}>Tell us what you need</Link>{' '}
       and we will price it.
     </p>
@@ -198,13 +202,13 @@ export default function PricingPage() {
             {TABS.map((t) => (
               <div className="tabs__panel" data-tab={t.id} key={t.id}>
                 <PricingCards discipline={t.id} />
-                {t.id === 'branding' || t.id === 'websites' ? (
-                  <RouteLine what={t.id === 'branding' ? 'Branding' : 'A website'} />
-                ) : null}
               </div>
             ))}
           </div>
         </div>
+
+        <RouteLine what="Branding" tab="branding" />
+        <RouteLine what="A website" tab="websites" />
       </Section>
 
       <CallBand

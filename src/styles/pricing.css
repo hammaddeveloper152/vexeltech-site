@@ -30,7 +30,9 @@
   display: inline-flex;
   flex-wrap: wrap;
   gap: var(--s-xs);
-  margin-bottom: var(--s-2xl);
+  /* 32px above the cards, the user's figure (2026-09-21). 32 is a step the
+     ramp skips; it is recorded as given. */
+  margin-bottom: 32px;
   padding: var(--s-xs);
   border: 0;
   border-radius: 999px;
@@ -74,9 +76,13 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  /* The lead card sits 12px higher, so the row needs the headroom or the lift
-     clips against the panel above. */
-  padding-top: 12px;
+  /* HEADROOM ONLY WHERE THE LEAD CARD IS IN THE TOP ROW, 2026-09-21. The lead
+     card sits 12px higher and the row needs the room, so the cards stand 32px
+     under the tab row, the user's figure. It was 12px on every ladder, and
+     where no lifted card was in the top row (Marketing, Automation, and
+     Branding stacked below 900) the gap read 44. See the rules under this
+     block. */
+  padding-top: 0;
   /* STRETCH, AND THIS REVERSES `align-items: start`.
 
      Top-aligning was right while the short card was short: stretching it put
@@ -88,7 +94,17 @@
   align-items: stretch;
 }
 
+/* The lead card leads the stack (Websites): headroom at every width. */
+.cards:has(> .card--lead:first-child) {
+  padding-top: 12px;
+}
+
 @media (min-width: 900px) {
+  /* Side by side, the lead card is always in the top row. */
+  .cards:has(> .card--lead) {
+    padding-top: 12px;
+  }
+
   .cards--3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -700,48 +716,49 @@
   }
 }
 
-/* THE ONE LINE THAT STANDS ON THE YELLOW ITSELF, and the walk found it.
-
-   The note above said nothing is set directly on the panel, and that was
-   wrong: each tab's route line — "Branding that is not on this list? Tell us
-   what you need" — sits under the cards, on the panel, not on a card. It
-   carried the dark ground's values from pages.css: steel-dark at 1.85:1 and a
-   shop white link at 1.88:1 on machine yellow. Both are asphalt here, and the
-   link's focus ring with them, because a machine yellow ring on a machine
-   yellow panel is no ring. `.tabs` scoped, so the same line anywhere else keeps
-   the dark-ground values it was written for. */
-.tabs .tiers__route {
-  color: var(--c-asphalt); /* 9.46:1 on the panel */
+/* THE ROUTE LINE IS UNDER THE PANEL, 2026-09-21, by the user. It stood on
+   the yellow, under the cards, in asphalt; now the panel is the tab row, 32px
+   and the cards, and nothing else, and the line stands on the dark ground
+   below with its dark-ground values from pages.css (steel-dark and a white
+   link). It shows for the checked tab only; Marketing and Automation have
+   none. */
+.tiers__route[data-tab] {
+  display: none;
 }
 
-.tabs .tiers__route a {
-  color: var(--c-asphalt); /* 9.46:1; the underline carries the link signal */
-  /* Hover and press, viewer audit 2026-09-16: it had neither. Opacity, not a
-     colour change: asphalt on machine yellow is the pair this line was
-     measured on. */
-  display: inline-block;
+.tabs:has(#tab-branding:checked) ~ .tiers__route[data-tab='branding'],
+.tabs:has(#tab-websites:checked) ~ .tiers__route[data-tab='websites'] {
+  display: block;
+}
+
+/* Its link keeps the hover and the press it had on the panel (viewer audit,
+   2026-09-16): opacity, and BUILD-LAW's 160ms scale. */
+.tiers__route[data-tab] a {
   transition:
     opacity var(--d-press) var(--ease-reveal),
     transform var(--d-press) var(--ease-reveal);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .tabs .tiers__route a:hover {
+  .tiers__route[data-tab] a:hover {
     opacity: var(--hover-opacity);
   }
 }
 
-.tabs .tiers__route a:active {
+.tiers__route[data-tab] a:active {
   transform: scale(0.97);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tabs .tiers__route a:active,
+  .tiers__route[data-tab] a:active {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
   .card__ask:active {
     transform: none;
   }
 }
 
-.tabs .tiers__route a:focus-visible {
-  outline-color: var(--c-asphalt); /* 9.46:1; yellow on yellow is 1:1 */
-}
+

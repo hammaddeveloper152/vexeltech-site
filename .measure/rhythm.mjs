@@ -117,7 +117,12 @@ function regions(im) {
 async function attribute(p, regs) {
   return p.evaluate((rs, EX) => {
     const isY = (s) => { const m = (s || '').match(/[\d.]+/g); if (!m) return false; const [r, g, b, a = 1] = m.map(Number); return a > 0.5 && Math.abs(r - 240) < 20 && Math.abs(g - 179) < 20 && Math.abs(b - 35) < 30; };
-    const name = (e) => { const c = e.className; const s = typeof c === 'string' ? c : (c && c.baseVal) || ''; return s.split(' ').filter(Boolean)[0] || e.tagName.toLowerCase(); };
+    /* ONE OBJECT, ONE CARRIER. A route's stop dots sit on its own line; since
+       the route went vertical (2026-09-21) their painted regions no longer
+       merge with the line's, and the walk named them as a second carrier.
+       They are the route. */
+    const ALIAS = { route__stop: 'route' };
+    const name = (e) => { const c = e.className; const s = typeof c === 'string' ? c : (c && c.baseVal) || ''; const n = s.split(' ').filter(Boolean)[0] || e.tagName.toLowerCase(); return ALIAS[n] || n; };
     return rs.map((r) => {
       let e = document.elementFromPoint(r.at[0], r.at[1]);
       if (!e) return { ...r, owner: 'nothing', exempt: null };
