@@ -1,27 +1,19 @@
-/* costprep.mjs — the founder's cost-1 to cost-4 renders (2048px on black,
-   in public/assets/objects, untracked) to the 192px WebPs What it costs you
-   mounts, MOLDED so the screen blend leaves no square on the drift
-   (2026-09-22). Two steps, both toward pure black, so nothing is added:
+/* SUPERSEDED 2026-09-23. DO NOT RUN THIS.
 
-   1. A TOE on luma: under 4/255 goes to black, eased back to full by 28/255
-      (smoothstep). The renders' flat haze (13 to 22) is what lifted a square
-      off the ground under screen; the objects' shading sits above it.
-   2. An EDGE FEATHER, per side, smoothstep to black: bottom 22% (the floor
-      reflections run into the frame), left and right 10%, top 3% (the phone's
-      top is at 4%, and nothing but haze reaches the top).
+   It molds the cost renders for `mix-blend-mode: screen` - a toe to black
+   under 4/255 easing back by 28/255, and a per-side edge feather - so that
+   their black ground would drop into the page under the blend.
 
-   Halved step by step in Chrome's canvas, WebP at 0.9.
+   THE BLEND IS GONE. It flashed a black square on reveal, because screen over
+   a parent that is mid-fade is not the same composite as screen over a
+   settled one. The objects are cut to real alpha now by `.measure/deskcut.py`
+   and mounted as plain images.
 
-   THE TARGET IS 2x THE SLOT AND IT MOVED, 2026-09-22. It was 192px for a
-   96px slot. The founder made the objects the artwork of that section and
-   the slot is 280px now, so the target is 560. Encoding for the old slot
-   would have shown a 192px render at 280 CSS px, which is 2.9x on a retina
-   screen: the one thing the section is now built around would be the
-   softest object on the page. The rule this follows is the recorded one -
-   an image set takes its ladder from the MEASURED element width, never the
-   viewport.
+   Kept, not deleted, because DESIGN.md cites the toe and the feather by
+   number and a script that produced recorded numbers is part of the record.
+   Running it would overwrite the cut WebPs with molded ones and put the flash
+   back.
 
-     node .measure/costprep.mjs [size] */
 const TARGET = Number(process.argv[2] || 560);
 import puppeteer from 'puppeteer';
 import fs from 'fs';

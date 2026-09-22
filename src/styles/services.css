@@ -45,268 +45,195 @@
   min-width: 0;
 }
 
-/* ---- 6. The section's foot ---------------------------------------------
+/* ---- 4. THE FOUR DISCIPLINE BANDS, 2026-09-23 --------------------------
 
-   It ended on zero padding so the closing call owned the gap. Since
-   2026-09-21 the cream route band follows it, and a colour band keeps its own
-   padding, so this section keeps its 96px: the fourth strip stood directly on
-   the cream edge while the zero was here. */
+   The 28 cards are out. One band per discipline, FULL WIDTH, alternating
+   base / cream / base / cream. The ground is the separator: the bands touch,
+   nothing is drawn between them, and the colour change is the edge. That is
+   the site's own rule about separation doing the work space cannot.
 
-/* ---- 4. The discipline sections, 2026-09-15 ----------------------------
+   Layout family: an ALTERNATING STACK is already on this page's record as the
+   family these sections take, and it still is - what changed inside it is
+   that each band is now two columns of TYPE rather than a name over a card
+   grid over a strip.
 
-   A full section per discipline, not a plate. Sides alternate, tile right on
-   01 and 03, left on 02 and 04. The layout family is the ALTERNATING STACK,
-   once on this page; the three-column panel is that component's second row
-   and repeats with it, the way the plates' two-column lists did. */
+   Values on the base: white 19.66:1, bone 16.32:1, steel-lift 7.55:1, yellow
+   10.47:1. On cream: asphalt 15.75:1, steel 7.20:1. Every value on a cream
+   band is restated for it, including the focus ring, which goes asphalt
+   because machine yellow is 1.66:1 there. */
 
 .svc2__d {
-  display: grid;
-  gap: var(--s-xl);
-  scroll-margin-top: calc(48px + 2 * var(--s-sm) + var(--s-lg));
+  padding: var(--s-3xl) var(--inset);
+  color: var(--c-shop-white);
 }
 
-/* ---- Row one: name and promise ----
+.svc2__d--cream {
+  background: var(--c-cream);
+  color: var(--c-asphalt); /* 15.75:1 */
+}
 
-   THE TILE IS GONE, 2026-09-16, by the user. The sub-service cards took its
-   place under the name and promise, so row one is the two of them alone and
-   the sides no longer alternate. */
+.svc2__d--cream :focus-visible {
+  outline-color: var(--c-asphalt);
+}
 
-/* Moldie at the statement step: 57.6px at 1280, the step the brief's 57px
-   names. The name face's permission already covers the discipline headings on
-   this page. */
+.svc2__in {
+  display: grid;
+  gap: var(--s-2xl);
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+/* 60/40 from 1024: the checklist needs the measure, the price needs room for
+   a 160px figure and nothing else. Below that they stack and the price leads,
+   because on a phone the figure is what the reader is scrolling for. */
+@media (min-width: 1024px) {
+  .svc2__in {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    column-gap: var(--s-3xl);
+    align-items: start;
+  }
+}
+
+.svc2__left {
+  display: grid;
+  align-content: start;
+  min-width: 0;
+}
+
+/* Moldie at 64px, the name register: a discipline is a product name. */
 .svc2__name {
   margin: 0 0 var(--s-md);
   font-family: var(--font-name);
-  font-size: var(--t-loud-s);
+  font-size: 64px;
   line-height: var(--t-loud-line);
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--c-shop-white);
+  color: inherit;
 }
 
-/* SATOSHI 22px ON 32px, BONE. A size the scale does not carry, set by the
-   brief for this one role: the promise is read, and at body 18 it sat level
-   with the columns below it. 32px keeps it on the 4px baseline. */
 .svc2__promise {
-  max-width: 40ch;
-  margin: 0;
+  max-width: 54ch;
+  margin: 0 0 var(--s-xl);
   font-family: var(--font-offer);
-  font-size: 22px;
+  font-size: var(--t-h3-size);
   line-height: 32px;
-  color: var(--c-bone); /* 13.84:1 on asphalt */
+  color: inherit;
+  text-wrap: pretty;
 }
 
-/* ---- Row two: the sub-service cards, 2026-09-16 ----
-
-   Six per discipline. One across below 768, two from 768, three from 1024:
-   six always land on whole rows, so no card is stranded. Lit-near with the two
-   lights and the four tinted edges (`.lit-obj`'s construction), the container
-   radius, and the ramp's 16px between them. */
-.svc2__cards {
+/* THE CHECKLIST, two columns from 768. `grid-auto-flow: column` with three
+   rows, so the six items read DOWN each column and match the source order; a
+   wrapping row would have read across the pair. */
+.svc2__list {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--s-md);
+  gap: var(--s-md) var(--s-xl);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 @media (min-width: 768px) {
-  .svc2__cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .svc2__list {
+    grid-auto-flow: column;
+    grid-template-rows: repeat(3, auto);
+    justify-content: start;
   }
 }
 
-@media (min-width: 1024px) {
-  .svc2__cards {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-.svc2__card {
+.svc2__item {
   display: grid;
-  align-content: start;
+  grid-template-columns: auto minmax(0, 1fr);
   gap: var(--s-sm);
-  padding: var(--s-lg);
-  border: 1px solid var(--lit-edge);
-  border-top-color: var(--lit-edge-top);
-  border-right-color: var(--lit-edge-arc);
-  border-bottom-color: var(--lit-edge-arc);
-  /* 12px, the storyboard's one card radius, 2026-09-21 (it was 8). */
-  border-radius: 12px;
-  background-color: var(--lit-near);
-  background-image: var(--lit-key), var(--lit-rim);
-  background-repeat: no-repeat;
-  box-shadow: var(--lit-inset);
-  color: var(--c-shop-white); /* the icon inherits it: 16.48:1 on lit-near */
-  /* THE LEAVE IS 400ms, THE FILL IS 250, by the user, 2026-09-16. The card
-     returns slower than it fills: an arrival is an event and a departure is
-     not. Colour and transform only. */
-  transition:
-    background-color var(--d-panel) var(--ease-reveal),
-    color var(--d-panel) var(--ease-reveal),
-    border-color var(--d-panel) var(--ease-reveal),
-    transform var(--d-panel) var(--ease-reveal);
-}
-
-/* ---- THE CARD FILLS, 2026-09-16, by the user ----------------------------
-
-   On hover the card becomes machine yellow, its title, line and icon go
-   asphalt (9.46:1, the button's own pair), and it lifts 4px. One card can be
-   filled at a time, so the fill is the frame's carrier while the pointer is on
-   it and the primary call in that frame is exempt for its duration: recorded
-   in BUILD-LAW under the transient accent clause, and in DESIGN.md.
-
-   `:active` is the press, which stays the site's own scale. */
-@media (hover: hover) and (pointer: fine) {
-  .svc2__card:hover {
-    background-color: var(--c-accent-ground);
-    background-image: none;
-    border-color: var(--c-accent-ground);
-    box-shadow: none;
-    color: var(--c-asphalt); /* the icon inherits it */
-    transform: translateY(-4px);
-    transition-duration: var(--d-drop);
-  }
-
-  .svc2__card:hover .svc2__ct,
-  .svc2__card:hover .svc2__cl {
-    color: var(--c-asphalt); /* 9.46:1 on machine yellow */
-  }
-}
-
-/* Touch and keyboard: the same fill, held while the finger is down. These
-   cards are not links (nothing on /services to navigate to from them), so a
-   tap fills and lets go; the home cards carry the 300ms tap before they
-   navigate. */
-.svc2__card:active,
-.svc2__card:focus-visible,
-.svc2__card[data-tap='true'] {
-  background-color: var(--c-accent-ground);
-  background-image: none;
-  border-color: var(--c-accent-ground);
-  color: var(--c-asphalt);
-  transition-duration: var(--d-drop);
-}
-
-.svc2__card:active .svc2__ct,
-.svc2__card:active .svc2__cl,
-.svc2__card:focus-visible .svc2__ct,
-.svc2__card:focus-visible .svc2__cl,
-.svc2__card[data-tap='true'] .svc2__ct,
-.svc2__card[data-tap='true'] .svc2__cl {
-  color: var(--c-asphalt);
-}
-
-.svc2__card:active {
-  transform: scale(0.97); /* BUILD-LAW's press, 160ms */
-  transition-duration: var(--d-press);
-}
-
-/* Reduced motion: the colour swaps and nothing moves. */
-@media (prefers-reduced-motion: reduce) {
-  .svc2__card,
-  .svc2__card:hover,
-  .svc2__card:active,
-  .svc2__card:focus-visible,
-  .svc2__card[data-tap='true'] {
-    transition: none;
-    transform: none;
-  }
-}
-
-/* The 24px station, top left. Colour inherited from the card, by the user's
-   decision: machine yellow would share frames with the primary calls. */
-.svc2__ci {
-  margin-bottom: var(--s-sm);
-}
-
-.svc2__ct {
-  margin: 0;
+  align-items: start;
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  font-weight: var(--t-weight-label);
-  color: var(--c-shop-white); /* 16.48:1 on lit-near */
+  color: inherit;
 }
 
-.svc2__cl {
-  margin: 0;
-  font-family: var(--font-offer);
-  font-size: var(--t-small-size);
-  line-height: var(--t-small-line);
-  color: var(--c-bone); /* 13.67:1 on lit-near */
+/* The tick is machine yellow on the dark bands and asphalt on the cream ones:
+   yellow on cream is 1.66:1, and a tick is a meaningful graphic at a 3:1 bar,
+   so it cannot simply carry through. */
+.svc2__check {
+  width: var(--icon-md);
+  height: var(--icon-md);
+  /* Optical: the cap height of the line beside it, not the line box. */
+  margin-top: 2px;
+  color: var(--c-accent-draw-dark); /* 10.47:1 on the base */
 }
 
-/* ---- Row three: the strip, 2026-09-21, by the user ----
+.svc2__d--cream .svc2__check {
+  color: var(--c-asphalt); /* 15.75:1 on cream */
+}
 
-   One strip on lit-near with both lights and the four tinted edges, the lit
-   surfaces' construction, replacing the three-column panel. Price left in
-   Moldie 32px, the turnaround and the fit line in bone, the call right. It
-   stacks below 1024, the call last. */
-.svc2__strip {
+/* ---- The right column: the price IS the visual ------------------------- */
+
+.svc2__right {
   display: grid;
-  gap: var(--s-lg);
-  align-items: center;
-  padding: var(--s-lg);
-  border: 1px solid var(--lit-edge);
-  border-top-color: var(--lit-edge-top);
-  border-right-color: var(--lit-edge-arc);
-  border-bottom-color: var(--lit-edge-arc);
-  border-radius: var(--r-md);
-  background-color: var(--lit-near);
-  background-image: var(--lit-key), var(--lit-rim);
-  background-repeat: no-repeat;
-  box-shadow: var(--lit-inset);
+  align-content: start;
+  justify-items: start;
+  min-width: 0;
 }
 
-@media (min-width: 1024px) {
-  /* The price takes what it needs up to a third; the facts take the rest; the
-     call sits at its own width on the right. */
-  .svc2__strip {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto;
-    column-gap: var(--s-xl);
-    padding: var(--s-lg) var(--s-xl);
-  }
-}
-
-/* Moldie at the name step, 32px, white: 16.48:1 on lit-near. The price is a
-   name here, the thing the discipline costs, as the tier names are on
-   /pricing. */
-.svc2__price {
-  margin: 0;
+/* Moldie at 160px. It is capped against the column so "$299 to $449" - the
+   longest of the two figures at eleven characters - cannot run past its own
+   measure on a narrow screen; the cap binds below roughly 900px of page. */
+.svc2__fig {
+  margin: 0 0 var(--s-lg);
   font-family: var(--font-name);
-  font-size: var(--t-name-m);
+  font-size: min(160px, 17vw);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: inherit;
+  text-wrap: nowrap;
+}
+
+/* "On the call" is a SENTENCE, not a figure, so it takes the loud register at
+   the heading step rather than Moldie at 160: setting it in the name face at
+   a figure's size would make a statement about pricing look like a price. */
+.svc2__oncall {
+  margin: 0 0 var(--s-lg);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-h);
   line-height: var(--t-loud-line);
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--c-shop-white);
+  color: inherit;
   text-wrap: balance;
 }
 
-.svc2__facts {
-  display: grid;
-  gap: var(--s-xs);
-  min-width: 0;
-}
-
+/* The label register, 11px, the site's mono station. */
 .svc2__fact {
-  margin: 0;
+  max-width: 44ch;
+  margin: 0 0 var(--s-sm);
   font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  color: var(--c-bone); /* 13.67:1 on lit-near */
-  text-wrap: pretty;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-steel-lift); /* 7.55:1 on the base */
 }
 
-/* THE CALLS. Branding and Websites: button-primary, asphalt on machine
-   yellow, square, sentence case. Marketing and Automation: the kit's
-   secondary, an outline, since the storyboard pass (2026-09-21); it was an
-   underlined link. On lit-near the outline is the bar's own secondary: a
-   transparent fill, a rule-dark edge brightened to steel-lift so the button
-   reads as one (6.33:1 against lit-near), and a white label. */
+.svc2__d--cream .svc2__fact {
+  color: var(--c-steel); /* 7.20:1 on cream */
+}
+
+.svc2__right .svc2__cta,
+.svc2__right .svc2__link {
+  margin-top: var(--s-lg);
+}
+
+/* ---- The call ------------------------------------------------------------
+
+   Branding and Websites take the yellow primary; Marketing and Automation the
+   kit's secondary outline. On a CREAM band the outline restates: an asphalt
+   edge and an asphalt label, because a steel-lift edge on cream is 1.9:1 and
+   a white label on cream is 1.1:1. The yellow primary needs no restatement -
+   asphalt on machine yellow is 9.46:1 on either ground. */
 .svc2__cta,
 .svc2__link {
   display: inline-flex;
@@ -336,8 +263,15 @@
   background: transparent;
   border: 1px solid var(--c-steel-lift);
   border-radius: var(--r-none);
-  color: var(--c-shop-white); /* 16.48:1 on lit-near */
+  color: var(--c-shop-white); /* 19.66:1 on the base */
   text-decoration: none;
+}
+
+/* Restated for cream: a steel-lift edge is 1.9:1 there and a white label
+   1.1:1. Both go asphalt, 15.75:1. */
+.svc2__d--cream .svc2__link {
+  border-color: var(--c-asphalt);
+  color: var(--c-asphalt);
 }
 
 @media (hover: hover) and (pointer: fine) {

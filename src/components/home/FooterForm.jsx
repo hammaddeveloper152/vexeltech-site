@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { PaperPlaneTilt } from '@phosphor-icons/react';
 import FooterMeta from './FooterMeta.jsx';
-import Slot from '../site/Slot.jsx';
 import { budgetBands } from '../../content/pricing.js';
 import './FooterForm.css';
 
@@ -79,7 +78,6 @@ function validate(id, value) {
 /* P2, the character on the phone, stands at the left of the form on EVERY
    route (2026-09-21, the user's final placement, overriding the storyboard's
    per-page poses): one of the site's two character appearances, with P1 on
-   home's cream band. The slot renders nothing until `character-2.webp`
    exists. The handset that stood above the heading on Contact came off the
    site the same day. */
 export default function FooterForm() {
@@ -158,17 +156,13 @@ export default function FooterForm() {
           Get in touch
         </h2>
 
+        {/* THE MASCOT IS OFF EVERY ROUTE, 2026-09-23 (the founder). It stood
+            at the right of this form for part of 2026-09-22. `FooterForm` is
+            shared by every route, so one object here was the same object on
+            nine pages — the opposite of what the placement was for. THE
+            MASCOT APPEARS ONCE ON THE SITE: P1 on home's cream band.
+            `character-desk.webp` is deleted from the build. */}
         <div className="foot__stage">
-          {/* THE MASCOT, 2026-09-22 (the founder): at the RIGHT of the form,
-              360px, bottom-aligned so the desk legs land on the row's bottom
-              edge, which acts as his floor. It replaces P2 at the left, which
-              never rendered because `character-2.webp` does not exist, and
-              the stop-03 placement of the same day. Two appearances on the
-              site now, both on home: Who we are, and here. Empty and taking
-              no space until the file exists. */}
-          <div className="foot__cast">
-            <Slot src="/assets/objects/character-desk.webp" className="foot__char" />
-          </div>
         <form className="foot__form" onSubmit={onSubmit} noValidate aria-labelledby="foot-h">
           {FIELDS.map(({ id, label, type, autoComplete, required }) => {
             const err = errors[id];

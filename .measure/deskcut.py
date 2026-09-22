@@ -1,61 +1,84 @@
-"""deskcut.py - the mascot at the desk, cut to alpha and encoded for stop 03.
+"""deskcut.py - cut a supplied render to alpha, and encode it for its slot.
 
    WHY THIS IS NOT objcut.mjs. That tool floods in from the edge through
-   pixels that are light and nearly neutral, and DESIGN.md already records it
-   failing on exactly this render: the white sneakers touch the white ground
-   with no darker edge between them, so the flood walks straight into the
-   shoes and they come out transparent, reading as black shoes on the base.
-   Two attempted fixes are recorded as rejected. A threshold cannot separate
-   a white object from a white ground, because there is nothing in the pixel
-   values to separate.
+   pixels that are light and nearly neutral. DESIGN.md records it failing on
+   the mascot render: the white sneakers touched the white ground with no
+   darker edge, so the flood walked into the shoes and they came out
+   transparent. A threshold cannot separate an object from a ground of the
+   same value, because there is nothing in the pixel values to separate. A
+   SEGMENTATION MODEL decides by what the thing IS, which is a different
+   question, and rembg's isnet-general-use with alpha matting answers it.
 
-   So this one uses a SEGMENTATION MODEL - rembg's isnet-general-use with
-   alpha matting - which decides by what the thing IS rather than by how
-   light it is. The shoes survive. Verified against the base, which is the
-   only ground this object stands on.
-
-   THREE STEPS, and the second two exist because the model's matte is not the
-   end of the job on a white ground:
+   THREE STEPS, and the last two exist because a matte is not the end of the
+   job when the render stood on a flat ground:
 
    1. rembg, isnet-general-use, alpha matting on.
 
-   2. UN-PREMULTIPLY AGAINST WHITE. The render stood on flat white, so every
-      pixel the matte left partly transparent still carries (1-a) of that
-      white in its own colour. Composited onto the base that reads as a pale
-      halo. Recovering F = (C - (1-a)*255)/a takes the white back out and
-      leaves the shape. This is the same arithmetic objcut.mjs does for its
-      own flood, applied to a matte instead.
+   2. UN-PREMULTIPLY AGAINST THE GROUND. Every pixel the matte left partly
+      transparent still carries (1-a) of the ground in its own colour, which
+      composites onto the page as a halo. Recovering
 
-   3. SMOOTH THE CONTOUR, NOT THE IMAGE. What is left after step 2 is a
-      jagged alpha edge along the shoes - single pixels the matte could not
-      decide, because a white toe against a white floor is the hardest call
-      in the frame. A light blur on the ALPHA CHANNEL ALONE, followed by a
-      steep smoothstep back through 0.5, straightens the contour without
-      moving it and without touching a colour. Blurring the composite would
-      soften the whole object; this only affects where the edge falls.
+          F = (C - (1-a) * G) / a
 
-   Then trim to the opaque box and encode. The output is 640px wide, the
-   mount is 320px at 1280, so the file carries 2x for a retina screen and
-   nothing more.
+      takes the ground back out and leaves the shape. G IS AN ARGUMENT AND
+      THAT MATTERS: the mascot stood on white (G = 255), the cost objects
+      stand on black (G = 0, so the recovery is simply C/a). Running the
+      white arithmetic over a black-ground render washes it out, and the
+      other way round leaves a dark rind. Neither failure is subtle once it
+      is on the page and both are invisible in the PNG on its own.
 
-     python .measure/deskcut.py
+   3. SMOOTH THE CONTOUR, NOT THE IMAGE. What is left is a jagged alpha edge
+      where the matte could not decide. A light blur on the ALPHA CHANNEL
+      ALONE, then a steep smoothstep back through 0.5, straightens the
+      contour without moving it and without touching a colour. Blurring the
+      composite would soften the whole object.
 
-   Writes public/assets/objects/character-desk.png (the working RGBA) and
-   character-desk.webp (what the page loads), plus a composite over the base
-   at .measure/out/desk-on-base.png for the eye check that closes it.
+   Then trim to the opaque box and encode WebP at 2x the slot.
+
+     python .measure/deskcut.py <src> <out-base> <ground> <width> [keep]
+
+       ground   "black" or "white", the colour the render stood on
+       width    the WebP's width in px, which is 2x the CSS slot
+       keep     pass "keep" to hold the SOURCE CANVAS instead of trimming to
+                the opaque box
+
+   WHY `keep` EXISTS. Trimming is right for a single object that will be sized
+   on its own, like the mascot. It is wrong for a SET: the four cost renders
+   were composed inside one 2048 square each, and trimming each to its own ink
+   gave four different aspect ratios - 689x1642 next to 1668x1250 - so a row
+   that shared one 280px slot would have shown them at four unrelated scales.
+   The square is the founder's composition and the relative sizes inside it
+   are a decision. Transparent margin costs almost nothing in WebP.
+
+   THE COST OBJECTS, 2026-09-23. `costprep.mjs` used to mold them - a toe to
+   black and an edge feather - so that `mix-blend-mode: screen` would drop
+   their black ground into the page. That works at rest and FLASHES A BLACK
+   BOX during a reveal, because screen over a fading parent is not the same
+   composite. They are cut to real alpha now and mounted as plain images, so
+   there is nothing to blend and nothing to flash:
+
+     python .measure/deskcut.py "public/assets/objects/cost-1. png.png" \\
+            public/assets/cost-1 black 560
 """
+import os
+import sys
+
 import numpy as np
 from PIL import Image, ImageFilter
-from rembg import remove, new_session
+from rembg import new_session, remove
 
-SRC = 'public/assets/objects/character-3-raw.png.png'
-OUT_PNG = 'public/assets/objects/character-desk.png'
-OUT_WEBP = 'public/assets/objects/character-desk.webp'
-BASE = (11, 11, 13)          # --c-base #0B0B0D, the only ground it stands on
-WIDTH = 640                  # mounted at 320px, so 2x and no more
+SRC = sys.argv[1]
+OUT = sys.argv[2]
+GROUND = (sys.argv[3] if len(sys.argv) > 3 else 'white').lower()
+WIDTH = int(sys.argv[4]) if len(sys.argv) > 4 else 640
+KEEP = len(sys.argv) > 5 and sys.argv[5].lower() == 'keep'
+
+G = 255.0 if GROUND == 'white' else 0.0
+# The page ground each is checked against, for the composite this writes out.
+CHECK = (11, 11, 13)
 
 im = Image.open(SRC).convert('RGBA')
-print(f'in            {im.size[0]}x{im.size[1]}')
+print(f'in            {im.size[0]}x{im.size[1]}  ground={GROUND}')
 
 cut = remove(
     im,
@@ -69,37 +92,32 @@ cut = remove(
 arr = np.asarray(cut).astype(np.float32)
 rgb, a = arr[..., :3], arr[..., 3:4] / 255.0
 
-# 2. un-premultiply against the white the render stood on
 eps = 1e-3
-fg = np.clip(np.where(a > eps, (rgb - (1.0 - a) * 255.0) / np.maximum(a, eps), rgb), 0, 255)
+fg = np.clip(np.where(a > eps, (rgb - (1.0 - a) * G) / np.maximum(a, eps), rgb), 0, 255)
 
-# 3. straighten the contour: blur alpha only, then smoothstep back through 0.5
 am = Image.fromarray((a[..., 0] * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.1))
 av = np.asarray(am).astype(np.float32)[..., None] / 255.0
 t = np.clip((av - 0.34) / (0.66 - 0.34), 0.0, 1.0)
 av = t * t * (3.0 - 2.0 * t)
-av = np.where(av < 0.06, 0.0, av)      # below 6% is haze, not object
+av = np.where(av < 0.06, 0.0, av)
 
 res = Image.fromarray(np.concatenate([fg, av * 255.0], axis=2).astype(np.uint8), 'RGBA')
-res = res.crop(res.getbbox())
-print(f'cut, trimmed  {res.size[0]}x{res.size[1]}')
+if KEEP:
+    print(f'cut, canvas   {res.size[0]}x{res.size[1]}')
+else:
+    box = res.getbbox()
+    if box:
+        res = res.crop(box)
+    print(f'cut, trimmed  {res.size[0]}x{res.size[1]}')
 
-res.save(OUT_PNG)
-
+res.save(f'{OUT}.png')
 h = round(res.size[1] * WIDTH / res.size[0])
-small = res.resize((WIDTH, h), Image.LANCZOS)
-small.save(OUT_WEBP, 'WEBP', quality=88, method=6)
-import os
-print(f'webp          {WIDTH}x{h}  {os.path.getsize(OUT_WEBP)/1024:.1f} KB')
+res.resize((WIDTH, h), Image.LANCZOS).save(f'{OUT}.webp', 'WEBP', quality=88, method=6)
+print(f'webp          {WIDTH}x{h}  {os.path.getsize(OUT + ".webp") / 1024:.1f} KB')
 
-# the eye check: the object on the one ground it stands on
-comp = Image.alpha_composite(Image.new('RGBA', res.size, BASE + (255,)), res).convert('RGB')
-comp.save('.measure/out/desk-on-base.png')
-W, H = res.size
-comp.crop((int(0.32 * W), int(0.80 * H), int(0.81 * W), H)).resize((760, 460), Image.LANCZOS).save(
-    '.measure/out/desk-sneakers.png'
-)
-comp.crop((int(0.53 * W), int(0.31 * H), W, int(0.57 * H))).resize((700, 560), Image.LANCZOS).save(
-    '.measure/out/desk-laptop.png'
-)
-print('wrote the base composite and the two crops')
+# The eye check: the object on the ground it actually stands on.
+name = os.path.basename(OUT)
+os.makedirs('.measure/out', exist_ok=True)
+comp = Image.alpha_composite(Image.new('RGBA', res.size, CHECK + (255,)), res).convert('RGB')
+comp.save(f'.measure/out/{name}-on-base.png')
+print(f'wrote         .measure/out/{name}-on-base.png')

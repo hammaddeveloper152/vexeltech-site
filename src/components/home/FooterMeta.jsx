@@ -37,10 +37,20 @@ const PAGES = [
   { id: 'contact', label: 'Contact us', href: '/contact-us' },
 ];
 
-/* null until supplied; neither line renders while it is null. The copy file
-   gives the legal line as "[LEGAL ENTITY NAME] · 2026". */
+/* THE LEGAL LINE RENDERS AS ITS OWN PLACEHOLDER, 2026-09-23 (the founder):
+   "[LEGAL ENTITY NAME] · 2026", verbatim from VEXELTECH-COPY.md, until the
+   founder replaces it. It was null and rendered nothing.
+
+   This is not a breach of "no placeholder content": the site's rule is that
+   every placeholder string SAYS it is a placeholder, and a bracketed slot in
+   the legal row does exactly that. The alternative - a footer with no legal
+   line at all - reads as finished and is the thing that quietly ships.
+
+   THE PHONE STAYS NULL. A visible "[PHONE]" in the contact row would sit
+   beside a real email and a real address and invite a reader to try it; a
+   legal line is a statement about the company, not something anyone dials. */
 const PHONE = null;
-const LEGAL = null;
+const LEGAL = '[LEGAL ENTITY NAME]';
 const YEAR = 2026;
 
 export default function FooterMeta() {

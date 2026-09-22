@@ -24,72 +24,12 @@
   margin: 0 auto;
 }
 
-/* ---- THE MASCOT BESIDE THE FORM, 2026-09-22 (the founder) ---------------
-
-   `character-desk.webp` at the RIGHT of the form, 360px, BOTTOM-ALIGNED so
-   the desk legs land exactly on the row's bottom edge, which is the form's
-   own baseline and acts as his floor. He is sitting at a desk, so he needs
-   one; an object with legs floating in the middle of a column reads as a
-   sticker rather than as someone in the room.
-
-   This replaces P2 at the LEFT, which never rendered - `character-2.webp`
-   does not exist - and it replaces the stop-03 placement the same day. The
-   mascot now appears twice on the site, both on home: Who we are, and here.
-
-   The column only exists while the file has rendered: `:has()` keeps the
-   form full width while the slot is empty, so nothing reserves space.
-
-   Below 1024 it drops under the form and centres at 240px: a 360px column
-   beside the form at 768 leaves the fields 328px, and the form is the thing
-   the section is for. */
-.foot__cast {
-  display: grid;
-  justify-items: center;
-  align-self: end;
-  margin-top: var(--s-xl);
-}
-
-.foot__cast:empty {
-  display: none;
-}
-
-.foot__char {
-  width: 240px;
-}
-
-/* The image sits flush to the bottom of its own box: no descender space, so
-   the legs meet the edge rather than hovering a few pixels above it. */
-.foot__char .slot__img,
-.foot__cast .slot__img {
-  display: block;
-}
-
-@media (min-width: 1024px) {
-  .foot__stage:has(.foot__char) {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 360px;
-    column-gap: var(--s-2xl);
-    /* END, not start: the floor is the row's bottom edge. */
-    align-items: end;
-  }
-
-  /* Placed explicitly, so the form stays FIRST in the markup and in the tab
-     ring while the object sits to its right. */
-  .foot__stage:has(.foot__char) .foot__form {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .foot__cast {
-    grid-column: 2;
-    grid-row: 1;
-    margin-top: 0;
-  }
-
-  .foot__char {
-    width: 360px;
-  }
-}
+/* The mascot stood at the right of this form for part of 2026-09-22 and came
+   off on 2026-09-23. `.foot__cast`, `.foot__char` and the two-column
+   `.foot__stage` went with it. THIS COMPONENT IS SHARED BY EVERY ROUTE, which
+   is the whole reason: one object mounted here was the same object on nine
+   pages, and the site's rule is that the mascot appears ONCE. It does, on
+   home's cream band, as a plain `<img>` in `About.jsx`. */
 
 /* MONIGUE, 2026-09-21, by the user. It was Clash at h2, which the register
    keeps for controls; "Get in touch" is the footer's section heading, so it

@@ -95,8 +95,15 @@ const FRAMES = [
      either side and nothing painted, so the SECTION is the surface the
      carrier sits on. */
   ['/', '.route-band', 'home route, yellow numerals', '.route-band'],
-  ['/services', '.svc__plate', 'services plates', '.svc__plate'],
-  ['/services', '.svc__index', 'services index', '.svc__index-n'],
+  /* THE FOUR SERVICE BANDS, 2026-09-23: the 28 cards are gone and each
+     discipline is one band, alternating base / cream. The carrier on a dark
+     band is the yellow primary and the six ticks; on a cream band the ticks
+     are asphalt and the primary is still yellow. Measured per band, because
+     the grounds alternate and a ground is not a carrier. */
+  ['/services', '#branding', 'services, branding (base)', '#branding'],
+  ['/services', '#websites', 'services, websites (cream)', '#websites'],
+  ['/services', '#marketing', 'services, marketing (base)', '#marketing'],
+  ['/services', '#automation', 'services, automation (cream)', '#automation'],
 ];
 
 const b = await puppeteer.launch({ headless: 'new',

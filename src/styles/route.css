@@ -4,16 +4,16 @@
    its darkest with 128px above and below and nothing painted: no hairline,
    plate or panel.
 
-   THE NUMERALS ARE MACHINE YELLOW AT 96px, 2026-09-22 (the founder), flat at
-   every width rather than the 64/96 name step: the numeral is the stop's
-   object now that the five image slots are gone. Titles white, lines bone;
-   the line and a reached stop stay yellow. Yellow on the drift is 10.47:1 on
-   the base and 9.93:1 on arc-black, so every pair clears.
+   THE NUMERALS ARE 96px, flat at every width rather than the 64/96 name step:
+   the numeral is the stop's object. They REST IN STEEL-LIFT and turn machine
+   yellow when the drawn line reaches their own dot (2026-09-23), so the
+   accent marks progress rather than painting all five at once. Titles white,
+   lines bone. On the drift: steel-lift 7.55:1 on the base and 7.16:1 on
+   arc-black, yellow 10.47 and 9.93 - every pair clears at either state.
 
-   THE SECTION'S PAINTED YELLOW WENT UP, and it is walked rather than assumed:
-   `.measure/carrier.mjs` measures the route's share of its own surface after
-   this change. A numeral is type at scale, which is what the accent-as-text
-   role exists for; it is not a fill.
+   The line is a ScrollTrigger scrub driven by Lenis; see RouteBand.jsx.
+   `.measure/carrier.mjs` walks the section's painted yellow, which now
+   depends on scroll position: the walk reads it fully drawn, the worst case.
 
    The seam rules in lit.css leave `.route-band--open` alone and the ticker
    gives up its bottom margin to it.
@@ -112,21 +112,29 @@
   background: var(--route-line);
 }
 
-/* Moldie, the name face: a stop's numeral is its name. MACHINE YELLOW at
-   every state, 2026-09-22 (the founder). It no longer lifts from steel to
-   white on arrival — a numeral that is already the accent has nowhere to go —
-   so arrival is carried by the dot and by the line reaching it, which is what
-   draws the eye down the route in the first place. */
+/* Moldie, the name face: a stop's numeral is its name.
+
+   STEEL-LIFT AT REST, MACHINE YELLOW ONCE REACHED (2026-09-23, the founder).
+   It was yellow at every state for a day, which spent the accent on all five
+   numerals at once and left arrival with nothing to say. Now the line
+   arriving at a dot is what lights that dot's numeral, so the accent marks
+   progress instead of decorating the list. steel-lift is 7.55:1 on the base
+   and 7.16:1 on arc-black; yellow is 10.47 and 9.93. */
 .route__n {
   font-family: var(--font-name);
   font-size: var(--n-size);
   line-height: 0.9;
   font-weight: 400;
   letter-spacing: 0;
-  color: var(--route-line);
+  color: var(--route-rest);
+  transition: color var(--d-drop) var(--ease-reveal);
   /* One column width for all five, so every title starts on one line. The
      widest numeral, 04, measures 1.24em in Moldie. */
   min-width: 1.3em;
+}
+
+.route__stop[data-reached='true'] .route__n {
+  color: var(--route-line);
 }
 
 /* The title and its line beside the numeral, the title's first line centred
@@ -177,7 +185,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .route__stop::before {
+  .route__stop::before,
+  .route__n {
     transition: none;
   }
 }
