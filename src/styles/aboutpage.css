@@ -1,13 +1,39 @@
 /* ==========================================================================
-   THE ABOUT PAGE, THIRD VERSION, 2026-09-15; the cream hero restored and the
-   disciplines row added 2026-09-21. See AboutPage.jsx.
+   THE ABOUT PAGE, REBUILT 2026-09-23 from the founder's copy. See
+   AboutPage.jsx for the section list, the two decisions the copy forced and
+   the layout-family note.
+
+   The sections that were here before and are not on the founder's list -
+   "What we do", the promise band and "Our standards" - are gone, and their
+   rules go with the markup: a selector nothing matches is a second opinion
+   the next reader has to resolve.
    ========================================================================== */
 
 .ab3-hero,
-.ab3-what,
-.ab3-how,
-.ab3-std {
+.ab3-origin,
+.ab3-lesson,
+.ab3-fit,
+.ab3-work,
+.ab3-note {
   padding: var(--s-3xl) var(--inset);
+}
+
+.ab3__in {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+/* Monigue at the heading step, the loud register's section heading. */
+.ab3__h {
+  margin: 0 0 var(--s-xl);
+  font-family: var(--font-loud);
+  font-size: var(--t-loud-h);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-shop-white); /* 17.77:1 */
+  text-wrap: balance;
 }
 
 /* ---- 1. Hero: the statement at the display step, on the drift, 2026-09-22 --
@@ -105,83 +131,253 @@
   }
 }
 
-/* ---- 4. Pricing and refusals: the promise band, `styles/promise.css`,
-   shared with home since the storyboard pass, 2026-09-21. ------------------ */
 
-.ab3__in {
-  width: min(100%, 1200px);
-  margin: 0 auto;
-}
+/* ---- 2. Where we come from: a TIMELINE, three stops in a row ------------
 
-/* Monigue at the heading step, the loud register's section heading. */
-.ab3__h {
-  margin: 0 0 var(--s-xl);
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-h);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  color: var(--c-shop-white); /* 17.77:1 */
-  text-wrap: balance;
-}
+   The numeral sits INLINE before its title on one line, with the paragraph
+   under. That is the difference from section 6, where the numeral is stacked
+   above a single line: this one is read left to right as one story, and that
+   one is four promises read in any order. Both are rows of Moldie numerals,
+   which is the closest pair on the page; the distinction is what each column
+   holds and how it is read, which is the line BUILD-LAW's own amendment drew.
 
-/* ---- 2. What we do: two columns, heading and body ------------------------ */
+   Three columns from 1024, stacked below: a 3-across row of paragraphs at
+   768 gives each stop 218px, which is nine characters a line. */
 
-.ab3-what__in {
+.ab3-origin__row {
   display: grid;
-  gap: var(--s-xl);
+  gap: var(--s-2xl);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.ab3-what__h {
+@media (min-width: 1024px) {
+  .ab3-origin__row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: var(--s-2xl);
+    align-items: start;
+  }
+}
+
+.ab3-origin__stop {
+  display: grid;
+  gap: var(--s-sm);
+  align-content: start;
+  min-width: 0;
+}
+
+/* The numeral and the title share a baseline, so the stop reads as one
+   phrase rather than as a figure with a caption. */
+.ab3-origin__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-md);
   margin: 0;
 }
 
-/* Bone, at the page leads' step: body on a phone, 27 on 36 from 1024. */
-.ab3-what__p {
-  max-width: 38rem;
+.ab3-origin__n {
+  font-family: var(--font-name);
+  font-size: 64px;
+  line-height: 0.9;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--c-accent-text-dark); /* 10.47:1 on the base */
+}
+
+.ab3-origin__t {
+  font-family: var(--font-offer);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-label);
+  color: var(--c-shop-white); /* 19.66:1 */
+}
+
+.ab3-origin__b {
   margin: 0;
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* 13.84:1 */
+  color: var(--c-bone); /* 16.32:1 */
   text-wrap: pretty;
 }
 
+/* ---- 3. What the phones taught us: four cream cards ---------------------
+
+   Cream band, four cards. NO RIM LIGHT ON CREAM - the key alone, which is the
+   rule this system already carries for the pricing ticket and the home
+   discipline cards: two lights are a dark-surface model, and an arc rim on a
+   light plane reads as a stain.
+
+   Values on cream: asphalt 15.75:1, steel 7.20:1. The band restates its own
+   focus ring as asphalt, because machine yellow is 1.66:1 there. */
+
+.ab3-lesson {
+  background: var(--c-cream);
+  color: var(--c-asphalt);
+}
+
+.ab3-lesson :focus-visible,
+.ab3-fit :focus-visible {
+  outline-color: var(--c-asphalt);
+}
+
+.ab3-lesson__h,
+.ab3-fit__h {
+  color: var(--c-asphalt); /* 15.75:1 on cream */
+}
+
+.ab3-lesson__grid {
+  display: grid;
+  gap: var(--s-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .ab3-lesson__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (min-width: 1024px) {
-  .ab3-what__in {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: var(--s-2xl);
+  .ab3-lesson__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.ab3-lesson__card {
+  display: grid;
+  align-content: start;
+  gap: var(--s-sm);
+  min-width: 0;
+  padding: var(--s-lg);
+  border: 1px solid var(--c-line);
+  border-radius: 12px;
+  background-color: var(--c-shop-white);
+  background-image: var(--lit-key);
+  background-repeat: no-repeat;
+}
+
+.ab3-lesson__i {
+  width: 32px;
+  height: 32px;
+  color: var(--c-asphalt);
+}
+
+/* Moldie at 40px, the discipline as a name. */
+.ab3-lesson__n {
+  margin: 0;
+  font-family: var(--font-name);
+  font-size: var(--t-name-l);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-asphalt);
+}
+
+.ab3-lesson__l {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-steel); /* 7.20:1 on white */
+  text-wrap: pretty;
+}
+
+/* ---- 5. Who we are for: two cream cards, a Check list and an X list -----
+
+   Two wide cards against section 3's four small ones, a list card against an
+   icon-led card. THE CHECK REPEATS, and it is the founder's instruction: the
+   same mark is on the /services checklist. It is a semantic tick rather than
+   a device - the recorded ruling is that a state glyph may repeat - and it is
+   recorded here rather than left for someone to find. */
+
+.ab3-fit {
+  background: var(--c-cream);
+  color: var(--c-asphalt);
+}
+
+.ab3-fit__cols {
+  display: grid;
+  gap: var(--s-lg);
+}
+
+@media (min-width: 768px) {
+  .ab3-fit__cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: start;
   }
-
-  .ab3-what__p {
-    font-size: var(--t-h3-size);
-    line-height: 36px;
-  }
 }
 
-/* ---- 3. How it goes: four short lines, 2026-09-21 -------------------------
-
-   The route is home's device, by the user; About says how a project runs in
-   the user's one sentence, a clause a line: no numerals, no line, no diagram.
-   Satoshi at the h3 reading size, white on the drift (17.77:1 on asphalt,
-   higher on arc-black). The heading keeps its scroll margin: the hero's "How
-   we work" jumps here. */
-.ab3-how__h {
-  scroll-margin-top: calc(48px + 2 * var(--s-sm) + var(--s-lg));
+.ab3-fit__card {
+  display: grid;
+  align-content: start;
+  gap: var(--s-md);
+  min-width: 0;
+  padding: var(--s-xl);
+  border: 1px solid var(--c-line);
+  border-radius: 12px;
+  background-color: var(--c-shop-white);
+  background-image: var(--lit-key);
+  background-repeat: no-repeat;
 }
 
-/* FOUR BLOCKS IN ONE ROW, 2026-09-22 (the founder): a Moldie numeral at 96px
-   in machine yellow with its clause under it in bone. Stacked below 768.
+.ab3-fit__n {
+  margin: 0;
+  font-family: var(--font-name);
+  font-size: var(--t-name-l);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-asphalt);
+}
 
-   NO DRAWN LINE. The route is home's device and appears once on the site, so
-   a line joining these would be the second. The numerals carry the sequence
-   on their own, which is what a numeral is for.
+.ab3-fit__list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 
-   The four clauses are one sentence broken across the blocks, so they read
-   down the row in order: "A call, / then concepts you can see, / then a build
-   you can test, / then it's yours." Nothing is restated per block. */
+.ab3-fit__item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--s-sm);
+  align-items: start;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-asphalt); /* 17.77:1 on white */
+  text-wrap: pretty;
+}
+
+/* Both marks are asphalt: a tick is a meaningful graphic at a 3:1 bar, and
+   machine yellow on this card is 1.88:1. The X is not red - the list is a
+   statement about fit, not an error, and error-dark on white is a warning the
+   copy is not making. */
+.ab3-fit__mark {
+  width: var(--icon-md);
+  height: var(--icon-md);
+  margin-top: 2px;
+  color: var(--c-asphalt);
+}
+
+.ab3-fit__card[data-kind='no'] .ab3-fit__mark {
+  color: var(--c-steel); /* 7.20:1: present, and quieter than the fit list */
+}
+
+/* ---- 6. How we work with you: the 01 to 04 row -------------------------
+
+   The numeral STACKED above its title and line, four across: four promises
+   read in any order, against section 2's timeline read left to right. */
+
 .ab3-how__steps {
   display: grid;
   gap: var(--s-xl);
@@ -194,6 +390,7 @@
   .ab3-how__steps {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     column-gap: var(--s-2xl);
+    align-items: start;
   }
 }
 
@@ -204,16 +401,21 @@
   min-width: 0;
 }
 
-/* Moldie at 96px, the same figure and face the home route's numerals take.
-   Machine yellow, 10.47:1 on the base and 9.93:1 on arc-black - this section
-   is where About's drift lands on arc-black, so both pairs are walked. */
 .ab3-how__n {
   font-family: var(--font-name);
   font-size: 96px;
   line-height: 0.9;
   font-weight: 400;
   letter-spacing: 0;
-  color: var(--c-accent-text-dark);
+  color: var(--c-accent-text-dark); /* 10.47:1 on the base, 9.93 on arc-black */
+}
+
+.ab3-how__t {
+  font-family: var(--font-offer);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-label);
+  color: var(--c-shop-white);
 }
 
 .ab3-how__line {
@@ -221,123 +423,38 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* 16.32:1 on the base, 15.47:1 on arc-black */
-  text-wrap: pretty;
-}
-
-/* ---- 5. Standards: three columns with hairlines, each one tested --------- */
-
-.ab3-std__cols {
-  display: grid;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-/* Each standard is a statement, so it shouts at the small loud step. The
-   hairline is the system's dark divider: three statements on one ground read
-   as one block without it. */
-.ab3-std__col {
-  padding: var(--s-lg) 0;
-  border-top: 1px solid var(--c-rule-dark);
-}
-
-/* THE STATEMENT IS THE CONTROL, 2026-09-21: a button that reveals the line
-   under it. It keeps the statement's own type, so the section reads as it did
-   until the reader reaches for it. 48px minimum target (the text is taller). */
-.ab3-std__line {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--s-md);
-  width: 100%;
-  min-height: 48px;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  text-align: left;
-  cursor: pointer;
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-small);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  text-transform: uppercase;
-  color: var(--c-shop-white); /* 17.77:1 */
-  text-wrap: balance;
-  transition: transform var(--d-press) var(--ease-reveal);
-}
-
-.ab3-std__line:active {
-  transform: scale(0.97);
-}
-
-/* THE CUE, 2026-09-22: CaretDown at the 24px station, steel-lift at rest
-   (7.55:1 on the base), white and turned half a circle when open. Transform
-   only, 250ms in and 400ms back on the reveal curve. */
-.ab3-std__caret {
-  margin-top: 4px;
-  color: var(--c-steel-lift);
-  transition:
-    transform var(--d-panel) var(--ease-reveal),
-    color var(--d-panel) var(--ease-reveal);
-}
-
-.ab3-std__col[data-open='true'] .ab3-std__caret {
-  color: var(--c-shop-white);
-  transform: rotate(180deg);
-  transition-duration: var(--d-drop);
-}
-
-/* The line: its space is held so nothing moves when it arrives; opacity and
-   an 8px rise only, 250ms in on the reveal curve, 400ms out. Bone, 13.84:1. */
-.ab3-std__job {
-  margin: var(--s-md) 0 0;
-  max-width: 34ch;
-  font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
   color: var(--c-bone);
   text-wrap: pretty;
-  opacity: 0;
-  transform: translateY(var(--s-sm));
-  transition:
-    opacity var(--d-panel) var(--ease-reveal),
-    transform var(--d-panel) var(--ease-reveal);
 }
 
-.ab3-std__col[data-open='true'] .ab3-std__job {
-  opacity: 1;
-  transform: none;
-  transition-duration: var(--d-drop);
+/* ---- 7. The note: one reading-width paragraph --------------------------
+
+   62ch, the measure this system uses for a passage meant to be read rather
+   than scanned. The signature is Moldie: it is a name, which is the one thing
+   that face sets. */
+
+.ab3-note__in {
+  display: grid;
+  gap: var(--s-lg);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .ab3-std__job,
-  .ab3-std__col[data-open='true'] .ab3-std__job {
-    transform: none;
-    transition: opacity var(--d-panel) var(--ease-reveal);
-  }
-
-  .ab3-std__line:active,
-  .ab3-std__col[data-open='true'] .ab3-std__caret {
-    transform: none;
-  }
+.ab3-note__p {
+  max-width: 62ch;
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-h3-size);
+  line-height: 36px;
+  color: var(--c-shop-white); /* 19.66:1 on the base */
+  text-wrap: pretty;
 }
 
-@media (min-width: 1024px) {
-  .ab3-std__cols {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .ab3-std__col {
-    padding: var(--s-sm) var(--s-xl);
-    border-top: 0;
-    border-left: 1px solid var(--c-rule-dark);
-  }
-
-  .ab3-std__col:first-child {
-    padding-left: 0;
-    border-left: 0;
-  }
+.ab3-note__sig {
+  margin: 0;
+  font-family: var(--font-name);
+  font-size: var(--t-name-m);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-accent-text-dark); /* 10.47:1 on the base */
 }

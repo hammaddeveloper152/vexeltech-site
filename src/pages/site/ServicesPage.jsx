@@ -1,30 +1,11 @@
 import React from 'react';
-import {
-  Browser,
-  CalendarCheck,
-  Cards,
-  ChartLineUp,
-  ChatCircle,
-  CreditCard,
-  Database,
-  Envelope,
-  FilmSlate,
-  Gear,
-  GoogleLogo,
-  Image,
-  Layout,
-  MagnifyingGlass,
-  Megaphone,
-  MetaLogo,
-  Palette,
-  PenNib,
-  Receipt,
-  Robot,
-  ShareNetwork,
-  ShoppingCart,
-  Swatches,
-  Wrench,
-} from '@phosphor-icons/react';
+/* THE 24 PHOSPHOR IMPORTS AND THE `Icon` FIELDS ARE GONE, 2026-09-23. The
+   sub-service cards came off with the band rebuild and nothing renders an
+   icon on this page any more, but the imports stayed and the bundler kept
+   bundling twenty-four icon components for markup that does not exist. An
+   import that nothing renders is still shipped weight. The card `line` text
+   is kept: it is the founder's copy from VEXELTECH-SERVICES-COPY.md and costs
+   nothing but bytes of source. */
 import Shell from './Shell.jsx';
 import { PageHead, Section, CallBand } from './parts.jsx';
 import ServiceSections from './ServiceSections.jsx';
@@ -69,12 +50,12 @@ const DISCIPLINES = [
     promise:
       'The name people remember after the job is done. Drawn and shown to you before you owe anything.',
     cards: [
-      { Icon: PenNib, title: 'Logo design', line: 'Custom logo design, with 5 concepts on Basic or 8 on Advance.' },
-      { Icon: Palette, title: 'Brand guidelines', line: 'A brand guideline so every future job looks like the same company.' },
-      { Icon: Cards, title: 'Stationery kit', line: 'Business card, letterhead, envelope and email signature.' },
-      { Icon: ShareNetwork, title: 'Social media kit', line: 'A social media kit with banners and cover profiles.' },
-      { Icon: Swatches, title: 'Colour variations', line: 'Colour variations of the mark.' },
-      { Icon: Image, title: 'Digital assets', line: 'A favicon and logo sizes for social.' },
+      { title: 'Logo design', line: 'Custom logo design, with 5 concepts on Basic or 8 on Advance.' },
+      { title: 'Brand guidelines', line: 'A brand guideline so every future job looks like the same company.' },
+      { title: 'Stationery kit', line: 'Business card, letterhead, envelope and email signature.' },
+      { title: 'Social media kit', line: 'A social media kit with banners and cover profiles.' },
+      { title: 'Colour variations', line: 'Colour variations of the mark.' },
+      { title: 'Digital assets', line: 'A favicon and logo sizes for social.' },
     ],
     price: 'From $299. Advance at $449.',
     turnaround: '1 to 2 business days.',
@@ -87,12 +68,12 @@ const DISCIPLINES = [
     promise:
       'A site that sells while you sleep. Built for you rather than picked off a shelf, in four business days, with 30 days of maintenance and a dedicated team you can actually reach.',
     cards: [
-      { Icon: Browser, title: 'Custom websites', line: 'Custom design up to 6 pages, mobile first, live on your own domain.' },
-      { Icon: ShoppingCart, title: 'Ecommerce stores', line: 'Ecommerce stores, web apps and SaaS products.' },
-      { Icon: Layout, title: 'UI and UX design', line: 'Custom UI and UX with SEO-friendly content.' },
-      { Icon: Database, title: 'Custom backend', line: 'A custom backend and CRM development.' },
-      { Icon: CreditCard, title: 'Payment gateways', line: 'Payment gateway integration built into the site.' },
-      { Icon: Wrench, title: '30 days maintenance', line: "30 days of maintenance included, then it's a conversation, not a retainer." },
+      { title: 'Custom websites', line: 'Custom design up to 6 pages, mobile first, live on your own domain.' },
+      { title: 'Ecommerce stores', line: 'Ecommerce stores, web apps and SaaS products.' },
+      { title: 'UI and UX design', line: 'Custom UI and UX with SEO-friendly content.' },
+      { title: 'Custom backend', line: 'A custom backend and CRM development.' },
+      { title: 'Payment gateways', line: 'Payment gateway integration built into the site.' },
+      { title: '30 days maintenance', line: "30 days of maintenance included, then it's a conversation, not a retainer." },
     ],
     price: '$700, one tier.',
     turnaround: '4 business days from the day we have your content.',
@@ -105,12 +86,12 @@ const DISCIPLINES = [
     promise:
       'Full stack marketing, pointed at one thing. Not impressions, not reach. Whether the phone rings.',
     cards: [
-      { Icon: MagnifyingGlass, title: 'SEO and AEO', line: 'SEO and AEO, so the search that should find you finds you.' },
-      { Icon: GoogleLogo, title: 'Google ads', line: 'Google ads run as performance marketing.' },
-      { Icon: MetaLogo, title: 'Meta ads', line: 'Meta ads pointed at lead generation.' },
-      { Icon: ChartLineUp, title: 'Lead generation and CRO', line: 'CRO, so the clicks you pay for become calls.' },
-      { Icon: Megaphone, title: 'Campaign management', line: 'Campaign management across your paid ads.' },
-      { Icon: FilmSlate, title: 'Social content and reels', line: 'Social media management, organic content creation and reels.' },
+      { title: 'SEO and AEO', line: 'SEO and AEO, so the search that should find you finds you.' },
+      { title: 'Google ads', line: 'Google ads run as performance marketing.' },
+      { title: 'Meta ads', line: 'Meta ads pointed at lead generation.' },
+      { title: 'Lead generation and CRO', line: 'CRO, so the clicks you pay for become calls.' },
+      { title: 'Campaign management', line: 'Campaign management across your paid ads.' },
+      { title: 'Social content and reels', line: 'Social media management, organic content creation and reels.' },
     ],
     price: 'Priced on the call, in writing before any work starts.',
     turnaround: 'Campaigns live within the first week after the page is ready.',
@@ -123,12 +104,12 @@ const DISCIPLINES = [
     promise:
       'The jobs that eat your week, done without you. Complicated tasks made simple, and workflows that hold.',
     cards: [
-      { Icon: Gear, title: 'Workflow automation', line: 'The repeated tasks run on their own.' },
-      { Icon: Robot, title: 'AI agents', line: 'AI agents that answer, book and route, on your rules.' },
-      { Icon: ChatCircle, title: 'Chatbots', line: 'On your site and your channels, answering the questions you answer ten times a day.' },
-      { Icon: Envelope, title: 'Quotes and follow-ups', line: 'Quotes and follow-ups go out on their own.' },
-      { Icon: Receipt, title: 'Invoices and reminders', line: 'Invoices and reminders run on their own.' },
-      { Icon: CalendarCheck, title: 'Booking and routing', line: 'AI agents that book and route, on your rules.' },
+      { title: 'Workflow automation', line: 'The repeated tasks run on their own.' },
+      { title: 'AI agents', line: 'AI agents that answer, book and route, on your rules.' },
+      { title: 'Chatbots', line: 'On your site and your channels, answering the questions you answer ten times a day.' },
+      { title: 'Quotes and follow-ups', line: 'Quotes and follow-ups go out on their own.' },
+      { title: 'Invoices and reminders', line: 'Invoices and reminders run on their own.' },
+      { title: 'Booking and routing', line: 'AI agents that book and route, on your rules.' },
     ],
     price: 'Priced on the call, in writing before any work starts.',
     turnaround: 'Scoped per workflow on the call.',

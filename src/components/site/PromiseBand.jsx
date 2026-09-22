@@ -2,8 +2,12 @@ import React from 'react';
 import '../../styles/promise.css';
 
 /* WHAT WE PROMISE: the yellow band with the $700 figure and the four
-   refusals. Built for About (2026-09-16) and shared with home since the
-   storyboard pass, 2026-09-21: one component, identical copy, by the user.
+   refusals. Built for About (2026-09-16), shared with home from 2026-09-21,
+   and HOME'S ALONE since 2026-09-23, when the About rebuild dropped every
+   section not on the founder's list. The `ab3-` prefix on its classes is
+   history - it meant "About, third version" - and it is left alone rather
+   than renamed, because the class names are the only thing binding this
+   component to `promise.css` and a rename buys nothing but risk.
 
    THE FIGURE IS THE BAND'S ONLY OBJECT, 2026-09-22 (the founder). $700 in
    Monigue at 240px is the visual, and the two image slots are gone with the

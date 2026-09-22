@@ -1,115 +1,153 @@
-import React, { useState } from 'react';
-import { CaretDown } from '@phosphor-icons/react';
+import React from 'react';
+import { Check, CursorClick, Eye, MagnifyingGlass, Timer, X } from '@phosphor-icons/react';
 import Shell from './Shell.jsx';
-import PromiseBand from '../../components/site/PromiseBand.jsx';
 import { CallBand } from './parts.jsx';
 import '../../styles/aboutpage.css';
 
-/* THE ABOUT PAGE, aligned to the storyboard, 2026-09-21.
+/* THE ABOUT PAGE, REBUILT 2026-09-23 FROM THE FOUNDER'S COPY.
 
-     1. Who we're for   the statement at the DISPLAY step with a 48px yellow
-                        rule under it, then the paragraph. On the drift
-                        (2026-09-22): the cream is gone, and so is the
-                        banner slot and the "How we work" call
-     2. What we do      dark, two columns of plain text
-     3. How it goes     dark: four short lines under the heading, no
-                        numerals, no line (the route is home's device)
-     4. What we promise yellow: the shared promise band, $700, the refusals
-     5. Our standards   dark, three lines, each revealing how it shows up on
-                        a job: the page's engagement device
-     6. Tell us         the call on the spotlight (about-call.webp), restored
-                        2026-09-22
+   The source is VEXELTECH-COPY.md, "ABOUT 2026-09-23", in the design repo,
+   and every string below is that file verbatim. The order is the founder's:
 
-   ---- THE HERO, 2026-09-22 (the founder) ---------------------------------
+     1  hero          the statement and its paragraph on the base, the rule
+     2  where we      three Moldie-numbered stops in a row
+        come from
+     3  what the      four cream cards: icon, discipline in Moldie, the line
+        phones
+        taught us
+     4  the numbers   OFF. Every figure is an unfilled bracket
+     5  who we are    two cream cards, a Check list and an X list
+        for
+     6  how we work   the 01 to 04 row
+        with you
+     7  the note      one reading-width paragraph, the signature in Moldie
+     8  the call      the spotlight, and the form from the Shell
 
-   THE BANNER IS GONE (no banners anywhere), and with it the cream. The rule
-   is machine yellow, and yellow on cream is 1.66:1 — DESIGN.md's own words
-   for a yellow stroke on a light ground are "not a line, a rumour of one",
-   which is why deep amber exists. The conflict was raised before anything was
-   written and the user took the ground off rather than the colour off the
-   rule: the hero opens on the base #0B0B0D like every other page, and the
-   rule measures 10.47:1. Cream still appears once on the site, on home's
-   Who we are band.
+   WHAT WAS DELETED, because it is not on that list: "What we do" (the two
+   text columns), the promise band, and "Our standards" with its CaretDown.
+   The promise band is shared with home and home keeps it; this page simply
+   stops mounting it. CaretDown was on the standards and nowhere else, so it
+   leaves the site with them.
 
-   THE STATEMENT IS AT THE DISPLAY STEP, which the record called home's alone.
-   It is the same derived step, measure / 6.227, not a second size: 185px at
-   1280, the hero's own figure. The user's call.
+   ---- TWO DECISIONS THE COPY FORCED, BOTH PUT TO THE FOUNDER -------------
 
-   The "How we work" button came off with it; How it goes is two sections down
-   and on the same scroll. The paragraph stays, the user's choice.
+   THE [YEAR] BRACKETS. All three stops in section 2 carry one. The rule is
+   that a line with an unfilled bracket is cut and never guessed, but cutting
+   all three would have deleted the section the founder asked for in the same
+   breath. The founder's answer: cut the BRACKET, keep the line. Nothing is
+   guessed, each stop still reads as a complete sentence, and a year drops in
+   later with no layout change.
 
-   The "Four disciplines, one team" plates came off with the storyboard. The
-   ground drifts from the base to arc-black at How it goes and holds there
-   through the footer (2026-09-21).
-   EVERY LINE IS THE BRIEF'S, which is the user's own copy. */
+   VEXEL SCALES. Stop 02 as supplied named it. CLAUDE.md records, under
+   "settled and not to be revisited", that no Vexel Scales attribution or
+   reference of any kind appears anywhere on the site - the rule the legacy
+   footer lines and the JSON-LD `legalName` were removed under. The founder's
+   answer: keep the stop, drop the name. The history and the lesson survive
+   and the entity does not, so the settled rule holds.
 
-/* How it goes, the user's sentence, one clause a line (2026-09-21). FOUR
-   BLOCKS IN ONE ROW since 2026-09-22 (the founder): each clause takes a
-   Moldie numeral at 96px in machine yellow with its line under it. Same four
-   clauses, same order, unchanged - what moved is that they are now counted.
+   ---- THE LAYOUT FAMILIES, AND THE ONE THAT IS ARGUABLE ------------------
 
-   NO ROUTE LINE. The route is home's device and appears once on the site; a
-   drawn line here would be the second. The numerals are the sequence. */
-const HOW = ['A call,', 'then concepts you can see,', 'then a build you can test,', "then it's yours."];
+   Sections 2 and 6 are both rows of Moldie numerals, which is the closest
+   pair on this page, and they are built to be read differently rather than
+   merely to differ. Section 2 is a TIMELINE: three stops, the numeral inline
+   before its title on one line, a paragraph under, read as one story from
+   left to right. Section 6 is four PROMISES: the numeral stacked above a
+   single line, each read on its own and in any order. That is the same
+   distinction BUILD-LAW's own amendment drew between icon columns and a
+   figure row - what each column holds and how it is read - and it is flagged
+   rather than assumed, because a reader who thinks they are one family twice
+   is not obviously wrong.
 
-/* THE STANDARDS, TESTED: About's engagement device (2026-09-21, the user's
-   choice; built for this page and used nowhere else, BUILD-LAW 0). Each
-   standard reveals how it shows up on a job: on hover with a mouse, on a tap
-   or Enter anywhere else. The three lines are the user's, verbatim. */
-const STANDARDS = [
+   Sections 3 and 5 are both cream: four small cards against two wide ones,
+   an icon-led card against a list card. */
+
+/* Section 2, the founder's copy with the [YEAR] cut from each stop and the
+   entity name cut from 02. */
+const ORIGINS = [
   {
-    id: 'see',
-    line: 'You see the work before you owe anything.',
-    job: "Concepts are drawn and shown on the call. No deposit, no invoice, until you've seen them.",
+    n: '01',
+    title: 'The phones.',
+    body:
+      'A call centre selling US internet and TV service on behalf of national providers. Thousands of conversations a month with homeowners, landlords and small business owners across the States.',
   },
   {
-    id: 'revise',
-    line: 'Revisions are unlimited until you say stop.',
-    job: "There is no round three. You ask, we change it, until it's right.",
+    n: '02',
+    title: 'The ads.',
+    body:
+      'A paid media agency registered in Texas, running Google and Meta campaigns for the same kind of customer we used to call. That is where we learned that most ad spend dies on a bad landing page.',
   },
   {
-    id: 'decides',
-    line: 'The person who decides is the person you talk to.',
-    job: 'No account manager. The person on your call is the person who builds it.',
+    n: '03',
+    title: 'The whole thing.',
+    body:
+      'VexelTech: branding, the website, the marketing and the automation, from one team, at a flat price, because the businesses we talked to for years could never afford four agencies.',
   },
 ];
 
-function Standard({ id, line, job }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <li
-      className="ab3-std__col"
-      data-open={open ? 'true' : 'false'}
-      onPointerEnter={(e) => e.pointerType === 'mouse' && setOpen(true)}
-      onPointerLeave={(e) => e.pointerType === 'mouse' && setOpen(false)}
-    >
-      <button
-        type="button"
-        className="ab3-std__line"
-        aria-expanded={open}
-        aria-controls={`std-${id}`}
-        onClick={() => setOpen((o) => !o)}
-      >
-        <span className="ab3-std__line-t">{line}</span>
-        {/* The cue that it opens, 2026-09-22, the founder's ruling: CaretDown,
-            used nowhere else on the site, turning when open. Decorative. */}
-        <CaretDown className="i i--md ab3-std__caret" aria-hidden="true" />
-      </button>
-      {/* Held in the layout so nothing moves; hidden from assistive tech
-          until it is open, so it matches `aria-expanded`. */}
-      <p className="ab3-std__job" id={`std-${id}`} aria-hidden={!open}>
-        {job}
-      </p>
-    </li>
-  );
-}
+/* Section 3. Four icons that are on no other route: Eye for being judged in
+   ten seconds, MagnifyingGlass for scanning rather than reading, CursorClick
+   for the page after the click, Timer for the two minutes. Each says
+   something its line says; none is a neutral placeholder. */
+const LESSONS = [
+  {
+    id: 'branding',
+    Icon: Eye,
+    name: 'Branding',
+    line:
+      'A caller decides if you are real in the first ten seconds. Your name and your mark do that work before you say a word.',
+  },
+  {
+    id: 'websites',
+    Icon: MagnifyingGlass,
+    name: 'Websites',
+    line:
+      'Nobody reads. They scan for a number, a price and a reason to trust you, and they leave if any of the three is missing.',
+  },
+  {
+    id: 'marketing',
+    Icon: CursorClick,
+    name: 'Marketing',
+    line:
+      'Ads do not fail in the ad. They fail on the page after the click, and on the phone after the page.',
+  },
+  {
+    id: 'automation',
+    Icon: Timer,
+    name: 'Automation',
+    line:
+      'The job you lose is the one that called while you were on a roof. A missed call answered in two minutes is still a job.',
+  },
+];
+
+/* Section 5. The founder's two cards, split into their sentences so each is
+   its own line against its own mark. */
+const FIT = {
+  yes: [
+    'Plumbers, HVAC, electricians, roofers, cleaners, dentists, contractors.',
+    'One to fifteen people.',
+    'You answer your own phone, or you want to stop having to.',
+  ],
+  no: [
+    'Agencies looking for white-label work.',
+    'Startups raising a round.',
+    'Anyone who wants a retainer instead of a result.',
+  ],
+};
+
+/* Section 6, the founder's four, each a title and the line after it. */
+const WORK = [
+  { n: '01', title: 'One person picks up.', line: 'Not a ticket queue. You get a name and a number.' },
+  { n: '02', title: 'You see it before you pay.', line: 'Concepts first, then the build, then the invoice.' },
+  { n: '03', title: 'You own everything.', line: 'Domain, hosting, code, credentials. In your name from day one.' },
+  { n: '04', title: 'Thirty days of support.', line: 'After that it is a conversation, not a contract.' },
+];
 
 export default function AboutPage() {
   return (
     <Shell
-      driftTo=".ab3-how"
+      driftTo=".ab3-work"
       title="About us | VexelTech"
-      description="Branding, websites, marketing and automation for local service businesses across the US. One flat price."
+      description="We spent years making phones ring for other people's brands. Branding, websites, marketing and automation from one team."
     >
       {/* 1. HERO. The statement at the display step on the drift, a 48px
              yellow rule under it, then the paragraph. */}
@@ -117,51 +155,113 @@ export default function AboutPage() {
         <div className="ab3__in ab3-hero__in">
           <div className="ab3-hero__text">
             <h1 className="ab3-hero__h" id="ab3-hero-h">
-              A website that looks expensive and costs $700.
+              We spent years making phones ring for other people&apos;s brands.
             </h1>
-            {/* The rule: 48px of machine yellow, 10.47:1 on the base.
-                Decorative, so it is a presentational span rather than an
-                <hr>, which would announce a thematic break to a screen
-                reader between a heading and the paragraph that answers it. */}
+            {/* Decorative, so a span rather than an <hr>, which would announce
+                a thematic break between a heading and the line answering it. */}
             <span className="ab3-hero__rule" aria-hidden="true" />
             <p className="ab3-hero__p">
-              Branding, websites, marketing and automation for plumbers, movers, electricians
-              and cleaners across the US. One flat price. No surprises.
+              Before VexelTech built a single website, our team answered calls for US internet
+              providers, day and night, from Karachi. We know what a customer sounds like when they
+              are ready to buy, and what makes them hang up.
             </p>
           </div>
         </div>
       </section>
 
-      {/* 2. WHAT WE DO. */}
-      <section className="vt ab3-what" aria-labelledby="ab3-what-h">
-        <div className="ab3__in ab3-what__in">
-          <h2 className="ab3__h ab3-what__h" id="ab3-what-h">
-            We work with local service businesses, not everyone.
+      {/* 2. WHERE WE COME FROM. Three stops, the numeral inline before its
+             title, a paragraph under: a timeline read left to right. */}
+      <section className="vt ab3-origin" aria-labelledby="ab3-origin-h">
+        <div className="ab3__in">
+          <h2 className="ab3__h" id="ab3-origin-h">
+            Where we come from
           </h2>
-          <p className="ab3-what__p">
-            Four disciplines under one roof. A mark you&apos;re proud of, from $299. A finished
-            website on your own domain in four business days, $700 flat. Marketing pointed at one
-            thing: whether the phone rings. Automation for the jobs that eat your week. One team,
-            one invoice, one person who picks up.
-          </p>
+          <ol className="ab3-origin__row">
+            {ORIGINS.map(({ n, title, body }) => (
+              <li className="ab3-origin__stop" key={n}>
+                <p className="ab3-origin__head">
+                  {/* The list is ordered, so a screen reader counts it; reading
+                      "01" aloud before the title would say it twice. */}
+                  <span className="ab3-origin__n" aria-hidden="true">
+                    {n}
+                  </span>
+                  <span className="ab3-origin__t">{title}</span>
+                </p>
+                <p className="ab3-origin__b">{body}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
-      {/* 3. HOW IT GOES. Four counted blocks in one row, no drawn line. */}
-      <section className="vt ab3-how" aria-labelledby="ab3-how-h">
+      {/* 3. WHAT THE PHONES TAUGHT US. Four cream cards. */}
+      <section className="vt ab3-lesson colour-band" aria-labelledby="ab3-lesson-h">
         <div className="ab3__in">
-          <h2 className="ab3__h ab3-how__h" id="ab3-how-h">
-            Here is exactly how a project runs.
+          <h2 className="ab3__h ab3-lesson__h" id="ab3-lesson-h">
+            What the phones taught us
+          </h2>
+          <ul className="ab3-lesson__grid">
+            {LESSONS.map(({ id, Icon, name, line }) => (
+              <li className="ab3-lesson__card" key={id}>
+                <Icon className="ab3-lesson__i" aria-hidden="true" />
+                <h3 className="ab3-lesson__n">{name}</h3>
+                <p className="ab3-lesson__l">{line}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* 4. THE NUMBERS is OFF: every figure in the copy is an unfilled
+             bracket, and a marble band of four empty figures is a claim with
+             the number left out. It returns when the figures are real. */}
+
+      {/* 5. WHO WE ARE FOR. Two cream cards, a Check list and an X list. */}
+      <section className="vt ab3-fit colour-band" aria-labelledby="ab3-fit-h">
+        <div className="ab3__in">
+          <h2 className="ab3__h ab3-fit__h" id="ab3-fit-h">
+            Who we are for
+          </h2>
+          <div className="ab3-fit__cols">
+            <div className="ab3-fit__card" data-kind="yes">
+              <h3 className="ab3-fit__n">A fit</h3>
+              <ul className="ab3-fit__list">
+                {FIT.yes.map((t) => (
+                  <li className="ab3-fit__item" key={t}>
+                    <Check className="ab3-fit__mark" weight="bold" aria-hidden="true" />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="ab3-fit__card" data-kind="no">
+              <h3 className="ab3-fit__n">Not a fit</h3>
+              <ul className="ab3-fit__list">
+                {FIT.no.map((t) => (
+                  <li className="ab3-fit__item" key={t}>
+                    <X className="ab3-fit__mark" weight="bold" aria-hidden="true" />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. HOW WE WORK WITH YOU. The 01 to 04 row: numeral above a line. */}
+      <section className="vt ab3-work" aria-labelledby="ab3-work-h">
+        <div className="ab3__in">
+          <h2 className="ab3__h ab3-work__h" id="ab3-work-h">
+            How we work with you
           </h2>
           <ol className="ab3-how__steps">
-            {HOW.map((line, i) => (
-              <li className="ab3-how__step" key={line}>
-                {/* The numeral is decorative: the list is already ordered, so
-                    a screen reader counts it. Reading "01" aloud before every
-                    clause would say the same thing twice. */}
+            {WORK.map(({ n, title, line }) => (
+              <li className="ab3-how__step" key={n}>
                 <span className="ab3-how__n" aria-hidden="true">
-                  {String(i + 1).padStart(2, '0')}
+                  {n}
                 </span>
+                <span className="ab3-how__t">{title}</span>
                 <span className="ab3-how__line">{line}</span>
               </li>
             ))}
@@ -169,25 +269,22 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 4. PRICING AND REFUSALS. The promise band, shared with home. The
-             $700 at 240px is its object; the image slot came off 2026-09-22. */}
-      <PromiseBand id="ab3-price-h" />
-
-      {/* 5. STANDARDS. */}
-      <section className="vt ab3-std" aria-labelledby="ab3-std-h">
-        <div className="ab3__in">
-          <h2 className="ab3__h" id="ab3-std-h">
-            Our standards are simple and we keep them.
+      {/* 7. THE NOTE. One reading-width paragraph, the signature in Moldie. */}
+      <section className="vt ab3-note" aria-labelledby="ab3-note-h">
+        <div className="ab3__in ab3-note__in">
+          <h2 className="skip-h" id="ab3-note-h">
+            A note from the founder
           </h2>
-          <ul className="ab3-std__cols">
-            {STANDARDS.map((st) => (
-              <Standard key={st.id} {...st} />
-            ))}
-          </ul>
+          <p className="ab3-note__p">
+            I started this because I got tired of watching good tradesmen lose work to worse ones
+            with better websites. If your phone is not ringing the way it should, that is a fixable
+            problem, and it should not cost you a year&apos;s profit to fix it.
+          </p>
+          <p className="ab3-note__sig">Zee, founder, VexelTech Solutions</p>
         </div>
       </section>
 
-      {/* 6. THE CALL on the spotlight, restored 2026-09-22. */}
+      {/* 8. THE CALL on the spotlight, and the form from the Shell. */}
       <CallBand
         material="spot"
         heading="Tell us about your business and get a quote the same day."

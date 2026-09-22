@@ -80,8 +80,12 @@ const FRAMES = [
   ['/services', '.callband', 'call band, plain', '.callband'],
   ['/', '.services__grid', 'home services plates', '.svc__plate'],
   ['/', '.work__list', 'work grid', '.work__plate'],
-  ['/about-us', '.plates', 'about plates, at rest', '.plate'],
-  ['/about-us', '.plates', 'about plates, one open', '.plate', true],
+  /* ABOUT, REBUILT 2026-09-23: the plates are gone with the old page. The
+     two numeral rows and the two cream bands are what carry, or do not. */
+  ['/about-us', '.ab3-origin', 'about, where we come from', '.ab3-origin'],
+  ['/about-us', '.ab3-lesson', 'about, lessons (cream)', '.ab3-lesson'],
+  ['/about-us', '.ab3-fit', 'about, who we are for (cream)', '.ab3-fit'],
+  ['/about-us', '.ab3-work', 'about, how we work', '.ab3-work'],
   /* THE PLAN BUILDER, 2026-09-22: /pricing. Its yellow is the Plan Builder
      exception (SKILL.md): the progress line, the selected card's border, the
      total and the one primary button. Its ground is the drift's arc-black
