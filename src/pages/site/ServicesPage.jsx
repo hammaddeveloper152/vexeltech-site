@@ -149,9 +149,14 @@ export default function ServicesPage() {
         lead="Four disciplines and one team. Not four agencies who don't talk to each other, and not four invoices."
       />
 
-      <Section title={null}>
-        <ServiceSections disciplines={DISCIPLINES} />
-      </Section>
+      {/* NOT INSIDE `Section`, 2026-09-23. Each discipline is a full-width
+          band now, and `Section` wraps its children in `.pg__section-in`,
+          which is the page measure plus the inset - so the bands were 1152
+          wide at 1280 and a cream band stopped short of both edges. A band
+          that does not reach the viewport edge is not a band. Each section
+          carries its own `vt` and its own inset, which is the established
+          pattern: `vt` goes on the SECTION, never on a page wrapper. */}
+      <ServiceSections disciplines={DISCIPLINES} />
 
 
       {/* TALK TO US: the plain dark call. */}

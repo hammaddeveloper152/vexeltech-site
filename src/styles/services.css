@@ -125,8 +125,15 @@
 /* THE CHECKLIST, two columns from 768. `grid-auto-flow: column` with three
    rows, so the six items read DOWN each column and match the source order; a
    wrapping row would have read across the pair. */
+/* ONE COLUMN THAT CAN SHRINK. A grid with no template gets a single `auto`
+   track, and an auto track is max-content: the longest item - "Lead
+   generation and CRO" - set the list's width and pushed 15px past a 390
+   viewport. Nothing scrolled enough to notice, which is the failure mode
+   BUILD-LAW's container-budget note describes. `minmax(0, 1fr)` lets it
+   shrink to the band. */
 .svc2__list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--s-md) var(--s-xl);
   margin: 0;
   padding: 0;
@@ -135,6 +142,7 @@
 
 @media (min-width: 768px) {
   .svc2__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-flow: column;
     grid-template-rows: repeat(3, auto);
     justify-content: start;
@@ -170,24 +178,27 @@
 /* ---- The right column: the price IS the visual ------------------------- */
 
 .svc2__right {
+  /* The figure is sized in `cqi`, so this column is the container it
+     measures against. */
+  container-type: inline-size;
   display: grid;
   align-content: start;
   justify-items: start;
   min-width: 0;
 }
 
-/* Moldie at 160px. It is capped against the column so "$299 to $449" - the
-   longest of the two figures at eleven characters - cannot run past its own
-   measure on a narrow screen; the cap binds below roughly 900px of page. */
+/* Moldie, filling its own column, capped at the founder's 160px. `--fig-em`
+   is the string's measured advance at 1em and comes from the component; see
+   the note there for why the cap is not always what binds and why there is no
+   `nowrap`. */
 .svc2__fig {
   margin: 0 0 var(--s-lg);
   font-family: var(--font-name);
-  font-size: min(160px, 17vw);
+  font-size: min(160px, calc(100cqi / var(--fig-em, 6)));
   line-height: var(--t-loud-line);
   font-weight: 400;
   letter-spacing: 0;
   color: inherit;
-  text-wrap: nowrap;
 }
 
 /* "On the call" is a SENTENCE, not a figure, so it takes the loud register at
