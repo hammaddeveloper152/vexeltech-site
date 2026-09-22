@@ -43,11 +43,28 @@ ANYWHERE**; `Banner.jsx` and `banner.css` are deleted, not left unimported.
 
 **THE MASCOT HAS THREE PLACEMENTS AND ALL THREE ARE ON HOME:** P1 on the
 cream Who we are band (`character.webp`, as built); `character-desk.webp` at
-route stop 03, 320px, floating 6px, right of the stop and opposite the drawn
-line; and P2 at the left of the footer form (`character-2.webp`, empty until
-its file exists). It supersedes the two-appearances-site-wide placement of
-2026-09-21: the footer form is on every route, so P2 still appears on every
-route, and the two home placements are new.
+route stop 03, **mounted**, 320px, floating 6px, right of the stop and
+opposite the drawn line; and P2 at the left of the footer form
+(`character-2.webp`, empty until its file exists). It supersedes the
+two-appearances-site-wide placement of 2026-09-21: the footer form is on
+every route, so P2 still appears on every route, and the two home placements
+are new.
+
+**THE DESK POSE IS CUT BY A MODEL, NOT BY A THRESHOLD** (`.measure/deskcut.py`,
+committed). `objcut.mjs` floods in from the edge through pixels that are light
+and nearly neutral, and DESIGN.md records it failing on exactly this render:
+the white sneakers touch the white ground with no darker edge, so the flood
+walks into the shoes and they come out transparent, reading as black shoes on
+the base. **A threshold cannot separate a white object from a white ground**,
+because there is nothing in the values to separate. rembg's
+`isnet-general-use` with alpha matting decides by what the thing is. Two
+steps follow it and both are needed on a white ground: **un-premultiply**
+(`F = (C - (1-a)*255)/a`, which takes out the pale halo every partly
+transparent pixel still carries), then **smooth the alpha contour alone** (a
+1.1px blur on the channel, then a smoothstep back through 0.5 — blurring the
+composite would soften the object; this only moves where the edge falls).
+Checked on the base at the real 320px mount: sneakers and laptop edge both
+intact, no halo. 640px webp, 62.8 KB, 2x for the 320px mount and no more.
 
 **Home.** `cost-1` to `cost-4.webp` beside What it costs you. What we do
 stays the storyboard's four icon cards (the word tiles are on the "what comes
@@ -71,7 +88,15 @@ cards' 6% white veil and 45% white border are solid values now, and the
 hairlines carry `--lit-edge` as painted (#303134 on the panel, #3C3E41 on a
 card). The progress line runs along the panel's top inner edge. The 720px
 minimum height is withdrawn: the section is its content plus 96px. Step 3's
-card grid is `align-items: start`. On a lit surface **steel-dark is banned**
+card grid is `align-items: start`. **The cream ticket mounts from STEP 1 in
+its empty state** — WORK ORDER, one line "Your plan starts here." in steel
+(7.20:1 on cream), and no total strip until a priced line exists — so the
+panel has something opposite it on every step instead of 40% of bare ground
+until the first answer. The trade line is Moldie and would otherwise render
+as an empty paragraph holding its own height, which is a reservation rather
+than a state. The 390 sticky bar still waits for the first answer: a 64px bar
+across the bottom of a phone saying nothing is a cost the desktop column does
+not pay. On a lit surface **steel-dark is banned**
 (it is the ground's value), so the progress hairline and the disabled Next
 take steel-lift, 6.33:1. THE PLAN BUILDER EXCEPTION is unchanged: its yellow
 is the progress line, the selected card's border, the total and the one

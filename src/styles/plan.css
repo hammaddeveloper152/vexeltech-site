@@ -495,6 +495,19 @@
   text-transform: uppercase;
 }
 
+/* THE EMPTY STATE, from step 1. Steel on cream, 7.20:1 - the ticket's own
+   secondary value, the same one the stage line and the WORK ORDER key take.
+   It carries the ticket's bottom padding itself, because with no lines and no
+   total strip under it there is nothing else to close the card. */
+.plan__ticket-empty {
+  margin: var(--s-xs) 0 0;
+  padding: 0 var(--s-xl) var(--s-xl);
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel); /* 7.20:1 on cream */
+}
+
 /* The stage line: steel, not steel-dark (3.08:1 on cream), the user's choice. */
 .plan__ticket-stage {
   margin: var(--s-sm) 0 0;

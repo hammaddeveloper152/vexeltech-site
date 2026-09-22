@@ -397,7 +397,10 @@ export default function PlanBuilder() {
 
   const trade = TRADES.find((x) => x.id === a.trade);
   const stage = STAGES.find((x) => x.id === a.stage);
-  const showTicket = !!a.trade;
+  /* THE 390 SHEET'S BAR still waits for the first answer: a 64px sticky bar
+     across the bottom of a phone, saying nothing, is a cost the desktop
+     column does not pay. */
+  const showBar = !!a.trade;
 
   /* A render function, not a component: declared as a component inside the
      render it would be a new type every render, and React would remount the
@@ -405,7 +408,16 @@ export default function PlanBuilder() {
   const renderTicket = (inSheet = false) => (
     <div className="plan__ticket" data-sheet={inSheet ? 'true' : 'false'}>
       <p className="plan__ticket-k">WORK ORDER</p>
-      <p className="plan__ticket-trade">{trade ? trade.label : ''}</p>
+      {/* THE EMPTY STATE, from step 1: the ticket is mounted before there is
+          anything on it, so the panel has something opposite it on every
+          step. One line, steel on cream at 7.20:1. The trade line is Moldie
+          and would otherwise render as an empty paragraph holding its own
+          height, which is a reservation rather than a state. */}
+      {trade ? (
+        <p className="plan__ticket-trade">{trade.label}</p>
+      ) : (
+        <p className="plan__ticket-empty">Your plan starts here.</p>
+      )}
       {stage ? <p className="plan__ticket-stage">{stage.title}</p> : null}
       {t.lines.length ? (
         <ul className="plan__ticket-lines">
@@ -604,15 +616,16 @@ export default function PlanBuilder() {
 
         </div>
 
-        {showTicket ? (
-          <aside className="plan__side" aria-label="Your plan">
-            {renderTicket(false)}
-          </aside>
-        ) : null}
+        {/* MOUNTED FROM STEP 1, in its empty state: the panel has something
+            opposite it on every step rather than a bare 40% of ground until
+            the first answer lands. */}
+        <aside className="plan__side" aria-label="Your plan">
+          {renderTicket(false)}
+        </aside>
       </div>
 
       {/* 390: the ticket as a sticky bottom bar that opens as a sheet. */}
-      {showTicket ? (
+      {showBar ? (
         <div className="plan__bar">
           <button type="button" className="plan__bar-btn" aria-expanded={sheet} onClick={() => setSheet(true)}>
             <span className="plan__bar-k">Your plan</span>
