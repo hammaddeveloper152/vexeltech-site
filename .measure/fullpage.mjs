@@ -31,6 +31,7 @@ fs.mkdirSync(OUT, { recursive: true });
 
 const PAGES = [
   ['home', '/'],
+  ['services', '/services'],
   ['pricing', '/pricing'],
   ['about', '/about-us'],
 ];
