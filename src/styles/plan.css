@@ -9,12 +9,27 @@
    60/40, 48px gutter, left aligned inside the page measure; single column at
    390 with the ticket as a sticky bottom bar.
 
-   Values on arc-black: shop white 18.65:1, bone 15.47:1 (the helper and the
-   labels), steel-lift 7.16:1, steel-dark 5.37:1 (the disabled Next, the
-   progress hairline), yellow 9.93:1. On the answer card's veil (6% white
-   over arc-black, #1C202D): white 16.23, bone 13.47, steel-dark 4.67.
-   `.measure/planpairs.mjs` walks every pair. On cream: asphalt 15.75:1, steel 7.20:1. In
-   the strip: yellow 9.46:1.
+   THE BUILDER HAS A BODY, 2026-09-22 (the founder). The left column is one
+   LIT-NEAR PANEL standing on that drift: #1E1F22, a hairline, 12px, the two
+   lights, 48px of inner padding at 1280 and 24px at 390. The answer cards
+   inside it are LIT-RAISED, #2B2D31, with their own hairline.
+
+   NOTHING IS TRANSLUCENT. The cards used to be a 6% white veil over the
+   ground with a 45% white border, so their painted colour depended on what
+   the drift was doing behind them at that scroll depth and every measurement
+   had to be taken on pixels rather than on a declared pair. Both are solid
+   values now, and the hairlines carry the painted result of `--lit-edge`
+   (white at 8%) as a flat hex: #303134 on the panel, #3C3E41 on a card. The
+   two lights stay gradients — a light is not a surface, and the two-light
+   model is the site's, unchanged.
+
+   Values on lit-near (the panel): shop white 16.48:1, bone 13.67:1,
+   steel-lift 6.33:1, machine yellow 8.77:1. steel-dark is 4.75 and is the
+   GROUND's value, banned above it, so the disabled Next and the progress
+   hairline take steel-lift here. On lit-raised (a card): white 13.79, bone
+   11.44, steel-lift 5.30, yellow 7.34. On cream: asphalt 15.75:1, steel
+   7.20:1. In the total strip: yellow 9.46:1. `.measure/planpairs.mjs` walks
+   every pair on the painted ground.
 
    THE PLAN BUILDER EXCEPTION (SKILL.md): the yellow here is the progress
    line, the selected card's border, the total and the one primary button.
@@ -28,7 +43,7 @@
 }
 
 .plan :focus-visible {
-  outline: var(--focus-ring) solid var(--c-accent-draw-dark); /* 9.93:1 on arc-black, a ring */
+  outline: var(--focus-ring) solid var(--c-accent-draw-dark); /* 8.77:1 on the panel, a ring */
   outline-offset: 2px;
 }
 
@@ -44,19 +59,37 @@
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     column-gap: 48px;
     align-items: start;
-    min-height: 720px;
   }
 }
 
+/* THE PANEL. The 720px minimum height is withdrawn, 2026-09-22: the section
+   is its content plus the 96px the ramp already gives it, and a floor that
+   tall left the early steps standing in a column of empty ground. */
 .plan__main {
+  --plan-pad: var(--s-lg); /* 24px at 390 */
   position: relative;
   display: grid;
   align-content: start;
   min-width: 0;
+  padding: var(--plan-pad);
+  border: 1px solid #303134; /* --lit-edge as painted on lit-near */
+  border-radius: 12px;
+  background-color: var(--lit-near);
+  background-image: var(--lit-key), var(--lit-rim);
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 1280px) {
+  .plan__main {
+    --plan-pad: 48px;
+  }
 }
 
 /* ---- The progress line ------------------------------------------------- */
 
+/* THE PROGRESS LINE runs along the PANEL'S TOP INNER EDGE, 2026-09-22: it is
+   the first thing in the padding box, full width of it bar the 6px each end
+   that keeps the outer nodes from hanging over the panel's own edge. */
 .plan__progress {
   position: relative;
   height: 12px;
@@ -72,9 +105,11 @@
   height: 1px;
 }
 
-/* The hairline in steel-dark, 5.37:1 on arc-black; the fill in yellow. */
+/* The hairline in steel-lift, 6.33:1 on the panel; the fill in yellow.
+   steel-dark is the ground's secondary value and is banned on a lit surface
+   (4.75 on lit-near, failing outright a step higher). */
 .plan__track {
-  background: var(--c-steel-dark);
+  background: var(--c-steel-lift);
 }
 
 .plan__fill {
@@ -92,8 +127,8 @@
   height: 12px;
   margin-left: -6px;
   border-radius: 50%;
-  border: 1px solid var(--c-steel-dark);
-  background: var(--c-arc-black);
+  border: 1px solid var(--c-steel-lift);
+  background: var(--lit-near); /* the panel it sits on, not the ground */
 }
 
 .plan__node[data-on='true'] {
@@ -112,7 +147,7 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--c-shop-white); /* 18.65:1 */
+  color: var(--c-shop-white); /* 16.48:1 on the panel */
   text-wrap: balance;
 }
 
@@ -120,15 +155,16 @@
   outline: none;
 }
 
-/* Bone, the user's choice when steel-lift failed on arc (3.04:1). On
-   arc-black steel-lift passes at 7.16:1; bone is kept until told otherwise. */
+/* Bone, the user's choice when steel-lift failed on arc (3.04:1). On the
+   panel bone is 13.67:1 and steel-lift 6.33:1; bone is kept, as instructed,
+   until told otherwise. */
 .plan__help,
 .plan__why {
   margin: 0 0 var(--s-xl);
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* 15.47:1 */
+  color: var(--c-bone); /* 13.67:1 on the panel */
 }
 
 .plan__why {
@@ -146,12 +182,16 @@
   gap: var(--s-sm);
 }
 
+/* SOLID, 2026-09-22. The veil (6% white) and the 45% white border are gone:
+   an answer card is lit-raised with the hairline that surface carries, so its
+   painted colour is a declared pair rather than a composite over whatever the
+   drift is doing behind it. */
 .plan__chip,
 .plan__card {
   position: relative;
-  border: 1px solid rgb(255 255 255 / 45%);
-  background: rgb(255 255 255 / 6%);
-  color: var(--c-shop-white);
+  border: 1px solid #3c3e41; /* --lit-edge as painted on lit-raised */
+  background: var(--c-lit-raised);
+  color: var(--c-shop-white); /* 13.79:1 */
   cursor: pointer;
   transition:
     border-color var(--d-drop) var(--ease-reveal),
@@ -184,6 +224,13 @@
 .plan__cards {
   display: grid;
   gap: var(--s-md);
+}
+
+/* STEP 3 ONLY, 2026-09-22. Its cells hold a card and, for Branding, the two
+   tier chips under it, so a stretched row would pull every other card down to
+   the tallest cell and leave three cards with a void beneath their label. */
+.plan__cards--svc {
+  align-items: start;
 }
 
 @media (min-width: 768px) {
@@ -220,7 +267,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-small-size);
   line-height: var(--t-small-line);
-  color: var(--c-bone);
+  color: var(--c-bone); /* 11.44:1 on lit-raised */
 }
 
 /* Hover: lift 4px, the border to yellow. Gated to a real pointer. */
@@ -285,7 +332,7 @@
   font-weight: var(--t-weight-label);
   letter-spacing: var(--t-track-label);
   text-transform: uppercase;
-  color: var(--c-bone); /* 15.47:1 on arc-black */
+  color: var(--c-bone); /* 13.67:1 on the panel */
 }
 
 .plan__input {
@@ -310,9 +357,11 @@
   margin-top: var(--s-xl);
 }
 
-/* NEXT: the secondary, a WHITE outline and label (18.65:1 on arc-black; the
+/* NEXT: the secondary, a WHITE outline and label (16.48:1 on the panel; the
    user's choice when asphalt failed on arc). Disabled: the same outline at
-   full opacity with steel-dark text, 5.37:1, now passing outright. */
+   full opacity with STEEL-LIFT text, 6.33:1. It was steel-dark, which is the
+   ground's secondary value and is banned on a lit surface — it reads 4.75 on
+   lit-near, a value that only ever just clears the floor. */
 .plan__next {
   min-height: 48px;
   padding: var(--s-md) var(--s-xl);
@@ -330,7 +379,7 @@
 
 .plan__next:disabled {
   opacity: 1;
-  color: var(--c-steel-dark);
+  color: var(--c-steel-lift); /* 6.33:1 on the panel */
   cursor: default;
 }
 
@@ -389,31 +438,15 @@
   color: var(--c-shop-white);
 }
 
-/* ---- The object: 480px bottom-left, screen blend, floating ---------------- */
-
-.plan__object {
-  margin-top: var(--s-2xl);
-  animation: plan-fade 0.3s var(--ease-reveal) both;
-}
-
-.plan__object:not(:has(.slot)) {
-  display: none;
-}
+/* The five step objects (`.plan__object` / `.plan__obj`, plan-1 to
+   plan-5.webp at 480px, screen blend) are DELETED, 2026-09-22: cost-1 to
+   cost-4 and the mascot are the site's only artwork, so the slot was holding
+   space for files that are not coming. `plan-fade` is kept below; the sheet
+   still uses it under reduced motion. */
 
 @keyframes plan-fade {
   from {
     opacity: 0;
-  }
-}
-
-.plan__obj {
-  width: 240px;
-  mix-blend-mode: screen;
-}
-
-@media (min-width: 1024px) {
-  .plan__obj {
-    width: 480px;
   }
 }
 
@@ -434,7 +467,7 @@
 .plan__ticket {
   display: grid;
   overflow: hidden;
-  border: 1px solid rgb(23 24 26 / 10%);
+  border: 1px solid #dedbd5; /* asphalt at 10% as painted on cream */
   border-radius: 12px;
   background-color: var(--c-cream);
   background-image: var(--lit-key);
@@ -568,7 +601,7 @@
   height: 64px;
   padding: 0 var(--inset);
   border: 0;
-  border-top: 1px solid rgb(23 24 26 / 10%);
+  border-top: 1px solid #dedbd5; /* asphalt at 10% as painted on cream */
   background: var(--c-cream);
   color: var(--c-asphalt);
   cursor: pointer;

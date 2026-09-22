@@ -89,6 +89,12 @@ const FRAMES = [
      (b - r is 18, over the 12 bar), so this row's arc reads FIELD on the
      drift's own colour, as it would on home's How it works. */
   ['/pricing', '.plan', 'plan builder, step 1', '.plan__main'],
+  /* HOME'S ROUTE, 2026-09-22: the five numerals went to machine yellow at
+     96px, so this section's painted accent went up and has to be walked
+     rather than assumed. The route stands directly on the drift with 128px
+     either side and nothing painted, so the SECTION is the surface the
+     carrier sits on. */
+  ['/', '.route-band', 'home route, yellow numerals', '.route-band'],
   ['/services', '.svc__plate', 'services plates', '.svc__plate'],
   ['/services', '.svc__index', 'services index', '.svc__index-n'],
 ];

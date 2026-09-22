@@ -102,7 +102,7 @@ createRoot(document.getElementById('hero-root')).render(
           lines={STEP_LINES}
         />
         <CounterRow band />
-        <PromiseBand id="promise-h" image="/assets/promise.webp" />
+        <PromiseBand id="promise-h" />
         <Faq />
         <FooterForm />
       </main>

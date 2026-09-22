@@ -9,10 +9,18 @@ import '../../styles/route.css';
    painted. /services and About carried it until the same day; /services now
    says it in its strips, About in four short lines.
 
-   A numeral is steel-lift at rest and white when reached; the line and a
-   reached stop are yellow. Each stop has a 160px image slot right of its
-   text, route-1 to route-5.webp, floating 6px (2026-09-22); a slot is empty
-   until its file exists.
+   THE NUMERAL IS THE STOP'S OBJECT, 2026-09-22 (the founder): Moldie 01 to
+   05 at 96px, machine yellow, beside the title at every width. The five
+   `route-1` to `route-5.webp` slots are GONE with their column — cost-1 to
+   cost-4 and the mascot are the only artwork on the site, so a slot nothing
+   will ever fill is not a reservation, it is a hole. The line and a reached
+   stop stay yellow; the numeral no longer changes colour on arrival, because
+   it is the accent already.
+
+   STOP 03 CARRIES THE MASCOT, `character-desk.webp`, 320px, floating 6px, to
+   the RIGHT of the stop and opposite the drawn line. One of the mascot's
+   three placements, all on home (Who we are, this stop, the footer form). It
+   renders nothing and takes no space until its file exists.
 
    THE LINE DRAWS ON SCROLL, scrubbed: its length follows the reading line
    (60% down the viewport) through the route, transform only, and what has
@@ -113,9 +121,11 @@ export default function RouteBand({ id, heading, lines }) {
                 <span className="route__t">{title}</span>
                 {lines && lines[i] ? <span className="route__d">{lines[i]}</span> : null}
               </span>
-              {/* The founder's image for this stop, 160px 1:1, right of the
-                  text, floating. Empty until the file exists. */}
-              <Slot src={`/assets/route-${i + 1}.webp`} className="route__img" float />
+              {/* The mascot, stop 03 only: 320px, right of the stop, floating
+                  6px. Empty and takes no space until the file exists. */}
+              {n === '03' ? (
+                <Slot src="/assets/objects/character-desk.webp" className="route__cast" float />
+              ) : null}
             </li>
           ))}
         </ol>

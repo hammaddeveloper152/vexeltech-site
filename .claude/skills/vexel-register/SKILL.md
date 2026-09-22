@@ -28,24 +28,69 @@ every route before it ships.
 ## 000. The founder's restructure (2026-09-22) outranks what follows
 
 Asphalt is retired as a GROUND: the base is #0B0B0D (`--c-base`) and the
-drift runs base to arc-black; asphalt stays as ink on yellow and cream. Home:
-cost-1 to cost-4.webp beside What it costs you, route-1 to route-5.webp on
-the route, promise.webp on the band. What we do stays the storyboard's four
-icon cards (the word tiles are on the "what comes off the site" list).
-Pricing: the head ("What do you need?"), pricing-banner.webp, then THE PLAN
-BUILDER on the drift (no ground of its own: the drift lands on arc-black
-#0E1220 at the builder's top and holds; arc #0D47BD is the rim light only;
-no pin), then the burst call. THE PLAN
-BUILDER EXCEPTION: its yellow is the progress line, the selected card's
-border, the total and the one primary button ("Send this plan to us");
-nothing else on /pricing is yellow except the burst call's own button. Next
-is a white outline, the helper bone (both chosen on the old arc ground and
-kept); the progress hairline is steel-dark, its fill yellow; on the cream
-ticket the stage line is steel. Its glyphs are used nowhere else on the site; its Check may
-repeat inside it. It posts the Netlify form "plan" declared in index.html. About: about-banner.webp
-after the hero, CaretDown on the standards, promise-about.webp, and the
-spotlight call again. Every image slot (`Slot`) renders nothing until its
-file exists.
+drift runs base to arc-black; asphalt stays as ink on yellow and cream.
+
+**THE ARTWORK IS CLOSED, later the same day. `cost-1` to `cost-4.webp` and
+the mascot are the ONLY artwork on the site, and there are no other image
+slots.** Every slot that was standing empty is deleted with its reserved
+layout, because a reservation for a file that is not coming is not a
+reservation, it is a hole: `route-1` to `route-5.webp` off the route,
+`promise.webp` and `promise-about.webp` off the two bands, `plan-1` to
+`plan-5.webp` off the Plan Builder, and `pricing-banner.webp` and
+`about-banner.webp` with the `Banner` component itself. **NO BANNERS
+ANYWHERE**; `Banner.jsx` and `banner.css` are deleted, not left unimported.
+`Slot.jsx` stays, and its rule is unchanged for the slots that remain.
+
+**THE MASCOT HAS THREE PLACEMENTS AND ALL THREE ARE ON HOME:** P1 on the
+cream Who we are band (`character.webp`, as built); `character-desk.webp` at
+route stop 03, 320px, floating 6px, right of the stop and opposite the drawn
+line; and P2 at the left of the footer form (`character-2.webp`, empty until
+its file exists). It supersedes the two-appearances-site-wide placement of
+2026-09-21: the footer form is on every route, so P2 still appears on every
+route, and the two home placements are new.
+
+**Home.** `cost-1` to `cost-4.webp` beside What it costs you. What we do
+stays the storyboard's four icon cards (the word tiles are on the "what comes
+off the site" list). The route's five stops carry their **Moldie numeral at
+96px in MACHINE YELLOW**, flat at every width, beside the title: the numeral
+is the stop's object now the image slots are gone, and it no longer lifts
+from steel to white on arrival, because it is the accent already. The line
+still draws on scroll and a reached dot still lights. **The promise band's
+object is the $700 in Monigue at 240px**, up from 200; the 30vw cap still
+binds first on a phone.
+
+**Pricing.** The head ("What do you need?") runs straight into THE PLAN
+BUILDER; the banner between them is gone. The SECTION still has no ground of
+its own (the drift lands on arc-black #0E1220 at the builder's top and holds;
+arc #0D47BD is the rim light only; no pin), then the burst call. **THE
+BUILDER HAS A BODY:** one lit-near panel (#1E1F22, hairline, 12px, the two
+lights, 48px of inner padding at 1280 and 24px at 390) standing on that
+drift, with the answer cards lit-raised (#2B2D31) and their own hairline.
+**Nothing in it is translucent and no surface is under opacity 1** — the
+cards' 6% white veil and 45% white border are solid values now, and the
+hairlines carry `--lit-edge` as painted (#303134 on the panel, #3C3E41 on a
+card). The progress line runs along the panel's top inner edge. The 720px
+minimum height is withdrawn: the section is its content plus 96px. Step 3's
+card grid is `align-items: start`. On a lit surface **steel-dark is banned**
+(it is the ground's value), so the progress hairline and the disabled Next
+take steel-lift, 6.33:1. THE PLAN BUILDER EXCEPTION is unchanged: its yellow
+is the progress line, the selected card's border, the total and the one
+primary button ("Send this plan to us"); nothing else on /pricing is yellow
+except the burst call's own button. Next is a white outline and the helper is
+bone (both chosen on the old arc ground and kept); on the cream ticket the
+stage line is steel. Its glyphs are used nowhere else on the site; its Check
+may repeat inside it. It posts the Netlify form "plan" declared in
+index.html.
+
+**About.** The page opens on its **statement in Monigue at the DISPLAY step**
+— the same derived step, measure / 6.227, 185px at 1280, not a second size —
+with a **48px machine yellow rule** under it at the drawn 3px weight, then
+the paragraph, then What we do. **The cream hero is gone**, and it went for
+the rule: yellow on cream is 1.66:1, which DESIGN.md calls a rumour of a
+line, so the user took the ground off rather than the colour off the rule.
+The hero stands on the base at 10.47:1. The "How we work" call came off with
+it. Cream still appears once on the site, on home's Who we are band. CaretDown
+on the standards and the spotlight call stay.
 
 ## 0. The storyboard decides sections, order and placement (2026-09-21)
 

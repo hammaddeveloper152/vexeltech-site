@@ -10,23 +10,33 @@
   padding: var(--s-3xl) var(--inset);
 }
 
-/* ---- 1. Hero: a cream band, TEXT ONLY, 2026-09-21 ---------------------------
+/* ---- 1. Hero: the statement at the display step, on the drift, 2026-09-22 --
 
-   The statement at the HEADING step, the paragraph and the call, in the left
-   60% of the row from 1024. THE MASCOT CAME OFF, by the user: the site has two
-   character appearances, P1 on home's cream band and P2 beside the footer
-   form. A cream band with type and no object is what the band rule of
-   2026-09-14 called a field; the user chose it knowingly, and DESIGN.md
-   records the exception. The display-step hero before it was the site's
-   second display use, and that record is withdrawn: the home hero is the one
-   display use. The copy is the third version's, unchanged.
+   THE CREAM IS GONE AND THE BANNER WITH IT (the founder: no banners
+   anywhere). The rule under the statement is machine yellow, and yellow on
+   cream is 1.66:1 — DESIGN.md's own phrase for a yellow stroke on a light
+   ground is "not a line, a rumour of one", which is the reason deep amber
+   exists at all. The conflict was raised before anything was written and the
+   user took the GROUND off rather than the colour off the rule. So the hero
+   opens on the base like every other page and the rule measures 10.47:1.
+   Cream still appears once on the site, on home's Who we are band.
 
-   Every value on the band is asphalt, 15.7:1 on cream, and the focus ring is
-   restated asphalt. The bar stays solid: a cream band is not a film or
-   surface hero, and white navigation over cream would be 1.13:1. */
+   THE STATEMENT IS AT THE DISPLAY STEP, by the user, which the record called
+   home's alone. It is the SAME derived step rather than a second size:
+   measure / 6.227, the hero's own divisor, so it lands on 185px at 1280 and
+   57px at 390 and the page scales as one thing with the rest of the scale.
+   Fluid with no floor and no ceiling, exactly as the hero is.
+
+   The paragraph stays (the user's choice); the "How we work" outline call
+   came off, because How it goes is two sections below on the same scroll.
+
+   Values on the base: white 19.66:1, bone 16.32:1, machine yellow 10.47:1.
+   The focus ring goes back to the page default, machine yellow, now that the
+   ground is dark. */
 .ab3-hero {
-  background: var(--c-cream);
-  color: var(--c-asphalt);
+  /* No ground of its own: the drift runs through it, as it does on every
+     other section of this page. */
+  color: var(--c-shop-white);
 }
 
 .ab3-hero__in {
@@ -39,19 +49,37 @@
   display: grid;
   gap: var(--s-lg);
   align-content: start;
+  justify-items: start;
   min-width: 0;
 }
 
+/* The display step. `--inset` is the only value the hero and the scale share,
+   so the same expression here IS the hero's size, not a copy of its number. */
 .ab3-hero__h {
   margin: 0;
   font-family: var(--font-loud);
-  font-size: var(--t-loud-h);
+  font-size: calc((100vw - 2 * var(--inset)) / 6.227);
   line-height: var(--t-loud-line);
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--c-asphalt); /* 15.7:1 on cream */
+  color: var(--c-shop-white); /* 19.66:1 on the base */
   text-wrap: balance;
+}
+
+/* The rule: 48px of machine yellow at the drawn 3px weight the route and the
+   failures rail use. A mark, not an edge, which is why it is not a hairline.
+
+   48 IS A LITERAL, and deliberately so: the spacing ramp is 4/8/16/24/40/64/96
+   and skips 32 and 48 on purpose. That ramp governs SPACE between things. This
+   is the length of a drawn mark — the same class of value as `--stroke-drawn`
+   itself, which is 3px and on no ramp either — and the founder gave the
+   figure. Recorded here so the next reader meets the reason rather than the
+   discrepancy. */
+.ab3-hero__rule {
+  width: 48px;
+  height: var(--stroke-drawn);
+  background: var(--c-accent-draw-dark); /* 10.47:1 on the base */
 }
 
 .ab3-hero__p {
@@ -60,69 +88,18 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-asphalt); /* 15.7:1 on cream */
+  color: var(--c-bone); /* 16.32:1 on the base */
   text-wrap: pretty;
 }
 
-/* THE CALL, 2026-09-21: the kit's asphalt outline secondary, "How we work",
-   jumping to How it goes. Label and edge asphalt on cream, 15.7:1. */
-.ab3-hero__call {
-  display: inline-flex;
-  align-items: center;
-  justify-self: start;
-  min-height: 48px;
-  margin-top: var(--s-sm);
-  padding: var(--s-md) var(--s-lg);
-  background: transparent;
-  border: 1px solid var(--c-asphalt);
-  border-radius: var(--r-none);
-  font-family: var(--font-brand);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  font-weight: var(--t-weight-brand);
-  color: var(--c-asphalt); /* 15.7:1 on cream */
-  text-decoration: none;
-  transition:
-    opacity var(--d-press) var(--ease-reveal),
-    transform var(--d-press) var(--ease-reveal);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .ab3-hero__call:hover {
-    opacity: var(--hover-opacity);
-  }
-}
-
-.ab3-hero__call:active {
-  transform: scale(0.97);
-}
-
-@media (min-width: 768px) {
-  .ab3-hero__call {
-    padding: var(--s-lg) var(--s-xl);
-    font-size: var(--t-h3-size);
-    line-height: var(--t-h3-line);
-    letter-spacing: var(--t-track-h3);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ab3-hero__call:active {
-    transform: none;
-  }
-}
-
-.ab3-hero :focus-visible {
-  outline-color: var(--c-asphalt); /* the yellow ring is 1.66:1 on cream */
-}
-
 @media (min-width: 1024px) {
-  /* The text holds the left 60%, the measure it had beside the mascot. */
-  .ab3-hero__text {
-    max-width: 60%;
-  }
-
+  /* THE 60% CAP IS GONE. It was "the measure it had beside the mascot", and
+     the mascot left this section in 2026-09-21. At the display step the cap
+     was still binding: the statement set FIVE lines at 185px, 832px of type,
+     taller than the viewport it opens in. The statement takes the full
+     measure and the paragraph keeps its own, which is what `--p` is for. */
   .ab3-hero__p {
+    max-width: 38rem;
     font-size: var(--t-h3-size);
     line-height: 36px;
   }

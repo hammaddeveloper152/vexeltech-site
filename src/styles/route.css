@@ -4,18 +4,28 @@
    its darkest with 128px above and below and nothing painted: no hairline,
    plate or panel.
 
-   Numerals steel-lift at rest and white when reached; titles white, lines
-   bone; the LINE AND A REACHED STOP are machine yellow, 9.46:1 on asphalt and
-   more on arc-black, the section's carrier. The seam rules in lit.css leave
-   `.route-band--open` alone and the ticker gives up its bottom margin to it.
+   THE NUMERALS ARE MACHINE YELLOW AT 96px, 2026-09-22 (the founder), flat at
+   every width rather than the 64/96 name step: the numeral is the stop's
+   object now that the five image slots are gone. Titles white, lines bone;
+   the line and a reached stop stay yellow. Yellow on the drift is 10.47:1 on
+   the base and 9.93:1 on arc-black, so every pair clears.
+
+   THE SECTION'S PAINTED YELLOW WENT UP, and it is walked rather than assumed:
+   `.measure/carrier.mjs` measures the route's share of its own surface after
+   this change. A numeral is type at scale, which is what the accent-as-text
+   role exists for; it is not a fill.
+
+   The seam rules in lit.css leave `.route-band--open` alone and the ticker
+   gives up its bottom margin to it.
    ========================================================================== */
 
 .route-band {
   --route-ink: var(--c-shop-white);
   --route-soft: var(--c-bone);
   --route-line: var(--c-accent-draw-dark);
+  /* The dot's rest value. `--route-lit` went with the numeral's arrival
+     colour: a token with no call site is deleted, not kept for later. */
   --route-rest: var(--c-steel-lift);
-  --route-lit: var(--c-shop-white);
   padding: 128px var(--inset);
   color: var(--route-ink);
 }
@@ -47,7 +57,9 @@
    the reading line's progress through the route: transform only. */
 .route {
   --dot: 12px;
-  --n-size: var(--t-name-fig); /* 64px, 96px from 1024 */
+  /* 96px flat, the founder's figure, not the 64/96 name step: the numeral is
+     the stop's object and it is the same object at every width. */
+  --n-size: 96px;
   --n-mid: calc(var(--n-size) * 0.9 / 2);
   position: relative;
   display: grid;
@@ -77,27 +89,32 @@
   align-items: start;
 }
 
-/* THE STOP'S IMAGE, 2026-09-22: 160px 1:1 to the right of the text, floating
-   6px. The column exists only once the file has landed. Below 768 it sits
-   under the text, still 160px: a third column beside a 64px numeral would
-   leave the text too narrow to read. */
-.route__stop:has(.route__img) {
-  grid-template-columns: auto minmax(0, 1fr) 160px;
+/* THE MASCOT AT STOP 03, 2026-09-22: 320px to the RIGHT of the stop, the side
+   opposite the drawn line, floating 6px on `.float`. The column exists only
+   once the file has landed, so the other four stops and this one before it
+   lands are the two-column stop exactly as before.
+
+   Below 1024 it drops under the text and centres: a 320px column beside a
+   96px numeral leaves 0px for the title at 768 by the container-budget test
+   (768 - 80 inset - 40 rail - 125 numeral - 24 gap - 320 - 24 = 155px, and
+   the title is set at h3 there). */
+.route__stop:has(.route__cast) {
+  grid-template-columns: auto minmax(0, 1fr) 320px;
 }
 
-.route__img {
-  width: 160px;
-  aspect-ratio: 1 / 1;
+.route__cast {
+  width: 320px;
 }
 
-@media (max-width: 767px) {
-  .route__stop:has(.route__img) {
+@media (max-width: 1023px) {
+  .route__stop:has(.route__cast) {
     grid-template-columns: auto minmax(0, 1fr);
   }
 
-  .route__img {
+  .route__cast {
     grid-column: 2;
-    margin-top: var(--s-md);
+    justify-self: center;
+    margin-top: var(--s-lg);
   }
 }
 
@@ -119,22 +136,21 @@
   background: var(--route-line);
 }
 
-/* Moldie, the name face: a stop's numeral is its name. */
+/* Moldie, the name face: a stop's numeral is its name. MACHINE YELLOW at
+   every state, 2026-09-22 (the founder). It no longer lifts from steel to
+   white on arrival — a numeral that is already the accent has nowhere to go —
+   so arrival is carried by the dot and by the line reaching it, which is what
+   draws the eye down the route in the first place. */
 .route__n {
   font-family: var(--font-name);
   font-size: var(--n-size);
   line-height: 0.9;
   font-weight: 400;
   letter-spacing: 0;
-  color: var(--route-rest);
-  transition: color var(--d-drop) var(--ease-reveal);
+  color: var(--route-line);
   /* One column width for all five, so every title starts on one line. The
      widest numeral, 04, measures 1.24em in Moldie. */
   min-width: 1.3em;
-}
-
-.route__stop[data-reached='true'] .route__n {
-  color: var(--route-lit);
 }
 
 /* The title and its line beside the numeral, the title's first line centred
@@ -164,8 +180,11 @@
   text-wrap: pretty;
 }
 
-/* Below 768 the title steps down to body so it holds beside a 64px numeral in
-   a 358px column. */
+/* Below 768 the title steps down to body so it holds beside the numeral in a
+   358px column. The numeral is 96px at every width now, so the title's budget
+   there is 358 - 40 rail - 125 numeral - 16 gap = 177px, measured; it was
+   218px against the old 64px numeral. Recorded rather than softened: the
+   figure is the founder's. */
 @media (max-width: 767px) {
   .route__stop {
     column-gap: var(--s-md);
@@ -182,8 +201,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .route__stop::before,
-  .route__n {
+  .route__stop::before {
     transition: none;
   }
 }

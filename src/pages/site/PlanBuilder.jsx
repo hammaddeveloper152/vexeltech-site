@@ -19,20 +19,31 @@ import {
   Thermometer,
   Tooth,
 } from '@phosphor-icons/react';
-import Slot from '../../components/site/Slot.jsx';
 import { FIGURES, bundleSaving, money } from '../../content/pricing.js';
 import '../../styles/plan.css';
 
 /* THE PLAN BUILDER, /pricing, 2026-09-22 (the founder's brief). It replaced
    the tabbed package board and the toggle receipt.
 
-   Four steps and a result in one frame, with no ground of its own: the
-   page's drift lands on arc-black (#0E1220) at the builder and holds
-   (2026-09-22; it was flat arc #0D47BD, now the rim light only). Left
-   column (60%): the progress line, the question, the helper, the answers, the
-   step's object. Right column (40%): the TICKET, a cream work order that
-   fills as the reader answers. At 390 the ticket is a sticky bottom bar that
-   opens as a sheet.
+   Four steps and a result in one frame. The SECTION has no ground of its own:
+   the page's drift lands on arc-black (#0E1220) at the builder and holds
+   (2026-09-22; it was flat arc #0D47BD, now the rim light only).
+
+   THE BUILDER HAS A BODY, 2026-09-22 (the founder): the left column is one
+   lit-near panel (#1E1F22, hairline, 12px, the two lights, 48px of inner
+   padding at 1280 and 24px at 390) standing on that drift, and the answer
+   cards inside it are lit-raised (#2B2D31) with their own hairline. Nothing
+   is translucent — the veil the cards used to take (6% white over the ground)
+   and their 45% white border are both gone for solid values, so every surface
+   in here is a painted colour that can be measured rather than a composite.
+   The progress line runs along the panel's top inner edge. The five
+   `plan-1` to `plan-5.webp` object slots are deleted: cost-1 to cost-4 and
+   the mascot are the site's only artwork.
+
+   Left column (60%): the progress line, the question, the helper, the
+   answers. Right column (40%): the TICKET, a cream work order that fills as
+   the reader answers. At 390 the ticket is a sticky bottom bar that opens as
+   a sheet.
 
    DECIDED WITH THE USER BEFORE BUILDING, and recorded in DESIGN.md:
    - Nearest passing colours, chosen on the old arc ground and kept: Next is
@@ -498,8 +509,11 @@ export default function PlanBuilder() {
               </div>
             ) : null}
 
+            {/* `--svc`: this grid's cells hold a card AND, for Branding, the
+                tier chips under it, so the row must not stretch its siblings
+                to the tallest cell. `align-items: start`, step 3 only. */}
             {step === 2 ? (
-              <div className="plan__cards">
+              <div className="plan__cards plan__cards--svc">
                 {SERVICES.map(({ id, title, Icon }) => (
                   <div className="plan__svc" key={id}>
                     <Choice className="plan__card" pressed={a.services[id]} onPick={() => toggleService(id)}>
@@ -588,11 +602,6 @@ export default function PlanBuilder() {
             )}
           </div>
 
-          {/* The step's object, 480px bottom-left (240 at 390), screen blend,
-              floating; empty until plan-N.webp exists. Crossfades on swap. */}
-          <div className="plan__object" key={`obj-${step}`}>
-            <Slot src={`/assets/objects/plan-${step + 1}.webp`} className="plan__obj" float />
-          </div>
         </div>
 
         {showTicket ? (

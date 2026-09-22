@@ -133,7 +133,9 @@ export default function Home() {
           lines={STEP_LINES}
         />
         <CounterRow band />
-        <PromiseBand id="promise-h" image="/assets/promise.webp" />
+        {/* The $700 at 240px is the band's object; `promise.webp` came off
+            2026-09-22 with every other unfilled slot. */}
+        <PromiseBand id="promise-h" />
         <Faq />
         <FooterForm />
       </main>

@@ -1,14 +1,18 @@
 import React from 'react';
-import Slot from './Slot.jsx';
 import '../../styles/promise.css';
 
 /* WHAT WE PROMISE: the yellow band with the $700 figure and the four
    refusals. Built for About (2026-09-16) and shared with home since the
    storyboard pass, 2026-09-21: one component, identical copy, by the user.
 
-   The figure is the band's object (a typographic figure counts, by the
-   user's decision of 2026-09-16), and each page's band carries its own image
-   bottom right (2026-09-22).
+   THE FIGURE IS THE BAND'S ONLY OBJECT, 2026-09-22 (the founder). $700 in
+   Monigue at 240px is the visual, and the two image slots are gone with the
+   `image` prop: `promise.webp` on home and `promise-about.webp` on About were
+   both reserving space for files that are not coming, because cost-1 to
+   cost-4 and the mascot are the whole of the site's artwork. A typographic
+   figure has counted as a band's object since 2026-09-16, so the band rule
+   ("a colour band is allowed when objects stand on it") is met by the figure
+   alone and the band is not a field.
 
    EVERY LINE IS THE ABOUT BRIEF'S, which is the user's own copy. */
 
@@ -19,7 +23,7 @@ const REFUSALS = [
   "We don't keep your files. Domain, hosting, code and credentials move to your name.",
 ];
 
-export default function PromiseBand({ id, image }) {
+export default function PromiseBand({ id }) {
   return (
     <section className="vt ab3-price promise colour-band" aria-labelledby={id}>
       <div className="promise__in">
@@ -40,14 +44,6 @@ export default function PromiseBand({ id, image }) {
             ))}
           </ul>
         </div>
-        {/* The founder's image, 240px, bottom right of the band. One file per
-            page (BUILD-LAW 0): promise.webp on home, promise-about.webp on
-            About. Empty until the file exists. */}
-        {image ? (
-          <div className="promise__cast">
-            <Slot src={image} className="promise__img" />
-          </div>
-        ) : null}
       </div>
     </section>
   );
