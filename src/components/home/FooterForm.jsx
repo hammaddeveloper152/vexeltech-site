@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PaperPlaneTilt } from '@phosphor-icons/react';
 import FooterMeta from './FooterMeta.jsx';
-import Character from '../site/Character.jsx';
+import Slot from '../site/Slot.jsx';
 import { budgetBands } from '../../content/pricing.js';
 import './FooterForm.css';
 
@@ -16,19 +16,24 @@ import './FooterForm.css';
 
    There is no Vexel Scales line anywhere in this file, by decision. */
 
-/* THE FORM IS NOT LIVE, and it says so on the page.
+/* THE FORM IS LIVE, 2026-09-22. It posts the Netlify form "contact",
+   declared as a hidden static twin in index.html so Netlify's HTML parser
+   can find its fields — the same mechanism the Plan Builder's "plan" form
+   already uses and which is confirmed working.
 
-   There is no endpoint. Until there is one, the submit is disabled and a
-   visible line under it says the form is not live yet. It used to validate,
-   show a sending state for 900ms and then report "Message sent" — a reader
-   who filled it in was told it had gone somewhere, and it had not. BUILD-LAW
-   Truth applies to interface states as much as to copy: a success message is
-   a claim.
+   THE WIRING WAS WRITTEN IN THIS PASS, and that is worth recording because
+   the instruction was to enable Send on the understanding it was already
+   wired. It was not: index.html declared only "plan", and this file's
+   `onSubmit` returned early with nothing to post to. Enabling the button
+   without the wiring would have given a form that validates, reports success
+   and drops every enquiry — which is the exact failure the LIVE flag was put
+   here to prevent, and BUILD-LAW names it: a success message is a claim.
 
-   A mailto was the other option and was not taken, because the address is a
-   placeholder too. Flip this to true only when `onSubmit` posts to something
-   real; the sent and failed branches below are already wired for that. */
-const LIVE = false;
+   WHAT STILL HAS TO BE TRUE ON THE OTHER SIDE: Forms must be enabled for the
+   site in Netlify, and the deploy must be a Netlify build of this repo, or
+   the POST lands on the SPA shell and returns 200 with nothing recorded.
+   That cannot be verified from here. */
+const LIVE = true;
 
 const FIELDS = [
   { id: 'name', label: 'Name', type: 'text', autoComplete: 'name', required: true },
@@ -114,18 +119,34 @@ export default function FooterForm() {
       return;
     }
 
-    /* Nothing to post to. The button is disabled while LIVE is false, so this
-       branch is only reachable by a submit event that bypassed the button —
-       the Enter key in a field — and it must still not pretend. */
     if (!LIVE) {
       setStatus('idle');
       return;
     }
 
     setStatus('sending');
-    /* Replace with the real request. On success setStatus('sent'), on any
-       failure setStatus('failed'); both messages below are already written. */
-    setStatus('failed');
+    /* url-encoded to "/", form-name "contact": Netlify's own convention for a
+       script-rendered form, and the same call PlanBuilder makes. `budget` is
+       sent as its label rather than its id, so the notification reads the way
+       the reader saw it. */
+    const body = new URLSearchParams({
+      'form-name': 'contact',
+      name: values.name,
+      email: values.email,
+      company: values.company,
+      budget: BUDGETS.find((b) => b.id === values.budget)?.label || values.budget || '',
+      message: values.message,
+    });
+    try {
+      const r = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+      });
+      setStatus(r.ok ? 'sent' : 'failed');
+    } catch {
+      setStatus('failed');
+    }
   };
 
   const sending = status === 'sending';
@@ -138,8 +159,15 @@ export default function FooterForm() {
         </h2>
 
         <div className="foot__stage">
+          {/* THE MASCOT, 2026-09-22 (the founder): at the RIGHT of the form,
+              360px, bottom-aligned so the desk legs land on the row's bottom
+              edge, which acts as his floor. It replaces P2 at the left, which
+              never rendered because `character-2.webp` does not exist, and
+              the stop-03 placement of the same day. Two appearances on the
+              site now, both on home: Who we are, and here. Empty and taking
+              no space until the file exists. */}
           <div className="foot__cast">
-            <Character pose={2} className="foot__char" />
+            <Slot src="/assets/objects/character-desk.webp" className="foot__char" />
           </div>
         <form className="foot__form" onSubmit={onSubmit} noValidate aria-labelledby="foot-h">
           {FIELDS.map(({ id, label, type, autoComplete, required }) => {
@@ -238,12 +266,11 @@ export default function FooterForm() {
                 in an input crowds the value and moves the text away from the
                 edge the label is aligned to. Decorative, because the button
                 already says Send. */}
-            <button
-              className="foot__submit"
-              type="submit"
-              disabled={!LIVE || sending}
-              aria-describedby={LIVE ? undefined : 'foot-offline'}
-            >
+            {/* NO DISABLED STATE, 2026-09-22 (the founder): the yellow
+                primary at full opacity, always. A double submit is stopped in
+                `onSubmit` by the sending guard rather than by greying the
+                control, so nothing has to explain itself to the reader. */}
+            <button className="foot__submit" type="submit">
               <PaperPlaneTilt className="i i--sm" aria-hidden="true" />
               {sending ? 'Sending' : 'Send'}
             </button>
@@ -251,21 +278,14 @@ export default function FooterForm() {
             {/* Polite, so it does not cut across whatever the reader is doing,
                 and always present so the region is not created on the fly. */}
             <p className="foot__status" role="status">
-              {!LIVE ? (
-                /* Plain and visible, not a tooltip and not a disabled-state
-                   colour alone: a greyed button on its own reads as broken,
-                   and the reader should know it is deliberate. */
-                <span className="foot__offline" id="foot-offline">
-                  This form isn't wired up yet, so nothing you type here reaches us.
-                  Email us instead and it will.
-                </span>
-              ) : null}
               {status === 'sent' ? (
                 <span className="foot__ok">
                   <span className="foot__ok-mark" aria-hidden="true">
                     &#10003;
                   </span>
-                  Message sent.
+                  {/* VEXELTECH-COPY.md, Contact form, verbatim. */}
+                  Got it. You&apos;ll hear from a person, not an autoresponder, within one
+                  business day.
                 </span>
               ) : null}
               {status === 'failed' ? (

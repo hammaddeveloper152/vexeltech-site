@@ -9,27 +9,34 @@
    60/40, 48px gutter, left aligned inside the page measure; single column at
    390 with the ticket as a sticky bottom bar.
 
-   THE BUILDER HAS A BODY, 2026-09-22 (the founder). The left column is one
-   LIT-NEAR PANEL standing on that drift: #1E1F22, a hairline, 12px, the two
-   lights, 48px of inner padding at 1280 and 24px at 390. The answer cards
-   inside it are LIT-RAISED, #2B2D31, with their own hairline.
+   THE PANEL IS CREAM, 2026-09-22 (the founder), and it was lit-near for a
+   few hours of the same day. #F4F1EA with asphalt ink, a hairline, 12px, and
+   48px of inner padding at 1280 / 24px at 390. The answer chips and cards are
+   BONE (#E8EAED) with an asphalt hairline; a selected card is asphalt-filled
+   with cream text and a yellow border. The TICKET inverts to asphalt with
+   cream ink, so the two read as counterparts across the frame rather than as
+   two cream planes, and its total strip is yellow with asphalt numerals.
 
-   NOTHING IS TRANSLUCENT. The cards used to be a 6% white veil over the
-   ground with a 45% white border, so their painted colour depended on what
-   the drift was doing behind them at that scroll depth and every measurement
-   had to be taken on pixels rather than on a declared pair. Both are solid
-   values now, and the hairlines carry the painted result of `--lit-edge`
-   (white at 8%) as a flat hex: #303134 on the panel, #3C3E41 on a card. The
-   two lights stay gradients — a light is not a surface, and the two-light
-   model is the site's, unchanged.
+   NO RIM LIGHT ON CREAM, the rule this sheet already applies to the ticket:
+   two lights are a DARK-surface model. The key alone.
 
-   Values on lit-near (the panel): shop white 16.48:1, bone 13.67:1,
-   steel-lift 6.33:1, machine yellow 8.77:1. steel-dark is 4.75 and is the
-   GROUND's value, banned above it, so the disabled Next and the progress
-   hairline take steel-lift here. On lit-raised (a card): white 13.79, bone
-   11.44, steel-lift 5.30, yellow 7.34. On cream: asphalt 15.75:1, steel
-   7.20:1. In the total strip: yellow 9.46:1. `.measure/planpairs.mjs` walks
-   every pair on the painted ground.
+   NOTHING IS TRANSLUCENT and no surface is under opacity 1. That survives the
+   recolour: every value here is a flat hex, so each pair is declared rather
+   than composited against whatever the drift is doing behind it.
+
+   Values on cream (#F4F1EA): asphalt 15.75:1, steel 7.20:1, steel-dark
+   3.08:1. On bone (#E8EAED): asphalt 14.63:1, steel 6.69:1. On asphalt: cream
+   15.75:1, bone 14.74:1, steel-dark 5.12:1, yellow 9.46:1. In the total
+   strip: asphalt on yellow 9.46:1.
+
+   ONE VALUE IN THE BRIEF IS OVERRIDDEN AND IT IS RECORDED RATHER THAN
+   QUIETLY CHANGED: the helper line was asked for in STEEL-DARK, which is
+   3.08:1 on cream and under the 4.5:1 floor for body text. BUILD-LAW is the
+   floor and outranks a styling instruction on contrast, and this exact pair
+   was already ruled on by the user once - the ticket's stage line is steel,
+   "not steel-dark (3.08:1 on cream)". So the helper is STEEL, 7.20:1. Where
+   steel-dark IS used here it is on a non-text mark, the progress hairline,
+   where the bar is 3:1 and 3.08 clears it.
 
    THE PLAN BUILDER EXCEPTION (SKILL.md): the yellow here is the progress
    line, the selected card's border, the total and the one primary button.
@@ -43,8 +50,23 @@
 }
 
 .plan :focus-visible {
-  outline: var(--focus-ring) solid var(--c-accent-draw-dark); /* 8.77:1 on the panel, a ring */
+  /* THE RING FOLLOWS THE GROUND IT LANDS ON, and this section now has two.
+     Machine yellow is 1.66:1 on cream, the same arithmetic that took the
+     cream off About's hero, so on the cream panel the ring is asphalt. On the
+     asphalt-faced ticket, phone bar and sheet it is the page's own yellow at
+     9.46:1. Every cream and yellow band on this site restates its ring; this
+     is that rule applied twice in one section, not a new one.
+
+     The offset puts the ring OUTSIDE the element, so a selected card - which
+     is asphalt-filled - still rings against the cream panel behind it. */
+  outline: var(--focus-ring) solid var(--c-asphalt); /* 15.75:1 on cream */
   outline-offset: 2px;
+}
+
+.plan__ticket :focus-visible,
+.plan__bar-btn:focus-visible,
+.plan__sheet :focus-visible {
+  outline-color: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
 }
 
 .plan__in {
@@ -72,11 +94,13 @@
   align-content: start;
   min-width: 0;
   padding: var(--plan-pad);
-  border: 1px solid #303134; /* --lit-edge as painted on lit-near */
+  border: 1px solid var(--c-line); /* the light-ground hairline */
   border-radius: 12px;
-  background-color: var(--lit-near);
-  background-image: var(--lit-key), var(--lit-rim);
+  background-color: var(--c-cream);
+  /* The key alone: the rim is a dark-surface light. */
+  background-image: var(--lit-key);
   background-repeat: no-repeat;
+  color: var(--c-asphalt); /* 15.75:1 on cream */
 }
 
 @media (min-width: 1280px) {
@@ -105,11 +129,10 @@
   height: 1px;
 }
 
-/* The hairline in steel-lift, 6.33:1 on the panel; the fill in yellow.
-   steel-dark is the ground's secondary value and is banned on a lit surface
-   (4.75 on lit-near, failing outright a step higher). */
+/* The hairline in steel-dark on cream: 3.08:1, and it is a MARK rather than
+   text, so the bar is 3:1 and it clears. The fill is yellow. */
 .plan__track {
-  background: var(--c-steel-lift);
+  background: var(--c-steel-dark);
 }
 
 .plan__fill {
@@ -127,8 +150,8 @@
   height: 12px;
   margin-left: -6px;
   border-radius: 50%;
-  border: 1px solid var(--c-steel-lift);
-  background: var(--lit-near); /* the panel it sits on, not the ground */
+  border: 1px solid var(--c-steel-dark);
+  background: var(--c-cream); /* the panel it sits on */
 }
 
 .plan__node[data-on='true'] {
@@ -147,7 +170,7 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--c-shop-white); /* 16.48:1 on the panel */
+  color: var(--c-asphalt); /* 15.75:1 on cream */
   text-wrap: balance;
 }
 
@@ -155,23 +178,22 @@
   outline: none;
 }
 
-/* Bone, the user's choice when steel-lift failed on arc (3.04:1). On the
-   panel bone is 13.67:1 and steel-lift 6.33:1; bone is kept, as instructed,
-   until told otherwise. */
+/* STEEL, not steel-dark: see the override recorded at the head of this sheet.
+   steel-dark is 3.08:1 on cream and the floor for body text is 4.5. */
 .plan__help,
 .plan__why {
   margin: 0 0 var(--s-xl);
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* 13.67:1 on the panel */
+  color: var(--c-steel); /* 7.20:1 on cream */
 }
 
 .plan__why {
   max-width: 48ch;
   font-size: var(--t-h3-size);
   line-height: var(--t-h3-line);
-  color: var(--c-shop-white);
+  color: var(--c-asphalt); /* 15.75:1 on cream */
 }
 
 /* ---- Chips (step 1, the tiers) and cards (steps 2, 3) --------------------- */
@@ -182,16 +204,15 @@
   gap: var(--s-sm);
 }
 
-/* SOLID, 2026-09-22. The veil (6% white) and the 45% white border are gone:
-   an answer card is lit-raised with the hairline that surface carries, so its
-   painted colour is a declared pair rather than a composite over whatever the
-   drift is doing behind it. */
+/* BONE WITH AN ASPHALT HAIRLINE, 2026-09-22 (the founder). Still solid: the
+   veil and the 45% white border went earlier the same day and nothing here
+   goes back to a composite. Asphalt on bone is 14.63:1. */
 .plan__chip,
 .plan__card {
   position: relative;
-  border: 1px solid #3c3e41; /* --lit-edge as painted on lit-raised */
-  background: var(--c-lit-raised);
-  color: var(--c-shop-white); /* 13.79:1 */
+  border: 1px solid var(--c-asphalt);
+  background: var(--c-bone);
+  color: var(--c-asphalt); /* 14.63:1 on bone */
   cursor: pointer;
   transition:
     border-color var(--d-drop) var(--ease-reveal),
@@ -260,14 +281,14 @@
   font-size: var(--t-name-m);
   line-height: var(--t-loud-line);
   text-transform: uppercase;
-  color: var(--c-shop-white);
+  color: var(--c-asphalt); /* 14.63:1 on bone */
 }
 
 .plan__card-l {
   font-family: var(--font-offer);
   font-size: var(--t-small-size);
   line-height: var(--t-small-line);
-  color: var(--c-bone); /* 11.44:1 on lit-raised */
+  color: var(--c-steel); /* 6.69:1 on bone */
 }
 
 /* Hover: lift 4px, the border to yellow. Gated to a real pointer. */
@@ -279,10 +300,24 @@
   }
 }
 
-/* Selected: the yellow border and the Check top right. */
+/* SELECTED: asphalt-filled, cream text, a yellow border (2026-09-22, the
+   founder). The fill is what marks it; the yellow edge is the accent doing
+   the job it does everywhere else on this page. Cream on asphalt 15.75:1. */
 .plan__chip[aria-pressed='true'],
 .plan__card[aria-pressed='true'] {
   border: 2px solid var(--c-accent-draw-dark);
+  background: var(--c-asphalt);
+  color: var(--c-cream); /* 15.75:1 */
+}
+
+.plan__chip[aria-pressed='true'] .plan__card-t,
+.plan__card[aria-pressed='true'] .plan__card-t {
+  color: var(--c-cream);
+}
+
+.plan__chip[aria-pressed='true'] .plan__card-l,
+.plan__card[aria-pressed='true'] .plan__card-l {
+  color: var(--c-bone); /* 14.74:1 on asphalt */
 }
 
 .plan__check {
@@ -291,7 +326,7 @@
   right: var(--s-sm);
   width: 20px;
   height: 20px;
-  color: var(--c-shop-white);
+  color: var(--c-cream);
 }
 
 .plan__chip .plan__check {
@@ -332,13 +367,13 @@
   font-weight: var(--t-weight-label);
   letter-spacing: var(--t-track-label);
   text-transform: uppercase;
-  color: var(--c-bone); /* 13.67:1 on the panel */
+  color: var(--c-steel); /* 7.20:1 on cream */
 }
 
 .plan__input {
   min-height: 48px;
   padding: var(--s-md);
-  border: 1px solid var(--c-shop-white);
+  border: 1px solid var(--c-asphalt);
   border-radius: var(--r-sm);
   background: var(--c-shop-white);
   font-family: var(--font-offer);
@@ -357,29 +392,32 @@
   margin-top: var(--s-xl);
 }
 
-/* NEXT: the secondary, a WHITE outline and label (16.48:1 on the panel; the
-   user's choice when asphalt failed on arc). Disabled: the same outline at
-   full opacity with STEEL-LIFT text, 6.33:1. It was steel-dark, which is the
-   ground's secondary value and is banned on a lit surface — it reads 4.75 on
-   lit-near, a value that only ever just clears the floor. */
+/* NEXT: ASPHALT FILL, CREAM LABEL (2026-09-22, the founder), 15.75:1. The
+   white outline it carried was chosen on the old arc ground and then on
+   lit-near; on cream a white outline is invisible. Disabled is the same
+   control as an ASPHALT OUTLINE - full opacity, asphalt label on cream at
+   15.75:1 - so the difference between the two states is fill against
+   outline, which is a difference in kind rather than a faded version of the
+   same thing. Nothing here drops below opacity 1. */
 .plan__next {
   min-height: 48px;
   padding: var(--s-md) var(--s-xl);
-  border: 1px solid var(--c-shop-white);
+  border: 1px solid var(--c-asphalt);
   border-radius: var(--r-none);
-  background: transparent;
+  background: var(--c-asphalt);
   font-family: var(--font-brand);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
   font-weight: var(--t-weight-brand);
-  color: var(--c-shop-white);
+  color: var(--c-cream); /* 15.75:1 on asphalt */
   cursor: pointer;
   transition: transform var(--d-press) var(--ease-reveal);
 }
 
 .plan__next:disabled {
   opacity: 1;
-  color: var(--c-steel-lift); /* 6.33:1 on the panel */
+  background: transparent;
+  color: var(--c-asphalt); /* 15.75:1 on cream */
   cursor: default;
 }
 
@@ -392,7 +430,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* 15.47:1 */
+  color: var(--c-steel); /* 7.20:1 on cream */
   text-decoration: underline;
   text-underline-offset: 4px;
   cursor: pointer;
@@ -435,7 +473,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-shop-white);
+  color: var(--c-asphalt); /* 15.75:1 on cream */
 }
 
 /* The five step objects (`.plan__object` / `.plan__obj`, plan-1 to
@@ -450,7 +488,16 @@
   }
 }
 
-/* ---- The ticket: cream, asphalt, 12px, hairline, the warm key only -------- */
+/* ---- The ticket: ASPHALT-FACED with CREAM ink, 2026-09-22 ----------------
+
+   It inverts against the cream panel, by the founder, so the two read as
+   counterparts across the frame instead of as two cream planes with a gutter
+   between them. Cream on asphalt is 15.75:1, bone 14.74:1, steel-dark 5.12:1.
+   The total strip stays yellow and its numerals go asphalt, 9.46:1.
+
+   The key stays and the rim does not: the plane is dark again, but the rim is
+   the light that says which way a plane faces and this one is a flat card
+   inside a lit panel, not an object in the page's own space. One light. */
 
 .plan__side {
   display: none;
@@ -467,12 +514,18 @@
 .plan__ticket {
   display: grid;
   overflow: hidden;
-  border: 1px solid #dedbd5; /* asphalt at 10% as painted on cream */
+  /* THE EDGE IS STEEL-DARK, NOT ASPHALT. Asphalt on arc-black is 1.17:1 —
+     the ticket's face and the drift behind it are within a few points of each
+     other — so a border the colour of the face is no border at all and the
+     card dissolved into the ground. It is a counterpart to the cream panel
+     only if it reads as an object. steel-dark is 5.12:1 on its own face and
+     clears the 3:1 non-text bar against the drift. */
+  border: 1px solid var(--c-steel-dark);
   border-radius: 12px;
-  background-color: var(--c-cream);
+  background-color: var(--c-asphalt);
   background-image: var(--lit-key);
   background-repeat: no-repeat;
-  color: var(--c-asphalt); /* 15.75:1 on cream */
+  color: var(--c-cream); /* 15.75:1 on asphalt */
 }
 
 .plan__ticket-k {
@@ -483,7 +536,7 @@
   line-height: 16px;
   font-weight: var(--t-weight-label);
   letter-spacing: var(--t-track-label);
-  color: var(--c-steel); /* 7.20:1 */
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
 }
 
 .plan__ticket-trade {
@@ -505,17 +558,18 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel); /* 7.20:1 on cream */
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
 }
 
-/* The stage line: steel, not steel-dark (3.08:1 on cream), the user's choice. */
+/* The stage line. It was steel because the ticket was cream; the ticket is
+   asphalt now, so it takes the ground's own secondary, steel-dark. */
 .plan__ticket-stage {
   margin: var(--s-sm) 0 0;
   padding: 0 var(--s-xl);
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel); /* 7.20:1 */
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
 }
 
 .plan__ticket-lines {
@@ -544,7 +598,7 @@
 .plan__tl-sub {
   font-size: var(--t-small-size);
   line-height: var(--t-small-line);
-  color: var(--c-steel); /* 7.20:1 */
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
 }
 
 .plan__tl-save {
@@ -553,7 +607,7 @@
   font-weight: var(--t-weight-label);
   letter-spacing: var(--t-track-label);
   text-transform: uppercase;
-  color: var(--c-steel);
+  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
 }
 
 .plan__tl-p {
@@ -562,7 +616,9 @@
   line-height: var(--t-loud-line);
 }
 
-/* The total strip: asphalt, the total in Moldie 72px yellow, 9.46:1. */
+/* The total strip: YELLOW, the total in Moldie 72px asphalt, 9.46:1. It was
+   the inverse while the ticket was cream; the ticket is asphalt now, so an
+   asphalt strip would have disappeared into its own card. */
 .plan__total {
   display: flex;
   align-items: baseline;
@@ -570,7 +626,7 @@
   gap: var(--s-md);
   margin: 0;
   padding: var(--s-lg) var(--s-xl);
-  background: var(--c-asphalt);
+  background: var(--c-accent-ground);
 }
 
 .plan__total-k {
@@ -580,7 +636,7 @@
   font-weight: var(--t-weight-label);
   letter-spacing: var(--t-track-label);
   text-transform: uppercase;
-  color: var(--c-bone); /* 14.74:1 on asphalt */
+  color: var(--c-asphalt); /* 9.46:1 on machine yellow */
 }
 
 .plan__total-n {
@@ -588,7 +644,7 @@
   font-size: 72px;
   line-height: var(--t-loud-line);
   font-variant-numeric: tabular-nums;
-  color: var(--c-accent-text-dark); /* 9.46:1 */
+  color: var(--c-asphalt); /* 9.46:1 on machine yellow */
 }
 
 /* ---- 390: the sticky bottom bar and the sheet ------------------------------ */
@@ -614,9 +670,12 @@
   height: 64px;
   padding: 0 var(--inset);
   border: 0;
-  border-top: 1px solid #dedbd5; /* asphalt at 10% as painted on cream */
-  background: var(--c-cream);
-  color: var(--c-asphalt);
+  /* The bar and the sheet are the ticket's phone presentation, so they carry
+     the ticket's own face: asphalt with cream ink (2026-09-22). A cream bar
+     opening onto an asphalt ticket would have been two cards. */
+  border-top: 1px solid var(--c-steel-dark);
+  background: var(--c-asphalt);
+  color: var(--c-cream); /* 15.75:1 */
   cursor: pointer;
 }
 
@@ -641,8 +700,8 @@
   overflow-y: auto;
   padding: var(--s-md) var(--inset) var(--s-xl);
   border-radius: 12px 12px 0 0;
-  background: var(--c-cream);
-  color: var(--c-asphalt);
+  background: var(--c-asphalt);
+  color: var(--c-cream); /* 15.75:1 */
   animation: plan-sheet var(--d-panel) var(--ease-drawer) both;
 }
 
@@ -661,12 +720,12 @@
   min-height: 48px;
   margin-left: auto;
   padding: 0 var(--s-md);
-  border: 1px solid var(--c-asphalt);
+  border: 1px solid var(--c-cream);
   background: transparent;
   font-family: var(--font-brand);
   font-size: var(--t-body-size);
   font-weight: var(--t-weight-brand);
-  color: var(--c-asphalt);
+  color: var(--c-cream); /* 15.75:1 on asphalt */
   cursor: pointer;
 }
 

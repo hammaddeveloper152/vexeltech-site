@@ -79,6 +79,18 @@
       <textarea name="plan"></textarea>
       <input type="text" name="bot-field" />
     </form>
+    <!-- The contact form in the footer, on every route, 2026-09-22. Same
+         reason as the twin above: the footer form is rendered by script, so
+         Netlify cannot see its fields without this. It POSTs to "/" with
+         form-name "contact". Hidden; never shown. -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="company" />
+      <input type="text" name="budget" />
+      <textarea name="message"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

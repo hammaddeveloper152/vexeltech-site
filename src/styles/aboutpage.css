@@ -172,18 +172,57 @@
   scroll-margin-top: calc(48px + 2 * var(--s-sm) + var(--s-lg));
 }
 
-.ab3-how__lines {
+/* FOUR BLOCKS IN ONE ROW, 2026-09-22 (the founder): a Moldie numeral at 96px
+   in machine yellow with its clause under it in bone. Stacked below 768.
+
+   NO DRAWN LINE. The route is home's device and appears once on the site, so
+   a line joining these would be the second. The numerals carry the sequence
+   on their own, which is what a numeral is for.
+
+   The four clauses are one sentence broken across the blocks, so they read
+   down the row in order: "A call, / then concepts you can see, / then a build
+   you can test, / then it's yours." Nothing is restated per block. */
+.ab3-how__steps {
   display: grid;
-  gap: var(--s-xs);
+  gap: var(--s-xl);
   margin: 0;
-  font-family: var(--font-offer);
-  font-size: var(--t-h3-size);
-  line-height: var(--t-h3-line);
-  color: var(--c-shop-white);
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .ab3-how__steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: var(--s-2xl);
+  }
+}
+
+.ab3-how__step {
+  display: grid;
+  gap: var(--s-sm);
+  align-content: start;
+  min-width: 0;
+}
+
+/* Moldie at 96px, the same figure and face the home route's numerals take.
+   Machine yellow, 10.47:1 on the base and 9.93:1 on arc-black - this section
+   is where About's drift lands on arc-black, so both pairs are walked. */
+.ab3-how__n {
+  font-family: var(--font-name);
+  font-size: 96px;
+  line-height: 0.9;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--c-accent-text-dark);
 }
 
 .ab3-how__line {
   display: block;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone); /* 16.32:1 on the base, 15.47:1 on arc-black */
+  text-wrap: pretty;
 }
 
 /* ---- 5. Standards: three columns with hairlines, each one tested --------- */

@@ -10,21 +10,31 @@
       reflections run into the frame), left and right 10%, top 3% (the phone's
       top is at 4%, and nothing but haze reaches the top).
 
-   Halved step by step to 192px in Chrome's canvas, WebP at 0.9.
+   Halved step by step in Chrome's canvas, WebP at 0.9.
 
-     node .measure/costprep.mjs */
+   THE TARGET IS 2x THE SLOT AND IT MOVED, 2026-09-22. It was 192px for a
+   96px slot. The founder made the objects the artwork of that section and
+   the slot is 280px now, so the target is 560. Encoding for the old slot
+   would have shown a 192px render at 280 CSS px, which is 2.9x on a retina
+   screen: the one thing the section is now built around would be the
+   softest object on the page. The rule this follows is the recorded one -
+   an image set takes its ladder from the MEASURED element width, never the
+   viewport.
+
+     node .measure/costprep.mjs [size] */
+const TARGET = Number(process.argv[2] || 560);
 import puppeteer from 'puppeteer';
 import fs from 'fs';
 const b = await puppeteer.launch({ headless: 'new' });
 const p = await b.newPage();
 for (const i of [1, 2, 3, 4]) {
   const src = 'data:image/png;base64,' + fs.readFileSync(`public/assets/objects/cost-${i}. png.png`).toString('base64');
-  const out = await p.evaluate(async (src) => {
+  const out = await p.evaluate(async (src, TARGET) => {
     const img = new Image(); img.src = src; await img.decode();
     let c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
     c.getContext('2d').drawImage(img, 0, 0);
-    while (c.width > 192) {
-      const n = Math.max(192, Math.round(c.width / 2));
+    while (c.width > TARGET) {
+      const n = Math.max(TARGET, Math.round(c.width / 2));
       const d = document.createElement('canvas'); d.width = d.height = n;
       const x = d.getContext('2d'); x.imageSmoothingEnabled = true; x.imageSmoothingQuality = 'high';
       x.drawImage(c, 0, 0, n, n); c = d;
@@ -42,7 +52,7 @@ for (const i of [1, 2, 3, 4]) {
     }
     ctx.putImageData(id, 0, 0);
     return c.toDataURL('image/webp', 0.9);
-  }, src);
+  }, src, TARGET);
   fs.writeFileSync(`public/assets/cost-${i}.webp`, Buffer.from(out.split(',')[1], 'base64'));
   console.log(`cost-${i}.webp`, fs.statSync(`public/assets/cost-${i}.webp`).size, 'bytes');
 }

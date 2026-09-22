@@ -89,34 +89,10 @@
   align-items: start;
 }
 
-/* THE MASCOT AT STOP 03, 2026-09-22: 320px to the RIGHT of the stop, the side
-   opposite the drawn line, floating 6px on `.float`. The column exists only
-   once the file has landed, so the other four stops and this one before it
-   lands are the two-column stop exactly as before.
-
-   Below 1024 it drops under the text and centres: a 320px column beside a
-   96px numeral leaves 0px for the title at 768 by the container-budget test
-   (768 - 80 inset - 40 rail - 125 numeral - 24 gap - 320 - 24 = 155px, and
-   the title is set at h3 there). */
-.route__stop:has(.route__cast) {
-  grid-template-columns: auto minmax(0, 1fr) 320px;
-}
-
-.route__cast {
-  width: 320px;
-}
-
-@media (max-width: 1023px) {
-  .route__stop:has(.route__cast) {
-    grid-template-columns: auto minmax(0, 1fr);
-  }
-
-  .route__cast {
-    grid-column: 2;
-    justify-self: center;
-    margin-top: var(--s-lg);
-  }
-}
+/* The mascot stood at stop 03 for part of 2026-09-22 and came off: at 320px
+   it was 504px tall against ~100px of copy, drove its stop's row height and
+   left a ~380px hole before stop 04. The route is numerals and the line only;
+   the object moved to Get in touch. */
 
 /* The stop on the line, level with its numeral's centre. Muted at rest, the
    line's colour once reached. */

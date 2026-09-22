@@ -24,17 +24,29 @@
   margin: 0 auto;
 }
 
-/* ---- P2 beside the form, every route, 2026-09-21 ------------------------
+/* ---- THE MASCOT BESIDE THE FORM, 2026-09-22 (the founder) ---------------
 
-   The user's final placement: at the left of the form, 320px at 1280 and in a
-   200px column from 768 (a 320px column would leave the form 304px at 768);
-   below 768, 200px, centred above the form. The column only exists while the
-   pose has rendered: `:has()` keeps the form full width while the slot is
-   empty. */
+   `character-desk.webp` at the RIGHT of the form, 360px, BOTTOM-ALIGNED so
+   the desk legs land exactly on the row's bottom edge, which is the form's
+   own baseline and acts as his floor. He is sitting at a desk, so he needs
+   one; an object with legs floating in the middle of a column reads as a
+   sticker rather than as someone in the room.
+
+   This replaces P2 at the LEFT, which never rendered - `character-2.webp`
+   does not exist - and it replaces the stop-03 placement the same day. The
+   mascot now appears twice on the site, both on home: Who we are, and here.
+
+   The column only exists while the file has rendered: `:has()` keeps the
+   form full width while the slot is empty, so nothing reserves space.
+
+   Below 1024 it drops under the form and centres at 240px: a 360px column
+   beside the form at 768 leaves the fields 328px, and the form is the thing
+   the section is for. */
 .foot__cast {
   display: grid;
   justify-items: center;
-  margin-bottom: var(--s-xl);
+  align-self: end;
+  margin-top: var(--s-xl);
 }
 
 .foot__cast:empty {
@@ -42,30 +54,40 @@
 }
 
 .foot__char {
-  width: 200px;
+  width: 240px;
 }
 
-@media (min-width: 768px) {
-  .foot__stage:has(.foot__char) {
-    display: grid;
-    grid-template-columns: 200px minmax(0, 1fr);
-    column-gap: var(--s-xl);
-    align-items: start;
-  }
-
-  .foot__cast {
-    margin-bottom: 0;
-  }
+/* The image sits flush to the bottom of its own box: no descender space, so
+   the legs meet the edge rather than hovering a few pixels above it. */
+.foot__char .slot__img,
+.foot__cast .slot__img {
+  display: block;
 }
 
 @media (min-width: 1024px) {
   .foot__stage:has(.foot__char) {
-    grid-template-columns: 320px minmax(0, 1fr);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
     column-gap: var(--s-2xl);
+    /* END, not start: the floor is the row's bottom edge. */
+    align-items: end;
+  }
+
+  /* Placed explicitly, so the form stays FIRST in the markup and in the tab
+     ring while the object sits to its right. */
+  .foot__stage:has(.foot__char) .foot__form {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .foot__cast {
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 0;
   }
 
   .foot__char {
-    width: 320px;
+    width: 360px;
   }
 }
 
@@ -233,24 +255,20 @@
     opacity var(--d-press) var(--ease-reveal);
 }
 
-/* Disabled comes from tokens.css: opacity 0.4 and pointer-events none, no
-   colour change. This is the one place the accent may go below the 0.64
-   floor, because a disabled control is not actionable. */
+/* NO DISABLED STATE, 2026-09-22 (the founder). The submit is the yellow
+   primary at full opacity at every moment; a double submit is stopped by the
+   sending guard in `onSubmit`, not by greying the control. The note that used
+   to sit here - that a disabled control may drop below the 0.64 accent floor -
+   no longer applies to anything in this form, and the 0.4 opacity it described
+   is what took this button out of the carrier count. It is IN the count now.
 
 .foot__status {
   margin: 0;
   min-height: var(--s-lg);
 }
 
-/* Not an error and not a success: a fact about the page. Steel-dark, the
-   same value the form's own labels use, so it reads as part of the form
-   rather than as a warning about it. 5.12:1 on asphalt. */
-.foot__offline {
-  display: block;
-  font-size: var(--t-small-size);
-  line-height: var(--t-small-line);
-  color: var(--c-steel-dark);
-}
+   `.foot__offline` is deleted with the line it styled: the form is wired, so
+   there is nothing to say about it not being wired. */
 
 @media (hover: hover) and (pointer: fine) {
   .foot__submit:hover {
@@ -484,9 +502,19 @@
     justify-content: space-between;
   }
 
+  /* TWO COLUMNS, 2026-09-22 (the founder). Five pages fill 3 + 2 reading
+     DOWN, which is why this is a grid with a row count rather than a wrapping
+     row: `grid-auto-flow: column` with three rows puts Home / Services /
+     Pricing in the first column and About us / Contact us in the second, so
+     the order down a column is the order in the markup. A wrapping flex row
+     would have read left-to-right across both columns instead. */
   .foot__nav-list {
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(3, auto);
+    justify-content: start;
+    column-gap: var(--s-2xl);
+    row-gap: var(--s-sm);
   }
 
   /* Wordmark left, address centre, legal right: three columns with equal outer

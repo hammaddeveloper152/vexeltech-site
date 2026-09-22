@@ -117,6 +117,64 @@ The hero stands on the base at 10.47:1. The "How we work" call came off with
 it. Cream still appears once on the site, on home's Who we are band. CaretDown
 on the standards and the spotlight call stay.
 
+## 0000. The founder's six fixes (2026-09-22) outrank section 000 above
+
+1. **What it costs you is four ALTERNATING two-column bands**: the object at
+   280px one side, the statement and its line the other, left / right / left /
+   right. They were 96px, which is an icon station, and that is what made the
+   artwork read as icons. Files re-encoded at 560px (`costprep.mjs 560`);
+   screen blend stays.
+2. **What we do is four CREAM cards**: #F4F1EA, asphalt ink, 12px, Phosphor
+   icon 32px asphalt, Moldie name 40px, items Satoshi in steel (7.20:1).
+   **No rim light on cream** - the key alone, the ticket's own rule: two
+   lights are a DARK-surface model. Hover fills yellow with asphalt ink, as
+   before. 32px is a literal, off the 16 / 24 / 64 icon ramp.
+3. **THE MASCOT IS OFF THE ROUTE. The route is numerals and the line only.**
+   At 320px it was 504px tall against ~100px of copy and left a ~380px hole
+   between stops 03 and 04. **Two placements, both home: Who we are, and Get
+   in touch** - right of the form, 360px, BOTTOM-ALIGNED so the desk legs land
+   on the row's bottom edge, which is his floor. `Character.jsx` and
+   `character.css` are deleted; P1 is a plain `<img>` and P2 is gone.
+4. **The Plan Builder panel is CREAM.** Asphalt ink, hairline, 12px. Chips and
+   cards **bone** with an asphalt hairline; selected is **asphalt-filled,
+   cream text, yellow border**; progress hairline steel-dark, fill yellow;
+   **Next asphalt-filled with a cream label**, disabled the same control as an
+   asphalt outline. **The ticket inverts to asphalt-faced with cream ink**,
+   total strip **yellow with asphalt numerals**; the phone bar and sheet take
+   the ticket's face. Still nothing translucent, no surface under opacity 1.
+   - **The helper is STEEL, not steel-dark**: 3.08:1 on cream is under the
+     4.5 floor and BUILD-LAW is the floor. The user ruled on this exact pair
+     once already (the stage line). steel-dark stays on the progress
+     hairline, a mark, where the bar is 3:1.
+   - **The ticket's edge is steel-dark, not asphalt**: asphalt on arc-black is
+     1.17:1, so a border the colour of the face was no border and the card
+     dissolved into the drift. An edge is not a text pair; a pair walk will
+     not find this.
+   - **The focus ring follows its ground**: asphalt on the cream panel (yellow
+     is 1.66:1 there), yellow on the asphalt ticket, bar and sheet.
+5. **About's "How a project runs" is four counted blocks in one row** (stacked
+   below 768): Moldie numeral 01 to 04 at 96px yellow, the clause under it in
+   bone. **No drawn line** - the route is home's device and appears once. The
+   numerals are `aria-hidden` inside an `<ol>`.
+6. **THE FORMS ARE LIVE.** `LIVE = true`, the not-wired line and its style
+   gone, Send is the yellow primary at full opacity with **no disabled
+   state** (the sending guard stops a double submit). Success copy is
+   VEXELTECH-COPY.md's. Footer pages in **two columns** (`grid-auto-flow:
+   column`, three rows, so the order reads DOWN). The social row is built and
+   **renders nothing** until a real URL is set - pre-flight 5 stands.
+   **The wiring was written in this pass**: only "plan" was declared and
+   `onSubmit` posted to nothing, so enabling the button alone would have
+   shipped a form that reports success and drops every enquiry. A hidden
+   static "contact" twin is in `index.html` and the submit POSTs url-encoded
+   to "/". **Forms must be enabled on the Netlify side; that cannot be checked
+   from here.**
+
+**Measured:** contrast clean on home, /pricing, /about-us and /services at
+1280 and 390, **zero failing pairs anywhere** (the disabled Send was the
+standing exception and there is no disabled Send). `planpairs.mjs` 110 and 80,
+none failing, over four grounds. `carrier.mjs` unchanged row for row: the
+route 1.63% / 3.32% against 5%, the cream cards 0.00% at rest.
+
 ## 0. The storyboard decides sections, order and placement (2026-09-21)
 
 `VEXELTECH-STORYBOARD.md` in the design repo is the founder's sheet and the

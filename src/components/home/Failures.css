@@ -1,9 +1,16 @@
 /* ==========================================================================
    The four failures. Between the hero and Services.
 
-   FOUR ROWS, 2026-09-22, the founder's restructure. On the ground, no band:
-   each row is a 96px 1:1 image slot (cost-1 to cost-4.webp) and then the
-   statement and its consequence. The Phosphor icons came off.
+   FOUR ALTERNATING BANDS, 2026-09-22 (the founder). Each row is two columns:
+   the object at 280px one side, the statement and its line the other, and
+   the rows alternate left / right / left / right. They were 96px, which is
+   an icon station, and that is what made the artwork read as icons.
+
+   THE OBJECT COLUMN IS FIXED AND THE TEXT TAKES THE REST, so the text's
+   budget is the same on every row whichever side the object is on: at 1280
+   that is 1200 - 280 - 64 gap = 856px. Below 768 the row stacks and the
+   object leads, at its own width rather than 280, because a 280px object
+   beside text in a 358px column leaves 54px.
 
    The TYPE and its colours are in register.css, which loads after this sheet.
    ========================================================================== */
@@ -20,35 +27,68 @@
 
 .fail__items {
   display: grid;
-  row-gap: var(--s-xl);
+  row-gap: var(--s-2xl);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* A row: the text alone until its image exists; then the 96px image on the
-   left and the two lines beside it, centred on the image. */
+/* A row: the text alone until its image exists; then the two columns. */
 .fail__item {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  column-gap: var(--s-lg);
+  gap: var(--s-lg);
   align-items: center;
   min-width: 0;
 }
 
-.fail__item:has(.fail__img) {
-  grid-template-columns: 96px minmax(0, 1fr);
-}
-
 .fail__img {
-  width: 96px;
+  width: 100%;
+  max-width: 280px;
   aspect-ratio: 1 / 1;
 }
 
+/* From 768 the row is two columns and the object alternates sides. The text
+   is placed explicitly rather than by source order, so the markup stays in
+   reading order for a screen reader and for the tab ring: the statement is
+   always the first thing in the row. */
+@media (min-width: 768px) {
+  .fail__item:has(.fail__img) {
+    grid-template-columns: 280px minmax(0, 1fr);
+    column-gap: var(--s-2xl);
+  }
+
+  .fail__item[data-side='left'] .fail__img {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .fail__item[data-side='left'] .fail__text {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .fail__item[data-side='right'] {
+    grid-template-columns: minmax(0, 1fr) 280px;
+  }
+
+  .fail__item[data-side='right'] .fail__img {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .fail__item[data-side='right'] .fail__text {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
 /* The founder's cost-1 to cost-4, 2026-09-22: rendered on pure black and
-   exported at 192px square (2x the slot), molded by .measure/costprep.mjs
-   (a toe to black and an edge feather). Screen drops the black into the
-   drift under the row, so only the drawing stands on the ground. */
+   exported at 560px square (2x the 280px slot), molded by
+   .measure/costprep.mjs (a toe to black and an edge feather). Screen drops
+   the black into the drift under the row, so only the drawing stands on the
+   ground. The blend stays at the larger size: it is what keeps the render's
+   own black from painting a square on the drift. */
 .fail__img .slot__img {
   mix-blend-mode: screen;
 }

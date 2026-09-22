@@ -13,9 +13,18 @@ import './Failures.css';
 
    ---- FOUR ROWS WITH THE FOUNDER'S IMAGES, 2026-09-22 ----------------
 
-   Four rows on the ground, no band: each a 96px 1:1 image slot on the left
-   (`/assets/cost-1.webp` to `cost-4.webp`, supplied by the founder) and the
-   statement and consequence on the right. The Phosphor icons came off.
+   THE OBJECTS ARE THE ARTWORK, NOT ICONS (the founder, later the same day).
+   Each row is a two-column band: the object at 280px one side, the statement
+   and its line the other, and the rows ALTERNATE - object left, right, left,
+   right - so the reader's eye crosses the measure four times instead of
+   running down one gutter. They were 96px beside the text, which is an icon
+   station, and an icon station is what made them read as icons.
+
+   The files were re-encoded at 560px for this (`.measure/costprep.mjs 560`):
+   at the old 192px they would have been shown at 280 CSS px, 2.9x on a
+   retina screen, and the one thing the section is built around would have
+   been the softest object on the page.
+
    cost-1 and cost-2 swapped rows by the founder, 2026-09-22: the pin is on
    "They cannot find you", the phone on "Not enough are calling". A slot
    is empty and takes no space until its file exists, so a row with no image
@@ -64,8 +73,13 @@ export default function Failures() {
 
         <ul className="fail__items" data-revealed={revealed ? 'true' : 'false'} ref={ref}>
           {FAILURES.map(({ id, statement, consequence, image }, i) => (
-            <li className="fail__item" key={id} style={{ '--i': i }}>
-              {/* The founder's image, 96px 1:1, left of the row. Empty until
+            <li
+              className="fail__item"
+              key={id}
+              style={{ '--i': i }}
+              data-side={i % 2 === 0 ? 'left' : 'right'}
+            >
+              {/* The founder's object, 280px, alternating sides. Empty until
                   the file exists. Decorative: the statement says it. */}
               <Slot src={image} className="fail__img" />
               <div className="fail__text">

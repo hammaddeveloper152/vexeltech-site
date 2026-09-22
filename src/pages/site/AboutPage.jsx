@@ -43,7 +43,13 @@ import '../../styles/aboutpage.css';
    through the footer (2026-09-21).
    EVERY LINE IS THE BRIEF'S, which is the user's own copy. */
 
-/* How it goes, the user's sentence, one clause a line (2026-09-21). */
+/* How it goes, the user's sentence, one clause a line (2026-09-21). FOUR
+   BLOCKS IN ONE ROW since 2026-09-22 (the founder): each clause takes a
+   Moldie numeral at 96px in machine yellow with its line under it. Same four
+   clauses, same order, unchanged - what moved is that they are now counted.
+
+   NO ROUTE LINE. The route is home's device and appears once on the site; a
+   drawn line here would be the second. The numerals are the sequence. */
 const HOW = ['A call,', 'then concepts you can see,', 'then a build you can test,', "then it's yours."];
 
 /* THE STANDARDS, TESTED: About's engagement device (2026-09-21, the user's
@@ -141,19 +147,25 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 3. HOW IT GOES. Four short lines, no numerals, no line. */}
+      {/* 3. HOW IT GOES. Four counted blocks in one row, no drawn line. */}
       <section className="vt ab3-how" aria-labelledby="ab3-how-h">
         <div className="ab3__in">
           <h2 className="ab3__h ab3-how__h" id="ab3-how-h">
             Here is exactly how a project runs.
           </h2>
-          <p className="ab3-how__lines">
-            {HOW.map((line) => (
-              <span className="ab3-how__line" key={line}>
-                {line}
-              </span>
+          <ol className="ab3-how__steps">
+            {HOW.map((line, i) => (
+              <li className="ab3-how__step" key={line}>
+                {/* The numeral is decorative: the list is already ordered, so
+                    a screen reader counts it. Reading "01" aloud before every
+                    clause would say the same thing twice. */}
+                <span className="ab3-how__n" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span className="ab3-how__line">{line}</span>
+              </li>
             ))}
-          </p>
+          </ol>
         </div>
       </section>
 
