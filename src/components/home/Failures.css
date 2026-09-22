@@ -21,12 +21,21 @@
    by 32px a side, which is right for a section built to read as one object
    rather than as four rows.
 
-   THE OBJECT IS FITTED BY HEIGHT. `object-fit: contain` in a 220px square
-   box: the four renders are square canvases with the drawing sitting in
-   different amounts of transparent margin, so sizing by WIDTH would have
-   shown four objects at four apparent scales. Fitting the box and letting
-   the image contain inside it keeps the box identical and the drawing
-   honest.
+   THE OBJECT IS FITTED BY HEIGHT, and the box is 220px TALL rather than
+   220px square. Every object is exactly 220 high and as wide as its own
+   drawing needs - 92px for the pin, 293px for the name tag - which is what
+   makes four different objects read as one set.
+
+   IT TOOK TWO GOES AND THE FIRST IS WORTH RECORDING. The files were cut with
+   the source canvas KEPT, so each was a 2048 square with its drawing sitting
+   in a different amount of transparent margin. `contain` in a square box then
+   fitted the CANVAS, not the artwork, and the four appeared at four unrelated
+   scales while every measurement said the boxes were identical. They are cut
+   TRIMMED TO THEIR INK now (`deskcut.py` without `keep`), so the image's own
+   edges are the drawing's edges and fitting the box fits the object.
+
+   The width is capped at the cell so a wide object cannot push its column;
+   at 1280 the widest is 293 against a 584px cell.
 
    The TYPE and its colours are in register.css, which loads after this sheet.
    ========================================================================== */
@@ -72,17 +81,18 @@
   min-width: 0;
 }
 
-/* The box is fixed and square; the drawing contains inside it. */
+/* 220 TALL, width from the drawing's own ratio, capped at the cell. */
 .fail__img {
-  width: 220px;
   height: 220px;
+  max-width: 100%;
 }
 
 .fail__img .slot__img {
-  width: 100%;
+  width: auto;
   height: 100%;
+  max-width: 100%;
   object-fit: contain;
-  object-position: left center;
+  object-position: left bottom;
 }
 
 /* Below 768 the object steps down: a 220px square above two lines of text in
@@ -90,7 +100,6 @@
    screens for the same four sentences the grid exists to show together. */
 @media (max-width: 767px) {
   .fail__img {
-    width: 160px;
     height: 160px;
   }
 }
