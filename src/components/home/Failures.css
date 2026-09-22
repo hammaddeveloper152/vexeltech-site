@@ -1,22 +1,38 @@
 /* ==========================================================================
    The four failures. Between the hero and Services.
 
-   FOUR ALTERNATING BANDS, 2026-09-22 (the founder). Each row is two columns:
-   the object at 280px one side, the statement and its line the other, and
-   the rows alternate left / right / left / right. They were 96px, which is
-   an icon station, and that is what made the artwork read as icons.
+   A 2 x 2 GRID, 2026-09-23 (the founder), stacked at 390. Each cell is the
+   object at 220px over the title over the line, all flush left, with 32px
+   gutters and nothing drawn: no card, no hairline.
 
-   THE OBJECT COLUMN IS FIXED AND THE TEXT TAKES THE REST, so the text's
-   budget is the same on every row whichever side the object is on: at 1280
-   that is 1200 - 280 - 64 gap = 856px. Below 768 the row stacks and the
-   object leads, at its own width rather than 280, because a 280px object
-   beside text in a 358px column leaves 54px.
+   IT REPLACED FOUR ALTERNATING FULL-WIDTH BANDS. Those put one object and
+   one short statement on each of four rows and ran the section past 2000px
+   at 1280 - four screens of scroll to read four sentences, with the eye
+   crossing the measure each time. A 2 x 2 reads as one object: four costs,
+   seen together, which is what the section is arguing.
+
+   THE HEIGHT IS A BUDGET, NOT AN OUTCOME: no taller than 900px at 1280.
+   Measured at 96px of section padding it came to 962 - 192 padding, 126 for
+   the heading and its margin, 645 for the grid - so it was 62 over. The
+   padding is the only part of that not fixed by the founder's own figures
+   (the object at 220, the gutters at 32, the title in Monigue), so it steps
+   to `--s-2xl`, the next stop DOWN THE EXISTING RAMP rather than an invented
+   number, and the section measures 898. It sits tighter than its neighbours
+   by 32px a side, which is right for a section built to read as one object
+   rather than as four rows.
+
+   THE OBJECT IS FITTED BY HEIGHT. `object-fit: contain` in a 220px square
+   box: the four renders are square canvases with the drawing sitting in
+   different amounts of transparent margin, so sizing by WIDTH would have
+   shown four objects at four apparent scales. Fitting the box and letting
+   the image contain inside it keeps the box identical and the drawing
+   honest.
 
    The TYPE and its colours are in register.css, which loads after this sheet.
    ========================================================================== */
 
 .fail {
-  padding: var(--s-3xl) var(--s-md);
+  padding: var(--s-2xl) var(--s-md);
   color: var(--c-shop-white); /* 19.66:1 on the base */
 }
 
@@ -25,61 +41,86 @@
   margin: 0 auto;
 }
 
+/* 32px gutters. 32 is off the spacing ramp - 4/8/16/24/40/64/96 skips it on
+   purpose - and it is the founder's figure for this grid, so it is written as
+   a literal here rather than promoted to a ramp step everything could reach
+   for. Same treatment as the 48px rule on About and the 32px icon on the home
+   cards. */
 .fail__items {
   display: grid;
-  row-gap: var(--s-2xl);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* A row: the text alone until its image exists; then the two columns. */
+@media (min-width: 768px) {
+  .fail__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* A cell: object, title, line, stacked and flush left. `align-content: start`
+   so a cell whose line wraps to two does not centre its neighbours' objects
+   against it. */
 .fail__item {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--s-lg);
-  align-items: center;
+  align-content: start;
+  justify-items: start;
+  gap: var(--s-sm);
   min-width: 0;
 }
 
+/* The box is fixed and square; the drawing contains inside it. */
 .fail__img {
-  width: 100%;
-  max-width: 280px;
-  aspect-ratio: 1 / 1;
+  width: 220px;
+  height: 220px;
 }
 
-/* From 768 the row is two columns and the object alternates sides. The text
-   is placed explicitly rather than by source order, so the markup stays in
-   reading order for a screen reader and for the tab ring: the statement is
-   always the first thing in the row. */
+.fail__img .slot__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* Below 768 the object steps down: a 220px square above two lines of text in
+   a 358px column is most of a phone screen per cell, and four of them is four
+   screens for the same four sentences the grid exists to show together. */
+@media (max-width: 767px) {
+  .fail__img {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+.fail__text {
+  display: grid;
+  row-gap: var(--s-xs);
+  min-width: 0;
+}
+
+.fail__s,
+.fail__c {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.fail__c {
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
 @media (min-width: 768px) {
-  .fail__item:has(.fail__img) {
-    grid-template-columns: 280px minmax(0, 1fr);
-    column-gap: var(--s-2xl);
+  .fail {
+    padding: var(--s-2xl) var(--s-xl);
   }
+}
 
-  .fail__item[data-side='left'] .fail__img {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .fail__item[data-side='left'] .fail__text {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .fail__item[data-side='right'] {
-    grid-template-columns: minmax(0, 1fr) 280px;
-  }
-
-  .fail__item[data-side='right'] .fail__img {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .fail__item[data-side='right'] .fail__text {
-    grid-column: 1;
-    grid-row: 1;
+@media (min-width: 1024px) {
+  .fail {
+    padding: var(--s-2xl) var(--s-2xl);
   }
 }
 
@@ -119,13 +160,13 @@
 
 @media (min-width: 768px) {
   .fail {
-    padding: var(--s-3xl) var(--s-xl);
+    padding: var(--s-2xl) var(--s-xl);
   }
 }
 
 @media (min-width: 1024px) {
   .fail {
-    padding: var(--s-3xl) var(--s-2xl);
+    padding: var(--s-2xl) var(--s-2xl);
   }
 }
 

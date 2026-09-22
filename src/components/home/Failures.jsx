@@ -13,17 +13,16 @@ import './Failures.css';
 
    ---- FOUR ROWS WITH THE FOUNDER'S IMAGES, 2026-09-22 ----------------
 
-   THE OBJECTS ARE THE ARTWORK, NOT ICONS (the founder, later the same day).
-   Each row is a two-column band: the object at 280px one side, the statement
-   and its line the other, and the rows ALTERNATE - object left, right, left,
-   right - so the reader's eye crosses the measure four times instead of
-   running down one gutter. They were 96px beside the text, which is an icon
-   station, and an icon station is what made them read as icons.
+   A 2 x 2 GRID, 2026-09-23 (the founder). Each cell is the object at 220px
+   over the title over the line, flush left, 32px gutters, nothing drawn. It
+   replaced four alternating full-width bands, which put one object and one
+   sentence on each of four rows and ran the section past 2000px at 1280 -
+   four screens of scroll to read four sentences. Four costs seen together is
+   what the section is arguing.
 
-   The files were re-encoded at 560px for this (`.measure/costprep.mjs 560`):
-   at the old 192px they would have been shown at 280 CSS px, 2.9x on a
-   retina screen, and the one thing the section is built around would have
-   been the softest object on the page.
+   The objects are the artwork, not icons: they were 96px beside the text,
+   which is an icon station, and that is what made them read as icons. The
+   files are cut to alpha at 560px, so a 220px box shows them at 2.5x.
 
    cost-1 and cost-2 swapped rows by the founder, 2026-09-22: the pin is on
    "They cannot find you", the phone on "Not enough are calling". A slot
@@ -73,14 +72,10 @@ export default function Failures() {
 
         <ul className="fail__items" data-revealed={revealed ? 'true' : 'false'} ref={ref}>
           {FAILURES.map(({ id, statement, consequence, image }, i) => (
-            <li
-              className="fail__item"
-              key={id}
-              style={{ '--i': i }}
-              data-side={i % 2 === 0 ? 'left' : 'right'}
-            >
-              {/* The founder's object, 280px, alternating sides. Empty until
-                  the file exists. Decorative: the statement says it. */}
+            <li className="fail__item" key={id} style={{ '--i': i }}>
+              {/* The founder's object, a 220px square the drawing contains
+                  inside. Empty until the file exists. Decorative: the
+                  statement says it. */}
               <Slot src={image} className="fail__img" />
               <div className="fail__text">
                 <h3 className="fail__s">{statement}</h3>

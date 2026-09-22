@@ -236,15 +236,14 @@
   list-style: none;
 }
 
+/* TWO ACROSS, NOT FOUR, 2026-09-23 (the founder), stacked at 390. At four
+   across each card had 234px of content at 1280 and its line - the longest is
+   120 characters - set to five lines of 14px, which made the densest block on
+   the page out of the section that is meant to be read. Two across gives each
+   card 528px and its line two. */
 @media (min-width: 768px) {
   .ab3-lesson__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1024px) {
-  .ab3-lesson__grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
@@ -267,11 +266,13 @@
   color: var(--c-asphalt);
 }
 
-/* Moldie at 40px, the discipline as a name. */
+/* Moldie at 48px, the discipline as a name. 48 is a literal: the name
+   register's steps are 64 / 40 / 32 and it sits between two of them, which is
+   what the wider card affords. */
 .ab3-lesson__n {
   margin: 0;
   font-family: var(--font-name);
-  font-size: var(--t-name-l);
+  font-size: 48px;
   line-height: var(--t-loud-line);
   font-weight: 400;
   letter-spacing: 0;
@@ -279,11 +280,13 @@
   color: var(--c-asphalt);
 }
 
+/* Satoshi at the body step, 18px: the card is wide enough to read now, so
+   the line stops being metadata and becomes the thing on the card. */
 .ab3-lesson__l {
   margin: 0;
   font-family: var(--font-offer);
-  font-size: var(--t-small-size);
-  line-height: var(--t-small-line);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
   color: var(--c-steel); /* 7.20:1 on white */
   text-wrap: pretty;
 }
