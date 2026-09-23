@@ -74,33 +74,32 @@
   }
 }
 
-/* The reveal, 70ms apart, transform and opacity only. */
+/* The reveal, 70ms apart, transform and opacity only. On the cell, not the
+   card: the card's own hover lift has its own 200ms transition. */
+.services__cell {
+  min-width: 0;
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .services__grid[data-revealed='false'] .art {
+  .services__grid[data-revealed='false'] .services__cell {
     opacity: 0;
     transform: translateY(var(--s-sm));
   }
 
-  .services__grid .art {
+  .services__cell {
     transition:
       opacity var(--d-panel) var(--ease-reveal),
       transform var(--d-panel) var(--ease-reveal);
     transition-delay: calc(var(--i) * var(--stagger));
   }
-
-  /* The press keeps its own 160ms, with no stagger in front of it. */
-  .services__grid[data-revealed='true'] .art--link:active {
-    transition-duration: var(--d-press);
-    transition-delay: 0ms;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .services__grid[data-revealed='false'] .art {
+  .services__grid[data-revealed='false'] .services__cell {
     opacity: 0;
   }
 
-  .services__grid .art {
+  .services__cell {
     transition: opacity var(--d-panel) var(--ease-reveal);
   }
 }

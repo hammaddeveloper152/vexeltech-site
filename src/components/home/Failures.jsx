@@ -1,5 +1,5 @@
 import React from 'react';
-import Slot from '../site/Slot.jsx';
+import ArtCard from '../site/ArtCard.jsx';
 import { useReveal } from './hooks.js';
 import './Failures.css';
 
@@ -10,6 +10,15 @@ import './Failures.css';
    The order is the order a customer is lost in: found, called, answered,
    remembered. Nothing in them is a claim about VexelTech, so BUILD-LAW.md
    Truth is not in play for them.
+
+   ---- FOUR OF THE CARD, 2026-09-24 (the founder) ----------------------
+
+   Each cost is the site's one card (components/site/ArtCard.jsx) with its
+   object as the artwork: the transparent webp centred in the top 65% at
+   200px, over a lit-raised wash, the fade under it, the statement and the
+   consequence pinned to the bottom. Four across at 1280, two at 768, one at
+   390. No object stands on the page ground any more. What follows is the
+   history of the grid it replaced.
 
    ---- FOUR ROWS WITH THE FOUNDER'S IMAGES, 2026-09-22 ----------------
 
@@ -73,14 +82,7 @@ export default function Failures() {
         <ul className="fail__items" data-revealed={revealed ? 'true' : 'false'} ref={ref}>
           {FAILURES.map(({ id, statement, consequence, image }, i) => (
             <li className="fail__item" key={id} style={{ '--i': i }}>
-              {/* The founder's object, a 220px square the drawing contains
-                  inside. Empty until the file exists. Decorative: the
-                  statement says it. */}
-              <Slot src={image} className="fail__img" />
-              <div className="fail__text">
-                <h3 className="fail__s">{statement}</h3>
-                <p className="fail__c">{consequence}</p>
-              </div>
+              <ArtCard image={image} name={statement} line={consequence} />
             </li>
           ))}
         </ul>

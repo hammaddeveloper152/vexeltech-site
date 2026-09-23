@@ -37,7 +37,8 @@
    The width is capped at the cell so a wide object cannot push its column;
    at 1280 the widest is 293 against a 584px cell.
 
-   The TYPE and its colours are in register.css, which loads after this sheet.
+   The heading's type is in register.css, which loads after this sheet; the
+   cards' type is ArtCard.css.
    ========================================================================== */
 
 .fail {
@@ -50,15 +51,16 @@
   margin: 0 auto;
 }
 
-/* 32px gutters. 32 is off the spacing ramp - 4/8/16/24/40/64/96 skips it on
-   purpose - and it is the founder's figure for this grid, so it is written as
-   a literal here rather than promoted to a ramp step everything could reach
-   for. Same treatment as the 48px rule on About and the 32px icon on the home
-   cards. */
+/* FOUR OF THE CARD, 2026-09-24 (the founder): four across at 1280, two at
+   768, one at 390, with the site's card gap. The card is ArtCard.css; the
+   2 x 2 of objects, statements and lines that stood on the page ground here,
+   with its 32px gutters and its image rules, is gone. The cost files are
+   still the founder's alpha cuts (`.measure/deskcut.py`), which is why they
+   sit on the card's wash without a blend mode. */
 .fail__items {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 32px;
+  gap: var(--s-lg);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -68,115 +70,37 @@
   .fail__items {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .fail {
+    padding: var(--s-section) var(--s-xl);
+  }
 }
 
-/* A cell: object, title, line, stacked and flush left. `align-content: start`
-   so a cell whose line wraps to two does not centre its neighbours' objects
-   against it. */
+@media (min-width: 1024px) {
+  .fail {
+    padding: var(--s-section) var(--s-2xl);
+  }
+}
+
+@media (min-width: 1280px) {
+  .fail__items {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 .fail__item {
   display: grid;
-  align-content: start;
-  justify-items: start;
-  gap: var(--s-sm);
   min-width: 0;
 }
 
-/* 220 TALL, width from the drawing's own ratio, capped at the cell. */
-.fail__img {
-  height: 220px;
-  max-width: 100%;
-}
-
-.fail__img .slot__img {
-  width: auto;
-  height: 100%;
-  max-width: 100%;
-  object-fit: contain;
-  object-position: left bottom;
-}
-
-/* Below 768 the object steps down: a 220px square above two lines of text in
-   a 358px column is most of a phone screen per cell, and four of them is four
-   screens for the same four sentences the grid exists to show together. */
-@media (max-width: 767px) {
-  .fail__img {
-    height: 160px;
-  }
-}
-
-.fail__text {
-  display: grid;
-  row-gap: var(--s-xs);
-  min-width: 0;
-}
-
-.fail__s,
-.fail__c {
-  margin: 0;
-  text-wrap: balance;
-}
-
-.fail__c {
-  max-width: 46ch;
-  text-wrap: pretty;
-}
-
-@media (min-width: 768px) {
-  .fail {
-    padding: var(--s-section) var(--s-xl);
-  }
-}
-
-@media (min-width: 1024px) {
-  .fail {
-    padding: var(--s-section) var(--s-2xl);
-  }
-}
-
-/* The founder's cost-1 to cost-4, CUT TO REAL ALPHA 2026-09-23
-   (`.measure/deskcut.py <src> <out> black 560 keep`), mounted as plain
-   images. 560px square, 2x the 280px slot.
-
-   THE SCREEN BLEND IS GONE AND THAT WAS THE POINT. The renders stand on pure
-   black, and `mix-blend-mode: screen` dropped that black into the drift so
-   only the drawing showed. It is correct at rest and WRONG IN MOTION: these
-   rows reveal on a 70ms stagger, and screen over a parent that is mid-fade is
-   not the same composite as screen over a settled one, so each row flashed
-   its black square on the way in. A blend mode is a compositing instruction,
-   and a compositing instruction is exactly the thing an opacity animation
-   changes underneath.
-
-   Cut to alpha there is nothing to blend and nothing to flash. The files got
-   smaller too - 8.9 to 24.5 KB against 9.9 to 42.2 - because transparent
-   margin compresses better than a molded black field. */
-
-.fail__text {
-  display: grid;
-  row-gap: var(--s-xs);
-  min-width: 0;
-}
-
-.fail__s,
-.fail__c {
-  margin: 0;
-  text-wrap: balance;
-}
-
-.fail__c {
-  max-width: 62ch;
-  text-wrap: pretty;
-}
-
-@media (min-width: 768px) {
-  .fail {
-    padding: var(--s-section) var(--s-xl);
-  }
-}
-
-@media (min-width: 1024px) {
-  .fail {
-    padding: var(--s-section) var(--s-2xl);
-  }
+/* One height per row: a card that grew past 3:4 for a three-line title
+   takes its row-mates with it, rather than standing taller than them. An
+   explicit `stretch` overrides the aspect ratio in the block axis. */
+.fail__item .art {
+  align-self: stretch;
+  /* The width is pinned, or the stretched height feeds the aspect ratio back
+     into the width and the card runs past its column. */
+  width: 100%;
 }
 
 /* ---- Reveal. Four things to read, so 70ms per item ---------------------- */

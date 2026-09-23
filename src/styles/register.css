@@ -67,26 +67,8 @@
 }
 
 /* ---- Failures -----------------------------------------------------------
-   The statement is a card-level heading (an h3 under the section's h2), so it
-   takes the quiet face at the h3 step rather than the section step: Clash
-   Medium, sentence case, bone. The consequence is body, 16px steel-lift,
-   7.4:1. No carrier. */
-.fail__s {
-  font-family: var(--font-quiet);
-  font-size: var(--t-h3-size);
-  line-height: var(--t-h3-line);
-  font-weight: var(--t-weight-quiet);
-  letter-spacing: normal;
-  text-transform: none;
-  color: var(--c-bone); /* 16.32:1 */
-}
-
-/* The consequence explains: body, not small. */
-.fail__c {
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  color: var(--c-steel-lift); /* 7.4:1 on the base */
-}
+   FOUR OF THE CARD, 2026-09-24: the statement and the consequence are the
+   card's name and line (ArtCard.css), so their rules here are gone. */
 
 /* ---- Services -----------------------------------------------------------
    THE QUIET PASS, 2026-09-24: the discipline name is a service name, so it is

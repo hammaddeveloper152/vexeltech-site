@@ -103,7 +103,8 @@
   min-width: 0;
   padding: var(--s-lg);
   /* Every column carries a 2px top edge, transparent except on the picked
-     one, so the edge does not push one column's rows 2px off the rest. */
+     one, so the edge does not push one column's rows 2px off the rest. The
+     hairlines are the pseudo-elements below. */
   border-top: 2px solid transparent;
   color: var(--c-asphalt);
 }
@@ -112,32 +113,94 @@
   border-top-color: var(--c-accent-draw-dark); /* the recommended column */
 }
 
-/* Hairlines between columns, per layout. */
+/* HAIRLINES BETWEEN COLUMNS, per layout, drawn as two layers so the hover
+   can raise them with opacity alone (BUILD-LAW Motion): `::before` is the
+   rest line, asphalt at 15%; `::after` is the same line at 17.65% and fades
+   in on hover, and the two composite to the founder's 30%:
+   1 - (1 - 0.15)(1 - 0.1765) = 0.30. `--edge-l` and `--edge-t` say which
+   edges this column draws in the current layout. */
+.pr-col {
+  position: relative;
+  --edge-l: 0;
+  --edge-t: 0;
+}
+
 .pr-col + .pr-col {
-  box-shadow: inset 0 1px 0 var(--hair);
+  --edge-t: 1px;
 }
 
 @media (min-width: 768px) {
   .pr-col + .pr-col {
-    box-shadow: none;
+    --edge-t: 0;
   }
 
   .pr-col:nth-child(even) {
-    border-left: 1px solid var(--hair);
+    --edge-l: 1px;
   }
 
   .pr-col:nth-child(n + 3) {
-    box-shadow: inset 0 1px 0 var(--hair);
+    --edge-t: 1px;
   }
 }
 
 @media (min-width: 1280px) {
   .pr-col:nth-child(n + 3) {
-    box-shadow: none;
+    --edge-t: 0;
   }
 
   .pr-col + .pr-col {
-    border-left: 1px solid var(--hair);
+    --edge-l: 1px;
+  }
+}
+
+.pr-col::before,
+.pr-col::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-left: var(--edge-l) solid var(--hair);
+  border-top: var(--edge-t) solid var(--hair);
+  pointer-events: none;
+}
+
+.pr-col::after {
+  --hair: rgb(23 24 26 / 17.65%);
+  opacity: 0;
+  transition: opacity 200ms var(--ease-reveal);
+}
+
+/* THE COLUMN HOVER, 2026-09-24 (the founder): the content rises 2px, the
+   hairline goes to 30% and the button darkens one step, over 200ms. The
+   column's box and its lines do not move; its children do. */
+.pr-col > * {
+  transition: transform 200ms var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pr-col:hover > * {
+    transform: translateY(-2px);
+  }
+
+  .pr-col:hover::after {
+    opacity: 1;
+  }
+
+  .pr-col:hover .pr-col__btn::after {
+    opacity: 1;
+  }
+
+  .pr-col:hover .pr-col__btn:active {
+    transform: translateY(-2px) scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pr-col > * {
+    transition: none;
+  }
+
+  .pr-col:hover > * {
+    transform: none;
   }
 }
 
@@ -269,10 +332,28 @@
   color: var(--c-asphalt);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .pr-col__btn:hover {
-    opacity: var(--hover-opacity);
-  }
+/* ONE STEP DARKER ON HOVER, as an overlay that fades in: asphalt goes to the
+   base (#0B0B0D, black at 52% over asphalt), the yellow primary to black at
+   12%, where asphalt still reads 7.6:1. The label sits above the overlay. */
+.pr-col__btn {
+  position: relative;
+  isolation: isolate;
+}
+
+.pr-col__btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: rgb(0 0 0 / 52%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-reveal);
+}
+
+.pr-col__btn--primary::after {
+  background: rgb(0 0 0 / 12%);
 }
 
 .pr-col__btn:active {

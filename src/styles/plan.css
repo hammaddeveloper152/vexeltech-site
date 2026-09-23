@@ -63,9 +63,7 @@
   outline-offset: 2px;
 }
 
-.plan__ticket :focus-visible,
-.plan__bar-btn:focus-visible,
-.plan__sheet :focus-visible {
+.plan__bar-btn:focus-visible {
   outline-color: var(--c-focus); /* bone, 13.67:1 on lit-near */
 }
 
@@ -89,17 +87,24 @@
 }
 
 .plan__in {
+  /* ONE CREAM PANEL HOLDING BOTH COLUMNS, 2026-09-24 (the founder): the
+     questions left, the work order right, a 1px hairline between them. The
+     ticket is no longer a separate dark card. Below 1024 the right column is
+     the phone bar and sheet, so the panel holds the questions alone. */
   display: grid;
-  gap: var(--s-2xl);
   width: min(100%, 1200px);
   margin: 0 auto;
+  border-radius: var(--r-card);
+  background-color: var(--c-cream);
+  color: var(--c-asphalt); /* 15.75:1 */
 }
 
 @media (min-width: 1024px) {
+  /* Both columns run the panel's full height, so the hairline between them
+     does; the ticket inside the right one is what sticks. */
   .plan__in {
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    column-gap: 48px;
-    align-items: start;
+    align-items: stretch;
   }
 }
 
@@ -113,11 +118,6 @@
   align-content: start;
   min-width: 0;
   padding: var(--plan-pad);
-  /* A cream card, 2026-09-24: no hairline, no light, 20px. */
-  border: 0;
-  border-radius: var(--r-card);
-  background-color: var(--c-cream);
-  color: var(--c-asphalt); /* 15.75:1 on cream */
 }
 
 @media (min-width: 1280px) {
@@ -528,42 +528,42 @@
 @media (min-width: 1024px) {
   .plan__side {
     display: block;
+    padding: var(--s-xl);
+    border-left: 1px solid rgb(23 24 26 / 15%); /* asphalt 15%, the grid's hairline */
+  }
+
+  .plan__side .plan__ticket {
     position: sticky;
     top: calc(48px + 2 * var(--s-sm) + var(--s-lg));
   }
 }
 
+@media (min-width: 1280px) {
+  .plan__side {
+    padding: 48px;
+  }
+}
+
 .plan__ticket {
+  /* On the panel's cream: no ground, no border, no radius of its own. */
   display: grid;
-  overflow: hidden;
-  /* THE EDGE IS STEEL-DARK, NOT ASPHALT. Asphalt on arc-black is 1.17:1 —
-     the ticket's face and the drift behind it are within a few points of each
-     other — so a border the colour of the face is no border at all and the
-     card dissolved into the ground. It is a counterpart to the cream panel
-     only if it reads as an object. steel-dark is 5.12:1 on its own face and
-     clears the 3:1 non-text bar against the drift. */
-  /* A DARK CARD, 2026-09-24: lit-near, no border, no light, 20px. */
-  border: 0;
-  border-radius: var(--r-card);
-  background-color: var(--lit-near);
-  color: var(--c-bone); /* 13.67:1 on lit-near */
+  align-content: start;
+  color: var(--c-asphalt); /* 15.75:1 on cream */
 }
 
 .plan__ticket-k {
   margin: 0;
-  padding: var(--s-xl) var(--s-xl) 0;
   font-family: var(--font-offer);
   font-size: var(--t-label-q);
   line-height: var(--t-label-q-line);
   font-weight: var(--t-weight-label);
   letter-spacing: normal;
   text-transform: none;
-  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+  color: var(--c-steel); /* 7.20:1 on cream */
 }
 
 .plan__ticket-trade {
   margin: var(--s-xs) 0 0;
-  padding: 0 var(--s-xl);
   font-family: var(--font-quiet);
   font-size: var(--t-h3-size);
   line-height: var(--t-h3-line);
@@ -576,29 +576,27 @@
    total strip under it there is nothing else to close the card. */
 .plan__ticket-empty {
   margin: var(--s-xs) 0 0;
-  padding: 0 var(--s-xl) var(--s-xl);
   font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-steel); /* 7.20:1 on cream */
 }
 
 /* The stage line. It was steel because the ticket was cream; the ticket is
    asphalt now, so it takes the ground's own secondary, steel-dark. */
 .plan__ticket-stage {
   margin: var(--s-sm) 0 0;
-  padding: 0 var(--s-xl);
   font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-steel); /* 7.20:1 on cream */
 }
 
 .plan__ticket-lines {
   display: grid;
   gap: var(--s-md);
   margin: var(--s-lg) 0 0;
-  padding: 0 var(--s-xl) var(--s-xl);
+  padding: 0;
   list-style: none;
 }
 
@@ -613,14 +611,15 @@
   display: grid;
   gap: 2px;
   font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-asphalt); /* 15.75:1 */
 }
 
 .plan__tl-sub {
   font-size: var(--t-small-size);
   line-height: var(--t-small-line);
-  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+  color: var(--c-steel); /* 7.20:1 */
 }
 
 .plan__tl-save {
@@ -629,28 +628,34 @@
   font-weight: var(--t-weight-label);
   letter-spacing: normal;
   text-transform: none;
-  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+  color: var(--c-steel); /* 7.20:1 */
 }
 
 .plan__tl-p {
-  font-family: var(--font-quiet); /* Clash 400, 2026-09-24: Moldie is the route numerals and the home $700 only */
+  /* Clash 16px, right-aligned against the line (the founder, 2026-09-24). */
+  flex: none;
+  font-family: var(--font-quiet);
   font-weight: 400;
-  font-size: var(--t-name-m);
-  line-height: var(--t-loud-line);
+  font-size: 16px;
+  line-height: 24px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-asphalt);
 }
 
 /* The total strip: YELLOW, the total in Moldie 72px asphalt, 9.46:1. It was
    the inverse while the ticket was cream; the ticket is asphalt now, so an
    asphalt strip would have disappeared into its own card. */
 .plan__total {
+  /* The total row at the foot: a hairline above, "Total" in the label, the
+     figure in Clash 400 at 40px. No yellow strip. */
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: var(--s-md);
-  margin: 0;
-  padding: var(--s-lg) var(--s-xl);
-  /* NO FILL, 2026-09-24: it was a machine yellow strip, and yellow is kept
-     to four places. The total is bone Moldie on the card. */
+  margin: var(--s-lg) 0 0;
+  padding: var(--s-lg) 0 0;
+  border-top: 1px solid rgb(23 24 26 / 15%);
   background: transparent;
 }
 
@@ -661,16 +666,16 @@
   font-weight: var(--t-weight-label);
   letter-spacing: normal;
   text-transform: none;
-  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+  color: var(--c-steel); /* 7.20:1 */
 }
 
 .plan__total-n {
-  font-family: var(--font-quiet); /* Clash 400, 2026-09-24: Moldie is the route numerals and the home $700 only */
+  font-family: var(--font-quiet);
   font-weight: 400;
-  font-size: 72px;
-  line-height: var(--t-loud-line);
+  font-size: 40px;
+  line-height: 1.1;
   font-variant-numeric: tabular-nums;
-  color: var(--c-bone); /* 13.67:1 on lit-near */
+  color: var(--c-asphalt); /* 15.75:1 */
 }
 
 /* ---- 390: the sticky bottom bar and the sheet ------------------------------ */
@@ -727,8 +732,10 @@
   overflow-y: auto;
   padding: var(--s-md) var(--inset) var(--s-xl);
   border-radius: var(--r-card) var(--r-card) 0 0;
-  background: var(--lit-near);
-  color: var(--c-bone); /* 13.67:1 on lit-near */
+  /* Cream, like the panel the ticket stands in on the desktop, so the
+     ticket's values hold in both places (2026-09-24). */
+  background: var(--c-cream);
+  color: var(--c-asphalt); /* 15.75:1 */
   animation: plan-sheet var(--d-panel) var(--ease-drawer) both;
 }
 
@@ -747,12 +754,12 @@
   min-height: 48px;
   margin-left: auto;
   padding: 0 var(--s-md);
-  border: 1px solid var(--c-bone);
+  border: 1px solid var(--c-asphalt);
   background: transparent;
   font-family: var(--font-brand);
   font-size: var(--t-btn);
   font-weight: var(--t-weight-btn);
-  color: var(--c-bone); /* 13.67:1 on lit-near */
+  color: var(--c-asphalt); /* 15.75:1 on cream */
   cursor: pointer;
   line-height: var(--t-btn-line);
   letter-spacing: normal;

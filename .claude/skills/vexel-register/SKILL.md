@@ -59,6 +59,15 @@ otherwise, this section is right and the rest is history.
 - **Later 2026-09-24: Moldie is the home route numerals and the home $700
   only.** Every other price is Clash 400 (56px on /services and the /pricing
   grid). **Every panel and card is 24px** (`--r-card`); buttons and chips 6px.
+- **Card, second pass (2026-09-24)**: artwork 32% / 48% hover, top 65%,
+  fewer larger elements; fade 45% to 80%; chip 48 / icon 22; title 30;
+  padding 28; linked cards rise 4px. `image` mode puts a cost object in the
+  top 65% (in flow; the card may grow past 3:4). What it costs you is four
+  of them. No object stands on the page ground.
+- **Plan Builder is one cream panel** with the ticket as its right column
+  behind a 1px asphalt-15% hairline; the pricing grid's columns lift 2px on
+  hover. Colour changes on hover are overlays that fade in, never animated
+  colour.
 - **THE ONE CARD (2026-09-24)**: `components/site/ArtCard.jsx`. 3:4, 24px,
   lit-near, 1px white 10%, a drawn SVG artwork per discipline fading out by
   75%, chip + Clash 400 28px name + a 16px line (first sentence bone 500).

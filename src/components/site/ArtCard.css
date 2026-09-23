@@ -4,8 +4,14 @@
    Values on lit-near: bone 13.67:1, steel-lift 6.33:1. The chip is
    lit-raised with a bone icon, 11.44:1.
 
-   THE HOVER MOVES OPACITY AND NOTHING ELSE. The founder's hover takes the
-   artwork from 14% to 24% and the border from 10% to 20% white over 200ms.
+   THE SECOND PASS, 2026-09-24 (the founder): the artwork at 32% at rest and
+   48% on hover, the top 65%, the fade starting at 45%; a 48px chip with a
+   22px icon, a 30px title, 28px of padding, and the linked card rising 4px
+   on hover.
+
+   THE HOVER MOVES OPACITY AND TRANSFORM AND NOTHING ELSE. The founder's hover
+   takes the artwork up, the border from 10% to 20% white and the card up
+   4px, over 200ms.
    BUILD-LAW Motion animates transform and opacity only, so the border does
    not transition its colour: a second 1px edge sits on the first and fades
    in. White at 11.1% over white at 10% composites to 20%:
@@ -41,15 +47,15 @@
   transition: opacity 200ms var(--ease-reveal);
 }
 
-/* The artwork: the top 70% of the card, stroked in bone, no fill. The SVG's
-   own opacity is the 14%, so the hover is one opacity value. */
+/* The artwork: the top 65% of the card, stroked in bone, no fill. The SVG's
+   own opacity is the 32%, so the hover is one opacity value. */
 .art__svg {
   position: absolute;
   inset: 0 0 auto 0;
   z-index: -2;
   width: 100%;
-  height: 70%;
-  opacity: 0.14;
+  height: 65%;
+  opacity: 0.32;
   fill: none;
   stroke: var(--c-bone);
   stroke-width: 1.5px;
@@ -60,10 +66,10 @@
   vector-effect: non-scaling-stroke;
 }
 
-/* Websites' three cells: bone at 10% of the card, so 0.714 of the SVG's 14%. */
+/* Websites' three cells: bone at 10% of the card, so 0.3125 of the SVG's 32%. */
 .art__svg .art__fill {
   fill: var(--c-bone);
-  fill-opacity: 0.714;
+  fill-opacity: 0.3125;
   stroke: none;
 }
 
@@ -77,12 +83,14 @@
   fill: var(--lit-near);
 }
 
-/* Transparent at 30% of the card's height, lit-near at 75%. */
+/* Transparent at 45% of the card's height, lit-near at 80%: the founder
+   moved the start to 45%, and the end moves with it so the fade keeps the
+   35 points it had rather than becoming a hard edge under the artwork. */
 .art__fade {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(to bottom, transparent 30%, var(--lit-near) 75%);
+  background: linear-gradient(to bottom, transparent 45%, var(--lit-near) 80%);
   pointer-events: none;
 }
 
@@ -90,22 +98,22 @@
   display: grid;
   justify-items: start;
   gap: var(--s-sm);
-  padding: var(--s-lg);
+  padding: 28px; /* the founder's, off the ramp */
 }
 
 .art__chip {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   margin-bottom: var(--s-sm);
   border-radius: 12px;
   background: var(--c-lit-raised);
 }
 
 .art__icon {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   color: var(--c-bone); /* 11.44:1 on lit-raised */
 }
 
@@ -115,7 +123,7 @@
 .art .art__name {
   margin: 0;
   font-family: var(--font-quiet);
-  font-size: 28px;
+  font-size: 30px;
   line-height: 1.15;
   font-weight: 400;
   letter-spacing: normal;
@@ -142,25 +150,75 @@
    Only a card that goes somewhere answers the pointer; a card that is read
    and not pressed does not pretend to be a control. */
 @media (hover: hover) and (pointer: fine) {
+  .art--link:hover {
+    transform: translateY(-4px);
+  }
+
   .art--link:hover::after {
     opacity: 1;
   }
 
   .art--link:hover .art__svg {
-    opacity: 0.24;
+    opacity: 0.48;
+  }
+
+  .art--link:hover:active {
+    transform: translateY(-4px) scale(0.97);
   }
 }
 
 .art--link {
-  transition: transform var(--d-press) var(--ease-reveal);
+  transition: transform 200ms var(--ease-reveal);
 }
 
 .art--link:active {
   transform: scale(0.97);
+  transition-duration: var(--d-press);
+}
+
+/* ---- The image card: a cost object as the artwork -----------------------
+
+   The transparent webp centred at 200px tall in the top 65% of a 3:4 card,
+   over a radial wash of lit-raised at 40%, with the same fade under it.
+
+   THE OBJECT IS IN FLOW, NOT LAID OVER THE CARD, and the card may grow past
+   3:4. At four across a card is 270 x 360: the object's 65% is 234px and a
+   two-line title with a three-line consequence is about 205px, so a fixed
+   3:4 put the statement across the object. The object area keeps exactly
+   the 65%-of-3:4 height (300 x 260 of the card's width) and the text sits
+   under it; the card is 3:4 wherever that fits and taller where it does not.
+   `overflow: visible` is what lets `aspect-ratio` grow with the content. */
+.art--image {
+  justify-content: flex-start;
+  overflow: visible;
+}
+
+.art--image .art__body {
+  margin-top: auto;
+}
+
+.art__obj {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 100%;
+  aspect-ratio: 300 / 260;
+  border-radius: var(--r-card) var(--r-card) 0 0;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--c-lit-raised) 40%, transparent), transparent);
+}
+
+.art__img {
+  display: block;
+  height: 200px;
+  max-width: 85%;
+  width: auto;
+  object-fit: contain;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .art--link:active {
+  .art--link:hover,
+  .art--link:active,
+  .art--link:hover:active {
     transform: none;
   }
 }

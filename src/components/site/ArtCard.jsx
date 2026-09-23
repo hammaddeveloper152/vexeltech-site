@@ -6,30 +6,35 @@ import './ArtCard.css';
 
    A 3:4 portrait on lit-near, 24px, a 1px border at 10% white, no shadow and
    no light. Behind the text, clipped to the card, one SVG drawn here in code
-   covers the top 70%, stroked in bone at 1.5px with no fill, and a gradient
-   from transparent at 30% to lit-near at 75% fades it out before the text.
+   covers the top 65%, stroked in bone at 1.5px with no fill, at 32% (48% on
+   hover), and a gradient from transparent at 45% to lit-near at 80% fades it
+   out before the text.
    The content is pinned to the bottom: an icon chip, the name, and one line
    whose first sentence is bone and whose rest is steel-lift.
 
-   Used by home's What we do (links to /services) and About's What the phones
+   Used by home's What we do (links to /services), home's What it costs you
+   (the cost objects as the artwork, not links) and About's What the phones
    taught us (not links). DESIGN.md "THE CARD" is the record; BUILD-LAW 0 is
    amended there for the artworks, which appear on both.
 
-   THE ARTWORK IS IN A 300 x 280 BOX, which is the top 70% of a 3:4 card
+   THE ARTWORK IS IN A 300 x 260 BOX, which is the top 65% of a 3:4 card
    (300 wide, 400 tall), and it is placed with `slice` so it covers whatever
    the card's width. Every stroke is `non-scaling-stroke`, so 1.5px is 1.5px
    at every size. */
 
+/* THE SECOND PASS, 2026-09-24 (the founder): the artwork read as texture, not
+   artwork. It is fewer, larger elements now - legible as a pattern at a 320px
+   card - in a 300 x 260 box, the top 65% of a 3:4 card. */
 const W = 300;
-const H = 280;
+const H = 260;
 
-/* Branding: eleven concentric rounded squares, centred off the top right,
+/* Branding: seven concentric rounded squares, centred off the top right,
    each gap wider than the one inside it. */
 function Branding() {
-  const cx = 236;
-  const cy = 44;
-  const squares = Array.from({ length: 11 }, (_, i) => {
-    const half = 10 + 9 * i + 1.1 * i * i;
+  const cx = 232;
+  const cy = 52;
+  const squares = Array.from({ length: 7 }, (_, i) => {
+    const half = 16 + 16 * i + 3 * i * i;
     return (
       <rect
         key={i}
@@ -44,21 +49,21 @@ function Branding() {
   return <g>{squares}</g>;
 }
 
-/* Websites: a 12 x 16 grid of fine lines, three cells filled like a
-   wireframe's placed blocks. The fill is bone at 10% of the card: the SVG
-   sits at 14% opacity, so the cells carry 0.714 of their own. */
+/* Websites: an 8 x 10 grid, three cells filled like a wireframe's placed
+   blocks. The fill is bone at 10% of the card: the SVG sits at 32%, so the
+   cells carry 0.3125 of their own. */
 function Websites() {
-  const cols = 12;
-  const rows = 16;
+  const cols = 8;
+  const rows = 10;
   const cw = W / cols;
   const rh = H / rows;
   const lines = [];
   for (let c = 0; c <= cols; c += 1) lines.push(<line key={`v${c}`} x1={c * cw} y1={0} x2={c * cw} y2={H} />);
   for (let r = 0; r <= rows; r += 1) lines.push(<line key={`h${r}`} x1={0} y1={r * rh} x2={W} y2={r * rh} />);
   const filled = [
-    [2, 2],
-    [7, 4],
-    [4, 8],
+    [1, 1],
+    [5, 2],
+    [3, 5],
   ].map(([c, r]) => (
     <rect key={`f${c}-${r}`} className="art__fill" x={c * cw} y={r * rh} width={cw} height={rh} />
   ));
@@ -70,15 +75,14 @@ function Websites() {
   );
 }
 
-/* Marketing: 24 rays from a point outside the bottom-left corner. The angle
-   between neighbours widens toward the top right, so the fan is dense along
-   the bottom and opens as it climbs. */
+/* Marketing: 14 rays from a point outside the bottom-left corner. The angle
+   between neighbours widens toward the top right. */
 function Marketing() {
   const ox = -40;
   const oy = H + 40;
-  const rays = Array.from({ length: 24 }, (_, i) => {
-    const t = i / 23;
-    const deg = 4 + 78 * t ** 1.6; /* 4 to 82 degrees above the horizontal */
+  const rays = Array.from({ length: 14 }, (_, i) => {
+    const t = i / 13;
+    const deg = 6 + 76 * t ** 1.6; /* 6 to 82 degrees above the horizontal */
     const a = (deg * Math.PI) / 180;
     const len = 700;
     return <line key={i} x1={ox} y1={oy} x2={ox + Math.cos(a) * len} y2={oy - Math.sin(a) * len} />;
@@ -86,13 +90,12 @@ function Marketing() {
   return <g>{rays}</g>;
 }
 
-/* Automation: a dotted circuit. Three horizontal runs, each with one bend - a
-   short vertical - and a 6px node at each end of the bend. */
+/* Automation: a dotted circuit of two runs, each with one bend - a short
+   vertical - and a 6px node at each end of it. */
 function Automation() {
   const runs = [
-    { y: 60, bx: 110, dy: 28 },
-    { y: 128, bx: 196, dy: -24 },
-    { y: 196, bx: 74, dy: 30 },
+    { y: 70, bx: 120, dy: 44 },
+    { y: 170, bx: 196, dy: -40 },
   ];
   return (
     <g>
@@ -114,26 +117,48 @@ function splitLine(text) {
   return at < 0 ? [text, ''] : [text.slice(0, at + 1), text.slice(at + 2)];
 }
 
-export default function ArtCard({ art, Icon, name, line, href = null, as: Heading = 'h3', style }) {
-  const Art = ART[art];
+/* `art` draws one of the four; `image` puts a transparent object in the same
+   top 65% instead, centred at 200px tall over a lit-raised wash (What it
+   costs you, 2026-09-24). `Icon` is optional: the image cards carry none. */
+export default function ArtCard({
+  art = null,
+  image = null,
+  Icon = null,
+  name,
+  line,
+  href = null,
+  as: Heading = 'h3',
+  style,
+}) {
+  const Art = art ? ART[art] : null;
   const [lead, rest] = splitLine(line);
   const body = (
     <>
-      {/* Decorative: the name and the line are the card's content. */}
-      <svg
-        className="art__svg"
-        viewBox={`0 0 ${W} ${H}`}
-        preserveAspectRatio="xMidYMid slice"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <Art />
-      </svg>
+      {Art ? (
+        /* Decorative: the name and the line are the card's content. */
+        <svg
+          className="art__svg"
+          viewBox={`0 0 ${W} ${H}`}
+          preserveAspectRatio="xMidYMid slice"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <Art />
+        </svg>
+      ) : null}
+      {image ? (
+        <span className="art__obj" aria-hidden="true">
+          {/* Decorative: the title says what it shows. */}
+          <img className="art__img" src={image} alt="" loading="lazy" decoding="async" />
+        </span>
+      ) : null}
       <span className="art__fade" aria-hidden="true" />
       <span className="art__body">
-        <span className="art__chip" aria-hidden="true">
-          <Icon className="art__icon" />
-        </span>
+        {Icon ? (
+          <span className="art__chip" aria-hidden="true">
+            <Icon className="art__icon" />
+          </span>
+        ) : null}
         <Heading className="art__name">{name}</Heading>
         <span className="art__line">
           <span className="art__lead">{lead}</span>
@@ -148,7 +173,7 @@ export default function ArtCard({ art, Icon, name, line, href = null, as: Headin
       {body}
     </Link>
   ) : (
-    <div className="art" style={style}>
+    <div className={`art${image ? ' art--image' : ''}`} style={style}>
       {body}
     </div>
   );
