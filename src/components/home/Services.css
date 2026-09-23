@@ -5,9 +5,9 @@
    870px card, the horizontal tween, the focus-into-view helper and the
    `data-arrived` stagger. What is left is a heading, a lead, and a grid.
 
-   The plate itself is not described here. It is `plates.css`, shared with
-   `/services`, because two stylesheets describing one component is how a
-   component drifts.
+   The card itself is not described here. It is the site's one card,
+   `components/site/ArtCard.css` (2026-09-24), shared with About, because two
+   stylesheets describing one component is how a component drifts.
    ========================================================================== */
 
 .services {
@@ -58,22 +58,49 @@
 
 .services__grid {
   display: grid;
-  gap: var(--s-xl);
+  gap: var(--s-lg);
 }
 
-@media (min-width: 1024px) {
-  /* 2x2, 40px apart both ways. The row gap was 72px while the artefact slot
-     stood 32px above its plate; the cards hold their pictures inside their
-     own edges now, so nothing crosses a gap and one number does. */
+/* Four across at 1280, two at 768, one at 390 (the founder, 2026-09-24). */
+@media (min-width: 768px) {
   .services__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--s-xl);
   }
 }
 
-/* THE PLATE IS A LINK HERE, so it takes the link colour off and lets its own
-   type values stand. The list and its spacing are the plate's own now,
-   `plates.css`, shared with the About page's row. */
-.services__grid .svc__plate {
-  text-decoration: none;
+@media (min-width: 1280px) {
+  .services__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* The reveal, 70ms apart, transform and opacity only. */
+@media (prefers-reduced-motion: no-preference) {
+  .services__grid[data-revealed='false'] .art {
+    opacity: 0;
+    transform: translateY(var(--s-sm));
+  }
+
+  .services__grid .art {
+    transition:
+      opacity var(--d-panel) var(--ease-reveal),
+      transform var(--d-panel) var(--ease-reveal);
+    transition-delay: calc(var(--i) * var(--stagger));
+  }
+
+  /* The press keeps its own 160ms, with no stagger in front of it. */
+  .services__grid[data-revealed='true'] .art--link:active {
+    transition-duration: var(--d-press);
+    transition-delay: 0ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services__grid[data-revealed='false'] .art {
+    opacity: 0;
+  }
+
+  .services__grid .art {
+    transition: opacity var(--d-panel) var(--ease-reveal);
+  }
 }

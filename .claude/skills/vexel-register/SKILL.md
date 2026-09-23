@@ -56,6 +56,11 @@ otherwise, this section is right and the rest is history.
 - **Buttons (2026-09-24, pricing rebuild): every button is Clash Display
   Medium 14px, 6px radius** (`--t-btn`, `--t-weight-btn`, `--r-btn`), at
   every width. No call steps up with the frame.
+- **THE ONE CARD (2026-09-24)**: `components/site/ArtCard.jsx`. 3:4, 24px,
+  lit-near, 1px white 10%, a drawn SVG artwork per discipline fading out by
+  75%, chip + Clash 400 28px name + a 16px line (first sentence bone 500).
+  Hover on linked cards only, opacity-only. No yellow. Home's What we do and
+  About's lessons use it; build any new card from it (DESIGN.md "THE CARD").
 - **/pricing** (DESIGN.md "THE PRICING PAGE, REBUILT ON THE MELIUS
   PATTERN"): headline Clash 400 at 56px, grid names Clash 400 at 32px, grid
   prices Clash 400 at 56px (not Moldie, on this grid only). The grid's

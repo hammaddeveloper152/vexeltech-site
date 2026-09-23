@@ -1,8 +1,7 @@
 import React from 'react';
 import { DISCIPLINES as CARDS } from '../../content/disciplines.js';
-import DisciplinePlate from '../site/DisciplinePlate.jsx';
-import usePlateArrival from './usePlateArrival.js';
-import '../../styles/plates.css';
+import ArtCard from '../site/ArtCard.jsx';
+import { useReveal } from './hooks.js';
 import './Services.css';
 
 /* Section 5. The four disciplines, as plates.
@@ -29,7 +28,18 @@ import './Services.css';
    carrier. Neither is needed now. The section is asphalt under the two lights,
    like Failures above it, and the accent is spent on the bars.
 
-   ---- Sub-services, written 2026-09-08, unchanged ------------------------
+   ---- THE CLOAKED CARDS, 2026-09-24 (the founder) --------------------------
+
+   The cream plates and their yellow hover fill are gone. Each discipline is
+   the site's one card (components/site/ArtCard.jsx): 3:4, lit-near, a drawn
+   artwork fading behind the text, four across at 1280, two at 768, one at
+   390. No yellow in the section. The line on each card is the founder's
+   (content/disciplines.js); the sub-service table below is the history of
+   the plates' lists, which the lines replace. DisciplinePlate.jsx,
+   plates.css and usePlateArrival.js were used by nothing else and are
+   deleted.
+
+   ---- Sub-services, written 2026-09-08 (history) -------------------------
 
    All twelve are the user's, from the content answers and the pricing sheet.
    Nothing here is a capability this agency has not stated.
@@ -51,12 +61,11 @@ import './Services.css';
    "what comes off the site" list): lit-near with the two lights, a Phosphor
    icon at 24px top left in white, the name in Moldie, the three items, the
    yellow fill on hover, the strike ticker directly beneath. The tile files
-   are deleted from the build. See `plates.css`. */
+   are deleted from the build. (plates.css itself went 2026-09-24, above.) */
 
 
 export default function Services() {
-  const [plateRef] = usePlateArrival(CARDS.length);
-
+  const [ref, revealed] = useReveal();
   return (
     <section className="vt services" aria-labelledby="services-h">
       <div className="services__in">
@@ -70,19 +79,16 @@ export default function Services() {
             other, and not four invoices.
           </p>
         </div>
-
-        <div className="services__grid">
-          {CARDS.map(({ id, Icon, discipline, subs }, i) => (
-            <DisciplinePlate
+        <div className="services__grid" ref={ref} data-revealed={revealed ? 'true' : 'false'}>
+          {CARDS.map(({ id, Icon, discipline, line }, i) => (
+            <ArtCard
               key={id}
-              id={id}
+              art={id}
               Icon={Icon}
               name={discipline}
-              items={subs.map((t) => ({ t }))}
-              side={i % 2 === 0 ? 'left' : 'right'}
-              as="h3"
-              plateRef={plateRef(i)}
+              line={line}
               href={`/services#${id}`}
+              style={{ '--i': i }}
             />
           ))}
         </div>

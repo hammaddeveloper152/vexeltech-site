@@ -61,7 +61,9 @@ const COLUMNS = DISCIPLINES.map((d) => ({
 /* The founder's table, verbatim, in the grid's column order. */
 const ROWS = [
   ['Turnaround', ['1 to 2 days', '4 days', 'first week', 'per workflow']],
-  ['Revisions', ['unlimited before build', 'two rounds', 'ongoing', 'ongoing']],
+  /* Corrected by the founder, 2026-09-24: home is right, there is no cap.
+     The brief's "unlimited before build" and "two rounds" are superseded. */
+  ['Revisions', ['as many as it takes, before build', 'as many as it takes, before launch', 'ongoing', 'ongoing']],
   ['Ownership', ['yours', 'yours, domain and code', 'yours, ad accounts', 'yours, tools and access']],
   ['Support after launch', ['30 days', '30 days', 'monthly', 'monthly']],
   ['Payment', ['flat, on approval', 'flat, on approval', 'monthly', 'monthly']],

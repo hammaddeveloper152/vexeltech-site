@@ -1,0 +1,166 @@
+/* ==========================================================================
+   THE SITE'S ONE CARD, 2026-09-24. See ArtCard.jsx.
+
+   Values on lit-near: bone 13.67:1, steel-lift 6.33:1. The chip is
+   lit-raised with a bone icon, 11.44:1.
+
+   THE HOVER MOVES OPACITY AND NOTHING ELSE. The founder's hover takes the
+   artwork from 14% to 24% and the border from 10% to 20% white over 200ms.
+   BUILD-LAW Motion animates transform and opacity only, so the border does
+   not transition its colour: a second 1px edge sits on the first and fades
+   in. White at 11.1% over white at 10% composites to 20%:
+   1 - (1 - 0.10)(1 - 0.111) = 0.20.
+   ========================================================================== */
+
+.art {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  aspect-ratio: 3 / 4;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 24px;
+  background: var(--lit-near);
+  box-shadow: none;
+  color: var(--c-bone);
+  text-decoration: none;
+}
+
+.art::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: 2;
+  border: 1px solid rgb(255 255 255 / 11.1%);
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-reveal);
+}
+
+/* The artwork: the top 70% of the card, stroked in bone, no fill. The SVG's
+   own opacity is the 14%, so the hover is one opacity value. */
+.art__svg {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: -2;
+  width: 100%;
+  height: 70%;
+  opacity: 0.14;
+  fill: none;
+  stroke: var(--c-bone);
+  stroke-width: 1.5px;
+  transition: opacity 200ms var(--ease-reveal);
+}
+
+.art__svg * {
+  vector-effect: non-scaling-stroke;
+}
+
+/* Websites' three cells: bone at 10% of the card, so 0.714 of the SVG's 14%. */
+.art__svg .art__fill {
+  fill: var(--c-bone);
+  fill-opacity: 0.714;
+  stroke: none;
+}
+
+/* Automation's circuit is dotted; its nodes are 6px rings on the line. */
+.art__svg .art__dash {
+  stroke-dasharray: 2 5;
+  stroke-linecap: round;
+}
+
+.art__svg .art__node {
+  fill: var(--lit-near);
+}
+
+/* Transparent at 30% of the card's height, lit-near at 75%. */
+.art__fade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to bottom, transparent 30%, var(--lit-near) 75%);
+  pointer-events: none;
+}
+
+.art__body {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-sm);
+  padding: var(--s-lg);
+}
+
+.art__chip {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: var(--s-sm);
+  border-radius: 12px;
+  background: var(--c-lit-raised);
+}
+
+.art__icon {
+  width: 18px;
+  height: 18px;
+  color: var(--c-bone); /* 11.44:1 on lit-raised */
+}
+
+/* `.art .art__name`, two classes: a card on a cream panel sits under
+   `.panel :is(h2, h3)`, which sets headings asphalt and would put the name at
+   1.18:1 on lit-near. */
+.art .art__name {
+  margin: 0;
+  font-family: var(--font-quiet);
+  font-size: 28px;
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-bone); /* 13.67:1 */
+}
+
+.art__line {
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--c-steel-lift); /* 6.33:1 */
+  text-wrap: pretty;
+}
+
+.art__lead {
+  font-weight: 500;
+  color: var(--c-bone); /* 13.67:1 */
+}
+
+/* ---- The linked card: hover, press, focus ---------------------------------
+
+   Only a card that goes somewhere answers the pointer; a card that is read
+   and not pressed does not pretend to be a control. */
+@media (hover: hover) and (pointer: fine) {
+  .art--link:hover::after {
+    opacity: 1;
+  }
+
+  .art--link:hover .art__svg {
+    opacity: 0.24;
+  }
+}
+
+.art--link {
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.art--link:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art--link:active {
+    transform: none;
+  }
+}

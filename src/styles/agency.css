@@ -168,8 +168,9 @@
    that IS the carrier, which is why it was the only frame on the page allowed
    to spend 43% of itself on the accent. It spends 0.2% now.
 
-   Nothing else here is a section rule any more. The plates are `plates.css`,
-   shared with /services; the grid, the head and the ground are Services.css.
+   Nothing else here is a section rule any more. The cards are the site's one
+   card, `components/site/ArtCard.css` (2026-09-24; the plates and plates.css
+   are gone); the grid, the head and the ground are Services.css.
    ========================================================================== */
 
 /* ==========================================================================

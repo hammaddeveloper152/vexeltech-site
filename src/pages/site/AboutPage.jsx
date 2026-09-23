@@ -3,6 +3,7 @@ import { Check, CursorClick, Eye, MagnifyingGlass, Timer, X } from '@phosphor-ic
 import Shell from './Shell.jsx';
 import { CallBand } from './parts.jsx';
 import Faq from '../../components/home/Faq.jsx';
+import ArtCard from '../../components/site/ArtCard.jsx';
 import '../../styles/aboutpage.css';
 
 /* THE ABOUT PAGE, REBUILT 2026-09-23 FROM THE FOUNDER'S COPY.
@@ -277,18 +278,18 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 3. WHAT THE PHONES TAUGHT US. Four cards on a cream panel. */}
+      {/* 3. WHAT THE PHONES TAUGHT US. Four of the site's cards, two across, on a cream panel. */}
       <section className="vt ab3-lesson panel-sec" aria-labelledby="ab3-lesson-h">
         <div className="ab3__in panel">
           <h2 className="ab3__h ab3-lesson__h" id="ab3-lesson-h">
             What the phones taught us
           </h2>
+          {/* The site's one card, 2026-09-24: the four artworks keyed by the
+              discipline, the icons this page already carried. */}
           <ul className="ab3-lesson__grid">
             {LESSONS.map(({ id, Icon, name, line }) => (
-              <li className="ab3-lesson__card" key={id}>
-                <Icon className="ab3-lesson__i" aria-hidden="true" />
-                <h3 className="ab3-lesson__n">{name}</h3>
-                <p className="ab3-lesson__l">{line}</p>
+              <li className="ab3-lesson__item" key={id}>
+                <ArtCard art={id} Icon={Icon} name={name} line={line} />
               </li>
             ))}
           </ul>

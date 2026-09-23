@@ -79,7 +79,8 @@
      and it is not animatable; a layer positioned by `background-position` is.
      So these are the identical radials centred in their own square, sized and
      positioned by whatever uses them. An object that never moves its lights
-     takes the pair above; one that does takes these. See plates.css.
+     takes the pair above; one that does takes these. (plates.css, which used
+     them, is gone since 2026-09-24.)
 
      ONLY THE KEY HAS A MOVING FORM. The rim had one too, so it could swing to
      the point opposite the pointer; the spotlight holds the rim at its station
