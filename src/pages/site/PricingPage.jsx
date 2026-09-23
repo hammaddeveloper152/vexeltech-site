@@ -28,7 +28,15 @@ export default function PricingPage() {
       description="Branding and website packages, marketing and automation scoped to the job."
       driftTo=".plan"
     >
-      <PageHead title="What do you need?" lead="Four questions. Then a plan with a number on it." />
+      {/* The page's one highlighted word, 2026-09-24: `.hl`, tokens.css. */}
+      <PageHead
+        title={
+          <>
+            What do you <span className="hl">need</span>?
+          </>
+        }
+        lead="Four questions. Then a plan with a number on it."
+      />
 
       <PlanBuilder />
 

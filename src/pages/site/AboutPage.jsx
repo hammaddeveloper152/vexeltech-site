@@ -26,6 +26,12 @@ import '../../styles/aboutpage.css';
      7  the note      one reading-width paragraph, the signature in Moldie
      8  the call      the spotlight, and the form from the Shell
 
+   THE QUIET PASS, 2026-09-24, supersedes the faces and grounds named in
+   that list: Moldie is gone from this page (numerals and the signature are
+   Clash in bone), sections 3 and 5 are cream PANELS inside the measure
+   rather than bands, and "phones" in the statement is the page's one
+   highlighted word. DESIGN.md "The quiet pass" is the record.
+
    6a and 6b, and the definition line under the hero paragraph, are
    "ABOUT KEY FACTS 2026-09-23" in the same file, added the same day. The
    definition line is also this page's meta description and the
@@ -224,7 +230,9 @@ export default function AboutPage() {
         <div className="ab3__in ab3-hero__in">
           <div className="ab3-hero__text">
             <h1 className="ab3-hero__h" id="ab3-hero-h">
-              We spent years making phones ring for other people&apos;s brands.
+              {/* The page's one highlighted word, 2026-09-24: `.hl`, tokens.css. */}
+              We spent years making <span className="hl">phones</span> ring for other
+              people&apos;s brands.
             </h1>
             {/* Decorative, so a span rather than an <hr>, which would announce
                 a thematic break between a heading and the line answering it. */}
@@ -269,9 +277,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 3. WHAT THE PHONES TAUGHT US. Four cream cards. */}
-      <section className="vt ab3-lesson colour-band" aria-labelledby="ab3-lesson-h">
-        <div className="ab3__in">
+      {/* 3. WHAT THE PHONES TAUGHT US. Four cards on a cream panel. */}
+      <section className="vt ab3-lesson panel-sec" aria-labelledby="ab3-lesson-h">
+        <div className="ab3__in panel">
           <h2 className="ab3__h ab3-lesson__h" id="ab3-lesson-h">
             What the phones taught us
           </h2>
@@ -291,9 +299,9 @@ export default function AboutPage() {
              bracket, and a marble band of four empty figures is a claim with
              the number left out. It returns when the figures are real. */}
 
-      {/* 5. WHO WE ARE FOR. Two cream cards, a Check list and an X list. */}
-      <section className="vt ab3-fit colour-band" aria-labelledby="ab3-fit-h">
-        <div className="ab3__in">
+      {/* 5. WHO WE ARE FOR. Two cards on a cream panel, a Check list and an X list. */}
+      <section className="vt ab3-fit panel-sec" aria-labelledby="ab3-fit-h">
+        <div className="ab3__in panel">
           <h2 className="ab3__h ab3-fit__h" id="ab3-fit-h">
             Who we are for
           </h2>
@@ -365,7 +373,7 @@ export default function AboutPage() {
       {/* 6b. QUESTIONS. The home accordion, About's four, its own id prefix. */}
       <Faq items={QUESTIONS} id="ab3-faq" />
 
-      {/* 7. THE NOTE. One reading-width paragraph, the signature in Moldie. */}
+      {/* 7. THE NOTE. One reading-width paragraph, the signature in Clash. */}
       <section className="vt ab3-note" aria-labelledby="ab3-note-h">
         <div className="ab3__in ab3-note__in">
           <h2 className="skip-h" id="ab3-note-h">

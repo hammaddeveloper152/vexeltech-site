@@ -9,14 +9,14 @@
    the next reader has to resolve.
    ========================================================================== */
 
+/* The page's section space, 2026-09-24 (the quiet pass): 128 / 80. The two
+   cream sections take theirs from `.panel-sec` in tokens.css. */
 .ab3-hero,
 .ab3-origin,
-.ab3-lesson,
-.ab3-fit,
 .ab3-work,
 .ab3-facts,
 .ab3-note {
-  padding: var(--s-3xl) var(--inset);
+  padding: var(--s-section) var(--inset);
 }
 
 .ab3__in {
@@ -24,16 +24,18 @@
   margin: 0 auto;
 }
 
-/* Monigue at the heading step, the loud register's section heading. */
+/* THE QUIET HEADING, 2026-09-24: Clash Medium, sentence case, 44 / 32, bone.
+   It was Monigue at the heading step; Monigue on this page is the statement
+   alone now. */
 .ab3__h {
   margin: 0 0 var(--s-xl);
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-h);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  color: var(--c-shop-white); /* 17.77:1 */
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-bone); /* 16.32:1 */
   text-wrap: balance;
 }
 
@@ -63,7 +65,7 @@
 .ab3-hero {
   /* No ground of its own: the drift runs through it, as it does on every
      other section of this page. */
-  color: var(--c-shop-white);
+  color: var(--c-bone);
 }
 
 .ab3-hero__in {
@@ -106,7 +108,7 @@
 .ab3-hero__rule {
   width: 48px;
   height: var(--stroke-drawn);
-  background: var(--c-accent-draw-dark); /* 10.47:1 on the base */
+  background: var(--c-bone); /* 16.32:1: bone since 2026-09-24, yellow is kept to four places */
 }
 
 .ab3-hero__p {
@@ -128,7 +130,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* 16.32:1 on the base */
+  color: var(--c-steel-lift); /* body, 7.4:1 on the base */
   text-wrap: pretty;
 }
 
@@ -214,12 +216,14 @@
 }
 
 .ab3-origin__n {
-  font-family: var(--font-name);
+  /* Clash, bone, 2026-09-24: Moldie is prices and route numerals, and
+     yellow is kept to four places. */
+  font-family: var(--font-quiet);
   font-size: 64px;
   line-height: 0.9;
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--c-accent-text-dark); /* 10.47:1 on the base */
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  color: var(--c-bone); /* 16.32:1 on the base */
 }
 
 .ab3-origin__t {
@@ -227,7 +231,7 @@
   font-size: var(--t-h3-size);
   line-height: var(--t-h3-line);
   font-weight: var(--t-weight-label);
-  color: var(--c-shop-white); /* 19.66:1 */
+  color: var(--c-bone); /* 16.32:1 */
 }
 
 .ab3-origin__b {
@@ -235,7 +239,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* 16.32:1 */
+  color: var(--c-steel-lift); /* body, 7.4:1 */
   text-wrap: pretty;
 }
 
@@ -249,19 +253,12 @@
    Values on cream: asphalt 15.75:1, steel 7.20:1. The band restates its own
    focus ring as asphalt, because machine yellow is 1.66:1 there. */
 
-.ab3-lesson {
-  background: var(--c-cream);
+/* CREAM PANELS, 2026-09-24 (the quiet pass): both sections are the dark
+   base with `.panel-sec`, and their `.ab3__in` carries `.panel`, tokens.css.
+   The panel restates the ring and the headings as asphalt. */
+.ab3-lesson,
+.ab3-fit {
   color: var(--c-asphalt);
-}
-
-.ab3-lesson :focus-visible,
-.ab3-fit :focus-visible {
-  outline-color: var(--c-asphalt);
-}
-
-.ab3-lesson__h,
-.ab3-fit__h {
-  color: var(--c-asphalt); /* 15.75:1 on cream */
 }
 
 .ab3-lesson__grid {
@@ -289,11 +286,10 @@
   gap: var(--s-sm);
   min-width: 0;
   padding: var(--s-lg);
-  border: 1px solid var(--c-line);
-  border-radius: 12px;
+  /* On cream: no hairline, no light, 20px (2026-09-24). */
+  border: 0;
+  border-radius: var(--r-card);
   background-color: var(--c-shop-white);
-  background-image: var(--lit-key);
-  background-repeat: no-repeat;
 }
 
 .ab3-lesson__i {
@@ -306,13 +302,14 @@
    register's steps are 64 / 40 / 32 and it sits between two of them, which is
    what the wider card affords. */
 .ab3-lesson__n {
+  /* A card heading, 2026-09-24: Clash Medium at the h3 step, sentence case. */
   margin: 0;
-  font-family: var(--font-name);
-  font-size: 48px;
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
+  font-family: var(--font-quiet);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--c-asphalt);
 }
 
@@ -323,7 +320,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel); /* 7.20:1 on white */
+  color: var(--c-steel); /* 8.12:1 on white */
   text-wrap: pretty;
 }
 
@@ -335,10 +332,6 @@
    a device - the recorded ruling is that a state glyph may repeat - and it is
    recorded here rather than left for someone to find. */
 
-.ab3-fit {
-  background: var(--c-cream);
-  color: var(--c-asphalt);
-}
 
 .ab3-fit__cols {
   display: grid;
@@ -358,21 +351,19 @@
   gap: var(--s-md);
   min-width: 0;
   padding: var(--s-xl);
-  border: 1px solid var(--c-line);
-  border-radius: 12px;
+  border: 0;
+  border-radius: var(--r-card);
   background-color: var(--c-shop-white);
-  background-image: var(--lit-key);
-  background-repeat: no-repeat;
 }
 
 .ab3-fit__n {
   margin: 0;
-  font-family: var(--font-name);
-  font-size: var(--t-name-l);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
+  font-family: var(--font-quiet);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--c-asphalt);
 }
 
@@ -393,7 +384,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-asphalt); /* 17.77:1 on white */
+  color: var(--c-steel); /* body, 8.12:1 on white */
   text-wrap: pretty;
 }
 
@@ -441,12 +432,13 @@
 }
 
 .ab3-how__n {
-  font-family: var(--font-name);
+  /* Clash, bone, 2026-09-24. */
+  font-family: var(--font-quiet);
   font-size: 96px;
   line-height: 0.9;
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--c-accent-text-dark); /* 10.47:1 on the base, 9.93 on arc-black */
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  color: var(--c-bone); /* 16.32:1 on the base */
 }
 
 .ab3-how__t {
@@ -454,7 +446,7 @@
   font-size: var(--t-h3-size);
   line-height: var(--t-h3-line);
   font-weight: var(--t-weight-label);
-  color: var(--c-shop-white);
+  color: var(--c-bone);
 }
 
 .ab3-how__line {
@@ -462,7 +454,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone);
+  color: var(--c-steel-lift); /* body, 7.4:1 */
   text-wrap: pretty;
 }
 
@@ -510,12 +502,13 @@
 }
 
 .ab3-facts__dt {
+  /* The quiet label, 2026-09-24: 13px sentence case (was 11px caps). */
   font-family: var(--font-offer);
-  font-size: 11px;
-  line-height: var(--t-label-line);
+  font-size: var(--t-label-q);
+  line-height: var(--t-label-q-line);
   font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--c-steel-lift); /* 7.4:1 on the base */
 }
 
@@ -545,17 +538,17 @@
   font-family: var(--font-offer);
   font-size: var(--t-h3-size);
   line-height: 36px;
-  color: var(--c-shop-white); /* 19.66:1 on the base */
+  color: var(--c-bone); /* 16.32:1 on the base */
   text-wrap: pretty;
 }
 
 .ab3-note__sig {
+  /* Clash Medium, bone, 2026-09-24: it was Moldie in yellow. */
   margin: 0;
-  font-family: var(--font-name);
-  font-size: var(--t-name-m);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  color: var(--c-accent-text-dark); /* 10.47:1 on the base */
+  font-family: var(--font-quiet);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  color: var(--c-bone); /* 16.32:1 on the base */
 }

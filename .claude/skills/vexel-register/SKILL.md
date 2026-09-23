@@ -25,6 +25,35 @@ never substitute an existing asset, never generate, never leave a
 placeholder. Reuse is a defect, not a saving. Check every new glyph against
 every route before it ships.
 
+## 0000. THE QUIET PASS (2026-09-24) outranks everything below
+
+DESIGN.md "THE QUIET PASS" is the record. Where anything in this file says
+otherwise, this section is right and the rest is history.
+
+- **Monigue: two things only**, the home hero headline and the About
+  statement. **Every other heading: Clash Display Medium (500), sentence
+  case, normal tracking, bone, `--t-head` (44px at 1280, 32px at 390).**
+  Card-level headings: the same face at the h3 step, 27px.
+- **Moldie: prices and the route numerals only.**
+- **Label: 13px Satoshi, sentence case, steel-lift** (`--t-label-q`); steel on
+  cream. No uppercase tracked labels anywhere, the nav included.
+- **Body: 16px Satoshi, steel-lift. Headings: bone. Nothing pure white** but
+  the home hero headline (and the About statement, as its page's hero).
+- **No full-bleed colour.** Cream surfaces are `.panel`: 20px, inside the
+  1200 measure, on the dark base, no border, no light. Sections holding one
+  are `.panel-sec`; two in a row sit 96px apart. Photographic call bands are
+  imagery and stay.
+- **Yellow in exactly four places**: the primary button; one highlighted word
+  per page (`.hl`: "Yet." home, "phones" About, "need" pricing, "do"
+  services); the Plan Builder progress line; the route line. They may share a
+  frame (BUILD-LAW, amended). Everything else is bone. The focus ring is bone
+  on dark (`--c-focus`), asphalt on cream. The wordmark and the page
+  transition keep theirs.
+- **Cards: 20px** (`--r-card`). A dark card is flat lit-near, no border,
+  nothing else. Cream and white-on-cream cards: no hairline, no light.
+- **Section padding `--s-section`: 128px at 1280, 80px at 390.**
+- **Motion unchanged.**
+
 ## 000. The founder's restructure (2026-09-22) outranks what follows
 
 Asphalt is retired as a GROUND: the base is #0B0B0D (`--c-base`) and the
@@ -204,12 +233,13 @@ index rail, that is history.
 
 | Face | Token | Job | Weight | Case |
 |---|---|---|---|---|
-| **Monigue** | `--font-loud` | **shouts**: the hero, every section heading, every statement, every figure and numeral | 400, static | uppercase, always |
-| **Clash Display** | `--font-brand` | **controls, only controls**: calls, buttons, the questions a reader presses | 600 | sentence case from the copy, never a transform |
-| **Satoshi** | `--font-offer` | **reading**: body, sub, quotes, the first-person statement, labels | 400 body, 500 label | labels uppercase at 0.12em |
+| **Monigue** | `--font-loud` | **the home hero headline and the About statement, nothing else** (quiet pass, 2026-09-24) | 400, static | uppercase, always |
+| **Clash Display** | `--font-brand` / `--font-quiet` | **every other heading** at 500, sentence case, bone, `--t-head`; and controls at 600 | 500 headings, 600 controls | sentence case from the copy, never a transform |
+| **Satoshi** | `--font-offer` | **reading**: body (16px, steel-lift), sub, quotes, labels (13px, sentence case) | 400 body, 500 label | never uppercase |
+| **Moldie** | `--font-name` | **prices and the route numerals only** | 400 | as set |
 
-Clash is not a statement face and not a heading face any more. A quote is
-read, so it is Satoshi. A statement shouts, so it is Monigue.
+SUPERSEDED 2026-09-24: Clash is the heading face again, at Medium. The
+table above is current; the loud-register reasoning below is history.
 
 Monigue's hhea and typo metrics disagree by 6%: **every use sets
 `line-height` explicitly** (`--t-loud-line`, 0.9; the hero uses 0.88).
@@ -229,7 +259,8 @@ divided by a fixed number. The page scales as one thing.
 | Small loud | `--t-loud-small` | measure / 32 | 27 / 36 | 36px |
 | Quote | `--t-quote-size(-lg)` | fixed | | 40 / 58px, Satoshi |
 | Control | `--t-h2` / `--t-h3` / body | fixed | | 40 / 27 / 18px, Clash |
-| Body / small / label | `--t-body` / `--t-small` / `--t-label` | fixed | | 18 / 14 / 12px |
+| Heading (quiet) | `--t-head` | 32px at 390 to 44px at 1280, linear | 32 / 44 | 44px, Clash 500 |
+| Body / small / label | `--t-body` / `--t-small` / `--t-label-q` | fixed | | 16 / 14 / 13px |
 
 `--inset` is 16 / 40 / 64px at 390 / 768 / 1024 and is the only value the
 hero and the scale share. **The hero is the only fluid thing with no floor

@@ -125,13 +125,20 @@ export default function ServicesPage() {
       title="Services | VexelTech"
       description="Branding, websites, marketing and automation. The four disciplines in full, from one team."
     >
+      {/* The page's one highlighted word, 2026-09-24: `.hl`, tokens.css. */}
       <PageHead
-        title="What we do"
+        title={
+          <>
+            What we <span className="hl">do</span>
+          </>
+        }
         lead="Four disciplines and one team. Not four agencies who don't talk to each other, and not four invoices."
       />
 
-      {/* NOT INSIDE `Section`, 2026-09-23. Each discipline is a full-width
-          band now, and `Section` wraps its children in `.pg__section-in`,
+      {/* NOT INSIDE `Section`, 2026-09-23. (Since 2026-09-24 the cream
+          disciplines are panels inside the measure, not bands, and `vt` on
+          the section still holds.) Each discipline was a full-width
+          band then, and `Section` wraps its children in `.pg__section-in`,
           which is the page measure plus the inset - so the bands were 1152
           wide at 1280 and a cream band stopped short of both edges. A band
           that does not reach the viewport edge is not a band. Each section

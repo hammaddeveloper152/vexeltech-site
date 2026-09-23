@@ -294,12 +294,12 @@
   --t-h2-line: 44px;
   --t-h3-size: 27px;
   --t-h3-line: 32px;
-  --t-body-size: 18px;
-  --t-body-line: 28px;
+  --t-body-size: 16px; /* the quiet pass, 2026-09-24: was 18 */
+  --t-body-line: 24px;
   --t-small-size: 14px; /* deviation: readability, plate says 12 */
   --t-small-line: 20px;
-  --t-label-size: 12px; /* deviation: plate says 8, below the 11px floor */
-  --t-label-line: 16px;
+  --t-label-size: 13px; /* the quiet pass: 13px sentence case, was 12 uppercase */
+  --t-label-line: 20px;
 
   /* Pull quote: display-sized body, not a heading. Same sizes as the brand
      register, body leading instead of heading leading. Both line heights are
@@ -387,6 +387,42 @@
      and brings it to well under the ceiling. It is still the second largest
      object in the section at that width. */
   --t-name-fig: 64px; /* the work grid numerals            */
+
+  /* ---- THE QUIET PASS, 2026-09-24, the founder --------------------------
+
+     From a comparison against teak.io. DESIGN.md "The quiet pass" is the
+     record; these are its values.
+
+     THE HEADING. Clash Display Medium, sentence case, normal tracking, bone:
+     44px at 1280 and 32px at 390, linear between and held outside. Every
+     heading on the site takes it except the home hero headline and the About
+     statement, which stay Monigue. 44 / 32 is the founder's pair; the slope is
+     12px over 890px of viewport.
+
+     THE LABEL. 13px Satoshi, sentence case, steel-lift on the dark base and
+     steel on cream. It replaces the 11px and 12px uppercase tracked label
+     everywhere, so --t-label-size follows it.
+
+     SECTION SPACE. 128px above and below a section at 1280, 80px at 390, on
+     the same linear slope. Neither is on the Plate 04 ramp and both are the
+     founder's; the ramp still governs the space between things inside a
+     section. Panels are 96px apart, which is the ramp's own --s-3xl.
+
+     THE CARD. 20px radius on every card and panel. A card on the dark base
+     is lit-near and nothing else; a cream panel has no hairline and no light. */
+  --font-quiet: var(--font-brand);
+  --t-weight-quiet: 500;
+  --t-head: clamp(32px, calc(26.74px + 1.348vw), 44px);
+  --t-head-line: 1.15;
+  --t-label-q: 13px;
+  --t-label-q-line: 20px;
+  --s-section: clamp(80px, calc(58.97px + 5.393vw), 128px);
+  --s-panel-gap: var(--s-3xl);
+  --r-card: 20px;
+  --c-card-edge: rgb(255 255 255 / 8%);
+  /* Focus is bone on the dark base and asphalt on cream: yellow is kept to
+     its four places, and a ring is none of them. Bone on the base 16.32:1. */
+  --c-focus: var(--c-bone);
 
   /* ---- Spacing: Plate 04. 32 and 48 are deliberately absent ------------- */
   --s-xs: 4px;
@@ -647,7 +683,9 @@ html {
   line-height: var(--t-body-line);
   /* Explicit: Satoshi is variable and its default instance is 900. */
   font-weight: var(--t-weight-body);
-  color: var(--c-shop-white);
+  /* Bone, not white, 2026-09-24: nothing on the site is pure white except
+     the home hero headline. */
+  color: var(--c-bone);
   /* NO GROUND. `.vt` painted asphalt on every section it touched, which is
      every section on the site — 41 of them, all opaque, three pages' worth of
      them sitting on top of their own lighting rig. The ground is the rig's,
@@ -660,9 +698,10 @@ html {
 
 /* Focus is a ring, never the hover treatment.
 
-   One rule, because there is one ground. The register took every section to
-   asphalt, so the ring is machine yellow direct at 9.46:1 and needs no offset
-   band. The `.vt--light` variant that used to sit here carried the asphalt
+   One rule, because there is one ground. The ring is BONE since the quiet
+   pass, 2026-09-24 (it was machine yellow at 9.46:1): yellow is kept to four
+   places and a ring is none of them. Bone on the base is 16.32:1, and a cream
+   panel restates it as asphalt below. The `.vt--light` variant that used to sit here carried the asphalt
    band for light-ground sections; nothing has carried that class since the
    register pass, and BUILD-LAW records that dead override code has produced
    near-invisible text on this project before. It is deleted rather than left
@@ -673,8 +712,71 @@ html {
    in register.css, which is self-contained and does not depend on this one
    for anything but the outline every focusable element already gets. */
 .vt :focus-visible {
-  outline: var(--focus-ring) solid var(--c-accent-draw-dark);
+  outline: var(--focus-ring) solid var(--c-focus);
   outline-offset: var(--focus-offset);
+}
+
+/* ---- The quiet pass, 2026-09-24: the panel and the highlighter ---------
+
+   The heading is not a class here: each heading rule is set at its own source
+   to --font-quiet / --t-head, because a shared class would lose to every
+   section sheet loaded after this one.
+
+   THE PANEL. Cream, 20px, inside the measure, on the dark base: no border,
+   no light, no shadow. It replaces every full-bleed colour band. Values on
+   cream: asphalt 15.75:1, steel 7.20:1. Yellow on cream is 1.66:1, so no
+   yellow sits on a panel and its focus ring is asphalt. */
+.panel {
+  width: min(100%, 1200px);
+  margin-inline: auto;
+  padding: var(--s-2xl) var(--s-lg);
+  border: 0;
+  border-radius: var(--r-card);
+  background: var(--c-cream);
+  box-shadow: none;
+  color: var(--c-asphalt);
+}
+
+@media (min-width: 768px) {
+  .panel {
+    padding: var(--s-2xl);
+  }
+}
+
+.panel :focus-visible {
+  outline-color: var(--c-asphalt);
+}
+
+/* Headings on a panel are asphalt, 15.75:1. `:is()` rather than `:where()`:
+   this has to beat each section's own heading colour, whatever loads last. */
+.panel :is(h2, h3) {
+  color: var(--c-asphalt);
+}
+
+/* A section holding a panel keeps the page's section space; two panel
+   sections in a row close up to the 96px between panels. */
+.panel-sec {
+  padding: var(--s-section) var(--inset);
+}
+
+.panel-sec + .panel-sec {
+  padding-top: 0;
+}
+
+.panel-sec:has(+ .panel-sec) {
+  padding-bottom: var(--s-panel-gap);
+}
+
+/* THE HIGHLIGHTER. One word per page, a machine yellow box behind it with
+   asphalt type inside, 9.46:1. It is one of yellow's four places; BUILD-LAW
+   records it as one type treatment used once per page, not a repeated
+   device. `box-decoration-break` keeps the box whole on a word that wraps. */
+.hl {
+  padding: 0 0.12em;
+  background: var(--c-accent-ground);
+  color: var(--c-asphalt);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 /* The skip link.
@@ -709,7 +811,7 @@ html {
   background: var(--c-base);
   border: 1px solid var(--c-rule-dark);
   border-radius: var(--r-sm); /* control */
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  color: var(--c-bone); /* 16.32:1 on the base */
   font-family: var(--font-brand); /* it is pressed, so it is Clash */
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
@@ -719,7 +821,7 @@ html {
 
 .skip:focus-visible {
   transform: translateY(0);
-  outline: var(--focus-ring) solid var(--c-accent-draw-dark); /* 9.46:1 */
+  outline: var(--focus-ring) solid var(--c-focus); /* 16.32:1 */
   outline-offset: var(--focus-offset);
 }
 

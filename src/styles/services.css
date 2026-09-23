@@ -41,7 +41,9 @@
 /* The four discipline sections, 96px apart. See section 4 below. */
 .svc2 {
   display: grid;
-  gap: var(--s-3xl);
+  /* 0, 2026-09-24: each discipline carries the page's section space now
+     (128 / 80), so a gap on top of it would double it. It was 96. */
+  gap: 0;
   min-width: 0;
 }
 
@@ -63,13 +65,15 @@
    because machine yellow is 1.66:1 there. */
 
 .svc2__d {
-  padding: var(--s-3xl) var(--inset);
-  color: var(--c-shop-white);
+  padding: var(--s-section) var(--inset);
+  color: var(--c-bone);
 }
 
+/* A CREAM PANEL, 2026-09-24 (the quiet pass): the section is the dark base
+   and `.svc2__in` carries `.panel`, both tokens.css. It was a full-bleed
+   cream band. Type inherits asphalt from the panel. */
 .svc2__d--cream {
-  background: var(--c-cream);
-  color: var(--c-asphalt); /* 15.75:1 */
+  color: var(--c-asphalt); /* 15.75:1 on the panel */
 }
 
 .svc2__d--cream :focus-visible {
@@ -103,12 +107,14 @@
 /* Moldie at 64px, the name register: a discipline is a product name. */
 .svc2__name {
   margin: 0 0 var(--s-md);
-  font-family: var(--font-name);
-  font-size: 64px;
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
+  /* A service name is a heading, 2026-09-24: Clash Medium, 44 / 32. It was
+     Moldie at 64px. */
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
   color: inherit;
 }
 
@@ -157,7 +163,11 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: inherit;
+  color: var(--c-steel-lift); /* body, 7.4:1 on the base */
+}
+
+.svc2__d--cream .svc2__item {
+  color: var(--c-steel); /* body on cream, 7.20:1 */
 }
 
 /* The tick is machine yellow on the dark bands and asphalt on the cream ones:
@@ -168,7 +178,7 @@
   height: var(--icon-md);
   /* Optical: the cap height of the line beside it, not the line box. */
   margin-top: 2px;
-  color: var(--c-accent-draw-dark); /* 10.47:1 on the base */
+  color: var(--c-bone); /* 16.32:1: bone since 2026-09-24, yellow is kept to four places */
 }
 
 .svc2__d--cream .svc2__check {
@@ -206,27 +216,27 @@
    a figure's size would make a statement about pricing look like a price. */
 .svc2__oncall {
   margin: 0 0 var(--s-lg);
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-h);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
   color: inherit;
   text-wrap: balance;
 }
 
-/* The label register, 11px, the site's mono station. */
+/* The label register: 13px sentence case since 2026-09-24 (was 11px caps). */
 .svc2__fact {
   max-width: 44ch;
   margin: 0 0 var(--s-sm);
   font-family: var(--font-offer);
-  font-size: 11px;
-  line-height: 16px;
+  font-size: var(--t-label-q);
+  line-height: var(--t-label-q-line);
   font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
-  color: var(--c-steel-lift); /* 7.55:1 on the base */
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-steel-lift); /* 7.4:1 on the base */
 }
 
 .svc2__d--cream .svc2__fact {
@@ -274,7 +284,7 @@
   background: transparent;
   border: 1px solid var(--c-steel-lift);
   border-radius: var(--r-none);
-  color: var(--c-shop-white); /* 19.66:1 on the base */
+  color: var(--c-bone); /* 16.32:1 on the base */
   text-decoration: none;
 }
 

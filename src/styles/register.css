@@ -45,9 +45,10 @@
    ========================================================================== */
 
 /* ---- Every section heading ------------------------------------------------
-   Monigue, uppercase, display / 2 — 95px at 1280. About's heading stays
-   visually hidden by its own recorded decision (a visible heading above a
-   pull quote is a fifth thing in that frame); the rule is harmless on it. */
+   THE QUIET PASS, 2026-09-24 (the founder): Clash Display Medium, sentence
+   case, 44px at 1280 and 32px at 390, normal tracking, bone, 16.32:1. It was
+   Monigue uppercase at display / 2, 95px at 1280. Monigue is the home hero
+   headline's and the About statement's alone now. */
 .fail__h,
 .services__h,
 .about__h,
@@ -55,39 +56,44 @@
 .faq__h,
 .foot__h {
   margin: 0 0 var(--s-xl);
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-h);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  color: var(--c-shop-white); /* 17.77:1 */
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-bone);
   text-wrap: balance;
 }
 
 /* ---- Failures -----------------------------------------------------------
-   FOUR DARK ROWS, 2026-09-21. The heading is the rule above, white. The
-   statement is Monigue at the small loud step, white; the consequence is body
-   in bone, 13.84:1. No carrier. */
+   The statement is a card-level heading (an h3 under the section's h2), so it
+   takes the quiet face at the h3 step rather than the section step: Clash
+   Medium, sentence case, bone. The consequence is body, 16px steel-lift,
+   7.4:1. No carrier. */
 .fail__s {
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-small);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  color: var(--c-shop-white); /* 17.77:1 */
+  font-family: var(--font-quiet);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-bone); /* 16.32:1 */
 }
 
 /* The consequence explains: body, not small. */
 .fail__c {
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* 13.84:1 */
+  color: var(--c-steel-lift); /* 7.4:1 on the base */
 }
 
 /* ---- Services -----------------------------------------------------------
-   Carrier: THE DISCIPLINE NAME on every card, in yellow at the STATEMENT
+   THE QUIET PASS, 2026-09-24: the discipline name is a service name, so it is
+   the heading face at the heading size, and BONE - yellow is kept to its four
+   places. The history below is what it was.
+
+   WAS: Carrier: THE DISCIPLINE NAME on every card, in yellow at the STATEMENT
    size. The frame is a pinned scroller with at most two cards in view, and
    at the heading size two yellow disciplines measured over 5% of the frame;
    at the statement size they are about 2.5%, and the heading above them
@@ -95,13 +101,13 @@
    no accent since its numerals came out; it spends it here, on the one word
    each card exists to say. */
 .services__discipline {
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-s);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  color: var(--c-accent-text-dark); /* 9.46:1 */
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-bone);
 }
 
 .services__sub {
@@ -152,10 +158,11 @@
    steel-lift, 6.33:1 on lit-near. */
 .services__art::after {
   content: attr(data-n);
-  font-family: var(--font-name);
+  /* Clash, not Moldie, 2026-09-24: Moldie is prices and route numerals. */
+  font-family: var(--font-quiet);
   font-size: 96px;
-  line-height: var(--t-loud-line);
-  font-weight: 400;
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
   letter-spacing: 0;
   color: var(--c-steel-lift);
 }
@@ -219,7 +226,7 @@
    page built around one rig, which is the exact defect the audit existed to
    find. */
 .counters {
-  color: var(--c-shop-white);
+  color: var(--c-bone);
 }
 
 /* The three column separators are gone. Four figures at 128px in four equal
@@ -236,23 +243,24 @@
 }
 
 .counters__n {
-  font-family: var(--font-loud);
+  /* Clash, 2026-09-24: Monigue is two headlines only now. */
+  font-family: var(--font-quiet);
   font-size: var(--t-loud-fig);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--c-shop-white);
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  color: var(--c-bone);
 }
 
 /* WHITE, 2026-09-21, ready for when the figures land: the storyboard keeps
    yellow to buttons, the route line, the hovered card and the yellow band.
    It was the frame's yellow carrier. */
 .counters__item:first-child .counters__n {
-  color: var(--c-shop-white); /* 17.77:1 */
+  color: var(--c-bone); /* 16.32:1 */
 }
 
 .counters__l {
-  color: var(--c-steel-dark); /* 5.12:1 */
+  color: var(--c-steel-lift); /* 7.4:1 */
 }
 
 /* ---- Testimonials and Process: came off with the storyboard, 2026-09-21. The
@@ -271,14 +279,14 @@
    The drawn rule under a question is a hairline in both states and no longer
    the accent, because the heading is. */
 .faq {
-  color: var(--c-shop-white);
+  color: var(--c-bone);
 }
 
 /* WHITE, 2026-09-21. It was the FAQ frame's yellow carrier; the storyboard
    keeps yellow to buttons, the route line, the hovered card and the Yellow
    band, and a heading is none of them. */
 .faq__h {
-  color: var(--c-shop-white); /* 17.77:1 */
+  color: var(--c-bone); /* 16.32:1 */
 }
 
 .faq__list,
@@ -294,44 +302,13 @@
   background: var(--c-rule-dark);
 }
 
-/* The open row's ground and radius are agency.css's - lit-near, both lights,
-   `--r-md`. What is left here is nothing: the pair that was here set shop
-   white and squared the corners, and both were reversed one sheet later.
-   Kept as a note rather than a rule, because a declaration that never lands is
-   a second opinion the next reader has to resolve. */
-
-.faq__item[data-open='true'] .faq__q-t {
-  color: var(--c-asphalt); /* 17.77:1 on white */
-}
-
-.faq__item[data-open='true'] .faq__mark,
-.faq__item[data-open='true'] .faq__a {
-  color: var(--c-steel); /* 8.12:1 on white */
-}
-
-.faq__item[data-open='true'] .faq__rule {
-  background: var(--c-line);
-}
-
-/* The open row is the one light surface left on the page, and this rule is
-   the whole of its focus treatment.
-
-   Measured after the register pass: the question's ring was machine yellow
-   straight on shop white at 1.88:1. The ring itself is unchanged — every
-   focusable element on the page gets the same 2px machine yellow outline
-   from `.vt :focus-visible` in tokens.css — and what this adds is the
-   asphalt band behind it, which is what supplies the separation on a light
-   ground. DESIGN.md Components: the band, not the yellow, is what makes
-   focus readable there.
-
-   It used to be described as the row-scoped copy of a `.vt--light`
-   section rule. That rule is deleted: no section carries the class since
-   the register took the page to asphalt, and a dead override is the failure
-   BUILD-LAW's contrast note is about. This one stands on its own and
-   depends on nothing but the base outline. */
-.faq__item[data-open='true'] :focus-visible {
-  box-shadow: 0 0 0 calc(var(--focus-ring) + var(--focus-offset)) var(--c-asphalt);
-}
+/* THE OPEN ROW IS A DARK CARD, and its rules are Faq.css's alone: flat
+   lit-near, 20px, no border, no light, no shadow (the quiet pass,
+   2026-09-24). The asphalt-on-white values that were here were dead on both
+   routes that mount the accordion - agency.css beat them on home and Faq.css,
+   imported after this sheet, beat them on About - and a dead override is the
+   failure BUILD-LAW's contrast note is about. The asphalt focus band went
+   with them: it was separation for a light row, and the row is dark. */
 
 /* ---- Footer form --------------------------------------------------------
    Carrier: THE SUBMIT — already the accent, already solid. It steps to the

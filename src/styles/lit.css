@@ -710,13 +710,12 @@ body[data-ground='drift']::before {
   box-shadow: var(--lift), var(--lit-inset);
 }
 
-/* ---- Display type: the glow, and only here -----------------------------
+/* ---- Display type: the glow is GONE, 2026-09-24 ---------------------------
 
-   Machine yellow at 12%, 40px. It is the key falling on the largest object on
-   the page and it is the one place on the site that gets it. */
-.hero__headline {
-  text-shadow: 0 0 40px rgb(240 179 35 / 12%);
-}
+   It was machine yellow at 12%, 40px, on the hero headline. The quiet pass
+   keeps yellow to four places, and the headline now carries one of them - the
+   highlighter behind "Yet." - so a yellow haze around the same line would be
+   a fifth. */
 
 /* ---- The back layer ----------------------------------------------------
 

@@ -412,7 +412,7 @@
   line-height: var(--t-body-line);
   font-weight: var(--t-weight-body);
   letter-spacing: normal;
-  color: var(--c-shop-white);
+  color: var(--c-bone); /* 2026-09-24: nothing white but the headline */
   text-decoration: underline;
   text-decoration-thickness: from-font;
   text-underline-offset: 0.25em;

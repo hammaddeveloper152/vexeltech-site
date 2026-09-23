@@ -44,9 +44,9 @@
 
 .plan {
   position: relative;
-  padding: var(--s-3xl) var(--inset);
+  padding: var(--s-section) var(--inset);
   background: transparent; /* the drift, arc-black here */
-  color: var(--c-shop-white);
+  color: var(--c-bone);
 }
 
 .plan :focus-visible {
@@ -66,7 +66,7 @@
 .plan__ticket :focus-visible,
 .plan__bar-btn:focus-visible,
 .plan__sheet :focus-visible {
-  outline-color: var(--c-accent-draw-dark); /* 9.46:1 on asphalt */
+  outline-color: var(--c-focus); /* bone, 13.67:1 on lit-near */
 }
 
 .plan__in {
@@ -94,12 +94,10 @@
   align-content: start;
   min-width: 0;
   padding: var(--plan-pad);
-  border: 1px solid var(--c-line); /* the light-ground hairline */
-  border-radius: 12px;
+  /* A cream card, 2026-09-24: no hairline, no light, 20px. */
+  border: 0;
+  border-radius: var(--r-card);
   background-color: var(--c-cream);
-  /* The key alone: the rim is a dark-surface light. */
-  background-image: var(--lit-key);
-  background-repeat: no-repeat;
   color: var(--c-asphalt); /* 15.75:1 on cream */
 }
 
@@ -164,12 +162,14 @@
 .plan__q {
   max-width: 18ch;
   margin: 0 0 var(--s-md);
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-h);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
+  /* The Plan Builder question is a heading, 2026-09-24: Clash Medium,
+     sentence case, 44 / 32. It was Monigue at the heading step. */
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--c-asphalt); /* 15.75:1 on cream */
   text-wrap: balance;
 }
@@ -267,7 +267,7 @@
   width: 100%;
   min-height: 48px;
   padding: var(--s-lg);
-  border-radius: 12px;
+  border-radius: var(--r-card);
   text-align: left;
 }
 
@@ -277,10 +277,11 @@
 }
 
 .plan__card-t {
-  font-family: var(--font-name);
-  font-size: var(--t-name-m);
-  line-height: var(--t-loud-line);
-  text-transform: uppercase;
+  /* Clash Medium, 2026-09-24: Moldie is prices and route numerals now. */
+  font-family: var(--font-quiet);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-quiet);
   color: var(--c-asphalt); /* 14.63:1 on bone */
 }
 
@@ -296,7 +297,6 @@
   .plan__chip:hover,
   .plan__card:hover {
     transform: translateY(-4px);
-    border-color: var(--c-accent-draw-dark);
   }
 }
 
@@ -305,7 +305,8 @@
    the job it does everywhere else on this page. Cream on asphalt 15.75:1. */
 .plan__chip[aria-pressed='true'],
 .plan__card[aria-pressed='true'] {
-  border: 2px solid var(--c-accent-draw-dark);
+  /* The yellow border went, 2026-09-24: the fill already says selected. */
+  border: 2px solid var(--c-asphalt);
   background: var(--c-asphalt);
   color: var(--c-cream); /* 15.75:1 */
 }
@@ -362,11 +363,11 @@
 
 .plan__label {
   font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
+  font-size: var(--t-label-q);
+  line-height: var(--t-label-q-line);
   font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--c-steel); /* 7.20:1 on cream */
 }
 
@@ -520,32 +521,32 @@
      card dissolved into the ground. It is a counterpart to the cream panel
      only if it reads as an object. steel-dark is 5.12:1 on its own face and
      clears the 3:1 non-text bar against the drift. */
-  border: 1px solid var(--c-steel-dark);
-  border-radius: 12px;
-  background-color: var(--c-asphalt);
-  background-image: var(--lit-key);
-  background-repeat: no-repeat;
-  color: var(--c-cream); /* 15.75:1 on asphalt */
+  /* A DARK CARD, 2026-09-24: lit-near, no border, no light, 20px. */
+  border: 0;
+  border-radius: var(--r-card);
+  background-color: var(--lit-near);
+  color: var(--c-bone); /* 13.67:1 on lit-near */
 }
 
 .plan__ticket-k {
   margin: 0;
   padding: var(--s-xl) var(--s-xl) 0;
   font-family: var(--font-offer);
-  font-size: 11px;
-  line-height: 16px;
+  font-size: var(--t-label-q);
+  line-height: var(--t-label-q-line);
   font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
 }
 
 .plan__ticket-trade {
   margin: var(--s-xs) 0 0;
   padding: 0 var(--s-xl);
-  font-family: var(--font-name);
-  font-size: var(--t-name-m);
-  line-height: var(--t-loud-line);
-  text-transform: uppercase;
+  font-family: var(--font-quiet);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-quiet);
 }
 
 /* THE EMPTY STATE, from step 1. Steel on cream, 7.20:1 - the ticket's own
@@ -558,7 +559,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
 }
 
 /* The stage line. It was steel because the ticket was cream; the ticket is
@@ -569,7 +570,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
 }
 
 .plan__ticket-lines {
@@ -598,16 +599,16 @@
 .plan__tl-sub {
   font-size: var(--t-small-size);
   line-height: var(--t-small-line);
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
 }
 
 .plan__tl-save {
-  font-size: 11px;
-  line-height: 16px;
+  font-size: var(--t-label-q);
+  line-height: var(--t-label-q-line);
   font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
 }
 
 .plan__tl-p {
@@ -626,17 +627,19 @@
   gap: var(--s-md);
   margin: 0;
   padding: var(--s-lg) var(--s-xl);
-  background: var(--c-accent-ground);
+  /* NO FILL, 2026-09-24: it was a machine yellow strip, and yellow is kept
+     to four places. The total is bone Moldie on the card. */
+  background: transparent;
 }
 
 .plan__total-k {
   font-family: var(--font-offer);
-  font-size: 11px;
-  line-height: 16px;
+  font-size: var(--t-label-q);
+  line-height: var(--t-label-q-line);
   font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
-  color: var(--c-asphalt); /* 9.46:1 on machine yellow */
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
 }
 
 .plan__total-n {
@@ -644,7 +647,7 @@
   font-size: 72px;
   line-height: var(--t-loud-line);
   font-variant-numeric: tabular-nums;
-  color: var(--c-asphalt); /* 9.46:1 on machine yellow */
+  color: var(--c-bone); /* 13.67:1 on lit-near */
 }
 
 /* ---- 390: the sticky bottom bar and the sheet ------------------------------ */
@@ -675,7 +678,7 @@
      opening onto an asphalt ticket would have been two cards. */
   border-top: 1px solid var(--c-steel-dark);
   background: var(--c-asphalt);
-  color: var(--c-cream); /* 15.75:1 */
+  color: var(--c-bone); /* 14.74:1 on asphalt */
   cursor: pointer;
 }
 
@@ -699,9 +702,9 @@
   max-height: 85vh;
   overflow-y: auto;
   padding: var(--s-md) var(--inset) var(--s-xl);
-  border-radius: 12px 12px 0 0;
-  background: var(--c-asphalt);
-  color: var(--c-cream); /* 15.75:1 */
+  border-radius: var(--r-card) var(--r-card) 0 0;
+  background: var(--lit-near);
+  color: var(--c-bone); /* 13.67:1 on lit-near */
   animation: plan-sheet var(--d-panel) var(--ease-drawer) both;
 }
 
@@ -720,12 +723,12 @@
   min-height: 48px;
   margin-left: auto;
   padding: 0 var(--s-md);
-  border: 1px solid var(--c-cream);
+  border: 1px solid var(--c-bone);
   background: transparent;
   font-family: var(--font-brand);
   font-size: var(--t-body-size);
   font-weight: var(--t-weight-brand);
-  color: var(--c-cream); /* 15.75:1 on asphalt */
+  color: var(--c-bone); /* 13.67:1 on lit-near */
   cursor: pointer;
 }
 

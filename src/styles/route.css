@@ -20,13 +20,14 @@
    ========================================================================== */
 
 .route-band {
-  --route-ink: var(--c-shop-white);
-  --route-soft: var(--c-bone);
+  /* 2026-09-24: bone and steel-lift. Nothing is white but the hero. */
+  --route-ink: var(--c-bone);
+  --route-soft: var(--c-steel-lift);
   --route-line: var(--c-accent-draw-dark);
   /* The dot's rest value. `--route-lit` went with the numeral's arrival
      colour: a token with no call site is deleted, not kept for later. */
   --route-rest: var(--c-steel-lift);
-  padding: 128px var(--inset);
+  padding: var(--s-section) var(--inset);
   color: var(--route-ink);
 }
 
@@ -39,12 +40,12 @@
 .route-band__h {
   scroll-margin-top: calc(48px + 2 * var(--s-sm) + var(--s-lg));
   margin: 0 0 var(--s-2xl);
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-h);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--route-ink);
   text-wrap: balance;
 }
@@ -134,7 +135,9 @@
 }
 
 .route__stop[data-reached='true'] .route__n {
-  color: var(--route-line);
+  /* BONE, 2026-09-24: the numeral lights on arrival as it did, but to bone.
+     The line is the route's one yellow. */
+  color: var(--route-ink);
 }
 
 /* The title and its line beside the numeral, the title's first line centred

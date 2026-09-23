@@ -12,8 +12,8 @@
 
 .foot {
   /* Transparent. The ground and both blooms are the page rig's, declared once
-     in lit.css — see the audit note there. */  padding: var(--s-3xl) var(--s-md);
-  color: var(--c-shop-white); /* 17.77:1 */
+     in lit.css — see the audit note there. */  padding: var(--s-section) var(--s-md);
+  color: var(--c-bone); /* 16.32:1 */
 /* Section separator REMOVED 2026-09-08: on an all-asphalt page two
    sections are separated by space, not by a stroke. See DESIGN.md,
    "Separation on an all-asphalt page". */
@@ -36,13 +36,14 @@
    takes the loud face at the heading step like every other one. */
 .foot__h {
   margin: 0 0 var(--s-xl);
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-h);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  color: var(--c-shop-white); /* 17.77:1 */
+  /* The quiet heading, 2026-09-24: Clash Medium, sentence case, 44 / 32. */
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-bone); /* 16.32:1 */
   text-wrap: balance;
 }
 
@@ -62,13 +63,14 @@
 }
 
 .foot__label {
+  /* The quiet label, 2026-09-24: 13px, sentence case, steel-lift. */
   font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
+  font-size: var(--t-label-q);
+  line-height: var(--t-label-q-line);
   font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
-  color: var(--c-shop-white);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-steel-lift); /* 7.4:1 */
 }
 
 .foot__req {
@@ -260,18 +262,15 @@
   color: var(--c-bone); /* 13.84:1 */
   text-decoration: underline;
   text-underline-offset: 4px;
-  transition: color var(--d-press) var(--ease-reveal);
+  transition: opacity var(--d-press) var(--ease-reveal);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .foot__email:hover {
-    color: var(--c-shop-white);
+    opacity: var(--hover-opacity);
   }
 }
 
-.foot__email:focus-visible {
-  color: var(--c-shop-white);
-}
 
 .foot__email:active {
   transform: scale(0.97);
@@ -283,7 +282,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* 13.84:1 */
+  color: var(--c-steel-lift); /* body, 7.4:1 */
 }
 
 /* NO HAIRLINES, 2026-09-21, by the user. The footer sits on the drift's last
@@ -324,7 +323,7 @@
   min-height: 48px;
   font-size: var(--t-small-size);
   line-height: var(--t-small-line);
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  color: var(--c-bone); /* 16.32:1 */
   text-decoration: none;
   transition:
     opacity var(--d-press) var(--ease-reveal),
@@ -364,12 +363,12 @@
 
 @media (hover: hover) and (pointer: fine) {
   .social__a:hover {
-    color: var(--c-shop-white); /* 17.77:1 */
+    color: var(--c-bone); /* 16.32:1 */
   }
 }
 
 .social__a:focus-visible {
-  color: var(--c-shop-white);
+  color: var(--c-bone);
 }
 
 .social__a:active {
@@ -379,18 +378,19 @@
 /* ---- The base -----------------------------------------------------------
 
    "Mono" in the brief is the label register, as it was on About's pricing
-   band: the system has no monospace face. 11px, the label floor, steel-lift. */
+   band: the system has no monospace face. 13px sentence case since the quiet
+   pass, 2026-09-24 (was 11px uppercase), steel-lift. */
 .foot__base {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--s-xs);
   font-family: var(--font-offer);
-  font-size: 11px;
-  line-height: var(--t-label-line);
+  font-size: var(--t-label-q);
+  line-height: var(--t-label-q-line);
   font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--c-steel-lift); /* 7.4:1 on asphalt */
 }
 
@@ -424,7 +424,7 @@
 
 @media (min-width: 768px) {
   .foot {
-    padding: var(--s-3xl) var(--s-xl);
+    padding: var(--s-section) var(--s-xl);
   }
 
   .foot__form {
@@ -481,6 +481,6 @@
 
 @media (min-width: 1024px) {
   .foot {
-    padding: var(--s-3xl) var(--s-2xl);
+    padding: var(--s-section) var(--s-2xl);
   }
 }

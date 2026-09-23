@@ -15,8 +15,9 @@
    The band is a GROUND, not a carrier. Everything on it is asphalt, 9.46:1,
    and the focus ring is restated asphalt. */
 .ab3-price {
-  padding: var(--s-3xl) var(--inset);
-  background: var(--c-accent-field);
+  /* A CREAM PANEL, 2026-09-24 (the quiet pass): it was the full-bleed
+     machine yellow band. The section is the dark base with `.panel-sec`'s
+     space and the cream is `.panel` on `.promise__in`, both tokens.css. */
   color: var(--c-asphalt);
 }
 
@@ -28,13 +29,13 @@
 /* Monigue at the heading step, asphalt on the band: 9.46:1. */
 .promise__h {
   margin: 0 0 var(--s-xl);
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-h);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  color: var(--c-asphalt);
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-asphalt); /* 15.75:1 on cream */
   text-wrap: balance;
 }
 
@@ -48,14 +49,20 @@
 }
 
 .ab3-price__fig {
+  /* The figure is sized in `cqi`, so this column is its container: Moldie
+     sets "$700" about 2.2em wide against Monigue's 1.3, and at the old
+     min(240px, 30vw) it ran into the refusals at 1280 (2026-09-24). */
+  container-type: inline-size;
   display: grid;
   align-content: start;
 }
 
 .ab3-price__n {
   margin: 0 0 var(--s-md);
-  font-family: var(--font-loud);
-  font-size: min(240px, 30vw);
+  /* Moldie, 2026-09-24: prices are the name face's, and asphalt on cream,
+     15.75:1. It was Monigue. */
+  font-family: var(--font-name);
+  font-size: min(240px, calc(100cqi / 2.3));
   line-height: var(--t-loud-line);
   font-weight: 400;
   letter-spacing: 0;
@@ -65,12 +72,12 @@
 .ab3-price__k {
   margin: var(--s-xs) 0 0;
   font-family: var(--font-offer);
-  font-size: 13px;
-  line-height: 20px;
+  font-size: var(--t-label-q);
+  line-height: var(--t-label-q-line);
   font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
-  color: var(--c-asphalt);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-steel); /* the quiet label on cream, 7.20:1 */
 }
 
 .ab3-price__refuse {
@@ -85,7 +92,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-asphalt);
+  color: var(--c-steel); /* body on cream, 7.20:1 */
   text-wrap: pretty;
 }
 
@@ -96,10 +103,6 @@
     align-items: start;
   }
 
-  .ab3-price__r {
-    font-size: var(--t-h3-size);
-    line-height: 36px;
-  }
 }
 
 /* The image row that stood here (`.promise__cast` / `.promise__img`, 240px

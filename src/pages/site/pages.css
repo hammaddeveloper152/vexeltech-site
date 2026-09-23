@@ -31,49 +31,8 @@
    construction. It stops being trivial the moment a second one is added.
    ========================================================================== */
 
-/* ---- Page head ---------------------------------------------------------
-
-   A page opens with its name and one line under it. No eyebrow anywhere on
-   these pages, so the three-per-page allowance is spent nowhere and the
-   heading is the first thing read.
-
-   ---- THE STEP, RAISED 2026-09-08 --------------------------------------
-
-   It was `--t-loud-h`, the section-heading step, measure / 12.12, 95px at
-   1280. THAT IS EXACTLY HALF THE HERO, and it was the wrong half: a page
-   whose entire content is its heading was opening at the same size as a
-   heading that labels a section inside a page. The seven pages read as
-   abandoned because their one loud element was the quietest loud thing on
-   the site.
-
-   IT IS NOW THE FIGURE STEP, `--t-loud-fig`, measure / 9 — 128px at 1280,
-   64px at 390. Derived from the page's own measure the way the hero's size
-   is, not chosen against the h2 step:
-
-     Display   measure / 6.06    190px    the hero, and nothing else
-     Figure    measure / 9       128px    THE PAGE HEAD, from here
-     Heading   measure / 12.12    95px    a section inside a page
-
-   That puts it nearer the hero than the section heading, which is the
-   relationship a page head should have to both.
-
-   NO SIZE WAS ADDED. This is an existing step taking a new role, which is
-   the only kind of change the scale allows — "if a step is missing, it is
-   missing on purpose". The figure step already carried the counter figures,
-   the process numerals, the failures lead and the testimonial count; it
-   carries page heads now too.
-
-   DISPLAY WAS CONSIDERED AND IS NOT AVAILABLE. It is the hero's, one per
-   site, and it has no floor or ceiling because the hero's string was solved
-   against the full-bleed measure. A page head at 190px would also leave the
-   two full pages nothing above their own section headings. */
-
-.pg__h[data-step='figure'] {
-  font-size: var(--t-loud-fig); /* measure / 9 */
-}
-
 .pg__head {
-  padding: var(--s-3xl) var(--inset) var(--s-2xl);
+  padding: var(--s-section) var(--inset) var(--s-2xl);
 }
 
 .pg__head-in {
@@ -86,13 +45,17 @@
    figure step is kept for a page that passes `step="figure"` (Contact, which
    is off the sheet). */
 .pg__h {
+  /* The quiet heading, 2026-09-24: Clash Medium, sentence case, 44 / 32,
+     bone. It was Monigue at the heading step. Contact's `data-step="figure"`
+     rule went with it: there is one heading size now. */
   margin: 0;
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-h); /* measure / 12.12, 95px at 1280 */
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  text-transform: uppercase;
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-bone); /* 16.32:1 */
   text-wrap: balance;
 }
 
@@ -104,7 +67,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  color: var(--c-steel-lift); /* 7.4:1 on the base */
 }
 
 /* DESIGN.md, Pull quote: "A sentence set large is not a heading, and it must
@@ -142,7 +105,7 @@
    and the section needs its own top inset. */
 
 .pg__section {
-  padding: 0 var(--inset) var(--s-3xl);
+  padding: 0 var(--inset) var(--s-section);
 }
 
 /* THE CONTACT PAGE'S FORM FOLLOWS THE HEAD DIRECTLY, and it carried its own
@@ -162,12 +125,13 @@
    the page head leads and these are the supporting set. Statement step. */
 .pg__sh {
   margin: 0 0 var(--s-lg);
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-s);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  text-transform: uppercase;
-  color: var(--c-shop-white);
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-bone);
 }
 
 .pg__note {
@@ -176,7 +140,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-dark);
+  color: var(--c-steel-lift);
 }
 
 /* ---- The discipline block, Services page ------------------------------- */
@@ -197,25 +161,15 @@
   }
 }
 
-/* THE NAME FACE, and the selector is scoped to `.disc` ON PURPOSE. The About
-   page reuses `.disc__name` for "The people", which is a sub-heading and not a
-   product name; Moldie is banned from headings, so it must not reach it. Only
-   a name inside a discipline block takes the face; the size is the loud
-   scale's own and does not change. */
-.disc .disc__name {
-  font-family: var(--font-name);
-  font-weight: 400;
-  letter-spacing: 0;
-}
-
 .disc__name {
   margin: 0 0 var(--s-md);
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-s);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  text-transform: uppercase;
-  color: var(--c-shop-white);
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-bone);
 }
 
 .disc__line {
@@ -224,7 +178,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-dark);
+  color: var(--c-steel-lift);
 }
 
 @media (min-width: 1024px) {
@@ -267,7 +221,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-shop-white);
+  color: var(--c-bone);
 }
 
 /* A detail belonging to the item above it, not a service of its own. */
@@ -275,7 +229,7 @@
   display: block;
   font-size: var(--t-small-size);
   line-height: var(--t-small-line);
-  color: var(--c-steel-dark);
+  color: var(--c-steel-lift);
 }
 
 /* ---- Tier cards, Pricing page: REMOVED 2026-09-10 ----------------------
@@ -302,7 +256,7 @@
 
 /* Section separator removed: asphalt against asphalt under 96px of space. */
 .callband {
-  padding: var(--s-3xl) var(--inset);
+  padding: var(--s-section) var(--inset);
 }
 
 /* MEASURED 2026-09-08: this band used 43 to 48% of a 1280 frame — the
@@ -343,12 +297,13 @@
 
 .callband__h {
   margin: 0;
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-s);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  text-transform: uppercase;
-  color: var(--c-shop-white);
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-bone);
 }
 
 .callband__note {
@@ -357,7 +312,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-dark);
+  color: var(--c-steel-lift);
 }
 
 /* button-primary: asphalt on machine yellow, 9.46:1. Square, sentence case,
@@ -417,7 +372,7 @@
   align-content: center;
   gap: var(--s-xl);
   min-height: calc(100svh - var(--bar-h, 65px));
-  padding: var(--s-3xl) var(--inset);
+  padding: var(--s-section) var(--inset);
 }
 
 .one__in {
@@ -427,14 +382,13 @@
 
 .one__h {
   margin: 0;
-  font-family: var(--font-loud);
-  /* The same step as .pg__h, and most obviously right here: on these four
-     pages the heading IS the content. */
-  font-size: var(--t-loud-fig);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  text-transform: uppercase;
-  color: var(--c-shop-white);
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-bone);
 }
 
 .one__lead {
@@ -443,7 +397,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-dark);
+  color: var(--c-steel-lift);
 }
 
 /* Same as .pg__lead: the h3 size with body leading, never heading leading. */
@@ -466,7 +420,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-small-size);
   line-height: var(--t-small-line);
-  color: var(--c-steel-dark);
+  color: var(--c-steel-lift);
 }
 
 .one__cta {
@@ -554,7 +508,7 @@
   font-size: var(--t-quote-size);
   line-height: var(--t-quote-line);
   font-weight: var(--t-weight-body);
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  color: var(--c-bone); /* 16.32:1 on the base */
   text-wrap: balance;
 }
 
@@ -571,7 +525,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  color: var(--c-steel-lift); /* 7.4:1 on the base */
 }
 
 .pgq__support + .pgq__support {
@@ -593,12 +547,12 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-dark);
+  color: var(--c-steel-lift);
 }
 
 .runline strong {
   font-weight: var(--t-weight-body);
-  color: var(--c-shop-white);
+  color: var(--c-bone);
 }
 
 .runline a {
@@ -610,7 +564,7 @@
   display: inline-block;
   padding-block: 14px;
   margin-block: -14px;
-  color: var(--c-shop-white);
+  color: var(--c-bone);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -650,7 +604,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-dark);
+  color: var(--c-steel-lift);
 }
 
 .tiers__route a {
@@ -662,7 +616,7 @@
   display: inline-block;
   padding-block: 14px;
   margin-block: -14px;
-  color: var(--c-shop-white);
+  color: var(--c-bone);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -713,7 +667,7 @@
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
   font-weight: var(--t-weight-brand);
-  color: var(--c-steel-dark); /* 5.12:1 on asphalt */
+  color: var(--c-steel-lift); /* 7.4:1 on the base */
   cursor: pointer;
   /* NO TRANSITION. The first draft had `transition: color` here, which is a
      straight breach of BUILD-LAW Motion — transform and opacity only — and it
@@ -746,8 +700,8 @@
 #tab-websites:checked ~ .tabs__row [for=tab-websites],
 #tab-marketing:checked ~ .tabs__row [for=tab-marketing],
 #tab-automation:checked ~ .tabs__row [for=tab-automation] {
-  border-bottom-color: var(--c-shop-white);
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  border-bottom-color: var(--c-bone);
+  color: var(--c-bone); /* 16.32:1 on the base */
 }
 
 /* Focus lands on the input, so the ring has to be drawn on the label it
@@ -757,7 +711,7 @@
 #tab-websites:focus-visible ~ .tabs__row [for=tab-websites],
 #tab-marketing:focus-visible ~ .tabs__row [for=tab-marketing],
 #tab-automation:focus-visible ~ .tabs__row [for=tab-automation] {
-  outline: 2px solid var(--c-accent-ground);
+  outline: 2px solid var(--c-focus);
   outline-offset: 2px;
 }
 

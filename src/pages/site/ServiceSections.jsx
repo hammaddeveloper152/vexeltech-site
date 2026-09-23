@@ -91,10 +91,10 @@ export default function ServiceSections({ disciplines }) {
           <section
             key={d.id}
             id={d.id}
-            className={`vt svc2__d${cream ? ' svc2__d--cream colour-band' : ''}`}
+            className={`vt svc2__d${cream ? ' svc2__d--cream panel-sec' : ''}`}
             aria-labelledby={`svc-${d.id}`}
           >
-            <div className="svc2__in">
+            <div className={`svc2__in${cream ? ' panel' : ''}`}>
               <div className="svc2__left">
                 <h2 className="svc2__name" id={`svc-${d.id}`}>
                   {d.name}

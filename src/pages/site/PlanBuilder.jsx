@@ -407,7 +407,7 @@ export default function PlanBuilder() {
      ticket (and restart its line animations) on every keystroke. */
   const renderTicket = (inSheet = false) => (
     <div className="plan__ticket" data-sheet={inSheet ? 'true' : 'false'}>
-      <p className="plan__ticket-k">WORK ORDER</p>
+      <p className="plan__ticket-k">Work order</p>
       {/* THE EMPTY STATE, from step 1: the ticket is mounted before there is
           anything on it, so the panel has something opposite it on every
           step. One line, steel on cream at 7.20:1. The trade line is Moldie
@@ -429,7 +429,7 @@ export default function PlanBuilder() {
             >
               <span className="plan__tl-t">
                 {l.label}
-                {l.save ? <span className="plan__tl-save">saves {money(l.save)}</span> : null}
+                {l.save ? <span className="plan__tl-save">Saves {money(l.save)}</span> : null}
                 {l.sub ? <span className="plan__tl-sub">{l.sub}</span> : null}
               </span>
               {l.price !== null ? <span className="plan__tl-p">{money(l.price)}</span> : null}

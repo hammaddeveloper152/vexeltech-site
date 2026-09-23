@@ -307,8 +307,8 @@ for (const [w, h, size] of [[1280, 800, 64], [390, 844, 40]]) {
   check(fit.every((f) => f.over <= 1), `reduced: every phrase inside the frame (lines/overrun: ${fit.map((f) => `${f.lines}/${f.over}`).join(', ')})`);
 
   /* The line-through against the painted caps, on every line of the longest
-     phrase: yellow rows with the line, white rows with the line made
-     transparent. */
+     phrase: the line's rows by difference (below), white rows with the line
+     made transparent. */
   await rp.evaluate(() => {
     const e = [...document.querySelectorAll('.tick__problem')].sort((a, b) => b.textContent.length - a.textContent.length)[0];
     e.id = 'rm-probe';
@@ -334,8 +334,25 @@ for (const [w, h, size] of [[1280, 800, 64], [390, 844, 40]]) {
     }
     return [a, z];
   };
+  /* THE LINE IS FOUND BY DIFFERENCE, 2026-09-24. It was found by colour -
+     yellow rows - and the strike went bone with the quiet pass, the same
+     colour as the outline, so a colour test found nothing and returned NaN.
+     A row is the line's where a third of the fragment's width is bright with
+     the line and was not without it. */
+  const lineRows = ([x0, y0, bw, bh]) => {
+    let a = null, z = null;
+    for (let y = Math.max(0, Math.ceil(y0)); y < Math.min(withLine.height, Math.floor(y0 + bh)); y++) {
+      let hit = 0;
+      for (let x = Math.max(0, Math.ceil(x0)); x < Math.min(withLine.width, Math.floor(x0 + bw)); x++) {
+        const i = (y * withLine.width + x) * 4;
+        if (withLine.data[i] > 200 && noLine.data[i] < 120) hit++;
+      }
+      if (hit > bw / 3) { if (a === null) a = y; z = y; }
+    }
+    return [a, z];
+  };
   const offs = rects.map((r) => {
-    const [ya, yz] = rows(withLine, r, (R, G, B) => R > 200 && G > 140 && B < 90);
+    const [ya, yz] = lineRows(r);
     const [ca, cz] = rows(noLine, r, (R, G, B) => R > 200 && G > 200 && B > 200);
     return ya === null || ca === null ? NaN : +(((ya + yz + 1) / 2) - ((ca + cz + 1) / 2)).toFixed(1);
   });

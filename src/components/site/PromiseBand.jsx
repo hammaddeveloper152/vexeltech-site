@@ -29,15 +29,15 @@ const REFUSALS = [
 
 export default function PromiseBand({ id }) {
   return (
-    <section className="vt ab3-price promise colour-band" aria-labelledby={id}>
-      <div className="promise__in">
+    <section className="vt ab3-price promise panel-sec" aria-labelledby={id}>
+      <div className="promise__in panel">
         <h2 className="promise__h ab3-price__h" id={id}>
           Flat prices, and a short list of things we refuse to do.
         </h2>
         <div className="ab3-price__cols">
           <div className="ab3-price__fig">
             <p className="ab3-price__n">$700</p>
-            <p className="ab3-price__k">flat, one time</p>
+            <p className="ab3-price__k">Flat, one time</p>
             <p className="ab3-price__k">$299 to $449 for branding</p>
           </div>
           <ul className="ab3-price__refuse">

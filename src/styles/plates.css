@@ -30,13 +30,13 @@
   position: relative;
   isolation: isolate;
   display: grid;
-  border: 1px solid var(--c-line); /* the light-ground hairline */
-  border-radius: var(--r-md);
+  /* A CREAM CARD, 2026-09-24 (the quiet pass): no hairline, no light, 20px. */
+  border: 0;
+  border-radius: var(--r-card);
   background-color: var(--c-cream);
   /* THE KEY ALONE. The rim is a dark-surface light; see the head of this
      sheet. The key no longer follows the pointer (2026-09-21, storyboard). */
-  background-image: var(--lit-key);
-  background-repeat: no-repeat;
+  background-image: none;
   /* The resting state, alternating, straightened on arrival. */
   transform: rotate(-1.5deg);
   transition:
@@ -92,9 +92,9 @@
   align-content: start;
   gap: var(--s-lg);
   padding: 32px;
-  border-radius: 12px;
+  border-radius: var(--r-card);
   overflow: hidden;
-  clip-path: inset(0 round 12px);
+  clip-path: inset(0 round var(--r-card));
   color: var(--c-asphalt); /* the icon inherits it: 15.75:1 on cream */
 }
 
@@ -143,49 +143,23 @@
    which is the failure BUILD-LAW's gating rule names. Focus and the tap hold
    their own state and are safe outside the gate. */
 @media (hover: hover) and (pointer: fine) {
+  /* THE FILL IS GONE, 2026-09-24: the card was machine yellow on hover, and
+     yellow is kept to four places. The lift stays - motion is unchanged -
+     and the card stays cream. */
   .svc__plate:hover {
-    background-color: var(--c-accent-ground);
-    background-image: none;
-    border-color: var(--c-accent-ground);
     box-shadow: none;
     /* -8, because the card already rests at -4 from its arrival. The lift the
        reader sees is the brief's 4px. */
     transform: rotate(0deg) translateY(-8px);
-    transition:
-      background-color var(--d-drop) var(--ease-reveal),
-      border-color var(--d-drop) var(--ease-reveal),
-      transform var(--d-drop) var(--ease-reveal);
-  }
-
-  .svc__plate:hover .svc__icon,
-  .svc__plate:hover .disc__name,
-  .svc__plate:hover .disc__item {
-    color: var(--c-asphalt); /* 9.46:1 on machine yellow */
-    transition: color var(--d-drop) var(--ease-reveal);
+    transition: transform var(--d-drop) var(--ease-reveal);
   }
 }
 
 .svc__plate:focus-visible,
 .svc__plate[data-tap='true'] {
-  background-color: var(--c-accent-ground);
-  background-image: none;
-  border-color: var(--c-accent-ground);
   box-shadow: none;
   transform: rotate(0deg) translateY(-8px);
-  transition:
-    background-color var(--d-drop) var(--ease-reveal),
-    border-color var(--d-drop) var(--ease-reveal),
-    transform var(--d-drop) var(--ease-reveal);
-}
-
-.svc__plate:focus-visible .svc__icon,
-.svc__plate:focus-visible .disc__name,
-.svc__plate:focus-visible .disc__item,
-.svc__plate[data-tap='true'] .svc__icon,
-.svc__plate[data-tap='true'] .disc__name,
-.svc__plate[data-tap='true'] .disc__item {
-  color: var(--c-asphalt); /* 9.46:1 on machine yellow */
-  transition: color var(--d-drop) var(--ease-reveal);
+  transition: transform var(--d-drop) var(--ease-reveal);
 }
 
 /* The press, on the filled card. Last, so it wins the tie with the fill. */
@@ -203,25 +177,18 @@
     transform: none;
     transition: none;
   }
-  .svc__plate:hover .svc__icon,
-  .svc__plate:hover .disc__name,
-  .svc__plate:hover .disc__item,
-  .svc__plate[data-tap='true'] .svc__icon,
-  .svc__plate[data-tap='true'] .disc__name,
-  .svc__plate[data-tap='true'] .disc__item {
-    transition: none;
-  }
 }
 
 /* Moldie, the name face, at the home card step (40px). Asphalt on cream. */
 .svc__plate .disc__name {
   margin: 0 0 var(--s-sm);
-  font-family: var(--font-name);
-  font-size: var(--t-name-l);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
+  /* A service name is a heading, 2026-09-24: Clash Medium, 44 / 32. */
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--c-asphalt); /* 15.75:1 on cream */
 }
 

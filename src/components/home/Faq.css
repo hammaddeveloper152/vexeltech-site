@@ -36,10 +36,10 @@
      the viewport edge. */
   --faq-bleed: min(var(--s-lg), var(--faq-pad));
 
-  padding: var(--s-3xl) var(--faq-pad);
+  padding: var(--s-section) var(--faq-pad);
   /* Transparent. The ground and both blooms are the page rig's, declared once
      in lit.css. */
-  color: var(--c-shop-white);
+  color: var(--c-bone);
 }
 
 .faq__inner {
@@ -49,11 +49,11 @@
 
 .faq__h {
   margin: 0 0 var(--s-xl);
-  font-family: var(--font-brand);
-  font-size: var(--t-h2-size);
-  line-height: var(--t-h2-line);
-  font-weight: var(--t-weight-brand);
-  letter-spacing: var(--t-track-display);
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
   text-wrap: balance;
 }
 
@@ -95,22 +95,25 @@
 
    Not animated. A background is neither transform nor opacity, so it changes
    when the row changes and the motion budget stays on the panel's contents. */
+/* THE QUIET PASS, 2026-09-24: a dark card is flat lit-near with no border,
+   no light and no shadow, at the card radius. The paragraph above is its
+   history. */
 .faq__item[data-open='true'] {
   background-color: var(--lit-near);
-  background-image: var(--lit-key), var(--lit-rim);
-  border-radius: var(--r-md); /* container */
-  border-bottom-color: var(--lit-edge-arc);
+  background-image: none;
+  border-radius: var(--r-card);
+  border-bottom-color: transparent;
 }
 
-/* The row is a lit plane, so its values are the dark-ground set - the same
+/* The row is a dark plane, so its values are the dark-ground set - the same
    ones the closed rows already carry, restated here because a value correct by
    inheritance is one edit away from being wrong by inheritance. */
 .faq__item[data-open='true'] .faq__q-t {
-  color: var(--c-shop-white);
+  color: var(--c-bone); /* 13.67:1 on lit-near */
 }
 
 .faq__item[data-open='true'] .faq__a {
-  color: var(--c-bone);
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
 }
 
 .faq__item[data-open='true'] .faq__mark {
@@ -122,7 +125,7 @@
    what was then a white row - and only load order kept it off the page.
    register.css owns where the accent lands; this is kept in step with it. */
 .faq__item[data-open='true'] .faq__rule {
-  background: rgb(255 255 255 / 12%);
+  background: transparent; /* no border on a dark card, 2026-09-24 */
 }
 
 /* Sits exactly on the static hairline and draws over it from the left. A
@@ -184,15 +187,16 @@
 }
 
 .faq__q-t {
-  font-family: var(--font-brand);
+  /* Medium, 2026-09-24: the quiet pass sets every heading at 500. */
+  font-family: var(--font-quiet);
   /* Moves with the row on hover. The 1px lift alone is close to invisible on
      a row this wide; a nudge along the reading direction is what makes it
      clear the row itself is the control. */
   transform: translateX(0);
   font-size: var(--t-h3-size);
   line-height: var(--t-h3-line);
-  font-weight: var(--t-weight-brand);
-  letter-spacing: var(--t-track-h3);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
   text-wrap: balance;
 }
 

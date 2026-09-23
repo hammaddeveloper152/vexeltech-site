@@ -41,8 +41,8 @@
    ========================================================================== */
 
 .fail {
-  padding: var(--s-2xl) var(--s-md);
-  color: var(--c-shop-white); /* 19.66:1 on the base */
+  padding: var(--s-section) var(--s-md);
+  color: var(--c-bone); /* 16.32:1 on the base */
 }
 
 .fail__inner {
@@ -123,13 +123,13 @@
 
 @media (min-width: 768px) {
   .fail {
-    padding: var(--s-2xl) var(--s-xl);
+    padding: var(--s-section) var(--s-xl);
   }
 }
 
 @media (min-width: 1024px) {
   .fail {
-    padding: var(--s-2xl) var(--s-2xl);
+    padding: var(--s-section) var(--s-2xl);
   }
 }
 
@@ -169,13 +169,13 @@
 
 @media (min-width: 768px) {
   .fail {
-    padding: var(--s-2xl) var(--s-xl);
+    padding: var(--s-section) var(--s-xl);
   }
 }
 
 @media (min-width: 1024px) {
   .fail {
-    padding: var(--s-2xl) var(--s-2xl);
+    padding: var(--s-section) var(--s-2xl);
   }
 }
 

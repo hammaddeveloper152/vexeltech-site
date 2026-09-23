@@ -51,12 +51,15 @@
   bottom: 0;
   white-space: nowrap;
   will-change: transform;
-  font-family: var(--font-loud);
+  /* Clash Medium, sentence case, 2026-09-24 (the quiet pass): Monigue is the
+     home hero headline's and the About statement's alone now. Line height
+     stays 0.9 because the view's declared height is built on it. */
+  font-family: var(--font-quiet);
   font-size: var(--tick-size);
   line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 /* THE PROBLEM, OUTLINED. A 1.5px white stroke and no fill: it is the thing
@@ -65,7 +68,7 @@
   position: relative;
   display: block;
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--c-shop-white);
+  -webkit-text-stroke: 1.5px var(--c-bone);
 }
 
 /* THE FIX, SOLID, 8px above, left-aligned with its problem. It drops in: 8px
@@ -74,7 +77,7 @@
   position: absolute;
   left: 0;
   bottom: calc(100% + 8px);
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  color: var(--c-bone); /* 16.32:1 on the base */
   opacity: 0;
   transform: translateY(-8px);
   transition:
@@ -91,15 +94,20 @@
    THROUGH THE CAPS' MIDDLE, WHICH IS NOT THE BOX'S. Monigue sits high in its
    0.9em line box: `.measure/ticker.mjs` found the painted caps' middle at
    40.6% of the box at 390, where 50% put the strike 3.4px low. A proportion
-   of the box, so it holds at every size the clamp gives. */
+   of the box, so it holds at every size the clamp gives.
+
+   56.6% SINCE THE QUIET PASS, 2026-09-24: the phrase is Clash Medium in
+   sentence case now, and `.measure/ticker.mjs` found the painted middle of
+   the lowercase at 56.6% of the box at 1280. At 40.6% the strike ran along
+   the tops of the lowercase rather than through them. */
 .tick__strike {
   position: absolute;
   left: 0;
   right: 0;
-  top: 40.6%;
+  top: 56.6%;
   height: var(--stroke-drawn);
   margin-top: calc(var(--stroke-drawn) / -2);
-  background: var(--c-accent-draw-dark);
+  background: var(--c-bone); /* bone, 2026-09-24: yellow is kept to four places */
   clip-path: polygon(2.35px 0, 100% 0, calc(100% - 2.35px) 100%, 0 100%);
   transform: scaleX(0);
   transform-origin: 0 50%;
@@ -166,10 +174,10 @@
 
 .ticker[data-static='true'] .tick__problem {
   display: inline;
-  background-image: linear-gradient(var(--c-accent-draw-dark), var(--c-accent-draw-dark));
+  background-image: linear-gradient(var(--c-bone), var(--c-bone));
   background-repeat: no-repeat;
   background-size: 100% var(--stroke-drawn);
-  background-position: 0 calc(0.4em - var(--stroke-drawn) / 2);
+  background-position: 0 calc(0.545em - var(--stroke-drawn) / 2); /* 2026-09-24, with the strike's 56.6% */
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
@@ -204,7 +212,7 @@
   background: var(--c-base);
   border: 0;
   border-radius: var(--r-none);
-  color: var(--c-shop-white);
+  color: var(--c-bone);
   cursor: pointer;
   transition:
     transform var(--d-press) var(--ease-reveal),

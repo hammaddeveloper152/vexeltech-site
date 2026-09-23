@@ -158,13 +158,15 @@
   display: inline-flex;
   align-items: center;
   min-height: 48px;
+  /* The quiet label, 2026-09-24: 13px Satoshi, sentence case, steel-lift,
+     7.4:1 on the base. It was 12px uppercase in white. */
   font-family: var(--font-offer);
-  font-size: var(--t-label-size);
-  line-height: var(--t-label-line);
+  font-size: var(--t-label-q);
+  line-height: var(--t-label-q-line);
   font-weight: var(--t-weight-label);
-  letter-spacing: var(--t-track-label);
-  text-transform: uppercase;
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-steel-lift);
   text-decoration: none;
   transition:
     opacity var(--d-press) var(--ease-reveal),
@@ -189,7 +191,7 @@
   padding: var(--s-sm) var(--s-md);
   background: transparent;
   border: 1px solid var(--c-rule-dark);
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  color: var(--c-bone); /* 16.32:1 on the base */
   /* Square, sentence case, brand register — the hero CTA decision. What this
      frame does NOT take is the hero's h3 STEP, and the reason is width.
 
@@ -322,7 +324,7 @@
   background: none;
   border: 1px solid var(--c-rule-dark);
   border-radius: var(--r-sm);
-  color: var(--c-shop-white);
+  color: var(--c-bone);
   cursor: pointer;
   transition:
     opacity var(--d-press) var(--ease-reveal),
@@ -360,7 +362,7 @@
   line-height: var(--t-h3-line);
   font-weight: var(--t-weight-brand);
   letter-spacing: var(--t-track-h3);
-  color: var(--c-shop-white);
+  color: var(--c-bone);
   text-decoration: none;
 }
 

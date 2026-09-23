@@ -71,10 +71,25 @@ function shotAt(t) {
 
 /* One line of copy. Keyed by shot at the call site, so every cut mounts a
    fresh line and its fade-up in Hero.css runs again. */
+/* THE HIGHLIGHTER, 2026-09-24 (the founder): home's one highlighted word is
+   "Yet." in the second shot's line, a machine yellow box with asphalt type.
+   `.hl` is tokens.css. Split on the word rather than hard-coding the line, so
+   the copy in heroSpot.js stays the only place the line is written. */
+const HIGHLIGHT = 'Yet.';
+
 function Line({ text, leaving }) {
+  const at = text.lastIndexOf(HIGHLIGHT);
   return (
     <span className="hero__line" data-leaving={leaving ? 'true' : 'false'} aria-hidden="true">
-      {text}
+      {at < 0 ? (
+        text
+      ) : (
+        <>
+          {text.slice(0, at)}
+          <span className="hl">{HIGHLIGHT}</span>
+          {text.slice(at + HIGHLIGHT.length)}
+        </>
+      )}
     </span>
   );
 }

@@ -14,7 +14,7 @@
   /* Transparent. The ground and both blooms are the page rig's, declared once
      in lit.css — see the audit note there. */  /* Content plus 96px, top and bottom. The section is its content now; it has
      no height of its own to hold. */
-  padding: var(--s-3xl) var(--inset);
+  padding: var(--s-section) var(--inset);
 }
 
 .services__in {
@@ -36,12 +36,13 @@
    yellow field it used to stand on. */
 .services__h {
   margin: 0;
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-h);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  text-transform: uppercase;
-  color: var(--c-shop-white); /* 17.77:1 on asphalt */
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-bone); /* 16.32:1 on the base */
 }
 
 .services__lead {
@@ -50,7 +51,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-bone); /* 13.84:1 on asphalt */
+  color: var(--c-steel-lift); /* body, 7.4:1 on the base */
 }
 
 /* ---- The grid ---------------------------------------------------------- */

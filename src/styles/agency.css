@@ -203,24 +203,25 @@
    The layout is About.css's. This block owns colour and nothing else.
    ========================================================================== */
 
-.about {
-  background: var(--c-cream);
-  color: var(--c-asphalt); /* 15.7:1 on cream */
-}
+/* A CREAM PANEL NOW, 2026-09-24 (the quiet pass): the cream is `.panel` on
+   `.about__inner` and the section itself is the dark base. Everything below
+   sits on the panel, so every value is still a cream value. */
 
-/* The statement tier, beside the mascot rather than across the measure. */
+/* The statement reads as the section's heading, so it takes the heading
+   face and size: Clash Medium, sentence case, asphalt on cream, 15.75:1. */
 .about__statement {
-  font-family: var(--font-loud);
-  font-size: var(--t-loud-s);
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  color: var(--c-asphalt); /* 15.7:1 on cream */
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-asphalt); /* 15.75:1 on cream */
 }
 
+/* Body on cream is steel, 7.20:1: steel-lift is 2.27:1 there. */
 .about__support {
-  color: var(--c-asphalt); /* 15.7:1 on cream */
+  color: var(--c-steel);
 }
 
 /* THE ASPHALT OUTLINE, the kit's secondary button, 2026-09-21 (storyboard:
@@ -237,9 +238,6 @@
   color: var(--c-asphalt); /* 15.7:1 on cream */
 }
 
-.about :focus-visible {
-  outline-color: var(--c-asphalt); /* 15.7:1 on cream; yellow is 1.66:1 */
-}
 
 /* THE ARC RECORD, kept because it is the kind of thing that gets tried again:
    ARC WORKS AS AN ACCENT AND FAILS AS A GROUND. A flat field of it with no
@@ -274,14 +272,14 @@
    prop rather than a fork - one set of type, two grounds it is correct on. */
 
 .counters__h {
-  color: var(--c-shop-white);
+  color: var(--c-bone);
 }
 
 /* INVERTED FOR THE MARBLE. The band was concrete and its values were
    light-ground ones; it is black marble under an 85% scrim now, so the figures
    are white, the labels steel-lift and the hairlines white at 12%. */
 .counters .counters__item .counters__n {
-  color: var(--c-shop-white);
+  color: var(--c-bone);
 }
 
 .counters__l {
@@ -294,11 +292,10 @@
   opacity: 1;
 }
 
-/* The lit stretch of each rule is the one place the band spends anything: it
-   is the figure's own progress and it takes the accent, which the marble's
-   gold veins already agree with. */
+/* The lit stretch of each rule is bone, 2026-09-24: it was machine yellow,
+   and yellow is kept to its four places. */
 .counters__rule-lit {
-  background: var(--c-accent-draw-dark);
+  background: var(--c-bone);
 }
 
 /* 8 and 9. TESTIMONIALS and PROCESS came off with the storyboard,
@@ -324,11 +321,12 @@
 .faq__h,
 .faq__q,
 .faq__q-t {
-  color: var(--c-shop-white);
+  color: var(--c-bone); /* 16.32:1 */
 }
 
+/* Body, 2026-09-24: steel-lift. 6.33:1 on lit-near, where it is read. */
 .faq__a {
-  color: var(--c-bone);
+  color: var(--c-steel-lift);
 }
 
 .faq__mark {
@@ -345,7 +343,10 @@
   background: rgb(255 255 255 / 12%);
 }
 
-/* THE OPEN ROW IS A LIT OBJECT ON LIT-NEAR, with the two lights on its own
+/* THE OPEN ROW IS A DARK CARD, 2026-09-24 (the quiet pass): flat lit-near,
+   20px, no border, no light, no offset. What follows is its history.
+
+   WAS: THE OPEN ROW IS A LIT OBJECT ON LIT-NEAR, with the two lights on its own
    box. It is a plane raised toward the key, not a change of ground: the row
    that has been opened is nearer than the three that have not.
 
@@ -359,17 +360,18 @@
    site had them. */
 .faq__item[data-open='true'] {
   background-color: var(--lit-near);
-  background-image: var(--lit-key), var(--lit-rim);
-  border-radius: var(--r-md);
-  box-shadow: var(--lift-sm);
+  background-image: none;
+  border-radius: var(--r-card);
+  border-bottom-color: transparent;
+  box-shadow: none;
 }
 
 .faq__item[data-open='true'] .faq__q-t {
-  color: var(--c-shop-white);
+  color: var(--c-bone); /* 13.67:1 on lit-near */
 }
 
 .faq__item[data-open='true'] .faq__a {
-  color: var(--c-bone);
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
 }
 
 /* Steel-lift, not the accent. The mark is a control's state indicator and the
@@ -380,7 +382,7 @@
 }
 
 .faq__item[data-open='true'] .faq__rule {
-  background: rgb(255 255 255 / 18%);
+  background: transparent;
 }
 
 /* ==========================================================================

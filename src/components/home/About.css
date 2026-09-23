@@ -14,9 +14,9 @@
    and owns every colour on the page. The call's size is register.css's.
    ========================================================================== */
 
-.about {
-  padding: var(--s-3xl) var(--s-md);
-}
+/* The section's space is `.panel-sec` and the cream is `.panel` on the
+   inner, both tokens.css (the quiet pass, 2026-09-24): this was a full-bleed
+   cream band and it is a 20px panel inside the measure now. */
 
 /* Visually hidden, not display:none. It stays in the accessibility tree and
    in the heading outline; it just does not paint. See About.jsx. */
@@ -102,20 +102,11 @@
   transform: scale(0.97);
 }
 
-@media (min-width: 768px) {
-  .about {
-    padding: var(--s-3xl) var(--s-xl);
-  }
-}
 
 /* ---- 1024: the mascot at 40% on the RIGHT, 2026-09-21 ---------------------
    The storyboard puts P1 right of the statement. The DOM keeps the mascot
    first so a phone still stacks it above the type; the grid moves it. */
 @media (min-width: 1024px) {
-  .about {
-    padding: var(--s-3xl) var(--s-2xl);
-  }
-
   .about__inner {
     grid-template-columns: minmax(0, 1fr) 40%;
     column-gap: var(--s-2xl);
