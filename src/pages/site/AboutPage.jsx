@@ -278,9 +278,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 3. WHAT THE PHONES TAUGHT US. Four of the site's cards, two across, on a cream panel. */}
-      <section className="vt ab3-lesson panel-sec" aria-labelledby="ab3-lesson-h">
-        <div className="ab3__in panel">
+      {/* 3. WHAT THE PHONES TAUGHT US. Four of the site's cards on the base, four across at 1280. */}
+      <section className="vt ab3-lesson" aria-labelledby="ab3-lesson-h">
+        <div className="ab3__in">
           <h2 className="ab3__h ab3-lesson__h" id="ab3-lesson-h">
             What the phones taught us
           </h2>

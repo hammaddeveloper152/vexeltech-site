@@ -22,7 +22,7 @@
   min-width: 0;
   overflow: hidden;
   border: 1px solid rgb(255 255 255 / 10%);
-  border-radius: 24px;
+  border-radius: var(--r-card); /* 24px, the site's one panel and card radius */
   background: var(--lit-near);
   box-shadow: none;
   color: var(--c-bone);

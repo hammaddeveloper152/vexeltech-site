@@ -408,7 +408,8 @@
      founder's; the ramp still governs the space between things inside a
      section. Panels are 96px apart, which is the ramp's own --s-3xl.
 
-     THE CARD. 20px radius on every card and panel. A card on the dark base
+     THE CARD. 24px radius on every card and panel (20px until the card
+     brief). A card on the dark base
      is lit-near and nothing else; a cream panel has no hairline and no light. */
   --font-quiet: var(--font-brand);
   --t-weight-quiet: 500;
@@ -418,7 +419,9 @@
   --t-label-q-line: 20px;
   --s-section: clamp(80px, calc(58.97px + 5.393vw), 128px);
   --s-panel-gap: var(--s-3xl);
-  --r-card: 20px;
+  /* 24px since 2026-09-24 (the founder): one radius for every panel and
+     card, matching the one card. Buttons and chips stay 6px (--r-btn). */
+  --r-card: 24px;
   --c-card-edge: rgb(255 255 255 / 8%);
   /* THE BUTTON, 2026-09-24 (the pricing rebuild, the founder): every button
      on the site is Clash Display Medium at 14px with a 6px radius, primary

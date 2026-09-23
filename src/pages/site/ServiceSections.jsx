@@ -43,31 +43,12 @@ import { FIGURES, money } from '../../content/pricing.js';
    price strings are replaced by their tokens, and the cards' one-line
    descriptions come off with the cards. */
 
-/* THE FIGURE FILLS ITS OWN COLUMN, CAPPED AT 160px, and the cap is not always
-   what binds. Measured in Moldie: "$299 to $449" is 6.025em wide and "$700"
-   is 2.208em. The right column at 1280 is (1152 - 96) * 2/5 = 422px, so at
-   the founder's 160px the Branding string wants 964px - it overflowed the
-   column, pushed the document to 1745px against a 1280 client, and took the
-   cream bands' full-bleed with it, because a band can only be as wide as the
-   document it is in.
-
-   That is the container-budget test in BUILD-LAW, failing exactly the way it
-   describes: the content box minus its fixed costs, compared to what has to
-   fit. 160px was set against the viewport and never against the column.
-
-   So each figure sizes itself against ITS OWN column and string:
-   `min(160px, 100cqi / em)`. Websites still reaches the full 160 (422 / 2.208
-   would allow 191). Branding lands at 70. They are never seen together - one
-   band at a time - so a shared size buys nothing, and shrinking Websites to
-   match a string it does not have would be the cap failing twice.
-
-   `--fig-em` is the measured advance width of that string at 1em. If a price
-   changes shape the ratio moves, so the figure also has no `nowrap`: a wrong
-   ratio wraps a line, it cannot push the page wide again. */
-const FIG_EM = {
-  branding: 6.025, // "$299 to $449"
-  websites: 2.208, // "$700"
-};
+/* THE FIGURE IS CLASH 400 AT 56px SINCE 2026-09-24 (the founder), set like
+   the /pricing grid, and so is "On the call". The Moldie figure that filled
+   its own column in `cqi` up to a 160px cap, and the measured `--fig-em`
+   ratios that sized it, are gone: at 56px "$299 to $449" is about 330px and
+   fits the right column at every width from 1024, and it wraps rather than
+   pushing the page wide below that. The history of the cap is in git. */
 
 /* The price, per discipline, derived rather than typed. `null` means the work
    is scoped on the call, which is the founder's position for two of the four
@@ -115,7 +96,7 @@ export default function ServiceSections({ disciplines }) {
 
               <div className="svc2__right">
                 {figure ? (
-                  <p className="svc2__fig" style={{ '--fig-em': FIG_EM[d.id] || 6 }}>
+                  <p className="svc2__fig">
                     {figure}
                   </p>
                 ) : (

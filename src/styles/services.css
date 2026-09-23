@@ -188,38 +188,23 @@
 /* ---- The right column: the price IS the visual ------------------------- */
 
 .svc2__right {
-  /* The figure is sized in `cqi`, so this column is the container it
-     measures against. */
-  container-type: inline-size;
   display: grid;
   align-content: start;
   justify-items: start;
   min-width: 0;
 }
 
-/* Moldie, filling its own column, capped at the founder's 160px. `--fig-em`
-   is the string's measured advance at 1em and comes from the component; see
-   the note there for why the cap is not always what binds and why there is no
-   `nowrap`. */
-.svc2__fig {
-  margin: 0 0 var(--s-lg);
-  font-family: var(--font-name);
-  font-size: min(160px, calc(100cqi / var(--fig-em, 6)));
-  line-height: var(--t-loud-line);
-  font-weight: 400;
-  letter-spacing: 0;
-  color: inherit;
-}
-
-/* "On the call" is a SENTENCE, not a figure, so it takes the loud register at
-   the heading step rather than Moldie at 160: setting it in the name face at
-   a figure's size would make a statement about pricing look like a price. */
+/* THE PRICE, 2026-09-24 (the founder): Clash Display 400 at 56px, set like
+   the /pricing grid, with the turnaround and fit lines under it. It was
+   Moldie at up to 160px. "On the call" is a sentence rather than a figure,
+   and it takes the same setting so the four right columns read as one. */
+.svc2__fig,
 .svc2__oncall {
-  margin: 0 0 var(--s-lg);
+  margin: 0 0 var(--s-md);
   font-family: var(--font-quiet);
-  font-size: var(--t-head);
-  line-height: var(--t-head-line);
-  font-weight: var(--t-weight-quiet);
+  font-size: 56px;
+  line-height: 1.05;
+  font-weight: 400;
   letter-spacing: normal;
   text-transform: none;
   color: inherit;

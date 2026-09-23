@@ -633,7 +633,8 @@
 }
 
 .plan__tl-p {
-  font-family: var(--font-name);
+  font-family: var(--font-quiet); /* Clash 400, 2026-09-24: Moldie is the route numerals and the home $700 only */
+  font-weight: 400;
   font-size: var(--t-name-m);
   line-height: var(--t-loud-line);
 }
@@ -664,7 +665,8 @@
 }
 
 .plan__total-n {
-  font-family: var(--font-name);
+  font-family: var(--font-quiet); /* Clash 400, 2026-09-24: Moldie is the route numerals and the home $700 only */
+  font-weight: 400;
   font-size: 72px;
   line-height: var(--t-loud-line);
   font-variant-numeric: tabular-nums;
@@ -711,7 +713,8 @@
 }
 
 .plan__bar-n {
-  font-family: var(--font-name);
+  font-family: var(--font-quiet); /* Clash 400, 2026-09-24: Moldie is the route numerals and the home $700 only */
+  font-weight: 400;
   font-size: var(--t-name-m);
   line-height: var(--t-loud-line);
 }

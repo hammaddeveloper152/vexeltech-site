@@ -13,6 +13,7 @@
    cream sections take theirs from `.panel-sec` in tokens.css. */
 .ab3-hero,
 .ab3-origin,
+.ab3-lesson,
 .ab3-work,
 .ab3-facts,
 .ab3-note {
@@ -243,7 +244,7 @@
   text-wrap: pretty;
 }
 
-/* ---- 3. What the phones taught us: four cards on a cream panel ---------
+/* ---- 3. What the phones taught us: four cards on the base ---------------
 
    Cream band, four cards. NO RIM LIGHT ON CREAM - the key alone, which is the
    rule this system already carries for the pricing ticket and the home
@@ -253,10 +254,10 @@
    Values on cream: asphalt 15.75:1, steel 7.20:1. The band restates its own
    focus ring as asphalt, because machine yellow is 1.66:1 there. */
 
-/* CREAM PANELS, 2026-09-24 (the quiet pass): both sections are the dark
-   base with `.panel-sec`, and their `.ab3__in` carries `.panel`, tokens.css.
-   The panel restates the ring and the headings as asphalt. */
-.ab3-lesson,
+/* WHO WE ARE FOR IS A CREAM PANEL (the quiet pass, 2026-09-24): the dark
+   base with `.panel-sec`, its `.ab3__in` carrying `.panel`, tokens.css. What
+   the phones taught us WAS one too and came OFF the panel later the same day
+   (the founder): its cards are the site's dark card and sit on the base. */
 .ab3-fit {
   color: var(--c-asphalt);
 }
@@ -269,14 +270,20 @@
   list-style: none;
 }
 
-/* TWO ACROSS, NOT FOUR, 2026-09-23 (the founder), stacked at 390. At four
-   across each card had 234px of content at 1280 and its line - the longest is
-   120 characters - set to five lines of 14px, which made the densest block on
-   the page out of the section that is meant to be read. Two across gives each
-   card 528px and its line two. */
+/* FOUR ACROSS AT 1280, TWO AT 768, ONE AT 390, 2026-09-24 (the founder),
+   like home's What we do. Two across made each 3:4 card about 550px tall, and
+   at that size they read as slabs. (It was two across from 2026-09-23 for the
+   old white cards, whose 14px lines set five deep at four across; the card's
+   16px line in a 270px column sets four.) */
 @media (min-width: 768px) {
   .ab3-lesson__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .ab3-lesson__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
