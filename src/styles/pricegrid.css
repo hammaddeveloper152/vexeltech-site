@@ -16,6 +16,12 @@
   margin: 0 auto;
 }
 
+/* 64px from the hero's paragraph to the panel (the founder, 2026-09-24):
+   the head's own 64px bottom padding, and none on top of the grid. */
+.pr-grid {
+  padding-top: 0;
+}
+
 /* ---- 1. The head, on the base --------------------------------------------
 
    THE ONE HEADLINE ABOVE THE QUIET STEP. The founder set it at 56px, weight
@@ -175,9 +181,8 @@
    shadow fade in, and the price scales by 60 / 56 rather than changing its
    font size, which would reflow the column.
 
-   THE WEBSITES COLUMN SHOWS THIS STATE AT REST, with its 2px yellow top edge
-   over the plane, and on hover it only lifts. Values on white: asphalt
-   17.77:1, steel 8.12:1. */
+   The Websites column takes it on hover like the rest (below). Values on
+   white: asphalt 17.77:1, steel 8.12:1. */
 .pr-col__bg {
   position: absolute;
   inset: -2px 0 0; /* over the column's transparent 2px top edge */
@@ -195,19 +200,23 @@
   transition: transform 220ms ease;
 }
 
-/* The lit state: the picked column always, any column on hover. The line
-   on the right of a lit column belongs to its neighbour, so that fades too. */
-.pr-col[data-picked='true'] .pr-col__bg {
-  opacity: 1;
-}
-
-.pr-col[data-picked='true']::before,
-.pr-col[data-picked='true'] + .pr-col::before {
-  opacity: 0;
-}
-
-.pr-col[data-picked='true'] .pr-col__price {
-  transform: scale(1.0714); /* 56px to 60px */
+/* THE WEBSITES COLUMN AT REST, 2026-09-24 (the founder): only its yellow top
+   edge, the "Most picked" chip and the yellow button. The white plane and
+   its shadow come on hover, as on every other column. At rest the edge is a
+   straight 2px line on `::after`; on hover it fades and the plane's own
+   rounded yellow edge takes over, so the line never stands above a rounded
+   corner. The line on the right of a lit column belongs to its neighbour,
+   so that fades on hover too. */
+.pr-col[data-picked='true']::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: var(--c-accent-draw-dark);
+  pointer-events: none;
+  transition: opacity 220ms ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -225,7 +234,11 @@
   }
 
   .pr-col:hover .pr-col__price {
-    transform: scale(1.0714);
+    transform: scale(1.0714); /* 56px to 60px */
+  }
+
+  .pr-col[data-picked='true']:hover::after {
+    opacity: 0;
   }
 
   .pr-col:hover .pr-col__btn::after {

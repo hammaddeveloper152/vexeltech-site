@@ -84,7 +84,7 @@ export default function Services() {
               two transitions never compete for one element. */}
           {CARDS.map(({ id, Icon, discipline, line }, i) => (
             <div className="services__cell" key={id} style={{ '--i': i }}>
-              <ArtCard art={id} Icon={Icon} name={discipline} line={line} href={`/services#${id}`} />
+              <ArtCard Icon={Icon} name={discipline} line={line} href={`/services#${id}`} />
             </div>
           ))}
         </div>

@@ -61,14 +61,16 @@
   gap: var(--s-lg);
 }
 
-/* Four across at 1280, two at 768, one at 390 (the founder, 2026-09-24). */
-@media (min-width: 768px) {
+/* Four across from 1024, two below it, one on a phone (the founder,
+   2026-09-24, the quiet card). The phone stays one column: two across at
+   390 is a 167px card, 103px of text after its 32px padding. */
+@media (min-width: 640px) {
   .services__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1024px) {
   .services__grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
