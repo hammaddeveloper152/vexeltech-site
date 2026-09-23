@@ -212,7 +212,8 @@
    face and size: Clash Medium, sentence case, asphalt on cream, 15.75:1. */
 .about__statement {
   font-family: var(--font-quiet);
-  font-size: var(--t-head);
+  /* 40px, the founder's, 2026-09-24; the quiet step's 32px on a phone. */
+  font-size: min(var(--t-head), 40px);
   line-height: var(--t-head-line);
   font-weight: var(--t-weight-quiet);
   letter-spacing: normal;

@@ -109,20 +109,22 @@
   color: var(--c-asphalt);
 }
 
-.pr-col[data-picked='true'] {
-  border-top-color: var(--c-accent-draw-dark); /* the recommended column */
+/* The recommended column's 2px yellow edge is drawn on its white plane,
+   2026-09-24, so it follows the plane's rounded top rather than standing as
+   a straight line above it. The column's own 2px top stays transparent. */
+.pr-col[data-picked='true'] .pr-col__bg {
+  border-top: 2px solid var(--c-accent-draw-dark);
 }
 
-/* HAIRLINES BETWEEN COLUMNS, per layout, drawn as two layers so the hover
-   can raise them with opacity alone (BUILD-LAW Motion): `::before` is the
-   rest line, asphalt at 15%; `::after` is the same line at 17.65% and fades
-   in on hover, and the two composite to the founder's 30%:
-   1 - (1 - 0.15)(1 - 0.1765) = 0.30. `--edge-l` and `--edge-t` say which
-   edges this column draws in the current layout. */
+/* HAIRLINES BETWEEN COLUMNS, per layout, on `::before`, so a column can
+   fade its lines out with opacity alone (BUILD-LAW Motion). `--edge-l` and
+   `--edge-t` say which edges this column draws in the current layout. */
 .pr-col {
   position: relative;
+  isolation: isolate;
   --edge-l: 0;
   --edge-t: 0;
+  transition: transform 220ms ease;
 }
 
 .pr-col + .pr-col {
@@ -153,53 +155,91 @@
   }
 }
 
-.pr-col::before,
-.pr-col::after {
+.pr-col::before {
   content: '';
   position: absolute;
   inset: 0;
   border-left: var(--edge-l) solid var(--hair);
   border-top: var(--edge-t) solid var(--hair);
   pointer-events: none;
+  transition: opacity 220ms ease;
 }
 
-.pr-col::after {
-  --hair: rgb(23 24 26 / 17.65%);
+/* ---- THE MELIUS GLOW, 2026-09-24 (the founder's live walk) -------------
+
+   On hover a column lifts onto a white plane: the plane is #FFFFFF with a
+   soft shadow, 0 12px 36px at 12% black, its hairlines fade to nothing, the
+   column rises 4px and its price gains 4px, over 220ms on the founder's
+   `ease`. THE FIRST SHADOW ON THE SITE, by the founder's decision; DESIGN.md
+   records it. Everything moves by opacity and transform: the plane and its
+   shadow fade in, and the price scales by 60 / 56 rather than changing its
+   font size, which would reflow the column.
+
+   THE WEBSITES COLUMN SHOWS THIS STATE AT REST, with its 2px yellow top edge
+   over the plane, and on hover it only lifts. Values on white: asphalt
+   17.77:1, steel 8.12:1. */
+.pr-col__bg {
+  position: absolute;
+  inset: -2px 0 0; /* over the column's transparent 2px top edge */
+  z-index: -1;
+  border-radius: var(--r-card);
+  background: #ffffff;
+  box-shadow: 0 12px 36px rgb(0 0 0 / 12%);
   opacity: 0;
-  transition: opacity 200ms var(--ease-reveal);
+  pointer-events: none;
+  transition: opacity 220ms ease;
 }
 
-/* THE COLUMN HOVER, 2026-09-24 (the founder): the content rises 2px, the
-   hairline goes to 30% and the button darkens one step, over 200ms. The
-   column's box and its lines do not move; its children do. */
-.pr-col > * {
-  transition: transform 200ms var(--ease-reveal);
+.pr-col__price {
+  transform-origin: 0 100%;
+  transition: transform 220ms ease;
+}
+
+/* The lit state: the picked column always, any column on hover. The line
+   on the right of a lit column belongs to its neighbour, so that fades too. */
+.pr-col[data-picked='true'] .pr-col__bg {
+  opacity: 1;
+}
+
+.pr-col[data-picked='true']::before,
+.pr-col[data-picked='true'] + .pr-col::before {
+  opacity: 0;
+}
+
+.pr-col[data-picked='true'] .pr-col__price {
+  transform: scale(1.0714); /* 56px to 60px */
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .pr-col:hover > * {
-    transform: translateY(-2px);
+  .pr-col:hover {
+    transform: translateY(-4px);
   }
 
-  .pr-col:hover::after {
+  .pr-col:hover .pr-col__bg {
     opacity: 1;
+  }
+
+  .pr-col:hover::before,
+  .pr-col:hover + .pr-col::before {
+    opacity: 0;
+  }
+
+  .pr-col:hover .pr-col__price {
+    transform: scale(1.0714);
   }
 
   .pr-col:hover .pr-col__btn::after {
     opacity: 1;
   }
-
-  .pr-col:hover .pr-col__btn:active {
-    transform: translateY(-2px) scale(0.97);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pr-col > * {
+  .pr-col,
+  .pr-col__price {
     transition: none;
   }
 
-  .pr-col:hover > * {
+  .pr-col:hover {
     transform: none;
   }
 }

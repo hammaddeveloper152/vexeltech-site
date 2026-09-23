@@ -94,7 +94,7 @@
   display: grid;
   width: min(100%, 1200px);
   margin: 0 auto;
-  border-radius: var(--r-card);
+  border-radius: var(--r-panel);
   background-color: var(--c-cream);
   color: var(--c-asphalt); /* 15.75:1 */
 }
@@ -233,9 +233,9 @@
   background: var(--c-bone);
   color: var(--c-asphalt); /* 14.63:1 on bone */
   cursor: pointer;
-  transition:
-    border-color var(--d-drop) var(--ease-reveal),
-    transform var(--d-drop) var(--ease-reveal);
+  /* Transform only: a border colour does not animate here (BUILD-LAW
+     Motion). The chip's hover edge is the overlay below. */
+  transition: transform var(--d-drop) var(--ease-reveal);
 }
 
 .plan__chip {
@@ -244,7 +244,13 @@
   gap: var(--s-sm);
   min-height: 48px;
   padding: var(--s-sm) var(--s-lg);
-  border-radius: 999px;
+  /* THE CHIP, 2026-09-24 (the founder's live walk): 8px, a faint asphalt
+     edge at 15% at rest that goes to 40% on hover, a 2px lift. The label
+     identifies the control; the edge is 15% so the hover has somewhere to
+     go. */
+  border-color: rgb(23 24 26 / 15%);
+  border-radius: 8px;
+  transition: transform 200ms var(--ease-reveal);
   font-family: var(--font-brand);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
@@ -311,11 +317,36 @@
   color: var(--c-steel); /* 6.69:1 on bone */
 }
 
-/* Hover: lift 4px, the border to yellow. Gated to a real pointer. */
+/* The chip's hover edge: asphalt at 29.4% over the 15% edge composites to
+   40% (1 - 0.85 x 0.706), faded in. */
+.plan__chip::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid rgb(23 24 26 / 29.4%);
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-reveal);
+}
+
+/* Hover, gated to a real pointer: a card lifts 4px, a chip 2px with its
+   edge to 40%. */
 @media (hover: hover) and (pointer: fine) {
-  .plan__chip:hover,
   .plan__card:hover {
     transform: translateY(-4px);
+  }
+
+  .plan__chip:hover {
+    transform: translateY(-2px);
+  }
+
+  .plan__chip:not([aria-pressed='true']):hover::after {
+    opacity: 1;
+  }
+
+  .plan__next:not(:disabled):hover::after {
+    opacity: 1;
   }
 }
 
@@ -433,6 +464,25 @@
   cursor: pointer;
   transition: transform var(--d-press) var(--ease-reveal);
   letter-spacing: normal;
+}
+
+/* ONE STEP DARKER ON HOVER, 2026-09-24: black at 52% over asphalt is the
+   base, faded in under the label. */
+.plan__next {
+  position: relative;
+  isolation: isolate;
+}
+
+.plan__next::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: rgb(0 0 0 / 52%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-reveal);
 }
 
 .plan__next:disabled {

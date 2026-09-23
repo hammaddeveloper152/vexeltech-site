@@ -59,6 +59,10 @@ otherwise, this section is right and the rest is history.
 - **Later 2026-09-24: Moldie is the home route numerals and the home $700
   only.** Every other price is Clash 400 (56px on /services and the /pricing
   grid). **Every panel and card is 24px** (`--r-card`); buttons and chips 6px.
+- **Live walk (2026-09-24)**: card artwork 130% wide, bleeding, 2px at
+  36% over a bone glow; cream panels 32px radius (`--r-panel`) with
+  `--p-panel` padding; pricing columns lift onto a white plane with the
+  site's one shadow (the founder's); chips 8px. Cost objects 180px tall.
 - **Card, second pass (2026-09-24)**: artwork 32% / 48% hover, top 65%,
   fewer larger elements; fade 45% to 80%; chip 48 / icon 22; title 30;
   padding 28; linked cards rise 4px. `image` mode puts a cost object in the

@@ -62,7 +62,7 @@
   /* Moldie, 2026-09-24: prices are the name face's, and asphalt on cream,
      15.75:1. It was Monigue. */
   font-family: var(--font-name);
-  font-size: min(240px, calc(100cqi / 2.3));
+  font-size: min(200px, calc(100cqi / 2.3)); /* 200px, the founder's, where the column holds it */
   line-height: var(--t-loud-line);
   font-weight: 400;
   letter-spacing: 0;
@@ -90,15 +90,17 @@
 
 .ab3-price__r {
   font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
+  font-size: 18px; /* the founder's, 2026-09-24 */
+  line-height: 28px;
   color: var(--c-steel); /* body on cream, 7.20:1 */
   text-wrap: pretty;
 }
 
 @media (min-width: 1024px) {
+  /* Even halves, 2026-09-24: the figure is 200px now and "$700" in Moldie is
+     about 2.2em, 440px, which the 2fr column (384px at 1280) could not hold. */
   .ab3-price__cols {
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: var(--s-2xl);
     align-items: start;
   }

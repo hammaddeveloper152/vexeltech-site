@@ -422,6 +422,10 @@
   /* 24px since 2026-09-24 (the founder): one radius for every panel and
      card, matching the one card. Buttons and chips stay 6px (--r-btn). */
   --r-card: 24px;
+  /* THE CREAM PANEL, 2026-09-24 (the founder's live walk): 32px radius and
+     64px of padding at 1280, 32px at 390, linear between. Cards stay 24. */
+  --r-panel: 32px;
+  --p-panel: clamp(32px, calc(17.98px + 3.596vw), 64px);
   --c-card-edge: rgb(255 255 255 / 8%);
   /* THE BUTTON, 2026-09-24 (the pricing rebuild, the founder): every button
      on the site is Clash Display Medium at 14px with a 6px radius, primary
@@ -741,18 +745,12 @@ html {
 .panel {
   width: min(100%, 1200px);
   margin-inline: auto;
-  padding: var(--s-2xl) var(--s-lg);
+  padding: var(--p-panel);
   border: 0;
-  border-radius: var(--r-card);
+  border-radius: var(--r-panel);
   background: var(--c-cream);
   box-shadow: none;
   color: var(--c-asphalt);
-}
-
-@media (min-width: 768px) {
-  .panel {
-    padding: var(--s-2xl);
-  }
 }
 
 .panel :focus-visible {

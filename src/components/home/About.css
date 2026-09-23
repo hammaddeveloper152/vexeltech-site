@@ -106,16 +106,29 @@
 /* ---- 1024: the mascot at 40% on the RIGHT, 2026-09-21 ---------------------
    The storyboard puts P1 right of the statement. The DOM keeps the mascot
    first so a phone still stacks it above the type; the grid moves it. */
+/* THE MASCOT IS SIZED BY THE PANEL, 2026-09-24 (the founder's live walk):
+   the panel's height minus 48px, right-aligned at the panel's padding, its
+   feet on the panel's bottom edge and not past it. Out of flow, so the text
+   column decides the panel's height and the mascot follows it; the grid's
+   40% column stays as the space it stands in. */
 @media (min-width: 1024px) {
   .about__inner {
+    position: relative;
     grid-template-columns: minmax(0, 1fr) 40%;
     column-gap: var(--s-2xl);
   }
 
   .about__mascot {
-    order: 2;
-    width: 100%;
-    justify-self: stretch;
+    position: absolute;
+    right: var(--p-panel);
+    bottom: 0;
+    width: auto;
+    height: calc(100% - 48px);
+  }
+
+  .about__character {
+    width: auto;
+    height: 100%;
   }
 }
 

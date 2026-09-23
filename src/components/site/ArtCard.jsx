@@ -134,10 +134,15 @@ export default function ArtCard({
   const [lead, rest] = splitLine(line);
   const body = (
     <>
+      {/* The glow behind the artwork, 2026-09-24: bone, centred at 35% of
+          the height. Decorative. */}
+      {Art ? <span className="art__glow" aria-hidden="true" /> : null}
       {Art ? (
-        /* Decorative: the name and the line are the card's content. */
+        /* Decorative: the name and the line are the card's content. The
+           `data-art` anchor decides which edges the 130% artwork bleeds off. */
         <svg
           className="art__svg"
+          data-art={art}
           viewBox={`0 0 ${W} ${H}`}
           preserveAspectRatio="xMidYMid slice"
           aria-hidden="true"
