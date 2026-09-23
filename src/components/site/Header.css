@@ -296,11 +296,11 @@
      Ground is unchanged: transparent with the 12% border. The hero's own note
      still holds — two filled calls in a frame is a composition that has not
      decided. */
-  border-radius: var(--r-none);
+  border-radius: var(--r-btn);
   font-family: var(--font-brand);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  font-weight: var(--t-weight-brand);
+  font-size: var(--t-btn);
+  line-height: var(--t-btn-line);
+  font-weight: var(--t-weight-btn);
   letter-spacing: normal;
   text-decoration: none;
   white-space: nowrap;

@@ -187,27 +187,18 @@
   align-items: center;
   gap: var(--s-sm);
   min-height: 48px;
-  /* The hero call's own steps: body on a phone, h3 from 768. At h3 on a
-     phone it measured 6.9% of the section, over the ceiling. */
+  /* The button, 2026-09-24: 14px Clash Medium, 6px radius, at every width
+     (it used the hero call's steps, body to h3). */
   padding: var(--s-md) var(--s-lg);
   border: 1px solid transparent;
-  border-radius: var(--r-none);
+  border-radius: var(--r-btn);
   font-family: var(--font-brand);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  font-weight: var(--t-weight-brand);
+  font-size: var(--t-btn);
+  line-height: var(--t-btn-line);
+  font-weight: var(--t-weight-btn);
   letter-spacing: normal;
   text-transform: none;
   text-decoration: none;
-}
-
-@media (min-width: 768px) {
-  .about__link {
-    padding: var(--s-lg) var(--s-xl);
-    font-size: var(--t-h3-size);
-    line-height: var(--t-h3-line);
-    letter-spacing: var(--t-track-h3);
-  }
 }
 
 /* ---- Counter row --------------------------------------------------------
@@ -311,31 +302,16 @@
    with them: it was separation for a light row, and the row is dark. */
 
 /* ---- Footer form --------------------------------------------------------
-   Carrier: THE SUBMIT — already the accent, already solid. It steps to the
-   hero call's own sizes so the two calls on the page are one call: body on a
-   phone, h3 from 768, h2 from 1280. Disabled while the form is not live, and
+   Carrier: THE SUBMIT — already the accent, already solid. It is the site's
+   one button size since 2026-09-24: 14px Clash Medium, 6px radius, at every
+   width (it stepped body, h3, h2 with the hero call before). Disabled while the form is not live, and
    disabled is the one state the accent may drop below its floor. */
 .foot__submit {
   padding: var(--s-md) var(--s-lg);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
+  font-size: var(--t-btn);
+  line-height: var(--t-btn-line);
   letter-spacing: normal;
+  font-weight: var(--t-weight-btn);
+  border-radius: var(--r-btn);
 }
 
-@media (min-width: 768px) {
-  .foot__submit {
-    padding: var(--s-lg) var(--s-xl);
-    font-size: var(--t-h3-size);
-    line-height: var(--t-h3-line);
-    letter-spacing: var(--t-track-h3);
-  }
-}
-
-@media (min-width: 1280px) {
-  .foot__submit {
-    padding: var(--s-lg) var(--s-2xl);
-    font-size: var(--t-h2-size);
-    line-height: var(--t-h2-line);
-    letter-spacing: var(--t-track-display);
-  }
-}

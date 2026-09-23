@@ -383,16 +383,17 @@
   justify-content: center;
   /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
   min-height: 48px;
-  /* Body step at 390, h3 from 768, h2 from 1280. */
+  /* The button, 2026-09-24: 14px Clash Medium, 6px, at every width. It
+     stepped to h3 at 768 and h2 at 1280 until then. */
   padding: var(--s-md) var(--s-lg);
   border: 1px solid var(--c-accent-ground);
-  border-radius: var(--r-none);
+  border-radius: var(--r-btn);
   background: var(--c-accent-ground);
   color: var(--c-asphalt); /* 9.46:1 */
   font-family: var(--font-brand);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  font-weight: var(--t-weight-brand);
+  font-size: var(--t-btn);
+  line-height: var(--t-btn-line);
+  font-weight: var(--t-weight-btn);
   letter-spacing: normal;
   text-decoration: none;
   transition:
@@ -484,14 +485,6 @@
   .hero__headline {
     font-size: min(calc((100vw - 2 * var(--s-xl)) / 6.227), calc((100svh - 360px) / 1.76));
   }
-
-  /* The call steps up with the headline. h3 here; h2 from 1280. */
-  .hero__cta:not(.hero__cta--line) {
-    padding: var(--s-lg) var(--s-xl);
-    font-size: var(--t-h3-size);
-    line-height: var(--t-h3-line);
-    letter-spacing: var(--t-track-h3);
-  }
 }
 
 @media (min-width: 1024px) {
@@ -508,17 +501,6 @@
 
   .hero__headline {
     font-size: min(calc((100vw - 2 * var(--s-2xl)) / 6.227), calc((100svh - 360px) / 1.76));
-  }
-}
-
-@media (min-width: 1280px) {
-  /* h2, and the full s-2xl padding. At 1280x800 the call paints 4.6% of the
-     frame: at scale, and under the 5% ceiling. */
-  .hero__cta:not(.hero__cta--line) {
-    padding: var(--s-lg) var(--s-2xl);
-    font-size: var(--t-h2-size);
-    line-height: var(--t-h2-line);
-    letter-spacing: var(--t-track-display);
   }
 }
 

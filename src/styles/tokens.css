@@ -420,6 +420,15 @@
   --s-panel-gap: var(--s-3xl);
   --r-card: 20px;
   --c-card-edge: rgb(255 255 255 / 8%);
+  /* THE BUTTON, 2026-09-24 (the pricing rebuild, the founder): every button
+     on the site is Clash Display Medium at 14px with a 6px radius, primary
+     and secondary alike. The calls no longer step with the frame. 6px is not
+     on the 0 / 4 / 8 / 20 radius ladder and is the founder's; 48px minimum
+     height still comes from padding (BUILD-LAW Touch). */
+  --t-btn: 14px;
+  --t-btn-line: 20px;
+  --t-weight-btn: 500;
+  --r-btn: 6px;
   /* Focus is bone on the dark base and asphalt on cream: yellow is kept to
      its four places, and a ring is none of them. Bone on the base 16.32:1. */
   --c-focus: var(--c-bone);

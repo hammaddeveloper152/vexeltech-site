@@ -69,6 +69,25 @@
   outline-color: var(--c-focus); /* bone, 13.67:1 on lit-near */
 }
 
+/* The visible heading, when the page gives one (2026-09-24): the quiet
+   heading, bone on the base, inside the same measure as the builder. */
+.plan__head {
+  width: min(100%, 1200px);
+  margin: 0 auto var(--s-xl);
+}
+
+.plan__h {
+  max-width: 24ch;
+  margin: 0;
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  color: var(--c-bone); /* 16.32:1 */
+  text-wrap: balance;
+}
+
 .plan__in {
   display: grid;
   gap: var(--s-2xl);
@@ -404,15 +423,16 @@
   min-height: 48px;
   padding: var(--s-md) var(--s-xl);
   border: 1px solid var(--c-asphalt);
-  border-radius: var(--r-none);
+  border-radius: var(--r-btn);
   background: var(--c-asphalt);
   font-family: var(--font-brand);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  font-weight: var(--t-weight-brand);
+  font-size: var(--t-btn);
+  line-height: var(--t-btn-line);
+  font-weight: var(--t-weight-btn);
   color: var(--c-cream); /* 15.75:1 on asphalt */
   cursor: pointer;
   transition: transform var(--d-press) var(--ease-reveal);
+  letter-spacing: normal;
 }
 
 .plan__next:disabled {
@@ -443,15 +463,16 @@
   min-height: 48px;
   padding: var(--s-md) var(--s-xl);
   border: 0;
-  border-radius: var(--r-none);
+  border-radius: var(--r-btn);
   background: var(--c-accent-ground);
   font-family: var(--font-brand);
-  font-size: var(--t-h3-size);
-  line-height: var(--t-h3-line);
-  font-weight: var(--t-weight-brand);
+  font-size: var(--t-btn);
+  line-height: var(--t-btn-line);
+  font-weight: var(--t-weight-btn);
   color: var(--c-asphalt);
   cursor: pointer;
   transition: transform var(--d-press) var(--ease-reveal);
+  letter-spacing: normal;
 }
 
 .plan__send:disabled {
@@ -656,7 +677,7 @@
   position: sticky;
   bottom: 0;
   z-index: 5;
-  margin: var(--s-xl) calc(-1 * var(--inset)) calc(-1 * var(--s-3xl));
+  margin: var(--s-xl) calc(-1 * var(--inset)) calc(-1 * var(--s-section)); /* the section padding since 2026-09-24 */
 }
 
 @media (min-width: 1024px) {
@@ -726,10 +747,13 @@
   border: 1px solid var(--c-bone);
   background: transparent;
   font-family: var(--font-brand);
-  font-size: var(--t-body-size);
-  font-weight: var(--t-weight-brand);
+  font-size: var(--t-btn);
+  font-weight: var(--t-weight-btn);
   color: var(--c-bone); /* 13.67:1 on lit-near */
   cursor: pointer;
+  line-height: var(--t-btn-line);
+  letter-spacing: normal;
+  border-radius: var(--r-btn);
 }
 
 @media (min-width: 1024px) {

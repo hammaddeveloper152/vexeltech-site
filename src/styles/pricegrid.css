@@ -1,0 +1,361 @@
+/* ==========================================================================
+   THE PRICING PAGE, 2026-09-24 (the founder, on the Melius pattern). See
+   PricingPage.jsx for the section list and where every string comes from.
+
+   Values, all measured against their own ground:
+     on the base      bone 16.32:1, steel-lift 7.4:1
+     on the cream     asphalt 15.75:1, steel 7.20:1
+     on machine       asphalt 9.46:1
+     yellow
+   The hairlines are marks, not text: asphalt at 15% between the grid's
+   columns, white at 8% between the table's rows, both the founder's.
+   ========================================================================== */
+
+.pr__in {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+/* ---- 1. The head, on the base --------------------------------------------
+
+   THE ONE HEADLINE ABOVE THE QUIET STEP. The founder set it at 56px, weight
+   400: larger and lighter than the 44px Medium every other heading takes,
+   because this page opens on a statement of the offer rather than a section
+   name. 56 at 1280 and 36 at 390, linear between, on the same slope the
+   quiet heading uses; 36 is where a nine-word line still sets in three lines
+   on a 358px column. */
+.pr-head {
+  padding: var(--s-section) var(--inset) var(--s-2xl);
+}
+
+.pr-head__eyebrow {
+  margin: 0 0 var(--s-md);
+  font-family: var(--font-offer);
+  font-size: var(--t-label-q);
+  line-height: var(--t-label-q-line);
+  font-weight: var(--t-weight-label);
+  color: var(--c-steel-lift); /* 7.4:1 */
+}
+
+.pr-head__h {
+  max-width: 20ch;
+  margin: 0;
+  font-family: var(--font-quiet);
+  font-size: clamp(36px, calc(27.24px + 2.247vw), 56px);
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: normal;
+  color: var(--c-bone); /* 16.32:1 */
+  text-wrap: balance;
+}
+
+.pr-head__lead {
+  max-width: 60ch;
+  margin: var(--s-lg) 0 0;
+  font-family: var(--font-offer);
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--c-steel-lift); /* 7.4:1 */
+}
+
+/* ---- 2. The grid, a cream panel ------------------------------------------
+
+   Four columns from 1280, two from 768, one below. Each column is a SUBGRID
+   of the list's eight rows (tag, name, line, price, under-price, what you
+   get, the list, the button), so every row lines up across the columns and
+   the buttons sit on one line whatever wraps above them. No column has a
+   background; they are separated by hairlines alone. */
+.pr-grid__panel {
+  /* The columns carry their own inset, so the panel's side padding would
+     double it; top and bottom keep the panel's. */
+  padding-inline: 0;
+  /* The columns' own 24px sits inside this, so the panel's 64px top and
+     bottom would leave 104px of cream above the first name. */
+  padding-block: var(--s-xl);
+}
+
+.pr-grid__cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .pr-grid__cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .pr-grid__cols {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.pr-col {
+  --hair: rgb(23 24 26 / 15%); /* asphalt at 15%, the founder's */
+  display: grid;
+  grid-row: span 8;
+  grid-template-rows: subgrid;
+  row-gap: var(--s-sm);
+  min-width: 0;
+  padding: var(--s-lg);
+  /* Every column carries a 2px top edge, transparent except on the picked
+     one, so the edge does not push one column's rows 2px off the rest. */
+  border-top: 2px solid transparent;
+  color: var(--c-asphalt);
+}
+
+.pr-col[data-picked='true'] {
+  border-top-color: var(--c-accent-draw-dark); /* the recommended column */
+}
+
+/* Hairlines between columns, per layout. */
+.pr-col + .pr-col {
+  box-shadow: inset 0 1px 0 var(--hair);
+}
+
+@media (min-width: 768px) {
+  .pr-col + .pr-col {
+    box-shadow: none;
+  }
+
+  .pr-col:nth-child(even) {
+    border-left: 1px solid var(--hair);
+  }
+
+  .pr-col:nth-child(n + 3) {
+    box-shadow: inset 0 1px 0 var(--hair);
+  }
+}
+
+@media (min-width: 1280px) {
+  .pr-col:nth-child(n + 3) {
+    box-shadow: none;
+  }
+
+  .pr-col + .pr-col {
+    border-left: 1px solid var(--hair);
+  }
+}
+
+.pr-col p,
+.pr-col h3 {
+  margin: 0;
+}
+
+/* The tag's row exists in every column so the names line up; only the
+   picked column fills it. Asphalt on machine yellow, 9.46:1. */
+.pr-col__tag-row {
+  min-height: 0;
+}
+
+.pr-col__tag {
+  display: inline-block;
+  padding: 2px var(--s-sm);
+  border-radius: var(--r-btn);
+  background: var(--c-accent-ground);
+  font-family: var(--font-offer);
+  font-size: var(--t-label-q);
+  line-height: var(--t-label-q-line);
+  font-weight: var(--t-weight-label);
+  color: var(--c-asphalt); /* 9.46:1 */
+}
+
+.pr-col__name {
+  font-family: var(--font-quiet);
+  font-size: 32px;
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: normal;
+  color: var(--c-asphalt); /* 15.75:1 */
+}
+
+.pr-col__line {
+  font-family: var(--font-offer);
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--c-steel); /* 7.20:1 */
+}
+
+.pr-col__price {
+  padding-top: var(--s-md);
+  font-family: var(--font-quiet);
+  font-size: 56px;
+  line-height: 1.05;
+  font-weight: 400;
+  letter-spacing: normal;
+  color: var(--c-asphalt); /* 15.75:1 */
+}
+
+.pr-col__sub {
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-steel); /* 7.20:1 */
+}
+
+.pr-col__get {
+  padding-top: var(--s-lg);
+}
+
+.pr-col .pr-col__label {
+  margin: 0 0 var(--s-md);
+  font-family: var(--font-offer);
+  font-size: var(--t-label-q);
+  line-height: var(--t-label-q-line);
+  font-weight: var(--t-weight-label);
+  color: var(--c-steel); /* 7.20:1 */
+}
+
+.pr-col__list {
+  display: grid;
+  gap: var(--s-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pr-col__item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--s-sm);
+  align-items: start;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-asphalt); /* 15.75:1 */
+}
+
+/* 14px, asphalt: a tick is a graphic at a 3:1 bar and this is 15.75:1. The
+   top margin sets it on the line's x-height rather than its top. */
+.pr-col__check {
+  width: 14px;
+  height: 14px;
+  margin-top: 5px;
+  color: var(--c-asphalt);
+}
+
+/* The button, full width at the foot of the column: the site's one button
+   size (tokens.css), asphalt with a cream label, 15.75:1. The picked column's
+   is the yellow primary, asphalt label 9.46:1. */
+.pr-col__btn {
+  align-self: end;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-top: var(--s-lg);
+  padding: var(--s-md) var(--s-lg);
+  border-radius: var(--r-btn);
+  background: var(--c-asphalt);
+  color: var(--c-cream);
+  font-family: var(--font-brand);
+  font-size: var(--t-btn);
+  line-height: var(--t-btn-line);
+  font-weight: var(--t-weight-btn);
+  letter-spacing: normal;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+.pr-col__btn--primary {
+  background: var(--c-accent-ground);
+  color: var(--c-asphalt);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pr-col__btn:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+.pr-col__btn:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pr-col__btn:active {
+    transform: none;
+  }
+}
+
+/* ---- 3. What's in every project, on the base -----------------------------
+
+   A real table. Below 1024 it keeps a readable width and scrolls sideways in
+   its own labelled region rather than crushing five columns into 358px;
+   from 1024 the region stops clipping, which is what lets the header row
+   stick under the bar at 1280 (an overflow container would be the sticky
+   header's scroll parent instead of the page). */
+.pr-cmp {
+  padding: var(--s-section) var(--inset);
+}
+
+.pr-sec__h {
+  margin: 0 0 var(--s-xl);
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  color: var(--c-bone); /* 16.32:1 */
+  text-wrap: balance;
+}
+
+.pr-cmp__wrap {
+  overflow-x: auto;
+}
+
+@media (min-width: 1024px) {
+  .pr-cmp__wrap {
+    overflow: visible;
+  }
+}
+
+.pr-cmp__t {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  /* Five equal columns: auto layout gave each service the width of its
+     longest value, so the four read as four different tables. */
+  table-layout: fixed;
+}
+
+.pr-cmp__t th,
+.pr-cmp__t td {
+  padding: var(--s-md) var(--s-md) var(--s-md) 0;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: var(--t-weight-body);
+  color: var(--c-bone); /* 16.32:1 */
+  text-align: left;
+  vertical-align: top;
+}
+
+/* Headers carry the weight a header needs, not a second colour. */
+.pr-cmp__t th {
+  font-weight: var(--t-weight-label);
+}
+
+/* Hairlines BETWEEN rows: under the header row and under every body row but
+   the last. */
+.pr-cmp__t thead tr,
+.pr-cmp__t tbody tr:not(:last-child) {
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+}
+
+@media (min-width: 1280px) {
+  .pr-cmp__t thead :is(th, td) {
+    position: sticky;
+    top: calc(48px + 2 * var(--s-sm)); /* under the bar */
+    z-index: 1;
+    background: var(--c-base);
+    box-shadow: inset 0 -1px 0 rgb(255 255 255 / 8%);
+  }
+}

@@ -158,7 +158,10 @@ function Choice({ pressed, onPick, className, children, label }) {
   );
 }
 
-export default function PlanBuilder() {
+/* `heading`: a visible section heading, 2026-09-24. The pricing rebuild puts
+   the builder under "Not sure?" with the founder's heading; without it the
+   section keeps its visually hidden name. */
+export default function PlanBuilder({ heading = null }) {
   const [step, setStep] = useState(0); // 0..3 the questions, 4 the result
   const [a, setA] = useState({
     trade: null,
@@ -448,9 +451,17 @@ export default function PlanBuilder() {
 
   return (
     <section className="vt plan colour-band" aria-labelledby="plan-h" onKeyDown={onKeyDown}>
-      <h2 className="skip-h" id="plan-h">
-        The plan builder
-      </h2>
+      {heading ? (
+        <div className="plan__head">
+          <h2 className="plan__h" id="plan-h">
+            {heading}
+          </h2>
+        </div>
+      ) : (
+        <h2 className="skip-h" id="plan-h">
+          The plan builder
+        </h2>
+      )}
       <div className="plan__in">
         <div className="plan__main">
           {/* The progress line: four nodes, a bone hairline, the fill yellow. */}

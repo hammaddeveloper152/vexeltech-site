@@ -53,6 +53,14 @@ otherwise, this section is right and the rest is history.
   nothing else. Cream and white-on-cream cards: no hairline, no light.
 - **Section padding `--s-section`: 128px at 1280, 80px at 390.**
 - **Motion unchanged.**
+- **Buttons (2026-09-24, pricing rebuild): every button is Clash Display
+  Medium 14px, 6px radius** (`--t-btn`, `--t-weight-btn`, `--r-btn`), at
+  every width. No call steps up with the frame.
+- **/pricing** (DESIGN.md "THE PRICING PAGE, REBUILT ON THE MELIUS
+  PATTERN"): headline Clash 400 at 56px, grid names Clash 400 at 32px, grid
+  prices Clash 400 at 56px (not Moldie, on this grid only). The grid's
+  recommended column (Websites) adds a **fifth yellow place**: its 2px top
+  edge and "Most picked" chip.
 
 ## 000. The founder's restructure (2026-09-22) outranks what follows
 
