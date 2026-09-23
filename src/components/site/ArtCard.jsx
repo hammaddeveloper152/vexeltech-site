@@ -118,20 +118,25 @@ function splitLine(text) {
 }
 
 /* `art` draws one of the four; `image` puts a transparent object in the same
-   top 65% instead, centred at 200px tall over a lit-raised wash (What it
-   costs you, 2026-09-24). `Icon` is optional: the image cards carry none. */
+   top 65% instead, fitted by height (180px, or `imageHeight`) and standing on
+   the zone's bottom line, over a lit-raised wash (What it costs you,
+   2026-09-24). `Icon` is optional: the image cards carry none. With no
+   `name` the card is BARE - the object alone, filling the card - which is
+   how the 404 page holds its mark. */
 export default function ArtCard({
   art = null,
   image = null,
+  imageHeight = null,
   Icon = null,
-  name,
-  line,
+  name = null,
+  line = '',
   href = null,
   as: Heading = 'h3',
   style,
 }) {
   const Art = art ? ART[art] : null;
   const [lead, rest] = splitLine(line);
+  const bare = !name;
   const body = (
     <>
       {/* The glow behind the artwork, 2026-09-24: bone, centred at 35% of
@@ -152,12 +157,17 @@ export default function ArtCard({
         </svg>
       ) : null}
       {image ? (
-        <span className="art__obj" aria-hidden="true">
+        <span
+          className="art__obj"
+          aria-hidden="true"
+          style={imageHeight ? { '--obj-h': `${imageHeight}px` } : undefined}
+        >
           {/* Decorative: the title says what it shows. */}
           <img className="art__img" src={image} alt="" loading="lazy" decoding="async" />
         </span>
       ) : null}
-      <span className="art__fade" aria-hidden="true" />
+      {bare ? null : <span className="art__fade" aria-hidden="true" />}
+      {bare ? null : (
       <span className="art__body">
         {Icon ? (
           <span className="art__chip" aria-hidden="true">
@@ -170,6 +180,7 @@ export default function ArtCard({
           {rest ? ` ${rest}` : null}
         </span>
       </span>
+      )}
     </>
   );
 
@@ -178,7 +189,7 @@ export default function ArtCard({
       {body}
     </Link>
   ) : (
-    <div className={`art${image ? ' art--image' : ''}`} style={style}>
+    <div className={`art${image ? ' art--image' : ''}${bare ? ' art--bare' : ''}`} style={style}>
       {body}
     </div>
   );

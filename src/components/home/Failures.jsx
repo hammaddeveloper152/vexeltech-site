@@ -49,6 +49,9 @@ const FAILURES = [
     statement: 'Not enough are calling',
     consequence: 'The marketing budget goes out every month and the leads do not come back.',
     image: '/assets/cost-1.webp',
+    /* 220px, the founder's (2026-09-24): the phone's silhouette is narrow,
+       76px wide at the others' 180. */
+    height: 220,
   },
   {
     id: 'miss',
@@ -80,9 +83,9 @@ export default function Failures() {
         </h2>
 
         <ul className="fail__items" data-revealed={revealed ? 'true' : 'false'} ref={ref}>
-          {FAILURES.map(({ id, statement, consequence, image }, i) => (
+          {FAILURES.map(({ id, statement, consequence, image, height }, i) => (
             <li className="fail__item" key={id} style={{ '--i': i }}>
-              <ArtCard image={image} name={statement} line={consequence} />
+              <ArtCard image={image} imageHeight={height} name={statement} line={consequence} />
             </li>
           ))}
         </ul>

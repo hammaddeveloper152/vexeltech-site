@@ -19,11 +19,10 @@
   text-align: center;
 }
 
-/* 480px wide at 1280, never wider than the frame. */
-.nf__mark {
-  display: block;
-  width: min(480px, 100%);
-  height: auto;
+/* The mark's card: 320px wide, never wider than the frame; the render
+   covers it (2026-09-24). */
+.nf__card {
+  width: min(320px, 100%);
   margin-bottom: var(--s-xl);
 }
 

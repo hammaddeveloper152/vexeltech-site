@@ -241,8 +241,13 @@
 }
 
 .art__obj {
+  /* Every object stands on the zone's bottom line (the founder, 2026-09-24),
+     so four objects of four heights share one floor. */
   display: grid;
-  place-items: center;
+  place-items: end center;
+  /* 8px, not 16: at four across the zone is 234px tall, and the phone's
+     220px plus 16 overflowed it and pushed its floor 4px down. */
+  padding-bottom: var(--s-sm);
   flex: none;
   width: 100%;
   aspect-ratio: 300 / 260;
@@ -252,11 +257,30 @@
 
 .art__img {
   display: block;
-  /* 180px tall, fitted by height (the founder's live walk, 2026-09-24). */
-  height: 180px;
+  /* 180px tall, fitted by height (the founder's live walk, 2026-09-24); a
+     card can pass its own, as the narrow phone does at 220. */
+  height: var(--obj-h, 180px);
   max-width: 85%;
   width: auto;
   object-fit: contain;
+}
+
+/* THE BARE CARD: a render alone, filling the card edge to edge. The 404
+   page's mark is one: it is a render on its own black floor, not a cut-out,
+   so it covers the card rather than floating in it as a black square. */
+.art--bare .art__obj {
+  aspect-ratio: 3 / 4;
+  padding-bottom: 0;
+  overflow: hidden;
+  border-radius: var(--r-card);
+  background: none;
+}
+
+.art--bare .art__img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
 }
 
 @media (prefers-reduced-motion: reduce) {
