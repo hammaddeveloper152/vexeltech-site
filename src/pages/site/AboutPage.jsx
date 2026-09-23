@@ -2,6 +2,7 @@ import React from 'react';
 import { Check, CursorClick, Eye, MagnifyingGlass, Timer, X } from '@phosphor-icons/react';
 import Shell from './Shell.jsx';
 import { CallBand } from './parts.jsx';
+import Faq from '../../components/home/Faq.jsx';
 import '../../styles/aboutpage.css';
 
 /* THE ABOUT PAGE, REBUILT 2026-09-23 FROM THE FOUNDER'S COPY.
@@ -20,8 +21,15 @@ import '../../styles/aboutpage.css';
         for
      6  how we work   the 01 to 04 row
         with you
+     6a key facts     a real <dl>, two columns from 1024, one below
+     6b questions     the home accordion with About's own four
      7  the note      one reading-width paragraph, the signature in Moldie
      8  the call      the spotlight, and the form from the Shell
+
+   6a and 6b, and the definition line under the hero paragraph, are
+   "ABOUT KEY FACTS 2026-09-23" in the same file, added the same day. The
+   definition line is also this page's meta description and the
+   Organization description in index.html's JSON-LD.
 
    WHAT WAS DELETED, because it is not on that list: "What we do" (the two
    text columns), the promise band, and "Our standards" with its CaretDown.
@@ -36,7 +44,8 @@ import '../../styles/aboutpage.css';
    all three would have deleted the section the founder asked for in the same
    breath. The founder's answer: cut the BRACKET, keep the line. Nothing is
    guessed, each stop still reads as a complete sentence, and a year drops in
-   later with no layout change.
+   later with no layout change. Stop 03 has its year now, 2026, supplied
+   with the key facts; 01 and 02 still have none.
 
    VEXEL SCALES. Stop 02 as supplied named it. CLAUDE.md records, under
    "settled and not to be revisited", that no Vexel Scales attribution or
@@ -78,7 +87,7 @@ const ORIGINS = [
   },
   {
     n: '03',
-    title: 'The whole thing.',
+    title: 'The whole thing. 2026.',
     body:
       'VexelTech: branding, the website, the marketing and the automation, from one team, at a flat price, because the businesses we talked to for years could never afford four agencies.',
   },
@@ -142,12 +151,63 @@ const WORK = [
   { n: '04', title: 'Thirty days of support.', line: 'After that it is a conversation, not a contract.' },
 ];
 
+/* Section 6a, the founder's twelve facts, verbatim. A row with an unfilled
+   bracket is OMITTED, not trimmed: the rule is applied here by the filter
+   rather than by deleting rows, so filling a bracket is a one-line edit and
+   the row appears. Omitted today: Founder ([SURNAME]), Contact ([PHONE]) and
+   Social (both URLs). The email is real but lives in the Contact row, and a
+   row cut in half is a guess about which half the founder wanted shown. */
+const FACTS = [
+  ['Company', 'VexelTech Solutions'],
+  ['Type', 'Branding, web design, marketing and automation agency'],
+  ['Founded', '2026'],
+  ['Founder', 'Zee [SURNAME]'],
+  [
+    'Serves',
+    'US local service businesses: plumbing, HVAC, electrical, roofing, cleaning, dental, contracting',
+  ],
+  ['Team based in', 'Karachi, working US hours'],
+  [
+    'Core offer',
+    'Branding from $299, website $700 flat, marketing and automation scoped on a call',
+  ],
+  ['Contract terms', 'Flat project price, no retainer, thirty days of support included'],
+  ['Turnaround', 'Branding 1 to 2 business days, website 4 business days'],
+  ['Ownership', "Domain, hosting, code and credentials in the client's name"],
+  ['Contact', 'info@vexeltechsolutions.com, [PHONE]'],
+  ['Social', '[LINKEDIN URL], [INSTAGRAM URL]'],
+].filter(([, value]) => !/\[[^\]]*\]/.test(value));
+
+/* Section 6b, the founder's four questions, in the home accordion. */
+const QUESTIONS = [
+  {
+    id: 'us',
+    q: 'Do you work with businesses outside the US?',
+    a: 'No. Everything from the copy to the ad targeting is built for US customers, and that is what we know.',
+  },
+  {
+    id: 'team',
+    q: 'Where is the team?',
+    a: 'Karachi, working US business hours. You get one named person, a US number and a reply within one business day.',
+  },
+  {
+    id: 'concepts',
+    q: 'What happens if I do not like the first concepts?',
+    a: 'You tell us, we go again. You see concepts before you pay for the build, so nothing is owed for work you have not approved.',
+  },
+  {
+    id: 'takeover',
+    q: 'Can you take over a website someone else built?',
+    a: 'Yes, if you own the domain and the files. If you do not, the first job is getting them into your name.',
+  },
+];
+
 export default function AboutPage() {
   return (
     <Shell
       driftTo=".ab3-work"
       title="About us | VexelTech"
-      description="We spent years making phones ring for other people's brands. Branding, websites, marketing and automation from one team."
+      description="VexelTech Solutions is a branding, web design, marketing and automation agency for US local service businesses, with flat prices from $299 and a finished website for $700."
     >
       {/* 1. HERO. The statement at the display step on the drift, a 48px
              yellow rule under it, then the paragraph. */}
@@ -164,6 +224,12 @@ export default function AboutPage() {
               Before VexelTech built a single website, our team answered calls for US internet
               providers, day and night, from Karachi. We know what a customer sounds like when they
               are ready to buy, and what makes them hang up.
+            </p>
+            {/* The definition line: what VexelTech is, in one sentence a
+                search result or a reader skimming can lift whole. */}
+            <p className="ab3-hero__def">
+              VexelTech Solutions is a branding, web design, marketing and automation agency for US
+              local service businesses, with flat prices from $299 and a finished website for $700.
             </p>
           </div>
         </div>
@@ -268,6 +334,27 @@ export default function AboutPage() {
           </ol>
         </div>
       </section>
+
+      {/* 6a. KEY FACTS. A real description list: label in the 11px register,
+             value in bone, a hairline between rows. */}
+      <section className="vt ab3-facts" aria-labelledby="ab3-facts-h">
+        <div className="ab3__in">
+          <h2 className="ab3__h" id="ab3-facts-h">
+            Key facts
+          </h2>
+          <dl className="ab3-facts__list">
+            {FACTS.map(([label, value]) => (
+              <div className="ab3-facts__row" key={label}>
+                <dt className="ab3-facts__dt">{label}</dt>
+                <dd className="ab3-facts__dd">{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {/* 6b. QUESTIONS. The home accordion, About's four, its own id prefix. */}
+      <Faq items={QUESTIONS} id="ab3-faq" />
 
       {/* 7. THE NOTE. One reading-width paragraph, the signature in Moldie. */}
       <section className="vt ab3-note" aria-labelledby="ab3-note-h">

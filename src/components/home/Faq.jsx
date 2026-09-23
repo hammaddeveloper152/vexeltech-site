@@ -62,7 +62,10 @@ const ITEMS = [
   },
 ];
 
-export default function Faq() {
+/* `items` and `id` let a second route mount the same accordion with its own
+   questions (About, 2026-09-23). `id` prefixes every DOM id, so two instances
+   never collide; home passes neither and its ids are unchanged. */
+export default function Faq({ items = ITEMS, id: base = 'faq' }) {
   const [openId, setOpenId] = useState(null);
 
   /* One piece of state, set synchronously. The entrance is a keyframe
@@ -91,7 +94,7 @@ export default function Faq() {
   useLayoutEffect(() => {
     const list = listRef.current;
     if (!list || !openId) return;
-    const panel = list.querySelector(`#faq-panel-${openId}`);
+    const panel = list.querySelector(`#${base}-panel-${openId}`);
     if (!panel) return;
 
     let line = -1;
@@ -104,17 +107,17 @@ export default function Faq() {
       }
       w.style.setProperty('--line', line);
     });
-  }, [openId]);
+  }, [openId, base]);
 
   return (
-    <section className="vt faq" aria-labelledby="faq-h">
+    <section className="vt faq" aria-labelledby={`${base}-h`}>
       <div className="faq__inner">
-        <h2 className="faq__h" id="faq-h">
+        <h2 className="faq__h" id={`${base}-h`}>
           Questions
         </h2>
 
         <div className="faq__list" ref={listRef}>
-          {ITEMS.map(({ id, q, a }) => {
+          {items.map(({ id, q, a }) => {
             const open = openId === id;
             return (
               <div className="faq__item" key={id} data-open={open ? 'true' : 'false'}>
@@ -127,9 +130,9 @@ export default function Faq() {
                   <button
                     className="faq__btn"
                     type="button"
-                    id={`faq-btn-${id}`}
+                    id={`${base}-btn-${id}`}
                     aria-expanded={open}
-                    aria-controls={`faq-panel-${id}`}
+                    aria-controls={`${base}-panel-${id}`}
                     onClick={() => toggle(id)}
                   >
                     <span className="faq__q-t">{q}</span>
@@ -148,9 +151,9 @@ export default function Faq() {
 
                 <div
                   className="faq__panel"
-                  id={`faq-panel-${id}`}
+                  id={`${base}-panel-${id}`}
                   role="region"
-                  aria-labelledby={`faq-btn-${id}`}
+                  aria-labelledby={`${base}-btn-${id}`}
                   hidden={!open}
                   data-open={open}
                 >

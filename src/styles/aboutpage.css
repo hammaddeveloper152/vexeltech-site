@@ -14,6 +14,7 @@
 .ab3-lesson,
 .ab3-fit,
 .ab3-work,
+.ab3-facts,
 .ab3-note {
   padding: var(--s-3xl) var(--inset);
 }
@@ -109,6 +110,19 @@
 }
 
 .ab3-hero__p {
+  max-width: 38rem;
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone); /* 16.32:1 on the base */
+  text-wrap: pretty;
+}
+
+/* The definition line, 2026-09-23: Satoshi at the body step under the
+   paragraph, which steps up to h3 from 1024. One step down so the paragraph
+   stays the lead and this reads as the sentence that files the company. */
+.ab3-hero__def {
   max-width: 38rem;
   margin: 0;
   font-family: var(--font-offer);
@@ -427,6 +441,68 @@
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
   color: var(--c-bone);
+  text-wrap: pretty;
+}
+
+/* ---- 6a. Key facts: a description list, 2026-09-23 ---------------------
+
+   Each row is a <div> inside the <dl>, which HTML allows, so a row can carry
+   its own hairline. The label is the 11px label register - the floor - in
+   steel-lift, as the footer base and the services facts set it; the value is
+   bone at the body step. Two columns from 1024, one below: at 768 a two-up
+   column is 344px and the longest value, Serves at 95 characters, sets four
+   lines of it.
+
+   Hairlines are BETWEEN rows, never above the first or under the last: the
+   heading already separates, and the section boundary is the drift's. In two
+   columns the first two rows are both first. */
+
+.ab3-facts__list {
+  display: grid;
+  margin: 0;
+  column-gap: var(--s-2xl);
+}
+
+@media (min-width: 1024px) {
+  .ab3-facts__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.ab3-facts__row {
+  display: grid;
+  gap: var(--s-xs);
+  align-content: start;
+  min-width: 0;
+  padding-block: var(--s-md);
+}
+
+.ab3-facts__row + .ab3-facts__row {
+  border-top: 1px solid var(--c-rule-dark);
+}
+
+@media (min-width: 1024px) {
+  .ab3-facts__row:nth-child(2) {
+    border-top: 0;
+  }
+}
+
+.ab3-facts__dt {
+  font-family: var(--font-offer);
+  font-size: 11px;
+  line-height: var(--t-label-line);
+  font-weight: var(--t-weight-label);
+  letter-spacing: var(--t-track-label);
+  text-transform: uppercase;
+  color: var(--c-steel-lift); /* 7.4:1 on the base */
+}
+
+.ab3-facts__dd {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone); /* 16.32:1 on the base */
   text-wrap: pretty;
 }
 

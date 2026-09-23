@@ -49,12 +49,20 @@
          The four offer URLs point at /services#<discipline>, the canonical
          anchors. They pointed at /services/<discipline>, which have been
          redirects since the sub-service pages came off the router, and
-         structured data should name the destination rather than a hop. -->
+         structured data should name the destination rather than a hop.
+
+         2026-09-23, from "ABOUT KEY FACTS" in the design repo's copy file:
+         the Organization description is the founder's definition line (also
+         /about-us's meta description), with foundingDate, founder and
+         areaServed. The founder is "Zee", the name the About note is signed
+         with; the fact's [SURNAME] is unfilled and is not guessed. `sameAs`
+         is ABSENT because both social URLs are unfilled brackets: add them
+         here and to About's Social row together when they land. -->
     <script type="application/ld+json">
       {
         "@context":"https://schema.org",
         "@graph":[
-          {"@type":"Organization","@id":"https://vexeltechsolutions.com/#organization","name":"VexelTech Solutions","url":"https://vexeltechsolutions.com/","description":"Branding, websites, marketing and automation for startups, SMBs and founders.","email":"info@vexeltechsolutions.com","address":{"@type":"PostalAddress","streetAddress":"6619 Elks Trce","addressLocality":"Richmond","addressRegion":"TX","postalCode":"77406","addressCountry":"US"}},
+          {"@type":"Organization","@id":"https://vexeltechsolutions.com/#organization","name":"VexelTech Solutions","url":"https://vexeltechsolutions.com/","description":"VexelTech Solutions is a branding, web design, marketing and automation agency for US local service businesses, with flat prices from $299 and a finished website for $700.","foundingDate":"2026","founder":{"@type":"Person","name":"Zee"},"areaServed":{"@type":"Country","name":"United States"},"email":"info@vexeltechsolutions.com","address":{"@type":"PostalAddress","streetAddress":"6619 Elks Trce","addressLocality":"Richmond","addressRegion":"TX","postalCode":"77406","addressCountry":"US"}},
           {"@type":"ProfessionalService","@id":"https://vexeltechsolutions.com/#service","name":"VexelTech Solutions","parentOrganization":{"@id":"https://vexeltechsolutions.com/#organization"},"areaServed":{"@type":"Country","name":"United States"},"priceRange":"$$","hasOfferCatalog":{"@type":"OfferCatalog","name":"Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Brand Identity Design","url":"https://vexeltechsolutions.com/services#branding"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Website Design and Development","url":"https://vexeltechsolutions.com/services#websites"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Digital Marketing","url":"https://vexeltechsolutions.com/services#marketing"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Marketing Automation","url":"https://vexeltechsolutions.com/services#automation"}}]}},
           {"@type":"WebSite","@id":"https://vexeltechsolutions.com/#website","url":"https://vexeltechsolutions.com/","name":"VexelTech Solutions","publisher":{"@id":"https://vexeltechsolutions.com/#organization"}}
         ]
