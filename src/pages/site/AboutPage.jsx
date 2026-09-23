@@ -6,97 +6,66 @@ import Faq from '../../components/home/Faq.jsx';
 import ArtCard from '../../components/site/ArtCard.jsx';
 import '../../styles/aboutpage.css';
 
-/* THE ABOUT PAGE, REBUILT 2026-09-23 FROM THE FOUNDER'S COPY.
+/* THE ABOUT PAGE. The copy is VEXELTECH-COPY.md, "ABOUT 2026-09-24", in the
+   design repo, the founder's, verbatim; it superseded "ABOUT 2026-09-23"
+   entirely and that block is deleted. The order is the founder's:
 
-   The source is VEXELTECH-COPY.md, "ABOUT 2026-09-23", in the design repo,
-   and every string below is that file verbatim. The order is the founder's:
-
-     1  hero          the statement and its paragraph on the base, the rule
-     2  where we      three Moldie-numbered stops in a row
+     1  hero          the statement (Monigue, "phone" highlighted), the rule,
+                      the paragraph, the definition line
+     2  where we      three numbered stops in a row, a timeline
         come from
-     3  what the      four cream cards: icon, discipline in Moldie, the line
-        phones
-        taught us
-     4  the numbers   OFF. Every figure is an unfilled bracket
-     5  who we are    two cream cards, a Check list and an X list
+     3  what we       four of the site's card on the base, four across at 1280
+        build it
+        around
+     4  who we are    a cream panel, a Check list and an X list
         for
-     6  how we work   the 01 to 04 row
+     5  how we work   the 01 to 04 row
         with you
-     6a key facts     a real <dl>, two columns from 1024, one below
-     6b questions     the home accordion with About's own four
-     7  the note      one reading-width paragraph, the signature in Moldie
-     8  the call      the spotlight, and the form from the Shell
+     6  key facts, questions, the founder's note, the spotlight call and the
+        form from the Shell, as built
 
-   THE QUIET PASS, 2026-09-24, supersedes the faces and grounds named in
-   that list: Moldie is gone from this page (numerals and the signature are
-   Clash in bone), sections 3 and 5 are cream PANELS inside the measure
-   rather than bands, and "phones" in the statement is the page's one
-   highlighted word. DESIGN.md "The quiet pass" is the record.
+   THE ORIGIN STORY WAS REPLACED BY THE FOUNDER ON 2026-09-24, on the site
+   and in the copy files: the hero, the first stop and section 3's heading
+   now tell the paid-media-to-build story, and the earlier one is gone.
 
-   6a and 6b, and the definition line under the hero paragraph, are
-   "ABOUT KEY FACTS 2026-09-23" in the same file, added the same day. The
-   definition line is also this page's meta description and the
-   Organization description in index.html's JSON-LD.
+   The definition line is also this page's meta description and the
+   Organization description in index.html's JSON-LD; key facts and the four
+   questions are "ABOUT KEY FACTS 2026-09-23" in the same file.
 
-   WHAT WAS DELETED, because it is not on that list: "What we do" (the two
-   text columns), the promise band, and "Our standards" with its CaretDown.
-   The promise band is shared with home and home keeps it; this page simply
-   stops mounting it. CaretDown was on the standards and nowhere else, so it
-   leaves the site with them.
-
-   ---- TWO DECISIONS THE COPY FORCED, BOTH PUT TO THE FOUNDER -------------
-
-   THE [YEAR] BRACKETS. All three stops in section 2 carry one. The rule is
-   that a line with an unfilled bracket is cut and never guessed, but cutting
-   all three would have deleted the section the founder asked for in the same
-   breath. The founder's answer: cut the BRACKET, keep the line. Nothing is
-   guessed, each stop still reads as a complete sentence, and a year drops in
-   later with no layout change. Stop 03 has its year now, 2026, supplied
-   with the key facts; 01 and 02 still have none.
-
-   VEXEL SCALES. Stop 02 as supplied named it. CLAUDE.md records, under
-   "settled and not to be revisited", that no Vexel Scales attribution or
-   reference of any kind appears anywhere on the site - the rule the legacy
-   footer lines and the JSON-LD `legalName` were removed under. The founder's
-   answer: keep the stop, drop the name. The history and the lesson survive
-   and the entity does not, so the settled rule holds.
+   VEXEL SCALES stays off the page. Stop 01 describes the paid media agency
+   without naming it: CLAUDE.md records, as settled, that no Vexel Scales
+   attribution or reference of any kind appears on the site, and the founder
+   has answered that the same way before (keep the stop, drop the name).
 
    ---- THE LAYOUT FAMILIES, AND THE ONE THAT IS ARGUABLE ------------------
 
-   Sections 2 and 6 are both rows of Moldie numerals, which is the closest
-   pair on this page, and they are built to be read differently rather than
-   merely to differ. Section 2 is a TIMELINE: three stops, the numeral inline
-   before its title on one line, a paragraph under, read as one story from
-   left to right. Section 6 is four PROMISES: the numeral stacked above a
-   single line, each read on its own and in any order. That is the same
-   distinction BUILD-LAW's own amendment drew between icon columns and a
-   figure row - what each column holds and how it is read - and it is flagged
-   rather than assumed, because a reader who thinks they are one family twice
-   is not obviously wrong.
+   Sections 2 and 5 are both rows of numerals, the closest pair on this page,
+   built to be read differently: section 2 is a TIMELINE, the numeral inline
+   before its title with a paragraph under, read left to right as one story;
+   section 5 is four PROMISES, the numeral stacked above a single line, read
+   in any order. That is the distinction BUILD-LAW's amendment drew between a
+   figure row and icon columns - what each holds and how it is read - and it
+   is flagged rather than assumed. */
 
-   Sections 3 and 5 are both cream: four small cards against two wide ones,
-   an icon-led card against a list card. */
-
-/* Section 2, the founder's copy with the [YEAR] cut from each stop and the
-   entity name cut from 02. */
+/* Section 2, the founder's three stops, ABOUT 2026-09-24. */
 const ORIGINS = [
   {
     n: '01',
-    title: 'The phones.',
+    title: 'The ads.',
     body:
-      'A call centre selling US internet and TV service on behalf of national providers. Thousands of conversations a month with homeowners, landlords and small business owners across the States.',
+      'A paid media agency registered in Texas, running Google and Meta campaigns for local service businesses. That is where we learned that most ad spend dies on a bad landing page.',
   },
   {
     n: '02',
-    title: 'The ads.',
+    title: 'The build.',
     body:
-      'A paid media agency registered in Texas, running Google and Meta campaigns for the same kind of customer we used to call. That is where we learned that most ad spend dies on a bad landing page.',
+      'So we started building the pages ourselves, then the whole site, then the follow-up that runs after the click. Every piece we added was a piece that used to leak.',
   },
   {
     n: '03',
     title: 'The whole thing. 2026.',
     body:
-      'VexelTech: branding, the website, the marketing and the automation, from one team, at a flat price, because the businesses we talked to for years could never afford four agencies.',
+      'VexelTech: branding, the website, the marketing and the automation, from one team, at a flat price, because the businesses we were running ads for could never afford four vendors.',
   },
 ];
 
@@ -170,7 +139,7 @@ const UNFILLED = /\[[^\]]*\]/;
 
 const FACTS = [
   ['Company', 'VexelTech Solutions'],
-  ['Type', 'Branding, web design, marketing and automation agency'],
+  ['Type', 'Technology company: websites, marketing, automation and branding for local service businesses'],
   ['Founded', '2026'],
   ['Founder', 'Zee [SURNAME]'],
   [
@@ -223,31 +192,30 @@ export default function AboutPage() {
     <Shell
       driftTo=".ab3-work"
       title="About us | VexelTech"
-      description="VexelTech Solutions is a branding, web design, marketing and automation agency for US local service businesses, with flat prices from $299 and a finished website for $700."
+      description="VexelTech Solutions is a technology company that builds the website, the marketing and the automation behind US local service businesses, at flat prices from $299."
     >
-      {/* 1. HERO. The statement at the display step on the drift, a 48px
-             yellow rule under it, then the paragraph. */}
+      {/* 1. HERO. The statement at the display step on the drift, the 48px
+             bone rule under it, the paragraph, the definition line. */}
       <section className="vt ab3-hero" aria-labelledby="ab3-hero-h">
         <div className="ab3__in ab3-hero__in">
           <div className="ab3-hero__text">
             <h1 className="ab3-hero__h" id="ab3-hero-h">
               {/* The page's one highlighted word, 2026-09-24: `.hl`, tokens.css. */}
-              We spent years making <span className="hl">phones</span> ring for other
-              people&apos;s brands.
+              We build the system that makes the <span className="hl">phone</span> ring.
             </h1>
             {/* Decorative, so a span rather than an <hr>, which would announce
                 a thematic break between a heading and the line answering it. */}
             <span className="ab3-hero__rule" aria-hidden="true" />
             <p className="ab3-hero__p">
-              Before VexelTech built a single website, our team answered calls for US internet
-              providers, day and night, from Karachi. We know what a customer sounds like when they
-              are ready to buy, and what makes them hang up.
+              A local business does not need a designer. It needs a website that converts, ads that
+              point at it, and the automation that catches every call and quote behind them. That is
+              one system, and we build the whole of it.
             </p>
             {/* The definition line: what VexelTech is, in one sentence a
                 search result or a reader skimming can lift whole. */}
             <p className="ab3-hero__def">
-              VexelTech Solutions is a branding, web design, marketing and automation agency for US
-              local service businesses, with flat prices from $299 and a finished website for $700.
+              VexelTech Solutions is a technology company that builds the website, the marketing and
+              the automation behind US local service businesses, at flat prices from $299.
             </p>
           </div>
         </div>
@@ -278,11 +246,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 3. WHAT THE PHONES TAUGHT US. Four of the site's cards on the base, four across at 1280. */}
+      {/* 3. WHAT WE BUILD IT AROUND. Four of the site's cards on the base, four across at 1280. */}
       <section className="vt ab3-lesson" aria-labelledby="ab3-lesson-h">
         <div className="ab3__in">
           <h2 className="ab3__h ab3-lesson__h" id="ab3-lesson-h">
-            What the phones taught us
+            What we build it around
           </h2>
           {/* The site's one card, 2026-09-24: the four artworks keyed by the
               discipline, the icons this page already carried. */}
