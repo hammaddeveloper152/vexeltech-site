@@ -166,11 +166,33 @@
   list-style: none;
 }
 
+/* THE COLUMNS SIZE TO THEIR HEADS, 2026-09-23. Stop 03 became "The whole
+   thing. 2026." and its head needs 374px (numeral 75, gap 16, title 283)
+   against a 341px third at 1280, so the title wrapped under its numeral.
+   Each track is now at least its head's one-line width and shares what is
+   left: the paragraph is `contain: inline-size`, so it adds nothing to the
+   track's max-content and simply wraps to whatever the head decided.
+
+   The other answer - every title one step down - was measured and rejected:
+   at 18px the head is still 280px against 256px at 1024, and the titles
+   would sit at the body size. The heads total 797px, which fits the 1024px of room at 1280
+   and fits 1024 to 1279 only with the gap one step down at 40px, so the
+   gap steps back up to 64 from 1280. */
 @media (min-width: 1024px) {
   .ab3-origin__row {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: var(--s-2xl);
+    grid-template-columns: repeat(3, minmax(max-content, 1fr));
+    column-gap: var(--s-xl);
     align-items: start;
+  }
+
+  .ab3-origin__b {
+    contain: inline-size;
+  }
+}
+
+@media (min-width: 1280px) {
+  .ab3-origin__row {
+    column-gap: var(--s-2xl);
   }
 }
 

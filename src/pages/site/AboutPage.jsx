@@ -154,9 +154,13 @@ const WORK = [
 /* Section 6a, the founder's twelve facts, verbatim. A row with an unfilled
    bracket is OMITTED, not trimmed: the rule is applied here by the filter
    rather than by deleting rows, so filling a bracket is a one-line edit and
-   the row appears. Omitted today: Founder ([SURNAME]), Contact ([PHONE]) and
-   Social (both URLs). The email is real but lives in the Contact row, and a
-   row cut in half is a guess about which half the founder wanted shown. */
+   the row appears. Omitted today: Founder ([SURNAME]) and Social (both URLs).
+
+   CONTACT IS SPLIT, by the founder, 2026-09-23: its value is a list of
+   parts, the filled ones are shown and joined, and [PHONE] joins the same
+   row when it is filled. A row whose parts are all unfilled is omitted. */
+const UNFILLED = /\[[^\]]*\]/;
+
 const FACTS = [
   ['Company', 'VexelTech Solutions'],
   ['Type', 'Branding, web design, marketing and automation agency'],
@@ -174,9 +178,14 @@ const FACTS = [
   ['Contract terms', 'Flat project price, no retainer, thirty days of support included'],
   ['Turnaround', 'Branding 1 to 2 business days, website 4 business days'],
   ['Ownership', "Domain, hosting, code and credentials in the client's name"],
-  ['Contact', 'info@vexeltechsolutions.com, [PHONE]'],
+  ['Contact', ['info@vexeltechsolutions.com', '[PHONE]']],
   ['Social', '[LINKEDIN URL], [INSTAGRAM URL]'],
-].filter(([, value]) => !/\[[^\]]*\]/.test(value));
+]
+  .map(([label, value]) => [
+    label,
+    Array.isArray(value) ? value.filter((part) => !UNFILLED.test(part)).join(', ') : value,
+  ])
+  .filter(([, value]) => value && !UNFILLED.test(value));
 
 /* Section 6b, the founder's four questions, in the home accordion. */
 const QUESTIONS = [
