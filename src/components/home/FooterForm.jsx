@@ -70,7 +70,10 @@ function validate(id, value) {
    per-page poses): one of the site's two character appearances, with P1 on
    exists. The handset that stood above the heading on Contact came off the
    site the same day. */
-export default function FooterForm() {
+/* `form={false}` renders the footer block alone, with no form above it:
+   About's page ends on it (2026-09-25, the founder's About rebuild). The
+   hooks still run so the component's shape does not change with the prop. */
+export default function FooterForm({ form = true }) {
   const [values, setValues] = useState({
     name: '', phone: '', email: '', message: '',
   });
@@ -152,6 +155,14 @@ export default function FooterForm() {
   };
 
   const sending = status === 'sending';
+
+  if (!form) {
+    return (
+      <footer className="vt foot foot--bare">
+        <FooterMeta />
+      </footer>
+    );
+  }
 
   return (
     <footer className="vt foot">

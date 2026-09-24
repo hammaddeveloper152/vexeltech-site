@@ -30,6 +30,9 @@ export default function Shell({
   title,
   description,
   meta = true,
+  /* `footerForm={false}`: the page ends on the footer block alone, with no
+     contact form (About, since 2026-09-25). */
+  footerForm = true,
   barOver = false,
   children,
 }) {
@@ -68,7 +71,7 @@ export default function Shell({
             The footer is `vt foot` inside FooterForm, which is load-bearing:
             tokens.css applies the ground per SECTION, and a footer rendered
             bare once sat on the UA's white body on six pages. */}
-        {meta ? <FooterForm /> : null}
+        {meta ? <FooterForm form={footerForm} /> : null}
       </main>
       {/* Below 768, once the page head has gone (StickyCta.jsx). */}
       <StickyCta />

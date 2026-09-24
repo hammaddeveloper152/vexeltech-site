@@ -53,16 +53,17 @@
 
          2026-09-23, from "ABOUT KEY FACTS" in the design repo's copy file:
          the Organization description is the founder's definition line (also
-         /about-us's meta description; replaced by ABOUT 2026-09-24's), with foundingDate, founder and
-         areaServed. The founder is "Zee", the name the About note is signed
-         with; the fact's [SURNAME] is unfilled and is not guessed. `sameAs`
-         is ABSENT because both social URLs are unfilled brackets: add them
-         here and to About's Social row together when they land. -->
+         /about-us's meta description; replaced by ABOUT 2026-09-24's), with foundingDate and
+         areaServed. `founder` ("Zee", from the About note's signature) CAME
+         OUT 2026-09-25 with the note: the About rebuild no longer names a
+         founder, and structured data states nothing the page does not.
+         `sameAs` is ABSENT because no social URL is set (content/socials.js):
+         add them here when they land. -->
     <script type="application/ld+json">
       {
         "@context":"https://schema.org",
         "@graph":[
-          {"@type":"Organization","@id":"https://vexeltechsolutions.com/#organization","name":"VexelTech Solutions","url":"https://vexeltechsolutions.com/","description":"VexelTech Solutions is a technology company that builds the website, the marketing and the automation behind US local service businesses, at flat prices from $299.","foundingDate":"2026","founder":{"@type":"Person","name":"Zee"},"areaServed":{"@type":"Country","name":"United States"},"email":"info@vexeltechsolutions.com","address":{"@type":"PostalAddress","streetAddress":"6619 Elks Trce","addressLocality":"Richmond","addressRegion":"TX","postalCode":"77406","addressCountry":"US"}},
+          {"@type":"Organization","@id":"https://vexeltechsolutions.com/#organization","name":"VexelTech Solutions","url":"https://vexeltechsolutions.com/","description":"VexelTech Solutions is a technology company that builds the website, the marketing and the automation behind US local service businesses, at flat prices from $299.","foundingDate":"2026","areaServed":{"@type":"Country","name":"United States"},"email":"info@vexeltechsolutions.com","address":{"@type":"PostalAddress","streetAddress":"6619 Elks Trce","addressLocality":"Richmond","addressRegion":"TX","postalCode":"77406","addressCountry":"US"}},
           {"@type":"ProfessionalService","@id":"https://vexeltechsolutions.com/#service","name":"VexelTech Solutions","parentOrganization":{"@id":"https://vexeltechsolutions.com/#organization"},"areaServed":{"@type":"Country","name":"United States"},"priceRange":"$$","hasOfferCatalog":{"@type":"OfferCatalog","name":"Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Brand Identity Design","url":"https://vexeltechsolutions.com/services#branding"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Website Design and Development","url":"https://vexeltechsolutions.com/services#websites"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Digital Marketing","url":"https://vexeltechsolutions.com/services#marketing"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Marketing Automation","url":"https://vexeltechsolutions.com/services#automation"}}]}},
           {"@type":"WebSite","@id":"https://vexeltechsolutions.com/#website","url":"https://vexeltechsolutions.com/","name":"VexelTech Solutions","publisher":{"@id":"https://vexeltechsolutions.com/#organization"}}
         ]

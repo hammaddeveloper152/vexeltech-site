@@ -70,6 +70,10 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **About rebuild, 2026-09-25**: /about-us is text only, four blocks
+  (statement with the swash on "phone"; What we do as a cream sheet list;
+  the definition; clients and partners) and the footer block with no form
+  (Shell `footerForm={false}`). No cards, FAQ, facts or call there.
 - **Genesis pass, 2026-09-25**: the highlight is the SWASH (Brush.jsx,
   thickness 'fit', -2deg, the word asphalt once the stroke is drawn), not the
   box; no `.hl`. Loose swashes under What it costs you's intro and off the

@@ -335,6 +335,17 @@
   }
 }
 
+/* THE BARE FOOTER, 2026-09-25: the block alone, no form above it (About).
+   The section before it gives the space above, so the block's own top
+   margin goes. */
+.foot--bare {
+  padding-top: 0;
+}
+
+.foot--bare .foot__band {
+  margin-top: 0;
+}
+
 /* On a phone the block is one column and the copyright goes to its foot,
    bottom left: the left column's two pieces become the block's own. */
 @media (max-width: 767px) {
