@@ -1,5 +1,11 @@
 import React from 'react';
-import { Check, CursorClick, Eye, MagnifyingGlass, Timer, X } from '@phosphor-icons/react';
+import { Check, X } from '@phosphor-icons/react';
+import {
+  GlyphAutomation,
+  GlyphBranding,
+  GlyphMarketing,
+  GlyphWebsites,
+} from '../../components/site/Glyphs.jsx';
 import Shell from './Shell.jsx';
 import { CallBand } from './parts.jsx';
 import Faq from '../../components/home/Faq.jsx';
@@ -69,35 +75,35 @@ const ORIGINS = [
   },
 ];
 
-/* Section 3. Four icons that are on no other route: Eye for being judged in
-   ten seconds, MagnifyingGlass for scanning rather than reading, CursorClick
-   for the page after the click, Timer for the two minutes. Each says
-   something its line says; none is a neutral placeholder. */
+/* Section 3. The site's own four glyphs (components/site/Glyphs.jsx,
+   2026-09-24, the founder), the same four as home's What we do: the glyphs
+   are part of the one card, keyed by discipline, and BUILD-LAW 0 records it.
+   They replaced Eye, MagnifyingGlass, CursorClick and Timer. */
 const LESSONS = [
   {
     id: 'branding',
-    Icon: Eye,
+    Icon: GlyphBranding,
     name: 'Branding',
     line:
       'A caller decides if you are real in the first ten seconds. Your name and your mark do that work before you say a word.',
   },
   {
     id: 'websites',
-    Icon: MagnifyingGlass,
+    Icon: GlyphWebsites,
     name: 'Websites',
     line:
       'Nobody reads. They scan for a number, a price and a reason to trust you, and they leave if any of the three is missing.',
   },
   {
     id: 'marketing',
-    Icon: CursorClick,
+    Icon: GlyphMarketing,
     name: 'Marketing',
     line:
       'Ads do not fail in the ad. They fail on the page after the click, and on the phone after the page.',
   },
   {
     id: 'automation',
-    Icon: Timer,
+    Icon: GlyphAutomation,
     name: 'Automation',
     line:
       'The job you lose is the one that called while you were on a roof. A missed call answered in two minutes is still a job.',

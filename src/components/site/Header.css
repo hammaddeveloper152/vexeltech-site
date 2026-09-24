@@ -374,10 +374,10 @@
 /* ---- Hover, gated to real pointers ------------------------------------- */
 
 @media (hover: hover) and (pointer: fine) {
-  .bar__link:hover,
+  /* The nav links take the site's text-link hover, the highlighter
+     (`.tl`, tokens.css, 2026-09-24), in place of the opacity dip. */
   .bar__cta:hover,
-  .bar__menu:hover,
-  .bar__panel-link:hover {
+  .bar__menu:hover {
     opacity: var(--hover-opacity);
   }
 }

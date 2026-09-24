@@ -124,6 +124,7 @@ export default function PricingPage() {
               <li className="pr-col" key={c.id} data-picked={c.picked ? 'true' : 'false'}>
                 {/* The white plane the column lifts onto (the Melius glow).
                     Out of flow, so it takes no row of the subgrid. */}
+                <span className="pr-col__glow" aria-hidden="true" />
                 <span className="pr-col__bg" aria-hidden="true" />
                 <p className="pr-col__tag-row">
                   {c.picked ? <span className="pr-col__tag">Most picked</span> : null}

@@ -319,9 +319,8 @@
   list-style: none;
 }
 
-/* Steel on hover, a colour swap and not an animation: BUILD-LAW Motion
-   animates transform and opacity only, so there is no transition on it. A
-   row is 48px tall, BUILD-LAW Touch. */
+/* A row is 48px tall, BUILD-LAW Touch. The hover is the site's text-link
+   highlighter (`.tl`, tokens.css): it replaced the steel colour swap. */
 .foot__page {
   display: inline-flex;
   align-items: center;
@@ -335,12 +334,6 @@
   color: var(--c-asphalt); /* 15.75:1 */
   text-decoration: none;
   transition: transform var(--d-press) var(--ease-reveal);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .foot__page:hover {
-    color: var(--c-steel); /* 7.20:1 */
-  }
 }
 
 .foot__page:active {
@@ -379,8 +372,8 @@
 }
 
 .foot__glyph {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   color: var(--c-asphalt); /* 9.46:1 on machine yellow */
 }
 

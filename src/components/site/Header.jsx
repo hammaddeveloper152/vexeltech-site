@@ -191,7 +191,7 @@ export default function Header({ over = false }) {
             {NAV.map(({ id, label, href }) => (
               <li key={id}>
                 <Link className="bar__link" to={href}>
-                  {label}
+                  <span className="tl">{label}</span>
                 </Link>
               </li>
             ))}
@@ -240,7 +240,7 @@ export default function Header({ over = false }) {
             {NAV.map(({ id, label, href }) => (
               <li key={id}>
                 <Link className="bar__panel-link" to={href} onClick={() => setOpen(false)}>
-                  {label}
+                  <span className="tl">{label}</span>
                 </Link>
               </li>
             ))}

@@ -171,7 +171,8 @@
 /* ---- THE MELIUS GLOW, 2026-09-24 (the founder's live walk) -------------
 
    On hover a column lifts onto a white plane: the plane is #FFFFFF with a
-   soft shadow, 0 12px 36px at 12% black, its hairlines fade to nothing, the
+   yellow halo, 0 0 24px at 25% (the grey 0 12px 36px shadow came off
+   2026-09-24), its hairlines fade to nothing, the
    column rises 4px and its price gains 4px, over 220ms on the founder's
    `ease`. THE FIRST SHADOW ON THE SITE, by the founder's decision; DESIGN.md
    records it. Everything moves by opacity and transform: the plane and its
@@ -186,7 +187,8 @@
   z-index: -1;
   border-radius: var(--r-card);
   background: #ffffff;
-  box-shadow: 0 12px 36px rgb(0 0 0 / 12%);
+  /* A yellow halo, 2026-09-24 (the founder): it replaced the grey shadow. */
+  box-shadow: 0 0 24px rgb(240 179 35 / 25%);
   opacity: 0;
   pointer-events: none;
   transition: opacity 220ms ease;
@@ -195,6 +197,48 @@
 .pr-col__price {
   transform-origin: 0 100%;
   transition: transform 220ms ease;
+}
+
+/* THE GLOW, 2026-09-24 (the founder, from melius.com/pricing): a yellow
+   layer behind each column's white card, 8px larger all round, blurred by
+   16px, the card's radius. At rest it is 0; on hover 0.45 and 1.02 scale,
+   200ms. The blur is a fixed filter and never animates - only opacity and
+   transform move (BUILD-LAW Motion). The Websites column shows it at 0.3 at
+   rest and the full 0.45 on hover. A new place for yellow, the founder's;
+   DESIGN.md records it. */
+.pr-col__glow {
+  position: absolute;
+  inset: -8px;
+  z-index: -2;
+  border-radius: var(--r-card);
+  background: var(--c-accent-ground);
+  filter: blur(16px);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 200ms var(--ease-reveal),
+    transform 200ms var(--ease-reveal);
+}
+
+.pr-col[data-picked='true'] .pr-col__glow {
+  opacity: 0.3;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pr-col:hover .pr-col__glow {
+    opacity: 0.45;
+    transform: scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pr-col__glow {
+    transition: none;
+  }
+
+  .pr-col:hover .pr-col__glow {
+    transform: none;
+  }
 }
 
 /* THE WEBSITES COLUMN AT REST, 2026-09-24 (the founder): only its yellow top

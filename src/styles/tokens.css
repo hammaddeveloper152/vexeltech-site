@@ -822,6 +822,25 @@ html {
   content: ')' / '';
 }
 
+/* THE TEXT-LINK HOVER, 2026-09-24 (the founder): THE HIGHLIGHTER AS A HOVER.
+   A nav link's words sit in `.tl`; on hover a solid machine yellow block
+   appears behind them, 2px by 6px of padding, no radius, and the words are
+   asphalt on it (9.46:1). Instant: no transition, so BUILD-LAW Motion is not
+   in play. The padding is always there and the negative margin takes it
+   back, so nothing moves when the block appears. Focus keeps the ring, never
+   this treatment (BUILD-LAW Markup). */
+.tl {
+  padding: 2px 6px;
+  margin-inline: -6px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a:hover > .tl {
+    background: var(--c-accent-ground);
+    color: var(--c-asphalt);
+  }
+}
+
 /* THE HIGHLIGHTER. One word per page, a machine yellow box behind it with
    asphalt type inside, 9.46:1. It is one of yellow's four places; BUILD-LAW
    records it as one type treatment used once per page, not a repeated

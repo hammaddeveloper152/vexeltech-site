@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { InstagramLogo, LinkedinLogo } from '@phosphor-icons/react';
+import { GlyphInstagram, GlyphLinkedIn } from '../site/Glyphs.jsx';
 import './FooterForm.css';
 
 /* THE FOOTER BAND, 2026-09-24 (the founder's Flesh and Bones pass), on every
@@ -38,8 +38,8 @@ const PAGES = [
 
 /* The founder's two accounts, `#` until the URLs are supplied. */
 const SOCIALS = [
-  { id: 'linkedin', label: 'LinkedIn', href: '#', Icon: LinkedinLogo },
-  { id: 'instagram', label: 'Instagram', href: '#', Icon: InstagramLogo },
+  { id: 'linkedin', label: 'LinkedIn', href: '#', Icon: GlyphLinkedIn },
+  { id: 'instagram', label: 'Instagram', href: '#', Icon: GlyphInstagram },
 ];
 
 /* A placeholder that says it is one, verbatim from VEXELTECH-COPY.md. */
@@ -61,7 +61,7 @@ export default function FooterMeta() {
           {PAGES.map(({ id, label, href }) => (
             <li key={id}>
               <Link className="foot__page" to={href}>
-                {label}
+                <span className="tl">{label}</span>
               </Link>
             </li>
           ))}
