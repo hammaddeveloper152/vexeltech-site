@@ -124,10 +124,6 @@
   fill: var(--c-accent-ground);
 }
 
-.art__ill .iso-line {
-  fill: none;
-}
-
 /* The small filled squares (the browser's three dots): asphalt, on the
    now-white bar (it was blue until the three-colour pass). */
 .art__ill .iso-d {

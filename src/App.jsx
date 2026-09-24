@@ -13,29 +13,17 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
    ---- Two trees, and which owns which path ------------------------------
 
-   THE REBUILD OWNS THE EIGHT DESTINATIONS from content answer 10.1. They are
-   the site: `/`, `/services`, `/pricing`, `/about-us`, `/contact-us`,
-   `/resources`, `/portfolio`, `/case-studies`.
+   THE REBUILD OWNS FIVE DESTINATIONS since 2026-09-25: `/`, `/services`,
+   `/pricing`, `/about-us`, `/contact-us`. `/resources`, `/portfolio` and
+   `/case-studies` had no content and were removed with their pages
+   (netlify.toml sends them to `/`).
 
-   WHAT IS LEFT OF THE LEGACY TREE is four pages: the blog, the two legal
-   pages and the thanks page, plus `/legacy/contact`. Everything else has
-   been audited off. The rule that emerged is not "keep old pages" but:
-   **a URL is kept only while what it says is true.** A page that is merely
-   old stays; a page that publishes a price, a metric or a client the source
-   does not support comes off, whoever wrote it.
+   WHAT IS LEFT OF THE LEGACY TREE is three pages: the two legal pages and
+   the thanks page, all noindex. The rule the legacy audit produced stands:
+   **a URL is kept only while what it says is true.**
 
-   WHERE THE TWO COLLIDE, THE REBUILD WINS AND THE OLD PAGE IS GONE.
-   Six paths were legacy pages and are now rebuilt pages. The superseded
-   originals were parked under `/legacy/...` for a day and then audited; five
-   of the six came off the router because they render a disputed price, an
-   invented client, or an unsourced metric. Only `/legacy/contact` survives.
-   The reasoning and the audit are at that route, below.
-
-   THE ALIASES NOW POINT AT THE REBUILD, not at the legacy page they used to
-   reach. `/packages`, `/pricing/`, `/contact`, `/work`, `/case-studies` and
-   the rest resolve to the rebuilt page for their destination, because an
-   alias exists to send a reader to the canonical page and the canonical page
-   moved.
+   THE ALIASES POINT AT THE REBUILD: `/packages`, `/pricing/`, `/contact`,
+   `/about` and the rest resolve to the rebuilt page for their destination.
 
    ---- Lazy, and why it is not premature ---------------------------------
 
@@ -53,27 +41,14 @@ import ServicesPage from './pages/site/ServicesPage.jsx';
 import PricingPage from './pages/site/PricingPage.jsx';
 import ContactPage from './pages/site/ContactPage.jsx';
 import AboutPage from './pages/site/AboutPage.jsx';
-import {
-  PortfolioPage,
-  CaseStudiesPage,
-  ResourcesPage,
-} from './pages/site/OneScreenPages.jsx';
 import NotFoundPage from './pages/site/NotFoundPage.jsx';
 
 /* The legacy tree. Lazy, and every one of them wrapped in LegacyShell.
 
-   TEN legacy components are deliberately NOT imported here any more. Their
-   routes came off on 2026-09-08 and an import with no route would put them
-   back in the bundle for nothing. The files all stay on disk.
-
-     HomePage, Services, Packages, About, Portfolio  superseded duplicates
-     WebDevelopment, Branding, Marketing, Automation each carried a price
-     Industries                                      unsourced percentages
-
-   See the notes by the redirects and by `/legacy/contact`. */
+   Three remain: /thanks, the Privacy Policy and the Terms of Service. The
+   superseded legacy pages, /blog and /legacy/contact were DELETED from the
+   repo on 2026-09-25 (the founder's cleanup); git history holds them. */
 const LegacyShell = lazy(() => import('./legacy/LegacyShell.jsx'));
-const LegacyContact = lazy(() => import('./pages/Contact.jsx'));
-const LegacyBlog = lazy(() => import('./pages/Blog.jsx'));
 const LegacySimple = lazy(() => import('./pages/SimplePage.jsx'));
 const LegacyThanks = lazy(() => import('./pages/ThanksPage.jsx'));
 
@@ -93,7 +68,7 @@ const legacy = (node) => <Legacy>{node}</Legacy>;
 export default function App() {
   return (
     <Routes>
-      {/* ---- The rebuild: the eight destinations, 10.1 ------------------ */}
+      {/* ---- The rebuild: five destinations since 2026-09-25 -------------- */}
       <Route path="/" element={<Home />} />
 
       <Route path="/services" element={<ServicesPage />} />
@@ -111,17 +86,10 @@ export default function App() {
       <Route path="/contact-us/" element={<ContactPage />} />
       <Route path="/contact" element={<ContactPage />} />
 
-      <Route path="/portfolio" element={<PortfolioPage />} />
-      <Route path="/portfolio/" element={<PortfolioPage />} />
-      <Route path="/portfolio.html" element={<PortfolioPage />} />
-      <Route path="/work" element={<PortfolioPage />} />
-      <Route path="/work/" element={<PortfolioPage />} />
-
-      <Route path="/case-studies" element={<CaseStudiesPage />} />
-      <Route path="/case-studies/" element={<CaseStudiesPage />} />
-
-      <Route path="/resources" element={<ResourcesPage />} />
-      <Route path="/resources/" element={<ResourcesPage />} />
+      {/* /portfolio, /case-studies, /resources (and /work, /portfolio.html),
+          /blog and /legacy/contact are GONE, 2026-09-25 (the founder's repo
+          cleanup): no content, so their routes, pages and styles are
+          deleted, and netlify.toml sends each to / with a 301. */}
 
       {/* ---- The four sub-service pages are GONE, 2026-09-08 ------------
 
@@ -165,8 +133,6 @@ export default function App() {
       <Route path="/automation/" element={<Navigate to="/services#automation" replace />} />
 
       {/* ---- Legacy: the pages the rebuild has not reached -------------- */}
-      <Route path="/blog" element={legacy(<LegacyBlog />)} />
-
       <Route path="/thanks" element={legacy(<LegacyThanks />)} />
       <Route path="/thanks.html" element={legacy(<LegacyThanks />)} />
       <Route path="/privacy-policy" element={legacy(<LegacySimple title="Privacy Policy" />)} />
@@ -179,31 +145,6 @@ export default function App() {
       />
       <Route path="/terms.html" element={legacy(<LegacySimple title="Terms of Service" />)} />
 
-      {/* ---- The superseded pages: FIVE OF SIX ARE OFF THE ROUTER -------
-
-          They were parked under `/legacy/...` on the reasoning that deleting
-          a working URL to tidy a diff is worse than keeping it. Audited on
-          2026-09-08 with `.measure/legacyaudit.mjs`, that reasoning does not
-          survive what is actually on them. A superseded page is only worth
-          keeping if it is merely OLD; these are wrong, and a wrong page on a
-          live path is worse than a dead link.
-
-          | Path | Off, because |
-          |---|---|
-          | `/legacy/home` | renders the disputed **$700** twice, claims "127 REVIEWS" and "8 stars", prints a mock phone number `(713) 555-0142`, and carries 7 dashes |
-          | `/legacy/packages` | six prices, **$990 to $5,990**, none of which appear on the pricing sheet at all, plus 3 dashes |
-          | `/legacy/portfolio` | **invents clients and case studies outright** — "Glamour Aroma", "Nexus Systems" — while source section 5, THE WORK, is blank. The worst Truth breach found on this site |
-          | `/legacy/about` | invents a founder story, a philosophy and a pull quote presented as a quotation |
-          | `/legacy/services` | "$0 Agency Retainer", "3-4 WK Average Delivery" and "100% Client Ownership" as stat tiles, none of them sourced, and the delivery figure contradicts the content answers |
-
-          THE COMPONENTS ARE NOT DELETED. They are in `src/pages/` and one
-          line each brings them back. What is removed is public reachability.
-
-          `/legacy/contact` STAYS, and it is the only one that passes all
-          three tests: no price, no invented client or metric, no dash. It
-          duplicates `/contact-us`, so it is arguably pointless rather than
-          harmful, and pointless is not a reason to delete a URL. */}
-      <Route path="/legacy/contact" element={legacy(<LegacyContact />)} />
 
       {/* THE NOT-FOUND ROUTE IS THE REBUILD'S, 2026-09-15. It was the legacy
           NotFound in the legacy shell; `/404` names it and `*` catches the

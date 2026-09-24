@@ -1,6 +1,8 @@
 import puppeteer from 'puppeteer';
 
-export const URL_ = 'http://localhost:4178/hero-preview.html';
+/* The production preview. It was hero-preview.html on 4178, a harness page
+   deleted 2026-09-25 (the founder's cleanup). */
+export const URL_ = 'http://localhost:4179/';
 export const ACCENT = [240, 179, 35]; // #F0B323 machine yellow
 
 /* Candidate grounds the accent is ever painted over on this page. A pixel is

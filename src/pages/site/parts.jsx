@@ -42,22 +42,6 @@ export function PageHead({ title, lead, id = 'pg-h', step = 'heading' }) {
   );
 }
 
-export function Section({ title, note, children, labelledBy }) {
-  return (
-    <section className="vt pg__section" aria-labelledby={labelledBy}>
-      <div className="pg__section-in">
-        {title ? (
-          <h2 className="pg__sh" id={labelledBy}>
-            {title}
-          </h2>
-        ) : null}
-        {note ? <p className="pg__note">{note}</p> : null}
-        {children}
-      </div>
-    </section>
-  );
-}
-
 /* THE CLOSING CALL, 2026-09-24 (the founder's Flesh and Bones pass): one
    line, the heading's own words, in Clash Display Medium 32px uppercase in
    machine yellow with a hand-drawn yellow scribble 8px below it (a straight
@@ -90,26 +74,3 @@ export function CallBand({ heading, note = null }) {
   );
 }
 
-/* A one-screen page: a heading, a line, optionally a note saying what is not
-   here yet, and the call.
-
-   `pending` is deliberately a separate prop from `lead`. A line that states
-   what the page IS may be real copy; a line that says content has not been
-   supplied is a placeholder and has to be visibly one, so the two are styled
-   differently and neither can quietly become the other. */
-export function OneScreen({ title, lead, pending, callHeadingId = 'one-h' }) {
-  return (
-    <section className="vt one" aria-labelledby={callHeadingId}>
-      <div className="one__in">
-        <h1 className="one__h" id={callHeadingId}>
-          {title}
-        </h1>
-        {lead ? <p className="one__lead">{lead}</p> : null}
-        {pending ? <p className="one__pending">{pending}</p> : null}
-        <Link className="one__cta" to={CALL_HREF}>
-          {CALL_LABEL}
-        </Link>
-      </div>
-    </section>
-  );
-}

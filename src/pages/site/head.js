@@ -3,8 +3,8 @@
    here, and the 404 marks itself noindex.
 
    WHY, measured: no page had a canonical URL or any Open Graph tag, and
-   seven alias routes (/about, /contact, /work, /packages, /portfolio.html
-   and the trailing-slash forms) render a rebuilt page under a second URL.
+   alias routes (/about, /contact, /packages and the trailing-slash forms)
+   render a rebuilt page under a second URL.
    The canonical names the one URL each page is kept at.
 
    THE ORIGIN is the one the JSON-LD in index.html already asserts.

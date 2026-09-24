@@ -50,8 +50,8 @@ import './Header.css';
 
    PORTFOLIO IS OUT OF THE BAR, 2026-09-21, by the user, at every width and
    in the phone menu (both render this one list). The work section is still a
-   placeholder, so the bar no longer offers it as evidence. `/portfolio` stays
-   reachable by URL until it is retired with the other legacy routes. The bar
+   placeholder, so the bar no longer offers it as evidence. `/portfolio` was
+   retired on 2026-09-25 and redirects to / (netlify.toml). The bar
    holds three; its container budget only gains from the removal.
 
    Social icons, also 10.4: in the FOOTER since 2026-09-16, not the bar. See

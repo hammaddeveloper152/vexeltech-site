@@ -7,7 +7,7 @@ import React from 'react';
    is kept: it is the founder's copy from VEXELTECH-SERVICES-COPY.md and costs
    nothing but bytes of source. */
 import Shell from './Shell.jsx';
-import { PageHead, Section, CallBand } from './parts.jsx';
+import { PageHead, CallBand } from './parts.jsx';
 import ServiceSections from './ServiceSections.jsx';
 import { DISCIPLINES } from '../../content/services.js';
 import '../../styles/services.css';

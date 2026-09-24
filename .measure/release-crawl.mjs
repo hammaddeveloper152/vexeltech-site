@@ -4,7 +4,8 @@ import { createRequire } from 'node:module';
 const require = createRequire('C:/Users/LENOVO/Desktop/vexeltech2-src/vexeltech2-main/package.json');
 const puppeteer = require('puppeteer');
 const BASE = 'http://localhost:4173';
-const ROUTES = ['/', '/services', '/pricing', '/about-us', '/contact-us', '/resources', '/portfolio', '/case-studies', '/nope'];
+/* The five pages since 2026-09-25, the three legacy pages that remain, and a 404. */
+const ROUTES = ['/', '/services', '/pricing', '/about-us', '/contact-us', '/privacy-policy', '/terms-of-service', '/thanks', '/nope'];
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const b = await puppeteer.launch({ headless: 'new' });
 const hrefs = new Map(); // href -> set of pages

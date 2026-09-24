@@ -110,16 +110,8 @@
   --lit-key-page: radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%);
   --lit-rim-page: linear-gradient(transparent, transparent); /* no blue, 2026-09-25 */
 
-  /* `--lit-edge-arc`, the rim's arc-blue edge, is DELETED (2026-09-25, the
-     release audit): no blue anywhere, and `.lit-obj` below matches nothing. */
-}
-
-/* Every lit object takes this. One declaration, so a card, a plate and a panel
-   cannot drift into three interpretations of the same two lights. */
-.lit-obj {
-  background-image: var(--lit-key), var(--lit-rim);
-  border-color: var(--lit-edge);
-  border-top-color: var(--lit-edge-top);
+  /* `--lit-edge-arc` (the rim's arc-blue edge) and `.lit-obj`, the one
+     rule that used it, are DELETED (2026-09-25): no blue anywhere. */
 }
 
 /* ---- THE RIG. ONE PER PAGE, NOT ONE PER SECTION ------------------------
@@ -546,24 +538,6 @@ body::before {
   opacity: 0.06;
   mix-blend-mode: screen;
   pointer-events: none;
-}
-
-
-.services__card,
-.hero__plate {
-  border: 1px solid var(--lit-edge);
-  border-top-color: var(--lit-edge-top);
-  box-shadow: var(--lit-inset);
-  background-clip: padding-box;
-}
-
-/* LIT-NEAR. The card is 423px tall and the warm surfaces stop at 320: past
-   that a tint is a plane of colour rather than light on a plane. The glow and
-   the accent carry the warmth. agency.css carries the argument. */
-.services__card {
-  background-color: var(--lit-near);
-  background-image: var(--lit-key), var(--lit-rim);
-  box-shadow: var(--lift), var(--lit-inset);
 }
 
 /* ---- Display type: the glow is GONE, 2026-09-24 ---------------------------

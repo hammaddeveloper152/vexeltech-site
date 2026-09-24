@@ -70,6 +70,14 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Repo cleanup, 2026-09-25**: five pages (/, /services, /pricing, /about-us,
+  /contact-us) plus /privacy-policy, /terms-of-service and /thanks. /blog,
+  /legacy/contact, /resources, /portfolio and /case-studies 301 to /.
+  `hero-preview.html`, the legacy pages and every unreachable file are
+  deleted. `.measure/` keeps 14 scripts (see its README); mentions below of
+  deskcut, objcut, costprep, planpairs, carrier, legacyaudit or the harness
+  are history. The storyboard is archived and no longer decides section
+  order.
 - **Content audit, 2026-09-25**: the audience is US local service
   businesses, never "startups", "founders" or "SMBs". Body copy and card
   titles use contractions (can't, don't, doesn't, that's); Monigue headings
@@ -351,6 +359,8 @@ route 1.63% / 3.32% against 5%, the cream cards 0.00% at rest.
 
 ## 0. The storyboard decides sections, order and placement (2026-09-21)
 
+**Superseded 2026-09-25: the storyboard is archived
+(`archive/VEXELTECH-STORYBOARD.md`) and decides nothing now.** It read:
 `VEXELTECH-STORYBOARD.md` in the design repo is the founder's sheet and the
 source of every page's sections, their order, their grounds and where every
 asset stands. It outranks this file and any earlier record where they differ;

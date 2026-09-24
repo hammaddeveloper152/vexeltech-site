@@ -34,10 +34,6 @@
    THE INDEX RAIL CAME OFF, 2026-09-21, by the user (storyboard: it is not in
    the motion or component lists). The four sections run down one column. */
 
-.svc {
-  display: grid;
-}
-
 /* The four discipline sections, 96px apart. See section 4 below. */
 .svc2 {
   display: grid;
@@ -110,8 +106,6 @@
   width: min(100%, 1200px);
   margin: 0 auto;
 }
-
-
 
 /* 60/40 from 1024: the checklist needs the measure, the price needs room for
    a 160px figure and nothing else. Below that they stack and the price leads,

@@ -29,7 +29,9 @@
     <div class="row" id="a"></div>
     <div class="row" id="b"></div>
     <script type="module">
-      const TARGET = new URLSearchParams(location.search).get('src') || '/hero-preview.html';
+      /* The home page by default (hero-preview.html was deleted 2026-09-25);
+         `?src=/pricing` and so on for any other route. */
+      const TARGET = new URLSearchParams(location.search).get('src') || '/';
       const ALL = [
         ['a', 390, 844],
         ['a', 600, 800],

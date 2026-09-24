@@ -2,6 +2,70 @@
   command = "npm run build"
   publish = "dist"
 
+# ROUTES WITH NO CONTENT, REMOVED 2026-09-25 (the founder's repo cleanup):
+# each goes to / with a 301. These come BEFORE the SPA rewrite below, since
+# Netlify applies the first rule that matches.
+
+[[redirects]]
+  from = "/blog"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/legacy/contact"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/resources"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/resources/*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/portfolio"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/portfolio/*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/portfolio.html"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/work"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/work/*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/case-studies"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/case-studies/*"
+  to = "/"
+  status = 301
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
