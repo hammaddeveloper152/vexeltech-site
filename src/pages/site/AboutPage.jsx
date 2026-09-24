@@ -1,5 +1,6 @@
 import React from 'react';
-import { IconCheck, IconCross } from '../../components/site/Icons.jsx';
+import { Link } from 'react-router-dom';
+import { IconArrowUpRight, IconCheck, IconCross } from '../../components/site/Icons.jsx';
 import {
   IsoAutomation,
   IsoBranding,
@@ -124,14 +125,6 @@ const FIT = {
     'Anyone who wants a retainer instead of a result.',
   ],
 };
-
-/* Section 6, the founder's four, each a title and the line after it. */
-const WORK = [
-  { n: '01', title: 'One person picks up.', line: 'Not a ticket queue. You get a name and a number.' },
-  { n: '02', title: 'You see it before you pay.', line: 'Concepts first, then the build, then the invoice.' },
-  { n: '03', title: 'You own everything.', line: 'Domain, hosting, code, credentials. In your name from day one.' },
-  { n: '04', title: 'Thirty days of support.', line: 'After that it is a conversation, not a contract.' },
-];
 
 /* Section 6a, the founder's twelve facts, verbatim. A row with an unfilled
    bracket is OMITTED, not trimmed: the rule is applied here by the filter
@@ -274,6 +267,15 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
+          {/* THE WAY TO THE PROCESS, 2026-09-25 (the founder's life pass 3),
+              verbatim: How we work with you came off this page, and home's
+              How it works is where a project is shown step by step. */}
+          <p className="ab3-lesson__more">
+            <Link className="ab3-lesson__link" to="/#how-it-works">
+              See how a project runs, step by step
+              <IconArrowUpRight className="i i--sm" />
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -314,25 +316,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 6. HOW WE WORK WITH YOU. The 01 to 04 row: numeral above a line. */}
-      <section className="vt ab3-work" aria-labelledby="ab3-work-h">
-        <div className="ab3__in">
-          <h2 className="ab3__h ab3-work__h" id="ab3-work-h">
-            How we work with you
-          </h2>
-          <ol className="ab3-how__steps">
-            {WORK.map(({ n, title, line }) => (
-              <li className="ab3-how__step" key={n}>
-                <span className="ab3-how__n" aria-hidden="true">
-                  {n}
-                </span>
-                <span className="ab3-how__t">{title}</span>
-                <span className="ab3-how__line">{line}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      {/* 6. HOW WE WORK WITH YOU CAME OFF THIS PAGE, 2026-09-25 (the
+             founder's life pass 3). The line at the foot of What we build
+             it around points to home's How it works instead. */}
 
       {/* 6a. KEY FACTS. A real description list: label in the 11px register,
              value in bone, a hairline between rows. */}

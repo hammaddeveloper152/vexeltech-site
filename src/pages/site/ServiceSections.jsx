@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Badge from '../../components/site/Badge.jsx';
-import { IconArrowUpRight, IconCheck } from '../../components/site/Icons.jsx';
+import CheckDot from '../../components/site/CheckDot.jsx';
+import { IconArrowUpRight } from '../../components/site/Icons.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
 
 /* THE FOUR DISCIPLINES ON /services, AS ALTERNATING BANDS, 2026-09-23.
@@ -78,9 +78,6 @@ export default function ServiceSections({ disciplines }) {
           >
             <div className={`svc2__in${cream ? ' panel' : ''}`}>
               <div className="svc2__left">
-                {/* The discipline's number, its badge, at the top right of
-                    the section head (life pass 2). */}
-                <Badge n={String(i + 1).padStart(2, '0')} className="svc2__badge" />
                 <h2 className="svc2__name" id={`svc-${d.id}`}>
                   {d.name}
                 </h2>
@@ -91,7 +88,7 @@ export default function ServiceSections({ disciplines }) {
                     <li className="svc2__item" key={title}>
                       {/* Decorative: the item says the thing, and a list of
                           six ticks read aloud is six words nobody needs. */}
-                      <IconCheck className="i svc2__check" />
+                      <CheckDot />
                       {title}
                     </li>
                   ))}

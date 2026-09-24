@@ -381,11 +381,26 @@
 
 /* 14px, asphalt: a tick is a graphic at a 3:1 bar and this is 15.75:1. The
    top margin sets it on the line's x-height rather than its top. */
-.pr-col__check {
-  width: 14px;
-  height: 14px;
-  margin-top: 5px;
-  color: var(--c-asphalt);
+/* The columns keep their discipline colours for the check dots
+   (CheckDot.jsx, life pass 3). */
+.pr-col--branding {
+  --disc: var(--c-accent-ground);
+  --disc-ink: var(--c-asphalt);
+}
+
+.pr-col--websites {
+  --disc: var(--c-arc-blue);
+  --disc-ink: var(--c-shop-white);
+}
+
+.pr-col--marketing {
+  --disc: var(--c-coral);
+  --disc-ink: var(--c-shop-white);
+}
+
+.pr-col--automation {
+  --disc: var(--c-mint);
+  --disc-ink: var(--c-shop-white);
 }
 
 /* The button, full width at the foot of the column: the site's one button

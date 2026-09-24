@@ -20,6 +20,8 @@
    ========================================================================== */
 
 .route-band {
+  /* The anchor `/#how-it-works` lands the section's top under the bar. */
+  scroll-margin-top: calc(48px + 2 * var(--s-sm));
   /* 2026-09-24: bone and steel-lift. Nothing is white but the hero. */
   --route-ink: var(--c-bone);
   --route-soft: var(--c-steel-lift);

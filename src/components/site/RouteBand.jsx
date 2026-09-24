@@ -54,7 +54,9 @@ const STOPS = [
 
 /* The margin label is Marginalia.jsx's since 2026-09-25; the `marg` prop is
    gone. */
-export default function RouteBand({ id, heading, lines }) {
+/* `sectionId`: the section's own anchor, `how-it-works` on home since
+   2026-09-25, so About's line can link to it (`/#how-it-works`). */
+export default function RouteBand({ id, heading, lines, sectionId = null }) {
   const sectionRef = useRef(null);
   const listRef = useRef(null);
   const stopRefs = useRef([]);
@@ -127,6 +129,7 @@ export default function RouteBand({ id, heading, lines }) {
   return (
     <section
       className="vt route-band route-band--open"
+      id={sectionId || undefined}
       aria-labelledby={id}
       ref={sectionRef}
     >

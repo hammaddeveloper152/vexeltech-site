@@ -44,6 +44,8 @@ const ROWS = [
   ['Team', 'One team across all four disciplines.'],
   ['Build', 'Four business days from content to live.'],
   ['After', 'Thirty days of care, then it is yours.'],
+  /* The fourth, 2026-09-25 (the founder's life pass 3), verbatim. */
+  ['Price', 'Flat prices. No retainers, no surprises.'],
 ];
 
 export default function About() {

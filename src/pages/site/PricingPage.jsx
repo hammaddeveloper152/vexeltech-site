@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { IconCheck } from '../../components/site/Icons.jsx';
+import Brush from '../../components/site/Brush.jsx';
+import CheckDot from '../../components/site/CheckDot.jsx';
 import Shell from './Shell.jsx';
 import { CallBand } from './parts.jsx';
 import PlanBuilder from './PlanBuilder.jsx';
@@ -123,7 +124,7 @@ export default function PricingPage() {
           </h2>
           <ul className="pr-grid__cols">
             {COLUMNS.map((c) => (
-              <li className="pr-col" key={c.id} data-picked={c.picked ? 'true' : 'false'}>
+              <li className={`pr-col pr-col--${c.id}`} key={c.id} data-picked={c.picked ? 'true' : 'false'}>
                 {/* The white plane the column lifts onto (the Melius glow).
                     Out of flow, so it takes no row of the subgrid. */}
                 <span className="pr-col__glow" aria-hidden="true" />
@@ -133,14 +134,17 @@ export default function PricingPage() {
                 </p>
                 <h3 className="pr-col__name">{c.name}</h3>
                 <p className="pr-col__line">{c.line}</p>
-                <p className="pr-col__price">{c.price}</p>
+                {/* The Websites figure carries the brush stroke (life pass 3). */}
+                <p className="pr-col__price">
+                  {c.id === 'websites' ? <Brush>{c.price}</Brush> : c.price}
+                </p>
                 <p className="pr-col__sub">{c.sub}</p>
                 <div className="pr-col__get">
                   <p className="pr-col__label lbl">What you get</p>
                   <ul className="pr-col__list">
                     {c.items.map((item) => (
                       <li className="pr-col__item" key={item}>
-                        <IconCheck className="i pr-col__check" />
+                        <CheckDot />
                         {item}
                       </li>
                     ))}

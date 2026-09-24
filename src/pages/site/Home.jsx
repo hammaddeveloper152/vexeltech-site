@@ -83,7 +83,18 @@ export default function Home() {
     document.title = TITLE;
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.content = DESCRIPTION;
-    window.scrollTo(0, 0);
+    /* A FRAGMENT IS HONOURED, 2026-09-25: About links to `/#how-it-works`.
+       Scrolled once the fonts are in, so the target does not move after
+       the page has landed on it; `scroll-margin-top` clears the bar. */
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    const target = id ? document.getElementById(id) : null;
+    if (target) {
+      const go = () => target.scrollIntoView();
+      if (document.fonts) document.fonts.ready.then(go);
+      else requestAnimationFrame(go);
+    } else {
+      window.scrollTo(0, 0);
+    }
   }, []);
 
   /* THE GROUND is the root's since 2026-09-24: one drift, base to
@@ -113,7 +124,7 @@ export default function Home() {
         <About />
         <Services />
         <WordBand />
-        <RouteBand id="how-h" heading="How it works" lines={STEP_LINES} />
+        <RouteBand id="how-h" sectionId="how-it-works" heading="How it works" lines={STEP_LINES} />
         <CounterRow band />
         {/* The $700 at 240px is the band's object; `promise.webp` came off
             2026-09-22 with every other unfilled slot. */}

@@ -886,6 +886,74 @@ html {
   }
 }
 
+/* THE CHECK DOT, 2026-09-25 (the founder's life pass 3). See CheckDot.jsx.
+   A 20px disc in the list's discipline colour, the check 12px inside it.
+   The check against its disc: asphalt on yellow 9.46:1, white on arc blue
+   7.91, on coral 3.03, on mint 3.16: all clear the 3:1 a mark needs. */
+.cdot {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: var(--disc, var(--c-accent-ground));
+  color: var(--disc-ink, var(--c-asphalt));
+}
+
+.cdot .cdot__i {
+  width: 12px;
+  height: 12px;
+}
+
+/* THE BRUSH STROKE, 2026-09-25 (the founder's life pass 3). See Brush.jsx.
+   Behind the words: the text is above it in its own layer. The stroke's
+   centre sits in the lower third of the numerals (`--brush-at`, from the
+   figure's box top, set per figure), 12px past the words each side,
+   rotated -3 degrees, at 0.9. It draws with `stroke-dashoffset`. */
+.brush {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+
+.brush__t {
+  position: relative;
+  z-index: 1;
+}
+
+.brush__stroke {
+  position: absolute;
+  top: calc(var(--brush-at, 70%) - 22px); /* the box is 44px, the stroke 28 */
+  left: -12px;
+  z-index: 0;
+  overflow: visible;
+  opacity: 0.9;
+  transform: rotate(-3deg);
+  pointer-events: none;
+}
+
+.brush__stroke path {
+  fill: none;
+  stroke: var(--c-accent-draw-dark);
+  stroke-width: 28px;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 500ms var(--ease-reveal);
+}
+
+.brush__stroke[data-drawn='true'] path {
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brush__stroke path {
+    transition: none;
+  }
+}
+
 /* THE SEND BUTTON'S ARROW, 2026-09-25 (the founder's life pass 2): after
    the label on the contact form's submit and the Plan Builder's, sliding
    4px right on a real pointer's hover. Transform only (BUILD-LAW Motion). */

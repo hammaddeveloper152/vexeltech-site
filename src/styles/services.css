@@ -83,27 +83,28 @@
   outline-color: var(--c-asphalt);
 }
 
-/* THE DISCIPLINE'S COLOUR, 2026-09-25 (the founder's life pass 2), in
-   three places only: the ticks, a 4px bar left of the price, and the number
-   badge. The section's ground is unchanged. Measured, the ticks against
-   their ground: yellow on the dark base 10.47:1, arc blue on cream 7.02,
-   coral on the base 6.50, MINT ON CREAM 2.80, under the 3:1 a meaningful
-   graphic should clear; the tick is a list bullet here and the item says
-   the thing, and it is recorded rather than recoloured. */
+/* THE DISCIPLINE'S COLOUR, 2026-09-25 (the founder's life passes 2 and 3),
+   in two places: the check dots of the What you get list (CheckDot.jsx)
+   and a 4px bar left of the price. The number badge that was the third is
+   gone (life pass 3). The section's ground is unchanged. */
 .svc2__d--branding {
   --disc: var(--c-accent-ground);
+  --disc-ink: var(--c-asphalt);
 }
 
 .svc2__d--websites {
   --disc: var(--c-arc-blue);
+  --disc-ink: var(--c-shop-white);
 }
 
 .svc2__d--marketing {
   --disc: var(--c-coral);
+  --disc-ink: var(--c-shop-white);
 }
 
 .svc2__d--automation {
   --disc: var(--c-mint);
+  --disc-ink: var(--c-shop-white);
 }
 
 .svc2__in {
@@ -114,17 +115,7 @@
   margin: 0 auto;
 }
 
-/* The badge at the top right of the section head, the left column that
-   holds the name and the promise (Badge.jsx). Not the section's own top
-   right: from 1024 that is where the price stands. */
-.svc2__left {
-  position: relative;
-}
 
-.svc2__left .svc2__badge {
-  top: 0;
-  right: 0;
-}
 
 /* 60/40 from 1024: the checklist needs the measure, the price needs room for
    a 160px figure and nothing else. Below that they stack and the price leads,
@@ -209,20 +200,7 @@
   color: var(--c-steel); /* body on cream, 7.20:1 */
 }
 
-/* The tick is machine yellow on the dark bands and asphalt on the cream ones:
-   yellow on cream is 1.66:1, and a tick is a meaningful graphic at a 3:1 bar,
-   so it cannot simply carry through. */
-.svc2__check {
-  width: var(--icon-md);
-  height: var(--icon-md);
-  /* Optical: the cap height of the line beside it, not the line box. */
-  margin-top: 2px;
-  color: var(--disc); /* the discipline's colour, life pass 2; see above */
-}
-
-.svc2__d--cream .svc2__check {
-  color: var(--disc);
-}
+/* The tick is the check dot since life pass 3 (CheckDot.jsx, tokens.css). */
 
 /* ---- The right column: the price IS the visual ------------------------- */
 

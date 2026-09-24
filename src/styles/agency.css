@@ -240,10 +240,10 @@
   color: var(--c-asphalt); /* 15.7:1 on cream */
 }
 
-/* The tiles (2026-09-25, the life pass): lilac, mint, coral, in that order,
-   every word asphalt. Measured: asphalt on lilac 8.68:1, on mint 5.62:1, on
-   coral 5.87:1. The label is asphalt too: steel would be 3.97, 2.57 and 2.68
-   on them. */
+/* The tiles (2026-09-25, the life pass): lilac, mint, coral, and yellow
+   since life pass 3, in that order, every word asphalt. Measured: asphalt
+   on lilac 8.68:1, on mint 5.62:1, on coral 5.87:1, on yellow 9.46:1. The
+   label is asphalt too: steel would be 3.97, 2.57, 2.68 and 4.32 on them. */
 .about__row:nth-child(1) {
   background: var(--c-lilac);
 }
@@ -254,6 +254,10 @@
 
 .about__row:nth-child(3) {
   background: var(--c-coral);
+}
+
+.about__row:nth-child(4) {
+  background: var(--c-accent-ground);
 }
 
 .about__row-k,

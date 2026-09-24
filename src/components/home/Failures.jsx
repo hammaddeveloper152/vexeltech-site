@@ -52,15 +52,20 @@ export default function Failures() {
     <section className="vt fail" aria-labelledby="fail-h">
       {/* The margin label is Marginalia.jsx's since 2026-09-25. */}
       <div className="fail__inner">
-        <h2 className="fail__h" id="fail-h">
-          What it costs you
-        </h2>
+        {/* THE HEAD COLUMN, 2026-09-25 (the founder's life pass 3): the
+            heading and the founder's intro line, verbatim. */}
+        <div className="fail__head">
+          <h2 className="fail__h" id="fail-h">
+            What it costs you
+          </h2>
+          <p className="fail__intro">Four ways a local business loses money before anyone notices.</p>
+        </div>
+        {/* A 2 x 2 from 1024, one column below it. No numerals since life
+            pass 3: the list is still ordered, and a screen reader still
+            hears its count. */}
         <ol className="fail__rows" data-revealed={revealed ? 'true' : 'false'} ref={ref}>
           {FAILURES.map(({ id, statement, consequence }, i) => (
             <li className="fail__row" key={id} style={{ '--i': i }}>
-              <span className="fail__n" aria-hidden="true">
-                {String(i + 1).padStart(2, '0')}
-              </span>
               <h3 className="fail__t">{statement}</h3>
               <p className="fail__b">{consequence}</p>
             </li>

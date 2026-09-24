@@ -18,14 +18,32 @@
   margin: 0 auto;
 }
 
-/* FOUR ROWS ON THE PAGE GROUND, 2026-09-24 (the founder). No panel. A row
-   is the numeral, the title and the body; from 1024 the three sit on one
-   line with the title column at 40%, and below it the numeral and title
-   share a line with the body under the title. 32px above and below each
-   row; white hairlines at 10% above every row and under the last. Values on
-   the base: bone 16.32:1, steel-lift 7.4:1. */
+/* ---- TWO COLUMNS FROM 1024, 2026-09-25 (the founder's life pass 3) -------
+
+   Left, 35%: the heading as it was and the intro, 16px bone at 85%. Right:
+   the four as a 2 x 2, 32px gaps, each cell a 1px white-at-14% hairline on
+   top, 24px, the title in Clash Display Medium 32px bone, the body 16px
+   bone at 85% under it. No numerals. Below 1024 the cells stack in one
+   column under the heading. The rows it replaced (numeral, title, body on
+   one line) are in git. Values on the ground: bone 16.32:1, bone at 85%
+   11.84:1. */
+.fail__head {
+  margin-bottom: var(--s-xl);
+}
+
+.fail__intro {
+  max-width: 34ch;
+  margin: var(--s-md) 0 0;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-body-dark);
+  text-wrap: pretty;
+}
+
 .fail__rows {
   display: grid;
+  gap: 32px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -33,44 +51,29 @@
 
 .fail__row {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr);
-  column-gap: var(--s-md);
-  row-gap: var(--s-xs);
-  align-items: baseline;
-  padding-block: 32px;
+  align-content: start;
+  gap: var(--s-sm);
+  padding-top: var(--s-lg);
   border-top: 1px solid var(--c-rule-dark);
-}
-
-.fail__row:last-child {
-  border-bottom: 1px solid var(--c-rule-dark);
-}
-
-.fail__n {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  color: var(--c-steel-lift); /* 7.4:1 */
 }
 
 .fail__t {
   margin: 0;
   font-family: var(--font-quiet);
-  font-size: var(--t-h3-size); /* 27px */
-  line-height: var(--t-h3-line);
+  font-size: 32px;
+  line-height: 1.15;
   font-weight: var(--t-weight-quiet); /* Medium */
   letter-spacing: normal;
   color: var(--c-bone); /* 16.32:1 */
+  text-wrap: balance;
 }
 
 .fail__b {
-  grid-column: 2;
   margin: 0;
   font-family: var(--font-offer);
   font-size: 16px;
   line-height: 24px;
-  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
+  color: var(--c-body-dark); /* bone at 85%, 11.84:1 */
   text-wrap: pretty;
 }
 
@@ -85,14 +88,19 @@
     padding: var(--s-section) var(--s-2xl);
   }
 
-  /* The title column is 40% of the row, the founder's. */
-  .fail__row {
-    grid-template-columns: 64px 40% minmax(0, 1fr);
-    column-gap: var(--s-lg);
+  .fail__inner {
+    display: grid;
+    grid-template-columns: 35% minmax(0, 1fr);
+    column-gap: var(--s-2xl);
+    align-items: start;
   }
 
-  .fail__b {
-    grid-column: 3;
+  .fail__head {
+    margin-bottom: 0;
+  }
+
+  .fail__rows {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

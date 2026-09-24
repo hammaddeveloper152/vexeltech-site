@@ -70,6 +70,10 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Life pass 3, 2026-09-25**: What you get lists use CheckDot (20px disc in
+  the discipline colour, 12px check, white or asphalt on yellow); the $700s
+  carry the Brush stroke; no badges on /services heads; What it costs you is
+  a 35% head plus a 2 x 2; four Who we are tiles; About has no How we work.
 - **Life pass 2, 2026-09-25, supersedes the life pass**: premium, not
   rainbow. Outside the four discipline cards and the Who we are tiles, the
   accents are MARKS AND EDGES only (ticks, crosses, 4px bars and edges,

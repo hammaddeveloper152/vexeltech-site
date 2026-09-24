@@ -1,4 +1,5 @@
 import React from 'react';
+import Brush from './Brush.jsx';
 import '../../styles/promise.css';
 
 /* WHAT WE PROMISE: the yellow band with the $700 figure and the four
@@ -36,7 +37,10 @@ export default function PromiseBand({ id }) {
         </h2>
         <div className="ab3-price__cols">
           <div className="ab3-price__fig">
-            <p className="ab3-price__n">$700</p>
+            {/* The brush stroke through the figure, 2026-09-25 (life pass 3). */}
+            <p className="ab3-price__n">
+              <Brush>$700</Brush>
+            </p>
             <p className="ab3-price__k">Flat, one time</p>
             <p className="ab3-price__k">$299 to $449 for branding</p>
           </div>
