@@ -14,22 +14,17 @@ import './ArtCard.css';
    it. The chip and its glyph are gone. The hover keeps the 4px lift, which
    carries the illustration up with it, and the border going to 22% white.
 
-   Used by home's What we do (links to /services) and About's What we build
-   it around (not links). DESIGN.md "THE CARD v2 (quiet)" is the record.
+   Used by home's What we do (links to /services). About's cards came off
+   with the About rebuild (2026-09-25). DESIGN.md is the record.
 
    ONE CARD, TWO VARIANTS: `variant="dark"` (the default) is the translucent
-   card above; the discipline cards are the colour variant below. The cream
-   variant they had from 2026-09-24 is gone.
-
-   THE COLOUR VARIANT, 2026-09-25 (the founder's life pass), replaces the
-   cream one on the four discipline cards: `variant="colour"` with a `tone`
-   (branding yellow, websites arc blue, marketing coral, automation mint),
-   a `tilt` of -2 or +2 degrees at rest that straightens on the linked
-   card's hover, the illustration in a white keyline, and the NUMBER BADGE
-   (Badge.jsx, life pass 2): 01 to 04 on a white die-cut disc over the
-   card's top right corner by 20px, rotated 12 degrees, hidden below 768. It
-   replaced the illustration sticker, and the card's small index text went
-   with it.
+   card above; `variant="cream"` is the discipline cards' since the
+   three-colour pass (2026-09-25): cream, asphalt ink, the light-palette
+   illustration, a `tilt` of -2 or +2 degrees at rest that straightens on
+   the linked card's hover, and the NUMBER BADGE (Badge.jsx): 01 to 04 on a
+   white die-cut disc over the card's top right corner by 20px, rotated 12
+   degrees, hidden below 768, in place of the card's small index text. The
+   colour variant (yellow, arc blue, coral, mint) went with those colours.
 
    THE BARE CARD is the one other use: with no `name`, a render fills a 3:4
    card edge to edge. The 404 page's mark stands in one, so no object on the
@@ -49,12 +44,13 @@ export default function ArtCard({
   href = null,
   as: Heading = 'h3',
   variant = 'dark',
-  tone = null,
   tilt = 0,
   style,
 }) {
-  const colour = variant === 'colour' && tone;
-  const v = colour ? ` art--colour art--${tone}` : '';
+  /* The cream variant (since the three-colour pass, 2026-09-25) carries the
+     tilt and the number badge; `tone` went with the colour cards. */
+  const colour = variant === 'cream';
+  const v = colour ? ' art--cream' : '';
   const s = colour ? { ...style, '--tilt': `${tilt}deg` } : style;
   if (!name) {
     return (

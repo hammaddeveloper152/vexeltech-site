@@ -191,9 +191,10 @@
   /* Cream, the home About band's ground, 2026-09-14. Asphalt on it is 15.7:1.
      A light ground, so every value on it is restated where it is used. */
   --c-cream: #f4f1ea;
-  /* The drift's deepest value, home's ground at the route (2026-09-21): the
-     ground's own hue taken deeper and cooler. A ground, never a field. */
-  --c-arc-black: #0e1220;
+  /* THE DRIFT'S MIDDLE, a neutral near-black (2026-09-25, the three-colour
+     pass). It was arc-black, #0E1220, the ground's hue taken cooler, which
+     tinted the whole page blue. A ground, never a field. */
+  --c-ground-mid: #101012;
   /* `--c-accent-tag` existed for a few hours of 2026-09-14 as the work grid's
      Branding tag fill, and went when the tag became an outline: it shared every
      work frame with the plates' yellow numerals, and the numerals keep the
@@ -221,20 +222,10 @@
      Steel-lift stays for captions under 14px and disabled states only.
      Composited on the base it is 11.84:1. */
   --c-body-dark: rgb(232 234 237 / 85%);
-  /* ARC BLUE, the second accent, 2026-09-24 (the founder): inside the card
-     illustrations and on the Plan Builder's progress dots, nowhere else.
-     7.02:1 on cream. */
-  --c-arc-blue: #0d47bd;
-  /* THE LIFE PASS ACCENTS, 2026-09-25 (the founder; truus.co's flat colour
-     blocks, stickers and tilt only). Beside yellow and arc blue, and ONLY in
-     the elements DESIGN.md lists: the discipline cards, the trade ticker's
-     pills, the Who we are tiles, the Plan Builder's dots and the "Most
-     picked" chip. Never a ground, never body text, never a button.
-     Measured: asphalt on coral 5.87:1, on mint 5.62, on lilac 8.68; white
-     on coral 3.03 and on mint 3.16, so their text is asphalt. */
-  --c-coral: #f26b3a;
-  --c-mint: #2fa37a;
-  --c-lilac: #c9a6f5;
+  /* THREE COLOURS, 2026-09-25 (the founder): black, cream and machine
+     yellow, with white and the steels for text. Arc blue, coral, mint and
+     lilac are gone from the tokens and from every use; DESIGN.md "THE
+     THREE-COLOUR PASS" lists where each was replaced. */
 
   /* ---- Colour: light grounds (relief) ---------------------------------- */
   --c-shop-white: #ffffff; /* surface */
@@ -887,9 +878,9 @@ html {
 }
 
 /* THE CHECK DOT, 2026-09-25 (the founder's life pass 3). See CheckDot.jsx.
-   A 20px disc in the list's discipline colour, the check 12px inside it.
-   The check against its disc: asphalt on yellow 9.46:1, white on arc blue
-   7.91, on coral 3.03, on mint 3.16: all clear the 3:1 a mark needs. */
+   A 20px machine yellow disc with the check 12px inside it in asphalt,
+   9.46:1, everywhere (the three-colour pass: it took the discipline's
+   colour until then). */
 .cdot {
   display: inline-grid;
   flex: none;
@@ -898,8 +889,8 @@ html {
   height: 20px;
   margin-top: 2px;
   border-radius: 50%;
-  background: var(--disc, var(--c-accent-ground));
-  color: var(--disc-ink, var(--c-asphalt));
+  background: var(--c-accent-ground);
+  color: var(--c-asphalt);
 }
 
 .cdot .cdot__i {

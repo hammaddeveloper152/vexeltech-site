@@ -97,7 +97,7 @@
 
 /* The illustration's faces and keyline, the light palette since the energy
    pass (2026-09-24): top white, left cream, right bone, the yellow element
-   machine yellow, the blue one arc blue; an asphalt keyline, 1.5px at any
+   machine yellow (no blue since the three-colour pass); an asphalt keyline, 1.5px at any
    size, round joins. The illustration on a colour card is redrawn white
    (below, the colour variant). */
 .art__ill path {
@@ -120,10 +120,6 @@
   fill: var(--c-bone);
 }
 
-.art__ill .iso-b {
-  fill: var(--c-arc-blue);
-}
-
 .art__ill .iso-y {
   fill: var(--c-accent-ground);
 }
@@ -132,10 +128,10 @@
   fill: none;
 }
 
-/* The small filled squares (the browser's three dots): white, on the blue
-   bar. */
+/* The small filled squares (the browser's three dots): asphalt, on the
+   now-white bar (it was blue until the three-colour pass). */
 .art__ill .iso-d {
-  fill: var(--c-shop-white);
+  fill: var(--c-asphalt);
 }
 
 /* The sound arcs and the connectors: 2px, no fill; the middle arc yellow. */
@@ -146,10 +142,6 @@
 
 .art__ill .iso-arc--y {
   stroke: var(--c-accent-draw-dark);
-}
-
-.art__ill .iso-arc--b {
-  stroke: var(--c-arc-blue);
 }
 
 /* The dot at each connector's join: asphalt, with its keyline connector
@@ -213,108 +205,38 @@
   transition-duration: var(--d-press);
 }
 
-/* ---- THE COLOUR VARIANT, 2026-09-25 (the founder's life pass) ----------
+/* ---- THE CREAM VARIANT, 2026-09-25 (the three-colour pass) -------------
 
-   The four discipline cards, a flat colour each, no border, 24px, 32px of
-   padding. It replaces the cream variant. Each tone sets its fill, its ink
-   and its index, every pair measured (BUILD-LAW is the contrast floor):
-
-     branding    yellow     asphalt ink 9.46:1   index asphalt 70%  4.84:1
-     websites    arc blue   white ink   7.91:1   index white 70%    4.69:1
-     marketing   coral      asphalt ink 5.87:1   index asphalt 100% 5.87:1
-     automation  mint       asphalt ink 5.62:1   index asphalt 100% 5.62:1
-
-   The brief asked for white text on all but yellow. White is 3.03:1 on
-   coral and 3.16:1 on mint, under the 4.5:1 floor for the 14px line (the
-   27px name would pass as large text, the line would not), so coral and
-   mint take asphalt, as yellow does. The index at 70% is 3.67:1 on coral
-   and 3.51:1 on mint, so there it is full asphalt.
-
-   TILT: -2 or +2 degrees at rest (`--tilt`, set per card), straightening to
-   0 as the linked card lifts: the hover rules above replace the transform.
-   The shadow fades in on hover as a layer (BUILD-LAW Motion). */
-.art--colour {
+   The four discipline cards on home, as they were before the colour cards:
+   cream, no border, 24px, 32px of padding, asphalt ink (15.75:1), the
+   illustration in its light palette (asphalt keyline, white faces, one
+   yellow element). The number badge and the tilt stay from the life
+   passes: -2 or +2 degrees at rest (`--tilt`, set per card), straightening
+   to 0 as the card lifts. The shadow fades in on hover as a layer
+   (BUILD-LAW Motion). The colour variant (yellow, arc blue, coral, mint) is
+   gone with the colours. */
+.art--cream {
   border: 0;
-  background: var(--tone);
-  color: var(--ink);
+  background: var(--c-cream);
+  color: var(--c-asphalt);
   transform: rotate(var(--tilt, 0deg));
 }
 
-.art--branding {
-  --tone: var(--c-accent-ground);
-  --ink: var(--c-asphalt);
-  --index: rgb(23 24 26 / 70%);
-}
-
-.art--websites {
-  --tone: var(--c-arc-blue);
-  --ink: var(--c-shop-white);
-  --index: rgb(255 255 255 / 70%);
-}
-
-.art--marketing {
-  --tone: var(--c-coral);
-  --ink: var(--c-asphalt);
-  --index: var(--c-asphalt);
-}
-
-.art--automation {
-  --tone: var(--c-mint);
-  --ink: var(--c-asphalt);
-  --index: var(--c-asphalt);
-}
-
-.art--colour::before {
+.art--cream::before {
   display: none;
 }
 
-.art--colour::after {
+.art--cream::after {
   inset: 0;
   z-index: -1;
   border: 0;
   box-shadow: var(--card-shadow);
 }
 
-.art--colour .art__num {
-  color: var(--index);
-}
-
-.art.art--colour .art__name,
-.art--colour .art__line,
-.art--colour .art__lead {
-  color: var(--ink);
-}
-
-/* The illustration on the colour: a white keyline, every face white at 20%,
-   and the object's own accent element (its yellow and its blue) solid
-   white. The browser's three dots take the card's colour, on the now-white
-   strip. Decorative, so it carries no contrast pair of its own. */
-.art--colour .art__ill path,
-.art--colour .art__ill circle {
-  stroke: var(--c-shop-white);
-}
-
-.art--colour .art__ill :is(.iso-t, .iso-l, .iso-r) {
-  fill: rgb(255 255 255 / 20%);
-}
-
-.art--colour .art__ill :is(.iso-y, .iso-b) {
-  fill: var(--c-shop-white);
-  /* Its edges in the card's colour: a white face keylined in white loses
-     its inner edges, and a cube becomes a flat hexagon. */
-  stroke: var(--tone);
-}
-
-.art--colour .art__ill .iso-d {
-  fill: var(--tone);
-}
-
-.art--colour .art__ill :is(.iso-arc, .iso-arc--y, .iso-arc--b) {
-  stroke: var(--c-shop-white);
-}
-
-.art--colour .art__ill .iso-dot {
-  fill: var(--c-shop-white);
+.art.art--cream .art__name,
+.art--cream .art__line,
+.art--cream .art__lead {
+  color: var(--c-asphalt); /* 15.75:1 on cream */
 }
 
 /* ---- THE NUMBER BADGE, 2026-09-25 (the founder's life pass 2) ------------

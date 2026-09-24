@@ -5,17 +5,18 @@
    facts, the note) went with their markup: a selector nothing matches is a
    second opinion the next reader has to resolve.
 
-   Section space is the site's: 128 / 80 on the dark ground, the cream
-   sheet's 96 from `.panel-sec` (tokens.css). Values on the base: white
-   19.66:1, bone 16.32:1, bone at 85% 11.84:1; on cream: asphalt 15.75:1,
-   steel 7.20:1.
+   THE LIGHT PAGE since the three-colour pass (2026-09-25): the route's
+   ground is cream (light.css), so blocks 1, 3 and 4 are asphalt on cream
+   (15.75:1) with steel for the mono labels (7.20:1), and block 2 is an
+   inset black block in bone (16.32:1). Section space is the site's, 128 /
+   80.
    ========================================================================== */
 
 .ab3-hero,
 .ab3-def,
 .ab3-contact {
   padding: var(--s-section) var(--inset);
-  color: var(--c-bone);
+  color: var(--c-asphalt);
 }
 
 .ab3__in {
@@ -27,7 +28,7 @@
 
    The Monigue line at the display step (the hero's own divisor, so it lands
    on 185px at 1280 and 57px at 390), the swash on "phone". Under it, two
-   paragraphs in two columns from 1024, each 40ch at most, 16px bone at 85%;
+   paragraphs in two columns from 1024, each 40ch at most, 16px asphalt;
    stacked below 1024. */
 .ab3-hero__h {
   margin: 0;
@@ -37,7 +38,7 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--c-shop-white); /* 19.66:1 on the base */
+  color: var(--c-asphalt); /* 15.75:1 on cream */
   text-wrap: balance;
 }
 
@@ -60,17 +61,40 @@
   font-family: var(--font-offer);
   font-size: 16px;
   line-height: 24px;
-  color: var(--c-body-dark); /* bone at 85%, 11.84:1 */
+  color: var(--c-asphalt); /* 15.75:1 on cream */
   text-wrap: pretty;
 }
 
-/* ---- 2. What we do: a cream sheet ----------------------------------------
+/* ---- 2. What we do: an inset black block --------------------------------
 
-   The heading Clash Display Medium 44px asphalt, then a plain list in two
-   columns (the discipline and an example of it), Clash Display Medium 32px
-   asphalt, 12px between rows, no icons and no hairlines. Below 768 each
-   example sits under its discipline. Then the line to home's How it works,
-   16px steel with the arrow. */
+   On the light page it is the one dark block above the footer: black, inset
+   16px from the viewport's sides, 32px radius, 96px of padding from 1024
+   (64 at 768, 32 on a phone, as the footer block's). The heading Clash
+   Display Medium 44px, then a plain list in two columns (the discipline
+   and an example of it), Clash Display Medium 32px, 12px between rows, no
+   icons, no hairlines, all bone. Below 768 each example sits under its
+   discipline. Then the line to home's How it works, 16px bone with the
+   arrow in machine yellow (10.47:1 on black). */
+.ab3-do {
+  margin: 0 16px;
+  padding: 32px;
+  border-radius: 32px;
+  background: var(--c-base);
+  color: var(--c-bone);
+}
+
+@media (min-width: 768px) {
+  .ab3-do {
+    padding: 64px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ab3-do {
+    padding: 96px;
+  }
+}
+
 .ab3-do__h {
   margin: 0 0 var(--s-xl);
   font-family: var(--font-brand);
@@ -78,7 +102,7 @@
   line-height: var(--t-head-line);
   font-weight: var(--t-weight-quiet);
   letter-spacing: normal;
-  color: var(--c-asphalt); /* 15.75:1 on cream */
+  color: var(--c-bone); /* 16.32:1 on black */
 }
 
 .ab3-do__list {
@@ -96,7 +120,7 @@
   line-height: 1.2;
   font-weight: var(--t-weight-quiet);
   letter-spacing: normal;
-  color: var(--c-asphalt); /* 15.75:1 on cream */
+  color: var(--c-bone); /* 16.32:1 on black */
 }
 
 @media (min-width: 768px) {
@@ -118,15 +142,19 @@
   font-family: var(--font-offer);
   font-size: 16px;
   line-height: 24px;
-  color: var(--c-steel); /* 7.20:1 on cream */
+  color: var(--c-bone); /* 16.32:1 on black */
   text-decoration: underline;
   text-underline-offset: 4px;
   transition: transform var(--d-press) var(--ease-reveal);
 }
 
+.ab3-do__go {
+  color: var(--c-accent-text-dark); /* the arrow, yellow, 10.47:1 on black */
+}
+
 @media (hover: hover) and (pointer: fine) {
   .ab3-do__link:hover {
-    color: var(--c-asphalt);
+    opacity: var(--hover-opacity);
   }
 }
 
@@ -136,7 +164,7 @@
 
 /* ---- 3. The definition ---------------------------------------------------
 
-   One centred sentence, Clash Display Medium 32px bone, 720px at most, its
+   One centred sentence, Clash Display Medium 32px asphalt, 720px at most, its
    mono label above it (the label is the section's heading). */
 .ab3-def__in {
   display: grid;
@@ -147,7 +175,7 @@
 
 .ab3-def__k {
   margin: 0;
-  color: var(--c-steel-lift); /* a 12px caption, 7.4:1 on the base */
+  color: var(--c-steel); /* a 12px caption, 7.20:1 on cream */
 }
 
 .ab3-def__p {
@@ -158,7 +186,7 @@
   line-height: 1.25;
   font-weight: var(--t-weight-quiet);
   letter-spacing: normal;
-  color: var(--c-bone); /* 16.32:1 on the base */
+  color: var(--c-asphalt); /* 15.75:1 on cream */
   text-wrap: balance;
 }
 
@@ -185,7 +213,7 @@
 
 .ab3-contact__k {
   margin: 0;
-  color: var(--c-steel-lift); /* a 12px caption, 7.4:1 on the base */
+  color: var(--c-steel); /* a 12px caption, 7.20:1 on cream */
 }
 
 .ab3-contact__line {
@@ -195,7 +223,7 @@
   line-height: var(--t-h3-line);
   font-weight: var(--t-weight-quiet);
   letter-spacing: normal;
-  color: var(--c-bone); /* 16.32:1 on the base */
+  color: var(--c-asphalt); /* 15.75:1 on cream */
   text-wrap: balance;
 }
 
@@ -208,7 +236,7 @@
   font-size: 16px;
   line-height: 24px;
   overflow-wrap: anywhere;
-  color: var(--c-body-dark); /* bone at 85%, 11.84:1 */
+  color: var(--c-asphalt); /* 15.75:1 on cream */
   text-decoration: underline;
   text-underline-offset: 4px;
   transition: transform var(--d-press) var(--ease-reveal);
@@ -216,7 +244,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .ab3-contact__email:hover {
-    color: var(--c-bone);
+    opacity: var(--hover-opacity);
   }
 }
 

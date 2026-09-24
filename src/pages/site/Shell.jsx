@@ -33,9 +33,22 @@ export default function Shell({
   /* `footerForm={false}`: the page ends on the footer block alone, with no
      contact form (About, since 2026-09-25). */
   footerForm = true,
+  /* `light`: the route is the light page (About, since 2026-09-25): a
+     cream ground for the whole route, set on the document root while the
+     route is mounted (light.css). */
+  light = false,
   barOver = false,
   children,
 }) {
+  useEffect(() => {
+    if (!light) return undefined;
+    const root = document.documentElement;
+    root.dataset.ground = 'light';
+    return () => {
+      delete root.dataset.ground;
+    };
+  }, [light]);
+
   useEffect(() => {
     if (title) document.title = title;
     if (description) {

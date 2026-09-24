@@ -70,6 +70,13 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Three-colour pass, 2026-09-25, supersedes every accent note below**:
+  black, cream, machine yellow; white and the steels for text only. NO arc
+  blue, coral, mint or lilac anywhere. Ground drift base/#101012/base.
+  Discipline cards cream (badges, tilt), tiles cream + one yellow, check
+  dots, chips, price bar and Plan Builder dots yellow. About is the light
+  page (Shell `light`, light.css): cream ground, black What we do block,
+  black footer block.
 - **About rebuild, 2026-09-25**: /about-us is text only, four blocks
   (statement with the swash on "phone"; What we do as a cream sheet list;
   the definition; clients and partners) and the footer block with no form

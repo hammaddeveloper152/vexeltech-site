@@ -1,0 +1,87 @@
+/* ==========================================================================
+   THE LIGHT PAGE, 2026-09-25 (the founder's three-colour pass). About is the
+   site's one light route: `html[data-ground='light']`, set by Shell's
+   `light` prop while the route is mounted and taken off when it leaves.
+
+   The ground is cream for the whole route with the grain over it; the bar is
+   on cream (asphalt word and nav, the dot deep amber, the call yellow);
+   "What we do" is an inset black block (AboutPage.jsx) and the footer block
+   is black, so the page ends dark like the rest of the site.
+
+   Every pair on cream, measured: asphalt 15.75:1, steel 7.20, deep amber
+   4.82 (the 12px margin labels), asphalt on machine yellow 9.46, asphalt on
+   the swash about 9.9. On the black blocks: bone 16.32, bone at 85% 11.84,
+   steel-lift 7.4 for the small mono lines (steel itself is 2.4:1 there).
+   ========================================================================== */
+
+html[data-ground='light'] {
+  background: var(--c-cream);
+}
+
+/* The grain over the whole cream ground, at the cream panels' 3%; the rig's
+   blooms are a dark ground's light and stand down. */
+html[data-ground='light'] body::before {
+  background-image: var(--grain);
+  opacity: var(--grain-opacity);
+}
+
+html[data-ground='light'] :focus-visible {
+  outline-color: var(--c-asphalt); /* 15.75:1 on cream */
+}
+
+/* ---- The bar on cream --------------------------------------------------- */
+html[data-ground='light'] .bar {
+  background: var(--c-cream);
+}
+
+html[data-ground='light'] .bar .wm {
+  color: var(--c-asphalt);
+}
+
+html[data-ground='light'] .bar .wm__dot {
+  color: var(--c-accent-text-light); /* deep amber, 4.82:1 on cream */
+}
+
+html[data-ground='light'] .bar__link,
+html[data-ground='light'] .bar__panel-link {
+  color: var(--c-asphalt); /* 15.75:1: steel-lift would be 2.27 */
+}
+
+html[data-ground='light'] .bar__menu {
+  border-color: rgb(11 11 13 / 15%);
+  color: var(--c-asphalt);
+}
+
+html[data-ground='light'] .bar__panel {
+  background: var(--c-cream);
+}
+
+/* The margin labels on cream: deep amber, as on every cream sheet. */
+html[data-ground='light'] .marg {
+  color: var(--c-accent-text-light);
+}
+
+/* ---- The black blocks: What we do, and the footer ------------------------ */
+html[data-ground='light'] :is(.ab3-do, .foot__band) :focus-visible {
+  outline-color: var(--c-bone); /* 16.32:1 on black */
+}
+
+html[data-ground='light'] .ab3-do .marg {
+  color: var(--c-steel-lift); /* 7.4:1 on black */
+}
+
+/* THE FOOTER BLOCK IS BLACK HERE, on the one light page, so the page ends
+   dark like the rest of the site. The dot and the corner swash are
+   unchanged. */
+html[data-ground='light'] .foot__band {
+  background: var(--c-base);
+  color: var(--c-bone);
+}
+
+html[data-ground='light'] :is(.foot__big, .foot__email, .foot__page) {
+  color: var(--c-bone); /* 16.32:1 on black */
+}
+
+html[data-ground='light'] :is(.foot__city, .foot__booking, .foot__legal) {
+  color: var(--c-steel-lift); /* 7.4:1 on black; steel would be 2.4 */
+}

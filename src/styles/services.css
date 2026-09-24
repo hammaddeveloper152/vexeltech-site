@@ -83,30 +83,9 @@
   outline-color: var(--c-asphalt);
 }
 
-/* THE DISCIPLINE'S COLOUR, 2026-09-25 (the founder's life passes 2 and 3),
-   in two places: the check dots of the What you get list (CheckDot.jsx)
-   and a 4px bar left of the price. The number badge that was the third is
-   gone (life pass 3). The section's ground is unchanged. */
-.svc2__d--branding {
-  --disc: var(--c-accent-ground);
-  --disc-ink: var(--c-asphalt);
-}
-
-.svc2__d--websites {
-  --disc: var(--c-arc-blue);
-  --disc-ink: var(--c-shop-white);
-}
-
-.svc2__d--marketing {
-  --disc: var(--c-coral);
-  --disc-ink: var(--c-shop-white);
-}
-
-.svc2__d--automation {
-  --disc: var(--c-mint);
-  --disc-ink: var(--c-shop-white);
-}
-
+/* THE DISCIPLINE COLOURS ARE GONE, 2026-09-25 (the three-colour pass): the
+   check dots are yellow everywhere (tokens.css) and the bar left of the price
+   is yellow. The section's ground is unchanged. */
 .svc2__in {
   position: relative;
   display: grid;
@@ -218,9 +197,10 @@
 .svc2__fig,
 .svc2__oncall {
   margin: 0 0 var(--s-md);
-  /* The 4px bar in the discipline's colour, left of the price (life pass 2). */
+  /* The 4px bar left of the price, machine yellow (it was the discipline's
+     colour until the three-colour pass). */
   padding-left: 20px;
-  border-left: 4px solid var(--disc);
+  border-left: 4px solid var(--c-accent-ground);
   font-family: var(--font-quiet);
   font-size: 56px;
   line-height: 1.05;

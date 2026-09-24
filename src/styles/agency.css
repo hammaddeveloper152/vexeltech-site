@@ -84,8 +84,7 @@
 /* The document ground and the rig are lit.css's, declared once. */
 
 :root {
-  --c-arc: #0d47bd;
-  --c-arc-deep: #08307f; /* the gradient's far end, same hue */
+  /* `--c-arc` and `--c-arc-deep` are gone (2026-09-25): no blue. */
 
   /* Depth, and it is a HARD offset rather than a soft blur. A blurred shadow
      is a claim about a light source and a soft material; this register has
@@ -240,23 +239,17 @@
   color: var(--c-asphalt); /* 15.7:1 on cream */
 }
 
-/* The tiles (2026-09-25, the life pass): lilac, mint, coral, and yellow
-   since life pass 3, in that order, every word asphalt. Measured: asphalt
-   on lilac 8.68:1, on mint 5.62:1, on coral 5.87:1, on yellow 9.46:1. The
-   label is asphalt too: steel would be 3.97, 2.57, 2.68 and 4.32 on them. */
-.about__row:nth-child(1) {
-  background: var(--c-lilac);
-}
-
-.about__row:nth-child(2) {
-  background: var(--c-mint);
-}
-
-.about__row:nth-child(3) {
-  background: var(--c-coral);
+/* THE TILES, THREE COLOURS (2026-09-25): TEAM, BUILD and AFTER are cream
+   on the cream sheet with a 1px edge of #0B0B0D at 12%; PRICE is machine
+   yellow. Every word asphalt: 15.75:1 on cream, 9.46:1 on yellow. They
+   were lilac, mint and coral. */
+.about__row {
+  border: 1px solid rgb(11 11 13 / 12%);
+  background: var(--c-cream);
 }
 
 .about__row:nth-child(4) {
+  border-color: var(--c-accent-ground);
   background: var(--c-accent-ground);
 }
 

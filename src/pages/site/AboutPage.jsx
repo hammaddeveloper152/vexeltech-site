@@ -4,19 +4,24 @@ import { IconArrowUpRight } from '../../components/site/Icons.jsx';
 import Shell from './Shell.jsx';
 import Brush from '../../components/site/Brush.jsx';
 import '../../styles/aboutpage.css';
+import '../../styles/light.css';
 
 /* THE ABOUT PAGE, REBUILT 2026-09-25 (the founder; chong.studio/info). Four
    blocks of text and then the footer: no cards, no timeline, no facts table,
    no FAQ, no closing call and no form on this page. Every line is the
    founder's, verbatim.
 
-     1  Statement    dark    the Monigue line with the swash on "phone", and
+   THE LIGHT PAGE since the three-colour pass (2026-09-25): a cream ground
+   for the whole route (Shell's `light`, light.css), the blocks on it in
+   asphalt, "What we do" an inset black block, the footer block black.
+
+     1  Statement    cream   the Monigue line with the swash on "phone", and
                              two paragraphs under it in two columns from 1024
-     2  What we do   cream   the four disciplines and an example of each, a
+     2  What we do   black   the four disciplines and an example of each, a
                              plain two-column list, and the line to home's
                              How it works
-     3  Definition   dark    one centred sentence under its mono label
-     4  Contact      dark    clients and partners, a label, a line, the email
+     3  Definition   cream   one centred sentence under its mono label
+     4  Contact      cream   clients and partners, a label, a line, the email
 
    Taken off: Where we come from, What we build it around (the cards), Who we
    are for, Key facts, Questions, the founder's note, the closing call and the
@@ -44,6 +49,7 @@ export default function AboutPage() {
       title="About us | VexelTech"
       description="VexelTech Solutions is a technology company that builds the website, the marketing and the automation behind US local service businesses, at flat prices from $299."
       footerForm={false}
+      light
     >
       {/* 1. THE STATEMENT. */}
       <section className="vt ab3-hero" aria-labelledby="ab3-hero-h">
@@ -71,9 +77,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 2. WHAT WE DO, a cream sheet. */}
-      <section className="vt ab3-do panel-sec" aria-labelledby="ab3-do-h">
-        <div className="panel">
+      {/* 2. WHAT WE DO, an inset black block on the light page. */}
+      <section className="vt ab3-do" aria-labelledby="ab3-do-h">
+        <div className="ab3__in">
           <h2 className="ab3-do__h" id="ab3-do-h">
             What we do
           </h2>
@@ -88,7 +94,7 @@ export default function AboutPage() {
           <p className="ab3-do__more">
             <Link className="ab3-do__link" to="/#how-it-works">
               See how a project runs, step by step
-              <IconArrowUpRight className="i i--sm" />
+              <IconArrowUpRight className="i i--sm ab3-do__go" />
             </Link>
           </p>
         </div>

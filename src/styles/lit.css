@@ -73,7 +73,10 @@
      fill, and `.measure/carrier.mjs` measures the painted share to keep it
      honest. */
   --lit-key: radial-gradient(200px 200px at 0 0, rgb(255 241 204 / 14%) 0%, transparent 70%);
-  --lit-rim: radial-gradient(200px 200px at 100% 100%, rgb(8 48 127 / 18%) 0%, transparent 70%);
+  /* THE RIM WAS DEEP ARC, a blue light (8 48 127). No blue since the
+     three-colour pass (2026-09-25): the rim is gone, kept as an empty layer
+     so every `var(--lit-rim)` list still parses. */
+  --lit-rim: linear-gradient(transparent, transparent);
 
   /* THE SAME TWO LIGHTS, MOVABLE. `at 0 0` is a coordinate inside the image
      and it is not animatable; a layer positioned by `background-position` is.
@@ -105,7 +108,7 @@
   /* The same pair at page scale, for a dark section's ground. 900px and 5%:
      the bloom has a whole viewport to cross rather than a card. */
   --lit-key-page: radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%);
-  --lit-rim-page: radial-gradient(900px 700px at 100% 106%, rgb(8 48 127 / 4%) 0%, transparent 70%);
+  --lit-rim-page: linear-gradient(transparent, transparent); /* no blue, 2026-09-25 */
 
   /* The edges say the same thing the faces do. The top edge is where the key
      lands and stays warm; the bottom and right edges are where the rim grazes
@@ -177,7 +180,7 @@ html {
   background-image: linear-gradient(
     to bottom,
     var(--c-base) 0%,
-    var(--c-arc-black) 50%,
+    var(--c-ground-mid) 50%,
     var(--c-base) 100%
   );
   background-repeat: no-repeat;
