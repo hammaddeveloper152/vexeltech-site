@@ -98,12 +98,14 @@
          form-name "contact". Hidden; never shown. Fields since 2026-09-24:
          name, phone, email, message and the four UTM tags; company and
          budget are gone. Since 2026-09-25 the contact page's form also sends
-         "need", the pills it picked, comma-separated. -->
+         "need", the pills it picked, comma-separated, and "budget", the
+         one band picked or empty. -->
     <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input type="text" name="name" />
       <input type="tel" name="phone" />
       <input type="email" name="email" />
       <input type="text" name="need" />
+      <input type="text" name="budget" />
       <textarea name="message"></textarea>
       <input type="hidden" name="utm_source" />
       <input type="hidden" name="utm_medium" />

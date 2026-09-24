@@ -70,6 +70,11 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Contact copy, 2026-09-25**: 05 Budget pills (radios, not required, the
+  founder's four bands), message 06, placeholder "Tell us about your
+  business and what you need *". The marquee has a pause control (32px face,
+  48px target, IconPause/IconPlay). The Who we are tiles are text on colour,
+  not a device (BUILD-LAW rule 0), and may stand on home and contact.
 - **Contact pass, 2026-09-25**: every field is a LINE FIELD (`LeadForm.jsx`,
   and the Plan Builder's): transparent, 1px line (`--field-line-dark` /
   `--field-line-cream`, 30%), 22px Satoshi, placeholder as label ("Your name

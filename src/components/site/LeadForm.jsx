@@ -32,7 +32,12 @@ const FIELDS = [
 /* The founder's five, verbatim. */
 const NEEDS = ['Branding', 'Websites', 'Marketing', 'Automation', 'Not sure yet'];
 
-const MESSAGE_PH = 'What is going wrong? *';
+/* The founder's budget bands for the contact page, verbatim (2026-09-25).
+   Single select and not required. */
+const BUDGETS = ['Under $500', '$500 to $1,000', '$1,000 to $2,500', 'Not sure yet'];
+
+/* The founder's placeholder, contact page and footer form (2026-09-25). */
+const MESSAGE_PH = 'Tell us about your business and what you need *';
 
 export function validate(id, value) {
   const v = value.trim();
@@ -49,7 +54,7 @@ export function validate(id, value) {
        actually valid, and the only real test is whether the mail arrives. */
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? '' : 'Enter an email address with an at sign and a domain.';
   }
-  if (id === 'message') return v ? '' : 'Tell us what is going wrong.';
+  if (id === 'message') return v ? '' : 'Tell us about your business and what you need.';
   return '';
 }
 
@@ -76,6 +81,7 @@ function Err({ id, msg }) {
 export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy }) {
   const [values, setValues] = useState({ name: '', phone: '', email: '', message: '' });
   const [picked, setPicked] = useState([]);
+  const [budget, setBudget] = useState('');
   /* The UTM tags, read when the form mounts (utm.js). */
   const [utm] = useState(getUtm);
   const [errors, setErrors] = useState({});
@@ -134,7 +140,7 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
       name: values.name,
       phone: values.phone,
       email: values.email,
-      ...(needs ? { need: picked.join(', ') } : {}),
+      ...(needs ? { need: picked.join(', '), budget } : {}),
       message: values.message,
       ...utm,
     });
@@ -184,7 +190,7 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
     );
   };
 
-  const msgIndex = needs ? 5 : 4;
+  const msgIndex = needs ? 6 : 4;
 
   return (
     <form
@@ -227,12 +233,40 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
         </fieldset>
       ) : null}
 
+      {needs ? (
+        /* 05, THE BUDGET: single select, so radios, in the pills' style. Not
+           required, and nothing is picked until the reader picks. */
+        <fieldset className="lf__needs">
+          <legend className="lf__legend">
+            <span className="lf__idx" aria-hidden="true">
+              05
+            </span>
+            <span className="lbl lf__legend-t">Budget</span>
+          </legend>
+          <div className="lf__pills">
+            {BUDGETS.map((n) => (
+              <label className="lf__pill" key={n}>
+                <input
+                  className="lf__check"
+                  type="radio"
+                  name="budget"
+                  value={n}
+                  checked={budget === n}
+                  onChange={() => setBudget(n)}
+                />
+                <span className="lf__pill-face">{n}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      ) : null}
+
       <p className="lf__field lf__field--msg">
         <span className="lf__idx" aria-hidden="true">
           {pad(msgIndex)}
         </span>
         <label className="lf__sr" htmlFor={fid('message')}>
-          What is going wrong?
+          Tell us about your business and what you need
         </label>
         <textarea
           className="lf__input lf__textarea"

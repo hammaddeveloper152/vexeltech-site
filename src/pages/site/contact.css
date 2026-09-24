@@ -22,6 +22,7 @@
 }
 
 .ct-mq {
+  position: relative;
   overflow: hidden;
 }
 
@@ -60,8 +61,51 @@
     animation: ct-mq var(--mq-dur, 40s) linear infinite;
   }
 
-  .ct-mq:hover .ct-mq__track {
+  .ct-mq:hover .ct-mq__track,
+  .ct-mq[data-paused='true'] .ct-mq__track {
     animation-play-state: paused;
+  }
+}
+
+/* THE PAUSE CONTROL: at the band's right end, centred on the line. The 48px
+   button is the target (BUILD-LAW Touch); the 32px asphalt face inside it
+   keeps the moving words from showing through, with a white-at-30% ring
+   like the pills'. Bone glyph, 16.32:1. */
+.ct-mq__ctl {
+  position: absolute;
+  top: 50%;
+  right: var(--inset);
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-top: -24px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: var(--c-bone);
+}
+
+.ct-mq__face {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--field-line-dark);
+  border-radius: 50%;
+  background: var(--c-asphalt);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ct-mq__ctl:hover .ct-mq__face {
+    border-color: var(--c-bone);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-mq__ctl {
+    display: none;
   }
 }
 

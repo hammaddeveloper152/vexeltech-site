@@ -22,7 +22,8 @@ import './Icons.css';
    circles, drawn at 16px in the same stroke.
 
    arrow-down-right (2026-09-25, the contact hero's line) points from the
-   heading into the form below it. */
+   heading into the form below it. pause (two bars) and play (a triangle,
+   sharp corners) are the contact marquee's control (2026-09-25). */
 
 function Icon({ className = 'i', size = 20, children }) {
   return (
@@ -77,6 +78,18 @@ export const IconArrowUpRight = ({ className }) => (
 export const IconArrowDownRight = ({ className }) => (
   <Icon className={className}>
     <path d="M6 6l8 8M14 7v7H7" />
+  </Icon>
+);
+
+export const IconPause = ({ className }) => (
+  <Icon className={className}>
+    <path d="M7 5v10M13 5v10" />
+  </Icon>
+);
+
+export const IconPlay = ({ className }) => (
+  <Icon className={className}>
+    <path d="M7 5l8 5-8 5z" />
   </Icon>
 );
 
