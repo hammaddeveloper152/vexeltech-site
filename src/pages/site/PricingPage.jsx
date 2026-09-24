@@ -99,6 +99,7 @@ export default function PricingPage() {
   return (
     <Shell
       title="Pricing | VexelTech"
+      path="/pricing"
       description="Flat prices for every job that needs doing. Branding and websites are fixed. Marketing and automation are scoped on a call."
     >
       {/* 1. THE HEAD. */}

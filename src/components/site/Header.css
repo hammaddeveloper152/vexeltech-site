@@ -157,7 +157,11 @@
 .bar__link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 48px;
+  /* 48 wide as well (BUILD-LAW Touch, "anything inside a nav"): "Pricing"
+     measured 41.1px wide in the release audit, 2026-09-25. */
+  min-width: 48px;
   /* The quiet label, 2026-09-24: 13px Satoshi, sentence case, steel-lift,
      7.4:1 on the base. It was 12px uppercase in white. */
   font-family: var(--font-offer);

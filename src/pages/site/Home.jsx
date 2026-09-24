@@ -13,6 +13,7 @@ import FooterForm from '../../components/home/FooterForm.jsx';
 import { CallBand } from './parts.jsx';
 import StickyCta from '../../components/site/StickyCta.jsx';
 import Marginalia from '../../components/site/Marginalia.jsx';
+import { setHead } from './head.js';
 import '../../styles/tokens.css';
 /* The loud register, applied to every section below the hero. Imported LAST
    so it wins on source order. See src/styles/register.css. */
@@ -79,10 +80,10 @@ const STEP_LINES = [
 ];
 
 export default function Home() {
+  /* The title, description, canonical and Open Graph tags (head.js). */
+  useEffect(() => setHead({ title: TITLE, description: DESCRIPTION, path: '/' }), []);
+
   useEffect(() => {
-    document.title = TITLE;
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.content = DESCRIPTION;
     /* A FRAGMENT IS HONOURED, 2026-09-25: About links to `/#how-it-works`.
        Scrolled once the fonts are in, so the target does not move after
        the page has landed on it; `scroll-margin-top` clears the bar. */

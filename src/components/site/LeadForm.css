@@ -193,6 +193,22 @@
   }
 }
 
+/* The press (BUILD-LAW Motion): 0.97 at the press duration, as every
+   pressable on the site. Missing until the release audit, 2026-09-25. */
+.lf__pill-face {
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.lf__pill:active .lf__pill-face {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf__pill:active .lf__pill-face {
+    transform: none;
+  }
+}
+
 /* Selected: yellow, asphalt words, 9.46:1. */
 .lf__check:checked + .lf__pill-face {
   background: var(--c-accent-ground);

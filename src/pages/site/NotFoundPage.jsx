@@ -17,7 +17,7 @@ import './notfound.css';
    heading says what happened, so its alt is empty. The copy is the brief's. */
 export default function NotFoundPage() {
   return (
-    <Shell title="Page not found | VexelTech" description="That page isn't here.">
+    <Shell noindex title="Page not found | VexelTech" description="That page isn't here.">
       <section className="vt nf" aria-labelledby="nf-h">
         <div className="nf__in">
           {/* IN A CARD, 2026-09-24 (the founder): the site's one card, bare,

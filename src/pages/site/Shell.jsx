@@ -3,6 +3,7 @@ import Header from '../../components/site/Header.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import StickyCta from '../../components/site/StickyCta.jsx';
 import Marginalia from '../../components/site/Marginalia.jsx';
+import { setHead } from './head.js';
 import '../../styles/tokens.css';
 import '../../styles/register.css';
 
@@ -37,6 +38,10 @@ export default function Shell({
      cream ground for the whole route, set on the document root while the
      route is mounted (light.css). */
   light = false,
+  /* `path`: the page's canonical path, and `noindex` for the 404
+     (head.js, the release audit, 2026-09-25). */
+  path,
+  noindex = false,
   barOver = false,
   children,
 }) {
@@ -49,17 +54,10 @@ export default function Shell({
     };
   }, [light]);
 
+  /* The title, description, canonical and Open Graph tags (head.js). */
+  useEffect(() => setHead({ title, description, path, noindex }), [title, description, path, noindex]);
+
   useEffect(() => {
-    if (title) document.title = title;
-    if (description) {
-      let meta = document.querySelector('meta[name="description"]');
-      if (!meta) {
-        meta = document.createElement('meta');
-        meta.name = 'description';
-        document.head.appendChild(meta);
-      }
-      meta.content = description;
-    }
     /* A route change is not a scroll, so nothing restores the position.
        EXCEPT A FRAGMENT, 2026-09-15: the About cards link to
        `/services#<id>`, and scrolling to the top threw the fragment away. The

@@ -47,6 +47,7 @@ export default function AboutPage() {
   return (
     <Shell
       title="About us | VexelTech"
+      path="/about-us"
       description="VexelTech Solutions is a technology company that builds the website, the marketing and the automation behind US local service businesses, at flat prices from $299."
       footerForm={false}
       light

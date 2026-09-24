@@ -58,7 +58,7 @@ const PENDING =
 
 export function PortfolioPage() {
   return (
-    <Shell title="Portfolio | VexelTech" description="Work by VexelTech.">
+    <Shell path="/portfolio" title="Portfolio | VexelTech" description="Work by VexelTech.">
       <OneScreen title="Portfolio" pending={PENDING} />
     </Shell>
   );
@@ -66,7 +66,7 @@ export function PortfolioPage() {
 
 export function CaseStudiesPage() {
   return (
-    <Shell title="Case studies | VexelTech" description="Case studies by VexelTech.">
+    <Shell path="/case-studies" title="Case studies | VexelTech" description="Case studies by VexelTech.">
       <OneScreen title="Case studies" pending={PENDING} />
     </Shell>
   );
@@ -74,7 +74,7 @@ export function CaseStudiesPage() {
 
 export function ResourcesPage() {
   return (
-    <Shell title="Resources | VexelTech" description="Resources from VexelTech.">
+    <Shell path="/resources" title="Resources | VexelTech" description="Resources from VexelTech.">
       <OneScreen title="Resources" pending={PENDING} />
     </Shell>
   );

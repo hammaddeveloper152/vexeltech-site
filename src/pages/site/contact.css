@@ -103,6 +103,16 @@
   }
 }
 
+/* The press, as every pressable (release audit, 2026-09-25). The control
+   is hidden under reduced motion, so it needs no reduced variant. */
+.ct-mq__face {
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.ct-mq__ctl:active .ct-mq__face {
+  transform: scale(0.97);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ct-mq__ctl {
     display: none;

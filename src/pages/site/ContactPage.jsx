@@ -83,6 +83,7 @@ export default function ContactPage() {
   return (
     <Shell
       title="Contact | VexelTech"
+      path="/contact-us"
       description="Tell us what you do and what you are losing. Fifteen minutes on the phone."
       meta={false}
     >

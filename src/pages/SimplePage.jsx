@@ -491,7 +491,9 @@ export default function SimplePage({ title }) {
 
   return (
     <SecondaryLayout
-      title={`${data.title} | VexelTech Solutions`}
+      /* The bare title: SecondaryLayout adds the suffix, and passing it
+         here as well doubled it (the release audit, 2026-09-25). */
+      title={data.title}
       description={data.subtitle}
     >
 

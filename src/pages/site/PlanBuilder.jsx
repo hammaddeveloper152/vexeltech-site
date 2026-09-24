@@ -208,7 +208,11 @@ export default function PlanBuilder({ heading = null }) {
     gsap.fromTo(
       cards,
       { y: 24, scale: 0.98, opacity: 0 },
-      { y: 0, scale: 1, opacity: 1, duration: 0.45, ease: 'power3.out', stagger: 0.07, delay: 0.1 }
+      /* clearProps: the tween's inline transform outranked the cards'
+         :hover lift and :active press, so neither ever showed (the release
+         audit, 2026-09-25). Cleared once they land, the stylesheet's states
+         apply again. */
+      { y: 0, scale: 1, opacity: 1, duration: 0.45, ease: 'power3.out', stagger: 0.07, delay: 0.1, clearProps: 'transform' }
     );
   }, [step]);
 

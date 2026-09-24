@@ -70,6 +70,11 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Release audit, 2026-09-25**: every page sets its head through
+  `src/pages/site/head.js` (pass `path` to Shell; `noindex` on the 404).
+  Every pressable gets its 0.97 press, including pills and icon controls. A
+  GSAP entrance on a pressable ends with `clearProps: 'transform'`, or its
+  :hover and :active never show. Nav links are 48 wide as well as tall.
 - **Contact copy, 2026-09-25**: 05 Budget pills (radios, not required, the
   founder's four bands), message 06, placeholder "Tell us about your
   business and what you need *". The marquee has a pause control (32px face,

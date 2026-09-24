@@ -52,6 +52,7 @@ export default function ServicesPage() {
   return (
     <Shell
       title="Services | VexelTech"
+      path="/services"
       description="Branding, websites, marketing and automation. The four disciplines in full, from one team."
     >
       {/* The page's one highlighted word, 2026-09-24: `.hl`, tokens.css. */}
