@@ -184,12 +184,6 @@ export default function SiteHeader() {
             </li>
 
             <li>
-              <Link to="/portfolio" onClick={closeMobileMenu}>
-                Portfolio
-              </Link>
-            </li>
-
-            <li>
               <Link to="/about-us" onClick={closeMobileMenu}>
                 About
               </Link>

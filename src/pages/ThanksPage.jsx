@@ -18,9 +18,6 @@ export default function ThanksPage() {
             <Link to="/" className="btn btn--go" style={{ display: 'inline-flex', alignItems: 'center', padding: '16px 32px', fontWeight: 700 }}>
               Return to Homepage
             </Link>
-            <Link to="/portfolio" className="btn btn--sec" style={{ display: 'inline-flex', alignItems: 'center', padding: '16px 32px', border: '1px solid var(--line-d)', color: '#fff' }}>
-              Explore Portfolio
-            </Link>
           </div>
         </div>
       </section>
