@@ -1,29 +1,41 @@
 /* ==========================================================================
    THE WORDMARK BAND, 2026-09-24. See WordBand.jsx.
 
-   96px above and below, the base colour, no image. The word is wider than
-   the viewport at 20vw, and a flex row centres an item that overflows by
-   letting it spill equally both ways, so it crops at both edges without a
-   measured offset. Bone at 70% over the base is about 8:1; it is decoration and
+   96px above and below, on the page's own ground, no image. The word spans
+   the band edge to edge at rest (below), and the drift carries it past each
+   edge in turn; the band's overflow crops it. Bone at 70% over the base is about 8:1; it is decoration and
    carries no text a reader needs.
    ========================================================================== */
 
 .wordband {
+  /* The word is sized against this box, not the viewport: 100vw counts the
+     scrollbar and would crop the word by its width. */
+  container-type: inline-size;
   display: flex;
   justify-content: center;
   overflow: hidden;
   padding-block: 96px;
-  background: var(--c-base);
+  /* No ground of its own, 2026-09-24 (the founder): it inherits the page's,
+     like every other section. */
 }
 
 .wordband__word {
   flex: none;
   margin: 0;
   font-family: var(--font-quiet);
-  font-size: 20vw;
+  /* EDGE TO EDGE, measured, 2026-09-24 (the founder): in Clash Display 500
+     at -0.02em, "VEXELTECH" inks 5.7995em wide (canvas measureText at
+     1000px: 15.6 left of the origin to 5783.9 right). So 100% of the band's
+     width over 5.7995 puts the ink on both edges at every width, 1280 and
+     1440 included. The ink sits 0.0169em left of the advance box's centre,
+     and a flex row centres the box, so a 0.0338em left margin moves the
+     box's centre - and the ink with it - that half-distance right. The 6%
+     drift then crops it alternately as the band scrolls past. */
+  margin-left: 0.0338em;
+  font-size: calc(100cqw / 5.7995);
   line-height: 0.9;
   font-weight: var(--t-weight-quiet);
-  letter-spacing: normal;
+  letter-spacing: -0.02em;
   white-space: nowrap;
   color: rgb(232 234 237 / 70%); /* bone at 70% */
   will-change: transform;

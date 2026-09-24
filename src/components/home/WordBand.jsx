@@ -7,9 +7,10 @@ import './WordBand.css';
 gsap.registerPlugin(ScrollTrigger);
 
 /* THE WORDMARK BAND, 2026-09-24 (the founder's Monolog pass). It replaces
-   the strike ticker under What we do: "VEXELTECH" in Clash Display Medium at
-   20vw, one line, bone at 70%, cropped at both edges by the band, drifting
-   6% sideways across the band's own scroll. No image.
+   the strike ticker under What we do: "VEXELTECH" in Clash Display Medium,
+   sized so its ink spans the band edge to edge (WordBand.css), -0.02em, one
+   line, bone at 70%, drifting 6% sideways across the band's own scroll. No
+   image.
 
    THE DRIFT is a ScrollTrigger scrub on the band's passage through the
    viewport, from +3% to -3% of the word's width, on transform alone. The

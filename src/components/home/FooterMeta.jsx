@@ -9,19 +9,25 @@ import './FooterForm.css';
    panel.
 
      row 1   RICHMOND, TX              mono 12px uppercase, steel
-     row 2   the five pages            Clash Medium 20px uppercase, asphalt,
+     row 2   the email                 16px asphalt link (added later the
+                                       same day, the founder)
+     row 3   the five pages            Clash Medium 20px uppercase, asphalt,
                                        40px apart, steel on hover
-     row 3   LinkedIn and Instagram    32px yellow circles, asphalt glyphs,
+     row 4   LinkedIn and Instagram    32px yellow circles, asphalt glyphs,
                                        `#` until the founder supplies them
-     row 4   (c) 2026 [LEGAL ENTITY NAME]  mono 12px, steel
+     row 5   Booking projects for October 2026   mono 12px, steel (added
+                                       with the email)
+     row 6   (c) 2026 [LEGAL ENTITY NAME]  mono 12px, steel
 
    A FULL-BLEED COLOUR BAND AND YELLOW CIRCLES are both the founder's
    decision in this brief, against the quiet pass's "no full-bleed colour"
    and its four places for yellow; DESIGN.md records both.
 
-   The email and "Booking projects for October 2026" are not in the band: the
-   brief's four rows do not carry them. The address confirmed 2026-09-08 is
-   in index.html's JSON-LD as a `PostalAddress`; the band names the city. */
+   The email confirmed 2026-09-08. The address is in index.html's JSON-LD as
+   a `PostalAddress`; the band names the city. */
+const EMAIL = 'info@vexeltechsolutions.com';
+const BOOKING = 'Booking projects for October 2026';
+
 const PAGES = [
   { id: 'home', label: 'Home', href: '/' },
   { id: 'services', label: 'Services', href: '/services' },
@@ -44,6 +50,10 @@ export default function FooterMeta() {
   return (
     <div className="foot__band">
       <p className="foot__city">Richmond, TX</p>
+
+      <a className="foot__email" href={`mailto:${EMAIL}`}>
+        {EMAIL}
+      </a>
 
       {/* A named landmark, so it is not confused with the bar's "Main". */}
       <nav className="foot__nav" aria-label="Site">
@@ -69,6 +79,8 @@ export default function FooterMeta() {
           </li>
         ))}
       </ul>
+
+      <p className="foot__booking">{BOOKING}</p>
 
       <p className="foot__legal">
         © {YEAR} {LEGAL}

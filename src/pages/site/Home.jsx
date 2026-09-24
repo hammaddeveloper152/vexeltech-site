@@ -11,6 +11,7 @@ import Faq from '../../components/home/Faq.jsx';
 import RouteBand from '../../components/site/RouteBand.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
+import { CallBand } from './parts.jsx';
 import useDrift, { at } from '../../components/site/useDrift.js';
 import '../../styles/tokens.css';
 /* The loud register, applied to every section below the hero. Imported LAST
@@ -138,6 +139,12 @@ export default function Home() {
             2026-09-22 with every other unfilled slot. */}
         <PromiseBand id="promise-h" />
         <Faq />
+        {/* The closing call, between Questions and the form: the founder's
+            line and subline, 2026-09-24. */}
+        <CallBand
+          heading="Not sure where to start?"
+          note="Fifteen minutes on the phone. We tell you what we would fix first."
+        />
         <FooterForm />
       </main>
     </IconProvider>

@@ -59,10 +59,14 @@ export function Section({ title, note, children, labelledBy }) {
 /* THE CLOSING CALL, 2026-09-24 (the founder's Flesh and Bones pass): one
    line, the heading's own words, in Clash Display Medium 32px uppercase in
    machine yellow with a 4px yellow underline 8px below it, centred, 160px
-   above and below on the base ground. The line IS the call - a link to the
-   contact page - so the separate button and the note under the heading are
-   gone, and so are the burst and spotlight grounds. */
-export function CallBand({ heading }) {
+   above and below on the page's ground. The line IS the call - a link to the
+   contact page - so the separate button is gone, and so are the burst and
+   spotlight grounds. The heading keeps its own punctuation under the
+   uppercase transform.
+
+   `note`, restored later the same day (the founder): the page's original
+   subline, 24px under the line, 16px steel-lift, centred, 520px wide at most. */
+export function CallBand({ heading, note = null }) {
   return (
     <section className="vt callband" aria-labelledby="callband-h">
       <h2 className="callband__h" id="callband-h">
@@ -70,6 +74,7 @@ export function CallBand({ heading }) {
           {heading}
         </Link>
       </h2>
+      {note ? <p className="callband__note">{note}</p> : null}
     </section>
   );
 }

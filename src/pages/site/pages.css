@@ -252,14 +252,15 @@
 
 /* ---- The closing call, 2026-09-24 (the founder's Flesh and Bones pass) ---
 
-   One line on the base ground, centred, 160px above and below: the heading
+   One line on the page's ground, centred, 160px above and below: the heading
    in Clash Display Medium 32px uppercase in machine yellow (10.47:1 on the
    base), with a 4px yellow underline 8px under it. The whole line is the
    link. The yellow is the founder's, a place of its own; DESIGN.md records
    it. */
 .callband {
+  /* No ground of its own (the founder, 2026-09-24): the page's, like every
+     other section. */
   padding: 160px var(--inset);
-  background: var(--c-base);
   text-align: center;
 }
 
@@ -283,6 +284,18 @@
   transition:
     opacity var(--d-press) var(--ease-reveal),
     transform var(--d-press) var(--ease-reveal);
+}
+
+/* The subline: 24px under the line, 16px steel-lift (7.4:1), centred,
+   520px wide at most. */
+.callband__note {
+  max-width: 520px;
+  margin: var(--s-lg) auto 0;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-steel-lift);
+  text-wrap: pretty;
 }
 
 @media (hover: hover) and (pointer: fine) {

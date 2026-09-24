@@ -10,14 +10,13 @@ import './Failures.css';
    remembered. Nothing in them is a claim about VexelTech, so BUILD-LAW.md
    Truth is not in play for them.
 
-   ---- ONE CREAM PANEL OF FOUR ROWS, 2026-09-24 (the founder) --------------
+   ---- FOUR ROWS ON THE PAGE GROUND, 2026-09-24 (the founder) ---------------
 
-   The four object cards are gone, and the objects with them: cost-1 to
-   cost-4 are deleted from the build and the pin re-cut is stopped. Each
-   cost is a row on one cream panel (32px radius, 64px padding), the rows
-   separated by hairlines: the numeral 01 to 04 and the title in Clash
-   Display Medium at 27px, the numeral steel and the title asphalt, and the
-   one-line body at 16px in steel. No images, no icons.
+   No panel, no images, no icons: four rows inside the measure, each a
+   numeral (mono 12px, steel-lift), a title (Clash Display Medium 27px,
+   bone) in a 40% column, and the one-line body (16px, steel-lift), 32px
+   above and below each row, split by white hairlines at 10%. The object
+   cards and the cream panel that followed them are gone.
 
    The numerals are an ordered list's own count shown in type, so a screen
    reader hears the list's count and not "01" read out before each title. */
@@ -59,7 +58,7 @@ export default function Failures() {
         <h2 className="fail__h" id="fail-h">
           What it costs you
         </h2>
-        <ol className="fail__rows panel" data-revealed={revealed ? 'true' : 'false'} ref={ref}>
+        <ol className="fail__rows" data-revealed={revealed ? 'true' : 'false'} ref={ref}>
           {FAILURES.map(({ id, statement, consequence }, i) => (
             <li className="fail__row" key={id} style={{ '--i': i }}>
               <span className="fail__n" aria-hidden="true">
