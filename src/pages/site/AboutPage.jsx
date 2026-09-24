@@ -331,7 +331,7 @@ export default function AboutPage() {
           <dl className="ab3-facts__list">
             {FACTS.map(([label, value]) => (
               <div className="ab3-facts__row" key={label}>
-                <dt className="ab3-facts__dt">{label}</dt>
+                <dt className="ab3-facts__dt lbl">{label}</dt>
                 <dd className="ab3-facts__dd">{value}</dd>
               </div>
             ))}

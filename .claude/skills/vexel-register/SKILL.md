@@ -59,6 +59,12 @@ otherwise, this section is right and the rest is history.
 - **Later 2026-09-24: Moldie is the home route numerals and the home $700
   only.** Every other price is Clash 400 (56px on /services and the /pricing
   grid). **Every panel and card is 24px** (`--r-card`); buttons and chips 6px.
+- **Monolog pass, 2026-09-24**: eyebrows, section labels, table headers and
+  form labels are `.lbl` - JetBrains Mono 12px uppercase 0.08em in CSS-drawn
+  parentheses. The ticker is a VEXELTECH wordmark band (it starts Lenis on
+  home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
+  (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
+  every cream panel.
 - **THE CARD v2 (quiet), 2026-09-24, supersedes the card bullets below**:
   no artwork, content height, 48px chip, 27px title, 14px line with a bold
   lead, 32px padding, four across from 1024. What it costs you is one cream

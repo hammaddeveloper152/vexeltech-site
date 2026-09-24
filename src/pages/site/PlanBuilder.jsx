@@ -410,7 +410,7 @@ export default function PlanBuilder({ heading = null }) {
      ticket (and restart its line animations) on every keystroke. */
   const renderTicket = (inSheet = false) => (
     <div className="plan__ticket" data-sheet={inSheet ? 'true' : 'false'}>
-      <p className="plan__ticket-k">Work order</p>
+      <p className="plan__ticket-k lbl">Work order</p>
       {/* THE EMPTY STATE, from step 1: the ticket is mounted before there is
           anything on it, so the panel has something opposite it on every
           step. One line, steel on cream at 7.20:1. The trade line is Moldie
@@ -442,7 +442,7 @@ export default function PlanBuilder({ heading = null }) {
       ) : null}
       {t.priced ? (
         <p className="plan__total">
-          <span className="plan__total-k">Total</span>
+          <span className="plan__total-k lbl">Total</span>
           <span className="plan__total-n">{money(step === 4 ? shownTotal : t.total)}</span>
         </p>
       ) : null}
@@ -567,7 +567,7 @@ export default function PlanBuilder({ heading = null }) {
                 ].map(([id, label, type, auto]) => (
                   <p className="plan__field" key={id}>
                     <label className="plan__label" htmlFor={`plan-${id}`}>
-                      {label}
+                      <span className="lbl">{label}</span>
                     </label>
                     <input
                       className="plan__input"

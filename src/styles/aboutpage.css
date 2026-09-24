@@ -474,13 +474,8 @@
 }
 
 .ab3-facts__dt {
+  /* Type is `.lbl` (tokens.css), the mono label, 2026-09-24. */
   /* The quiet label, 2026-09-24: 13px sentence case (was 11px caps). */
-  font-family: var(--font-offer);
-  font-size: var(--t-label-q);
-  line-height: var(--t-label-q-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: normal;
-  text-transform: none;
   color: var(--c-steel-lift); /* 7.4:1 on the base */
 }
 

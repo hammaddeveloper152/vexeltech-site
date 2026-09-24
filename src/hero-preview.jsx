@@ -7,7 +7,7 @@ import Header from './components/site/Header.jsx';
 import Hero from './components/home/Hero.jsx';
 import Failures from './components/home/Failures.jsx';
 import Services from './components/home/Services.jsx';
-import Marquee from './components/home/Marquee.jsx';
+import WordBand from './components/home/WordBand.jsx';
 import About from './components/home/About.jsx';
 import CounterRow from './components/home/CounterRow.jsx';
 import Faq from './components/home/Faq.jsx';
@@ -95,7 +95,7 @@ createRoot(document.getElementById('hero-root')).render(
         <Failures />
         <About />
         <Services />
-        <Marquee />
+        <WordBand />
         <RouteBand
           id="how-h"
           heading="How it works"

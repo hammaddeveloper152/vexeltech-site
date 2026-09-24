@@ -1,0 +1,30 @@
+/* ==========================================================================
+   THE WORDMARK BAND, 2026-09-24. See WordBand.jsx.
+
+   96px above and below, the base colour, no image. The word is wider than
+   the viewport at 20vw, and a flex row centres an item that overflows by
+   letting it spill equally both ways, so it crops at both edges without a
+   measured offset. Bone at 70% over the base is about 8:1; it is decoration and
+   carries no text a reader needs.
+   ========================================================================== */
+
+.wordband {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  padding-block: 96px;
+  background: var(--c-base);
+}
+
+.wordband__word {
+  flex: none;
+  margin: 0;
+  font-family: var(--font-quiet);
+  font-size: 20vw;
+  line-height: 0.9;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  white-space: nowrap;
+  color: rgb(232 234 237 / 70%); /* bone at 70% */
+  will-change: transform;
+}

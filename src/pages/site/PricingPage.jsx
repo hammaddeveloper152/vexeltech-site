@@ -102,7 +102,7 @@ export default function PricingPage() {
       {/* 1. THE HEAD. */}
       <header className="vt pr-head">
         <div className="pr__in">
-          <p className="pr-head__eyebrow">Pricing</p>
+          <p className="pr-head__eyebrow lbl">Pricing</p>
           <h1 className="pr-head__h" id="pg-h">
             Flat prices for every job that <span className="hl">needs</span> doing.
           </h1>
@@ -133,7 +133,7 @@ export default function PricingPage() {
                 <p className="pr-col__price">{c.price}</p>
                 <p className="pr-col__sub">{c.sub}</p>
                 <div className="pr-col__get">
-                  <p className="pr-col__label">What you get</p>
+                  <p className="pr-col__label lbl">What you get</p>
                   <ul className="pr-col__list">
                     {c.items.map((item) => (
                       <li className="pr-col__item" key={item}>
@@ -171,7 +171,7 @@ export default function PricingPage() {
                 <tr>
                   <td className="pr-cmp__corner" />
                   {COLUMNS.map((c) => (
-                    <th scope="col" key={c.id}>
+                    <th scope="col" className="lbl" key={c.id}>
                       {c.name}
                     </th>
                   ))}
@@ -180,7 +180,9 @@ export default function PricingPage() {
               <tbody>
                 {ROWS.map(([term, values]) => (
                   <tr key={term}>
-                    <th scope="row">{term}</th>
+                    <th scope="row" className="lbl">
+                      {term}
+                    </th>
                     {values.map((v, i) => (
                       <td key={COLUMNS[i].id}>{v}</td>
                     ))}

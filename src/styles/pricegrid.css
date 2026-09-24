@@ -35,11 +35,8 @@
 }
 
 .pr-head__eyebrow {
+  /* Type is `.lbl` (tokens.css), the mono label, 2026-09-24. */
   margin: 0 0 var(--s-md);
-  font-family: var(--font-offer);
-  font-size: var(--t-label-q);
-  line-height: var(--t-label-q-line);
-  font-weight: var(--t-weight-label);
   color: var(--c-steel-lift); /* 7.4:1 */
 }
 
@@ -318,11 +315,8 @@
 }
 
 .pr-col .pr-col__label {
+  /* Type is `.lbl` (tokens.css), the mono label, 2026-09-24. */
   margin: 0 0 var(--s-md);
-  font-family: var(--font-offer);
-  font-size: var(--t-label-q);
-  line-height: var(--t-label-q-line);
-  font-weight: var(--t-weight-label);
   color: var(--c-steel); /* 7.20:1 */
 }
 
@@ -472,9 +466,17 @@
   vertical-align: top;
 }
 
-/* Headers carry the weight a header needs, not a second colour. */
-.pr-cmp__t th {
-  font-weight: var(--t-weight-label);
+/* THE HEADERS ARE THE MONO LABEL, 2026-09-24: `.lbl`'s values restated at
+   this specificity, because the shared cell rule above outranks the class.
+   The line height stays the cells' 24px so a header sits on its row's
+   first line. Bone, as before. */
+.pr-cmp__t th.lbl {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 24px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 /* Hairlines BETWEEN rows: under the header row and under every body row but

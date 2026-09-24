@@ -169,8 +169,13 @@ export default function FooterForm() {
             return (
               <p className="foot__field" key={id}>
                 <label className="foot__label" htmlFor={`ff-${id}`}>
-                  {label}
-                  {required ? <span className="foot__req" aria-hidden="true"> (required)</span> : null}
+                  <span className="lbl">{label}</span>
+                  {required ? ' ' : null}
+                  {required ? (
+                    <span className="foot__req lbl" aria-hidden="true">
+                      required
+                    </span>
+                  ) : null}
                 </label>
                 <input
                   className="foot__input"
@@ -207,7 +212,7 @@ export default function FooterForm() {
 
           <p className="foot__field">
             <label className="foot__label" htmlFor="ff-budget">
-              Budget
+              <span className="lbl">Budget</span>
             </label>
             <select
               className="foot__input foot__select"
@@ -227,8 +232,10 @@ export default function FooterForm() {
 
           <p className="foot__field foot__field--wide">
             <label className="foot__label" htmlFor="ff-message">
-              Message
-              <span className="foot__req" aria-hidden="true"> (required)</span>
+              <span className="lbl">Message</span>{' '}
+              <span className="foot__req lbl" aria-hidden="true">
+                required
+              </span>
             </label>
             <textarea
               className="foot__input foot__textarea"

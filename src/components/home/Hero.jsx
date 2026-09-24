@@ -226,20 +226,9 @@ export default function Hero() {
 
       {mode === 'surface' ? <HeroSurface /> : null}
 
-      {/* Grain sits above the film, below content. */}
-      <svg className="hero__grain" aria-hidden="true" focusable="false">
-        <filter id="vt-grain">
-          <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="3" stitchTiles="stitch" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0.55
-                    0 0 0 0 0.55
-                    0 0 0 0 0.55
-                    0.32 0.32 0.32 0 0"
-          />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#vt-grain)" />
-      </svg>
+      {/* Grain over the film, below the content: the site's one noise
+          (`--grain`, tokens.css) at 3%, 2026-09-24. */}
+      <span className="hero__grain" aria-hidden="true" />
 
       <div className="hero__body">
         {/* ONE ACCESSIBLE NAME, AND IT IS THE HEADLINE THAT STAYS. Four lines

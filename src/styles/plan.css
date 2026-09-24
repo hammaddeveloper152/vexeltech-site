@@ -92,6 +92,7 @@
      ticket is no longer a separate dark card. Below 1024 the right column is
      the phone bar and sheet, so the panel holds the questions alone. */
   display: grid;
+  position: relative;
   width: min(100%, 1200px);
   margin: 0 auto;
   border-radius: var(--r-panel);
@@ -111,6 +112,17 @@
 /* THE PANEL. The 720px minimum height is withdrawn, 2026-09-22: the section
    is its content plus the 96px the ramp already gives it, and a floor that
    tall left the early steps standing in a column of empty ground. */
+/* The grain, at 3% as on every cream panel (tokens.css, 2026-09-24). */
+.plan__in::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: var(--grain);
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+}
+
 .plan__main {
   --plan-pad: var(--s-lg); /* 24px at 390 */
   position: relative;
@@ -412,12 +424,7 @@
 }
 
 .plan__label {
-  font-family: var(--font-offer);
-  font-size: var(--t-label-q);
-  line-height: var(--t-label-q-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: normal;
-  text-transform: none;
+  /* Type is `.lbl` (tokens.css), the mono label, 2026-09-24. */
   color: var(--c-steel); /* 7.20:1 on cream */
 }
 
@@ -602,13 +609,8 @@
 }
 
 .plan__ticket-k {
+  /* Type is `.lbl` (tokens.css), the mono label, 2026-09-24. */
   margin: 0;
-  font-family: var(--font-offer);
-  font-size: var(--t-label-q);
-  line-height: var(--t-label-q-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: normal;
-  text-transform: none;
   color: var(--c-steel); /* 7.20:1 on cream */
 }
 
@@ -710,12 +712,7 @@
 }
 
 .plan__total-k {
-  font-family: var(--font-offer);
-  font-size: var(--t-label-q);
-  line-height: var(--t-label-q-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: normal;
-  text-transform: none;
+  /* Type is `.lbl` (tokens.css), the mono label, 2026-09-24. */
   color: var(--c-steel); /* 7.20:1 */
 }
 
