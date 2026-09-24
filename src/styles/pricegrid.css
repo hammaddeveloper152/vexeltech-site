@@ -236,23 +236,24 @@
   }
 }
 
-/* THE WEBSITES COLUMN AT REST, 2026-09-24 (the founder): only its yellow top
-   edge, the "Most picked" chip and the yellow button. The white plane and
-   its shadow come on hover, as on every other column. At rest the edge is a
-   straight 2px line on `::after`; on hover it fades and the plane's own
-   rounded yellow edge takes over, so the line never stands above a rounded
-   corner. The line on the right of a lit column belongs to its neighbour,
-   so that fades on hover too. */
-.pr-col[data-picked='true']::after {
-  content: '';
-  position: absolute;
-  top: -2px;
-  right: 0;
-  left: 0;
-  height: 2px;
-  background: var(--c-accent-draw-dark);
-  pointer-events: none;
-  transition: opacity 220ms ease;
+/* THE WEBSITES COLUMN IS LIT AT REST, 2026-09-24 (the founder, reversing the
+   earlier rest state): its white card, its 4px lift and its halo are there
+   before any hover, with the glow at 0.3 (0.45 on hover, below). The yellow
+   top edge and the "Most picked" chip sit on the card - the edge is the
+   plane's own rounded top border. The hairlines on either side of it fade,
+   because the card covers where they run. On hover it only brightens its
+   glow; the other three columns light on hover alone, as before. */
+.pr-col[data-picked='true'] {
+  transform: translateY(-4px);
+}
+
+.pr-col[data-picked='true'] .pr-col__bg {
+  opacity: 1;
+}
+
+.pr-col[data-picked='true']::before,
+.pr-col[data-picked='true'] + .pr-col::before {
+  opacity: 0;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -271,10 +272,6 @@
 
   .pr-col:hover .pr-col__price {
     transform: scale(1.0714); /* 56px to 60px */
-  }
-
-  .pr-col[data-picked='true']:hover::after {
-    opacity: 0;
   }
 
   .pr-col:hover .pr-col__btn::after {

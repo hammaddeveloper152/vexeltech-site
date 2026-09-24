@@ -78,7 +78,7 @@
    on the asphalt ground is the strongest separation available and needs no
    border to say where the field is. */
 /* THE DARK FIELD, 2026-09-24 (the founder), on every form: lit-near, a 1px
-   white-at-10% edge, 6px, bone 16px text, steel-lift placeholders. Focus is
+   white-at-22% edge (10% until the founder raised it the same day), 6px, bone 16px text, steel-lift placeholders. Focus is
    a 1px machine yellow border and nothing else: no glow, and the page's ring
    stands down for a field because the border IS its focus state (yellow on
    lit-near 8.8:1, and never the hover treatment). Error: a 1px #E5484D
@@ -90,7 +90,7 @@
   padding: 14px 16px;
   background: var(--lit-near);
   color: var(--c-bone); /* 13.67:1 on lit-near */
-  border: 1px solid rgb(255 255 255 / 10%);
+  border: 1px solid rgb(255 255 255 / 22%); /* 22% since 2026-09-24, the founder */
   border-radius: 6px;
   font-family: var(--font-offer);
   font-size: 16px;
