@@ -907,11 +907,12 @@ html {
   height: 12px;
 }
 
-/* THE BRUSH STROKE, 2026-09-25 (the founder's life pass 3). See Brush.jsx.
-   Behind the words: the text is above it in its own layer. The stroke's
-   centre sits in the lower third of the numerals (`--brush-at`, from the
-   figure's box top, set per figure), 12px past the words each side,
-   rotated -3 degrees, at 0.9. It draws with `stroke-dashoffset`. */
+/* THE SWASH, the site's one brush stroke (Brush.jsx): the $700s since life
+   pass 3, the highlight and the loose marks since the Genesis pass,
+   2026-09-25. Around words it sits behind them, its centre at `--brush-at`
+   of their box, 12px past them each side; a loose mark is the stroke alone,
+   in flow. Its angle, strength and thickness are each use's (set by the
+   component); it draws with `stroke-dashoffset`. */
 .brush {
   position: relative;
   display: inline-block;
@@ -925,19 +926,37 @@ html {
 
 .brush__stroke {
   position: absolute;
-  top: calc(var(--brush-at, 70%) - 22px); /* the box is 44px, the stroke 28 */
-  left: -12px;
+  top: calc(var(--brush-at, 70%) - var(--brush-h, 44px) / 2);
+  left: var(--brush-left, -12px);
   z-index: 0;
   overflow: visible;
-  opacity: 0.9;
-  transform: rotate(-3deg);
+  opacity: var(--brush-op, 0.9);
+  transform: rotate(var(--brush-rot, -3deg));
   pointer-events: none;
+}
+
+.brush--mark {
+  display: block;
+}
+
+.brush--mark .brush__stroke {
+  position: static;
+  display: block;
+}
+
+/* THE HIGHLIGHT IS THE SWASH, 2026-09-25 (the Genesis pass): the one word a
+   page gives it sits wholly on the stroke, in asphalt, as it sat in the
+   box it replaces. ONLY ONCE THE STROKE IS DRAWN: until then the word keeps
+   its line's own colour, because asphalt with no stroke behind it is asphalt
+   on the dark ground, 1.13:1 (the contrast walk caught it before the draw).
+   The change is instant, not a colour transition. */
+.brush--hl[data-drawn='true'] .brush__t {
+  color: var(--c-asphalt);
 }
 
 .brush__stroke path {
   fill: none;
   stroke: var(--c-accent-draw-dark);
-  stroke-width: 28px;
   stroke-linecap: round;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
@@ -973,17 +992,9 @@ html {
   }
 }
 
-/* THE HIGHLIGHTER. One word per page, a machine yellow box behind it with
-   asphalt type inside, 9.46:1. It is one of yellow's four places; BUILD-LAW
-   records it as one type treatment used once per page, not a repeated
-   device. `box-decoration-break` keeps the box whole on a word that wraps. */
-.hl {
-  padding: 0 0.12em;
-  background: var(--c-accent-ground);
-  color: var(--c-asphalt);
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
+/* THE HIGHLIGHTER BOX (`.hl`) IS GONE, 2026-09-25 (the Genesis pass): the
+   one highlighted word a page gives is the swash now (Brush.jsx, `.brush--hl`
+   above), asphalt on the stroke as it was asphalt in the box. */
 
 /* The skip link.
 

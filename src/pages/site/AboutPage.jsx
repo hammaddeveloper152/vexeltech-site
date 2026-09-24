@@ -12,6 +12,7 @@ import { CallBand } from './parts.jsx';
 import Faq from '../../components/home/Faq.jsx';
 import ArtCard from '../../components/site/ArtCard.jsx';
 import '../../styles/aboutpage.css';
+import Brush from '../../components/site/Brush.jsx';
 
 /* THE ABOUT PAGE. The copy is VEXELTECH-COPY.md, "ABOUT 2026-09-24", in the
    design repo, the founder's, verbatim; it superseded "ABOUT 2026-09-23"
@@ -198,8 +199,8 @@ export default function AboutPage() {
         <div className="ab3__in ab3-hero__in">
           <div className="ab3-hero__text">
             <h1 className="ab3-hero__h" id="ab3-hero-h">
-              {/* The page's one highlighted word, 2026-09-24: `.hl`, tokens.css. */}
-              We build the system that makes the <span className="hl">phone</span> ring.
+              {/* The page's one highlighted word: the swash since 2026-09-25 (Brush.jsx). */}
+              We build the system that makes the <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">phone</Brush> ring.
             </h1>
             {/* Decorative, so a span rather than an <hr>, which would announce
                 a thematic break between a heading and the line answering it. */}

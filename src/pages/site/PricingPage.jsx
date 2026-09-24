@@ -107,7 +107,7 @@ export default function PricingPage() {
         <div className="pr__in">
           <p className="pr-head__eyebrow lbl">Pricing</p>
           <h1 className="pr-head__h" id="pg-h">
-            Flat prices for every job that <span className="hl">needs</span> doing.
+            Flat prices for every job that <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">needs</Brush> doing.
           </h1>
           <p className="pr-head__lead">
             Branding and websites are fixed. Marketing and automation are scoped on a call.

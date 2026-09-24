@@ -1,10 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
 import HeroSurface from './HeroSurface.jsx';
 import { videoAllowed } from './Video.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
 import { CUTS, EXIT_MS, FINAL_LINE, LINES, SPOT, TALL_QUERY } from './heroSpot.js';
 import './Hero.css';
+import Brush from '../site/Brush.jsx';
 
 /* THE HERO IS A SPOT NOW, AND THE CLIP IS THE CLOCK.
 
@@ -73,8 +76,8 @@ function shotAt(t) {
 /* One line of copy. Keyed by shot at the call site, so every cut mounts a
    fresh line and its fade-up in Hero.css runs again. */
 /* THE HIGHLIGHTER, 2026-09-24 (the founder): home's one highlighted word is
-   "Yet." in the second shot's line, a machine yellow box with asphalt type.
-   `.hl` is tokens.css. Split on the word rather than hard-coding the line, so
+   "Yet." in the second shot's line, asphalt on the swash since 2026-09-25
+   (Brush.jsx; it was a machine yellow box, `.hl`). Split on the word rather than hard-coding the line, so
    the copy in heroSpot.js stays the only place the line is written. */
 const HIGHLIGHT = 'Yet.';
 
@@ -87,7 +90,9 @@ function Line({ text, leaving }) {
       ) : (
         <>
           {text.slice(0, at)}
-          <span className="hl">{HIGHLIGHT}</span>
+          {/* THE SWASH, 2026-09-25 (the Genesis pass): the highlight is the
+              brush stroke now, not the box (Brush.jsx). */}
+          <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">{HIGHLIGHT}</Brush>
           {text.slice(at + HIGHLIGHT.length)}
         </>
       )}
@@ -95,7 +100,30 @@ function Line({ text, leaving }) {
   );
 }
 
+gsap.registerPlugin(ScrollTrigger);
+
+/* THE REVEAL, 2026-09-25 (the founder's Genesis pass). On load the copy
+   stands on the dark ground with no film behind it; the film is below it in
+   a frame, 60% of the measure wide, centred, its corners at 24px, its first
+   poster showing and then playing. The hero is pinned for 100vh of scroll,
+   and over it the frame grows to the whole viewport and loses its corners,
+   moving up behind the headline. The zoned shades that keep the copy legible
+   over the film fade in as it arrives (full by 30% of the way), so the copy
+   keeps its contrast at every step; measured in DESIGN.md.
+
+   Transform for the size and place (the frame is the hero's own size, scaled
+   down); `clip-path` for the corners (BUILD-LAW Motion names it for masked
+   reveals); opacity for the shades. Below 768 there is no pin: the frame
+   stands under the copy at the measure's width. Reduced motion (the still
+   mode) holds the first state, with no pin and no scrub. The surface mode has
+   no film and no frame. */
+const FRAME_SHARE = 0.6;
+const FRAME_GAP = 40;
+
 export default function Hero() {
+  const sectionRef = useRef(null);
+  const bodyRef = useRef(null);
+  const frameRef = useRef(null);
   const [mode, setMode] = useState(pickMode);
   /* The cut is chosen with the mode and kept: see TALL_QUERY. */
   const [tall] = useState(
@@ -210,38 +238,106 @@ export default function Hero() {
     };
   }, [mode]);
 
+  /* The reveal (see above). */
+  useLayoutEffect(() => {
+    const sec = sectionRef.current;
+    const body = bodyRef.current;
+    const frame = frameRef.current;
+    if (!sec || !body || !frame) return undefined;
+    const small = () => {
+      const s = sec.getBoundingClientRect();
+      const b = body.getBoundingClientRect();
+      const inset = parseFloat(getComputedStyle(sec).getPropertyValue('--hero-inset')) || 0;
+      const w = (s.width - 2 * inset) * FRAME_SHARE;
+      const sc = w / s.width;
+      return { x: (s.width - w) / 2, y: b.bottom - s.top + FRAME_GAP, sc, r: 24 / sc };
+    };
+    const mm = gsap.matchMedia();
+    mm.add(
+      { wide: '(min-width: 768px)', reduce: '(prefers-reduced-motion: reduce)' },
+      (ctx) => {
+        const { wide, reduce } = ctx.conditions;
+        if (!wide) return undefined;
+        sec.style.setProperty('--shade-in', '0');
+        if (reduce || mode !== 'spot') {
+          const k = small();
+          gsap.set(frame, { x: k.x, y: k.y, scale: k.sc, '--frame-r': `${k.r}px` });
+          return () => {
+            gsap.set(frame, { clearProps: 'all' });
+            sec.style.removeProperty('--shade-in');
+          };
+        }
+        gsap.fromTo(
+          frame,
+          {
+            x: () => small().x,
+            y: () => small().y,
+            scale: () => small().sc,
+            '--frame-r': () => `${small().r}px`,
+          },
+          {
+            x: 0,
+            y: 0,
+            scale: 1,
+            '--frame-r': '0px',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sec,
+              start: 'top top',
+              end: '+=100%',
+              pin: true,
+              scrub: true,
+              invalidateOnRefresh: true,
+              onUpdate: (self) => sec.style.setProperty('--shade-in', String(Math.min(1, self.progress / 0.3))),
+            },
+          }
+        );
+        return () => {
+          gsap.set(frame, { clearProps: 'all' });
+          sec.style.removeProperty('--shade-in');
+        };
+      }
+    );
+    return () => mm.revert();
+  }, [mode]);
+
   const src = tall ? SPOT.tall : SPOT.wide;
   const shot = mode === 'spot' ? state.shot : LINES.length - 1;
 
   return (
-    <section className="vt hero" aria-labelledby="hero-h" data-mode={mode}>
-      {mode === 'spot' ? (
-        <video
-          ref={videoRef}
-          className="hero__spot"
-          poster={src.first}
-          muted
-          playsInline
-          preload="auto"
-          /* Decoration under the copy, not content: the lines carry what the
-             film says, and the h1 carries the lines. */
-          aria-hidden="true"
-          tabIndex={-1}
-          disablePictureInPicture
-        >
-          {/* VP9 first, so a browser that decodes it never fetches the h.264. */}
-          <source src={src.webm} type="video/webm" />
-          <source src={src.mp4} type="video/mp4" />
-        </video>
-      ) : null}
+    <section className="vt hero" aria-labelledby="hero-h" data-mode={mode} ref={sectionRef}>
+      {/* THE FRAME the film stands in (the reveal, above). */}
+      {mode !== 'surface' ? (
+        <div className="hero__frame" ref={frameRef}>
+          {mode === 'spot' ? (
+            <video
+              ref={videoRef}
+              className="hero__spot"
+              poster={src.first}
+              muted
+              playsInline
+              preload="auto"
+              /* Decoration under the copy, not content: the lines carry what the
+                 film says, and the h1 carries the lines. */
+              aria-hidden="true"
+              tabIndex={-1}
+              disablePictureInPicture
+            >
+              {/* VP9 first, so a browser that decodes it never fetches the h.264. */}
+              <source src={src.webm} type="video/webm" />
+              <source src={src.mp4} type="video/mp4" />
+            </video>
+          ) : null}
 
-      {/* The still follows the width, unlike the film: nothing is playing, so
-          a rotated phone can take the other crop without restarting anything. */}
-      {mode === 'still' ? (
-        <picture>
-          <source media={TALL_QUERY} srcSet={SPOT.tall.poster} type="image/webp" />
-          <img className="hero__spot" src={SPOT.wide.poster} alt="" decoding="async" />
-        </picture>
+          {/* The still follows the width, unlike the film: nothing is playing, so
+              a rotated phone can take the other crop without restarting anything. */}
+          {mode === 'still' ? (
+            <picture>
+              <source media={TALL_QUERY} srcSet={SPOT.tall.poster} type="image/webp" />
+              <img className="hero__spot" src={SPOT.wide.poster} alt="" decoding="async" />
+            </picture>
+          ) : null}
+        </div>
       ) : null}
 
       {mode === 'surface' ? <HeroSurface /> : null}
@@ -250,7 +346,7 @@ export default function Hero() {
           (`--grain`, tokens.css) at 3%, 2026-09-24. */}
       <span className="hero__grain" aria-hidden="true" />
 
-      <div className="hero__body">
+      <div className="hero__body" ref={bodyRef}>
         {/* ONE ACCESSIBLE NAME, AND IT IS THE HEADLINE THAT STAYS. Four lines
             announced as they cut would be a screen reader talking over a film
             it cannot see; the final line is the sentence the page is about.

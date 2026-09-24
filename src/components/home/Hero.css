@@ -122,6 +122,50 @@
   pointer-events: none;
 }
 
+/* ---- THE FRAME, 2026-09-25 (the founder's Genesis pass) -----------------
+
+   The film stands in it (Hero.jsx, the reveal). From 768 the frame is the
+   hero's own box, scaled by the reveal to 60% of the measure below the copy
+   and grown back to the whole viewport as the hero is scrolled, its corners
+   a `clip-path` whose radius falls from 24px (at that scale) to 0: transform
+   and clip-path, BUILD-LAW Motion's own terms. The film fills the frame as
+   it filled the hero.
+
+   Below 768 there is no pin: the frame stands in the flow under the copy at
+   the measure's width, 4:5, corners at 24px, the tall cut in it. */
+.hero__frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  transform-origin: 0 0;
+  clip-path: inset(0 round var(--frame-r, 0px));
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .hero__frame {
+    position: relative;
+    inset: auto;
+    order: 2;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    margin-top: var(--s-lg);
+    border-radius: 24px;
+    clip-path: none;
+  }
+
+  .hero__body {
+    order: 1;
+  }
+}
+
+/* The zoned shades fade in as the film arrives behind the copy (the
+   reveal sets `--shade-in` from 0 to 1 by 30% of the way). Opacity only. */
+.hero:not([data-mode='surface']) :is(.hero__headline, .hero__support)::before {
+  opacity: var(--shade-in, 1);
+}
+
 /* ---- Copy --------------------------------------------------------------- */
 
 /* The copy block. It spans the section; there is no plate behind it. Its

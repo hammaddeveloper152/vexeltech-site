@@ -262,29 +262,41 @@
   color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
 }
 
-/* ---- THE FOOTER BAND, 2026-09-24 (the founder's Flesh and Bones pass) ----
+/* ---- THE FOOTER BLOCK, 2026-09-25 (the founder's Genesis pass) ----------
 
-   See FooterMeta.jsx. Full bleed: the band steps out through the footer's
-   inline padding (`--foot-px`) and its bottom padding, so it meets both
-   viewport edges and the foot of the page. 120px above and below,
-   everything centred, 24px between rows. Values on cream: asphalt 15.75:1,
-   steel 7.20:1; asphalt on machine yellow 9.46:1. */
+   See FooterMeta.jsx. A cream block inset 16px from the viewport on every
+   side: it steps out through the footer's inline padding (`--foot-px`) and
+   its bottom padding to 16px from each edge. 32px radius on every corner,
+   96px of padding from 1024 (64 at 768, 32 on a phone: 96 each side of a
+   390 screen would leave 166px for the words), the grain kept, and
+   `overflow: hidden` so the corner swash is cut by the radius. It replaced
+   the full-bleed band and its sheet corners and shadow. Values on cream:
+   asphalt 15.75:1, steel 7.20:1. */
 .foot__band {
   position: relative;
+  z-index: 1;
   display: grid;
-  justify-items: center;
-  gap: var(--s-lg);
-  margin: var(--s-section) calc(-1 * var(--foot-px)) calc(-1 * var(--s-section));
-  padding: 120px var(--foot-px);
+  gap: var(--s-2xl);
+  margin: var(--s-section) calc(16px - var(--foot-px)) calc(16px - var(--s-section));
+  padding: 32px;
+  overflow: hidden;
+  border-radius: 32px;
   background: var(--c-cream);
   color: var(--c-asphalt);
-  text-align: center;
-  /* THE LAST SHEET on every page (2026-09-24, the launch batch): the cream
-     sheets' corners and upward shadow (tokens.css). Its space above is the
-     form's own, so it overlaps nothing. */
-  z-index: 1;
-  border-radius: 40px 40px 0 0;
-  box-shadow: 0 -12px 40px rgb(0 0 0 / 35%);
+}
+
+@media (min-width: 768px) {
+  .foot__band {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: var(--s-2xl);
+    padding: 64px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .foot__band {
+    padding: 96px;
+  }
 }
 
 /* The grain, 3%, as on every cream panel. */
@@ -296,6 +308,109 @@
   background-image: var(--grain);
   opacity: var(--grain-opacity);
   pointer-events: none;
+}
+
+/* Left: the line, and the copyright at the column's foot. */
+.foot__big-col {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  align-content: space-between;
+  gap: var(--s-2xl);
+}
+
+.foot__big {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: 56px;
+  line-height: 1;
+  font-weight: var(--t-weight-quiet); /* Medium */
+  letter-spacing: normal;
+  color: var(--c-asphalt); /* 15.75:1 on cream */
+}
+
+@media (min-width: 768px) {
+  .foot__big {
+    font-size: 96px;
+  }
+}
+
+/* On a phone the block is one column and the copyright goes to its foot,
+   bottom left: the left column's two pieces become the block's own. */
+@media (max-width: 767px) {
+  .foot__big-col {
+    display: contents;
+  }
+
+  .foot__big {
+    order: 1;
+  }
+
+  .foot__meta {
+    order: 2;
+  }
+
+  .foot__legal {
+    position: relative;
+    z-index: 1;
+    order: 3;
+  }
+}
+
+/* Right: the email, the city, the pages, the socials, the booking line. */
+.foot__meta {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: start;
+  align-content: start;
+  gap: var(--s-md);
+}
+
+/* The booking line's dot: 8px, machine yellow, pulsing (scale 1 to 1.4,
+   opacity 1 to 0.4, 1.6s, transform and opacity only). Still under reduced
+   motion. A mark on cream, not text. */
+.foot__booking {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-sm);
+}
+
+.foot__pulse {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-accent-ground);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .foot__pulse {
+    animation: foot-pulse 1.6s var(--ease-move) infinite;
+  }
+}
+
+@keyframes foot-pulse {
+  50% {
+    opacity: 0.4;
+    transform: scale(1.4);
+  }
+}
+
+/* The corner swash: 48px, 420px long, -35 degrees, off the top right
+   corner and cut by the block's radius. Hidden below 768. */
+.foot__swash {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .foot__swash {
+    position: absolute;
+    top: -8px;
+    right: -170px;
+    z-index: 0;
+    display: block;
+  }
 }
 
 .foot__band :focus-visible {
@@ -346,8 +461,8 @@
 .foot__pages {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  column-gap: 40px;
+  justify-content: flex-start;
+  column-gap: var(--s-lg);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -376,7 +491,7 @@
 
 .foot__socials {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--s-sm);
   margin: 0;
   padding: 0;

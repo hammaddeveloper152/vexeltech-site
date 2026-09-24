@@ -11,6 +11,7 @@ import { PageHead, Section, CallBand } from './parts.jsx';
 import ServiceSections from './ServiceSections.jsx';
 import { DISCIPLINES } from '../../content/services.js';
 import '../../styles/services.css';
+import Brush from '../../components/site/Brush.jsx';
 
 /* THE SERVICES PAGE, REBUILT 2026-09-15. Four discipline SECTIONS, not plates.
 
@@ -57,7 +58,7 @@ export default function ServicesPage() {
       <PageHead
         title={
           <>
-            What we <span className="hl">do</span>
+            What we <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">do</Brush>
           </>
         }
         lead="Four disciplines and one team. Not four agencies who don't talk to each other, and not four invoices."

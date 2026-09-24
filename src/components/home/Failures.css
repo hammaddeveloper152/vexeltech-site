@@ -31,6 +31,18 @@
   margin-bottom: var(--s-xl);
 }
 
+.fail__marks {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .fail__marks {
+    display: grid;
+    gap: var(--s-md);
+    margin-top: var(--s-2xl);
+  }
+}
+
 .fail__intro {
   max-width: 34ch;
   margin: var(--s-md) 0 0;

@@ -70,6 +70,12 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Genesis pass, 2026-09-25**: the highlight is the SWASH (Brush.jsx,
+  thickness 'fit', -2deg, the word asphalt once the stroke is drawn), not the
+  box; no `.hl`. Loose swashes under What it costs you's intro and off the
+  footer block's corner. The footer is an inset cream block ("Let's talk.",
+  pulsing yellow dot). Home's hero pins 100vh and grows its framed film to
+  the viewport. "Most picked" and the trade chips are yellow.
 - **Life pass 3, 2026-09-25**: What you get lists use CheckDot (20px disc in
   the discipline colour, 12px check, white or asphalt on yellow); the $700s
   carry the Brush stroke; no badges on /services heads; What it costs you is

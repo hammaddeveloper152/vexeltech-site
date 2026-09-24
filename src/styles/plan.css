@@ -290,6 +290,16 @@
   padding-right: 44px;
 }
 
+/* THE TRADE CHIPS ARE YELLOW, 2026-09-25 (the founder's Genesis pass):
+   step 1's chips at rest, asphalt text on them 9.46:1, their edge the
+   cream rule's. A pressed chip is asphalt with cream text, as every pressed
+   choice here is. The branding tier chips keep the white of the cream rule.
+   Coral is left only on the progress dots. */
+.plan__chips .plan__chip:not([aria-pressed='true']) {
+  background: var(--c-accent-ground);
+  color: var(--c-asphalt);
+}
+
 
 .plan__cards {
   display: grid;

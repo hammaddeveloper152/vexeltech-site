@@ -299,8 +299,8 @@
 }
 
 /* The tag's row exists in every column so the names line up; only the
-   picked column fills it. CORAL since the life pass (2026-09-25), asphalt
-   on it 5.87:1. */
+   picked column fills it. MACHINE YELLOW since the Genesis pass
+   (2026-09-25; it was coral for a day), asphalt on it 9.46:1. */
 .pr-col__tag-row {
   min-height: 0;
 }
@@ -309,12 +309,12 @@
   display: inline-block;
   padding: 2px var(--s-sm);
   border-radius: var(--r-btn);
-  background: var(--c-coral);
+  background: var(--c-accent-ground);
   font-family: var(--font-offer);
   font-size: var(--t-label-q);
   line-height: var(--t-label-q-line);
   font-weight: var(--t-weight-label);
-  color: var(--c-asphalt); /* 5.87:1 on coral */
+  color: var(--c-asphalt); /* 9.46:1 on yellow */
 }
 
 .pr-col__name {
