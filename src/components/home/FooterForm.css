@@ -77,18 +77,35 @@
 /* The documented `input` component: asphalt on white, 17.77:1. A white field
    on the asphalt ground is the strongest separation available and needs no
    border to say where the field is. */
+/* THE DARK FIELD, 2026-09-24 (the founder), on every form: lit-near, a 1px
+   white-at-10% edge, 6px, bone 16px text, steel-lift placeholders. Focus is
+   a 1px machine yellow border and nothing else: no glow, and the page's ring
+   stands down for a field because the border IS its focus state (yellow on
+   lit-near 8.8:1, and never the hover treatment). Error: a 1px #E5484D
+   border (4.21:1 on lit-near) with the words below it, never colour alone.
+   No transition on any of it. */
 .foot__input {
-  /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
-  min-height: 48px;
+  min-height: 48px; /* BUILD-LAW Touch */
   width: 100%;
-  padding: var(--s-md);
-  background: var(--c-shop-white);
-  color: var(--c-asphalt);
-  border: 1px solid var(--c-line);
-  border-radius: var(--r-sm); /* control */
+  padding: 14px 16px;
+  background: var(--lit-near);
+  color: var(--c-bone); /* 13.67:1 on lit-near */
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 6px;
   font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.foot__input::placeholder {
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+  opacity: 1;
+}
+
+.foot__input.foot__input:focus,
+.foot__input.foot__input:focus-visible {
+  outline: none;
+  border-color: var(--c-accent-draw-dark);
 }
 
 .foot__textarea {
@@ -96,16 +113,24 @@
 }
 
 .foot__select {
-  /* The field is a control, so it keeps the control radius and the 48px
-     floor. The native arrow is left alone: replacing it would mean drawing an
-     icon, and iconography is unassigned. */
-  appearance: auto;
+  /* The native arrow is replaced by a bone chevron drawn in code
+     (`--field-chevron`, tokens.css), 16px from the right. */
+  appearance: none;
+  padding-right: 48px;
+  background-image: var(--field-chevron);
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+}
+
+.foot__select option {
+  background: var(--lit-near);
+  color: var(--c-bone);
 }
 
 /* Error. Never colour alone: the field takes a border, the message takes a
    mark, and the message itself is words. */
 .foot__input[data-invalid='true'] {
-  border-color: var(--c-error); /* 6.41:1 on white, the field's own ground */
+  border-color: var(--c-field-error); /* 4.21:1 on lit-near */
 }
 
 /* Empty until it has something to say, so it collapses to nothing rather

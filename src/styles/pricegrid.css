@@ -18,9 +18,8 @@
 
 /* 64px from the hero's paragraph to the panel (the founder, 2026-09-24):
    the head's own 64px bottom padding, and none on top of the grid. */
-.pr-grid {
-  padding-top: 0;
-}
+/* The band starts right after the head: its own 96px of cream is the space
+   (2026-09-24, cream is a band). */
 
 /* ---- 1. The head, on the base --------------------------------------------
 
@@ -69,12 +68,8 @@
    the buttons sit on one line whatever wraps above them. No column has a
    background; they are separated by hairlines alone. */
 .pr-grid__panel {
-  /* The columns carry their own inset, so the panel's side padding would
-     double it; top and bottom keep the panel's. */
-  padding-inline: 0;
-  /* The columns' own 24px sits inside this, so the panel's 64px top and
-     bottom would leave 104px of cream above the first name. */
-  padding-block: var(--s-xl);
+  /* The measure alone: the band carries the cream and the 96px. */
+  padding: 0;
 }
 
 .pr-grid__cols {

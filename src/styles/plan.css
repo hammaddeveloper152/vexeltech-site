@@ -42,11 +42,26 @@
    line, the selected card's border, the total and the one primary button.
    ========================================================================== */
 
+/* A CREAM BAND, 2026-09-24 (the founder: cream is a band, never a card).
+   The section is the cream, edge to edge, 96px above and below, the grain
+   kept; `.plan__in` is only the measure, and the two columns and the ticket
+   inside it are unchanged. */
 .plan {
   position: relative;
-  padding: var(--s-section) var(--inset);
-  background: transparent; /* the drift, arc-black here */
-  color: var(--c-bone);
+  isolation: isolate;
+  padding: 96px var(--inset);
+  background: var(--c-cream);
+  color: var(--c-asphalt); /* 15.75:1 */
+}
+
+.plan::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--grain);
+  opacity: var(--grain-opacity);
+  pointer-events: none;
 }
 
 .plan :focus-visible {
@@ -68,7 +83,7 @@
 }
 
 /* The visible heading, when the page gives one (2026-09-24): the quiet
-   heading, bone on the base, inside the same measure as the builder. */
+   heading, asphalt on the cream band, inside the same measure. */
 .plan__head {
   width: min(100%, 1200px);
   margin: 0 auto var(--s-xl);
@@ -82,7 +97,7 @@
   line-height: var(--t-head-line);
   font-weight: var(--t-weight-quiet);
   letter-spacing: normal;
-  color: var(--c-bone); /* 16.32:1 */
+  color: var(--c-asphalt); /* 15.75:1 on the cream band */
   text-wrap: balance;
 }
 
@@ -95,8 +110,6 @@
   position: relative;
   width: min(100%, 1200px);
   margin: 0 auto;
-  border-radius: var(--r-panel);
-  background-color: var(--c-cream);
   color: var(--c-asphalt); /* 15.75:1 */
 }
 
@@ -112,16 +125,6 @@
 /* THE PANEL. The 720px minimum height is withdrawn, 2026-09-22: the section
    is its content plus the 96px the ramp already gives it, and a floor that
    tall left the early steps standing in a column of empty ground. */
-/* The grain, at 3% as on every cream panel (tokens.css, 2026-09-24). */
-.plan__in::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background-image: var(--grain);
-  opacity: var(--grain-opacity);
-  pointer-events: none;
-}
 
 .plan__main {
   --plan-pad: var(--s-lg); /* 24px at 390 */
@@ -129,7 +132,14 @@
   display: grid;
   align-content: start;
   min-width: 0;
-  padding: var(--plan-pad);
+  /* The questions start on the measure's left edge, inside the band. */
+  padding: 0;
+}
+
+@media (min-width: 1024px) {
+  .plan__main {
+    padding-right: var(--plan-pad);
+  }
 }
 
 @media (min-width: 1280px) {
@@ -428,16 +438,35 @@
   color: var(--c-steel); /* 7.20:1 on cream */
 }
 
+/* THE DARK FIELD, 2026-09-24 (the founder): the same field as the contact
+   form's (FooterForm.css has the reasoning), dark on the cream band. */
 .plan__input {
-  min-height: 48px;
-  padding: var(--s-md);
-  border: 1px solid var(--c-asphalt);
-  border-radius: var(--r-sm);
-  background: var(--c-shop-white);
+  min-height: 48px; /* BUILD-LAW Touch */
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--lit-near);
+  color: var(--c-bone); /* 13.67:1 on lit-near */
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 6px;
   font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  color: var(--c-asphalt); /* 17.77:1 on white */
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.plan__input::placeholder {
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+  opacity: 1;
+}
+
+.plan__input.plan__input:focus,
+.plan__input.plan__input:focus-visible {
+  outline: none;
+  border-color: var(--c-accent-draw-dark);
+}
+
+.plan__input[aria-invalid='true'],
+.plan__input[data-invalid='true'] {
+  border-color: var(--c-field-error);
 }
 
 /* ---- Navigation ------------------------------------------------------------ */
@@ -585,7 +614,8 @@
 @media (min-width: 1024px) {
   .plan__side {
     display: block;
-    padding: var(--s-xl);
+    /* Left only: the band carries the space above and below. */
+    padding: 0 0 0 var(--s-xl);
     border-left: 1px solid rgb(23 24 26 / 15%); /* asphalt 15%, the grid's hairline */
   }
 
@@ -597,7 +627,7 @@
 
 @media (min-width: 1280px) {
   .plan__side {
-    padding: 48px;
+    padding-left: 48px;
   }
 }
 
@@ -731,7 +761,7 @@
   position: sticky;
   bottom: 0;
   z-index: 5;
-  margin: var(--s-xl) calc(-1 * var(--inset)) calc(-1 * var(--s-section)); /* the section padding since 2026-09-24 */
+  margin: var(--s-xl) calc(-1 * var(--inset)) calc(-1 * 96px); /* the band's own padding since 2026-09-24 */
 }
 
 @media (min-width: 1024px) {

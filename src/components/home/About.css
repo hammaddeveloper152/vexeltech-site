@@ -120,7 +120,7 @@
 
   .about__mascot {
     position: absolute;
-    right: var(--p-panel);
+    right: 0; /* the measure's right edge, inside the band */
     bottom: 0;
     width: auto;
     height: calc(100% - 48px);

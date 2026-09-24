@@ -305,15 +305,19 @@
    recorded here rather than left for someone to find. */
 
 
+/* CELLS, NOT CARDS, 2026-09-24 (the founder: cream is a band, never a
+   card). The grid stays; each card lost its white fill and its radius and
+   is a cell on the band, split from the other by an asphalt hairline at 15%:
+   side by side from 768, one above the other below it. Values on cream:
+   asphalt 15.75:1, steel 7.20:1. */
 .ab3-fit__cols {
   display: grid;
-  gap: var(--s-lg);
 }
 
 @media (min-width: 768px) {
   .ab3-fit__cols {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
+    align-items: stretch;
   }
 }
 
@@ -322,10 +326,26 @@
   align-content: start;
   gap: var(--s-md);
   min-width: 0;
-  padding: var(--s-xl);
+  padding: var(--s-xl) 0;
   border: 0;
-  border-radius: var(--r-card);
-  background-color: var(--c-shop-white);
+  border-radius: 0;
+  background: none;
+}
+
+.ab3-fit__card + .ab3-fit__card {
+  border-top: 1px solid rgb(23 24 26 / 15%);
+}
+
+@media (min-width: 768px) {
+  .ab3-fit__card {
+    padding: var(--s-lg) var(--s-xl) var(--s-lg) 0;
+  }
+
+  .ab3-fit__card + .ab3-fit__card {
+    padding: var(--s-lg) 0 var(--s-lg) var(--s-xl);
+    border-top: 0;
+    border-left: 1px solid rgb(23 24 26 / 15%);
+  }
 }
 
 .ab3-fit__n {
@@ -356,7 +376,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel); /* body, 8.12:1 on white */
+  color: var(--c-steel); /* body, 7.20:1 on the cream band */
   text-wrap: pretty;
 }
 

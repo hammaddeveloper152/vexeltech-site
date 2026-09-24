@@ -105,6 +105,11 @@
   }
 }
 
+/* On a cream band the label is steel, 7.20:1; steel-lift there is 2.27:1. */
+.panel-sec .marg {
+  color: var(--c-steel);
+}
+
 /* ---- Failures -----------------------------------------------------------
    FOUR OF THE CARD, 2026-09-24: the statement and the consequence are the
    card's name and line (ArtCard.css), so their rules here are gone. */
