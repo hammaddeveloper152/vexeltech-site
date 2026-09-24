@@ -70,6 +70,13 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Life pass, 2026-09-25, supersedes below where they differ**: accents
+  are yellow, arc blue, coral #F26B3A, mint #2FA37A, lilac #C9A6F5, ONLY on
+  the discipline cards and stickers, the trade ticker pills, the Who we are
+  tiles, the Plan Builder dots, the "Most picked" chip and the scribble;
+  never a ground, body text or a non-primary button. Cards: yellow / blue /
+  coral / mint, asphalt text except white on blue, tilt -2/+2, sticker top
+  right. The closing call's underline is a drawn scribble.
 - **Launch batch, 2026-09-25: the final design pass, only defects after
   it.** One drift on `html` (base, arc-black, base), no section paints a
   ground. Cream bands are sheets (40px top corners, -40px over the section

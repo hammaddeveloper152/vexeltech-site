@@ -1,0 +1,114 @@
+/* ==========================================================================
+   THE TRADE TICKER, 2026-09-25 (the founder's life pass). See
+   TradeTicker.jsx.
+
+   The pills: 40px tall, 8px radius, 16px across, the mark 16px and 8px from
+   the label, the label the mono label (12px, uppercase, 0.08em). Measured
+   pairs: asphalt on yellow 9.46:1, on coral 5.87, on mint 5.62, on lilac
+   8.68; white on arc blue 7.91. The mark takes the label's colour.
+
+   The motion is a transform on the track (BUILD-LAW Motion), linear, one
+   set's width per loop at 40px a second; it pauses on hover.
+   ========================================================================== */
+
+.trades {
+  /* The space above is What it costs you's own foot; the space below is the
+     sheet rule's (tokens.css), since the next section is a cream sheet. */
+  padding: 0;
+  overflow: hidden;
+}
+
+.trades__track {
+  display: flex;
+  column-gap: var(--s-sm);
+  width: max-content;
+}
+
+.trades__set {
+  display: flex;
+  gap: var(--s-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trades__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-sm);
+  height: 40px;
+  padding: 0 var(--s-md);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--c-asphalt);
+}
+
+.trades__pill--yellow {
+  background: var(--c-accent-ground);
+}
+
+.trades__pill--blue {
+  background: var(--c-arc-blue);
+  color: var(--c-shop-white);
+}
+
+.trades__pill--coral {
+  background: var(--c-coral);
+}
+
+.trades__pill--mint {
+  background: var(--c-mint);
+}
+
+.trades__pill--lilac {
+  background: var(--c-lilac);
+}
+
+.trades__mark {
+  width: 16px;
+  height: 16px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .trades__track {
+    animation: trades-loop var(--trades-dur, 40s) linear infinite;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .trades:hover .trades__track {
+      animation-play-state: paused;
+    }
+  }
+}
+
+@keyframes trades-loop {
+  to {
+    transform: translateX(var(--trades-shift, -50%));
+  }
+}
+
+/* Reduced motion: still, the one set wrapping inside the measure, and the
+   copy that only exists for the loop is not drawn. */
+@media (prefers-reduced-motion: reduce) {
+  .trades {
+    padding-inline: var(--inset);
+  }
+
+  .trades__track {
+    width: auto;
+  }
+
+  .trades__set {
+    flex-wrap: wrap;
+  }
+
+  .trades__set[aria-hidden='true'] {
+    display: none;
+  }
+}

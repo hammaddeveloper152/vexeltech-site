@@ -262,7 +262,15 @@ export default function AboutPage() {
           <ul className="ab3-lesson__grid">
             {LESSONS.map(({ id, Art, name, line }, i) => (
               <li className="ab3-lesson__item" key={id}>
-                <ArtCard num={String(i + 1).padStart(2, '0')} Art={Art} name={name} line={line} variant="cream" />
+                <ArtCard
+                  num={String(i + 1).padStart(2, '0')}
+                  Art={Art}
+                  name={name}
+                  line={line}
+                  variant="colour"
+                  tone={id}
+                  tilt={i % 2 ? 2 : -2}
+                />
               </li>
             ))}
           </ul>

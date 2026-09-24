@@ -225,6 +225,16 @@
      illustrations and on the Plan Builder's progress dots, nowhere else.
      7.02:1 on cream. */
   --c-arc-blue: #0d47bd;
+  /* THE LIFE PASS ACCENTS, 2026-09-25 (the founder; truus.co's flat colour
+     blocks, stickers and tilt only). Beside yellow and arc blue, and ONLY in
+     the elements DESIGN.md lists: the discipline cards, the trade ticker's
+     pills, the Who we are tiles, the Plan Builder's dots and the "Most
+     picked" chip. Never a ground, never body text, never a button.
+     Measured: asphalt on coral 5.87:1, on mint 5.62, on lilac 8.68; white
+     on coral 3.03 and on mint 3.16, so their text is asphalt. */
+  --c-coral: #f26b3a;
+  --c-mint: #2fa37a;
+  --c-lilac: #c9a6f5;
 
   /* ---- Colour: light grounds (relief) ---------------------------------- */
   --c-shop-white: #ffffff; /* surface */

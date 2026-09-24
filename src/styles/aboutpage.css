@@ -294,7 +294,15 @@
 /* THE CARDS ARE THE SITE'S ONE CARD, 2026-09-24 (the founder): ArtCard, on
    lit-near with its artwork, two across from 768. The white cream-panel
    cards, their 32px icon, their name and line rules are gone with them. */
+/* Each card's sticker overhangs the next card: earlier cells sit above later
+   ones (2026-09-25). */
+.ab3-lesson__item:nth-child(1) { z-index: 4; }
+.ab3-lesson__item:nth-child(2) { z-index: 3; }
+.ab3-lesson__item:nth-child(3) { z-index: 2; }
+.ab3-lesson__item:nth-child(4) { z-index: 1; }
+
 .ab3-lesson__item {
+  position: relative;
   display: grid; /* the card fills its cell, so a row is one height */
   min-width: 0;
 }

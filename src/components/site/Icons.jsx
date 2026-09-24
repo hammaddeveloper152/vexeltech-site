@@ -157,3 +157,71 @@ export const IconFacebook = ({ className }) => (
     <path d="M9.5 14V8.5h2l.5-2.25H9.5V5c0-.7.3-1 1-1H12V2.2A12 12 0 0 0 10.2 2C8.4 2 7.25 3.1 7.25 5v1.25h-2V8.5h2V14" />
   </Icon>
 );
+
+/* ---- The eight trade marks, 2026-09-25 (the life pass), for the trade
+   ticker's pills: the trades the founder named. Same spec as the set. ---- */
+
+/* A tap: its spout, its stem and handle, one drop. */
+export const IconTradePlumbing = ({ className }) => (
+  <Icon className={className}>
+    <path d="M3.5 9h8a3 3 0 0 1 3 3v1" />
+    <path d="M8 9V5.5M5.5 5.5h5M3.5 7v4" />
+    <path d="M14.5 16.4a1.2 1.2 0 0 1-2.4 0c0-.9 1.2-2.1 1.2-2.1s1.2 1.2 1.2 2.1z" />
+  </Icon>
+);
+
+/* A snowflake: three axes and a notch at each end of the upright. */
+export const IconTradeHvac = ({ className }) => (
+  <Icon className={className}>
+    <path d="M10 3v14M3.9 6.5l12.2 7M3.9 13.5l12.2-7" />
+    <path d="M8 4.5l2 1.5 2-1.5M8 15.5l2-1.5 2 1.5" />
+  </Icon>
+);
+
+/* A bolt. */
+export const IconTradeElectrical = ({ className }) => (
+  <Icon className={className}>
+    <path d="M11 2.5L5 11h5l-1 6.5L15 9h-5z" />
+  </Icon>
+);
+
+/* A roof: its ridge and a course of shingle under it. */
+export const IconTradeRoofing = ({ className }) => (
+  <Icon className={className}>
+    <path d="M2.5 11L10 4.5l7.5 6.5" />
+    <path d="M5 13.5l5-4.3 5 4.3" />
+    <path d="M7.5 16.5h5" />
+  </Icon>
+);
+
+/* A molar. */
+export const IconTradeDental = ({ className }) => (
+  <Icon className={className}>
+    <path d="M6.5 3.5c-2 0-3 1.6-3 3.6 0 2.2 1 3.5 1.5 5.4.5 2 .8 4 2 4 1.3 0 1.2-3.5 3-3.5s1.7 3.5 3 3.5c1.2 0 1.5-2 2-4 .5-1.9 1.5-3.2 1.5-5.4 0-2-1-3.6-3-3.6-1.5 0-2.3.8-3.5.8S8 3.5 6.5 3.5z" />
+  </Icon>
+);
+
+/* A sparkle and a small one beside it. */
+export const IconTradeCleaning = ({ className }) => (
+  <Icon className={className}>
+    <path d="M9 3c.6 3.6 1.4 4.4 5 5-3.6.6-4.4 1.4-5 5-.6-3.6-1.4-4.4-5-5 3.6-.6 4.4-1.4 5-5z" />
+    <path d="M15.5 13v4M13.5 15h4" />
+  </Icon>
+);
+
+/* A hard hat: its brim, its dome and its ridge. */
+export const IconTradeContracting = ({ className }) => (
+  <Icon className={className}>
+    <path d="M2.5 14.5h15" />
+    <path d="M4.5 14.5v-2a5.5 5.5 0 0 1 11 0v2" />
+    <path d="M8.5 7.4V5.5h3v1.9" />
+  </Icon>
+);
+
+/* A leaf and its vein. */
+export const IconTradeLandscaping = ({ className }) => (
+  <Icon className={className}>
+    <path d="M4 16c0-7 4-12 12-12 0 8-5 12-12 12z" />
+    <path d="M4 16l7-7" />
+  </Icon>
+);

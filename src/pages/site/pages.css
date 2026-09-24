@@ -278,11 +278,15 @@
 }
 
 .callband__link {
+  /* THE SCRIBBLE, 2026-09-25 (the founder's life pass): the straight 4px
+     underline is gone; the hand-drawn one sits 8px under the words
+     (Scribble.jsx). The link is a box as wide as its widest line, so the
+     scribble runs the width of the words. */
+  position: relative;
+  display: inline-block;
+  padding-bottom: 24px; /* 8px, then the 16px scribble */
   color: var(--c-accent-text-dark); /* 10.47:1 on the base */
-  text-decoration: underline;
-  text-decoration-color: var(--c-accent-draw-dark);
-  text-decoration-thickness: 4px;
-  text-underline-offset: 8px;
+  text-decoration: none;
   transition:
     opacity var(--d-press) var(--ease-reveal),
     transform var(--d-press) var(--ease-reveal);
@@ -307,8 +311,43 @@
 }
 
 .callband__link:active {
-  display: inline-block;
   transform: scale(0.97);
+}
+
+.scribble {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
+  overflow: visible;
+}
+
+.scribble path {
+  fill: none;
+  stroke: var(--c-accent-draw-dark);
+  stroke-width: 3px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.scribble__a {
+  transition: stroke-dashoffset 360ms var(--ease-reveal);
+}
+
+.scribble__b {
+  transition: stroke-dashoffset 240ms var(--ease-reveal) 360ms;
+}
+
+.scribble[data-drawn='true'] path {
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scribble path {
+    transition: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

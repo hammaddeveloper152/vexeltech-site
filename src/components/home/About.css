@@ -88,31 +88,23 @@
 }
 
 
-/* ---- THE ROWS, 2026-09-25 (the founder's launch batch) --------------------
-   Right of the copy from 768, vertically centred against it; stacked under
-   it below. Three rows, hairlines between them: the mono label above the
-   line in Clash Display Medium 27px. Colour is agency.css's. */
+/* ---- THE TILES, 2026-09-25 (the founder's life pass) ----------------------
+   The launch batch's three rows are three tiles now: lilac, mint, coral,
+   16px radius, 16px apart, stacked in the right column, the same copy, the
+   mono label above the line in Clash Display Medium 27px. Right of the copy
+   from 768, vertically centred against it; stacked under it below. Colour
+   is agency.css's. */
 .about__rows {
   display: grid;
+  gap: var(--s-md);
   margin: 0;
 }
 
 .about__row {
   display: grid;
   gap: var(--s-sm);
-  padding: var(--s-lg) 0;
-}
-
-.about__row + .about__row {
-  border-top: 1px solid rgb(11 11 13 / 15%);
-}
-
-.about__row:first-child {
-  padding-top: 0;
-}
-
-.about__row:last-child {
-  padding-bottom: 0;
+  padding: var(--s-lg);
+  border-radius: 16px;
 }
 
 .about__row-k {

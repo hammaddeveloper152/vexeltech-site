@@ -68,7 +68,6 @@ export function IsoBranding({ className }) {
     <svg className={className} viewBox="0 0 280 280" width="140" height="140" aria-hidden="true" focusable="false">
       <path className="iso-b" d="M28.0 187.3 L140.0 252.0 L140.0 239.1 L28.0 174.4Z" />
       <path className="iso-b" d="M252.0 187.3 L140.0 252.0 L140.0 239.1 L252.0 174.4Z" />
-      <path className="iso-b" d="M140.0 109.7 L252.0 174.4 L140.0 239.1 L28.0 174.4Z" />
       <path className="iso-l" d="M28.0 174.4 L140.0 239.1 L140.0 197.9 L28.0 133.3Z" />
       <path className="iso-r" d="M252.0 174.4 L140.0 239.1 L140.0 197.9 L252.0 133.3Z" />
       <path className="iso-t" d="M140.0 68.6 L252.0 133.3 L140.0 197.9 L28.0 133.3Z" />

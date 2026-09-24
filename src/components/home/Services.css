@@ -84,6 +84,10 @@
 .services__cell {
   display: grid; /* the card fills its cell */
   min-width: 0;
+  /* Each card's sticker overhangs the next card by up to 24px: earlier cells
+     sit above later ones, so a sticker is never under its neighbour. */
+  position: relative;
+  z-index: calc(4 - var(--i));
 }
 
 @media (prefers-reduced-motion: no-preference) {

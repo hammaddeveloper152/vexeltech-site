@@ -240,18 +240,25 @@
   color: var(--c-asphalt); /* 15.7:1 on cream */
 }
 
-/* The rows (2026-09-25): the label steel, 7.20:1; the line asphalt,
-   15.75:1; hairlines asphalt at 15%, the cream ground's own. */
-.about__row-k {
-  color: var(--c-steel);
+/* The tiles (2026-09-25, the life pass): lilac, mint, coral, in that order,
+   every word asphalt. Measured: asphalt on lilac 8.68:1, on mint 5.62:1, on
+   coral 5.87:1. The label is asphalt too: steel would be 3.97, 2.57 and 2.68
+   on them. */
+.about__row:nth-child(1) {
+  background: var(--c-lilac);
 }
 
+.about__row:nth-child(2) {
+  background: var(--c-mint);
+}
+
+.about__row:nth-child(3) {
+  background: var(--c-coral);
+}
+
+.about__row-k,
 .about__row-v {
   color: var(--c-asphalt);
-}
-
-.about__row + .about__row {
-  border-top-color: rgb(11 11 13 / 15%);
 }
 
 

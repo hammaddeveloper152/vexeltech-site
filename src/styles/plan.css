@@ -193,12 +193,15 @@
   background: var(--c-cream); /* the panel it sits on */
 }
 
-/* ARC BLUE, 2026-09-24 (the founder's energy pass): a reached dot is the
-   second accent, one of its two places (the other is the card
-   illustrations). 7.02:1 on cream. The line between them stays yellow. */
+/* CORAL, 2026-09-25 (the founder's life pass; it was arc blue): a reached
+   dot is filled, a dot not yet reached is a hollow steel-dark ring, so fill
+   against outline carries the state. Coral on cream is 2.68:1, under the
+   3:1 a non-text mark should clear; the step is also named in words for a
+   screen reader ("Step 2 of 4") and shown by the question itself. Recorded
+   in DESIGN.md. The line between the dots stays yellow. */
 .plan__node[data-on='true'] {
-  border-color: var(--c-arc-blue);
-  background: var(--c-arc-blue);
+  border-color: var(--c-coral);
+  background: var(--c-coral);
 }
 
 /* ---- The question ------------------------------------------------------- */

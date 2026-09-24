@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Scribble from '../../components/site/Scribble.jsx';
 import './pages.css';
 
 /* The three shapes every non-home page is built from.
@@ -59,7 +60,8 @@ export function Section({ title, note, children, labelledBy }) {
 
 /* THE CLOSING CALL, 2026-09-24 (the founder's Flesh and Bones pass): one
    line, the heading's own words, in Clash Display Medium 32px uppercase in
-   machine yellow with a 4px yellow underline 8px below it, centred, 160px
+   machine yellow with a hand-drawn yellow scribble 8px below it (a straight
+   4px underline until 2026-09-25; Scribble.jsx), centred, 160px
    above and below on the page's ground. The line IS the call - a link to the
    contact page - so the separate button is gone, and so are the burst and
    spotlight grounds. The heading keeps its own punctuation under the
@@ -73,6 +75,9 @@ export function CallBand({ heading, note = null }) {
       <h2 className="callband__h" id="callband-h">
         <Link className="callband__link" to={CALL_HREF}>
           {heading}
+          {/* The hand-drawn underline, 2026-09-25 (Scribble.jsx). It replaces
+              the straight 4px one. */}
+          <Scribble />
         </Link>
       </h2>
       {note ? <p className="callband__note">{note}</p> : null}

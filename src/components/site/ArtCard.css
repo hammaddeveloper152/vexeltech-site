@@ -98,8 +98,9 @@
 /* The illustration's faces and keyline, the light palette since the energy
    pass (2026-09-24): top white, left cream, right bone, the yellow element
    machine yellow, the blue one arc blue; an asphalt keyline, 1.5px at any
-   size, round joins. */
-.art__ill path {
+   size, round joins. The sticker keeps this palette; the illustration on a
+   colour card is redrawn white (below, the colour variant). */
+:is(.art__ill, .art__sticker-art) path {
   stroke: var(--c-asphalt);
   stroke-width: 1.5px;
   stroke-linejoin: round;
@@ -107,53 +108,53 @@
   vector-effect: non-scaling-stroke;
 }
 
-.art__ill .iso-t {
+:is(.art__ill, .art__sticker-art) .iso-t {
   fill: var(--c-shop-white);
 }
 
-.art__ill .iso-l {
+:is(.art__ill, .art__sticker-art) .iso-l {
   fill: var(--c-cream);
 }
 
-.art__ill .iso-r {
+:is(.art__ill, .art__sticker-art) .iso-r {
   fill: var(--c-bone);
 }
 
-.art__ill .iso-b {
+:is(.art__ill, .art__sticker-art) .iso-b {
   fill: var(--c-arc-blue);
 }
 
-.art__ill .iso-y {
+:is(.art__ill, .art__sticker-art) .iso-y {
   fill: var(--c-accent-ground);
 }
 
-.art__ill .iso-line {
+:is(.art__ill, .art__sticker-art) .iso-line {
   fill: none;
 }
 
 /* The small filled squares (the browser's three dots): white, on the blue
    bar. */
-.art__ill .iso-d {
+:is(.art__ill, .art__sticker-art) .iso-d {
   fill: var(--c-shop-white);
 }
 
 /* The sound arcs and the connectors: 2px, no fill; the middle arc yellow. */
-.art__ill .iso-arc {
+:is(.art__ill, .art__sticker-art) .iso-arc {
   fill: none;
   stroke-width: 2px;
 }
 
-.art__ill .iso-arc--y {
+:is(.art__ill, .art__sticker-art) .iso-arc--y {
   stroke: var(--c-accent-draw-dark);
 }
 
-.art__ill .iso-arc--b {
+:is(.art__ill, .art__sticker-art) .iso-arc--b {
   stroke: var(--c-arc-blue);
 }
 
 /* The dot at each connector's join: asphalt, with its keyline connector
    (2026-09-25: the blue went to the first cube). */
-.art__ill .iso-dot {
+:is(.art__ill, .art__sticker-art) .iso-dot {
   fill: var(--c-asphalt);
   stroke: none;
 }
@@ -212,38 +213,151 @@
   transition-duration: var(--d-press);
 }
 
-/* ---- THE CREAM VARIANT, 2026-09-24 (the founder's energy pass) ----------
+/* ---- THE COLOUR VARIANT, 2026-09-25 (the founder's life pass) ----------
 
-   Cream, no border, asphalt ink, 24px, 32px of padding; the number is the
-   mono label in steel (7.20:1), the name and the line asphalt (15.75:1).
-   The hover is the 4px lift and a shadow, 0 12px 36px black at 25%, and
-   the shadow is a layer that FADES IN (BUILD-LAW Motion: opacity and
-   transform only). The dark variant's fill and edge layers stand down. */
-.art--cream {
+   The four discipline cards, a flat colour each, no border, 24px, 32px of
+   padding. It replaces the cream variant. Each tone sets its fill, its ink
+   and its index, every pair measured (BUILD-LAW is the contrast floor):
+
+     branding    yellow     asphalt ink 9.46:1   index asphalt 70%  4.84:1
+     websites    arc blue   white ink   7.91:1   index white 70%    4.69:1
+     marketing   coral      asphalt ink 5.87:1   index asphalt 100% 5.87:1
+     automation  mint       asphalt ink 5.62:1   index asphalt 100% 5.62:1
+
+   The brief asked for white text on all but yellow. White is 3.03:1 on
+   coral and 3.16:1 on mint, under the 4.5:1 floor for the 14px line (the
+   27px name would pass as large text, the line would not), so coral and
+   mint take asphalt, as yellow does. The index at 70% is 3.67:1 on coral
+   and 3.51:1 on mint, so there it is full asphalt.
+
+   TILT: -2 or +2 degrees at rest (`--tilt`, set per card), straightening to
+   0 as the linked card lifts: the hover rules above replace the transform.
+   The shadow fades in on hover as a layer (BUILD-LAW Motion). */
+.art--colour {
   border: 0;
-  background: var(--c-cream);
-  color: var(--c-asphalt);
+  background: var(--tone);
+  color: var(--ink);
+  transform: rotate(var(--tilt, 0deg));
 }
 
-.art--cream::before {
+.art--branding {
+  --tone: var(--c-accent-ground);
+  --ink: var(--c-asphalt);
+  --index: rgb(23 24 26 / 70%);
+}
+
+.art--websites {
+  --tone: var(--c-arc-blue);
+  --ink: var(--c-shop-white);
+  --index: rgb(255 255 255 / 70%);
+}
+
+.art--marketing {
+  --tone: var(--c-coral);
+  --ink: var(--c-asphalt);
+  --index: var(--c-asphalt);
+}
+
+.art--automation {
+  --tone: var(--c-mint);
+  --ink: var(--c-asphalt);
+  --index: var(--c-asphalt);
+}
+
+.art--colour::before {
   display: none;
 }
 
-.art--cream::after {
+.art--colour::after {
   inset: 0;
   z-index: -1;
   border: 0;
   box-shadow: var(--card-shadow);
 }
 
-.art--cream .art__num {
-  color: var(--c-steel); /* 7.20:1 on cream */
+.art--colour .art__num {
+  color: var(--index);
 }
 
-.art.art--cream .art__name,
-.art--cream .art__line,
-.art--cream .art__lead {
-  color: var(--c-asphalt); /* 15.75:1 on cream */
+.art.art--colour .art__name,
+.art--colour .art__line,
+.art--colour .art__lead {
+  color: var(--ink);
+}
+
+/* The illustration on the colour: a white keyline, every face white at 20%,
+   and the object's own accent element (its yellow and its blue) solid
+   white. The browser's three dots take the card's colour, on the now-white
+   strip. Decorative, so it carries no contrast pair of its own. */
+.art--colour .art__ill path,
+.art--colour .art__ill circle {
+  stroke: var(--c-shop-white);
+}
+
+.art--colour .art__ill :is(.iso-t, .iso-l, .iso-r) {
+  fill: rgb(255 255 255 / 20%);
+}
+
+.art--colour .art__ill :is(.iso-y, .iso-b) {
+  fill: var(--c-shop-white);
+  /* Its edges in the card's colour: a white face keylined in white loses
+     its inner edges, and a cube becomes a flat hexagon. */
+  stroke: var(--tone);
+}
+
+.art--colour .art__ill .iso-d {
+  fill: var(--tone);
+}
+
+.art--colour .art__ill :is(.iso-arc, .iso-arc--y, .iso-arc--b) {
+  stroke: var(--c-shop-white);
+}
+
+.art--colour .art__ill .iso-dot {
+  fill: var(--c-shop-white);
+}
+
+/* ---- THE STICKER, 2026-09-25 (the founder's life pass) -------------------
+
+   A 72px copy of the card's own object, in its full colours, over the
+   card's top right corner by 24px each way, rotated 12 degrees. Its 6px
+   white outline is the SAME drawing underneath, every shape filled white
+   and stroked white at 12px with `paint-order: stroke`, so half the stroke
+   shows outside the silhouette: a die-cut edge. Hidden below 768. */
+.art__sticker {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .art__sticker {
+    position: absolute;
+    top: -24px;
+    right: -24px;
+    z-index: 2;
+    display: block;
+    width: 72px;
+    height: 72px;
+    transform: rotate(12deg);
+    pointer-events: none;
+  }
+
+  .art__sticker svg {
+    position: absolute;
+    inset: 0;
+    width: 72px;
+    height: 72px;
+    overflow: visible;
+  }
+
+  .art__sticker-edge :is(path, circle) {
+    fill: var(--c-shop-white);
+    stroke: var(--c-shop-white);
+    stroke-width: 12px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    paint-order: stroke;
+    vector-effect: non-scaling-stroke;
+  }
 }
 
 /* ---- The bare card: a render filling a 3:4 card ------------------------- */

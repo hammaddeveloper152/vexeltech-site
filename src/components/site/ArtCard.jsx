@@ -16,13 +16,19 @@ import './ArtCard.css';
    Used by home's What we do (links to /services) and About's What we build
    it around (not links). DESIGN.md "THE CARD v2 (quiet)" is the record.
 
-   ONE CARD, TWO VARIANTS, 2026-09-24 (the founder's energy pass):
-   `variant="dark"` (the default) is the translucent card above;
-   `variant="cream"` is cream, no border, asphalt ink, 32px, the 4px lift and
-   a soft shadow on hover. The four discipline cards (home's What we do,
-   About's What we build it around) are cream: the one place a cream card
-   stands on a dark ground, recorded in DESIGN.md as the exception to "cream
-   is a band, never a card".
+   ONE CARD, TWO VARIANTS: `variant="dark"` (the default) is the translucent
+   card above; the discipline cards are the colour variant below. The cream
+   variant they had from 2026-09-24 is gone.
+
+   THE COLOUR VARIANT, 2026-09-25 (the founder's life pass), replaces the
+   cream one on the four discipline cards: `variant="colour"` with a `tone`
+   (branding yellow, websites arc blue, marketing coral, automation mint),
+   a `tilt` of -2 or +2 degrees at rest that straightens on the linked
+   card's hover, the illustration in a white keyline, and a STICKER: a 72px
+   copy of the card's own object in its full colours, a 6px white outline
+   round it, over the card's top right corner, rotated 12 degrees. The
+   sticker is two copies of the same drawing stacked: the lower one only a
+   white stroke, the outline; the upper one the drawing. Hidden below 768.
 
    THE BARE CARD is the one other use: with no `name`, a render fills a 3:4
    card edge to edge. The 404 page's mark stands in one, so no object on the
@@ -42,9 +48,13 @@ export default function ArtCard({
   href = null,
   as: Heading = 'h3',
   variant = 'dark',
+  tone = null,
+  tilt = 0,
   style,
 }) {
-  const v = variant === 'cream' ? ' art--cream' : '';
+  const colour = variant === 'colour' && tone;
+  const v = colour ? ` art--colour art--${tone}` : '';
+  const s = colour ? { ...style, '--tilt': `${tilt}deg` } : style;
   if (!name) {
     return (
       <div className="art art--bare" style={style}>
@@ -69,6 +79,12 @@ export default function ArtCard({
           {Art ? <Art className="art__ill" /> : null}
         </span>
       ) : null}
+      {colour && Art ? (
+        <span className="art__sticker" aria-hidden="true">
+          <Art className="art__sticker-edge" />
+          <Art className="art__sticker-art" />
+        </span>
+      ) : null}
       <Heading className="art__name">{name}</Heading>
       <span className="art__line">
         <span className="art__lead">{lead}</span>
@@ -78,11 +94,11 @@ export default function ArtCard({
   );
 
   return href ? (
-    <Link className={`art art--link${v}`} to={href} style={style}>
+    <Link className={`art art--link${v}`} to={href} style={s}>
       {body}
     </Link>
   ) : (
-    <div className={`art${v}`} style={style}>
+    <div className={`art${v}`} style={s}>
       {body}
     </div>
   );
