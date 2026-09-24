@@ -70,6 +70,15 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Energy and consistency pass, 2026-09-24, supersedes below where they
+  differ**: body on dark is bone 85% (`--c-body-dark`), steel-lift only for
+  captions under 14px and disabled; arc blue #0D47BD only in illustrations
+  and Plan Builder dots; hairlines on dark 14%; labels have NO brackets. The
+  four discipline cards are the cream variant (the one cream-card exception).
+  One field / card / button, two grounds: fields dark 4% + 22% edge, cream
+  white + 15% edge, focus yellow (plus a 1px asphalt ring on cream). Primary
+  is always yellow, "Get a custom quote"; secondary "Ask a question". Dark
+  sections 128, cream bands 96. Pixel is a no-op without VITE_META_PIXEL_ID.
 - **Icon and card system, 2026-09-24, supersedes anything below that names
   Phosphor or a card fill**: every icon comes from `components/site/Icons.jsx`
   (20px box, 1.75px stroke, round caps and joins, currentColor); Phosphor is

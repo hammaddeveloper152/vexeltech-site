@@ -8,7 +8,9 @@
   display: grid;
   align-content: center;
   min-height: calc(100svh - (48px + 2 * var(--s-sm)));
-  padding: var(--s-2xl) var(--inset) var(--s-3xl);
+  /* The dark section's space, 128 / 80, as the one-screen pages have it
+     (the energy pass's consistency audit, 2026-09-24). It was 64 / 96. */
+  padding: var(--s-section) var(--inset);
 }
 
 .nf__in {

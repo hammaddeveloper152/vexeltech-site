@@ -73,6 +73,9 @@
    and `.svc2__in` carries `.panel`, both tokens.css. It was a full-bleed
    cream band. Type inherits asphalt from the panel. */
 .svc2__d--cream {
+  /* A cream band is 96px above and below on every page (the energy pass's
+     consistency audit, 2026-09-24). It was the dark sections' 128. */
+  padding-block: 96px;
   color: var(--c-asphalt); /* 15.75:1 on the panel */
 }
 
@@ -163,7 +166,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-lift); /* body, 7.4:1 on the base */
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
 }
 
 .svc2__d--cream .svc2__item {

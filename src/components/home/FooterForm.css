@@ -88,9 +88,11 @@
   min-height: 48px; /* BUILD-LAW Touch */
   width: 100%;
   padding: 14px 16px;
-  background: var(--lit-near);
-  color: var(--c-bone); /* 13.67:1 on lit-near */
-  border: 1px solid rgb(255 255 255 / 22%); /* 22% since 2026-09-24, the founder */
+  /* THE FIELD ON DARK, 2026-09-24 (the founder's energy pass): white at 4%,
+     a white-at-22% edge, bone text (tokens.css `--field-dark-*`). */
+  background: var(--field-dark-fill);
+  color: var(--c-bone); /* 15.13:1 on the composited fill */
+  border: 1px solid var(--field-dark-edge);
   border-radius: 6px;
   font-family: var(--font-offer);
   font-size: 16px;
@@ -257,7 +259,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-lift); /* body, 7.4:1 */
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
 }
 
 /* ---- THE FOOTER BAND, 2026-09-24 (the founder's Flesh and Bones pass) ----

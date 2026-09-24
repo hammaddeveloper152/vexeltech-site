@@ -21,7 +21,8 @@ import './pages.css';
    carrying it would be a second surface behind the sections that already
    have one. See the note above `.vt` in tokens.css. */
 
-export const CALL_LABEL = 'Let’s Talk';
+/* The primary label everywhere, 2026-09-24 (the founder's energy pass). */
+export const CALL_LABEL = 'Get a custom quote';
 export const CALL_HREF = '/contact-us';
 
 /* `step`: the storyboard (2026-09-21) opens every page but home at the

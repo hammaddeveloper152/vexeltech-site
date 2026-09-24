@@ -57,7 +57,7 @@ export const DISCIPLINES = [
     price: 'Priced on the call, in writing before any work starts.',
     turnaround: 'Campaigns live within the first week after the page is ready.',
     fit: "You're spending on marketing and not getting the leads, or you've never spent and don't know where to start.",
-    call: { label: 'Ask a question first', primary: false },
+    call: { label: 'Ask a question', primary: false },
   },
   {
     id: 'automation',
@@ -75,6 +75,6 @@ export const DISCIPLINES = [
     price: 'Priced on the call, in writing before any work starts.',
     turnaround: 'Scoped per workflow on the call.',
     fit: 'You or your staff answer the same message, send the same quote, or chase the same invoice every day.',
-    call: { label: 'Ask a question first', primary: false },
+    call: { label: 'Ask a question', primary: false },
   },
 ];

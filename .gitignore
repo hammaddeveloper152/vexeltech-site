@@ -22,3 +22,7 @@ impeccable/
 # The measurement build's output. The harness itself is tracked and states its
 # own rules in .measure/.gitignore; nothing about it belongs here as well.
 dist-measure/
+
+# Local environment (the Meta Pixel ID is set in the Netlify build env).
+.env.local
+.env.*.local

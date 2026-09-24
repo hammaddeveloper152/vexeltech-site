@@ -8,6 +8,7 @@ import {
   IconMarkWebsites,
 } from '../../components/site/Icons.jsx';
 import { FIGURES, bundleSaving, money } from '../../content/pricing.js';
+import { getUtm } from '../../components/site/utm.js';
 import '../../styles/plan.css';
 
 /* THE PLAN BUILDER, /pricing, 2026-09-22 (the founder's brief). It replaced
@@ -373,7 +374,17 @@ export default function PlanBuilder({ heading = null }) {
     ]
       .filter(Boolean)
       .join('\n');
-    const body = new URLSearchParams({ 'form-name': 'plan', name: a.name, email: a.email, phone: a.phone, plan });
+    /* The four UTM tags go with the plan as fields (utm.js, 2026-09-24). The
+       builder is not a <form>, so they are fields of the post rather than
+       hidden inputs; index.html's twin declares them. */
+    const body = new URLSearchParams({
+      'form-name': 'plan',
+      name: a.name,
+      email: a.email,
+      phone: a.phone,
+      plan,
+      ...getUtm(),
+    });
     try {
       const r = await fetch('/', {
         method: 'POST',

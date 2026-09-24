@@ -85,18 +85,27 @@
       <input type="email" name="email" />
       <input type="tel" name="phone" />
       <textarea name="plan"></textarea>
+      <input type="hidden" name="utm_source" />
+      <input type="hidden" name="utm_medium" />
+      <input type="hidden" name="utm_campaign" />
+      <input type="hidden" name="utm_content" />
       <input type="text" name="bot-field" />
     </form>
     <!-- The contact form in the footer, on every route, 2026-09-22. Same
          reason as the twin above: the footer form is rendered by script, so
          Netlify cannot see its fields without this. It POSTs to "/" with
-         form-name "contact". Hidden; never shown. -->
+         form-name "contact". Hidden; never shown. Fields since 2026-09-24:
+         name, phone, email, message and the four UTM tags; company and
+         budget are gone. -->
     <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input type="text" name="name" />
+      <input type="tel" name="phone" />
       <input type="email" name="email" />
-      <input type="text" name="company" />
-      <input type="text" name="budget" />
       <textarea name="message"></textarea>
+      <input type="hidden" name="utm_source" />
+      <input type="hidden" name="utm_medium" />
+      <input type="hidden" name="utm_campaign" />
+      <input type="hidden" name="utm_content" />
       <input type="text" name="bot-field" />
     </form>
     <div id="root"></div>

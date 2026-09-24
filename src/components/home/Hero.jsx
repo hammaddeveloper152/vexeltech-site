@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeroSurface from './HeroSurface.jsx';
 import { videoAllowed } from './Video.jsx';
+import { FIGURES, money } from '../../content/pricing.js';
 import { CUTS, EXIT_MS, FINAL_LINE, LINES, SPOT, TALL_QUERY } from './heroSpot.js';
 import './Hero.css';
 
@@ -21,9 +22,9 @@ import './Hero.css';
               frame holds, and so does the last line.
 
      still    REDUCED MOTION. The poster, which is the film's last frame, and
-              the final line, with nothing animating. Also where an autoplay
-              the browser refuses lands: the poster is already the right
-              picture for the line that goes with it.
+              the final line, with nothing animating. An autoplay the
+              browser refuses no longer lands here (2026-09-24): the film's
+              own first-second poster stays, with the final line.
 
      surface  SAVE-DATA, A SLOW CONNECTION, OR NO PLAYABLE VIDEO. The lit shader
               and the final line, fading up once. No bytes of film or poster
@@ -156,10 +157,20 @@ export default function Hero() {
       if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) setMode('surface');
     };
 
+    /* PLAY ONLY AFTER CANPLAYTHROUGH, 2026-09-24 (the founder's energy
+       pass): the poster (a frame from the first second) holds until the
+       browser says the clip can run to the end without stalling, so the
+       lines never wait on a buffering film. */
+    let ready = v.readyState >= 4;
+    const onReady = () => {
+      ready = true;
+      sync();
+    };
+
     /* Play only while the page is being looked at. The spot runs once, and a
        spot that plays out in a background tab has been spent on nobody. */
     const sync = () => {
-      if (v.ended) return;
+      if (v.ended || !ready) return;
       if (document.visibilityState !== 'visible') {
         v.pause();
         return;
@@ -167,12 +178,19 @@ export default function Hero() {
       const p = v.play();
       if (p && typeof p.catch === 'function') {
         p.catch((e) => {
-          if (e && e.name === 'NotAllowedError' && v.currentTime === 0) setMode('still');
+          /* AUTOPLAY REFUSED: THE POSTER STAYS (2026-09-24). The element
+             keeps its first-second poster and the headline takes its final
+             line, the one the page is about. It used to switch to the still
+             (the last frame). */
+          if (e && e.name === 'NotAllowedError' && v.currentTime === 0) {
+            setState({ shot: LINES.length - 1, leaving: false });
+          }
           if (e && e.name === 'NotSupportedError') setMode('surface');
         });
       }
     };
 
+    v.addEventListener('canplaythrough', onReady);
     v.addEventListener('playing', onPlaying);
     v.addEventListener('ended', onEnded);
     v.addEventListener('seeked', onSeeked);
@@ -182,6 +200,7 @@ export default function Hero() {
 
     return () => {
       cancelAnimationFrame(raf);
+      v.removeEventListener('canplaythrough', onReady);
       v.removeEventListener('playing', onPlaying);
       v.removeEventListener('ended', onEnded);
       v.removeEventListener('seeked', onSeeked);
@@ -200,6 +219,7 @@ export default function Hero() {
         <video
           ref={videoRef}
           className="hero__spot"
+          poster={src.first}
           muted
           playsInline
           preload="auto"
@@ -258,9 +278,18 @@ export default function Hero() {
               Get a custom quote
             </Link>
             <Link className="hero__cta hero__cta--line" to="/contact-us">
-              Ask a question first
+              Ask a question
             </Link>
           </div>
+
+          {/* THE PRICE LINE, 2026-09-24 (the founder's energy pass, CRO for
+              paid traffic), verbatim, under the buttons. The figures come
+              from content/pricing.js so a price change cannot leave the
+              hero behind. */}
+          <p className="hero__price">
+            Websites {money(FIGURES.website)} flat. Branding from {money(FIGURES.brandingBasic)}.
+            Live in four business days.
+          </p>
 
           <p className="hero__note">
             You'll see the work before you owe us anything. Ten seconds to decide, not

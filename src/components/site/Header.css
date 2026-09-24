@@ -371,6 +371,18 @@
   justify-self: start;
 }
 
+/* THE PRIMARY IS ALWAYS THE YELLOW BUTTON, 2026-09-24 (the founder's
+   energy pass), the header's included, and its label is the site's one
+   primary label, "Get a custom quote". This supersedes the secondary
+   treatment argued above: the founder has decided the bar's call and the
+   hero's call are the same call. Asphalt on machine yellow, 9.46:1. */
+.bar__cta {
+  background: var(--c-accent-ground);
+  border-color: var(--c-accent-ground);
+  border-radius: var(--r-btn);
+  color: var(--c-asphalt);
+}
+
 /* ---- Hover, gated to real pointers ------------------------------------- */
 
 @media (hover: hover) and (pointer: fine) {

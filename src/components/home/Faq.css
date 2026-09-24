@@ -75,7 +75,7 @@
   padding-inline: var(--faq-bleed);
   /* White at 12%: the section sits on the rig, and `--c-line` is a
      light-ground value that would be invisible on it. */
-  border-bottom: 1px solid rgb(255 255 255 / 12%);
+  border-bottom: 1px solid var(--c-rule-dark);
 }
 
 /* THE OPEN ROW IS A LIT OBJECT - the standard one, on lit-near, with the key
@@ -102,11 +102,13 @@
    over the ground, and a white-at-10% edge drawn as an inset line, so
    opening a row adds no border and moves nothing. */
 .faq__item[data-open='true'] {
-  background-color: rgb(255 255 255 / 4%);
+  /* THE DARK CARD VARIANT, nothing bespoke (the energy pass, 2026-09-24):
+     its fill and its edge, the edge drawn inset so opening moves nothing. */
+  background-color: var(--card-dark-fill);
   background-image: none;
   border-radius: var(--r-card);
   border-bottom-color: transparent;
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 10%);
+  box-shadow: inset 0 0 0 1px var(--card-dark-edge);
 }
 
 /* The row is a dark plane, so its values are the dark-ground set - the same
@@ -117,7 +119,7 @@
 }
 
 .faq__item[data-open='true'] .faq__a {
-  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
 }
 
 .faq__item[data-open='true'] .faq__mark {
@@ -304,7 +306,7 @@
   max-width: 60ch;
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-lift);
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
   text-wrap: pretty;
 }
 

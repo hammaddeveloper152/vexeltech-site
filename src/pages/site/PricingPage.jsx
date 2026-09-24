@@ -55,6 +55,9 @@ const COLUMNS = DISCIPLINES.map((d) => ({
   line: firstSentence(d.promise),
   items: d.cards.map((c) => c.title),
   call: d.call.label,
+  /* The button follows its label (2026-09-24): the primary is yellow, the
+     secondary the outline on cream. */
+  primary: d.call.primary,
   ...GRID[d.id],
 }));
 
@@ -145,7 +148,7 @@ export default function PricingPage() {
                   </ul>
                 </div>
                 <Link
-                  className={`pr-col__btn${c.picked ? ' pr-col__btn--primary' : ''}`}
+                  className={`pr-col__btn${c.primary ? ' pr-col__btn--primary' : ''}`}
                   to="/contact-us"
                 >
                   {c.call}

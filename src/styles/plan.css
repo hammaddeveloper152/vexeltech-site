@@ -193,9 +193,12 @@
   background: var(--c-cream); /* the panel it sits on */
 }
 
+/* ARC BLUE, 2026-09-24 (the founder's energy pass): a reached dot is the
+   second accent, one of its two places (the other is the card
+   illustrations). 7.02:1 on cream. The line between them stays yellow. */
 .plan__node[data-on='true'] {
-  border-color: var(--c-accent-draw-dark);
-  background: var(--c-accent-draw-dark);
+  border-color: var(--c-arc-blue);
+  background: var(--c-arc-blue);
 }
 
 /* ---- The question ------------------------------------------------------- */
@@ -248,12 +251,16 @@
 /* BONE WITH AN ASPHALT HAIRLINE, 2026-09-22 (the founder). Still solid: the
    veil and the 45% white border went earlier the same day and nothing here
    goes back to a composite. Asphalt on bone is 14.63:1. */
+/* THE CREAM RULE, 2026-09-24 (the founder's energy pass): the chips and the
+   option cards take the field's cream-ground values - white, an
+   asphalt-at-15% edge, asphalt ink (17.77:1). They were bone with an asphalt
+   hairline. */
 .plan__chip,
 .plan__card {
   position: relative;
-  border: 1px solid var(--c-asphalt);
-  background: var(--c-bone);
-  color: var(--c-asphalt); /* 14.63:1 on bone */
+  border: 1px solid var(--field-cream-edge);
+  background: var(--field-cream-fill);
+  color: var(--c-asphalt); /* 17.77:1 on white */
   cursor: pointer;
   /* Transform only: a border colour does not animate here (BUILD-LAW
      Motion). The chip's hover edge is the overlay below. */
@@ -270,7 +277,6 @@
      edge at 15% at rest that goes to 40% on hover, a 2px lift. The label
      identifies the control; the edge is 15% so the hover has somewhere to
      go. */
-  border-color: rgb(23 24 26 / 15%);
   border-radius: 8px;
   transition: transform 200ms var(--ease-reveal);
   font-family: var(--font-brand);
@@ -433,15 +439,16 @@
   color: var(--c-steel); /* 7.20:1 on cream */
 }
 
-/* THE DARK FIELD, 2026-09-24 (the founder): the same field as the contact
-   form's (FooterForm.css has the reasoning), dark on the cream band. */
+/* THE FIELD ON CREAM, 2026-09-24 (the founder's energy pass): one field,
+   two grounds. Here it is white, an asphalt-at-15% edge, asphalt text
+   (tokens.css `--field-cream-*`). */
 .plan__input {
   min-height: 48px; /* BUILD-LAW Touch */
   width: 100%;
   padding: 14px 16px;
-  background: var(--lit-near);
-  color: var(--c-bone); /* 13.67:1 on lit-near */
-  border: 1px solid rgb(255 255 255 / 22%); /* 22% since 2026-09-24, the founder */
+  background: var(--field-cream-fill);
+  color: var(--c-asphalt); /* 17.77:1 on white */
+  border: 1px solid var(--field-cream-edge);
   border-radius: 6px;
   font-family: var(--font-offer);
   font-size: 16px;
@@ -449,7 +456,7 @@
 }
 
 .plan__input::placeholder {
-  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+  color: var(--c-steel); /* 8.12:1 on white */
   opacity: 1;
 }
 
@@ -457,6 +464,11 @@
 .plan__input.plan__input:focus-visible {
   outline: none;
   border-color: var(--c-accent-draw-dark);
+  /* Focus is yellow on both grounds (the founder), and yellow is 1.9:1
+     against white: under BUILD-LAW's 3:1 for a non-text indicator. A 1px
+     asphalt ring outside the yellow edge carries the contrast (15.75:1 on
+     cream); the yellow stays the colour of focus. */
+  box-shadow: 0 0 0 1px var(--c-asphalt);
 }
 
 .plan__input[aria-invalid='true'],
@@ -474,31 +486,31 @@
   margin-top: var(--s-xl);
 }
 
-/* NEXT: ASPHALT FILL, CREAM LABEL (2026-09-22, the founder), 15.75:1. The
-   white outline it carried was chosen on the old arc ground and then on
-   lit-near; on cream a white outline is invisible. Disabled is the same
-   control as an ASPHALT OUTLINE - full opacity, asphalt label on cream at
-   15.75:1 - so the difference between the two states is fill against
-   outline, which is a difference in kind rather than a faded version of the
-   same thing. Nothing here drops below opacity 1. */
+/* NEXT IS THE YELLOW PRIMARY, 2026-09-24 (the founder's energy pass: the
+   primary is always the yellow button). Asphalt label, 9.46:1. It was an
+   asphalt fill with a cream label. DISABLED stays at opacity 1, as this
+   builder always has: the yellow at the site's 0.4 measured 2.02:1 painted,
+   under the floor. It takes the cream ground's inactive values instead -
+   the field's white, its 15% edge and a steel label, 8.12:1 - so an
+   unanswered step reads as not yet, not as a faded call. */
 .plan__next {
   min-height: 48px;
   padding: var(--s-md) var(--s-xl);
-  border: 1px solid var(--c-asphalt);
+  border: 1px solid var(--c-accent-ground);
   border-radius: var(--r-btn);
-  background: var(--c-asphalt);
+  background: var(--c-accent-ground);
   font-family: var(--font-brand);
   font-size: var(--t-btn);
   line-height: var(--t-btn-line);
   font-weight: var(--t-weight-btn);
-  color: var(--c-cream); /* 15.75:1 on asphalt */
+  color: var(--c-asphalt); /* 9.46:1 on machine yellow */
   cursor: pointer;
   transition: transform var(--d-press) var(--ease-reveal);
   letter-spacing: normal;
 }
 
-/* ONE STEP DARKER ON HOVER, 2026-09-24: black at 52% over asphalt is the
-   base, faded in under the label. */
+/* ONE STEP DARKER ON HOVER: black at 12% over the yellow, faded in under
+   the label (the pricing primary's hover); asphalt still reads 7.6:1. */
 .plan__next {
   position: relative;
   isolation: isolate;
@@ -510,20 +522,38 @@
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  background: rgb(0 0 0 / 52%);
+  background: rgb(0 0 0 / 12%);
   opacity: 0;
   pointer-events: none;
   transition: opacity 200ms var(--ease-reveal);
 }
 
-.plan__next:disabled {
+.plan.plan .plan__next:disabled {
   opacity: 1;
-  background: transparent;
-  color: var(--c-asphalt); /* 15.75:1 on cream */
+  border-color: var(--field-cream-edge);
+  background: var(--field-cream-fill);
+  color: var(--c-steel); /* 8.12:1 on white */
   cursor: default;
 }
 
-.plan__back,
+/* BACK IS THE OUTLINE BUTTON ON CREAM, 2026-09-24 (the founder): an asphalt
+   border and an asphalt label, 15.75:1. It was an underlined text link. */
+.plan__back {
+  min-height: 48px;
+  padding: var(--s-md) var(--s-xl);
+  border: 1px solid var(--c-asphalt);
+  border-radius: var(--r-btn);
+  background: transparent;
+  font-family: var(--font-brand);
+  font-size: var(--t-btn);
+  line-height: var(--t-btn-line);
+  font-weight: var(--t-weight-btn);
+  letter-spacing: normal;
+  color: var(--c-asphalt); /* 15.75:1 on cream */
+  cursor: pointer;
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
 .plan__again {
   min-height: 48px;
   padding: 0;

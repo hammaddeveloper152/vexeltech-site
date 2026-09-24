@@ -62,9 +62,10 @@ const NAV = [
   { id: 'about', label: 'About us', href: '/about-us' },
 ];
 
-/* 10.3, the user's own label for this call, verbatim. It replaces "Get a
-   custom quote", which was written here before the content arrived. */
-const CTA = 'Let’s Talk';
+/* THE PRIMARY LABEL, 2026-09-24 (the founder's energy pass, CRO for paid
+   traffic): "Get a custom quote" everywhere, the header included. It
+   replaces 10.3's "Let's Talk", which is no longer a button label. */
+const CTA = 'Get a custom quote';
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';

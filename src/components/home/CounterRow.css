@@ -88,7 +88,7 @@
 
 .counters__rule {
   position: absolute;
-  background: rgb(255 255 255 / 12%);
+  background: var(--c-rule-dark);
   /* Horizontal, spanning the stat, sitting in the row gap above it. */
   top: calc(var(--s-2xl) / -2);
   right: 0;
@@ -107,7 +107,7 @@
   width: 25%;
   /* Deep amber, not machine yellow. Machine yellow as a stroke measures
      1.69:1 on concrete, which is not a line, it is a rumour of one. */
-  background: rgb(255 255 255 / 12%);
+  background: var(--c-rule-dark);
   transform-origin: left;
 }
 

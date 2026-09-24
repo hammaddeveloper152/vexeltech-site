@@ -256,7 +256,7 @@
   text-shadow: 0 2px 24px rgb(0 0 0 / 60%);
 }
 
-.hero:not([data-mode='surface']) :is(.hero__sub, .hero__note, .hero__cta--line) {
+.hero:not([data-mode='surface']) :is(.hero__sub, .hero__price, .hero__note, .hero__cta--line) {
   text-shadow: 0 1px 12px rgb(0 0 0 / 60%);
 }
 
@@ -422,6 +422,16 @@
 .hero__cta:active {
   transform: scale(0.97);
   opacity: 1;
+}
+
+/* The price line, 16px bone (2026-09-24, the founder). */
+.hero__price {
+  margin: 0 0 var(--s-md);
+  max-width: 60ch;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-bone); /* over the film, as the note is */
 }
 
 .hero__note {

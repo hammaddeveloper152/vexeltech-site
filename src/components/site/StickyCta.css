@@ -1,0 +1,76 @@
+/* ==========================================================================
+   THE MOBILE STICKY CALL, 2026-09-24. See StickyCta.jsx.
+
+   56px tall, on the base with the dark hairline on top; the yellow primary
+   inside it at the site's one button size, full width, 48px (BUILD-LAW
+   Touch). It slides up from under the screen's edge: transform and opacity
+   only (BUILD-LAW Motion), and opacity alone under reduced motion. The
+   safe-area inset is added under it, so a phone's home indicator never sits
+   on the button.
+   ========================================================================== */
+
+.stick {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  box-sizing: content-box;
+  height: 48px;
+  padding: 4px var(--s-md) calc(4px + env(safe-area-inset-bottom, 0px));
+  background: var(--c-base);
+  border-top: 1px solid var(--c-rule-dark);
+  opacity: 0;
+  transform: translateY(100%);
+  transition:
+    transform var(--d-drop) var(--ease-reveal),
+    opacity var(--d-drop) var(--ease-reveal);
+}
+
+.stick[data-on='true'] {
+  opacity: 1;
+  transform: none;
+}
+
+.stick__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  border-radius: var(--r-btn);
+  background: var(--c-accent-ground);
+  color: var(--c-asphalt); /* 9.46:1 */
+  font-family: var(--font-brand);
+  font-size: var(--t-btn);
+  line-height: var(--t-btn-line);
+  font-weight: var(--t-weight-btn);
+  letter-spacing: normal;
+  text-decoration: none;
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.stick__btn:active {
+  transform: scale(0.97);
+}
+
+.stick__btn:focus-visible {
+  outline: var(--focus-ring) solid var(--c-focus); /* bone, 16.32:1 on the base */
+  outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+  .stick {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stick {
+    transform: none;
+    transition: opacity 0.15s linear;
+  }
+
+  .stick__btn:active {
+    transform: none;
+  }
+}

@@ -37,6 +37,6 @@
   font-weight: var(--t-weight-quiet);
   letter-spacing: -0.02em;
   white-space: nowrap;
-  color: rgb(232 234 237 / 70%); /* bone at 70% */
+  color: var(--c-bone); /* bone at 100%, 2026-09-24 (the energy pass) */
   will-change: transform;
 }

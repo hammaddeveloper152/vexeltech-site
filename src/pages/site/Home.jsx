@@ -11,6 +11,7 @@ import RouteBand from '../../components/site/RouteBand.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import { CallBand } from './parts.jsx';
+import StickyCta from '../../components/site/StickyCta.jsx';
 import useDrift, { at } from '../../components/site/useDrift.js';
 import '../../styles/tokens.css';
 /* The loud register, applied to every section below the hero. Imported LAST
@@ -131,7 +132,7 @@ export default function Home() {
           id="how-h"
           heading="How it works"
           lines={STEP_LINES}
-          marg="(04) How it works"
+          marg="04 How it works"
         />
         <CounterRow band />
         {/* The $700 at 240px is the band's object; `promise.webp` came off
@@ -146,6 +147,8 @@ export default function Home() {
         />
         <FooterForm />
       </main>
+      {/* Below 768, once the hero has gone (StickyCta.jsx, 2026-09-24). */}
+      <StickyCta />
     </>
   );
 }

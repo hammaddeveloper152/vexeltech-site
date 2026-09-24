@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { IconFacebook, IconInstagram, IconLinkedIn } from '../site/Icons.jsx';
+import { SOCIAL_URLS } from '../../content/socials.js';
 import './FooterForm.css';
 
 /* THE FOOTER BAND, 2026-09-24 (the founder's Flesh and Bones pass), on every
@@ -14,8 +15,10 @@ import './FooterForm.css';
      row 3   the five pages            Clash Medium 20px uppercase, asphalt,
                                        40px apart, steel on hover
      row 4   LinkedIn, Instagram and   32px yellow circles, asphalt marks from
-             Facebook                  the icon set, 16px, 48px hit areas,
-                                       `#` until the founder supplies them
+             Facebook                  the icon set, 16px, 48px hit areas.
+                                       HIDDEN UNTIL THEIR URLS ARE SET in
+                                       content/socials.js (2026-09-24); the
+                                       row collapses when none is
      row 5   Booking projects for October 2026   mono 12px, steel (added
                                        with the email)
      row 6   (c) 2026 [LEGAL ENTITY NAME]  mono 12px, steel
@@ -37,12 +40,15 @@ const PAGES = [
   { id: 'contact', label: 'Contact', href: '/contact-us' },
 ];
 
-/* The founder's three accounts, `#` until the URLs are supplied. */
+/* The founder's three accounts. Only an account with a URL in
+   content/socials.js renders; the `#` placeholders are gone. */
 const SOCIALS = [
-  { id: 'linkedin', label: 'LinkedIn', href: '#', Icon: IconLinkedIn },
-  { id: 'instagram', label: 'Instagram', href: '#', Icon: IconInstagram },
-  { id: 'facebook', label: 'Facebook', href: '#', Icon: IconFacebook },
-];
+  { id: 'linkedin', label: 'LinkedIn', Icon: IconLinkedIn },
+  { id: 'instagram', label: 'Instagram', Icon: IconInstagram },
+  { id: 'facebook', label: 'Facebook', Icon: IconFacebook },
+]
+  .map((s) => ({ ...s, href: (SOCIAL_URLS[s.id] || '').trim() }))
+  .filter((s) => s.href);
 
 /* A placeholder that says it is one, verbatim from VEXELTECH-COPY.md. */
 const LEGAL = '[LEGAL ENTITY NAME]';
@@ -70,17 +76,19 @@ export default function FooterMeta() {
         </ul>
       </nav>
 
-      <ul className="foot__socials" aria-label="Social">
-        {SOCIALS.map(({ id, label, href, Icon }) => (
-          <li key={id}>
-            <a className="foot__social" href={href} aria-label={label}>
-              <span className="foot__dot" aria-hidden="true">
-                <Icon className="foot__glyph" />
-              </span>
-            </a>
-          </li>
-        ))}
-      </ul>
+      {SOCIALS.length ? (
+        <ul className="foot__socials" aria-label="Social">
+          {SOCIALS.map(({ id, label, href, Icon }) => (
+            <li key={id}>
+              <a className="foot__social" href={href} aria-label={label}>
+                <span className="foot__dot" aria-hidden="true">
+                  <Icon className="foot__glyph" />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : null}
 
       <p className="foot__booking">{BOOKING}</p>
 

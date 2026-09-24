@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IconCheck, IconCross, IconSend } from '../site/Icons.jsx';
 import FooterMeta from './FooterMeta.jsx';
-import { budgetBands } from '../../content/pricing.js';
+import { UTM_KEYS, getUtm } from '../site/utm.js';
 import './FooterForm.css';
 
 /* Section 9. The form, and the end of the page.
@@ -34,37 +34,26 @@ import './FooterForm.css';
    That cannot be verified from here. */
 const LIVE = true;
 
+/* NAME, PHONE, EMAIL, MESSAGE, 2026-09-24 (the founder's energy pass, CRO
+   for paid traffic). Company and Budget are gone; Phone is new and required,
+   as Email is. The budget bands stay in content/pricing.js for the pricing
+   page; nothing here uses them now. Email takes the full row at 768 and up,
+   so the three short fields fill two rows without a hole. */
 const FIELDS = [
   { id: 'name', label: 'Name', type: 'text', autoComplete: 'name', required: true },
-  { id: 'email', label: 'Email', type: 'email', autoComplete: 'email', required: true },
-  { id: 'company', label: 'Company', type: 'text', autoComplete: 'organization', required: false },
+  { id: 'phone', label: 'Phone', type: 'tel', autoComplete: 'tel', required: true },
+  { id: 'email', label: 'Email', type: 'email', autoComplete: 'email', required: true, wide: true },
 ];
-
-/* THE BUDGET BANDS ARE REAL, from 2026-09-08.
-
-   They were placeholders because bands are price data and the price was in
-   conflict. The user settled it — one website at $700 — and the bands come
-   straight from the figures: `budgetBands()` in src/content/pricing.js, which
-   derives them from FIGURES so a price change cannot leave a band behind.
-
-   Up to $300 / $300 to $700 / $700 or more. The top band is open-ended AT
-   the highest published price rather than above it, because $700 is the
-   largest figure this business publishes and naming a ceiling nobody quoted
-   would be inventing one. The full reasoning is in that file.
-
-   The fallback is not decoration: if any figure returns to null the bands go
-   with it and the field says it is a placeholder again, rather than showing
-   three ranges derived from a number that is no longer there. */
-const BUDGETS = budgetBands() || [
-  'Placeholder range one',
-  'Placeholder range two',
-  'Placeholder range three',
-];
-
 
 function validate(id, value) {
   const v = value.trim();
   if (id === 'name') return v ? '' : 'Enter your name.';
+  if (id === 'phone') {
+    if (!v) return 'Enter your phone number.';
+    /* Loose, like the email check: seven digits anywhere, whatever the
+       punctuation. */
+    return (v.match(/\d/g) || []).length >= 7 ? '' : 'Enter a phone number with at least seven digits.';
+  }
   if (id === 'email') {
     if (!v) return 'Enter your email address.';
     /* Deliberately loose. A strict pattern rejects addresses that are
@@ -82,8 +71,10 @@ function validate(id, value) {
    site the same day. */
 export default function FooterForm() {
   const [values, setValues] = useState({
-    name: '', email: '', company: '', budget: '', message: '',
+    name: '', phone: '', email: '', message: '',
   });
+  /* The UTM tags, read when the form mounts (utm.js). */
+  const [utm] = useState(getUtm);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | sent | failed
 
@@ -100,7 +91,7 @@ export default function FooterForm() {
     if (status === 'sending') return;
 
     const next = {};
-    ['name', 'email', 'message'].forEach((id) => {
+    ['name', 'phone', 'email', 'message'].forEach((id) => {
       const msg = validate(id, values[id]);
       if (msg) next[id] = msg;
     });
@@ -124,16 +115,15 @@ export default function FooterForm() {
 
     setStatus('sending');
     /* url-encoded to "/", form-name "contact": Netlify's own convention for a
-       script-rendered form, and the same call PlanBuilder makes. `budget` is
-       sent as its label rather than its id, so the notification reads the way
-       the reader saw it. */
+       script-rendered form, and the same call PlanBuilder makes. The four
+       UTM tags ride along as the hidden fields below. */
     const body = new URLSearchParams({
       'form-name': 'contact',
       name: values.name,
+      phone: values.phone,
       email: values.email,
-      company: values.company,
-      budget: BUDGETS.find((b) => b.id === values.budget)?.label || values.budget || '',
       message: values.message,
+      ...utm,
     });
     try {
       const r = await fetch('/', {
@@ -164,10 +154,14 @@ export default function FooterForm() {
             `character-desk.webp` is deleted from the build. */}
         <div className="foot__stage">
         <form className="foot__form" onSubmit={onSubmit} noValidate aria-labelledby="foot-h">
-          {FIELDS.map(({ id, label, type, autoComplete, required }) => {
+          {/* The UTM tags as hidden fields (utm.js), 2026-09-24. */}
+          {UTM_KEYS.map((k) => (
+            <input key={k} type="hidden" name={k} value={utm[k]} />
+          ))}
+          {FIELDS.map(({ id, label, type, autoComplete, required, wide }) => {
             const err = errors[id];
             return (
-              <p className="foot__field" key={id}>
+              <p className={`foot__field${wide ? ' foot__field--wide' : ''}`} key={id}>
                 <label className="foot__label" htmlFor={`ff-${id}`}>
                   <span className="lbl">{label}</span>
                   {required ? ' ' : null}
@@ -207,26 +201,6 @@ export default function FooterForm() {
               </p>
             );
           })}
-
-          <p className="foot__field">
-            <label className="foot__label" htmlFor="ff-budget">
-              <span className="lbl">Budget</span>
-            </label>
-            <select
-              className="foot__input foot__select"
-              id="ff-budget"
-              name="budget"
-              value={values.budget}
-              onChange={set('budget')}
-            >
-              <option value="">No preference</option>
-              {BUDGETS.map((b) => (
-                <option key={b} value={b}>
-                  {b}
-                </option>
-              ))}
-            </select>
-          </p>
 
           <p className="foot__field foot__field--wide">
             <label className="foot__label" htmlFor="ff-message">

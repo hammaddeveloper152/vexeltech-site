@@ -51,7 +51,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-lift); /* body, 7.4:1 on the base */
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
 }
 
 /* ---- The grid ---------------------------------------------------------- */

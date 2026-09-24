@@ -55,15 +55,22 @@ export const FINAL_LINE = LINES[LINES.length - 1];
    they started on rather than restarting the clip at a different ratio. */
 export const TALL_QUERY = '(max-width: 767px)';
 
+/* `poster` is the film's LAST frame, the reduced-motion still. `first` is
+   a frame from its first second (0.5s, the phone on the desk), exported
+   2026-09-24 from the webm of each cut: the video element's own poster,
+   which is what shows until the clip can play through and what stays if
+   autoplay is refused. */
 export const SPOT = {
   wide: {
     webm: '/assets/hero/hero-spot.webm',
     mp4: '/assets/hero/hero-spot.mp4',
     poster: '/assets/hero/hero-spot-poster.webp',
+    first: '/assets/hero/hero-spot-first.webp',
   },
   tall: {
     webm: '/assets/hero/hero-spot-tall.webm',
     mp4: '/assets/hero/hero-spot-tall.mp4',
     poster: '/assets/hero/hero-spot-tall-poster.webp',
+    first: '/assets/hero/hero-spot-tall-first.webp',
   },
 };

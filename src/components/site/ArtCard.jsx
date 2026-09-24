@@ -16,6 +16,14 @@ import './ArtCard.css';
    Used by home's What we do (links to /services) and About's What we build
    it around (not links). DESIGN.md "THE CARD v2 (quiet)" is the record.
 
+   ONE CARD, TWO VARIANTS, 2026-09-24 (the founder's energy pass):
+   `variant="dark"` (the default) is the translucent card above;
+   `variant="cream"` is cream, no border, asphalt ink, 32px, the 4px lift and
+   a soft shadow on hover. The four discipline cards (home's What we do,
+   About's What we build it around) are cream: the one place a cream card
+   stands on a dark ground, recorded in DESIGN.md as the exception to "cream
+   is a band, never a card".
+
    THE BARE CARD is the one other use: with no `name`, a render fills a 3:4
    card edge to edge. The 404 page's mark stands in one, so no object on the
    site stands on the page ground. */
@@ -33,8 +41,10 @@ export default function ArtCard({
   line = '',
   href = null,
   as: Heading = 'h3',
+  variant = 'dark',
   style,
 }) {
+  const v = variant === 'cream' ? ' art--cream' : '';
   if (!name) {
     return (
       <div className="art art--bare" style={style}>
@@ -68,11 +78,11 @@ export default function ArtCard({
   );
 
   return href ? (
-    <Link className="art art--link" to={href} style={style}>
+    <Link className={`art art--link${v}`} to={href} style={style}>
       {body}
     </Link>
   ) : (
-    <div className="art" style={style}>
+    <div className={`art${v}`} style={style}>
       {body}
     </div>
   );

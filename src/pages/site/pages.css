@@ -67,7 +67,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-lift); /* 7.4:1 on the base */
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
 }
 
 /* DESIGN.md, Pull quote: "A sentence set large is not a heading, and it must
@@ -140,7 +140,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-lift);
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
 }
 
 /* ---- The discipline block, Services page ------------------------------- */
@@ -178,7 +178,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-lift);
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
 }
 
 @media (min-width: 1024px) {
@@ -229,7 +229,7 @@
   display: block;
   font-size: var(--t-small-size);
   line-height: var(--t-small-line);
-  color: var(--c-steel-lift);
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
 }
 
 /* ---- Tier cards, Pricing page: REMOVED 2026-09-10 ----------------------
@@ -260,7 +260,9 @@
 .callband {
   /* No ground of its own (the founder, 2026-09-24): the page's, like every
      other section. */
-  padding: 160px var(--inset);
+  /* The dark section's space, 128 / 80, since the energy pass's consistency
+     audit (2026-09-24). It was 160 at every width. */
+  padding: var(--s-section) var(--inset);
   text-align: center;
 }
 
@@ -294,7 +296,7 @@
   font-family: var(--font-offer);
   font-size: 16px;
   line-height: 24px;
-  color: var(--c-steel-lift);
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
   text-wrap: pretty;
 }
 
@@ -355,7 +357,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-lift);
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
 }
 
 /* Same as .pg__lead: the h3 size with body leading, never heading leading. */
@@ -378,7 +380,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-small-size);
   line-height: var(--t-small-line);
-  color: var(--c-steel-lift);
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
 }
 
 .one__cta {
@@ -483,7 +485,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-lift); /* 7.4:1 on the base */
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
 }
 
 .pgq__support + .pgq__support {
@@ -505,7 +507,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-lift);
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
 }
 
 .runline strong {
@@ -562,7 +564,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--c-steel-lift);
+  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
 }
 
 .tiers__route a {

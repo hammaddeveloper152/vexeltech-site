@@ -217,6 +217,14 @@
      price and the card name, which are the two things that should be the
      brightest object in the card. */
   --c-bone: #e8eaed;
+  /* BODY ON DARK, 2026-09-24 (the founder's energy pass): bone at 85%.
+     Steel-lift stays for captions under 14px and disabled states only.
+     Composited on the base it is 11.84:1. */
+  --c-body-dark: rgb(232 234 237 / 85%);
+  /* ARC BLUE, the second accent, 2026-09-24 (the founder): inside the card
+     illustrations and on the Plan Builder's progress dots, nowhere else.
+     7.02:1 on cream. */
+  --c-arc-blue: #0d47bd;
 
   /* ---- Colour: light grounds (relief) ---------------------------------- */
   --c-shop-white: #ffffff; /* surface */
@@ -233,7 +241,8 @@
 
   /* Dark-ground divider. line is a light-ground token and must not be used
      on asphalt, where it reads as a near-white rule at 13.72:1. */
-  --c-rule-dark: rgb(255 255 255 / 12%);
+  /* 14% since 2026-09-24 (the founder's energy pass). */
+  --c-rule-dark: rgb(255 255 255 / 14%);
 
   /* ---- Type: Plate 03, in pixels --------------------------------------- */
   --font-brand: 'Clash Display', 'Helvetica Neue', Arial, sans-serif;
@@ -435,6 +444,19 @@
      card, matching the one card. Buttons and chips stay 6px (--r-btn). */
   --r-card: 24px;
   --c-card-edge: rgb(255 255 255 / 8%);
+  /* ONE CARD, TWO GROUNDS, 2026-09-24 (the founder's energy pass). The dark
+     variant: white at 4% with a white-at-10% edge. The cream variant: cream,
+     no edge, asphalt ink, the lift and this shadow on hover. */
+  --card-dark-fill: rgb(255 255 255 / 4%);
+  --card-dark-edge: rgb(255 255 255 / 10%);
+  --card-shadow: 0 12px 36px rgb(0 0 0 / 25%);
+  /* ONE FIELD, TWO GROUNDS, 2026-09-24. Dark: white at 4%, a white-at-22%
+     edge, bone text. Cream: white, an asphalt-at-15% edge (#0B0B0D), asphalt
+     text. Focus is machine yellow on both. */
+  --field-dark-fill: rgb(255 255 255 / 4%);
+  --field-dark-edge: rgb(255 255 255 / 22%);
+  --field-cream-fill: #ffffff;
+  --field-cream-edge: rgb(11 11 13 / 15%);
   /* THE GRAIN, 2026-09-24 (the founder's Monolog pass): one feTurbulence
      noise, inline as an SVG data URI - no image file - laid at 3% over the
      hero's film and every cream panel. Defined once, here. */
@@ -446,6 +468,7 @@
      chevron-down (Icons.jsx), drawn here as a data URI in bone. */
   --c-field-error: #e5484d;
   --field-chevron: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%23e8eaed' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'><path d='M5 8l5 5 5-5'/></svg>");
+  --field-chevron-cream: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%2317181a' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'><path d='M5 8l5 5 5-5'/></svg>");
   /* THE BUTTON, 2026-09-24 (the pricing rebuild, the founder): every button
      on the site is Clash Display Medium at 14px with a 6px radius, primary
      and secondary alike. The calls no longer step with the frame. 6px is not
@@ -786,11 +809,10 @@ html {
 
 /* THE LABEL, 2026-09-24 (the founder's Monolog pass). Eyebrows, section
    labels, table headers and form labels: JetBrains Mono 12px, uppercase,
-   0.08em, in parentheses - "(PRICING)". Colour is each label's own. The
-   parentheses are drawn here with empty alternative text, so a screen reader
-   reads "Pricing", not "left paren pricing right paren". `.lbl` goes on the
-   element that holds the label's words and nothing else, which is why a form
-   label wraps its words in a span: "(NAME) required", not "(NAME required)". */
+   0.08em. Colour is each label's own. NO BRACKETS since the energy pass,
+   2026-09-24 (the founder): the parentheses drawn here are gone. `.lbl` goes
+   on the element that holds the label's words and nothing else, which is why
+   a form label wraps its words in a span: "NAME required". */
 .lbl {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -798,14 +820,6 @@ html {
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-}
-
-.lbl::before {
-  content: '(' / '';
-}
-
-.lbl::after {
-  content: ')' / '';
 }
 
 /* THE TEXT-LINK HOVER, 2026-09-24 (the founder): THE HIGHLIGHTER AS A HOVER.

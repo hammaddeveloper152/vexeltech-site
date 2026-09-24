@@ -70,7 +70,7 @@ export default function Services() {
     <section className="vt services" aria-labelledby="services-h">
       {/* The margin label, 2026-09-24: decorative, the heading names it. */}
       <span className="marg" aria-hidden="true">
-        (03) What we do
+        03 What we do
       </span>
       <div className="services__in">
         <div className="services__head">
@@ -94,6 +94,7 @@ export default function Services() {
                 name={discipline}
                 line={line}
                 href={`/services#${id}`}
+                variant="cream"
               />
             </div>
           ))}

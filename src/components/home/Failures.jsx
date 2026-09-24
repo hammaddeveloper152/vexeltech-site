@@ -52,7 +52,7 @@ export default function Failures() {
     <section className="vt fail" aria-labelledby="fail-h">
       {/* The margin label, 2026-09-24: decorative, the heading names it. */}
       <span className="marg" aria-hidden="true">
-        (01) What it costs you
+        01 What it costs you
       </span>
       <div className="fail__inner">
         <h2 className="fail__h" id="fail-h">
