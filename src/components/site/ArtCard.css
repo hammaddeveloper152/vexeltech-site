@@ -37,20 +37,60 @@
   transition: opacity 220ms var(--ease-reveal);
 }
 
-.art__chip {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  margin-bottom: var(--s-sm);
-  border-radius: 12px;
-  background: var(--c-lit-raised);
+/* THE TOP ROW, 2026-09-24: the number top left, the illustration top right,
+   the row as tall as the illustration so the name never meets it. */
+.art__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+  min-height: 140px;
+  margin-bottom: var(--s-md);
 }
 
-.art__icon {
-  width: 24px;
-  height: 24px;
-  color: var(--c-bone); /* 11.44:1 on lit-raised */
+.art__num {
+  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+}
+
+.art__ill {
+  flex: none;
+  width: 140px;
+  height: 140px;
+}
+
+/* The illustration's faces and keyline: top lit-raised, left lit-near,
+   right steel-dark, the one yellow element machine yellow; a bone keyline,
+   1.5px at any size, round joins. */
+.art__ill path {
+  stroke: var(--c-bone);
+  stroke-width: 1.5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.art__ill .iso-t {
+  fill: var(--c-lit-raised);
+}
+
+.art__ill .iso-l {
+  fill: var(--lit-near);
+}
+
+.art__ill .iso-r {
+  fill: var(--c-steel-dark);
+}
+
+.art__ill .iso-y {
+  fill: var(--c-accent-ground);
+}
+
+.art__ill .iso-line {
+  fill: none;
+}
+
+.art__ill .iso-line--y {
+  stroke: var(--c-accent-draw-dark);
 }
 
 /* `.art .art__name`, two classes: a card on a cream panel sits under

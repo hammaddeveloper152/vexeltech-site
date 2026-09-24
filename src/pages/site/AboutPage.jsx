@@ -1,11 +1,11 @@
 import React from 'react';
 import { Check, X } from '@phosphor-icons/react';
 import {
-  GlyphAutomation,
-  GlyphBranding,
-  GlyphMarketing,
-  GlyphWebsites,
-} from '../../components/site/Glyphs.jsx';
+  IsoAutomation,
+  IsoBranding,
+  IsoMarketing,
+  IsoWebsites,
+} from '../../components/site/Illustrations.jsx';
 import Shell from './Shell.jsx';
 import { CallBand } from './parts.jsx';
 import Faq from '../../components/home/Faq.jsx';
@@ -75,35 +75,35 @@ const ORIGINS = [
   },
 ];
 
-/* Section 3. The site's own four glyphs (components/site/Glyphs.jsx,
-   2026-09-24, the founder), the same four as home's What we do: the glyphs
-   are part of the one card, keyed by discipline, and BUILD-LAW 0 records it.
-   They replaced Eye, MagnifyingGlass, CursorClick and Timer. */
+/* Section 3. The four isometric illustrations (components/site/
+   Illustrations.jsx, 2026-09-24, the founder), the same four as home's What
+   we do: they are the one card's artwork, keyed by discipline, and BUILD-LAW
+   0 records the exemption. They replaced the chip glyphs. */
 const LESSONS = [
   {
     id: 'branding',
-    Icon: GlyphBranding,
+    Art: IsoBranding,
     name: 'Branding',
     line:
       'A caller decides if you are real in the first ten seconds. Your name and your mark do that work before you say a word.',
   },
   {
     id: 'websites',
-    Icon: GlyphWebsites,
+    Art: IsoWebsites,
     name: 'Websites',
     line:
       'Nobody reads. They scan for a number, a price and a reason to trust you, and they leave if any of the three is missing.',
   },
   {
     id: 'marketing',
-    Icon: GlyphMarketing,
+    Art: IsoMarketing,
     name: 'Marketing',
     line:
       'Ads do not fail in the ad. They fail on the page after the click, and on the phone after the page.',
   },
   {
     id: 'automation',
-    Icon: GlyphAutomation,
+    Art: IsoAutomation,
     name: 'Automation',
     line:
       'The job you lose is the one that called while you were on a roof. A missed call answered in two minutes is still a job.',
@@ -261,9 +261,9 @@ export default function AboutPage() {
           {/* The site's one card, 2026-09-24: the four artworks keyed by the
               discipline, the icons this page already carried. */}
           <ul className="ab3-lesson__grid">
-            {LESSONS.map(({ id, Icon, name, line }) => (
+            {LESSONS.map(({ id, Art, name, line }, i) => (
               <li className="ab3-lesson__item" key={id}>
-                <ArtCard Icon={Icon} name={name} line={line} />
+                <ArtCard num={String(i + 1).padStart(2, '0')} Art={Art} name={name} line={line} />
               </li>
             ))}
           </ul>

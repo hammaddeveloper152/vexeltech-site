@@ -4,11 +4,14 @@ import './ArtCard.css';
 
 /* THE SITE'S ONE CARD, v2 (QUIET), 2026-09-24 (the founder).
 
-   Lit-near, 24px, a 1px border at 10% white, no shadow, no light, and
-   CONTENT HEIGHT: a 48px icon chip, the name in Clash at 27px, one line at
-   14px whose first sentence is bold, 32px of padding. The drawn SVG
-   artwork, its glow and the 3:4 portrait of v1 are gone. The hover keeps
-   the 4px lift and the border going to 22% white.
+   Lit-near, 24px, a 1px border at 10% white, no shadow, no light, content
+   height, 32px of padding. THE ANATOMY SINCE THE ILLUSTRATION PASS,
+   2026-09-24: the number (01) to (04) in the mono label top left, a 140px
+   isometric illustration top right (Illustrations.jsx), then the name in
+   Clash at 27px and one line at 14px whose first sentence is bold. The
+   top row is the illustration's height, so the name always starts under
+   it. The chip and its glyph are gone. The hover keeps the 4px lift, which
+   carries the illustration up with it, and the border going to 22% white.
 
    Used by home's What we do (links to /services) and About's What we build
    it around (not links). DESIGN.md "THE CARD v2 (quiet)" is the record.
@@ -24,7 +27,8 @@ function splitLine(text) {
 
 export default function ArtCard({
   image = null,
-  Icon = null,
+  num = null,
+  Art = null,
   name = null,
   line = '',
   href = null,
@@ -43,9 +47,16 @@ export default function ArtCard({
   const [lead, rest] = splitLine(line);
   const body = (
     <>
-      {Icon ? (
-        <span className="art__chip" aria-hidden="true">
-          <Icon className="art__icon" />
+      {num || Art ? (
+        <span className="art__top">
+          {/* The number is the card's place in its set; decorative, as the
+              list is ordered. */}
+          {num ? (
+            <span className="art__num lbl" aria-hidden="true">
+              {num}
+            </span>
+          ) : null}
+          {Art ? <Art className="art__ill" /> : null}
         </span>
       ) : null}
       <Heading className="art__name">{name}</Heading>

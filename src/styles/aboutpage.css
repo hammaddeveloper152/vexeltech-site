@@ -293,6 +293,7 @@
    lit-near with its artwork, two across from 768. The white cream-panel
    cards, their 32px icon, their name and line rules are gone with them. */
 .ab3-lesson__item {
+  display: grid; /* the card fills its cell, so a row is one height */
   min-width: 0;
 }
 

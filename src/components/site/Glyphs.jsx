@@ -2,21 +2,12 @@ import React from 'react';
 
 /* THE SITE'S OWN GLYPHS, 2026-09-24 (the founder): drawn here, not imported.
 
-   The four discipline glyphs sit in the card chips on home's What we do and
-   About's What we build it around: 24px, a 2px stroke, round caps, and the
-   V mark's own corners - the mark is a filled path with SHARP corners, so
-   every join is mitred; the one rounded shape is Branding's square, which
-   the brief names as rounded. One concept each:
-
-     Branding     a monogram: the V in a rounded square
-     Websites     a browser frame with one content bar
-     Marketing    a signal: two arcs from a dot
-     Automation   three nodes linked in a line, the last one filled
-
-   The two social glyphs are 16px, a 2px stroke, for the footer's yellow
-   circles. Every glyph takes `currentColor`, so the chip sets bone and the
-   circle sets asphalt. Decorative wherever they are used: the name beside a
-   chip, and the link's own label on a social circle, say what they are. */
+   The four discipline glyphs that sat in the card chips are gone, later the
+   same day: the cards carry isometric illustrations now (Illustrations.jsx).
+   What is left are the two social glyphs for the footer's yellow circles:
+   16px, a 2px stroke, round caps, mitred joins (the V mark's own sharp
+   corners), `currentColor`, asphalt from the circle. Decorative: the link's
+   own label says what each is. */
 
 const base = {
   fill: 'none',
@@ -28,59 +19,11 @@ const base = {
   focusable: 'false',
 };
 
-function Glyph24({ className, children }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" width="24" height="24" {...base}>
-      {children}
-    </svg>
-  );
-}
-
 function Glyph16({ className, children }) {
   return (
     <svg className={className} viewBox="0 0 16 16" width="16" height="16" {...base}>
       {children}
     </svg>
-  );
-}
-
-export function GlyphBranding({ className }) {
-  return (
-    <Glyph24 className={className}>
-      <rect x="3" y="3" width="18" height="18" rx="4" />
-      <path d="M8 8.5 12 16l4-7.5" />
-    </Glyph24>
-  );
-}
-
-export function GlyphWebsites({ className }) {
-  return (
-    <Glyph24 className={className}>
-      <rect x="3" y="4" width="18" height="16" />
-      <path d="M3 8.5h18" />
-      <path d="M7 13.5h8" />
-    </Glyph24>
-  );
-}
-
-export function GlyphMarketing({ className }) {
-  return (
-    <Glyph24 className={className}>
-      <circle cx="6" cy="18" r="1.5" fill="currentColor" />
-      <path d="M6 12a6 6 0 0 1 6 6" />
-      <path d="M6 6.5A11.5 11.5 0 0 1 17.5 18" />
-    </Glyph24>
-  );
-}
-
-export function GlyphAutomation({ className }) {
-  return (
-    <Glyph24 className={className}>
-      <circle cx="4.5" cy="12" r="2.5" />
-      <circle cx="12" cy="12" r="2.5" />
-      <circle cx="19.5" cy="12" r="2.5" fill="currentColor" />
-      <path d="M7 12h2.5M14.5 12H17" />
-    </Glyph24>
   );
 }
 
