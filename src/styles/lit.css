@@ -156,27 +156,53 @@
 
    EVERY SECTION IS TRANSPARENT OVER IT. The only exception is the marble
    band — see below — and there is exactly one of those on the site. */
+/* ONE GROUND, SITE-WIDE, 2026-09-24 (the founder's launch batch). The dark
+   drift is set ONCE, here, on the page root: the base at the top of the
+   document, arc-black at its middle, the base again at its foot, one
+   gradient sized to the whole document so it spans it end to end on every
+   page. It replaces the per-page `useDrift` stops, which keyed the gradient
+   to each page's own sections (useDrift.js is deleted).
+
+   "Fixed" in the brief is read as FIXED TO THE DOCUMENT, not
+   `background-attachment: fixed`: a fixed attachment pins the image to the
+   viewport, so it could not span the document, and it is the attachment iOS
+   Safari does not honour (the fault the drift's own record already names).
+   So the image scrolls with the page, and no section paints a ground over
+   it: `.vt` is transparent, and so is `body`, because a body background
+   would paint over the root's. `html`'s colour is the floor if the image
+   ever fails. */
 html {
+  min-height: 100%;
   background-color: var(--c-base);
+  background-image: linear-gradient(
+    to bottom,
+    var(--c-base) 0%,
+    var(--c-arc-black) 50%,
+    var(--c-base) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 body {
-  /* The floor under the rig. If the layer never paints, this is what shows.
-     The base since 2026-09-22. */
-  background-color: var(--c-base);
+  /* A stacking context, so the rig's fixed layer below paints above the
+     root's ground and under the content. */
+  position: relative;
+  z-index: 0;
+  background: transparent;
 }
 
+/* The rig: its two blooms only, anchored to the viewport, over the one
+   ground. Its own fall from lit-near to lit-far went with the drift
+   (2026-09-21) and stays gone. */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-color: var(--lit-far);
-  background-image:
-    var(--lit-key-page),
-    var(--lit-rim-page),
-    radial-gradient(120% 120% at 0% 0%, var(--lit-near) 0%, var(--lit-far) 62%);
+  background-color: transparent;
+  background-image: var(--lit-key-page), var(--lit-rim-page);
   background-repeat: no-repeat;
 }
 
@@ -488,20 +514,8 @@ body::before {
    it and below the content. Arc-black is the ground's own hue taken deeper,
    not the arc field that failed as a ground; DESIGN.md records the
    distinction. */
-body[data-ground='drift'] {
-  position: relative;
-  z-index: 0;
-  background-color: var(--c-base);
-  background-image: var(--drift-image, none);
-  background-repeat: no-repeat;
-}
-
-/* The rig's two blooms stay, as recorded; its own fall gives way to the
-   drift. */
-body[data-ground='drift']::before {
-  background-color: transparent;
-  background-image: var(--lit-key-page), var(--lit-rim-page);
-}
+/* `body[data-ground='drift']` and its `--drift-image` are gone with
+   useDrift.js (2026-09-24): the ground is the root's, above. */
 
 /* RAYS IS GONE, 2026-09-24: it was the strike ticker's ground, and the
    ticker is the wordmark band now. rays.webp is deleted. */

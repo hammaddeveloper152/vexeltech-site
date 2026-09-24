@@ -6,6 +6,9 @@ import './About.css';
 
 /* The about section. Between the work wall and the counter row.
 
+   ---- THE MASCOT CAME OFF, 2026-09-25 (the launch batch). The three rows
+   stand where it stood; what follows is its history. ----------------------
+
    ---- A CREAM BAND WITH THE MASCOT ON IT, 2026-09-14 ----------------------
 
    The section was asphalt with its portrait slot hidden and a statement across
@@ -34,15 +37,21 @@ const COPY = {
   link: 'How we work',
 };
 
+/* THE THREE ROWS, 2026-09-25 (the founder's launch batch), verbatim. They
+   replace the mascot: right of the copy, centred against it, stacked under
+   it below 768. */
+const ROWS = [
+  ['Team', 'One team across all four disciplines.'],
+  ['Build', 'Four business days from content to live.'],
+  ['After', 'Thirty days of care, then it is yours.'],
+];
+
 export default function About() {
   const [ref, revealed] = useReveal();
 
   return (
     <section className="vt about panel-sec" aria-labelledby="about-h">
-      {/* The margin label, 2026-09-24: decorative, the heading names it. */}
-      <span className="marg" aria-hidden="true">
-        02 Who we are
-      </span>
+      {/* The margin label is Spine.jsx's since 2026-09-25. */}
       {/* Visually hidden, and it names the section for a screen reader. It
           read "Placeholder section name" until 2026-09-16, when the viewer
           audit found the placeholder being announced; the user named it. */}
@@ -54,20 +63,6 @@ export default function About() {
           2026-09-16): from the section the reveal fired before the block was
           on screen. */}
       <div className="about__inner panel" data-revealed={revealed ? 'true' : 'false'} ref={ref}>
-        {/* The reveal moves this wrapper and the float moves the image inside
-            it, so the two transforms never compete for one element. */}
-        <div className="about__mascot" style={{ '--i': 0 }}>
-          {/* Decorative. The statement beside it is what the section says, and
-              a description of a character waving would be read before it. */}
-          <img
-            className="about__character float"
-            src="/assets/objects/character.webp"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-
         <div className="about__body">
           <p className="about__statement" style={{ '--i': 1 }}>
             {COPY.statement}
@@ -83,6 +78,17 @@ export default function About() {
             <IconArrowUpRight className="i about__go" />
           </Link>
         </div>
+
+        {/* THE MASCOT IS GONE, 2026-09-25 (the founder's launch batch), and
+            its asset with it. */}
+        <dl className="about__rows" style={{ '--i': 4 }}>
+          {ROWS.map(([k, v]) => (
+            <div className="about__row" key={k}>
+              <dt className="about__row-k lbl">{k}</dt>
+              <dd className="about__row-v">{v}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );

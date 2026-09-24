@@ -196,7 +196,6 @@ const QUESTIONS = [
 export default function AboutPage() {
   return (
     <Shell
-      driftTo=".ab3-work"
       title="About us | VexelTech"
       description="VexelTech Solutions is a technology company that builds the website, the marketing and the automation behind US local service businesses, at flat prices from $299."
     >

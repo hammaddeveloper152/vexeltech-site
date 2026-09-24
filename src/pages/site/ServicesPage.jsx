@@ -50,7 +50,6 @@ import '../../styles/services.css';
 export default function ServicesPage() {
   return (
     <Shell
-      driftTo="#automation"
       title="Services | VexelTech"
       description="Branding, websites, marketing and automation. The four disciplines in full, from one team."
     >

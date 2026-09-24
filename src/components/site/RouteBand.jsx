@@ -52,8 +52,8 @@ const STOPS = [
   ['05', "Thirty days of support, then it's yours"],
 ];
 
-/* `marg`: the home page's margin label for this section (2026-09-24). */
-export default function RouteBand({ id, heading, lines, marg = null }) {
+/* The margin label is Spine.jsx's since 2026-09-25; the `marg` prop is gone. */
+export default function RouteBand({ id, heading, lines }) {
   const sectionRef = useRef(null);
   const listRef = useRef(null);
   const stopRefs = useRef([]);
@@ -96,7 +96,28 @@ export default function RouteBand({ id, heading, lines, marg = null }) {
       marks = tops.map((t) => (span > 0 ? (t - tops[0]) / span : 0));
     };
 
+    /* FROM 1024 THE ROUTE IS PART OF THE SPINE (2026-09-25, the launch batch):
+       its own line is gone there and its dots sit on the spine (route.css),
+       so a stop lights when the spine's drawn head reaches it - the head is
+       at 60% of the viewport, so each dot lights as it crosses 60%. Below
+       1024 the route keeps its own line and the scrub below. */
+    const mm = gsap.matchMedia();
+    mm.add('(min-width: 1024px)', () => {
+      const mid = () => parseFloat(getComputedStyle(list).getPropertyValue('--n-size')) * 0.45;
+      stops.forEach((el, i) => {
+        ScrollTrigger.create({
+          trigger: el,
+          start: () => `top+=${mid()} 60%`,
+          onEnter: () => {
+            const now = stops.filter((s) => s.getAttribute('data-reached') === 'true').length;
+            if (i + 1 > now) light(i + 1);
+          },
+        });
+      });
+    });
+
     const ctx = gsap.context(() => {
+      if (matchMedia('(min-width: 1024px)').matches) return;
       ScrollTrigger.create({
         trigger: section,
         start: 'top 70%',
@@ -120,7 +141,10 @@ export default function RouteBand({ id, heading, lines, marg = null }) {
     }, section);
 
     measureMarks();
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      mm.revert();
+    };
   }, []);
 
   return (
@@ -129,11 +153,6 @@ export default function RouteBand({ id, heading, lines, marg = null }) {
       aria-labelledby={id}
       ref={sectionRef}
     >
-      {marg ? (
-        <span className="marg" aria-hidden="true">
-          {marg}
-        </span>
-      ) : null}
       <div className="route-band__in">
         <h2 className="route-band__h" id={id}>
           {heading}

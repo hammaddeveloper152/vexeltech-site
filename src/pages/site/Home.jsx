@@ -12,7 +12,7 @@ import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import { CallBand } from './parts.jsx';
 import StickyCta from '../../components/site/StickyCta.jsx';
-import useDrift, { at } from '../../components/site/useDrift.js';
+import Spine from '../../components/site/Spine.jsx';
 import '../../styles/tokens.css';
 /* The loud register, applied to every section below the hero. Imported LAST
    so it wins on source order. See src/styles/register.css. */
@@ -86,23 +86,8 @@ export default function Home() {
     window.scrollTo(0, 0);
   }, []);
 
-  /* THE DRIFT, home's ground, the whole page (lit.css, useDrift.js). Two
-     colours, the base (#0B0B0D) and arc-black, after lit-near at the very
-     top: the base halfway to the route, arc-black through How it works, the
-     base from the FAQ through the form, arc-black again from the footer's
-     pages row. */
-  useDrift(() => {
-    const top = at('.route-band--open');
-    return [
-      ['--lit-near', 0],
-      ['--c-base', top === null ? null : Math.round(top / 2)],
-      ['--c-arc-black', top],
-      ['--c-arc-black', at('.route-band--open', 'bottom')],
-      ['--c-base', at('.faq')],
-      ['--c-base', at('.foot__stage', 'bottom')],
-      ['--c-arc-black', at('.foot__row')],
-    ];
-  });
+  /* THE GROUND is the root's since 2026-09-24: one drift, base to
+     arc-black to base, set once in lit.css. This page no longer keys it. */
 
   return (
     <>
@@ -128,12 +113,7 @@ export default function Home() {
         <About />
         <Services />
         <WordBand />
-        <RouteBand
-          id="how-h"
-          heading="How it works"
-          lines={STEP_LINES}
-          marg="04 How it works"
-        />
+        <RouteBand id="how-h" heading="How it works" lines={STEP_LINES} />
         <CounterRow band />
         {/* The $700 at 240px is the band's object; `promise.webp` came off
             2026-09-22 with every other unfilled slot. */}
@@ -149,6 +129,8 @@ export default function Home() {
       </main>
       {/* Below 768, once the hero has gone (StickyCta.jsx, 2026-09-24). */}
       <StickyCta />
+      {/* The margin labels and the spine, from 1024 (Spine.jsx). */}
+      <Spine />
     </>
   );
 }

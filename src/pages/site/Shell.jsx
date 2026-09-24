@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import Header from '../../components/site/Header.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
-import useDrift, { at } from '../../components/site/useDrift.js';
 import StickyCta from '../../components/site/StickyCta.jsx';
+import Spine from '../../components/site/Spine.jsx';
 import '../../styles/tokens.css';
 import '../../styles/register.css';
 
@@ -24,23 +24,15 @@ import '../../styles/register.css';
 
 /* `barOver`: the page opens on a film or surface hero, and the bar stands over
    it (Header.css, 2026-09-15). */
-/* `driftTo`: the section where this page's drift reaches arc-black and holds
-   through the footer (2026-09-21: no route has a flat ground). The base
-   (#0B0B0D) at the top; the footer by default. Services passes its last discipline, About its
-   How it goes, Pricing its Plan Builder. */
+/* The ground is the root's since 2026-09-24 (lit.css): one drift for every
+   page, so the `driftTo` prop this shell took is gone. */
 export default function Shell({
   title,
   description,
   meta = true,
   barOver = false,
-  driftTo = 'footer.foot',
   children,
 }) {
-  useDrift(() => [
-    ['--c-base', 0],
-    ['--c-arc-black', at(driftTo)],
-  ]);
-
   useEffect(() => {
     if (title) document.title = title;
     if (description) {
@@ -80,6 +72,8 @@ export default function Shell({
       </main>
       {/* Below 768, once the page head has gone (StickyCta.jsx). */}
       <StickyCta />
+      {/* The margin labels and the spine, from 1024 (Spine.jsx). */}
+      <Spine />
     </>
   );
 }

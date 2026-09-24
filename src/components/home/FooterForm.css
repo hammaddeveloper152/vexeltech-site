@@ -279,6 +279,12 @@
   background: var(--c-cream);
   color: var(--c-asphalt);
   text-align: center;
+  /* THE LAST SHEET on every page (2026-09-24, the launch batch): the cream
+     sheets' corners and upward shadow (tokens.css). Its space above is the
+     form's own, so it overlaps nothing. */
+  z-index: 1;
+  border-radius: 40px 40px 0 0;
+  box-shadow: 0 -12px 40px rgb(0 0 0 / 35%);
 }
 
 /* The grain, 3%, as on every cream panel. */
@@ -286,6 +292,7 @@
   content: '';
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   background-image: var(--grain);
   opacity: var(--grain-opacity);
   pointer-events: none;

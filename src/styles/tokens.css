@@ -790,6 +790,41 @@ html {
   pointer-events: none;
 }
 
+/* ---- THE CREAM SHEETS, 2026-09-24 (the founder's launch batch) ----------
+
+   Every cream band is a sheet laid over the page: its top corners rounded
+   at 40px, pulled up 40px over the section before it, stacked above that
+   section, with a shadow thrown upward (0 -12px 40px, black at 35%). The
+   bottom edge stays square. The section before takes 40px more at its foot,
+   so the sheet overlaps only that added space and nothing moves. The
+   Plan Builder's band is a sheet too (plan.css carries its own cream), and
+   the footer's cream band is the last sheet on every page (FooterForm.css).
+   The grain follows the corners. */
+.panel-sec,
+.plan {
+  z-index: 1;
+  margin-top: -40px;
+  border-radius: 40px 40px 0 0;
+  box-shadow: 0 -12px 40px rgb(0 0 0 / 35%);
+}
+
+.panel-sec::after,
+.plan::after {
+  border-radius: inherit;
+}
+
+/* `.vt` rather than a child of `main`: /services wraps its disciplines, so
+   the section before a sheet is not always one of main's children. */
+.vt:has(+ :is(.panel-sec, .plan)) {
+  padding-bottom: calc(var(--s-section) + 40px);
+}
+
+/* The one section before a sheet whose foot is not the section space: the
+   pricing page head, 64px. */
+.vt.pr-head:has(+ :is(.panel-sec, .plan)) {
+  padding-bottom: calc(var(--s-2xl) + 40px);
+}
+
 .panel {
   position: relative;
   width: min(100%, 1200px);

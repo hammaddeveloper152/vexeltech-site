@@ -173,8 +173,21 @@
    218px against the old 64px numeral. Recorded rather than softened: the
    figure is the founder's. */
 @media (max-width: 767px) {
+  /* THE NUMERAL IS 48px IN A 64px COLUMN below 768 (2026-09-25, the
+     founder's launch batch; it was 96 at every width). The dot and the line
+     follow it: both are placed from --n-mid, which is taken from the
+     numeral's size, so they stay level with its centre. */
+  .route {
+    --n-size: 48px;
+  }
+
   .route__stop {
+    grid-template-columns: 64px minmax(0, 1fr);
     column-gap: var(--s-md);
+  }
+
+  .route__n {
+    min-width: 0;
   }
 
   .route__t {
@@ -184,6 +197,30 @@
 
   .route__body {
     padding-top: calc(var(--n-mid) - var(--t-body-line) / 2);
+  }
+}
+
+/* ---- FROM 1024 THE ROUTE IS PART OF THE SPINE (2026-09-25) ---------------
+   The route's own line is dropped and each dot moves onto the spine
+   (spine.css, --spine-x), level with its numeral. The list and its stops
+   stand down as containing blocks, so a dot's `left` is measured from the
+   section, which spans the page as the spine's `main` does; its height is
+   still its stop's, through the static position and a margin. */
+@media (min-width: 1024px) {
+  .route-band .route-band__in,
+  .route-band .route,
+  .route-band .route__stop {
+    position: static;
+  }
+
+  .route-band .route::before {
+    display: none;
+  }
+
+  .route-band .route__stop::before {
+    top: auto;
+    left: calc(var(--spine-x) - var(--dot) / 2 + 0.5px);
+    margin-top: calc(var(--n-mid) - var(--dot) / 2);
   }
 }
 

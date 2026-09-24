@@ -59,6 +59,9 @@
 .services__grid {
   display: grid;
   gap: var(--s-lg);
+  /* ONE HEIGHT FOR ALL FOUR, 2026-09-25 (the launch batch): every row is as
+     tall as the tallest card, so two-across rows match as well. */
+  grid-auto-rows: 1fr;
 }
 
 /* Four across from 1024, two below it, one on a phone (the founder,
@@ -79,6 +82,7 @@
 /* The reveal, 70ms apart, transform and opacity only. On the cell, not the
    card: the card's own hover lift has its own 200ms transition. */
 .services__cell {
+  display: grid; /* the card fills its cell */
   min-width: 0;
 }
 

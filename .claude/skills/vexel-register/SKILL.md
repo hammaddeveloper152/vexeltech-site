@@ -70,6 +70,13 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Launch batch, 2026-09-25: the final design pass, only defects after
+  it.** One drift on `html` (base, arc-black, base), no section paints a
+  ground. Cream bands are sheets (40px top corners, -40px over the section
+  before, upward shadow). Spine.jsx builds the gutter labels and the 1px
+  spine on every page from 1024; the route's dots sit on the spine. Cards:
+  art centred, objects inside 112 x 112 by the binding side, feet on one
+  baseline, equal yellow and blue. No mascot.
 - **Energy and consistency pass, 2026-09-24, supersedes below where they
   differ**: body on dark is bone 85% (`--c-body-dark`), steel-lift only for
   captions under 14px and disabled; arc blue #0D47BD only in illustrations

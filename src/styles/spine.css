@@ -1,0 +1,64 @@
+/* ==========================================================================
+   THE SPINE AND THE MARGINALIA, 2026-09-25 (the founder's launch batch).
+   See Spine.jsx.
+
+   The gutter, from 1024 (--inset 64px): the labels are centred at 32px and
+   the spine runs at 48px, so the two never touch and neither reaches the
+   content at 64. The label's rules (face, rotation, place) are register.css's
+   `.marg`; this sheet adds its states and the spine.
+   ========================================================================== */
+
+:root {
+  --spine-x: calc(var(--inset) * 0.75);
+}
+
+main#main {
+  position: relative;
+}
+
+/* A section carrying a label is its containing block. */
+.has-marg {
+  position: relative;
+}
+
+.spine {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .spine {
+    position: absolute;
+    left: var(--spine-x);
+    z-index: 0;
+    display: block;
+    width: 1px;
+    background: var(--c-rule-dark); /* white at 14% */
+    pointer-events: none;
+  }
+
+  /* The drawn segment: transform only (BUILD-LAW Motion), from the top. */
+  .spine__fill {
+    position: absolute;
+    inset: 0;
+    background: var(--c-accent-draw-dark);
+    transform: scaleY(0);
+    transform-origin: 50% 0;
+  }
+
+  /* The label lights as its heading crosses 60%. Colour, instantly: the
+     state is the scroll position's, and it is set on a threshold, not
+     animated. Machine yellow on the dark ground, 10.47:1 on the base. */
+  .marg[data-on='true'] {
+    color: var(--c-accent-text-dark);
+  }
+
+  /* On a cream sheet the label rests in steel (7.20:1) and lights in deep
+     amber, accent-as-text on light: machine yellow is 1.66:1 on cream. */
+  .marg[data-ground='cream'] {
+    color: var(--c-steel);
+  }
+
+  .marg[data-ground='cream'][data-on='true'] {
+    color: var(--c-accent-text-light); /* 4.82:1 on cream */
+  }
+}

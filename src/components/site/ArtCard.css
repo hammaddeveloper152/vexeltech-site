@@ -55,19 +55,21 @@
   border: 1px solid rgb(255 255 255 / 8.89%);
 }
 
-/* THE TOP ROW, 2026-09-24: the number top left, the illustration top right,
-   the row as tall as the illustration so the name never meets it. */
+/* THE TOP, 2026-09-25 (the founder's launch batch): the index on its own
+   row, top left; the 140px art box 24px below it, CENTRED in the card; the
+   name 24px below the box (the card's 8px gap plus 16 here). It was the
+   index and the illustration side by side, the art top right. */
 .art__top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  display: grid;
+  justify-items: center;
+  row-gap: var(--s-lg);
   align-self: stretch;
-  /* The card's grid puts items at the start, so the row takes the card's
-     full width here: that is what puts the illustration top RIGHT. It sat
-     just right of the number until the energy pass caught it. */
   justify-self: stretch;
-  min-height: 140px;
   margin-bottom: var(--s-md);
+}
+
+.art__top .art__num {
+  justify-self: start;
 }
 
 .art__num {
@@ -78,9 +80,19 @@
   flex: none;
   width: 140px;
   height: 140px;
-  /* Normalised to 112px tall (Illustrations.jsx): Websites and Marketing
-     are wider than the box and overflow it evenly, never clipped. */
-  overflow: visible;
+}
+
+/* Below 768 the art box is 100px and the card's padding 24px (the launch
+   batch). The object scales with the box: 80px on its binding side. */
+@media (max-width: 767px) {
+  .art {
+    padding: var(--s-lg);
+  }
+
+  .art__ill {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 /* The illustration's faces and keyline, the light palette since the energy
@@ -139,9 +151,10 @@
   stroke: var(--c-arc-blue);
 }
 
-/* The dot at each connector's join: blue, with its connector. */
+/* The dot at each connector's join: asphalt, with its keyline connector
+   (2026-09-25: the blue went to the first cube). */
 .art__ill .iso-dot {
-  fill: var(--c-arc-blue);
+  fill: var(--c-asphalt);
   stroke: none;
 }
 

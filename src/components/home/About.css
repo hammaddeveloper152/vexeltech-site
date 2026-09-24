@@ -1,13 +1,11 @@
 /* ==========================================================================
    The about section. Between the work wall and the counter row.
 
-   A CREAM BAND WITH THE MASCOT STANDING ON IT, 2026-09-14.
-
-   Layout family: edge-bleed feature, without the bleed. It was one media
-   panel run off the left edge of the screen against a block of type; the
-   panel is the mascot now, standing inside the measure at 40% of the width,
-   with the statement, the body and the call beside it. Still one unit, not a
-   repeating track, which is what separates it from the Failures columns.
+   A CREAM SHEET: THE COPY LEFT, THREE ROWS RIGHT, 2026-09-25 (the launch
+   batch). The mascot that stood here from 2026-09-14 is gone with its asset;
+   the rows (TEAM, BUILD, AFTER) take its column, centred against the copy.
+   Still one unit, not a repeating track, which is what separates it from
+   the Failures columns.
 
    This sheet is LAYOUT ONLY. The cream ground, the asphalt type, the asphalt
    call and the restated focus ring are in agency.css, which loads after it
@@ -38,26 +36,13 @@
   clip-path: inset(50%);
 }
 
-/* ---- Stacked below 1024 --------------------------------------------------
-   The mascot first, capped so it stays a character standing on the band
-   rather than a picture filling a phone screen, and the type under it. */
+/* ---- Stacked below 768: the copy, then the rows under it. ---------------- */
 .about__inner {
   width: min(100%, 1200px);
   margin: 0 auto;
   display: grid;
   gap: var(--s-2xl);
   align-items: center;
-}
-
-.about__mascot {
-  width: min(100%, 360px);
-  justify-self: center;
-}
-
-.about__character {
-  display: block;
-  width: 100%;
-  height: auto;
 }
 
 .about__body {
@@ -103,39 +88,59 @@
 }
 
 
-/* ---- 1024: the mascot at 40% on the RIGHT, 2026-09-21 ---------------------
-   The storyboard puts P1 right of the statement. The DOM keeps the mascot
-   first so a phone still stacks it above the type; the grid moves it. */
-/* THE MASCOT IS SIZED BY THE PANEL, 2026-09-24 (the founder's live walk):
-   the panel's height minus 48px, right-aligned at the panel's padding, its
-   feet on the panel's bottom edge and not past it. Out of flow, so the text
-   column decides the panel's height and the mascot follows it; the grid's
-   40% column stays as the space it stands in. */
-@media (min-width: 1024px) {
+/* ---- THE ROWS, 2026-09-25 (the founder's launch batch) --------------------
+   Right of the copy from 768, vertically centred against it; stacked under
+   it below. Three rows, hairlines between them: the mono label above the
+   line in Clash Display Medium 27px. Colour is agency.css's. */
+.about__rows {
+  display: grid;
+  margin: 0;
+}
+
+.about__row {
+  display: grid;
+  gap: var(--s-sm);
+  padding: var(--s-lg) 0;
+}
+
+.about__row + .about__row {
+  border-top: 1px solid rgb(11 11 13 / 15%);
+}
+
+.about__row:first-child {
+  padding-top: 0;
+}
+
+.about__row:last-child {
+  padding-bottom: 0;
+}
+
+.about__row-k {
+  margin: 0;
+}
+
+.about__row-v {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: var(--t-h3-size); /* 27px */
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-quiet); /* 500, Medium */
+  letter-spacing: normal;
+  text-wrap: balance;
+}
+
+@media (min-width: 768px) {
   .about__inner {
-    position: relative;
-    grid-template-columns: minmax(0, 1fr) 40%;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: var(--s-2xl);
-  }
-
-  .about__mascot {
-    position: absolute;
-    right: 0; /* the measure's right edge, inside the band */
-    bottom: 0;
-    width: auto;
-    height: calc(100% - 48px);
-  }
-
-  .about__character {
-    width: auto;
-    height: 100%;
+    align-items: center;
   }
 }
 
 /* ---- Reveal. Four things arriving, so 70ms per item ---------------------- */
 
 @media (prefers-reduced-motion: no-preference) {
-  .about__inner[data-revealed='false'] .about__mascot,
+  .about__inner[data-revealed='false'] .about__rows,
   .about__inner[data-revealed='false'] .about__statement,
   .about__inner[data-revealed='false'] .about__support,
   .about__inner[data-revealed='false'] .about__link {
@@ -143,7 +148,7 @@
     transform: translateY(var(--s-sm));
   }
 
-  .about__mascot,
+  .about__rows,
   .about__statement,
   .about__support,
   .about__link {
@@ -157,14 +162,14 @@
 /* Reduced motion: keep the fade, drop the travel and the stagger with it. The
    float is `.float` in tokens.css and does not run under reduce either. */
 @media (prefers-reduced-motion: reduce) {
-  .about__inner[data-revealed='false'] .about__mascot,
+  .about__inner[data-revealed='false'] .about__rows,
   .about__inner[data-revealed='false'] .about__statement,
   .about__inner[data-revealed='false'] .about__support,
   .about__inner[data-revealed='false'] .about__link {
     opacity: 0;
   }
 
-  .about__mascot,
+  .about__rows,
   .about__statement,
   .about__support,
   .about__link {

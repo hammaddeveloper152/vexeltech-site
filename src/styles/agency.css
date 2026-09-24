@@ -240,6 +240,20 @@
   color: var(--c-asphalt); /* 15.7:1 on cream */
 }
 
+/* The rows (2026-09-25): the label steel, 7.20:1; the line asphalt,
+   15.75:1; hairlines asphalt at 15%, the cream ground's own. */
+.about__row-k {
+  color: var(--c-steel);
+}
+
+.about__row-v {
+  color: var(--c-asphalt);
+}
+
+.about__row + .about__row {
+  border-top-color: rgb(11 11 13 / 15%);
+}
+
 
 /* THE ARC RECORD, kept because it is the kind of thing that gets tried again:
    ARC WORKS AS AN ACCENT AND FAILS AS A GROUND. A flat field of it with no

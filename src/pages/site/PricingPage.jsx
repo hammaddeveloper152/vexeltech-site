@@ -100,7 +100,6 @@ export default function PricingPage() {
     <Shell
       title="Pricing | VexelTech"
       description="Flat prices for every job that needs doing. Branding and websites are fixed. Marketing and automation are scoped on a call."
-      driftTo=".plan"
     >
       {/* 1. THE HEAD. */}
       <header className="vt pr-head">
@@ -195,6 +194,25 @@ export default function PricingPage() {
               </tbody>
             </table>
           </div>
+          {/* BELOW 768, FOUR STACKED CARDS, 2026-09-25 (the founder's launch
+              batch): one per discipline, the term in the mono label above its
+              value, hairlines between rows. The same figures as the table;
+              only one of the two is ever displayed. */}
+          <ul className="pr-cmp__cards">
+            {COLUMNS.map((c, i) => (
+              <li className="pr-cmp__card" key={c.id}>
+                <h3 className="pr-cmp__card-h">{c.name}</h3>
+                <dl className="pr-cmp__rows">
+                  {ROWS.map(([term, values]) => (
+                    <div className="pr-cmp__row" key={term}>
+                      <dt className="pr-cmp__row-k lbl">{term}</dt>
+                      <dd className="pr-cmp__row-v">{values[i]}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

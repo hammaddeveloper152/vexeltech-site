@@ -482,6 +482,78 @@
   overflow-x: auto;
 }
 
+/* ---- BELOW 768: FOUR STACKED CARDS, 2026-09-25 (the launch batch) ------
+   The table scrolled sideways in its own region on a phone; it is four
+   cards now, one per discipline, each the site's dark card (white at 4%, a
+   10% edge, 24px), the term in the mono label above its value, a hairline
+   between rows. From 768 the table, and the cards go. */
+.pr-cmp__cards {
+  display: grid;
+  gap: var(--s-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pr-cmp__card {
+  padding: var(--s-lg);
+  border: 1px solid var(--card-dark-edge);
+  border-radius: var(--r-card);
+  background: var(--card-dark-fill);
+}
+
+.pr-cmp__card-h {
+  margin: 0 0 var(--s-md);
+  font-family: var(--font-quiet);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  color: var(--c-bone); /* 15.13:1 on the card */
+}
+
+.pr-cmp__rows {
+  margin: 0;
+}
+
+.pr-cmp__row {
+  display: grid;
+  gap: var(--s-xs);
+  padding: var(--s-md) 0;
+}
+
+.pr-cmp__row + .pr-cmp__row {
+  border-top: 1px solid var(--c-rule-dark);
+}
+
+.pr-cmp__row:last-child {
+  padding-bottom: 0;
+}
+
+.pr-cmp__row-k {
+  margin: 0;
+  color: var(--c-steel-lift); /* a 12px caption: 7.0:1 on the card */
+}
+
+.pr-cmp__row-v {
+  margin: 0;
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-body-dark);
+}
+
+@media (max-width: 767px) {
+  .pr-cmp__wrap {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .pr-cmp__cards {
+    display: none;
+  }
+}
+
 @media (min-width: 1024px) {
   .pr-cmp__wrap {
     overflow: visible;
@@ -529,12 +601,7 @@
   border-bottom: 1px solid var(--c-rule-dark);
 }
 
-@media (min-width: 1280px) {
-  .pr-cmp__t thead :is(th, td) {
-    position: sticky;
-    top: calc(48px + 2 * var(--s-sm)); /* under the bar */
-    z-index: 1;
-    background: var(--c-base);
-    box-shadow: inset 0 -1px 0 var(--c-rule-dark);
-  }
-}
+/* THE STICKY HEADER ROW IS GONE, 2026-09-24 (the launch batch's one
+   ground): stuck, it needed an opaque fill to cover the rows under it, and a
+   flat base strip on the document-long drift is a seam. Five rows do not
+   need it. */
