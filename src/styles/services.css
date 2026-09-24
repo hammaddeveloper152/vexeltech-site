@@ -83,9 +83,30 @@
   outline-color: var(--c-asphalt);
 }
 
-/* THE DISCIPLINE COLOURS ARE GONE, 2026-09-25 (the three-colour pass): the
-   check dots are yellow everywhere (tokens.css) and the bar left of the price
-   is yellow. The section's ground is unchanged. */
+/* THE DISCIPLINE COLOURS, 2026-09-25: the check dots take the section's
+   discipline colour (restored after the three-colour pass, Websites lilac
+   where it was arc blue); the bar left of the price stays yellow. The
+   section's ground is unchanged. */
+.svc2__d--branding {
+  --disc: var(--c-accent-ground);
+  --disc-ink: var(--c-asphalt); /* 9.46:1 */
+}
+
+.svc2__d--websites {
+  --disc: var(--c-lilac);
+  --disc-ink: var(--c-asphalt); /* 8.68:1: white on lilac is 2.05 */
+}
+
+.svc2__d--marketing {
+  --disc: var(--c-coral);
+  --disc-ink: var(--c-shop-white); /* 3.03:1, a mark */
+}
+
+.svc2__d--automation {
+  --disc: var(--c-mint);
+  --disc-ink: var(--c-shop-white); /* 3.16:1, a mark */
+}
+
 .svc2__in {
   position: relative;
   display: grid;

@@ -18,13 +18,14 @@ import './ArtCard.css';
    with the About rebuild (2026-09-25). DESIGN.md is the record.
 
    ONE CARD, TWO VARIANTS: `variant="dark"` (the default) is the translucent
-   card above; `variant="cream"` is the discipline cards' since the
-   three-colour pass (2026-09-25): cream, asphalt ink, the light-palette
-   illustration, a `tilt` of -2 or +2 degrees at rest that straightens on
-   the linked card's hover, and the NUMBER BADGE (Badge.jsx): 01 to 04 on a
-   white die-cut disc over the card's top right corner by 20px, rotated 12
-   degrees, hidden below 768, in place of the card's small index text. The
-   colour variant (yellow, arc blue, coral, mint) went with those colours.
+   card above; `variant="colour"` with a `tone` is the discipline cards'
+   (restored 2026-09-25 after the three-colour pass, without the blue):
+   branding yellow, websites lilac, marketing coral, automation mint,
+   asphalt ink on all four, the illustration in a white keyline, a `tilt`
+   of -2 or +2 degrees at rest that straightens on the linked card's hover,
+   and the NUMBER BADGE (Badge.jsx): 01 to 04 on a white die-cut disc over
+   the card's top right corner by 20px, rotated 12 degrees, hidden below
+   768, in place of the card's small index text.
 
    THE BARE CARD is the one other use: with no `name`, a render fills a 3:4
    card edge to edge. The 404 page's mark stands in one, so no object on the
@@ -44,13 +45,13 @@ export default function ArtCard({
   href = null,
   as: Heading = 'h3',
   variant = 'dark',
+  tone = null,
   tilt = 0,
   style,
 }) {
-  /* The cream variant (since the three-colour pass, 2026-09-25) carries the
-     tilt and the number badge; `tone` went with the colour cards. */
-  const colour = variant === 'cream';
-  const v = colour ? ' art--cream' : '';
+  /* The colour variant carries the tone, the tilt and the number badge. */
+  const colour = variant === 'colour' && tone;
+  const v = colour ? ` art--colour art--${tone}` : '';
   const s = colour ? { ...style, '--tilt': `${tilt}deg` } : style;
   if (!name) {
     return (

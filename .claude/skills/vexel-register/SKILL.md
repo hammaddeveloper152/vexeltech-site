@@ -70,6 +70,11 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Card accents restored, 2026-09-25, supersedes the three-colour pass**:
+  black, cream, yellow + coral, mint, lilac ONLY in the discipline cards
+  (Branding yellow, Websites lilac, Marketing coral, Automation mint, asphalt
+  text), the Who we are tiles, the check dots, the comparison chips/edges and
+  the Plan Builder dots. No arc blue anywhere; neutral ground.
 - **Three-colour pass, 2026-09-25, supersedes every accent note below**:
   black, cream, machine yellow; white and the steels for text only. NO arc
   blue, coral, mint or lilac anywhere. Ground drift base/#101012/base.

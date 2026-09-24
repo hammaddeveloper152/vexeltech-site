@@ -222,10 +222,17 @@
      Steel-lift stays for captions under 14px and disabled states only.
      Composited on the base it is 11.84:1. */
   --c-body-dark: rgb(232 234 237 / 85%);
-  /* THREE COLOURS, 2026-09-25 (the founder): black, cream and machine
-     yellow, with white and the steels for text. Arc blue, coral, mint and
-     lilac are gone from the tokens and from every use; DESIGN.md "THE
-     THREE-COLOUR PASS" lists where each was replaced. */
+  /* THE PALETTE, 2026-09-25 (the founder): black, cream and machine yellow,
+     plus three CARD ACCENTS used only in the discipline cards, the Who we
+     are tiles, the check dots, the comparison chips (and the phone cards'
+     edges) and the Plan Builder's dots. Arc blue is gone and stays gone;
+     lilac stands where it stood for Websites. Measured: asphalt on coral
+     5.87:1, on mint 5.62, on lilac 8.68; white on coral 3.03, on mint 3.16,
+     on lilac 2.05, so text on them is asphalt and a white mark (3:1) only
+     sits on coral and mint. */
+  --c-coral: #f26b3a;
+  --c-mint: #2fa37a;
+  --c-lilac: #c9a6f5;
 
   /* ---- Colour: light grounds (relief) ---------------------------------- */
   --c-shop-white: #ffffff; /* surface */
@@ -878,9 +885,10 @@ html {
 }
 
 /* THE CHECK DOT, 2026-09-25 (the founder's life pass 3). See CheckDot.jsx.
-   A 20px machine yellow disc with the check 12px inside it in asphalt,
-   9.46:1, everywhere (the three-colour pass: it took the discipline's
-   colour until then). */
+   A 20px disc in the list's discipline colour with the check 12px inside:
+   asphalt on yellow (9.46:1) and lilac (8.68), white on coral (3.03) and
+   mint (3.16), each over the 3:1 a mark needs. The list's container sets
+   `--disc` and `--disc-ink`; yellow and asphalt where it does not. */
 .cdot {
   display: inline-grid;
   flex: none;
@@ -889,8 +897,8 @@ html {
   height: 20px;
   margin-top: 2px;
   border-radius: 50%;
-  background: var(--c-accent-ground);
-  color: var(--c-asphalt);
+  background: var(--disc, var(--c-accent-ground));
+  color: var(--disc-ink, var(--c-asphalt));
 }
 
 .cdot .cdot__i {

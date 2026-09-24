@@ -193,14 +193,13 @@
   background: var(--c-cream); /* the panel it sits on */
 }
 
-/* MACHINE YELLOW WITH A 1px ASPHALT RING, 2026-09-25 (the three-colour
-   pass; it was coral, and arc blue before that): yellow alone is 1.66:1 on
-   cream, the ring 15.75:1, so the dot's edge clears 3:1. A dot not yet
-   reached is a hollow steel-dark ring. The line between the dots is yellow
-   too. */
+/* CORAL WITH A 1px ASPHALT RING, 2026-09-25 (restored after the
+   three-colour pass): coral alone is 2.68:1 on cream, the ring 15.75:1, so
+   the dot's edge clears 3:1. A dot not yet reached is a hollow steel-dark
+   ring. The line between the dots is yellow. */
 .plan__node[data-on='true'] {
   border-color: var(--c-asphalt);
-  background: var(--c-accent-ground); /* yellow since the three-colour pass */
+  background: var(--c-coral);
 }
 
 /* ---- The question ------------------------------------------------------- */

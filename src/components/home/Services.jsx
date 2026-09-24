@@ -91,7 +91,8 @@ export default function Services() {
                 name={discipline}
                 line={line}
                 href={`/services#${id}`}
-                variant="cream"
+                variant="colour"
+                tone={id}
                 tilt={i % 2 ? 2 : -2}
               />
             </div>

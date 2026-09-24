@@ -239,17 +239,23 @@
   color: var(--c-asphalt); /* 15.7:1 on cream */
 }
 
-/* THE TILES, THREE COLOURS (2026-09-25): TEAM, BUILD and AFTER are cream
-   on the cream sheet with a 1px edge of #0B0B0D at 12%; PRICE is machine
-   yellow. Every word asphalt: 15.75:1 on cream, 9.46:1 on yellow. They
-   were lilac, mint and coral. */
-.about__row {
-  border: 1px solid rgb(11 11 13 / 12%);
-  background: var(--c-cream);
+/* THE TILES (2026-09-25, restored after the three-colour pass): TEAM lilac,
+   BUILD mint, AFTER coral, PRICE yellow, every word asphalt: 8.68:1, 5.62,
+   5.87 and 9.46. The label is asphalt too (steel would be 3.97, 2.57, 2.68
+   and 4.32 on them). */
+.about__row:nth-child(1) {
+  background: var(--c-lilac);
+}
+
+.about__row:nth-child(2) {
+  background: var(--c-mint);
+}
+
+.about__row:nth-child(3) {
+  background: var(--c-coral);
 }
 
 .about__row:nth-child(4) {
-  border-color: var(--c-accent-ground);
   background: var(--c-accent-ground);
 }
 

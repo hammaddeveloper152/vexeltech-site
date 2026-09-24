@@ -134,6 +134,11 @@
   fill: var(--c-asphalt);
 }
 
+/* Websites' strip: solid white in both palettes (2026-09-25). */
+.art__ill .iso-w {
+  fill: var(--c-shop-white);
+}
+
 /* The sound arcs and the connectors: 2px, no fill; the middle arc yellow. */
 .art__ill .iso-arc {
   fill: none;
@@ -205,38 +210,92 @@
   transition-duration: var(--d-press);
 }
 
-/* ---- THE CREAM VARIANT, 2026-09-25 (the three-colour pass) -------------
+/* ---- THE COLOUR VARIANT, 2026-09-25 (restored after the three-colour pass,
+   without the blue) ---------------------------------------------------------
 
-   The four discipline cards on home, as they were before the colour cards:
-   cream, no border, 24px, 32px of padding, asphalt ink (15.75:1), the
-   illustration in its light palette (asphalt keyline, white faces, one
-   yellow element). The number badge and the tilt stay from the life
-   passes: -2 or +2 degrees at rest (`--tilt`, set per card), straightening
-   to 0 as the card lifts. The shadow fades in on hover as a layer
-   (BUILD-LAW Motion). The colour variant (yellow, arc blue, coral, mint) is
-   gone with the colours. */
-.art--cream {
+   The four discipline cards on home, a flat colour each, no border, 24px,
+   32px of padding: Branding machine yellow, Websites LILAC (it was arc
+   blue), Marketing coral, Automation mint. The ink is asphalt on all four,
+   because white fails on every one: 2.05:1 on lilac, 3.03 on coral, 3.16
+   on mint, 1.88 on yellow. Measured asphalt: 9.46, 8.68, 5.87, 5.62. The
+   number badge stands for the index.
+
+   TILT: -2 or +2 degrees at rest (`--tilt`, set per card), straightening to
+   0 as the linked card lifts: the hover rules above replace the transform.
+   The shadow fades in on hover as a layer (BUILD-LAW Motion). */
+.art--colour {
   border: 0;
-  background: var(--c-cream);
+  background: var(--tone);
   color: var(--c-asphalt);
   transform: rotate(var(--tilt, 0deg));
 }
 
-.art--cream::before {
+.art--branding {
+  --tone: var(--c-accent-ground);
+}
+
+.art--websites {
+  --tone: var(--c-lilac);
+}
+
+.art--marketing {
+  --tone: var(--c-coral);
+}
+
+.art--automation {
+  --tone: var(--c-mint);
+}
+
+.art--colour::before {
   display: none;
 }
 
-.art--cream::after {
+.art--colour::after {
   inset: 0;
   z-index: -1;
   border: 0;
   box-shadow: var(--card-shadow);
 }
 
-.art.art--cream .art__name,
-.art--cream .art__line,
-.art--cream .art__lead {
-  color: var(--c-asphalt); /* 15.75:1 on cream */
+.art.art--colour .art__name,
+.art--colour .art__line,
+.art--colour .art__lead {
+  color: var(--c-asphalt);
+}
+
+/* The illustration on the colour: a white keyline, every face white at 20%,
+   and the object's one yellow element solid white, keylined in the card's
+   colour so its edges survive. Websites' strip is solid white and its three
+   dots asphalt, as the founder kept them. Decorative, so it carries no
+   contrast pair of its own. */
+.art--colour .art__ill path,
+.art--colour .art__ill circle {
+  stroke: var(--c-shop-white);
+}
+
+.art--colour .art__ill :is(.iso-t, .iso-l, .iso-r) {
+  fill: rgb(255 255 255 / 20%);
+}
+
+.art--colour .art__ill .iso-y {
+  fill: var(--c-shop-white);
+  stroke: var(--tone);
+}
+
+.art--colour .art__ill .iso-w {
+  fill: var(--c-shop-white);
+}
+
+.art--colour .art__ill .iso-d {
+  fill: var(--c-asphalt);
+}
+
+.art--colour .art__ill :is(.iso-arc, .iso-arc--y) {
+  stroke: var(--c-shop-white);
+}
+
+.art--colour .art__ill .iso-dot {
+  fill: var(--c-shop-white);
 }
 
 /* ---- THE NUMBER BADGE, 2026-09-25 (the founder's life pass 2) ------------

@@ -381,7 +381,28 @@
 
 /* 14px, asphalt: a tick is a graphic at a 3:1 bar and this is 15.75:1. The
    top margin sets it on the line's x-height rather than its top. */
-/* The check dots are yellow in every column (tokens.css, 2026-09-25). */
+/* The columns' check dots take their discipline colour (restored
+   2026-09-25, Websites lilac). */
+.pr-col--branding {
+  --disc: var(--c-accent-ground);
+  --disc-ink: var(--c-asphalt); /* 9.46:1 */
+}
+
+.pr-col--websites {
+  --disc: var(--c-lilac);
+  --disc-ink: var(--c-asphalt); /* 8.68:1: white on lilac is 2.05 */
+}
+
+.pr-col--marketing {
+  --disc: var(--c-coral);
+  --disc-ink: var(--c-shop-white); /* 3.03:1, a mark */
+}
+
+.pr-col--automation {
+  --disc: var(--c-mint);
+  --disc-ink: var(--c-shop-white); /* 3.16:1, a mark */
+}
+
 /* The button, full width at the foot of the column: the site's one button
    size (tokens.css). SINCE THE ENERGY PASS (2026-09-24) THE BUTTON FOLLOWS
    ITS LABEL: "Get a custom quote" is the yellow primary, asphalt label
@@ -504,12 +525,31 @@
 }
 
 /* ---- THE COMPARISON CHIPS, 2026-09-25 -----------------------------------
-   The column headers, and the phone cards' titles: machine yellow with
-   asphalt text, 9.46:1, since the three-colour pass (they were the four
-   discipline colours). The phone cards' 4px top edge is yellow too. */
-.pr-cmp__card,
-.pr-chip {
+   The column headers, and the phone cards' titles and 4px top edges, in the
+   discipline colours (restored after the three-colour pass; Websites lilac
+   where it was arc blue). Asphalt text on all four: 9.46:1 on yellow, 8.68
+   on lilac, 5.87 on coral, 5.62 on mint. */
+.pr-cmp__card--branding,
+.pr-chip--branding {
   --chip: var(--c-accent-ground);
+  --chip-ink: var(--c-asphalt);
+}
+
+.pr-cmp__card--websites,
+.pr-chip--websites {
+  --chip: var(--c-lilac);
+  --chip-ink: var(--c-asphalt);
+}
+
+.pr-cmp__card--marketing,
+.pr-chip--marketing {
+  --chip: var(--c-coral);
+  --chip-ink: var(--c-asphalt);
+}
+
+.pr-cmp__card--automation,
+.pr-chip--automation {
+  --chip: var(--c-mint);
   --chip-ink: var(--c-asphalt);
 }
 
