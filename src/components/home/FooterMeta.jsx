@@ -21,7 +21,9 @@ import './FooterForm.css';
                                        row collapses when none is
      row 5   Booking projects for October 2026   mono 12px, steel (added
                                        with the email)
-     row 6   (c) 2026 [LEGAL ENTITY NAME]  mono 12px, steel
+     row 6   (c) 2026 VexelTech       mono 12px, steel. The legal entity
+                                       line is gone (2026-09-24, the
+                                       founder's final details)
 
    A FULL-BLEED COLOUR BAND AND YELLOW CIRCLES are both the founder's
    decision in this brief, against the quiet pass's "no full-bleed colour"
@@ -50,8 +52,9 @@ const SOCIALS = [
   .map((s) => ({ ...s, href: (SOCIAL_URLS[s.id] || '').trim() }))
   .filter((s) => s.href);
 
-/* A placeholder that says it is one, verbatim from VEXELTECH-COPY.md. */
-const LEGAL = '[LEGAL ENTITY NAME]';
+/* THE BOTTOM ROW, 2026-09-24 (the founder's final details): the brand and
+   the year, no legal entity. The "[LEGAL ENTITY NAME]" placeholder is
+   deleted. */
 const YEAR = 2026;
 
 export default function FooterMeta() {
@@ -93,7 +96,7 @@ export default function FooterMeta() {
       <p className="foot__booking">{BOOKING}</p>
 
       <p className="foot__legal">
-        © {YEAR} {LEGAL}
+        © {YEAR} VexelTech
       </p>
     </div>
   );

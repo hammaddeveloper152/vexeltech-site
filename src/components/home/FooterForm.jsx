@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { IconCheck, IconCross, IconSend } from '../site/Icons.jsx';
 import FooterMeta from './FooterMeta.jsx';
 import { UTM_KEYS, getUtm } from '../site/utm.js';
+import { trackPixel } from '../site/pixel.js';
 import './FooterForm.css';
 
 /* Section 9. The form, and the end of the page.
@@ -77,6 +78,12 @@ export default function FooterForm() {
   const [utm] = useState(getUtm);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | sent | failed
+  /* THE SENDING GUARD IS A REF, 2026-09-24. It was `status === 'sending'`,
+     which is state: a double click runs both handlers before React
+     re-renders, so both saw 'idle' and the form POSTed twice (and would
+     have fired two Leads). Measured on a test build: 2 posts from one
+     double click. A ref is set synchronously. */
+  const inFlight = useRef(false);
 
   const set = (id) => (e) => setValues((v) => ({ ...v, [id]: e.target.value }));
 
@@ -88,7 +95,7 @@ export default function FooterForm() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (status === 'sending') return;
+    if (inFlight.current) return;
 
     const next = {};
     ['name', 'phone', 'email', 'message'].forEach((id) => {
@@ -113,6 +120,7 @@ export default function FooterForm() {
       return;
     }
 
+    inFlight.current = true;
     setStatus('sending');
     /* url-encoded to "/", form-name "contact": Netlify's own convention for a
        script-rendered form, and the same call PlanBuilder makes. The four
@@ -132,8 +140,14 @@ export default function FooterForm() {
         body: body.toString(),
       });
       setStatus(r.ok ? 'sent' : 'failed');
+      /* THE LEAD, 2026-09-24 (the founder's final details): once per
+         submission, on the in-page success. The ref guard above means one
+         POST per submission, so one Lead. A no-op without a pixel ID. */
+      if (r.ok) trackPixel('Lead');
     } catch {
       setStatus('failed');
+    } finally {
+      inFlight.current = false;
     }
   };
 

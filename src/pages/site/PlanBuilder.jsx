@@ -9,6 +9,7 @@ import {
 } from '../../components/site/Icons.jsx';
 import { FIGURES, bundleSaving, money } from '../../content/pricing.js';
 import { getUtm } from '../../components/site/utm.js';
+import { trackPixel } from '../../components/site/pixel.js';
 import '../../styles/plan.css';
 
 /* THE PLAN BUILDER, /pricing, 2026-09-22 (the founder's brief). It replaced
@@ -357,8 +358,12 @@ export default function PlanBuilder({ heading = null }) {
   };
 
   /* ---- The post: Netlify form "plan", url-encoded, to "/". ---- */
+  /* The sending guard is a ref (2026-09-24): state is stale inside a double
+     click, and the builder POSTed twice from one. See FooterForm.jsx. */
+  const inFlight = useRef(false);
   const send = async () => {
-    if (status === 'sending') return;
+    if (inFlight.current) return;
+    inFlight.current = true;
     setStatus('sending');
     const trade = TRADES.find((x) => x.id === a.trade);
     const stage = STAGES.find((x) => x.id === a.stage);
@@ -392,8 +397,13 @@ export default function PlanBuilder({ heading = null }) {
         body: body.toString(),
       });
       setStatus(r.ok ? 'sent' : 'failed');
+      /* The Lead, once per submission, on the in-page success (2026-09-24).
+         The ref guard makes one POST one submission. */
+      if (r.ok) trackPixel('Lead');
     } catch {
       setStatus('failed');
+    } finally {
+      inFlight.current = false;
     }
   };
 

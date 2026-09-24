@@ -78,6 +78,9 @@
   flex: none;
   width: 140px;
   height: 140px;
+  /* Normalised to 112px tall (Illustrations.jsx): Websites and Marketing
+     are wider than the box and overflow it evenly, never clipped. */
+  overflow: visible;
 }
 
 /* The illustration's faces and keyline, the light palette since the energy

@@ -361,9 +361,14 @@
 /* One primary, then a link. The primary is LARGE AND SOLID and it is the
    frame's accent; the second action is a line. */
 .hero__actions {
-  display: grid;
-  justify-items: start;
-  gap: var(--s-lg);
+  /* ONE ROW, 2026-09-24 (the founder's final details): "Ask a question"
+     inline right of the yellow button, 24px apart, the two labels on one
+     baseline. It wraps under the button only if a width cannot hold both;
+     at 390 it holds them. */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-md) var(--s-lg);
   margin-bottom: var(--s-lg);
 }
 
@@ -424,14 +429,17 @@
   opacity: 1;
 }
 
-/* The price line, 16px bone (2026-09-24, the founder). */
+/* The offer line: Clash Display Medium, 16px, bone at 100% (2026-09-24,
+   the founder's final details; it was Satoshi). */
 .hero__price {
   margin: 0 0 var(--s-md);
   max-width: 60ch;
-  font-family: var(--font-offer);
+  font-family: var(--font-brand);
   font-size: 16px;
   line-height: 24px;
-  color: var(--c-bone); /* over the film, as the note is */
+  font-weight: var(--t-weight-quiet); /* 500, Medium */
+  letter-spacing: normal;
+  color: var(--c-bone); /* 100%, over the film, as the note is */
 }
 
 .hero__note {
