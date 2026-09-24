@@ -39,7 +39,7 @@ const EXPECT = [
   ['skip', 'Clash'],
   ['tabs__tab', 'Clash'], ['tier__cta', 'Clash'], ['tier__cta--solid', 'Clash'],
   ['hero__cta', 'Clash'], ['callband__cta', 'Clash'], ['band__cta', 'Clash'],
-  ['bar__cta', 'Clash'], ['bar__cta--panel', 'Clash'], ['foot__submit', 'Clash'],
+  ['bar__cta', 'Clash'], ['bar__cta--panel', 'Clash'], ['lf__submit', 'Clash'],
   ['card__cta', 'Clash'],
   ['faq__q', 'Clash'], ['faq__q-t', 'Clash'], ['about__link', 'Clash'],
   ['work__go', 'Clash'], ['one__cta', 'Clash'], ['quotes__btn', 'Clash'],

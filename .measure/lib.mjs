@@ -105,5 +105,5 @@ export const FRAMES = [
   { name: 'Route',        section: '.route-band',       carrier: '.route' },
   { name: 'Promise',      section: '.promise',          carrier: null },
   { name: 'FAQ',          section: '.faq',              carrier: null },
-  { name: 'Footer',       section: '.foot',             carrier: '.foot__submit' },
+  { name: 'Footer',       section: '.foot',             carrier: '.lf__submit' },
 ];

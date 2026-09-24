@@ -70,6 +70,15 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Contact pass, 2026-09-25**: every field is a LINE FIELD (`LeadForm.jsx`,
+  and the Plan Builder's): transparent, 1px line (`--field-line-dark` /
+  `--field-line-cream`, 30%), 22px Satoshi, placeholder as label ("Your name
+  *"), hidden real label, 12px mono index above (steel-lift on dark, steel on
+  cream), focus 2px yellow (plus 1px asphalt under it on cream), error 2px
+  red and the message. No boxes, no visible label rows. Submit: yellow pill,
+  40% until valid, `aria-disabled`. Contact: marquee h1 150/72 at 60px/s,
+  pills (80px radius, yellow when picked, 48px label target), tiles from
+  `content/facts.js`.
 - **Vertical rhythm, 2026-09-25**: sections pad TOP only (128 dark, 96 in a
   cream sheet), never bottom; last before the footer takes 128 below; grounded
   blocks keep a 96 foot. No gap over 160. Closing call: Clash Medium 56/40

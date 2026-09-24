@@ -330,16 +330,8 @@
    with them: it was separation for a light row, and the row is dark. */
 
 /* ---- Footer form --------------------------------------------------------
-   Carrier: THE SUBMIT — already the accent, already solid. It is the site's
-   one button size since 2026-09-24: 14px Clash Medium, 6px radius, at every
-   width (it stepped body, h3, h2 with the hero call before). Disabled while the form is not live, and
-   disabled is the one state the accent may drop below its floor. */
-.foot__submit {
-  padding: var(--s-md) var(--s-lg);
-  font-size: var(--t-btn);
-  line-height: var(--t-btn-line);
-  letter-spacing: normal;
-  font-weight: var(--t-weight-btn);
-  border-radius: var(--r-btn);
-}
+   Carrier: THE SUBMIT. Since 2026-09-25 (the founder's contact pass) it is
+   LeadForm's yellow pill, `.lf__submit`, styled in LeadForm.css alone, at
+   40% until the form is filled: the one state the accent may drop below its
+   floor. The `.foot__submit` rules here went with the square button. */
 

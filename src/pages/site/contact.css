@@ -1,0 +1,184 @@
+/* ==========================================================================
+   THE CONTACT PAGE, 2026-09-25 (the founder's contact pass). See
+   ContactPage.jsx. Sections carry their space above them (tokens.css, the
+   vertical rhythm).
+   ========================================================================== */
+
+/* ---- 1. The marquee headline -------------------------------------------- */
+
+.ct-hero {
+  padding-top: var(--s-section);
+  overflow-x: clip;
+}
+
+/* The sentence once, for a screen reader; the copies below are what shows. */
+.ct-hero__h {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.ct-mq {
+  overflow: hidden;
+}
+
+.ct-mq__track {
+  display: flex;
+  width: max-content;
+}
+
+.ct-mq__run {
+  display: flex;
+  flex: none;
+}
+
+.ct-mq__copy {
+  flex: none;
+  padding-right: 0.4em;
+  font-family: var(--font-brand);
+  font-size: 72px;
+  line-height: 1.1;
+  font-weight: var(--t-weight-quiet); /* Medium */
+  letter-spacing: normal;
+  white-space: nowrap;
+  color: var(--c-bone); /* 16.32:1 */
+}
+
+@media (min-width: 768px) {
+  .ct-mq__copy {
+    font-size: 150px;
+  }
+}
+
+/* Left at 60px a second (`--mq-dur` from the measured run), paused under
+   the pointer, still under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .ct-mq__track {
+    animation: ct-mq var(--mq-dur, 40s) linear infinite;
+  }
+
+  .ct-mq:hover .ct-mq__track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes ct-mq {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* 32px under the headline: the arrow and the line, 16px bone at 85%. */
+.ct-hero__line {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-sm);
+  width: min(100% - 2 * var(--inset), 1200px);
+  margin: 32px auto 0;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-body-dark); /* bone at 85% */
+}
+
+.ct-hero__line > span {
+  max-width: 32ch;
+}
+
+.ct-hero__arrow {
+  flex: none;
+  margin-top: 2px;
+}
+
+/* ---- 2. The form --------------------------------------------------------- */
+
+.ct-form {
+  padding: var(--s-2xl) var(--inset) 0;
+}
+
+.ct-form__in {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+/* ---- 3. The tiles, as trust facts --------------------------------------- */
+
+.ct-facts {
+  padding: var(--s-section) var(--inset) 0;
+}
+
+.ct-facts__h {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+/* Stacked below 768, two across at 768, four across from 1024. */
+.ct-facts__row {
+  display: grid;
+  gap: var(--s-md);
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .ct-facts__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .ct-facts__row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Home's tiles, the same colours in the same order (agency.css): TEAM
+   lilac, BUILD mint, AFTER coral, PRICE yellow, every word asphalt: 8.68:1,
+   5.62, 5.87 and 9.46. */
+.ct-facts__tile {
+  display: grid;
+  align-content: start;
+  gap: var(--s-sm);
+  padding: var(--s-lg);
+  border-radius: 16px;
+  color: var(--c-asphalt);
+}
+
+.ct-facts__tile:nth-child(1) {
+  background: var(--c-lilac);
+}
+
+.ct-facts__tile:nth-child(2) {
+  background: var(--c-mint);
+}
+
+.ct-facts__tile:nth-child(3) {
+  background: var(--c-coral);
+}
+
+.ct-facts__tile:nth-child(4) {
+  background: var(--c-accent-ground);
+}
+
+.ct-facts__k {
+  margin: 0;
+  color: var(--c-asphalt);
+}
+
+.ct-facts__v {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  text-wrap: balance;
+  color: var(--c-asphalt);
+}

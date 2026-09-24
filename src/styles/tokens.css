@@ -458,25 +458,20 @@
   --card-dark-fill: rgb(255 255 255 / 4%);
   --card-dark-edge: rgb(255 255 255 / 10%);
   --card-shadow: 0 12px 36px rgb(0 0 0 / 25%);
-  /* ONE FIELD, TWO GROUNDS, 2026-09-24. Dark: white at 4%, a white-at-22%
-     edge, bone text. Cream: white, an asphalt-at-15% edge (#0B0B0D), asphalt
-     text. Focus is machine yellow on both. */
-  --field-dark-fill: rgb(255 255 255 / 4%);
-  --field-dark-edge: rgb(255 255 255 / 22%);
-  --field-cream-fill: #ffffff;
-  --field-cream-edge: rgb(11 11 13 / 15%);
+  /* THE LINE FIELD, 2026-09-25 (the founder's contact pass): no box. A
+     field is transparent with a 1px line under it, white at 30% on dark,
+     #0B0B0D at 30% on cream; 2px machine yellow on focus, 2px error red on
+     error. The boxed fills and edges are gone. */
+  --field-line-dark: rgb(255 255 255 / 30%);
+  --field-line-cream: rgb(11 11 13 / 30%);
   /* THE GRAIN, 2026-09-24 (the founder's Monolog pass): one feTurbulence
      noise, inline as an SVG data URI - no image file - laid at 3% over the
      hero's film and every cream panel. Defined once, here. */
   --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   --grain-opacity: 0.03;
-  /* THE DARK FIELD, 2026-09-24 (the founder): every input, textarea and
-     select on every form. The error red is the founder's, used on a field's
-     border and nowhere else; the select's chevron is the icon set's
-     chevron-down (Icons.jsx), drawn here as a data URI in bone. */
+  /* The error red is the founder's, used on a field's line and nowhere
+     else. (The select chevrons went with the last select, 2026-09-25.) */
   --c-field-error: #e5484d;
-  --field-chevron: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%23e8eaed' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'><path d='M5 8l5 5 5-5'/></svg>");
-  --field-chevron-cream: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%2317181a' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'><path d='M5 8l5 5 5-5'/></svg>");
   /* THE BUTTON, 2026-09-24 (the pricing rebuild, the founder): every button
      on the site is Clash Display Medium at 14px with a 6px radius, primary
      and secondary alike. The calls no longer step with the frame. 6px is not
@@ -1023,13 +1018,13 @@ main#main footer.foot {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  :is(.foot__submit, .plan__send):hover .send__go {
+  .plan__send:hover .send__go {
     transform: translateX(4px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :is(.foot__submit, .plan__send):hover .send__go {
+  .plan__send:hover .send__go {
     transform: none;
   }
 }

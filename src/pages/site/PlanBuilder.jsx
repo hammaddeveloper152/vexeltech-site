@@ -568,14 +568,20 @@ export default function PlanBuilder({ heading = null }) {
 
             {step === 3 ? (
               <div className="plan__fields">
+                {/* THE LINE FIELDS, 2026-09-25 (the founder's contact pass):
+                    the placeholder is the label, a mono index above, the
+                    real label visually hidden (LeadForm.jsx's field). */}
                 {[
-                  ['name', 'Name', 'text', 'name'],
-                  ['email', 'Email', 'email', 'email'],
-                  ['phone', 'Phone', 'tel', 'tel'],
-                ].map(([id, label, type, auto]) => (
+                  ['name', 'Your name', 'text', 'name'],
+                  ['email', 'Your email', 'email', 'email'],
+                  ['phone', 'Your phone', 'tel', 'tel'],
+                ].map(([id, label, type, auto], i) => (
                   <p className="plan__field" key={id}>
-                    <label className="plan__label" htmlFor={`plan-${id}`}>
-                      <span className="lbl">{label}</span>
+                    <span className="plan__idx" aria-hidden="true">
+                      {`0${i + 1}`}
+                    </span>
+                    <label className="plan__sr" htmlFor={`plan-${id}`}>
+                      {label}
                     </label>
                     <input
                       className="plan__input"
@@ -583,6 +589,8 @@ export default function PlanBuilder({ heading = null }) {
                       name={id}
                       type={type}
                       autoComplete={auto}
+                      placeholder={`${label} *`}
+                      required
                       value={a[id]}
                       onChange={(e) => setA((c) => ({ ...c, [id]: e.target.value }))}
                     />

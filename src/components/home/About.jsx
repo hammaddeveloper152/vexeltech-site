@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { IconArrowUpRight } from '../site/Icons.jsx';
 import { useReveal } from './hooks.js';
+import { FACTS } from '../../content/facts.js';
 import './About.css';
 
 /* The about section. Between the work wall and the counter row.
@@ -37,17 +38,8 @@ const COPY = {
   link: 'How we work',
 };
 
-/* THE THREE ROWS, 2026-09-25 (the founder's launch batch), verbatim. They
-   replace the mascot: right of the copy, centred against it, stacked under
-   it below 768. */
-const ROWS = [
-  ['Team', 'One team across all four disciplines.'],
-  ['Build', 'Four business days from content to live.'],
-  ['After', 'Thirty days of care, then it is yours.'],
-  /* The fourth, 2026-09-25 (the founder's life pass 3), verbatim. */
-  ['Price', 'Flat prices. No retainers, no surprises.'],
-];
-
+/* THE FOUR ROWS: the founder's words, verbatim, in content/facts.js since
+   2026-09-25, so the contact page's tiles read the same words. */
 export default function About() {
   const [ref, revealed] = useReveal();
 
@@ -84,7 +76,7 @@ export default function About() {
         {/* THE MASCOT IS GONE, 2026-09-25 (the founder's launch batch), and
             its asset with it. */}
         <dl className="about__rows" style={{ '--i': 4 }}>
-          {ROWS.map(([k, v]) => (
+          {FACTS.map(([k, v]) => (
             <div className="about__row" key={k}>
               <dt className="about__row-k lbl">{k}</dt>
               <dd className="about__row-v">{v}</dd>

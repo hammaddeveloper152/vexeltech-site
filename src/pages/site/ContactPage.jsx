@@ -1,35 +1,67 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import Shell from './Shell.jsx';
-import { PageHead } from './parts.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
+import LeadForm from '../../components/site/LeadForm.jsx';
+import { IconArrowDownRight } from '../../components/site/Icons.jsx';
+import { FACTS } from '../../content/facts.js';
+import './contact.css';
 
-/* THE CONTACT PAGE. The form as built, and nothing added.
+/* THE CONTACT PAGE, 2026-09-25 (the founder's contact pass, after
+   brightscout.com/contact). Four things, top to bottom:
 
-   `FooterForm` is reused rather than reimplemented, so there is one form on
-   this site and one place its validation, its error handling and its offline
-   state live. It renders as a `<footer>` here, which is correct: it is the
-   end of this page as much as it is the end of the homepage, and it carries
-   the meta row with it.
+   1. THE MARQUEE HEADLINE. "Let's make the phone ring." in Clash Display
+      Medium, 150px bone (72 below 768), one line, repeating, moving left at
+      60px a second: the duration is set from the measured width of one run,
+      so the speed holds at every width. Transform only (BUILD-LAW Motion).
+      It pauses under the pointer and stands still under reduced motion. The
+      h1 is the sentence once, for a screen reader; the moving copies are
+      aria-hidden. Under it, 32px down, the arrow and the founder's line.
+   2. THE FORM: LeadForm with the pills. Row 1 name, phone, email; row 2
+      What do you need?; row 3 the message. One column below 768.
+   3. THE WHO WE ARE TILES, as trust facts: the same four facts as home,
+      read from content/facts.js.
+   4. THE FOOTER BLOCK, with no second form above it.
 
-   THE FORM IS STILL OFFLINE and says so on itself. `LIVE` in FooterForm.jsx
-   is false, the submit is disabled, and a visible line under it reads "This
-   form is not live yet." Supply an endpoint and flip that one constant; the
-   sent and failed branches are already wired.
+   NO CALL BAND ON THIS PAGE, as before: every other page's call points
+   here. */
 
-   NO SECOND CALL ON THIS PAGE. Every other page's call points here, so a
-   call here would point at the page the reader is on. The form is the
-   action, which is why this is the one page with no call band and the one
-   page whose accent is the form's own submit.
+const HEADLINE = 'Let’s make the phone ring.';
+const SPEED = 60; // px a second, the founder's
 
-   NOT BUILT: the phone field. Content answer 9.1 asks for name, phone with a
-   country code set from the IP, email, budget and message. The form has
-   name, email, company, budget and message, so `company` is on it and not in
-   9.1, and `phone` is in 9.1 and not on it. Both are the same decision and
-   its cost was reported rather than guessed: an IP country code needs either
-   a third party called on page load, which DESIGN.md's no-third-party-request
-   rule is aimed squarely at, or an edge function this static build does not
-   have. It would work perfectly while the form still went nowhere, which is
-   the argument for doing it when the endpoint lands and not before. */
+function Marquee() {
+  const track = useRef(null);
+
+  useLayoutEffect(() => {
+    const el = track.current;
+    if (!el) return undefined;
+    const run = el.firstElementChild;
+    const fit = () => {
+      el.style.setProperty('--mq-dur', `${run.getBoundingClientRect().width / SPEED}s`);
+    };
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(run);
+    return () => ro.disconnect();
+  }, []);
+
+  /* Two identical runs; the track moves by one run and starts again, so the
+     seam never shows. A run is two copies, wider than any screen. */
+  const runOf = (k) => (
+    <span className="ct-mq__run" key={k}>
+      <span className="ct-mq__copy">{HEADLINE}</span>
+      <span className="ct-mq__copy">{HEADLINE}</span>
+    </span>
+  );
+
+  return (
+    <div className="ct-mq" aria-hidden="true">
+      <div className="ct-mq__track" ref={track}>
+        {runOf('a')}
+        {runOf('b')}
+      </div>
+    </div>
+  );
+}
 
 export default function ContactPage() {
   return (
@@ -38,13 +70,38 @@ export default function ContactPage() {
       description="Tell us what you do and what you are losing. Fifteen minutes on the phone."
       meta={false}
     >
-      <PageHead
-        step="figure"
-        title="Let’s talk"
-        lead="Tell us what you do and what is going wrong. Fifteen minutes on the phone is enough for us to say what we would fix first, and there is nothing to pay for the answer."
-      />
-      {/* The handset came off the site with the storyboard, 2026-09-21. */}
-      <FooterForm />
+      <section className="vt ct-hero" aria-labelledby="ct-h">
+        <h1 className="ct-hero__h" id="ct-h">
+          {HEADLINE}
+        </h1>
+        <Marquee />
+        <p className="ct-hero__line">
+          <IconArrowDownRight className="i ct-hero__arrow" />
+          <span>Tell us what is going wrong. A person replies within one business day.</span>
+        </p>
+      </section>
+
+      <section className="vt ct-form" aria-label="Contact form">
+        <div className="ct-form__in">
+          <LeadForm idPrefix="ct" needs labelledBy="ct-h" />
+        </div>
+      </section>
+
+      <section className="vt ct-facts" aria-labelledby="ct-facts-h">
+        <h2 className="ct-facts__h" id="ct-facts-h">
+          Who we are
+        </h2>
+        <dl className="ct-facts__row">
+          {FACTS.map(([k, v]) => (
+            <div className="ct-facts__tile" key={k}>
+              <dt className="ct-facts__k lbl">{k}</dt>
+              <dd className="ct-facts__v">{v}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <FooterForm form={false} />
     </Shell>
   );
 }

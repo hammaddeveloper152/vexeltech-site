@@ -445,46 +445,69 @@
   margin: 0;
 }
 
-.plan__label {
-  /* Type is `.lbl` (tokens.css), the mono label, 2026-09-24. */
+/* THE LINE FIELD ON CREAM, 2026-09-25 (the founder's contact pass): no box,
+   a 1px line of #0B0B0D at 30%, 22px Satoshi in asphalt, the placeholder
+   as the label, a 12px mono index above. The founder's placeholder colour
+   is steel-lift, which is the dark-ground member of the steel family: on
+   cream it is 2.2:1, so here the placeholder and the index are steel,
+   7.20:1, as every steel label on cream is. The boxed white field is gone. */
+.plan__idx {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
   color: var(--c-steel); /* 7.20:1 on cream */
 }
 
-/* THE FIELD ON CREAM, 2026-09-24 (the founder's energy pass): one field,
-   two grounds. Here it is white, an asphalt-at-15% edge, asphalt text
-   (tokens.css `--field-cream-*`). */
+.plan__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
 .plan__input {
+  display: block;
   min-height: 48px; /* BUILD-LAW Touch */
   width: 100%;
-  padding: 14px 16px;
-  background: var(--field-cream-fill);
-  color: var(--c-asphalt); /* 17.77:1 on white */
-  border: 1px solid var(--field-cream-edge);
-  border-radius: 6px;
+  margin: 0;
+  padding: 14px 0;
+  background: transparent;
+  color: var(--c-asphalt); /* 15.75:1 on cream */
+  border: 0;
+  border-bottom: 1px solid var(--field-line-cream);
+  border-radius: 0;
   font-family: var(--font-offer);
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 22px;
+  line-height: 30px;
+  appearance: none;
 }
 
 .plan__input::placeholder {
-  color: var(--c-steel); /* 8.12:1 on white */
+  color: var(--c-steel); /* 7.20:1 on cream */
   opacity: 1;
-}
-
-.plan__input.plan__input:focus,
-.plan__input.plan__input:focus-visible {
-  outline: none;
-  border-color: var(--c-accent-draw-dark);
-  /* Focus is yellow on both grounds (the founder), and yellow is 1.9:1
-     against white: under BUILD-LAW's 3:1 for a non-text indicator. A 1px
-     asphalt ring outside the yellow edge carries the contrast (15.75:1 on
-     cream); the yellow stays the colour of focus. */
-  box-shadow: 0 0 0 1px var(--c-asphalt);
 }
 
 .plan__input[aria-invalid='true'],
 .plan__input[data-invalid='true'] {
-  border-color: var(--c-field-error);
+  padding-bottom: 13px;
+  border-bottom: 2px solid var(--c-field-error);
+}
+
+/* Focus: the line goes 2px machine yellow, as on dark. Yellow is 1.66:1 on
+   cream, under the 3:1 a focus indicator needs, so a 1px asphalt line sits
+   under it (15.75:1) and carries the contrast; yellow stays the colour of
+   focus. The same answer the boxed field had, as a line. */
+.plan__input.plan__input:focus,
+.plan__input.plan__input:focus-visible {
+  outline: none;
+  padding-bottom: 13px;
+  border-bottom: 2px solid var(--c-accent-draw-dark);
+  box-shadow: 0 1px 0 var(--c-asphalt);
 }
 
 /* ---- Navigation ------------------------------------------------------------ */

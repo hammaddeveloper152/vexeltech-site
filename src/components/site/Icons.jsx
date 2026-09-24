@@ -21,9 +21,8 @@ import './Icons.css';
    megaphone, three linked nodes), and three social marks for the footer's
    circles, drawn at 16px in the same stroke.
 
-   The select chevron is this set's chevron-down drawn as a CSS data URI
-   (`--field-chevron`, tokens.css), because a select's arrow cannot be a
-   React child. */
+   arrow-down-right (2026-09-25, the contact hero's line) points from the
+   heading into the form below it. */
 
 function Icon({ className = 'i', size = 20, children }) {
   return (
@@ -72,6 +71,12 @@ export const IconMinus = ({ className }) => (
 export const IconArrowUpRight = ({ className }) => (
   <Icon className={className}>
     <path d="M6 14L14 6M7 6h7v7" />
+  </Icon>
+);
+
+export const IconArrowDownRight = ({ className }) => (
+  <Icon className={className}>
+    <path d="M6 6l8 8M14 7v7H7" />
   </Icon>
 );
 

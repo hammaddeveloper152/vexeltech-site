@@ -64,7 +64,7 @@ for (const [w, h] of [[1280, 900], [390, 844]]) {
         base: { brand: !!$('.foot__brand .wm--sm'), addr: $('.foot__addr') && [$('.foot__addr').textContent, cs($('.foot__addr')).fontSize, cs($('.foot__addr')).color, cs($('.foot__addr')).fontFamily.split(',')[0]],
           legal: !!$('.foot__legal'), phone: !!$('.foot__phone'), stacked: baseEls.length === 2 && R(baseEls[1]).top > R(baseEls[0]).bottom - 1 },
         corner: cs(foot, '::before').backgroundImage,
-        form: !!$('.foot__form'),
+        form: !!$('.foot .lf'),
         oldMeta: !!$('.foot__meta-k, .foot__contact'),
       };
     });

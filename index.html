@@ -97,11 +97,13 @@
          Netlify cannot see its fields without this. It POSTs to "/" with
          form-name "contact". Hidden; never shown. Fields since 2026-09-24:
          name, phone, email, message and the four UTM tags; company and
-         budget are gone. -->
+         budget are gone. Since 2026-09-25 the contact page's form also sends
+         "need", the pills it picked, comma-separated. -->
     <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input type="text" name="name" />
       <input type="tel" name="phone" />
       <input type="email" name="email" />
+      <input type="text" name="need" />
       <textarea name="message"></textarea>
       <input type="hidden" name="utm_source" />
       <input type="hidden" name="utm_medium" />

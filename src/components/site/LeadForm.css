@@ -1,0 +1,273 @@
+/* ==========================================================================
+   THE LEAD FORM, 2026-09-25 (the founder's contact pass). See LeadForm.jsx.
+
+   The line field on the dark ground: transparent, a 1px line under it
+   (white at 30%), 22px Satoshi in bone, the placeholder as the label in
+   steel-lift, 14px above and below the text. A 12px mono index above each
+   field, steel-lift: the founder's "steel" is the light-ground member of the
+   family, and steel on black is 2.4:1, so on dark it is steel-lift, as
+   every other steel label on the dark grounds is.
+
+   Focus: the line becomes 2px machine yellow (9.46:1). Error: 2px red, the
+   message in words under it with a mark. A 2px line keeps the field's
+   height: the bottom padding gives back the extra pixel. No transition on
+   any of it.
+   ========================================================================== */
+
+.lf {
+  display: grid;
+  gap: var(--s-xl);
+  width: min(100%, 1200px);
+}
+
+/* Row 1: name, phone, email. One column below 768, three from it. */
+.lf__row {
+  display: grid;
+  gap: var(--s-xl);
+}
+
+@media (min-width: 768px) {
+  .lf__row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.lf__field {
+  display: grid;
+  gap: var(--s-sm);
+  margin: 0;
+  min-width: 0;
+}
+
+.lf__idx {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--c-steel-lift); /* 7.4:1 on asphalt */
+}
+
+/* The field's name, for a screen reader: the placeholder is its visible
+   label and leaves when the field fills. */
+.lf__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.lf__input {
+  display: block;
+  width: 100%;
+  min-height: 48px; /* BUILD-LAW Touch */
+  margin: 0;
+  padding: 14px 0;
+  background: transparent;
+  color: var(--c-bone); /* 16.32:1 */
+  border: 0;
+  border-bottom: 1px solid var(--field-line-dark);
+  border-radius: 0;
+  font-family: var(--font-offer);
+  font-size: 22px;
+  line-height: 30px;
+  appearance: none;
+}
+
+.lf__input::placeholder {
+  color: var(--c-steel-lift); /* 7.4:1 */
+  opacity: 1;
+}
+
+/* Error, then focus: focus wins, so the field the reader is in always shows
+   where they are; the error's words stay under it. */
+.lf__input[aria-invalid='true'] {
+  padding-bottom: 13px;
+  border-bottom: 2px solid var(--c-field-error);
+}
+
+.lf__input.lf__input:focus,
+.lf__input.lf__input:focus-visible {
+  outline: none;
+  padding-bottom: 13px;
+  border-bottom: 2px solid var(--c-accent-draw-dark);
+}
+
+/* One line tall, and it grows with what is typed (LeadForm.jsx sets the
+   height from the content). */
+.lf__textarea {
+  resize: none;
+  overflow: hidden;
+}
+
+.lf__err:empty {
+  display: none;
+}
+
+.lf__err {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-sm);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-error-dark); /* 5.11:1 on asphalt */
+}
+
+.lf__err-mark,
+.lf__ok-mark {
+  align-self: center;
+}
+
+.lf__ok {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-sm);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-success-dark); /* 5.49:1 on asphalt */
+}
+
+/* ---- Row 2 on the contact page: What do you need? ----------------------- */
+
+.lf__needs {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.lf__legend {
+  display: grid;
+  gap: var(--s-sm);
+  padding: 0;
+}
+
+.lf__legend-t {
+  color: var(--c-body-dark); /* bone at 85% */
+}
+
+.lf__pills {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--s-sm);
+  margin-top: var(--s-sm);
+}
+
+/* The label is the 48px target (BUILD-LAW Touch); the pill inside it is
+   the founder's 10px 20px. The checkbox is the real control, hidden. */
+.lf__pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  cursor: pointer;
+}
+
+.lf__check {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.lf__pill-face {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid var(--field-line-dark);
+  border-radius: 80px;
+  font-family: var(--font-offer);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--c-bone); /* 16.32:1 */
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lf__pill:hover .lf__pill-face {
+    border-color: var(--c-bone);
+  }
+}
+
+/* Selected: yellow, asphalt words, 9.46:1. */
+.lf__check:checked + .lf__pill-face {
+  background: var(--c-accent-ground);
+  border-color: var(--c-accent-ground);
+  color: var(--c-asphalt);
+}
+
+/* Focus is the site's ring on the pill, not the hover's edge. */
+.lf__check:focus-visible + .lf__pill-face {
+  outline: 2px solid var(--c-accent-draw-dark);
+  outline-offset: 3px;
+}
+
+/* ---- The submit ---------------------------------------------------------- */
+
+.lf__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-md) var(--s-lg);
+}
+
+/* THE YELLOW PILL, 2026-09-25: "Send message" and the arrow, 40% until the
+   four required fields are filled and valid (LeadForm.jsx). Opacity only,
+   so it may ease. */
+.lf__submit {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-sm);
+  min-height: 48px;
+  padding: var(--s-md) var(--s-lg);
+  background: var(--c-accent-ground);
+  color: var(--c-asphalt); /* 9.46:1 at full */
+  border: 0;
+  border-radius: 80px;
+  font-family: var(--font-brand);
+  font-size: var(--t-btn);
+  line-height: var(--t-btn-line);
+  font-weight: var(--t-weight-btn);
+  letter-spacing: normal;
+  cursor: pointer;
+  transition:
+    transform var(--d-press) var(--ease-reveal),
+    opacity var(--d-press) var(--ease-reveal);
+}
+
+.lf__submit[data-ready='false'] {
+  opacity: 0.4;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lf__submit[data-ready='true']:hover {
+    opacity: var(--hover-opacity);
+  }
+
+  .lf__submit:hover .send__go {
+    transform: translateX(4px);
+  }
+}
+
+.lf__submit:active {
+  transform: scale(0.97);
+}
+
+.lf__status {
+  margin: 0;
+}
+
+.lf__status:empty {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf__submit:active,
+  .lf__submit:hover .send__go {
+    transform: none;
+  }
+}
