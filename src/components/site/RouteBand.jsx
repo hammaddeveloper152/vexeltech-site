@@ -52,7 +52,8 @@ const STOPS = [
   ['05', "Thirty days of support, then it's yours"],
 ];
 
-export default function RouteBand({ id, heading, lines }) {
+/* `marg`: the home page's margin label for this section (2026-09-24). */
+export default function RouteBand({ id, heading, lines, marg = null }) {
   const sectionRef = useRef(null);
   const listRef = useRef(null);
   const stopRefs = useRef([]);
@@ -128,6 +129,11 @@ export default function RouteBand({ id, heading, lines }) {
       aria-labelledby={id}
       ref={sectionRef}
     >
+      {marg ? (
+        <span className="marg" aria-hidden="true">
+          {marg}
+        </span>
+      ) : null}
       <div className="route-band__in">
         <h2 className="route-band__h" id={id}>
           {heading}

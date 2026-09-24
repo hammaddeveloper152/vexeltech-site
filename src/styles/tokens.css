@@ -673,39 +673,29 @@ html {
   text-wrap: pretty;
 }
 
-/* THE WORDMARK LINKS AND THE FOOTER EMAIL PRESS, viewer audit 2026-09-16.
-   BUILD-LAW pins a 160ms press on every pressable element and these three had
-   none: the bar's lockup, the footer's lockup and the mailto. The wordmarks
-   take the site's hover as well, which they also lacked. */
-.bar__brand,
-.foot__brand,
-.foot__email {
+/* THE BAR'S WORDMARK PRESS, viewer audit 2026-09-16. BUILD-LAW pins a 160ms
+   press on every pressable element. The footer's lockup and its mailto that
+   shared this rule are gone with the footer rebuilds of 2026-09-24. */
+.bar__brand {
   transition:
     opacity var(--d-press) var(--ease-reveal),
-    transform var(--d-press) var(--ease-reveal),
-    color var(--d-press) var(--ease-reveal);
+    transform var(--d-press) var(--ease-reveal);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .bar__brand:hover,
-  .foot__brand:hover {
+  .bar__brand:hover {
     opacity: var(--hover-opacity);
   }
 }
 
 .bar__brand:active,
-.foot__brand:active,
-.foot__email:active,
 .skip:active {
   transform: scale(0.97);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .bar__brand:hover,
-  .foot__brand:hover,
   .bar__brand:active,
-  .foot__brand:active,
-  .foot__email:active,
   .skip:active {
     transform: none;
   }

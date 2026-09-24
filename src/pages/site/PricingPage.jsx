@@ -200,12 +200,8 @@ export default function PricingPage() {
       {/* 5. QUESTIONS. The home accordion, the founder's four. */}
       <Faq items={QUESTIONS} id="pr-faq" />
 
-      {/* 6. The burst call, then the form from the Shell. */}
-      <CallBand
-        material="burst"
-        heading="Not sure which one you need"
-        note="Tell us what is going wrong and we will say which of these we would start with. Sometimes it is the cheapest one on this page."
-      />
+      {/* 6. The closing call, then the form from the Shell. */}
+      <CallBand heading="Not sure which one you need" />
     </Shell>
   );
 }

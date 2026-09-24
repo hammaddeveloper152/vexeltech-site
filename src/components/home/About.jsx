@@ -39,6 +39,10 @@ export default function About() {
 
   return (
     <section className="vt about panel-sec" aria-labelledby="about-h">
+      {/* The margin label, 2026-09-24: decorative, the heading names it. */}
+      <span className="marg" aria-hidden="true">
+        (02) Who we are
+      </span>
       {/* Visually hidden, and it names the section for a screen reader. It
           read "Placeholder section name" until 2026-09-16, when the viewer
           audit found the placeholder being announced; the user named it. */}

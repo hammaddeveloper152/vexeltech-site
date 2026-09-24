@@ -131,6 +131,7 @@ export default function Home() {
           id="how-h"
           heading="How it works"
           lines={STEP_LINES}
+          marg="(04) How it works"
         />
         <CounterRow band />
         {/* The $700 at 240px is the band's object; `promise.webp` came off

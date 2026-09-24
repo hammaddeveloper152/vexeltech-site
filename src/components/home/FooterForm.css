@@ -12,7 +12,9 @@
 
 .foot {
   /* Transparent. The ground and both blooms are the page rig's, declared once
-     in lit.css — see the audit note there. */  padding: var(--s-section) var(--s-md);
+     in lit.css — see the audit note there. */  padding: var(--s-section) var(--foot-px);
+  /* The inline padding, named so the cream band can bleed past it. */
+  --foot-px: var(--s-md);
   color: var(--c-bone); /* 16.32:1 */
 /* Section separator REMOVED 2026-09-08: on an all-asphalt page two
    sections are separated by space, not by a stroke. See DESIGN.md,
@@ -223,16 +225,9 @@
 
 /* ---- Meta --------------------------------------------------------------- */
 
-/* THE FOOTER, REBUILT 2026-09-24 (the founder's Monolog pass). See
-   FooterMeta.jsx. Two columns inside the page measure from 768, stacked
-   below; the base row under them. Values on the base: bone 16.32:1,
-   steel-lift 7.4:1. */
-.foot__meta {
-  margin-top: var(--s-xl);
-}
-
+/* The line that answers the form, under it. */
 .foot__lead-p {
-  margin: 0;
+  margin: var(--s-xl) 0 0;
   max-width: 60ch;
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
@@ -240,43 +235,82 @@
   color: var(--c-steel-lift); /* body, 7.4:1 */
 }
 
-.foot__cols {
+/* ---- THE FOOTER BAND, 2026-09-24 (the founder's Flesh and Bones pass) ----
+
+   See FooterMeta.jsx. Full bleed: the band steps out through the footer's
+   inline padding (`--foot-px`) and its bottom padding, so it meets both
+   viewport edges and the foot of the page. 120px above and below,
+   everything centred, 24px between rows. Values on cream: asphalt 15.75:1,
+   steel 7.20:1; asphalt on machine yellow 9.46:1. */
+.foot__band {
+  position: relative;
   display: grid;
-  gap: var(--s-2xl);
-  margin-top: var(--s-3xl);
+  justify-items: center;
+  gap: var(--s-lg);
+  margin: var(--s-section) calc(-1 * var(--foot-px)) calc(-1 * var(--s-section));
+  padding: 120px var(--foot-px);
+  background: var(--c-cream);
+  color: var(--c-asphalt);
+  text-align: center;
+}
+
+/* The grain, 3%, as on every cream panel. */
+.foot__band::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+}
+
+.foot__band :focus-visible {
+  outline-color: var(--c-asphalt);
+}
+
+.foot__city,
+.foot__legal {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel); /* 7.20:1 */
 }
 
 .foot__pages {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 40px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.foot__pages li + li {
-  border-top: 1px solid rgb(255 255 255 / 10%);
-}
-
-/* The five pages: Clash Display Medium 32px bone, one per row. A row is at
-   least 48px tall (BUILD-LAW Touch) and the whole row is the link. */
+/* Steel on hover, a colour swap and not an animation: BUILD-LAW Motion
+   animates transform and opacity only, so there is no transition on it. A
+   row is 48px tall, BUILD-LAW Touch. */
 .foot__page {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   min-height: 48px;
-  padding-block: var(--s-md);
   font-family: var(--font-quiet);
-  font-size: 32px;
-  line-height: 1.15;
+  font-size: 20px;
+  line-height: 1.2;
   font-weight: var(--t-weight-quiet);
-  color: var(--c-bone); /* 16.32:1 */
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: var(--c-asphalt); /* 15.75:1 */
   text-decoration: none;
-  transition:
-    opacity var(--d-press) var(--ease-reveal),
-    transform var(--d-press) var(--ease-reveal);
+  transition: transform var(--d-press) var(--ease-reveal);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .foot__page:hover {
-    opacity: var(--hover-opacity);
+    color: var(--c-steel); /* 7.20:1 */
   }
 }
 
@@ -284,85 +318,48 @@
   transform: scale(0.97);
 }
 
-.foot__side {
-  display: grid;
-  align-content: start;
-  gap: var(--s-xl);
-}
-
-.foot__group {
-  display: grid;
-  justify-items: start;
-  gap: var(--s-xs);
-}
-
-/* (CONTACT), (SOCIALS): the mono label, `.lbl`, in steel-lift. */
-.foot__k {
-  margin: 0 0 var(--s-sm);
-  color: var(--c-steel-lift); /* 7.4:1 */
-}
-
-.foot__email,
-.foot__social {
-  display: inline-flex;
-  align-items: center;
-  max-width: 100%;
-  min-height: 48px; /* BUILD-LAW Touch */
-  font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  overflow-wrap: anywhere;
-  color: var(--c-bone); /* 16.32:1 */
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  transition: opacity var(--d-press) var(--ease-reveal);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .foot__email:hover,
-  .foot__social:hover {
-    opacity: var(--hover-opacity);
-  }
-}
-
-.foot__social:active {
-  transform: scale(0.97);
-  transition: transform var(--d-press) var(--ease-reveal);
-}
-
-.foot__addr,
-.foot__phone {
-  margin: 0;
-  font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  color: var(--c-bone);
-}
-
 .foot__socials {
+  display: flex;
+  justify-content: center;
+  gap: var(--s-sm);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* The base: 13px steel-lift, the booking line left, the legal line right. */
-.foot__base {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--s-sm) var(--s-lg);
-  margin-top: var(--s-2xl);
-  padding-top: var(--s-lg);
-  border-top: 1px solid rgb(255 255 255 / 10%);
-  font-family: var(--font-offer);
-  font-size: 13px;
-  line-height: 20px;
-  color: var(--c-steel-lift); /* 7.4:1 */
+/* The link is 48px (BUILD-LAW Touch); the yellow circle inside it is 32. */
+.foot__social {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  transition: transform var(--d-press) var(--ease-reveal);
 }
 
-.foot__booking,
-.foot__legal {
-  margin: 0;
+.foot__social:active {
+  transform: scale(0.97);
+}
+
+.foot__dot {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--c-accent-ground);
+}
+
+.foot__glyph {
+  width: 18px;
+  height: 18px;
+  color: var(--c-asphalt); /* 9.46:1 on machine yellow */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .foot__page:active,
+  .foot__social:active {
+    transform: none;
+  }
 }
 
 /* ---- Reduced motion ----------------------------------------------------- */
@@ -382,7 +379,7 @@
 
 @media (min-width: 768px) {
   .foot {
-    padding: var(--s-section) var(--s-xl);
+    --foot-px: var(--s-xl);
   }
 
   .foot__form {
@@ -394,14 +391,10 @@
     grid-column: 1 / -1;
   }
 
-  .foot__cols {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    column-gap: var(--s-3xl);
-  }
 }
 
 @media (min-width: 1024px) {
   .foot {
-    padding: var(--s-section) var(--s-2xl);
+    --foot-px: var(--s-2xl);
   }
 }

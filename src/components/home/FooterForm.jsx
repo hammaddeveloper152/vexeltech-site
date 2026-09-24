@@ -302,8 +302,14 @@ export default function FooterForm() {
         </form>
         </div>
 
-        <FooterMeta />
+        {/* The line that answers the form. */}
+        <p className="foot__lead-p">
+          Tell us what&apos;s going wrong. You&apos;ll hear from a person within one business day.
+        </p>
       </div>
+
+      {/* The cream band, full bleed, outside the form's measure. */}
+      <FooterMeta />
     </footer>
   );
 }

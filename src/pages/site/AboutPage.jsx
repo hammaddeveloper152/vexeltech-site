@@ -357,12 +357,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 8. THE CALL on the spotlight, and the form from the Shell. */}
-      <CallBand
-        material="spot"
-        heading="Tell us about your business and get a quote the same day."
-        note="Fifteen minutes on the phone and we'll tell you what we'd fix first. It isn't always the expensive one."
-      />
+      {/* 8. THE CLOSING CALL, and the form from the Shell. */}
+      <CallBand heading="Tell us about your business and get a quote the same day." />
     </Shell>
   );
 }

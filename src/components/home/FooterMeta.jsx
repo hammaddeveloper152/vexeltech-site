@@ -1,114 +1,78 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { InstagramLogo, LinkedinLogo } from '@phosphor-icons/react';
 import './FooterForm.css';
 
-/* THE FOOTER, REBUILT 2026-09-24 (the founder's Monolog pass), on every
-   route. It follows the form (FooterForm renders it), inside the page
-   measure:
+/* THE FOOTER BAND, 2026-09-24 (the founder's Flesh and Bones pass), on every
+   route: a full-bleed cream band under the form, 120px above and below,
+   everything centred, 24px between rows. Grain at 3%, as on every cream
+   panel.
 
-     left     the five pages, Clash Display Medium 32px bone, one per row,
-              a 1px white-at-10% hairline between rows
-     right    (CONTACT): the email and the Richmond address
-              (SOCIALS): LinkedIn and Instagram, `#` until the founder
-              supplies the accounts - the founder's instruction, which
-              replaces the rule that no social link renders without a URL
-     base     13px steel-lift: "Booking projects for October 2026" left, the
-              legal line and the year right
+     row 1   RICHMOND, TX              mono 12px uppercase, steel
+     row 2   the five pages            Clash Medium 20px uppercase, asphalt,
+                                       40px apart, steel on hover
+     row 3   LinkedIn and Instagram    32px yellow circles, asphalt glyphs,
+                                       `#` until the founder supplies them
+     row 4   (c) 2026 [LEGAL ENTITY NAME]  mono 12px, steel
 
-   The old footer's link grid, its wordmark row and the social glyph row
-   (SocialRow.jsx) are gone. The email and the address confirmed 2026-09-08;
-   the address and the `PostalAddress` in index.html's JSON-LD are one fact
-   written twice, so change them together. On a phone the columns stack. */
-const EMAIL = 'info@vexeltechsolutions.com';
-const ADDRESS = '6619 Elks Trce, Richmond, TX 77406';
+   A FULL-BLEED COLOUR BAND AND YELLOW CIRCLES are both the founder's
+   decision in this brief, against the quiet pass's "no full-bleed colour"
+   and its four places for yellow; DESIGN.md records both.
 
+   The email and "Booking projects for October 2026" are not in the band: the
+   brief's four rows do not carry them. The address confirmed 2026-09-08 is
+   in index.html's JSON-LD as a `PostalAddress`; the band names the city. */
 const PAGES = [
   { id: 'home', label: 'Home', href: '/' },
   { id: 'services', label: 'Services', href: '/services' },
   { id: 'pricing', label: 'Pricing', href: '/pricing' },
-  { id: 'about', label: 'About us', href: '/about-us' },
+  { id: 'about', label: 'About', href: '/about-us' },
   { id: 'contact', label: 'Contact', href: '/contact-us' },
 ];
 
-/* THE LEGAL LINE RENDERS AS ITS OWN PLACEHOLDER, 2026-09-23 (the founder):
-   "[LEGAL ENTITY NAME] · 2026", verbatim from VEXELTECH-COPY.md, until the
-   founder replaces it. It was null and rendered nothing.
-
-   This is not a breach of "no placeholder content": the site's rule is that
-   every placeholder string SAYS it is a placeholder, and a bracketed slot in
-   the legal row does exactly that. The alternative - a footer with no legal
-   line at all - reads as finished and is the thing that quietly ships.
-
-   THE PHONE STAYS NULL. A visible "[PHONE]" in the contact row would sit
-   beside a real email and a real address and invite a reader to try it; a
-   legal line is a statement about the company, not something anyone dials. */
-const PHONE = null;
-
 /* The founder's two accounts, `#` until the URLs are supplied. */
 const SOCIALS = [
-  { id: 'linkedin', label: 'LinkedIn', href: '#' },
-  { id: 'instagram', label: 'Instagram', href: '#' },
+  { id: 'linkedin', label: 'LinkedIn', href: '#', Icon: LinkedinLogo },
+  { id: 'instagram', label: 'Instagram', href: '#', Icon: InstagramLogo },
 ];
 
-/* The founder's line, 2026-09-24. */
-const BOOKING = 'Booking projects for October 2026';
+/* A placeholder that says it is one, verbatim from VEXELTECH-COPY.md. */
 const LEGAL = '[LEGAL ENTITY NAME]';
 const YEAR = 2026;
 
 export default function FooterMeta() {
   return (
-    <div className="foot__meta">
-      {/* The line that answered the form, kept from the old mail block. */}
-      <p className="foot__lead-p">
-        Tell us what&apos;s going wrong. You&apos;ll hear from a person within one business day.
-      </p>
-      <div className="foot__cols">
-        {/* A named landmark, so it is not confused with the bar's "Main"
-            navigation. */}
-        <nav className="foot__nav" aria-label="Site">
-          <ul className="foot__pages">
-            {PAGES.map(({ id, label, href }) => (
-              <li key={id}>
-                <Link className="foot__page" to={href}>
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+    <div className="foot__band">
+      <p className="foot__city">Richmond, TX</p>
 
-        <div className="foot__side">
-          <div className="foot__group">
-            <p className="foot__k lbl">Contact</p>
-            <a className="foot__email" href={`mailto:${EMAIL}`}>
-              {EMAIL}
+      {/* A named landmark, so it is not confused with the bar's "Main". */}
+      <nav className="foot__nav" aria-label="Site">
+        <ul className="foot__pages">
+          {PAGES.map(({ id, label, href }) => (
+            <li key={id}>
+              <Link className="foot__page" to={href}>
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <ul className="foot__socials" aria-label="Social">
+        {SOCIALS.map(({ id, label, href, Icon }) => (
+          <li key={id}>
+            <a className="foot__social" href={href} aria-label={label}>
+              <span className="foot__dot" aria-hidden="true">
+                <Icon className="foot__glyph" />
+              </span>
             </a>
-            <p className="foot__addr">{ADDRESS}</p>
-            {PHONE ? <p className="foot__phone">{PHONE}</p> : null}
-          </div>
-          <div className="foot__group">
-            <p className="foot__k lbl">Socials</p>
-            <ul className="foot__socials">
-              {SOCIALS.map(({ id, label, href }) => (
-                <li key={id}>
-                  <a className="foot__social" href={href}>
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
+          </li>
+        ))}
+      </ul>
 
-      <div className="foot__base">
-        <p className="foot__booking">{BOOKING}</p>
-        {LEGAL ? (
-          <p className="foot__legal">
-            {LEGAL} · {YEAR}
-          </p>
-        ) : null}
-      </div>
+      <p className="foot__legal">
+        © {YEAR} {LEGAL}
+      </p>
     </div>
   );
 }

@@ -59,6 +59,11 @@ otherwise, this section is right and the rest is history.
 - **Later 2026-09-24: Moldie is the home route numerals and the home $700
   only.** Every other price is Clash 400 (56px on /services and the /pricing
   grid). **Every panel and card is 24px** (`--r-card`); buttons and chips 6px.
+- **Flesh and Bones pass, 2026-09-24, supersedes the footer and call below**:
+  the footer is a full-bleed cream band (city, five pages in Clash 20px
+  uppercase, two yellow social circles, the legal line); the closing call is
+  one yellow Clash 32px uppercase underlined line on the base, and it is the
+  link; home sections carry vertical mono margin labels from 1024.
 - **Monolog pass, 2026-09-24**: eyebrows, section labels, table headers and
   form labels are `.lbl` - JetBrains Mono 12px uppercase 0.08em in CSS-drawn
   parentheses. The ticker is a VEXELTECH wordmark band (it starts Lenis on

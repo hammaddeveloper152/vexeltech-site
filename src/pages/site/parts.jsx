@@ -56,25 +56,20 @@ export function Section({ title, note, children, labelledBy }) {
   );
 }
 
-/* The page's one accent. See the accent note at the top of pages.css.
-
-   `material`, 2026-09-16: each closing call carries its own ground or none.
-   'burst' on Pricing, 'spot' (the spotlight) on About, and no prop on Services,
-   which closes on the plain dark call. A material appears on one band only, so
-   this is a prop set per mount, never a default. */
-export function CallBand({ heading, note, material }) {
-  const band = material ? ` band band-${material}` : '';
+/* THE CLOSING CALL, 2026-09-24 (the founder's Flesh and Bones pass): one
+   line, the heading's own words, in Clash Display Medium 32px uppercase in
+   machine yellow with a 4px yellow underline 8px below it, centred, 160px
+   above and below on the base ground. The line IS the call - a link to the
+   contact page - so the separate button and the note under the heading are
+   gone, and so are the burst and spotlight grounds. */
+export function CallBand({ heading }) {
   return (
-    <section className={`vt callband${band}`} aria-labelledby="callband-h">
-      <div className="callband__in">
-        <h2 className="callband__h" id="callband-h">
+    <section className="vt callband" aria-labelledby="callband-h">
+      <h2 className="callband__h" id="callband-h">
+        <Link className="callband__link" to={CALL_HREF}>
           {heading}
-        </h2>
-        {note ? <p className="callband__note">{note}</p> : null}
-        <Link className="callband__cta" to={CALL_HREF}>
-          {CALL_LABEL}
         </Link>
-      </div>
+      </h2>
     </section>
   );
 }

@@ -68,6 +68,10 @@ export default function Services() {
   const [ref, revealed] = useReveal();
   return (
     <section className="vt services" aria-labelledby="services-h">
+      {/* The margin label, 2026-09-24: decorative, the heading names it. */}
+      <span className="marg" aria-hidden="true">
+        (03) What we do
+      </span>
       <div className="services__in">
         <div className="services__head">
           <h2 className="services__h" id="services-h">

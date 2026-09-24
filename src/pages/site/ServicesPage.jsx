@@ -76,11 +76,8 @@ export default function ServicesPage() {
       <ServiceSections disciplines={DISCIPLINES} />
 
 
-      {/* TALK TO US: the plain dark call. */}
-      <CallBand
-        heading="Which one is costing you most"
-        note="Fifteen minutes on the phone and we'll tell you what we'd fix first. It isn't always the expensive one."
-      />
+      {/* TALK TO US: the closing call. */}
+      <CallBand heading="Which one is costing you most" />
     </Shell>
   );
 }

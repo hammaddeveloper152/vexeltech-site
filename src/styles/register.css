@@ -66,6 +66,45 @@
   text-wrap: balance;
 }
 
+/* ---- THE MARGINALIA, 2026-09-24 (the founder's Flesh and Bones pass) ------
+
+   Home only: a rotated label in each section's left gutter, pinned to the
+   top of the section's content - "(01) WHAT IT COSTS YOU" to "(04) HOW IT
+   WORKS". JetBrains Mono 12px uppercase, steel-lift (7.4:1), set vertically
+   and turned so it reads bottom to top. Centred in the 64px gutter, and gone
+   below 1024 where the gutter is 16 to 40px. Decorative: each section's own
+   heading names it. */
+.fail,
+.about,
+.services,
+.route-band {
+  position: relative;
+}
+
+.marg {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .marg {
+    position: absolute;
+    top: var(--s-section);
+    left: calc(var(--inset) / 2);
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--c-steel-lift);
+    writing-mode: vertical-rl;
+    transform: translateX(-50%) rotate(180deg);
+    pointer-events: none;
+  }
+}
+
 /* ---- Failures -----------------------------------------------------------
    FOUR OF THE CARD, 2026-09-24: the statement and the consequence are the
    card's name and line (ArtCard.css), so their rules here are gone. */
