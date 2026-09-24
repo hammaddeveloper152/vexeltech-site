@@ -98,9 +98,9 @@
 /* The illustration's faces and keyline, the light palette since the energy
    pass (2026-09-24): top white, left cream, right bone, the yellow element
    machine yellow, the blue one arc blue; an asphalt keyline, 1.5px at any
-   size, round joins. The sticker keeps this palette; the illustration on a
-   colour card is redrawn white (below, the colour variant). */
-:is(.art__ill, .art__sticker-art) path {
+   size, round joins. The illustration on a colour card is redrawn white
+   (below, the colour variant). */
+.art__ill path {
   stroke: var(--c-asphalt);
   stroke-width: 1.5px;
   stroke-linejoin: round;
@@ -108,53 +108,53 @@
   vector-effect: non-scaling-stroke;
 }
 
-:is(.art__ill, .art__sticker-art) .iso-t {
+.art__ill .iso-t {
   fill: var(--c-shop-white);
 }
 
-:is(.art__ill, .art__sticker-art) .iso-l {
+.art__ill .iso-l {
   fill: var(--c-cream);
 }
 
-:is(.art__ill, .art__sticker-art) .iso-r {
+.art__ill .iso-r {
   fill: var(--c-bone);
 }
 
-:is(.art__ill, .art__sticker-art) .iso-b {
+.art__ill .iso-b {
   fill: var(--c-arc-blue);
 }
 
-:is(.art__ill, .art__sticker-art) .iso-y {
+.art__ill .iso-y {
   fill: var(--c-accent-ground);
 }
 
-:is(.art__ill, .art__sticker-art) .iso-line {
+.art__ill .iso-line {
   fill: none;
 }
 
 /* The small filled squares (the browser's three dots): white, on the blue
    bar. */
-:is(.art__ill, .art__sticker-art) .iso-d {
+.art__ill .iso-d {
   fill: var(--c-shop-white);
 }
 
 /* The sound arcs and the connectors: 2px, no fill; the middle arc yellow. */
-:is(.art__ill, .art__sticker-art) .iso-arc {
+.art__ill .iso-arc {
   fill: none;
   stroke-width: 2px;
 }
 
-:is(.art__ill, .art__sticker-art) .iso-arc--y {
+.art__ill .iso-arc--y {
   stroke: var(--c-accent-draw-dark);
 }
 
-:is(.art__ill, .art__sticker-art) .iso-arc--b {
+.art__ill .iso-arc--b {
   stroke: var(--c-arc-blue);
 }
 
 /* The dot at each connector's join: asphalt, with its keyline connector
    (2026-09-25: the blue went to the first cube). */
-:is(.art__ill, .art__sticker-art) .iso-dot {
+.art__ill .iso-dot {
   fill: var(--c-asphalt);
   stroke: none;
 }
@@ -317,47 +317,13 @@
   fill: var(--c-shop-white);
 }
 
-/* ---- THE STICKER, 2026-09-25 (the founder's life pass) -------------------
-
-   A 72px copy of the card's own object, in its full colours, over the
-   card's top right corner by 24px each way, rotated 12 degrees. Its 6px
-   white outline is the SAME drawing underneath, every shape filled white
-   and stroked white at 12px with `paint-order: stroke`, so half the stroke
-   shows outside the silhouette: a die-cut edge. Hidden below 768. */
-.art__sticker {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .art__sticker {
-    position: absolute;
-    top: -24px;
-    right: -24px;
-    z-index: 2;
-    display: block;
-    width: 72px;
-    height: 72px;
-    transform: rotate(12deg);
-    pointer-events: none;
-  }
-
-  .art__sticker svg {
-    position: absolute;
-    inset: 0;
-    width: 72px;
-    height: 72px;
-    overflow: visible;
-  }
-
-  .art__sticker-edge :is(path, circle) {
-    fill: var(--c-shop-white);
-    stroke: var(--c-shop-white);
-    stroke-width: 12px;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    paint-order: stroke;
-    vector-effect: non-scaling-stroke;
-  }
+/* ---- THE NUMBER BADGE, 2026-09-25 (the founder's life pass 2) ------------
+   Over the card's top right corner by 20px each way (Badge.jsx and
+   Badge.css carry the object and its rotation). It replaced the
+   illustration sticker. */
+.art .art__badge {
+  top: -20px;
+  right: -20px;
 }
 
 /* ---- The bare card: a render filling a 3:4 card ------------------------- */

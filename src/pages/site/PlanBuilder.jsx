@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import {
+  IconArrowRight,
   IconCheck,
   IconMarkAutomation,
   IconMarkBranding,
@@ -616,7 +617,11 @@ export default function PlanBuilder({ heading = null }) {
                       onClick={send}
                       disabled={status === 'sending'}
                     >
-                      {status === 'sending' ? 'Sending' : 'Send this plan to us'}
+                      {/* The site's send button, 2026-09-25 (life pass 2): "Send
+                          message" and the arrow that slides on hover. It
+                          read "Send this plan to us". */}
+                      {status === 'sending' ? 'Sending' : 'Send message'}
+                      <IconArrowRight className="i send__go" />
                     </button>
                     {status === 'failed' ? (
                       <p className="plan__err" role="status">

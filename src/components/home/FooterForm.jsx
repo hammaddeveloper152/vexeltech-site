@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { IconCheck, IconCross, IconSend } from '../site/Icons.jsx';
+import { IconArrowRight, IconCheck, IconCross } from '../site/Icons.jsx';
 import FooterMeta from './FooterMeta.jsx';
 import { UTM_KEYS, getUtm } from '../site/utm.js';
 import { trackPixel } from '../site/pixel.js';
@@ -255,9 +255,13 @@ export default function FooterForm() {
                 primary at full opacity, always. A double submit is stopped in
                 `onSubmit` by the sending guard rather than by greying the
                 control, so nothing has to explain itself to the reader. */}
+            {/* "SEND MESSAGE" AND AN ARROW AFTER IT, 2026-09-25 (the founder's
+                life pass 2): the arrow slides 4px right on hover; the
+                button stays yellow. The paper plane before the label is
+                gone. */}
             <button className="foot__submit" type="submit">
-              <IconSend className="i" />
-              {sending ? 'Sending' : 'Send'}
+              {sending ? 'Sending' : 'Send message'}
+              <IconArrowRight className="i send__go" />
             </button>
 
             {/* Polite, so it does not cut across whatever the reader is doing,

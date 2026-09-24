@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Badge from './Badge.jsx';
 import './ArtCard.css';
 
 /* THE SITE'S ONE CARD, v2 (QUIET), 2026-09-24 (the founder).
@@ -24,11 +25,11 @@ import './ArtCard.css';
    cream one on the four discipline cards: `variant="colour"` with a `tone`
    (branding yellow, websites arc blue, marketing coral, automation mint),
    a `tilt` of -2 or +2 degrees at rest that straightens on the linked
-   card's hover, the illustration in a white keyline, and a STICKER: a 72px
-   copy of the card's own object in its full colours, a 6px white outline
-   round it, over the card's top right corner, rotated 12 degrees. The
-   sticker is two copies of the same drawing stacked: the lower one only a
-   white stroke, the outline; the upper one the drawing. Hidden below 768.
+   card's hover, the illustration in a white keyline, and the NUMBER BADGE
+   (Badge.jsx, life pass 2): 01 to 04 on a white die-cut disc over the
+   card's top right corner by 20px, rotated 12 degrees, hidden below 768. It
+   replaced the illustration sticker, and the card's small index text went
+   with it.
 
    THE BARE CARD is the one other use: with no `name`, a render fills a 3:4
    card edge to edge. The 404 page's mark stands in one, so no object on the
@@ -70,8 +71,8 @@ export default function ArtCard({
       {num || Art ? (
         <span className="art__top">
           {/* The number is the card's place in its set; decorative, as the
-              list is ordered. */}
-          {num ? (
+              list is ordered. A colour card shows it as its badge instead. */}
+          {num && !colour ? (
             <span className="art__num lbl" aria-hidden="true">
               {num}
             </span>
@@ -79,12 +80,7 @@ export default function ArtCard({
           {Art ? <Art className="art__ill" /> : null}
         </span>
       ) : null}
-      {colour && Art ? (
-        <span className="art__sticker" aria-hidden="true">
-          <Art className="art__sticker-edge" />
-          <Art className="art__sticker-art" />
-        </span>
-      ) : null}
+      {colour && num ? <Badge n={num} className="art__badge" /> : null}
       <Heading className="art__name">{name}</Heading>
       <span className="art__line">
         <span className="art__lead">{lead}</span>

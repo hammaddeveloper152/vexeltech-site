@@ -173,9 +173,11 @@ export default function PricingPage() {
               <thead>
                 <tr>
                   <td className="pr-cmp__corner" />
+                  {/* The column headers are chips in the discipline colours
+                      (2026-09-25, life pass 2). */}
                   {COLUMNS.map((c) => (
-                    <th scope="col" className="lbl" key={c.id}>
-                      {c.name}
+                    <th scope="col" key={c.id}>
+                      <span className={`pr-chip pr-chip--${c.id}`}>{c.name}</span>
                     </th>
                   ))}
                 </tr>
@@ -200,8 +202,10 @@ export default function PricingPage() {
               only one of the two is ever displayed. */}
           <ul className="pr-cmp__cards">
             {COLUMNS.map((c, i) => (
-              <li className="pr-cmp__card" key={c.id}>
-                <h3 className="pr-cmp__card-h">{c.name}</h3>
+              <li className={`pr-cmp__card pr-cmp__card--${c.id}`} key={c.id}>
+                <h3 className="pr-cmp__card-h">
+                  <span className={`pr-chip pr-chip--${c.id}`}>{c.name}</span>
+                </h3>
                 <dl className="pr-cmp__rows">
                   {ROWS.map(([term, values]) => (
                     <div className="pr-cmp__row" key={term}>

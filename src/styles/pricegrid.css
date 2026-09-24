@@ -499,18 +499,56 @@
 .pr-cmp__card {
   padding: var(--s-lg);
   border: 1px solid var(--card-dark-edge);
+  /* A 4px top edge in the discipline's colour (2026-09-25, life pass 2). */
+  border-top: 4px solid var(--chip);
   border-radius: var(--r-card);
   background: var(--card-dark-fill);
 }
 
 .pr-cmp__card-h {
   margin: 0 0 var(--s-md);
-  font-family: var(--font-quiet);
-  font-size: var(--t-h3-size);
-  line-height: var(--t-h3-line);
-  font-weight: var(--t-weight-quiet);
-  letter-spacing: normal;
-  color: var(--c-bone); /* 15.13:1 on the card */
+}
+
+/* ---- THE DISCIPLINE CHIPS, 2026-09-25 (the founder's life pass 2) --------
+   The comparison's column headers, and the mobile cards' titles: 8px
+   radius, the mono label, asphalt on yellow 9.46:1, on coral 5.87, on mint
+   5.62; white on arc blue 7.91. */
+.pr-cmp__card--branding,
+.pr-chip--branding {
+  --chip: var(--c-accent-ground);
+  --chip-ink: var(--c-asphalt);
+}
+
+.pr-cmp__card--websites,
+.pr-chip--websites {
+  --chip: var(--c-arc-blue);
+  --chip-ink: var(--c-shop-white);
+}
+
+.pr-cmp__card--marketing,
+.pr-chip--marketing {
+  --chip: var(--c-coral);
+  --chip-ink: var(--c-asphalt);
+}
+
+.pr-cmp__card--automation,
+.pr-chip--automation {
+  --chip: var(--c-mint);
+  --chip-ink: var(--c-asphalt);
+}
+
+.pr-chip {
+  display: inline-block;
+  padding: 4px var(--s-sm);
+  border-radius: 8px;
+  background: var(--chip);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--chip-ink);
 }
 
 .pr-cmp__rows {

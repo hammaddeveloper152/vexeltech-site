@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Badge from '../../components/site/Badge.jsx';
 import { IconArrowUpRight, IconCheck } from '../../components/site/Icons.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
 
@@ -72,11 +73,14 @@ export default function ServiceSections({ disciplines }) {
           <section
             key={d.id}
             id={d.id}
-            className={`vt svc2__d${cream ? ' svc2__d--cream panel-sec' : ''}`}
+            className={`vt svc2__d svc2__d--${d.id}${cream ? ' svc2__d--cream panel-sec' : ''}`}
             aria-labelledby={`svc-${d.id}`}
           >
             <div className={`svc2__in${cream ? ' panel' : ''}`}>
               <div className="svc2__left">
+                {/* The discipline's number, its badge, at the top right of
+                    the section head (life pass 2). */}
+                <Badge n={String(i + 1).padStart(2, '0')} className="svc2__badge" />
                 <h2 className="svc2__name" id={`svc-${d.id}`}>
                   {d.name}
                 </h2>

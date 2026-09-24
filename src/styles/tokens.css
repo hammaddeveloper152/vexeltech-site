@@ -886,6 +886,25 @@ html {
   }
 }
 
+/* THE SEND BUTTON'S ARROW, 2026-09-25 (the founder's life pass 2): after
+   the label on the contact form's submit and the Plan Builder's, sliding
+   4px right on a real pointer's hover. Transform only (BUILD-LAW Motion). */
+.send__go {
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :is(.foot__submit, .plan__send):hover .send__go {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.foot__submit, .plan__send):hover .send__go {
+    transform: none;
+  }
+}
+
 /* THE HIGHLIGHTER. One word per page, a machine yellow box behind it with
    asphalt type inside, 9.46:1. It is one of yellow's four places; BUILD-LAW
    records it as one type treatment used once per page, not a repeated

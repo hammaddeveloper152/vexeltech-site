@@ -70,6 +70,12 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Life pass 2, 2026-09-25, supersedes the life pass**: premium, not
+  rainbow. Outside the four discipline cards and the Who we are tiles, the
+  accents are MARKS AND EDGES only (ticks, crosses, 4px bars and edges,
+  dots, chips), never a fill larger than a chip. Number badges (white 56px
+  die-cut disc, Clash 20px) replace the stickers and the card index. No
+  trade ticker. Send buttons read "Send message" with a sliding arrow.
 - **Life pass, 2026-09-25, supersedes below where they differ**: accents
   are yellow, arc blue, coral #F26B3A, mint #2FA37A, lilac #C9A6F5, ONLY on
   the discipline cards and stickers, the trade ticker pills, the Who we are

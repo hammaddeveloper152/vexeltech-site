@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import Header from '../../components/site/Header.jsx';
 import Hero from '../../components/home/Hero.jsx';
 import Failures from '../../components/home/Failures.jsx';
-import TradeTicker from '../../components/home/TradeTicker.jsx';
 import Services from '../../components/home/Services.jsx';
 import WordBand from '../../components/home/WordBand.jsx';
 import About from '../../components/home/About.jsx';
@@ -111,8 +110,6 @@ export default function Home() {
       <main id="main" tabIndex={-1}>
         <Hero />
         <Failures />
-        {/* The trade ticker, under What it costs you (2026-09-25). */}
-        <TradeTicker />
         <About />
         <Services />
         <WordBand />

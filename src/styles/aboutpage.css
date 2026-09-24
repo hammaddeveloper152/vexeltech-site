@@ -294,7 +294,7 @@
 /* THE CARDS ARE THE SITE'S ONE CARD, 2026-09-24 (the founder): ArtCard, on
    lit-near with its artwork, two across from 768. The white cream-panel
    cards, their 32px icon, their name and line rules are gone with them. */
-/* Each card's sticker overhangs the next card: earlier cells sit above later
+/* Each card's number badge overhangs the next card: earlier cells sit above later
    ones (2026-09-25). */
 .ab3-lesson__item:nth-child(1) { z-index: 4; }
 .ab3-lesson__item:nth-child(2) { z-index: 3; }
@@ -391,19 +391,31 @@
   text-wrap: pretty;
 }
 
-/* Both marks are asphalt: a tick is a meaningful graphic at a 3:1 bar, and
-   machine yellow on this card is 1.88:1. The X is not red - the list is a
-   statement about fit, not an error, and error-dark on white is a warning the
-   copy is not making. */
+/* MINT AND CORAL, 2026-09-25 (the founder's life pass 2): the fit cell's
+   tick is mint with a 4px mint left edge, the not-a-fit cell's cross coral
+   with a 4px coral left edge. Measured on the cream band: mint 2.80:1,
+   coral 2.68:1, both under the 3:1 a meaningful graphic should clear. The
+   column's heading ("A fit", "Not a fit", asphalt 15.75:1) and the mark's
+   shape carry the meaning without the colour; recorded, not recoloured.
+   The cross is still not red: the list is about fit, not an error. */
 .ab3-fit__mark {
   width: var(--icon-md);
   height: var(--icon-md);
   margin-top: 2px;
-  color: var(--c-asphalt);
+  color: var(--c-mint);
 }
 
 .ab3-fit__card[data-kind='no'] .ab3-fit__mark {
-  color: var(--c-steel); /* 7.20:1: present, and quieter than the fit list */
+  color: var(--c-coral);
+}
+
+.ab3-fit__card.ab3-fit__card {
+  padding-left: var(--s-lg);
+  border-left: 4px solid var(--c-mint);
+}
+
+.ab3-fit__card.ab3-fit__card[data-kind='no'] {
+  border-left-color: var(--c-coral);
 }
 
 /* ---- 6. How we work with you: the 01 to 04 row -------------------------
@@ -442,6 +454,23 @@
   font-weight: var(--t-weight-quiet);
   letter-spacing: normal;
   color: var(--c-bone); /* 16.32:1 on the base */
+}
+
+/* THE NUMERALS TAKE THE ACCENTS IN ORDER, 2026-09-25 (the founder's life
+   pass 2): 01 yellow (10.47:1 on the base), 03 coral (6.50), 04 mint
+   (6.22). 02 WAS TO BE ARC BLUE AND IS BONE: arc blue on the dark ground is
+   2.48:1, under the 3:1 even 96px type needs (BUILD-LAW is the floor). The
+   founder is asked; nothing here is decided for them. */
+.ab3-how__step:nth-child(1) .ab3-how__n {
+  color: var(--c-accent-text-dark);
+}
+
+.ab3-how__step:nth-child(3) .ab3-how__n {
+  color: var(--c-coral);
+}
+
+.ab3-how__step:nth-child(4) .ab3-how__n {
+  color: var(--c-mint);
 }
 
 .ab3-how__t {

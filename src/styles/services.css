@@ -83,11 +83,47 @@
   outline-color: var(--c-asphalt);
 }
 
+/* THE DISCIPLINE'S COLOUR, 2026-09-25 (the founder's life pass 2), in
+   three places only: the ticks, a 4px bar left of the price, and the number
+   badge. The section's ground is unchanged. Measured, the ticks against
+   their ground: yellow on the dark base 10.47:1, arc blue on cream 7.02,
+   coral on the base 6.50, MINT ON CREAM 2.80, under the 3:1 a meaningful
+   graphic should clear; the tick is a list bullet here and the item says
+   the thing, and it is recorded rather than recoloured. */
+.svc2__d--branding {
+  --disc: var(--c-accent-ground);
+}
+
+.svc2__d--websites {
+  --disc: var(--c-arc-blue);
+}
+
+.svc2__d--marketing {
+  --disc: var(--c-coral);
+}
+
+.svc2__d--automation {
+  --disc: var(--c-mint);
+}
+
 .svc2__in {
+  position: relative;
   display: grid;
   gap: var(--s-2xl);
   width: min(100%, 1200px);
   margin: 0 auto;
+}
+
+/* The badge at the top right of the section head, the left column that
+   holds the name and the promise (Badge.jsx). Not the section's own top
+   right: from 1024 that is where the price stands. */
+.svc2__left {
+  position: relative;
+}
+
+.svc2__left .svc2__badge {
+  top: 0;
+  right: 0;
 }
 
 /* 60/40 from 1024: the checklist needs the measure, the price needs room for
@@ -181,11 +217,11 @@
   height: var(--icon-md);
   /* Optical: the cap height of the line beside it, not the line box. */
   margin-top: 2px;
-  color: var(--c-bone); /* 16.32:1: bone since 2026-09-24, yellow is kept to four places */
+  color: var(--disc); /* the discipline's colour, life pass 2; see above */
 }
 
 .svc2__d--cream .svc2__check {
-  color: var(--c-asphalt); /* 15.75:1 on cream */
+  color: var(--disc);
 }
 
 /* ---- The right column: the price IS the visual ------------------------- */
@@ -204,6 +240,9 @@
 .svc2__fig,
 .svc2__oncall {
   margin: 0 0 var(--s-md);
+  /* The 4px bar in the discipline's colour, left of the price (life pass 2). */
+  padding-left: 20px;
+  border-left: 4px solid var(--disc);
   font-family: var(--font-quiet);
   font-size: 56px;
   line-height: 1.05;

@@ -193,14 +193,12 @@
   background: var(--c-cream); /* the panel it sits on */
 }
 
-/* CORAL, 2026-09-25 (the founder's life pass; it was arc blue): a reached
-   dot is filled, a dot not yet reached is a hollow steel-dark ring, so fill
-   against outline carries the state. Coral on cream is 2.68:1, under the
-   3:1 a non-text mark should clear; the step is also named in words for a
-   screen reader ("Step 2 of 4") and shown by the question itself. Recorded
-   in DESIGN.md. The line between the dots stays yellow. */
+/* CORAL WITH A 1px ASPHALT RING, 2026-09-25 (the founder's life pass 2):
+   coral alone is 2.68:1 on cream, under 3:1; the ring is 15.75:1, so the
+   dot's edge clears. A dot not yet reached is a hollow steel-dark ring. The
+   line between the dots stays yellow. */
 .plan__node[data-on='true'] {
-  border-color: var(--c-coral);
+  border-color: var(--c-asphalt);
   background: var(--c-coral);
 }
 
@@ -572,8 +570,12 @@
   transition: transform var(--d-press) var(--ease-reveal);
 }
 
-/* The one primary: yellow, asphalt ink, 9.46:1. */
+/* The one primary: yellow, asphalt ink, 9.46:1. The label and its arrow
+   in a row since life pass 2. */
 .plan__send {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-sm);
   min-height: 48px;
   padding: var(--s-md) var(--s-xl);
   border: 0;
