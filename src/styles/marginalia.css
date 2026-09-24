@@ -1,0 +1,10 @@
+/* ==========================================================================
+   THE MARGINALIA, 2026-09-25. See Marginalia.jsx.
+
+   The label's face, rotation, place and colours are register.css's `.marg`.
+   This sheet only makes a labelled section the label's containing block.
+   ========================================================================== */
+
+.has-marg {
+  position: relative;
+}

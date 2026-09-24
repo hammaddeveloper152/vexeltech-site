@@ -200,30 +200,6 @@
   }
 }
 
-/* ---- FROM 1024 THE ROUTE IS PART OF THE SPINE (2026-09-25) ---------------
-   The route's own line is dropped and each dot moves onto the spine
-   (spine.css, --spine-x), level with its numeral. The list and its stops
-   stand down as containing blocks, so a dot's `left` is measured from the
-   section, which spans the page as the spine's `main` does; its height is
-   still its stop's, through the static position and a margin. */
-@media (min-width: 1024px) {
-  .route-band .route-band__in,
-  .route-band .route,
-  .route-band .route__stop {
-    position: static;
-  }
-
-  .route-band .route::before {
-    display: none;
-  }
-
-  .route-band .route__stop::before {
-    top: auto;
-    left: calc(var(--spine-x) - var(--dot) / 2 + 0.5px);
-    margin-top: calc(var(--n-mid) - var(--dot) / 2);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .route__stop::before,
   .route__n {

@@ -73,8 +73,9 @@ otherwise, this section is right and the rest is history.
 - **Launch batch, 2026-09-25: the final design pass, only defects after
   it.** One drift on `html` (base, arc-black, base), no section paints a
   ground. Cream bands are sheets (40px top corners, -40px over the section
-  before, upward shadow). Spine.jsx builds the gutter labels and the 1px
-  spine on every page from 1024; the route's dots sit on the spine. Cards:
+  before, upward shadow). Marginalia.jsx builds static gutter labels on
+  every page from 1024: steel-lift on dark, deep amber on cream, never
+  yellow; How it works keeps its own route line. Cards:
   art centred, objects inside 112 x 112 by the binding side, feet on one
   baseline, equal yellow and blue. No mascot.
 - **Energy and consistency pass, 2026-09-24, supersedes below where they

@@ -105,9 +105,11 @@
   }
 }
 
-/* On a cream band the label is steel, 7.20:1; steel-lift there is 2.27:1. */
-.panel-sec .marg {
-  color: var(--c-steel);
+/* STATIC, NEVER YELLOW (2026-09-25, the founder): steel-lift on the dark
+   ground (above), DEEP AMBER on a cream sheet, 4.82:1 (steel-lift there is
+   2.27:1). */
+:is(.panel-sec, .plan) .marg {
+  color: var(--c-accent-text-light);
 }
 
 /* ---- Failures -----------------------------------------------------------

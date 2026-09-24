@@ -12,7 +12,7 @@ import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import { CallBand } from './parts.jsx';
 import StickyCta from '../../components/site/StickyCta.jsx';
-import Spine from '../../components/site/Spine.jsx';
+import Marginalia from '../../components/site/Marginalia.jsx';
 import '../../styles/tokens.css';
 /* The loud register, applied to every section below the hero. Imported LAST
    so it wins on source order. See src/styles/register.css. */
@@ -129,8 +129,8 @@ export default function Home() {
       </main>
       {/* Below 768, once the hero has gone (StickyCta.jsx, 2026-09-24). */}
       <StickyCta />
-      {/* The margin labels and the spine, from 1024 (Spine.jsx). */}
-      <Spine />
+      {/* The margin labels, from 1024 (Marginalia.jsx). */}
+      <Marginalia />
     </>
   );
 }

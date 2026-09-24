@@ -50,7 +50,7 @@ export default function Failures() {
 
   return (
     <section className="vt fail" aria-labelledby="fail-h">
-      {/* The margin label is Spine.jsx's since 2026-09-25. */}
+      {/* The margin label is Marginalia.jsx's since 2026-09-25. */}
       <div className="fail__inner">
         <h2 className="fail__h" id="fail-h">
           What it costs you

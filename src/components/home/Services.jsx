@@ -68,7 +68,7 @@ export default function Services() {
   const [ref, revealed] = useReveal();
   return (
     <section className="vt services" aria-labelledby="services-h">
-      {/* The margin label is Spine.jsx's since 2026-09-25. */}
+      {/* The margin label is Marginalia.jsx's since 2026-09-25. */}
       <div className="services__in">
         <div className="services__head">
           <h2 className="services__h" id="services-h">
