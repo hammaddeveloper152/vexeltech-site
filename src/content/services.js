@@ -47,7 +47,7 @@ export const DISCIPLINES = [
     promise:
       'Full stack marketing, pointed at one thing. Not impressions, not reach. Whether the phone rings.',
     cards: [
-      { title: 'SEO and AEO', line: 'SEO and AEO, so the search that should find you finds you.' },
+      { title: 'SEO and AI search', line: 'SEO and AI search, so the search that should find you finds you.' },
       { title: 'Google ads', line: 'Google ads run as performance marketing.' },
       { title: 'Meta ads', line: 'Meta ads pointed at lead generation.' },
       { title: 'Lead generation and CRO', line: 'CRO, so the clicks you pay for become calls.' },

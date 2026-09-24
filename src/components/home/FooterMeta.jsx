@@ -1,4 +1,5 @@
 import React from 'react';
+import { company } from '../../content/company.js';
 import { Link } from 'react-router-dom';
 import { IconFacebook, IconInstagram, IconLinkedIn } from '../site/Icons.jsx';
 import { SOCIAL_URLS } from '../../content/socials.js';
@@ -33,7 +34,8 @@ import './FooterForm.css';
    The email confirmed 2026-09-08. The address is in index.html's JSON-LD as
    a `PostalAddress`; the band names the city. */
 const EMAIL = 'info@vexeltechsolutions.com';
-const BOOKING = 'Booking projects for October 2026';
+/* The month is content/company.js's (2026-09-25). */
+const BOOKING = `Booking projects for ${company.bookingMonth}`;
 
 const PAGES = [
   { id: 'home', label: 'Home', href: '/' },

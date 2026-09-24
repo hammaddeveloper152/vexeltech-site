@@ -389,16 +389,8 @@
   opacity: 0;
 }
 
-/* The accessible name, which is the final line. Clipped to a 1px box rather
-   than hidden, so the h1 keeps its name. */
-.hero__a11y {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
+/* `.hero__a11y` is gone (2026-09-25): the h1's accessible name is its
+   visible line. */
 
 /* ---- The support stack, sized against the headline -----------------------
 

@@ -42,7 +42,7 @@ export default function FooterForm({ form = true }) {
 
         {/* The line that answers the form. */}
         <p className="foot__lead-p">
-          Tell us what&apos;s going wrong. You&apos;ll hear from a person within one business day.
+          You&apos;ll hear from a person within one business day.
         </p>
       </div>
 

@@ -24,13 +24,13 @@ import './Failures.css';
 const FAILURES = [
   {
     id: 'find',
-    statement: 'They cannot find you',
+    statement: "They can't find you",
     consequence: 'No online presence, so the search that should have found you finds nobody.',
   },
   {
     id: 'call',
     statement: 'Not enough are calling',
-    consequence: 'The marketing budget goes out every month and the leads do not come back.',
+    consequence: "The marketing budget goes out every month and the leads don't come back.",
   },
   {
     id: 'miss',
@@ -39,7 +39,7 @@ const FAILURES = [
   },
   {
     id: 'remember',
-    statement: 'They do not remember you',
+    statement: "They don't remember you",
     consequence: 'Work with no name on it is work the next customer never hears about.',
   },
 ];

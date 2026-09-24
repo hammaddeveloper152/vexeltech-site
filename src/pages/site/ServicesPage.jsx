@@ -53,7 +53,7 @@ export default function ServicesPage() {
     <Shell
       title="Services | VexelTech"
       path="/services"
-      description="Branding, websites, marketing and automation. The four disciplines in full, from one team."
+      description="Branding, websites, marketing and automation for local service businesses. Flat prices, one team."
     >
       {/* The page's one highlighted word, 2026-09-24: `.hl`, tokens.css. */}
       <PageHead
@@ -79,7 +79,7 @@ export default function ServicesPage() {
 
       {/* TALK TO US: the closing call. */}
       <CallBand
-        heading="Which one is costing you most"
+        heading="Which one is costing you most?"
         note="Fifteen minutes on the phone and we'll tell you what we'd fix first. It isn't always the expensive one."
       />
     </Shell>

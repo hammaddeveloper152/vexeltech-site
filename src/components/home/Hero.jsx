@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import HeroSurface from './HeroSurface.jsx';
 import { videoAllowed } from './Video.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
-import { CUTS, EXIT_MS, FINAL_LINE, LINES, SPOT, TALL_QUERY } from './heroSpot.js';
+import { CUTS, EXIT_MS, LINES, SPOT, TALL_QUERY } from './heroSpot.js';
 import './Hero.css';
 import Brush from '../site/Brush.jsx';
 
@@ -84,7 +84,7 @@ const HIGHLIGHT = 'Yet.';
 function Line({ text, leaving }) {
   const at = text.lastIndexOf(HIGHLIGHT);
   return (
-    <span className="hero__line" data-leaving={leaving ? 'true' : 'false'} aria-hidden="true">
+    <span className="hero__line" data-leaving={leaving ? 'true' : 'false'}>
       {at < 0 ? (
         text
       ) : (
@@ -369,7 +369,11 @@ export default function Hero() {
             it cannot see; the final line is the sentence the page is about.
             Every visible line is aria-hidden. */}
         <h1 className="hero__headline" id="hero-h">
-          <span className="hero__a11y">{FINAL_LINE}</span>
+          {/* THE NAME IS THE VISIBLE LINE, 2026-09-25 (the founder's content
+              audit): the h1 reads what it shows. It was the final line in a
+              clipped span, with the shown line aria-hidden, so the name and
+              the headline differed for three of the four shots, and a
+              crawler read the two run together. */}
           {shot !== null ? (
             <Line key={shot} text={LINES[shot]} leaving={mode === 'spot' && state.leaving} />
           ) : null}

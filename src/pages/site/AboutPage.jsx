@@ -65,8 +65,8 @@ export default function AboutPage() {
           </h1>
           <div className="ab3-hero__cols">
             <p className="ab3-hero__p">
-              A local business does not need a designer. It needs a website that converts, ads that
-              point at it, and the automation that catches every call and quote behind them. That is
+              A local business doesn&apos;t need a designer. It needs a website that converts, ads that
+              point at it, and the automation that catches every call and quote behind them. That&apos;s
               one system, and we build the whole of it.
             </p>
             <p className="ab3-hero__p">

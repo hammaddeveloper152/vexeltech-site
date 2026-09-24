@@ -63,20 +63,20 @@ import '../../styles/lit.css';
    section numbers in the build brief were a build sequence, not a page
    order, so do not reorder to match them. */
 
-const TITLE = 'Website Design for Startups & Small Business | VexelTech';
+const TITLE = 'Websites, marketing and automation for local service businesses | VexelTech';
 const DESCRIPTION =
-  'Branding, websites, marketing and automation for startups, SMBs and founders. We show up with the work already built. Book a 15-minute call.';
+  'Flat prices for US local service businesses. Websites $700, branding from $299, live in four business days. You see the work before you owe anything.';
 
 /* The retired Process component's four step descriptions, carried as one
    line under stops 01 to 04 of the route, and the user's line for stop 05
    (2026-09-21). */
 const STEP_LINES = [
-  "Thirty minutes with a brand strategist. You tell us what's wrong and what you're after, and we listen before we price anything.",
+  "Fifteen minutes on the phone. You tell us what's wrong and what you're after, and we listen before we price anything.",
   'Onboarding and research first, then design starts: the brand work for branding, the UI and UX for the site.',
   'Four business days to build it, then testing. You look at it and tell us what to change, as many times as it takes.',
   'It moves to your hosting, with every credential and the ownership under your name. You own everything you paid for.',
   /* Stop 05, the user's line, 2026-09-21. */
-  "It moves to your hosting, with every credential under your name. Thirty days of support included, then it's a conversation, not a contract.",
+  "Thirty days of support included. After that it's a conversation, not a contract.",
 ];
 
 export default function Home() {

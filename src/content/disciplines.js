@@ -30,7 +30,7 @@ export const DISCIPLINES = [
     id: 'marketing',
     Art: IsoMarketing,
     discipline: 'Marketing',
-    line: 'Ads pointed at the phone. Search, Google and Meta, lead generation.',
+    line: 'Ads pointed at the phone. Google and Meta ads, lead generation.',
   },
   {
     id: 'automation',

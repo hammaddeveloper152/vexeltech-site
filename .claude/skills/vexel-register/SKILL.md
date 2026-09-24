@@ -70,6 +70,12 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Content audit, 2026-09-25**: the audience is US local service
+  businesses, never "startups", "founders" or "SMBs". Body copy and card
+  titles use contractions (can't, don't, doesn't, that's); Monigue headings
+  are left as set. A heading's accessible name is its visible text: no
+  clipped stand-in. "SEO and AI search", not "AEO". The booking month lives
+  in `content/company.js`.
 - **Release addendum, 2026-09-25**: home's critical CSS is inlined at build
   (`vite.config.js`) from `src/critical-classes.json`: re-run
   `node .measure/critical-classes.mjs` after any header or hero change.

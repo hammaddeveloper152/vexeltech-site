@@ -84,7 +84,7 @@ export default function ContactPage() {
     <Shell
       title="Contact | VexelTech"
       path="/contact-us"
-      description="Tell us what you do and what you are losing. Fifteen minutes on the phone."
+      description="Tell us about the business. A person replies within one business day."
       meta={false}
     >
       <section className="vt ct-hero" aria-labelledby="ct-h">

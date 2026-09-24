@@ -22,7 +22,7 @@ import '../../styles/promise.css';
    EVERY LINE IS THE ABOUT BRIEF'S, which is the user's own copy. */
 
 const REFUSALS = [
-  "We don't sell retainers. Thirty days of support are included, after that it's a conversation.",
+  "No retainers on branding or websites. Marketing is month to month, cancel any time. Thirty days of support are included, after that it's a conversation.",
   "We don't use templates. Every build starts from your business.",
   "We don't hide the price until a call. It's on this site.",
   "We don't keep your files. Domain, hosting, code and credentials move to your name.",
