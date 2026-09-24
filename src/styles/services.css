@@ -83,28 +83,24 @@
   outline-color: var(--c-asphalt);
 }
 
-/* THE DISCIPLINE COLOURS, 2026-09-25: the check dots take the section's
+/* THE DISCIPLINE COLOURS, 2026-09-25: the list marks take the section's
    discipline colour (restored after the three-colour pass, Websites lilac
    where it was arc blue); the bar left of the price stays yellow. The
    section's ground is unchanged. */
 .svc2__d--branding {
   --disc: var(--c-accent-ground);
-  --disc-ink: var(--c-asphalt); /* 9.46:1 */
 }
 
 .svc2__d--websites {
   --disc: var(--c-lilac);
-  --disc-ink: var(--c-asphalt); /* 8.68:1: white on lilac is 2.05 */
 }
 
 .svc2__d--marketing {
   --disc: var(--c-coral);
-  --disc-ink: var(--c-shop-white); /* 3.03:1, a mark */
 }
 
 .svc2__d--automation {
   --disc: var(--c-mint);
-  --disc-ink: var(--c-shop-white); /* 3.16:1, a mark */
 }
 
 .svc2__in {
@@ -170,7 +166,7 @@
 .svc2__list {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--s-md) var(--s-xl);
+  gap: 0 var(--s-xl);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -186,10 +182,14 @@
 }
 
 .svc2__item {
+  /* A row: the discipline's 6px dot, 12px, the words; 12px above and below
+     and a hairline under it (2026-09-25). */
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--s-sm);
-  align-items: start;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--c-rule-dark); /* white at 14% on dark */
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
@@ -198,9 +198,10 @@
 
 .svc2__d--cream .svc2__item {
   color: var(--c-steel); /* body on cream, 7.20:1 */
+  border-bottom-color: rgb(11 11 13 / 12%);
 }
 
-/* The tick is the check dot since life pass 3 (CheckDot.jsx, tokens.css). */
+/* The mark is the list mark since 2026-09-25 (`.lmark`, tokens.css). */
 
 /* ---- The right column: the price IS the visual ------------------------- */
 

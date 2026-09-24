@@ -12,18 +12,23 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
    path. Once drawn it stays. Reduced motion: drawn from the start.
 
    Decorative: the link's words are its name. */
-const H = 16;
-
+/* SCALED TO ITS WORDS, 2026-09-25: the closing call's heading went to 56px,
+   so the scribble takes its height (0.43em) and stroke (1/11em, 3px at the
+   least) from the words' own size rather than a fixed 16 and 3. */
 export default function Scribble() {
   const ref = useRef(null);
   const [w, setW] = useState(0);
+  const [fs, setFs] = useState(32);
   const [drawn, setDrawn] = useState(false);
 
   useLayoutEffect(() => {
     const svg = ref.current;
     const host = svg && svg.parentElement;
     if (!host) return undefined;
-    const measure = () => setW(Math.round(host.getBoundingClientRect().width));
+    const measure = () => {
+      setW(Math.round(host.getBoundingClientRect().width));
+      setFs(parseFloat(getComputedStyle(host).fontSize) || 32);
+    };
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(host);
@@ -49,10 +54,14 @@ export default function Scribble() {
   }, []);
 
   const W = Math.max(w, 40);
+  const H = Math.round(fs * 0.43);
+  const sw = Math.max(3, Math.round(fs / 11));
+  const k = H / 16;
   /* Two passes of a hand: the first rises and dips across the width, the
-     second comes back a little lower and crosses it. */
-  const a = `M2 10 C ${W * 0.22} 2, ${W * 0.52} 14, ${W - 2} 4`;
-  const b = `M${W * 0.08} 13 C ${W * 0.38} 6, ${W * 0.7} 15, ${W - 8} 9`;
+     second comes back a little lower and crosses it (drawn on a 16-unit
+     height and scaled to the words). */
+  const a = `M2 ${10 * k} C ${W * 0.22} ${2 * k}, ${W * 0.52} ${14 * k}, ${W - 2} ${4 * k}`;
+  const b = `M${W * 0.08} ${13 * k} C ${W * 0.38} ${6 * k}, ${W * 0.7} ${15 * k}, ${W - 8} ${9 * k}`;
   return (
     <svg
       ref={ref}
@@ -61,6 +70,7 @@ export default function Scribble() {
       viewBox={`0 0 ${W} ${H}`}
       width={W}
       height={H}
+      style={{ '--scribble-w': `${sw}px` }}
       aria-hidden="true"
       focusable="false"
     >

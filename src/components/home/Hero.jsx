@@ -261,7 +261,7 @@ export default function Hero() {
         sec.style.setProperty('--shade-in', '0');
         if (reduce || mode !== 'spot') {
           const k = small();
-          gsap.set(frame, { x: k.x, y: k.y, scale: k.sc, '--frame-r': `${k.r}px` });
+          gsap.set(frame, { x: k.x, y: k.y, scale: k.sc, '--frame-r': `${k.r}px`, '--note-k': 1 / k.sc });
           return () => {
             gsap.set(frame, { clearProps: 'all' });
             sec.style.removeProperty('--shade-in');
@@ -288,7 +288,11 @@ export default function Hero() {
               pin: true,
               scrub: true,
               invalidateOnRefresh: true,
-              onUpdate: (self) => sec.style.setProperty('--shade-in', String(Math.min(1, self.progress / 0.3))),
+              onUpdate: (self) => {
+                sec.style.setProperty('--shade-in', String(Math.min(1, self.progress / 0.3)));
+                frame.style.setProperty('--note-k', String(1 / gsap.getProperty(frame, 'scale')));
+              },
+              onRefresh: () => frame.style.setProperty('--note-k', String(1 / gsap.getProperty(frame, 'scale'))),
             },
           }
         );
@@ -302,6 +306,17 @@ export default function Hero() {
   }, [mode]);
 
   const src = tall ? SPOT.tall : SPOT.wide;
+
+  /* THE NOTE, 2026-09-25 (the founder): out of the copy stack and into the
+     frame's lower-left corner, 14px, over the poster and then the film, so
+     the stack is short enough for the frame to show at rest. The frame is
+     scaled down at rest, so the note is scaled back up by the inverse
+     (`--note-k`, set by the reveal) and stays 14px and 24px in. */
+  const note = (
+    <p className="hero__note">
+      You'll see the work before you owe us anything. Ten seconds to decide, not ten meetings.
+    </p>
+  );
   const shot = mode === 'spot' ? state.shot : LINES.length - 1;
 
   return (
@@ -337,6 +352,8 @@ export default function Hero() {
               <img className="hero__spot" src={SPOT.wide.poster} alt="" decoding="async" />
             </picture>
           ) : null}
+          <span className="hero__frame-shade" aria-hidden="true" />
+          {note}
         </div>
       ) : null}
 
@@ -387,10 +404,10 @@ export default function Hero() {
             Live in four business days.
           </p>
 
-          <p className="hero__note">
-            You'll see the work before you owe us anything. Ten seconds to decide, not
-            ten meetings.
-          </p>
+          {/* The note stands in the frame's lower left since 2026-09-25 (see
+              `note` above); only the surface mode, which has no frame, keeps
+              it in the stack. */}
+          {mode === 'surface' ? note : null}
         </div>
       </div>
     </section>

@@ -160,6 +160,26 @@
   }
 }
 
+/* THE FRAME SHOWS AT REST, 2026-09-25 (the founder): at least 180px of it
+   at 1280 x 800 before any scroll. From 768 (where the frame is below the
+   copy and the reveal runs) the copy stands at the top of the hero rather
+   than its middle, and the headline's height cap is the stack's own: the
+   stack is the headline (1.76em, two lines at 0.88) plus about 262px of
+   sub, calls and offer line, it starts 88px down and the frame 40px under
+   it, so the headline is at most (100svh - 570px) / 1.76 - 131px on an
+   800px screen, and on a taller screen the width binds as before (185px at
+   1280 x 1080). Below 768 the frame is in the flow under the copy and
+   nothing here applies. */
+@media (min-width: 768px) {
+  .hero:not([data-mode='surface']) {
+    align-content: start;
+  }
+
+  .hero:not([data-mode='surface']) .hero__headline {
+    font-size: min(calc((100vw - 2 * var(--s-md)) / 6.227), calc((100svh - 570px) / 1.76));
+  }
+}
+
 /* The zoned shades fade in as the film arrives behind the copy (the
    reveal sets `--shade-in` from 0 to 1 by 30% of the way). Opacity only. */
 .hero:not([data-mode='surface']) :is(.hero__headline, .hero__support)::before {
@@ -492,6 +512,37 @@
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
   color: var(--c-bone); /* over the film, the copy zone and its shadow; DESIGN.md */
+}
+
+/* THE NOTE IN THE FRAME, 2026-09-25 (the founder): 14px bone, 24px in from
+   the frame's lower-left corner, over the poster and then the film, on a
+   shade of its own that falls off from the corner (black at 70%). The frame
+   is scaled down at rest, so the note, its inset and its shade are scaled
+   back up by `--note-k` (the reveal sets it to the frame's inverse scale)
+   and stay their own size throughout. */
+.hero__frame .hero__note {
+  position: absolute;
+  bottom: calc(24px * var(--note-k, 1));
+  left: calc(24px * var(--note-k, 1));
+  z-index: 2;
+  max-width: 44ch;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-bone);
+  text-shadow: 0 1px 12px rgb(0 0 0 / 60%);
+  transform: scale(var(--note-k, 1));
+  transform-origin: 0 100%;
+}
+
+.hero__frame-shade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: calc(640px * var(--note-k, 1));
+  height: calc(200px * var(--note-k, 1));
+  background: radial-gradient(ellipse at 0 100%, rgb(11 11 13 / 70%) 0%, rgb(11 11 13 / 0%) 70%);
+  pointer-events: none;
 }
 
 /* ==========================================================================

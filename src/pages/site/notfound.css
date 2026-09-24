@@ -5,9 +5,10 @@
    ========================================================================== */
 
 .nf {
+  /* Its content, not a full screen, since the vertical rhythm (2026-09-25),
+     as the one-screen pages. */
   display: grid;
-  align-content: center;
-  min-height: calc(100svh - (48px + 2 * var(--s-sm)));
+  align-content: start;
   /* The dark section's space, 128 / 80, as the one-screen pages have it
      (the energy pass's consistency audit, 2026-09-24). It was 64 / 96. */
   padding: var(--s-section) var(--inset);

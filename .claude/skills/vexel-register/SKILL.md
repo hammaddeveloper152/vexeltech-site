@@ -70,6 +70,12 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Vertical rhythm, 2026-09-25**: sections pad TOP only (128 dark, 96 in a
+  cream sheet), never bottom; last before the footer takes 128 below; grounded
+  blocks keep a 96 foot. No gap over 160. Closing call: Clash Medium 56/40
+  uppercase yellow + scaled Scribble, subline 18 bone 85% at 24, button at 32,
+  128 either side. Lists: hairline rows, 12px padding, 6px `--disc` dot
+  (`.lmark`); no check discs. Hero note in the frame's lower-left, 180px peek.
 - **Card accents restored, 2026-09-25, supersedes the three-colour pass**:
   black, cream, yellow + coral, mint, lilac ONLY in the discipline cards
   (Branding yellow, Websites lilac, Marketing coral, Automation mint, asphalt

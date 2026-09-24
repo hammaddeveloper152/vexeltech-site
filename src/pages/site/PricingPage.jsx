@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Brush from '../../components/site/Brush.jsx';
-import CheckDot from '../../components/site/CheckDot.jsx';
 import Shell from './Shell.jsx';
 import { CallBand } from './parts.jsx';
 import PlanBuilder from './PlanBuilder.jsx';
@@ -144,7 +143,7 @@ export default function PricingPage() {
                   <ul className="pr-col__list">
                     {c.items.map((item) => (
                       <li className="pr-col__item" key={item}>
-                        <CheckDot />
+                        <span className="lmark" aria-hidden="true" />
                         {item}
                       </li>
                     ))}

@@ -362,17 +362,21 @@
 
 .pr-col__list {
   display: grid;
-  gap: var(--s-sm);
+  gap: 0;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .pr-col__item {
+  /* A row, as on /services (2026-09-25): the column's 6px dot, 12px, the
+     words, 12px above and below, a hairline of #0B0B0D at 12% under it. */
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--s-sm);
-  align-items: start;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgb(11 11 13 / 12%);
   font-family: var(--font-offer);
   font-size: 16px;
   line-height: 24px;
@@ -381,26 +385,22 @@
 
 /* 14px, asphalt: a tick is a graphic at a 3:1 bar and this is 15.75:1. The
    top margin sets it on the line's x-height rather than its top. */
-/* The columns' check dots take their discipline colour (restored
+/* The columns' list marks take their discipline colour (restored
    2026-09-25, Websites lilac). */
 .pr-col--branding {
   --disc: var(--c-accent-ground);
-  --disc-ink: var(--c-asphalt); /* 9.46:1 */
 }
 
 .pr-col--websites {
   --disc: var(--c-lilac);
-  --disc-ink: var(--c-asphalt); /* 8.68:1: white on lilac is 2.05 */
 }
 
 .pr-col--marketing {
   --disc: var(--c-coral);
-  --disc-ink: var(--c-shop-white); /* 3.03:1, a mark */
 }
 
 .pr-col--automation {
   --disc: var(--c-mint);
-  --disc-ink: var(--c-shop-white); /* 3.16:1, a mark */
 }
 
 /* The button, full width at the foot of the column: the site's one button

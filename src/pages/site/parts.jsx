@@ -69,18 +69,23 @@ export function Section({ title, note, children, labelledBy }) {
 
    `note`, restored later the same day (the founder): the page's original
    subline, 24px under the line, 16px steel-lift, centred, 520px wide at most. */
+/* THE CLOSING CALL SINCE 2026-09-25 (the founder): the heading at 56px (40
+   on a phone) with the scribble under it, scaled to it; the subline; the
+   yellow "Get a custom quote" button. The button is the link now, and the
+   heading is words. */
 export function CallBand({ heading, note = null }) {
   return (
     <section className="vt callband" aria-labelledby="callband-h">
       <h2 className="callband__h" id="callband-h">
-        <Link className="callband__link" to={CALL_HREF}>
+        <span className="callband__word">
           {heading}
-          {/* The hand-drawn underline, 2026-09-25 (Scribble.jsx). It replaces
-              the straight 4px one. */}
           <Scribble />
-        </Link>
+        </span>
       </h2>
       {note ? <p className="callband__note">{note}</p> : null}
+      <Link className="callband__cta" to={CALL_HREF}>
+        {CALL_LABEL}
+      </Link>
     </section>
   );
 }

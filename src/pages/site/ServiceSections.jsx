@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CheckDot from '../../components/site/CheckDot.jsx';
 import { IconArrowUpRight } from '../../components/site/Icons.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
 
@@ -88,7 +87,7 @@ export default function ServiceSections({ disciplines }) {
                     <li className="svc2__item" key={title}>
                       {/* Decorative: the item says the thing, and a list of
                           six ticks read aloud is six words nobody needs. */}
-                      <CheckDot />
+                      <span className="lmark" aria-hidden="true" />
                       {title}
                     </li>
                   ))}

@@ -821,16 +821,68 @@ html {
   border-radius: inherit;
 }
 
-/* `.vt` rather than a child of `main`: /services wraps its disciplines, so
-   the section before a sheet is not always one of main's children. */
-.vt:has(+ :is(.panel-sec, .plan)) {
-  padding-bottom: calc(var(--s-section) + 40px);
+/* ---- THE VERTICAL RHYTHM, 2026-09-25 (the founder) -----------------------
+
+   A section carries its space ABOVE it and none below: 128px on the dark
+   ground (80 on a phone, `--s-section`), 96px inside a cream sheet. Two
+   sections' paddings can never stack. The last section before the footer
+   takes 128 below, and the footer none above, so the page closes on the
+   same 128. These rules are the only place a section's bottom is set; they
+   out-rank each section's own padding shorthand (the id in the selector).
+
+   A SECTION WITH ITS OWN GROUND (a cream sheet, About's black block) keeps
+   space at its own foot, because its edge is visible and its words cannot
+   touch it; the edge is the separator there, and the space either side of
+   it is measured against the edge (DESIGN.md records the numbers). So: a
+   cream sheet keeps 96 at its foot; the section before a sheet takes 64px
+   of visible space to the sheet's edge (plus the 40 the sheet pulls up over
+   it); the section before About's black block takes 64. The hero, which
+   fills the screen, is outside the rule. */
+main#main :is(section, header).vt:not(.hero),
+main#main > div.vt {
+  padding-bottom: 0;
 }
 
-/* The one section before a sheet whose foot is not the section space: the
-   pricing page head, 64px. */
-.vt.pr-head:has(+ :is(.panel-sec, .plan)) {
-  padding-bottom: calc(var(--s-2xl) + 40px);
+main#main :is(section, header).vt:is(.panel-sec, .plan) {
+  padding-bottom: 96px;
+}
+
+/* About's black block keeps its own padding at its foot, as at its head:
+   32 on a phone, 64 from 768, 96 from 1024 (aboutpage.css). */
+main#main :is(section, header).vt.ab3-do {
+  padding-bottom: 32px;
+}
+
+@media (min-width: 768px) {
+  main#main :is(section, header).vt.ab3-do {
+    padding-bottom: 64px;
+  }
+}
+
+@media (min-width: 1024px) {
+  main#main :is(section, header).vt.ab3-do {
+    padding-bottom: 96px;
+  }
+}
+
+/* The same weight as the rule above (an element, the id, two classes), so
+   these win on order: at a lower weight the general rule beat them and the
+   sheet's pull-up overlapped the content above it by 40px. */
+main#main :is(section, header, div).vt:has(+ :is(.panel-sec, .plan)) {
+  padding-bottom: calc(var(--s-section) / 2 + 40px);
+}
+
+main#main :is(section, header, div).vt:has(+ .ab3-do) {
+  padding-bottom: calc(var(--s-section) / 2);
+}
+
+main#main :is(section, header, div).vt:has(+ footer.foot),
+main#main > div:has(+ footer.foot) > section.vt:last-child {
+  padding-bottom: var(--s-section);
+}
+
+main#main footer.foot {
+  padding-top: 0;
 }
 
 .panel {
@@ -884,26 +936,17 @@ html {
   }
 }
 
-/* THE CHECK DOT, 2026-09-25 (the founder's life pass 3). See CheckDot.jsx.
-   A 20px disc in the list's discipline colour with the check 12px inside:
-   asphalt on yellow (9.46:1) and lilac (8.68), white on coral (3.03) and
-   mint (3.16), each over the 3:1 a mark needs. The list's container sets
-   `--disc` and `--disc-ink`; yellow and asphalt where it does not. */
-.cdot {
-  display: inline-grid;
+/* THE LIST MARK, 2026-09-25 (the founder): every What you get item, on
+   /services and the /pricing columns, is a row with a 1px hairline under
+   it, 12px above and below, and a 6px dot in the discipline's colour 12px
+   before the words (`--disc`, set by the list's section or column). It
+   replaced the check disc (CheckDot.jsx, deleted). Decorative. */
+.lmark {
   flex: none;
-  place-items: center;
-  width: 20px;
-  height: 20px;
-  margin-top: 2px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--disc, var(--c-accent-ground));
-  color: var(--disc-ink, var(--c-asphalt));
-}
-
-.cdot .cdot__i {
-  width: 12px;
-  height: 12px;
 }
 
 /* THE SWASH, the site's one brush stroke (Brush.jsx): the $700s since life
