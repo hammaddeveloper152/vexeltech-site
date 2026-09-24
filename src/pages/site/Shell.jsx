@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import IconProvider from '../../components/site/Icons.jsx';
 import Header from '../../components/site/Header.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import useDrift, { at } from '../../components/site/useDrift.js';
@@ -63,7 +62,7 @@ export default function Shell({
   }, [title, description]);
 
   return (
-    <IconProvider>
+    <>
       <a className="skip" href="#main">
         Skip to content
       </a>
@@ -78,6 +77,6 @@ export default function Shell({
             bare once sat on the UA's white body on six pages. */}
         {meta ? <FooterForm /> : null}
       </main>
-    </IconProvider>
+    </>
   );
 }

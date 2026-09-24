@@ -14,7 +14,7 @@
    position, on a site that is one bundle already. */
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { List, X } from '@phosphor-icons/react';
+import { IconClose, IconMenu } from './Icons.jsx';
 import Wordmark from './Wordmark.jsx';
 import './Header.css';
 
@@ -218,9 +218,9 @@ export default function Header({ over = false }) {
           onClick={() => setOpen((v) => !v)}
         >
           {open ? (
-            <X className="i i--md" aria-hidden="true" />
+            <IconClose className="i" />
           ) : (
-            <List className="i i--md" aria-hidden="true" />
+            <IconMenu className="i" />
           )}
         </button>
       </div>

@@ -151,8 +151,8 @@
 }
 
 .foot__err-mark {
-  font-family: var(--font-brand);
-  font-weight: var(--t-weight-brand);
+  /* The icon set's mark (Icons.jsx), 16px, the message's own colour. */
+  align-self: center;
 }
 
 .foot__ok {
@@ -165,8 +165,8 @@
 }
 
 .foot__ok-mark {
-  font-family: var(--font-brand);
-  font-weight: var(--t-weight-brand);
+  /* The icon set's mark (Icons.jsx), 16px, the message's own colour. */
+  align-self: center;
 }
 
 /* ---- Actions ------------------------------------------------------------ */

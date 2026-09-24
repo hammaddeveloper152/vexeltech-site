@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PaperPlaneTilt } from '@phosphor-icons/react';
+import { IconCheck, IconCross, IconSend } from '../site/Icons.jsx';
 import FooterMeta from './FooterMeta.jsx';
 import { budgetBands } from '../../content/pricing.js';
 import './FooterForm.css';
@@ -199,9 +199,7 @@ export default function FooterForm() {
                 <span className="foot__err" id={`ff-${id}-err`} role="alert">
                   {err ? (
                     <>
-                      <span className="foot__err-mark" aria-hidden="true">
-                        &#215;
-                      </span>
+                      <IconCross className="i i--sm foot__err-mark" />
                       {err}
                     </>
                   ) : null}
@@ -253,9 +251,7 @@ export default function FooterForm() {
             <span className="foot__err" id="ff-message-err" role="alert">
               {errors.message ? (
                 <>
-                  <span className="foot__err-mark" aria-hidden="true">
-                    &#215;
-                  </span>
+                  <IconCross className="i i--sm foot__err-mark" />
                   {errors.message}
                 </>
               ) : null}
@@ -272,7 +268,7 @@ export default function FooterForm() {
                 `onSubmit` by the sending guard rather than by greying the
                 control, so nothing has to explain itself to the reader. */}
             <button className="foot__submit" type="submit">
-              <PaperPlaneTilt className="i i--sm" aria-hidden="true" />
+              <IconSend className="i" />
               {sending ? 'Sending' : 'Send'}
             </button>
 
@@ -281,9 +277,7 @@ export default function FooterForm() {
             <p className="foot__status" role="status">
               {status === 'sent' ? (
                 <span className="foot__ok">
-                  <span className="foot__ok-mark" aria-hidden="true">
-                    &#10003;
-                  </span>
+                  <IconCheck className="i i--sm foot__ok-mark" />
                   {/* VEXELTECH-COPY.md, Contact form, verbatim. */}
                   Got it. You&apos;ll hear from a person, not an autoresponder, within one
                   business day.
@@ -291,9 +285,7 @@ export default function FooterForm() {
               ) : null}
               {status === 'failed' ? (
                 <span className="foot__err">
-                  <span className="foot__err-mark" aria-hidden="true">
-                    &#215;
-                  </span>
+                  <IconCross className="i i--sm foot__err-mark" />
                   That did not send. Try again in a moment.
                 </span>
               ) : null}

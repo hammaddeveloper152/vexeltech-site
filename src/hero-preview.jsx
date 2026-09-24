@@ -2,7 +2,6 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import './styles/tokens.css';
-import IconProvider from './components/site/Icons.jsx';
 import Header from './components/site/Header.jsx';
 import Hero from './components/home/Hero.jsx';
 import Failures from './components/home/Failures.jsx';
@@ -67,8 +66,7 @@ createRoot(document.getElementById('hero-root')).render(
      so a click here goes where it would go on the site. */
   <React.StrictMode>
     <BrowserRouter>
-    {/* One icon weight for the whole tree. See Icons.jsx. */}
-    <IconProvider>
+    <>
       {/* First tab stop on the page, and the reason it is here: at 1280 the
           bar puts six links between the top of the document and the first
           word of the hero, and a keyboard reader met all six before reaching
@@ -106,7 +104,7 @@ createRoot(document.getElementById('hero-root')).render(
         <Faq />
         <FooterForm />
       </main>
-    </IconProvider>
+    </>
     </BrowserRouter>
   </React.StrictMode>
 );

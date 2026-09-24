@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import IconProvider from '../../components/site/Icons.jsx';
 import Header from '../../components/site/Header.jsx';
 import Hero from '../../components/home/Hero.jsx';
 import Failures from '../../components/home/Failures.jsx';
@@ -105,7 +104,7 @@ export default function Home() {
   });
 
   return (
-    <IconProvider>
+    <>
       {/* First tab stop on the page. At 1280 the bar puts four links and a
           call between the top of the document and the first word of the
           hero. The link is in the tab order at all times and off the screen
@@ -147,6 +146,6 @@ export default function Home() {
         />
         <FooterForm />
       </main>
-    </IconProvider>
+    </>
   );
 }

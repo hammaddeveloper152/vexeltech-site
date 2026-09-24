@@ -265,6 +265,8 @@
 }
 
 .svc2__link {
+  /* The arrow's gap, the same one every outline link keeps. */
+  gap: var(--s-sm);
   padding: var(--s-md) var(--s-lg);
   background: transparent;
   border: 1px solid var(--c-steel-lift);

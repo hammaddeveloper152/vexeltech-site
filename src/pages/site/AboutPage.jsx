@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, X } from '@phosphor-icons/react';
+import { IconCheck, IconCross } from '../../components/site/Icons.jsx';
 import {
   IsoAutomation,
   IsoBranding,
@@ -286,7 +286,7 @@ export default function AboutPage() {
               <ul className="ab3-fit__list">
                 {FIT.yes.map((t) => (
                   <li className="ab3-fit__item" key={t}>
-                    <Check className="ab3-fit__mark" weight="bold" aria-hidden="true" />
+                    <IconCheck className="i ab3-fit__mark" />
                     {t}
                   </li>
                 ))}
@@ -297,7 +297,7 @@ export default function AboutPage() {
               <ul className="ab3-fit__list">
                 {FIT.no.map((t) => (
                   <li className="ab3-fit__item" key={t}>
-                    <X className="ab3-fit__mark" weight="bold" aria-hidden="true" />
+                    <IconCross className="i ab3-fit__mark" />
                     {t}
                   </li>
                 ))}

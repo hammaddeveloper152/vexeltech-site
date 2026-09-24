@@ -98,11 +98,15 @@
 /* THE QUIET PASS, 2026-09-24: a dark card is flat lit-near with no border,
    no light and no shadow, at the card radius. The paragraph above is its
    history. */
+/* THE CARD'S FILL, 2026-09-24 (the founder): no fixed colour - white at 4%
+   over the ground, and a white-at-10% edge drawn as an inset line, so
+   opening a row adds no border and moves nothing. */
 .faq__item[data-open='true'] {
-  background-color: var(--lit-near);
+  background-color: rgb(255 255 255 / 4%);
   background-image: none;
   border-radius: var(--r-card);
   border-bottom-color: transparent;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 10%);
 }
 
 /* The row is a dark plane, so its values are the dark-ground set - the same

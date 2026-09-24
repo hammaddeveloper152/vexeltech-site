@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Check } from '@phosphor-icons/react';
+import { IconCheck } from '../../components/site/Icons.jsx';
 import Shell from './Shell.jsx';
 import { CallBand } from './parts.jsx';
 import PlanBuilder from './PlanBuilder.jsx';
@@ -138,7 +138,7 @@ export default function PricingPage() {
                   <ul className="pr-col__list">
                     {c.items.map((item) => (
                       <li className="pr-col__item" key={item}>
-                        <Check className="pr-col__check" weight="bold" aria-hidden="true" />
+                        <IconCheck className="i pr-col__check" />
                         {item}
                       </li>
                     ))}

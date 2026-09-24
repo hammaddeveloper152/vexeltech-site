@@ -442,9 +442,10 @@
   --grain-opacity: 0.03;
   /* THE DARK FIELD, 2026-09-24 (the founder): every input, textarea and
      select on every form. The error red is the founder's, used on a field's
-     border and nowhere else; the select's chevron is drawn here in bone. */
+     border and nowhere else; the select's chevron is the icon set's
+     chevron-down (Icons.jsx), drawn here as a data URI in bone. */
   --c-field-error: #e5484d;
-  --field-chevron: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%23e8eaed' stroke-width='2' stroke-linecap='round' stroke-linejoin='miter'><path d='M4 6l4 4 4-4'/></svg>");
+  --field-chevron: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='%23e8eaed' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'><path d='M5 8l5 5 5-5'/></svg>");
   /* THE BUTTON, 2026-09-24 (the pricing rebuild, the founder): every button
      on the site is Clash Display Medium at 14px with a 6px radius, primary
      and secondary alike. The calls no longer step with the frame. 6px is not

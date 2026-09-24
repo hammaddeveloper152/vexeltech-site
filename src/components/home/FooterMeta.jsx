@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { GlyphInstagram, GlyphLinkedIn } from '../site/Glyphs.jsx';
+import { IconFacebook, IconInstagram, IconLinkedIn } from '../site/Icons.jsx';
 import './FooterForm.css';
 
 /* THE FOOTER BAND, 2026-09-24 (the founder's Flesh and Bones pass), on every
@@ -13,7 +13,8 @@ import './FooterForm.css';
                                        same day, the founder)
      row 3   the five pages            Clash Medium 20px uppercase, asphalt,
                                        40px apart, steel on hover
-     row 4   LinkedIn and Instagram    32px yellow circles, asphalt glyphs,
+     row 4   LinkedIn, Instagram and   32px yellow circles, asphalt marks from
+             Facebook                  the icon set, 16px, 48px hit areas,
                                        `#` until the founder supplies them
      row 5   Booking projects for October 2026   mono 12px, steel (added
                                        with the email)
@@ -36,10 +37,11 @@ const PAGES = [
   { id: 'contact', label: 'Contact', href: '/contact-us' },
 ];
 
-/* The founder's two accounts, `#` until the URLs are supplied. */
+/* The founder's three accounts, `#` until the URLs are supplied. */
 const SOCIALS = [
-  { id: 'linkedin', label: 'LinkedIn', href: '#', Icon: GlyphLinkedIn },
-  { id: 'instagram', label: 'Instagram', href: '#', Icon: GlyphInstagram },
+  { id: 'linkedin', label: 'LinkedIn', href: '#', Icon: IconLinkedIn },
+  { id: 'instagram', label: 'Instagram', href: '#', Icon: IconInstagram },
+  { id: 'facebook', label: 'Facebook', href: '#', Icon: IconFacebook },
 ];
 
 /* A placeholder that says it is one, verbatim from VEXELTECH-COPY.md. */

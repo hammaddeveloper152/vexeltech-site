@@ -1,36 +1,159 @@
 import React from 'react';
-import { IconContext } from '@phosphor-icons/react';
 import './Icons.css';
 
-/* The icon system. DESIGN.md Iconography owns the rules; this file is the one
-   place they are applied.
+/* THE SITE'S ONE ICON SET, 2026-09-24 (the founder), drawn here in code. It
+   replaced Phosphor everywhere; the dependency is gone.
 
-   WEIGHT is set here and nowhere else. Phosphor takes weight as a prop, so
-   every call site is an opportunity for it to drift, and a set that is bold in
-   eight sections and regular in the ninth is not a system. Passing it through
-   context means a component cannot choose.
+   THE SPEC: a 20px box, a 1.75px stroke that stays 1.75px at any display
+   size (`vector-effect: non-scaling-stroke`, Icons.css), round caps and
+   round joins, sharp corners - no rounded rectangles, after the V mark -
+   and `currentColor`, so an icon is always its text's colour. Size comes
+   from the station classes in Icons.css, never from a call site.
 
-   Bold rather than regular, and not as a matter of taste. Phosphor draws on a
-   256 unit grid: regular is a 16 unit stroke, 6.25% of the box, which at the
-   16px small station renders exactly 1.00px. DESIGN.md Shapes reserves 1px for
-   the hairline, the edge whose whole job is to separate two things without
-   being looked at. An icon is the thing being looked at. Bold is 24 units,
-   9.38%, which lands at 1.50px small and 2.25px medium: above the divider,
-   below the 3px drawn stroke that belongs to the process route.
+   Every icon is decorative wherever it is mounted: the words beside it, or
+   the control's own label, say what it is. So each renders aria-hidden.
 
-   fill and duotone are out. A filled icon is a plane and competes with the
-   mark; duotone puts two tones inside one object, which is the gradient
-   argument wearing a different hat.
+   THE SET: check, cross, plus, minus, arrow-up-right, chevron-down, send
+   (a paper plane, two triangles), menu (two lines), close (two crossed
+   lines), four discipline marks (flat 20px versions of the card
+   illustrations: the V in a square, a browser frame with one bar, a
+   megaphone, three linked nodes), and three social marks for the footer's
+   circles, drawn at 16px in the same stroke.
 
-   SIZE is not set here. It comes from the station classes in Icons.css, so an
-   icon can never carry a literal pixel size at a call site, the same way a
-   component can never carry a literal hex.
+   The select chevron is this set's chevron-down drawn as a CSS data URI
+   (`--field-chevron`, tokens.css), because a select's arrow cannot be a
+   React child. */
 
-   COLOUR is not set here either. Phosphor defaults to currentColor, which is
-   the whole point: an icon takes the text token of whatever it sits in and is
-   therefore correct on both grounds without a dark and a light variant. */
-const ICON_DEFAULTS = { weight: 'bold' };
-
-export default function IconProvider({ children }) {
-  return <IconContext.Provider value={ICON_DEFAULTS}>{children}</IconContext.Provider>;
+function Icon({ className = 'i', size = 20, children }) {
+  return (
+    <svg
+      className={className}
+      viewBox={`0 0 ${size} ${size}`}
+      width={size}
+      height={size}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {children}
+    </svg>
+  );
 }
+
+export const IconCheck = ({ className }) => (
+  <Icon className={className}>
+    <path d="M4 10.5l4 4 8-9" />
+  </Icon>
+);
+
+export const IconCross = ({ className }) => (
+  <Icon className={className}>
+    <path d="M5 5l10 10M15 5L5 15" />
+  </Icon>
+);
+
+export const IconPlus = ({ className }) => (
+  <Icon className={className}>
+    <path d="M10 4v12M4 10h12" />
+  </Icon>
+);
+
+export const IconMinus = ({ className }) => (
+  <Icon className={className}>
+    <path d="M4 10h12" />
+  </Icon>
+);
+
+export const IconArrowUpRight = ({ className }) => (
+  <Icon className={className}>
+    <path d="M6 14L14 6M7 6h7v7" />
+  </Icon>
+);
+
+export const IconChevronDown = ({ className }) => (
+  <Icon className={className}>
+    <path d="M5 8l5 5 5-5" />
+  </Icon>
+);
+
+/* A paper plane as two triangles: the wing and its folded underside. */
+export const IconSend = ({ className }) => (
+  <Icon className={className}>
+    <path d="M3 9.5L17 3l-5.5 14-2.5-5.5z" />
+    <path d="M9 11.5L17 3" />
+  </Icon>
+);
+
+export const IconMenu = ({ className }) => (
+  <Icon className={className}>
+    <path d="M3 7h14M3 13h14" />
+  </Icon>
+);
+
+export const IconClose = ({ className }) => (
+  <Icon className={className}>
+    <path d="M4.5 4.5l11 11M15.5 4.5l-11 11" />
+  </Icon>
+);
+
+/* ---- The four discipline marks: the card illustrations, flat at 20px ---- */
+
+export const IconMarkBranding = ({ className }) => (
+  <Icon className={className}>
+    <path d="M3 3h14v14H3z" />
+    <path d="M6.5 6.5L10 13.5l3.5-7" />
+  </Icon>
+);
+
+export const IconMarkWebsites = ({ className }) => (
+  <Icon className={className}>
+    <path d="M2.5 4h15v12h-15z" />
+    <path d="M2.5 7.5h15M5.5 11h6" />
+  </Icon>
+);
+
+/* A megaphone in profile: a small back, a widening horn, an open mouth, the
+   handle under it. */
+export const IconMarkMarketing = ({ className }) => (
+  <Icon className={className}>
+    <path d="M3 8.5h3l8-4.5v12l-8-4.5H3z" />
+    <path d="M6 12v4h2.5v-3" />
+    <path d="M17 7.5v5" />
+  </Icon>
+);
+
+export const IconMarkAutomation = ({ className }) => (
+  <Icon className={className}>
+    <path d="M5.5 10h2.5M12 10h2.5" />
+    <circle cx="3.5" cy="10" r="2" />
+    <circle cx="10" cy="10" r="2" />
+    <circle cx="16.5" cy="10" r="2" fill="currentColor" />
+  </Icon>
+);
+
+/* ---- The three social marks, 16px, for the footer's yellow circles ------ */
+
+export const IconLinkedIn = ({ className }) => (
+  <Icon className={className} size={16}>
+    <path d="M4 7v5.5M8 12.5V7M8 9.5a2.5 2.5 0 0 1 5 0v3" />
+    <circle cx="4" cy="3.75" r="0.6" fill="currentColor" />
+  </Icon>
+);
+
+export const IconInstagram = ({ className }) => (
+  <Icon className={className} size={16}>
+    <path d="M2.5 2.5h11v11h-11z" />
+    <circle cx="8" cy="8" r="2.6" />
+    <circle cx="11.4" cy="4.6" r="0.35" fill="currentColor" />
+  </Icon>
+);
+
+export const IconFacebook = ({ className }) => (
+  <Icon className={className} size={16}>
+    <path d="M9.5 14V8.5h2l.5-2.25H9.5V5c0-.7.3-1 1-1H12V2.2A12 12 0 0 0 10.2 2C8.4 2 7.25 3.1 7.25 5v1.25h-2V8.5h2V14" />
+  </Icon>
+);

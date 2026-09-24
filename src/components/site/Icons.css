@@ -1,13 +1,10 @@
 /* ==========================================================================
-   Icon stations. DESIGN.md Iconography.
+   The icon set's stations and stroke. See Icons.jsx.
 
-   Three sizes, all existing spacing stations. Set as width and height rather
-   than font-size so an icon's size never depends on the type scale of the
-   thing it happens to sit beside, and set in CSS rather than passed as a prop
-   so a component cannot invent a fourth size on its way past.
-
-   width and height on the element override the width and height attributes
-   Phosphor writes into the SVG, which is what makes one class enough.
+   The default is the set's own 20px box. The stroke is 1.75px at any size:
+   `vector-effect` keeps it from scaling with the box, so a 16px station and
+   a 24px station draw the same line. Width and height here override the
+   attributes the SVG carries, which is what makes one class enough.
    ========================================================================== */
 
 .i {
@@ -15,6 +12,13 @@
   /* An icon never shrinks in a flex row. It is a fixed object beside text,
      not a column of it. */
   flex: none;
+  width: 20px;
+  height: 20px;
+}
+
+.i path,
+.i circle {
+  vector-effect: non-scaling-stroke;
 }
 
 .i--sm {
@@ -25,9 +29,4 @@
 .i--md {
   width: var(--icon-md);
   height: var(--icon-md);
-}
-
-.i--lg {
-  width: var(--icon-lg);
-  height: var(--icon-lg);
 }

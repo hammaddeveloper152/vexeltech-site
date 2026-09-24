@@ -1,17 +1,23 @@
 /* ==========================================================================
    THE SITE'S ONE CARD, v2 (QUIET), 2026-09-24. See ArtCard.jsx.
 
-   Values on lit-near: bone 13.67:1, steel-lift 6.33:1. The chip is
+   Text values are measured on the page (contrast.mjs), because the fill is
+   translucent over whatever ground the card sits on. The chip is
    lit-raised with a bone icon, 11.44:1.
 
+   THE CARD HAS NO FIXED FILL, 2026-09-24 (the founder): white at 4% over
+   whatever ground it sits on, a 1px white-at-10% border; on hover the fill
+   reads 6% and the border 18%.
+
    THE HOVER MOVES OPACITY AND TRANSFORM AND NOTHING ELSE (BUILD-LAW Motion):
-   the card rises 4px, and a second 1px edge at white 13.3% fades in over the
-   10% one, compositing to the founder's 22%:
-   1 - (1 - 0.10)(1 - 0.133) = 0.22.
+   the card rises 4px, and two layers fade in over the resting ones - a fill
+   of white at 2.08% over the 4% (1 - 0.96 x 0.9792 = 0.06) and a 1px edge of
+   white at 8.89% over the 10% (1 - 0.90 x 0.9111 = 0.18).
    ========================================================================== */
 
 .art {
   position: relative;
+  isolation: isolate;
   display: grid;
   align-content: start;
   justify-items: start;
@@ -20,21 +26,33 @@
   padding: 32px; /* the founder's */
   border: 1px solid rgb(255 255 255 / 10%);
   border-radius: var(--r-card);
-  background: var(--lit-near);
+  background: rgb(255 255 255 / 4%);
   box-shadow: none;
   color: var(--c-bone);
   text-decoration: none;
 }
 
+.art::before,
 .art::after {
   content: '';
   position: absolute;
   inset: -1px;
-  border: 1px solid rgb(255 255 255 / 13.3%);
   border-radius: inherit;
   opacity: 0;
   pointer-events: none;
   transition: opacity 220ms var(--ease-reveal);
+}
+
+/* The hover fill, under the content. */
+.art::before {
+  z-index: -1;
+  inset: 0;
+  background: rgb(255 255 255 / 2.08%);
+}
+
+/* The hover edge. */
+.art::after {
+  border: 1px solid rgb(255 255 255 / 8.89%);
 }
 
 /* THE TOP ROW, 2026-09-24: the number top left, the illustration top right,
@@ -49,7 +67,7 @@
 }
 
 .art__num {
-  color: var(--c-steel-lift); /* 6.33:1 on lit-near */
+  color: var(--c-steel-lift); /* measured on the page */
 }
 
 .art__ill {
@@ -89,8 +107,25 @@
   fill: none;
 }
 
-.art__ill .iso-line--y {
+/* The small filled squares (the browser's three dots): bone. */
+.art__ill .iso-d {
+  fill: var(--c-bone);
+}
+
+/* The sound arcs and the connectors: 2px, no fill; the middle arc yellow. */
+.art__ill .iso-arc {
+  fill: none;
+  stroke-width: 2px;
+}
+
+.art__ill .iso-arc--y {
   stroke: var(--c-accent-draw-dark);
+}
+
+/* The dot at each connector's join. */
+.art__ill .iso-dot {
+  fill: var(--c-bone);
+  stroke: none;
 }
 
 /* `.art .art__name`, two classes: a card on a cream panel sits under
@@ -132,6 +167,7 @@
     transform: translateY(-4px);
   }
 
+  .art--link:hover::before,
   .art--link:hover::after {
     opacity: 1;
   }

@@ -70,6 +70,12 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Icon and card system, 2026-09-24, supersedes anything below that names
+  Phosphor or a card fill**: every icon comes from `components/site/Icons.jsx`
+  (20px box, 1.75px stroke, round caps and joins, currentColor); Phosphor is
+  uninstalled. No glyph in the set means no icon. THE CARD is white 4% fill,
+  a 10% border, 6% and 18% on hover by overlay fade; not on cream. The
+  illustrations float with no plate, 124 of 140px. Three footer socials.
 - **THE CARD v2 (quiet), 2026-09-24, supersedes the card bullets below**:
   no artwork, content height, 48px chip, 27px title, 14px line with a bold
   lead, 32px padding, four across from 1024. What it costs you is one cream

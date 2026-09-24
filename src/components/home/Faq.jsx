@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { Plus } from '@phosphor-icons/react';
+import { IconPlus } from '../site/Icons.jsx';
 import './Faq.css';
 
 /* Section 8. The quiet one.
@@ -144,7 +144,7 @@ export default function Faq({ items = ITEMS, id: base = 'faq' }) {
                         aria-expanded on the button already say the whole
                         thing. */}
                     <span className="faq__mark" data-open={open}>
-                      <Plus className="i i--sm" aria-hidden="true" />
+                      <IconPlus className="i" />
                     </span>
                   </button>
                 </h3>

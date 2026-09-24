@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight } from '@phosphor-icons/react';
+import { IconArrowUpRight } from '../site/Icons.jsx';
 import { useReveal } from './hooks.js';
 import './About.css';
 
@@ -80,7 +80,7 @@ export default function About() {
           <Link className="about__link" to="/about-us" style={{ '--i': 3 }}>
             {COPY.link}
             {/* Decorative: the label is the link's accessible name. */}
-            <ArrowUpRight className="i i--sm about__go" aria-hidden="true" />
+            <IconArrowUpRight className="i about__go" />
           </Link>
         </div>
       </div>

@@ -283,11 +283,6 @@
   padding-right: 44px;
 }
 
-.plan__ci {
-  width: var(--icon-md);
-  height: var(--icon-md);
-  flex: none;
-}
 
 .plan__cards {
   display: grid;
@@ -573,6 +568,12 @@
 .plan__chip:active,
 .plan__card:active {
   transform: scale(0.97);
+}
+
+.plan__ok {
+  display: flex;
+  align-items: center;
+  gap: var(--s-sm);
 }
 
 .plan__ok,

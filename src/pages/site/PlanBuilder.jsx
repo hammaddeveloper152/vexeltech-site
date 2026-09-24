@@ -1,24 +1,12 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import {
-  Broom,
-  ChartBar,
-  Check,
-  ClockCounterClockwise,
-  DotsThree,
-  FlowArrow,
-  Globe,
-  HardHat,
-  House,
-  Monitor,
-  PhoneCall,
-  Pipe,
-  Plant,
-  Plug,
-  Stamp,
-  Thermometer,
-  Tooth,
-} from '@phosphor-icons/react';
+  IconCheck,
+  IconMarkAutomation,
+  IconMarkBranding,
+  IconMarkMarketing,
+  IconMarkWebsites,
+} from '../../components/site/Icons.jsx';
 import { FIGURES, bundleSaving, money } from '../../content/pricing.js';
 import '../../styles/plan.css';
 
@@ -62,28 +50,28 @@ import '../../styles/plan.css';
    index.html and posted from here. */
 
 const TRADES = [
-  { id: 'plumbing', label: 'Plumbing', Icon: Pipe },
-  { id: 'hvac', label: 'HVAC', Icon: Thermometer },
-  { id: 'electrical', label: 'Electrical', Icon: Plug },
-  { id: 'roofing', label: 'Roofing', Icon: House },
-  { id: 'dental', label: 'Dental', Icon: Tooth },
-  { id: 'cleaning', label: 'Cleaning', Icon: Broom },
-  { id: 'contracting', label: 'Contracting', Icon: HardHat },
-  { id: 'other', label: 'Something else', Icon: DotsThree },
+  { id: 'plumbing', label: 'Plumbing' },
+  { id: 'hvac', label: 'HVAC' },
+  { id: 'electrical', label: 'Electrical' },
+  { id: 'roofing', label: 'Roofing' },
+  { id: 'dental', label: 'Dental' },
+  { id: 'cleaning', label: 'Cleaning' },
+  { id: 'contracting', label: 'Contracting' },
+  { id: 'other', label: 'Something else' },
 ];
 
 const STAGES = [
-  { id: 'start', title: 'Just starting out', line: 'No logo, no site, first customers.', Icon: Plant },
-  { id: 'logo', title: 'Have a logo, no real website', line: 'People look you up and find nothing.', Icon: Globe },
-  { id: 'dated', title: 'Have both, they look dated', line: 'They were fine five years ago.', Icon: ClockCounterClockwise },
-  { id: 'calls', title: 'Set up, need more calls', line: 'The phone should ring more than it does.', Icon: PhoneCall },
+  { id: 'start', title: 'Just starting out', line: 'No logo, no site, first customers.' },
+  { id: 'logo', title: 'Have a logo, no real website', line: 'People look you up and find nothing.' },
+  { id: 'dated', title: 'Have both, they look dated', line: 'They were fine five years ago.' },
+  { id: 'calls', title: 'Set up, need more calls', line: 'The phone should ring more than it does.' },
 ];
 
 const SERVICES = [
-  { id: 'branding', title: 'Branding', Icon: Stamp },
-  { id: 'website', title: 'Website', Icon: Monitor },
-  { id: 'marketing', title: 'Marketing', Icon: ChartBar },
-  { id: 'automation', title: 'Automation', Icon: FlowArrow },
+  { id: 'branding', title: 'Branding', Icon: IconMarkBranding },
+  { id: 'website', title: 'Website', Icon: IconMarkWebsites },
+  { id: 'marketing', title: 'Marketing', Icon: IconMarkMarketing },
+  { id: 'automation', title: 'Automation', Icon: IconMarkAutomation },
 ];
 
 const STEPS = [
@@ -153,7 +141,7 @@ function Choice({ pressed, onPick, className, children, label }) {
       onClick={pick}
     >
       {children}
-      {pressed ? <Check className="plan__check" weight="bold" aria-hidden="true" /> : null}
+      {pressed ? <IconCheck className="i plan__check" /> : null}
     </button>
   );
 }
@@ -501,14 +489,13 @@ export default function PlanBuilder({ heading = null }) {
 
             {step === 0 ? (
               <div className="plan__chips">
-                {TRADES.map(({ id, label, Icon }) => (
+                {TRADES.map(({ id, label }) => (
                   <Choice
                     key={id}
                     className="plan__chip"
                     pressed={a.trade === id}
                     onPick={() => setA((c) => ({ ...c, trade: id }))}
                   >
-                    <Icon className="plan__ci" aria-hidden="true" />
                     {label}
                   </Choice>
                 ))}
@@ -517,14 +504,13 @@ export default function PlanBuilder({ heading = null }) {
 
             {step === 1 ? (
               <div className="plan__cards">
-                {STAGES.map(({ id, title, line, Icon }) => (
+                {STAGES.map(({ id, title, line }) => (
                   <Choice
                     key={id}
                     className="plan__card"
                     pressed={a.stage === id}
                     onPick={() => setA((c) => ({ ...c, stage: id }))}
                   >
-                    <Icon className="plan__card-i" aria-hidden="true" />
                     <span className="plan__card-t">{title}</span>
                     <span className="plan__card-l">{line}</span>
                   </Choice>
@@ -540,7 +526,7 @@ export default function PlanBuilder({ heading = null }) {
                 {SERVICES.map(({ id, title, Icon }) => (
                   <div className="plan__svc" key={id}>
                     <Choice className="plan__card" pressed={a.services[id]} onPick={() => toggleService(id)}>
-                      <Icon className="plan__card-i" aria-hidden="true" />
+                      <Icon className="i plan__card-i" />
                       <span className="plan__card-t">{title}</span>
                     </Choice>
                     {id === 'branding' && a.services.branding ? (
@@ -598,7 +584,7 @@ export default function PlanBuilder({ heading = null }) {
               <div className="plan__nav plan__nav--result">
                 {status === 'sent' ? (
                   <p className="plan__ok" role="status">
-                    <span aria-hidden="true">&#10003;</span> Message sent.
+                    <IconCheck className="i i--sm plan__ok-mark" /> Message sent.
                   </p>
                 ) : (
                   <>

@@ -361,11 +361,12 @@
    silently removed both lights from the row while every other object on the
    site had them. */
 .faq__item[data-open='true'] {
-  background-color: var(--lit-near);
+  /* The card's translucent fill and edge (Faq.css, 2026-09-24). */
+  background-color: rgb(255 255 255 / 4%);
   background-image: none;
   border-radius: var(--r-card);
   border-bottom-color: transparent;
-  box-shadow: none;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 10%);
 }
 
 .faq__item[data-open='true'] .faq__q-t {
