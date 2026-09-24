@@ -17,7 +17,7 @@ export default function SecondaryLayout({ children, title, description }) {
       meta.name = 'description';
       document.head.appendChild(meta);
     }
-    meta.content = description || metaInfo?.description || 'Branding, websites, marketing and automation for startups, SMBs and founders. We show up with the work already built.';
+    meta.content = description || metaInfo?.description || 'Flat prices for US local service businesses. Websites $700, branding from $299, live in four business days. You see the work before you owe anything.';
 
     const onScroll = () => document.body.classList.toggle('inner-page--scrolled', window.scrollY > 420);
     document.body.classList.add('inner-page');

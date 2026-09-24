@@ -7,5 +7,5 @@ export const FACTS = [
   ['Team', 'One team across all four disciplines.'],
   ['Build', 'Four business days from content to live.'],
   ['After', 'Thirty days of care, then it is yours.'],
-  ['Price', 'Flat prices. No retainers, no surprises.'],
+  ['Price', 'Flat prices on the build. No surprises.'],
 ];
