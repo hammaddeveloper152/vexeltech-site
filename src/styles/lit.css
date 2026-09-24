@@ -110,11 +110,8 @@
   --lit-key-page: radial-gradient(900px 700px at 8% -6%, rgb(240 179 35 / 6%) 0%, transparent 70%);
   --lit-rim-page: linear-gradient(transparent, transparent); /* no blue, 2026-09-25 */
 
-  /* The edges say the same thing the faces do. The top edge is where the key
-     lands and stays warm; the bottom and right edges are where the rim grazes
-     and take its tint, so an object reads as lit from two sides even at the
-     scale where its faces are one pixel of gradient. */
-  --lit-edge-arc: rgb(8 48 127 / 35%);
+  /* `--lit-edge-arc`, the rim's arc-blue edge, is DELETED (2026-09-25, the
+     release audit): no blue anywhere, and `.lit-obj` below matches nothing. */
 }
 
 /* Every lit object takes this. One declaration, so a card, a plate and a panel
@@ -123,8 +120,6 @@
   background-image: var(--lit-key), var(--lit-rim);
   border-color: var(--lit-edge);
   border-top-color: var(--lit-edge-top);
-  border-right-color: var(--lit-edge-arc);
-  border-bottom-color: var(--lit-edge-arc);
 }
 
 /* ---- THE RIG. ONE PER PAGE, NOT ONE PER SECTION ------------------------

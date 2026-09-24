@@ -43,6 +43,18 @@ let fontsRequested = false;
 export default function LegacyShell({ children }) {
   const ref = useRef(null);
 
+  /* NOINDEX, 2026-09-25 (the founder's release-audit addendum): /thanks and
+     every legacy page are kept out of search and out of sitemap.xml. Removed
+     on unmount, so a rebuilt page after it is not carried along. */
+  useEffect(() => {
+    const m = document.createElement('meta');
+    m.name = 'robots';
+    m.content = 'noindex';
+    m.dataset.legacy = 'robots';
+    document.head.appendChild(m);
+    return () => m.remove();
+  }, []);
+
   useEffect(() => {
     /* Once per session, not once per navigation. */
     if (!fontsRequested) {

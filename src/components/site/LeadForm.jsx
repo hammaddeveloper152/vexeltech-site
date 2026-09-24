@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { IconArrowRight, IconCheck, IconCross } from './Icons.jsx';
 import { UTM_KEYS, getUtm } from './utm.js';
 import { trackPixel } from './pixel.js';
@@ -98,13 +98,32 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
   const check = (id) => () => setErrors((prev) => ({ ...prev, [id]: validate(id, values[id]) }));
 
   /* THE MESSAGE GROWS WITH ITS CONTENT from one line. Height is set, never
-     animated. */
-  useLayoutEffect(() => {
+     animated, and includes the field's line (offsetHeight - clientHeight).
+     Re-measured when the field's WIDTH changes too (release addendum,
+     2026-09-25): the full stylesheet can land after home mounts, and a
+     height taken unstyled was left 18px tall; a viewport resize rewraps the
+     text the same way. */
+  const grow = () => {
     const el = msgRef.current;
     if (!el) return;
     el.style.height = 'auto';
-    el.style.height = `${el.scrollHeight}px`;
-  }, [values.message]);
+    el.style.height = `${el.scrollHeight + el.offsetHeight - el.clientHeight}px`;
+  };
+  useLayoutEffect(grow, [values.message]);
+  useEffect(() => {
+    const el = msgRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return undefined;
+    let w = el.getBoundingClientRect().width;
+    const ro = new ResizeObserver(([entry]) => {
+      const nw = entry.contentRect.width;
+      if (nw !== w) {
+        w = nw;
+        grow();
+      }
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   /* THE SUBMIT RULE, 2026-09-25 (the founder): 40% until name, phone, email
      and message are filled and valid, full when they are. It stays a live

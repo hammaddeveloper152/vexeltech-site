@@ -9,15 +9,16 @@
 
    THE ORIGIN is the one the JSON-LD in index.html already asserts.
 
-   NO og:image. There is no share image, and BUILD-LAW rule 0 says a missing
-   visual is asked for, never substituted or made. It is listed in the
-   release audit as owed by the founder; add `og:image` here when it lands.
+   THE SHARE IMAGE, 2026-09-25 (the founder's addendum): /og.jpg, 1200 x
+   630, drawn in code by .measure/brand-assets.mjs, on every page, with the
+   large card.
 
    ON UNMOUNT the page's canonical, og:url and robots tags are removed, so a
    client-side hop to a route that sets none (the legacy privacy, terms and
    thanks pages) does not carry a stale canonical with it. */
 
 export const ORIGIN = 'https://vexeltechsolutions.com';
+const OG_ALT = 'VexelTech. Websites $700 flat. Live in four business days.';
 
 function metaTag(attr, key) {
   let el = document.head.querySelector(`meta[${attr}="${key}"]`);
@@ -40,7 +41,11 @@ export function setHead({ title, description, path, noindex = false }) {
   }
   metaTag('property', 'og:type').content = 'website';
   metaTag('property', 'og:site_name').content = 'VexelTech';
-  metaTag('name', 'twitter:card').content = 'summary';
+  metaTag('property', 'og:image').content = `${ORIGIN}/og.jpg`;
+  metaTag('property', 'og:image:width').content = '1200';
+  metaTag('property', 'og:image:height').content = '630';
+  metaTag('property', 'og:image:alt').content = OG_ALT;
+  metaTag('name', 'twitter:card').content = 'summary_large_image';
 
   if (path) {
     const url = ORIGIN + path;

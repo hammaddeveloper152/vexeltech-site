@@ -70,6 +70,14 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Release addendum, 2026-09-25**: home's critical CSS is inlined at build
+  (`vite.config.js`) from `src/critical-classes.json`: re-run
+  `node .measure/critical-classes.mjs` after any header or hero change.
+  Non-home routes render after the full sheet (`main.jsx`). Anything that
+  measures itself must re-measure on resize (ResizeObserver), since home can
+  mount before the sheet lands. Icons and og.jpg come from
+  `node .measure/brand-assets.mjs`; re-run it after a mark, colour or line
+  change. The sitemap is five pages; legacy routes are noindex.
 - **Release audit, 2026-09-25**: every page sets its head through
   `src/pages/site/head.js` (pass `path` to Shell; `noindex` on the 404).
   Every pressable gets its 0.97 press, including pills and icon controls. A
@@ -466,8 +474,10 @@ step only — still button-secondary, transparent, square, sentence case.
   two named exceptions. Nothing animates height, width, top, padding, filter.
 - **Curves by role:** reveals `--ease-reveal` `(.23,1,.32,1)`; on-screen
   movement `--ease-move` `(.77,0,.175,1)`; drawers `--ease-drawer`
-  `(.32,.72,0,1)`. Never ease-in for UI. Springs only for gestures, bounce
-  0.1–0.3, never functional.
+  `(.32,.72,0,1)`; the pricing grid's hover lift, 220ms on the founder's
+  plain `ease` (DESIGN.md "The pricing grid's Melius glow"); `linear` for
+  ambient loops only (marquees, the page-transition parting). Never ease-in
+  for UI. Springs only for gestures, bounce 0.1–0.3, never functional.
 - **Durations:** press **160ms, pinned by law** — every pressable element
   gets `:active { transform: scale(.97) }` at 160ms; `--d-drop` 250ms;
   `--d-panel` 400ms; ambient 64 / 88 / 104s; rotation dwell 2.4s a phrase.
@@ -540,7 +550,13 @@ step only — still button-secondary, transparent, square, sentence case.
 - Spacing ramp 4 / 8 / 16 / 24 / 40 / 64 / 96 — 32 and 48 are absent on
   purpose. 4px baseline; every fixed line height is a multiple of 4.
 - Radius 0 by default, 4 on controls, 8 on containers; calls are square.
-  **No shadows, no gradients, no depth in CSS**, ever.
+  **Flat by default: no shadow and no gradient except the recorded ones**,
+  each a founder decision in DESIGN.md: the pricing column's white plane
+  (0 12px 36px at 12%, a yellow halo 0 0 24px at 25% on the lit column), the
+  discipline cards' hover (`--card-shadow`, 0 12px 36px at 25%), the cream
+  sheets' upward shadow (0 -12px 40px at 35%), the number badge's sticker
+  shadow, the hero copy's soft text shadows, and the page's neutral drift
+  and light rig. A new one is a founder decision, never a default.
 - **SECTIONS ARE SEPARATED BY SPACE, NOT BY STROKES.** A hairline is used
   only where two things would otherwise read as one. The removal test: delete
   the line and look; if nothing merges, it was not doing anything. Applied

@@ -58,7 +58,7 @@ for (const W of [1280, 390]) {
         desc: document.querySelector('meta[name="description"]')?.content || null,
         canonical: document.querySelector('link[rel="canonical"]')?.href || null,
         ogImage: document.querySelector('meta[property="og:image"]')?.content || null,
-        ogTitle: document.querySelector('meta[property="og:title"]')?.content || null,
+        ogTitle: document.querySelector('meta[property="og:title"]')?.content || null, card: document.querySelector('meta[name="twitter:card"]')?.content || null,
         robots: document.querySelector('meta[name="robots"]')?.content || null,
         jsonld: [...document.querySelectorAll('script[type="application/ld+json"]')].length,
         h1: [...document.querySelectorAll('h1')].map((h) => h.textContent.trim()),

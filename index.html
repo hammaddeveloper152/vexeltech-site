@@ -11,12 +11,23 @@
          do not run the app. Each page replaces them when it mounts, and sets
          its own canonical URL and og:url (src/pages/site/head.js). No og:url
          or canonical here: a static one would point every route at /.
-         NO og:image: none exists, and it is owed by the founder. -->
+         The share image is /og.jpg, drawn in code (.measure/brand-assets.mjs,
+         2026-09-25), with the large card. -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="VexelTech" />
     <meta property="og:title" content="Website Design for Startups &amp; Small Business | VexelTech" />
     <meta property="og:description" content="Branding, websites, marketing and automation for startups, SMBs and founders. We show up with the work already built. Book a 15-minute call." />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://vexeltechsolutions.com/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="VexelTech. Websites $700 flat. Live in four business days." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- THE ICONS, 2026-09-25 (the founder's addendum): the V mark in machine
+         yellow on the base colour, drawn in code from Wordmark.jsx's path by
+         .measure/brand-assets.mjs. -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <!-- THE NAME FACE, preloaded. Moldie sets the discipline names, the tier
          names, the plate titles and the work numerals, and every one of them
          is above the fold on the page it is on, so it is discovered from the
@@ -29,7 +40,12 @@
          `crossorigin` is not optional on a font preload even from the same
          origin: fonts are fetched in CORS mode, and a preload without it is a
          second, unused download rather than a warm cache entry. -->
-    <link rel="preload" href="/fonts/moldie.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- MOLDIE IS NO LONGER PRELOADED, 2026-09-25 (the release addendum): it
+         sets only the route numerals on home now, below the fold, so a
+         preload spent the first connection on a face no first paint uses.
+         The two display faces are preloaded instead: Monigue below, and
+         Clash Display, whose hashed file name the build injects
+         (vite.config.js). -->
     <!-- THE LOUD FACE, preloaded, 2026-09-16. Monigue sets every page heading
          and the hero, and the page is rendered by script, so the face was only
          discovered once the app had mounted: headings painted in the fallback
