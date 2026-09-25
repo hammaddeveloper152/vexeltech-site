@@ -96,12 +96,9 @@
         ]
       }
     </script>
-    <!-- The webfonts, the g-wait class and the three cdnjs scripts that used
-         to sit here have moved into the legacy tree, because `/` is the
-         rebuild now and none of them belong on it. Barlow and the g-wait
-         class are in src/legacy/LegacyShell.jsx; three.js and GSAP are
-         loaded on demand by the one page that uses them, src/pages/HomePage.jsx.
-         DESIGN.md: no third-party request on page load. -->
+    <!-- The legacy webfonts, the g-wait class and the three cdnjs scripts
+         that once sat here went with the legacy tree, which was deleted on
+         2026-09-25. DESIGN.md: no third-party request on page load. -->
   </head>
   <body>
     <!-- NETLIFY FORMS DETECTION, 2026-09-22. Netlify finds forms by parsing

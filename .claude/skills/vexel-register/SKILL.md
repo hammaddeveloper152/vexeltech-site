@@ -70,6 +70,12 @@ otherwise, this section is right and the rest is history.
   home). The footer is two columns: pages in Clash 32px left, (CONTACT) and
   (SOCIALS) right, a 13px base row. `--grain` at 3% on the hero film and
   every cream panel.
+- **Legacy rebuild, 2026-09-25**: THE LEGACY TREE IS GONE. /privacy-policy,
+  /terms-of-service and /thanks are `LegalPage.jsx` and `ThanksPage.jsx` in
+  `src/pages/site/` on `Shell` (noindex, footer block without the form), one
+  720px column, copy in `legalContent.js`, never retyped. There is no `.lg`
+  scope, no `styles.legacy.css`, no `LegacyShell` or `SecondaryLayout`; the
+  passages below that describe them are history.
 - **Repo cleanup, 2026-09-25**: five pages (/, /services, /pricing, /about-us,
   /contact-us) plus /privacy-policy, /terms-of-service and /thanks. /blog,
   /legacy/contact, /resources, /portfolio and /case-studies 301 to /.

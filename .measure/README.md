@@ -53,11 +53,12 @@ Run every script from the repo root.
 
 ## What each script proves
 
-**Cut to fourteen on 2026-09-25** (the founder's repo cleanup): the scripts
+**Cut to thirteen on 2026-09-25** (the founder's repo cleanup, then the
+legacy rebuild, which took `scope-legacy.mjs` with the stylesheet it made): the scripts
 the release audit or a build step runs, the one they import, the two the
 build law names as the current method for a live feature, the two the
-register skill names for the hero's shade, and the two that record how a
-live figure or file was made. The eighty-three others measured features that
+register skill names for the hero's shade, and the one that records how a
+live figure was made. The eighty-three others measured features that
 are gone or passes that are over; git history holds them, and DESIGN.md
 holds what they found.
 
@@ -75,7 +76,6 @@ holds what they found.
 | `spotshade.mjs` | the hero copy's shade zones, walked per width |
 | `spotwalk.mjs` | the hero's copy against the film, frame by frame |
 | `markgeom.mjs` | **every angle in the mark, from the shipped path** |
-| `scope-legacy.mjs` | the PostCSS pass that rewrote 1,500 legacy selectors to require `.lg`, zero dropped |
 | `lib.mjs` | the accent threshold (`isAccent`) that `wipe.mjs` and `spotwalk.mjs` import |
 
 ## The traps, in one place

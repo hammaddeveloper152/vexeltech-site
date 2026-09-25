@@ -1,54 +1,18 @@
-/* THE DASHES ARE OUT OF THE SHIPPED TEXT, 2026-09-08.
+/* THE LEGAL PAGES' COPY, moved verbatim from the legacy SimplePage.jsx on
+   2026-09-25 (the founder's legacy rebuild). Not one clause is edited. What
+   came out: the emoji each highlight carried (the site has one icon set, and
+   an emoji is not in it).
 
-   Thirteen em dashes were rendering on these two pages, including one in
-   both title tags, which BUILD-LAW.md **Markup** names explicitly. Legal
-   prose is shipped output and is not the one exception the rule allows,
-   which is a verbatim customer quote.
+   THE VEXEL SCALES LLC REFERENCES STAY, as they did in the legacy file: here
+   the name is the data controller and the counterparty to a binding
+   agreement, not attribution. Removing it is a legal question, not a design
+   one, and it is flagged rather than resolved (CLAUDE.md).
 
-   Each was replaced with the punctuation the sentence already wanted: a
-   colon where a label introduces its definition, commas where a phrase was
-   parenthetical or appositive. NO CLAUSE CHANGED MEANING, which is the bar
-   for touching a contract at all. The dashes left in this file are inside
-   comment banners and are not shipped.
+   WHAT IS UNVERIFIED AND LEFT AS WRITTEN, as before: the $150 hourly
+   cancellation rate, the 50/50 milestone split, the 1.5% monthly late fee and
+   the phone number (385) 284-3265, which appears nowhere else on the site. */
 
-   WHAT IS DELIBERATELY UNTOUCHED: the $150 hourly cancellation rate, the
-   50/50 milestone split and the 1.5% monthly late fee. Those are terms of an
-   agreement rather than published service prices, so the "a URL is kept only
-   while what it says is true" rule does not reach them the way it reached
-   the sub-service pages. They are also unverified by anything in the content
-   answers or the pricing sheet, and that is reported rather than fixed. */
-/* THE EMAIL IS info@vexeltechsolutions.com, given by the user 2026-09-08.
-   Every hello@ address in this file was replaced. It is not a branding
-   change: a published address that nobody reads sends a reader's message
-   nowhere, and on the legal pages it is the address a privacy request or a
-   data subject request is told to use. */
-/* THE VEXEL SCALES REFERENCES IN THIS FILE ARE DELIBERATELY LEFT ALONE.
-
-   CLAUDE.md records, as settled, that no Vexel Scales attribution or parent
-   company line appears anywhere on the site. That decision was applied on
-   2026-09-08 to the legacy footer and the legacy contact card, which are
-   marketing surfaces.
-
-   IT IS NOT APPLIED HERE, AND THAT IS A DECISION FOR THE USER RATHER THAN
-   FOR THIS BUILD. These two pages are the Privacy Policy and the Terms of
-   Service, and in them "Vexel Scales LLC" is not attribution. It is the
-   named data controller, the counterparty to a binding agreement, and the
-   physical mailing address a CAN-SPAM clause commits to including. Removing
-   the entity from a contract to satisfy a branding rule would break the
-   contract, and a legal page that does not say who you are contracting with
-   is worse than one that mentions a name the marketing site does not.
-
-   Flagged rather than resolved. If the entity is to come off these pages
-   too, that is a legal question, not a design one. */
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import SecondaryLayout from '../components/SecondaryLayout.jsx';
-
-/* ─────────────────────────────────────────────────────────────────
-   PRIVACY POLICY — comprehensive, Termly/Iubenda-equivalent
-   Effective for form data collection, email marketing, analytics
-───────────────────────────────────────────────────────────────── */
-const PRIVACY = {
+export const PRIVACY = {
   badge: 'LEGAL & DATA PROTECTION',
   title: 'Privacy Policy',
   effective: 'Effective Date: August 22, 2026',
@@ -56,10 +20,10 @@ const PRIVACY = {
   subtitle: 'How VexelTech Solutions (a brand of Vexel Scales LLC) collects, uses, and protects your personal information.',
   intro: 'VexelTech Solutions ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website vexeltechsolutions.com, contact us through our forms, or engage us for services. Please read this policy carefully. If you disagree with its terms, please discontinue use of our site.',
   highlights: [
-    { icon: '🚫', title: 'Never Sold', desc: 'We do not sell, rent, trade, or monetize your personal data to any third party under any circumstances.' },
-    { icon: '🎯', title: 'Purpose-Limited', desc: 'Data is collected only to respond to your inquiry, scope your project, and deliver contracted services.' },
-    { icon: '🔒', title: 'TLS Encrypted', desc: 'All data transmitted to and from our website and staging environments is protected via HTTPS/TLS encryption.' },
-    { icon: '✉️', title: 'Your Rights', desc: 'You may request access, correction, or deletion of your personal data at any time by contacting us directly.' }
+    { title: 'Never Sold', desc: 'We do not sell, rent, trade, or monetize your personal data to any third party under any circumstances.' },
+    { title: 'Purpose-Limited', desc: 'Data is collected only to respond to your inquiry, scope your project, and deliver contracted services.' },
+    { title: 'TLS Encrypted', desc: 'All data transmitted to and from our website and staging environments is protected via HTTPS/TLS encryption.' },
+    { title: 'Your Rights', desc: 'You may request access, correction, or deletion of your personal data at any time by contacting us directly.' }
   ],
   sections: [
     {
@@ -195,10 +159,7 @@ const PRIVACY = {
   ]
 };
 
-/* ─────────────────────────────────────────────────────────────────
-   TERMS OF SERVICE — comprehensive commercial terms
-───────────────────────────────────────────────────────────────── */
-const TERMS = {
+export const TERMS = {
   badge: 'COMMERCIAL TERMS OF ENGAGEMENT',
   title: 'Terms of Service',
   effective: 'Effective Date: August 22, 2026',
@@ -206,10 +167,10 @@ const TERMS = {
   subtitle: 'The agreement governing all projects, payments, intellectual property, revisions, and service delivery at VexelTech Solutions.',
   intro: 'These Terms of Service ("Terms") constitute a legally binding agreement between you ("Client," "you," or "your") and Vexel Scales LLC, a Texas limited liability company operating as VexelTech Solutions ("VexelTech," "we," "our," or "us"). By engaging our services, submitting a project deposit, or signing a project scope document, you agree to be bound by these Terms. If you do not agree, do not engage our services.',
   highlights: [
-    { icon: '🏆', title: '100% IP Ownership', desc: 'Upon final payment, all deliverables, source code, and creative assets transfer entirely to you with no strings attached.' },
-    { icon: '📋', title: 'Scope-First', desc: 'Every project begins with a written scope document. Work outside that scope is quoted and approved before it begins.' },
-    { icon: '💳', title: '50/50 Milestones', desc: 'Standard projects use a 50% initiation deposit and 50% final payment before production deployment.' },
-    { icon: '🛡️', title: 'Mutual NDA Available', desc: 'We gladly execute mutual non-disclosure agreements upon request before project initiation.' }
+    { title: '100% IP Ownership', desc: 'Upon final payment, all deliverables, source code, and creative assets transfer entirely to you with no strings attached.' },
+    { title: 'Scope-First', desc: 'Every project begins with a written scope document. Work outside that scope is quoted and approved before it begins.' },
+    { title: '50/50 Milestones', desc: 'Standard projects use a 50% initiation deposit and 50% final payment before production deployment.' },
+    { title: 'Mutual NDA Available', desc: 'We gladly execute mutual non-disclosure agreements upon request before project initiation.' }
   ],
   sections: [
     {
@@ -392,297 +353,3 @@ const TERMS = {
     }
   ]
 };
-
-/* ─────────────────────────────────────────────────────────────────
-   SHARED SUBCOMPONENTS
-───────────────────────────────────────────────────────────────── */
-function TableOfContents({ sections, activeId, onJump }) {
-  return (
-    <nav aria-label="Table of contents" style={{
-      position: 'sticky',
-      top: '96px',
-      background: '#ffffff',
-      border: '1px solid var(--line)',
-      borderRadius: '4px',
-      padding: '20px',
-      alignSelf: 'flex-start',
-      minWidth: '220px',
-      maxWidth: '260px',
-      flexShrink: 0
-    }}>
-      <div style={{ fontFamily: 'var(--mono)', fontSize: '10px', fontWeight: '700', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--steel)', marginBottom: '12px' }}>
-        TABLE OF CONTENTS
-      </div>
-      <ol style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        {sections.map(sec => {
-          const sId = sec.id;
-          const isActive = activeId === sId;
-          return (
-            <li key={sId}>
-              <button
-                onClick={() => onJump(sId)}
-                style={{
-                  background: isActive ? 'var(--concrete)' : 'transparent',
-                  border: 'none',
-                  borderLeft: isActive ? '2px solid var(--amber)' : '2px solid transparent',
-                  padding: '6px 10px',
-                  fontSize: '12.5px',
-                  color: isActive ? 'var(--ink)' : 'var(--steel)',
-                  fontFamily: 'var(--body)',
-                  textAlign: 'left',
-                  cursor: 'pointer',
-                  lineHeight: '1.4',
-                  width: '100%',
-                  borderRadius: '0 3px 3px 0',
-                  transition: 'all 0.15s ease'
-                }}
-              >
-                {sec.title.replace(/^\d+\.\s/, '')}
-              </button>
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
-  );
-}
-
-function SectionBlock({ sec }) {
-  return (
-    <section id={`section-${sec.id}`} style={{ marginBottom: '40px', scrollMarginTop: '112px' }}>
-      <h2 style={{
-        fontFamily: 'var(--disp)',
-        fontWeight: '700',
-        fontSize: 'clamp(18px, 2vw, 22px)',
-        color: 'var(--ink)',
-        marginBottom: '16px',
-        paddingBottom: '12px',
-        borderBottom: '2px solid var(--line)'
-      }}>
-        {sec.title}
-      </h2>
-      {sec.content.map((block, i) => (
-        <div key={i} style={{ marginBottom: '20px' }}>
-          <h3 style={{ fontFamily: 'var(--mono)', fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--amber)', marginBottom: '8px' }}>
-            {block.sub}
-          </h3>
-          <p style={{ fontSize: '15px', color: 'var(--steel)', lineHeight: '1.8', margin: 0 }}>
-            {block.body}
-          </p>
-        </div>
-      ))}
-    </section>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────────────
-   PAGE COMPONENT
-───────────────────────────────────────────────────────────────── */
-export default function SimplePage({ title }) {
-  const isPrivacy = title.toLowerCase().includes('privacy');
-  const data = isPrivacy ? PRIVACY : TERMS;
-  const [activeId, setActiveId] = useState('1');
-
-  const jumpTo = (id) => {
-    setActiveId(id);
-    const el = document.getElementById(`section-${id}`);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  return (
-    <SecondaryLayout
-      /* The bare title: SecondaryLayout adds the suffix, and passing it
-         here as well doubled it (the release audit, 2026-09-25). */
-      title={data.title}
-      description={data.subtitle}
-    >
-
-      {/* ══════════════════════════════════════════════════════
-          1. DARK HERO
-      ══════════════════════════════════════════════════════ */}
-      <section className="band band--ink" style={{ background: 'var(--ink)', color: '#ffffff', padding: 'clamp(72px,10vw,108px) 0 clamp(56px,7vw,80px)' }}>
-        <div className="wrap">
-          <div style={{ display: 'flex', marginBottom: '22px' }}>
-            <span style={{
-              background: 'rgba(255,255,255,0.08)',
-              border: '1px solid rgba(255,255,255,0.15)',
-              color: 'var(--beacon)',
-              fontSize: '11px',
-              fontWeight: '700',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              padding: '6px 14px',
-              borderRadius: '50px',
-              fontFamily: 'var(--mono)'
-            }}>
-              ✓ {data.badge}
-            </span>
-          </div>
-
-          <h1 className="h-xl" style={{ color: '#ffffff', marginBottom: '18px', maxWidth: '820px' }}>
-            {data.title.toUpperCase()}<span style={{ color: 'var(--beacon)' }}>.</span>
-          </h1>
-
-          <p className="lede" style={{ color: 'var(--text-d)', maxWidth: '680px', fontSize: '18px', lineHeight: '1.65', marginBottom: '28px' }}>
-            {data.subtitle}
-          </p>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
-            <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--steel)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-              {data.effective}
-            </span>
-            <span style={{ color: 'rgba(255,255,255,0.2)' }}>|</span>
-            <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--steel)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-              {data.updated}
-            </span>
-            <span style={{ color: 'rgba(255,255,255,0.2)' }}>|</span>
-            <a href="mailto:info@vexeltechsolutions.com" style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--beacon)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.1em', textDecoration: 'none' }}>
-              Legal Questions →
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════
-          2. KEY COMMITMENTS
-      ══════════════════════════════════════════════════════ */}
-      <section className="band" style={{ background: '#ffffff', padding: '52px 0', borderBottom: '1px solid var(--line)' }}>
-        <div className="wrap">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '20px' }}>
-            {data.highlights.map(h => (
-              <div key={h.title} style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                <span style={{ fontSize: '22px', flexShrink: 0, lineHeight: 1, marginTop: '2px' }}>{h.icon}</span>
-                <div>
-                  <div style={{ fontFamily: 'var(--disp)', fontWeight: '700', fontSize: '15px', color: 'var(--ink)', marginBottom: '4px' }}>{h.title}</div>
-                  <div style={{ fontSize: '13px', color: 'var(--steel)', lineHeight: '1.5' }}>{h.desc}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════
-          3. INTRO + TWO-COLUMN LEGAL BODY
-      ══════════════════════════════════════════════════════ */}
-      <section className="band band--concrete" style={{ background: 'var(--concrete)', padding: 'clamp(56px,8vw,96px) 0' }}>
-        <div className="wrap">
-          {/* Intro paragraph */}
-          <div style={{
-            background: 'var(--ink)',
-            color: 'var(--text-d)',
-            padding: '24px 28px',
-            borderRadius: '4px',
-            borderLeft: '3px solid var(--beacon)',
-            marginBottom: '40px',
-            fontSize: '15px',
-            lineHeight: '1.7'
-          }}>
-            <strong style={{ color: '#fff', display: 'block', marginBottom: '6px', fontFamily: 'var(--mono)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-              PLAIN LANGUAGE SUMMARY
-            </strong>
-            {data.intro}
-          </div>
-
-          {/* Body: sidebar TOC + sections */}
-          <div style={{ display: 'flex', gap: '40px', alignItems: 'flex-start' }}>
-            {/* Sidebar TOC — hidden on small screens via flex-wrap */}
-            <div className="toc-sidebar" style={{ display: 'flex', flexShrink: 0 }}>
-              <TableOfContents
-                sections={data.sections}
-                activeId={activeId}
-                onJump={jumpTo}
-              />
-            </div>
-
-            {/* Main content */}
-            <div style={{ flex: 1, minWidth: 0, background: '#ffffff', border: '1px solid var(--line)', borderRadius: '4px', padding: 'clamp(24px,4vw,40px)' }}>
-              {data.sections.map(sec => (
-                <SectionBlock key={sec.id} sec={sec} />
-              ))}
-
-              {/* Jurisdiction notice */}
-              <div style={{ background: 'var(--concrete)', border: '1px solid var(--line)', borderRadius: '3px', padding: '20px 24px', marginTop: '8px' }}>
-                <p style={{ fontSize: '13px', color: 'var(--steel)', lineHeight: '1.6', margin: 0 }}>
-                  <strong style={{ color: 'var(--ink)' }}>Jurisdiction Notice:</strong> This {data.title} is governed by the laws of the State of Texas, United States. If any provision of this document is found to be unenforceable, the remaining provisions shall remain in full force and effect. This document was last reviewed for compliance with CAN-SPAM, CCPA (California Consumer Privacy Act), and GDPR (General Data Protection Regulation) as of its effective date. For jurisdiction-specific questions, please consult a licensed attorney.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════
-          4. ENTITY CONTACT BLOCK
-      ══════════════════════════════════════════════════════ */}
-      <section className="band band--ink" style={{ background: 'var(--ink)', padding: 'clamp(56px,8vw,80px) 0' }}>
-        <div className="wrap">
-          <div style={{
-            background: 'var(--ink-2)',
-            border: '1px solid var(--line-d)',
-            borderRadius: '4px',
-            padding: 'clamp(28px,4vw,44px)',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '32px',
-            alignItems: 'center'
-          }}>
-            <div>
-              <span style={{ display: 'block', fontFamily: 'var(--mono)', fontSize: '10px', fontWeight: '700', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--beacon)', marginBottom: '10px' }}>
-                Official Legal Entity
-              </span>
-              <h3 className="h-md" style={{ color: '#ffffff', fontSize: '22px', marginBottom: '10px' }}>Vexel Scales LLC</h3>
-              <p style={{ color: 'var(--text-d)', fontSize: '14px', lineHeight: '1.65', margin: 0 }}>
-                Operating as <strong style={{ color: '#fff' }}>VexelTech Solutions</strong>. A Texas limited liability company. All contracts, invoices, and legal notices are issued under Vexel Scales LLC.
-              </p>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', borderLeft: '1px solid var(--line-d)', paddingLeft: 'clamp(0px,3vw,28px)' }}>
-              {[
-                { label: 'Registered State', value: 'Texas, United States' },
-                { label: 'Physical Address', value: 'Richmond, TX 77406, USA' },
-                { label: 'Legal & Privacy Desk', value: 'info@vexeltechsolutions.com', href: 'mailto:info@vexeltechsolutions.com' },
-                { label: 'Direct Line', value: '(385) 284-3265', href: 'tel:+13852843265' }
-              ].map(item => (
-                <div key={item.label}>
-                  <div style={{ fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--steel)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '2px' }}>{item.label}</div>
-                  {item.href
-                    ? <a href={item.href} style={{ color: 'var(--beacon)', fontSize: '14px', fontWeight: '600', textDecoration: 'none' }}>{item.value}</a>
-                    : <span style={{ color: '#ffffff', fontSize: '14px' }}>{item.value}</span>
-                  }
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════
-          5. FOOTER NAVIGATION — cross-link both docs + contact
-      ══════════════════════════════════════════════════════ */}
-      <section className="band" style={{ background: '#ffffff', padding: '40px 0', borderTop: '1px solid var(--line)' }}>
-        <div className="wrap" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
-            <Link
-              to={isPrivacy ? '/terms-of-service' : '/privacy-policy'}
-              style={{ fontFamily: 'var(--mono)', fontSize: '12px', fontWeight: '700', color: 'var(--steel)', textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none' }}
-            >
-              {isPrivacy ? 'View Terms of Service →' : 'View Privacy Policy →'}
-            </Link>
-            <span style={{ color: 'var(--line)' }}>|</span>
-            <Link
-              to="/contact-us"
-              style={{ fontFamily: 'var(--mono)', fontSize: '12px', fontWeight: '700', color: 'var(--amber)', textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none' }}
-            >
-              Contact Legal Desk →
-            </Link>
-          </div>
-          <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--steel)' }}>
-            © 2026 Vexel Scales LLC · All rights reserved
-          </span>
-        </div>
-      </section>
-
-    </SecondaryLayout>
-  );
-}

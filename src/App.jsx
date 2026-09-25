@@ -2,36 +2,20 @@ import React, { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 /* ==========================================================================
-   THE ROUTE SWAP. BUILD-LAW.md pre-flight step 12, done.
+   THE ROUTES, 2026-09-25.
 
-   `/` served the legacy site for the whole rebuild because `main.jsx`
-   imported an unscoped 9,960-line `styles.css` that opened with bare-element
-   resets. That stylesheet is now `styles.legacy.css`, every one of its 1,500
-   selectors rewritten to require `.lg`, and it is imported by
-   `legacy/LegacyShell.jsx` and nothing else. The condition the step named is
-   met, so the swap is made here.
+   The site is five pages: `/`, `/services`, `/pricing`, `/about-us`,
+   `/contact-us`, plus the Privacy Policy, the Terms of Service and /thanks,
+   which are noindex. Every page is on the site's shell. THE LEGACY TREE IS
+   GONE: its last three pages were rebuilt and `styles.legacy.css`,
+   `LegacyShell` and `SecondaryLayout` were deleted (the founder's legacy
+   rebuild). The rule its audit produced stands: **a URL is kept only while
+   what it says is true.**
 
-   ---- Two trees, and which owns which path ------------------------------
-
-   THE REBUILD OWNS FIVE DESTINATIONS since 2026-09-25: `/`, `/services`,
-   `/pricing`, `/about-us`, `/contact-us`. `/resources`, `/portfolio` and
-   `/case-studies` had no content and were removed with their pages
-   (netlify.toml sends them to `/`).
-
-   WHAT IS LEFT OF THE LEGACY TREE is three pages: the two legal pages and
-   the thanks page, all noindex. The rule the legacy audit produced stands:
-   **a URL is kept only while what it says is true.**
-
-   THE ALIASES POINT AT THE REBUILD: `/packages`, `/pricing/`, `/contact`,
-   `/about` and the rest resolve to the rebuilt page for their destination.
-
-   ---- Lazy, and why it is not premature ---------------------------------
-
-   Every legacy route is `lazy()`. That is what keeps the legacy stylesheet
-   and the legacy component tree out of the bundle a reader gets on `/`.
-   Without it the scoping would stop the styles LEAKING but the bytes would
-   still ship, and 165 KB of stylesheet for a page that cannot use one of its
-   rules is the same waste the tile ladder was about.
+   THE ALIASES POINT AT THE PAGE FOR THEIR DESTINATION: `/packages`,
+   `/pricing/`, `/contact`, `/about`, `/privacy.html` and the rest. The
+   routes with no content (/blog, /resources, /portfolio, /case-studies,
+   /legacy/contact) are removed and 301 to `/` in netlify.toml.
    ========================================================================== */
 
 /* The rebuild. Eager: these are the site, and the homepage must not wait on
@@ -43,27 +27,13 @@ import ContactPage from './pages/site/ContactPage.jsx';
 import AboutPage from './pages/site/AboutPage.jsx';
 import NotFoundPage from './pages/site/NotFoundPage.jsx';
 
-/* The legacy tree. Lazy, and every one of them wrapped in LegacyShell.
-
-   Three remain: /thanks, the Privacy Policy and the Terms of Service. The
-   superseded legacy pages, /blog and /legacy/contact were DELETED from the
-   repo on 2026-09-25 (the founder's cleanup); git history holds them. */
-const LegacyShell = lazy(() => import('./legacy/LegacyShell.jsx'));
-const LegacySimple = lazy(() => import('./pages/SimplePage.jsx'));
-const LegacyThanks = lazy(() => import('./pages/ThanksPage.jsx'));
-
-/* Nothing visible while a legacy chunk arrives. A spinner here would be a
-   loading state DESIGN.md has not specified, and inventing one is inventing
-   a component. The chunk is local and the gap is a frame or two. */
-function Legacy({ children }) {
-  return (
-    <Suspense fallback={null}>
-      <LegacyShell>{children}</LegacyShell>
-    </Suspense>
-  );
-}
-
-const legacy = (node) => <Legacy>{node}</Legacy>;
+/* THE LEGAL PAGES AND /thanks, rebuilt on the site's shell 2026-09-25 (the
+   founder's legacy rebuild). Lazy, so the legal text (about 40KB) stays out
+   of the bundle a reader gets on `/`. Nothing shows while the chunk arrives:
+   it is local and the gap is a frame or two. */
+const LegalPage = lazy(() => import('./pages/site/LegalPage.jsx'));
+const ThanksPage = lazy(() => import('./pages/site/ThanksPage.jsx'));
+const later = (node) => <Suspense fallback={null}>{node}</Suspense>;
 
 export default function App() {
   return (
@@ -132,18 +102,15 @@ export default function App() {
       <Route path="/automation" element={<Navigate to="/services#automation" replace />} />
       <Route path="/automation/" element={<Navigate to="/services#automation" replace />} />
 
-      {/* ---- Legacy: the pages the rebuild has not reached -------------- */}
-      <Route path="/thanks" element={legacy(<LegacyThanks />)} />
-      <Route path="/thanks.html" element={legacy(<LegacyThanks />)} />
-      <Route path="/privacy-policy" element={legacy(<LegacySimple title="Privacy Policy" />)} />
-      <Route path="/privacy-policy/" element={legacy(<LegacySimple title="Privacy Policy" />)} />
-      <Route path="/privacy.html" element={legacy(<LegacySimple title="Privacy Policy" />)} />
-      <Route path="/terms-of-service" element={legacy(<LegacySimple title="Terms of Service" />)} />
-      <Route
-        path="/terms-of-service/"
-        element={legacy(<LegacySimple title="Terms of Service" />)}
-      />
-      <Route path="/terms.html" element={legacy(<LegacySimple title="Terms of Service" />)} />
+      {/* ---- The legal pages and /thanks, on the site's shell ------------ */}
+      <Route path="/thanks" element={later(<ThanksPage />)} />
+      <Route path="/thanks.html" element={later(<ThanksPage />)} />
+      <Route path="/privacy-policy" element={later(<LegalPage kind="privacy" />)} />
+      <Route path="/privacy-policy/" element={later(<LegalPage kind="privacy" />)} />
+      <Route path="/privacy.html" element={later(<LegalPage kind="privacy" />)} />
+      <Route path="/terms-of-service" element={later(<LegalPage kind="terms" />)} />
+      <Route path="/terms-of-service/" element={later(<LegalPage kind="terms" />)} />
+      <Route path="/terms.html" element={later(<LegalPage kind="terms" />)} />
 
 
       {/* THE NOT-FOUND ROUTE IS THE REBUILD'S, 2026-09-15. It was the legacy

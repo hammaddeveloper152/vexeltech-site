@@ -1,0 +1,257 @@
+/* ==========================================================================
+   THE LEGAL PAGES AND /thanks, 2026-09-25 (the founder's legacy rebuild).
+   See LegalPage.jsx and ThanksPage.jsx.
+
+   The dark ground, one column at reading width (720px, about 75 characters
+   of 16px Satoshi), the site's quiet type: the page heading in Clash
+   Display Medium at the heading step, section headings a step down, body in
+   Satoshi at bone 85%, labels in the mono label in steel-lift. Nothing here
+   is a new value; every one is a token. The space above is the section's
+   and below it the last section's, by the rhythm rule (tokens.css).
+   ========================================================================== */
+
+.legal {
+  padding: var(--s-section) var(--inset) 0;
+  color: var(--c-bone); /* 16.32:1 */
+}
+
+.legal__in {
+  width: min(100%, 720px);
+  margin: 0 auto;
+}
+
+.legal__badge,
+.legal__meta .lbl,
+.legal__summary-l,
+.legal__entity-l,
+.legal__facts dt,
+.legal__copy {
+  color: var(--c-steel-lift); /* 7.4:1 */
+}
+
+.legal__badge {
+  margin: 0 0 var(--s-md);
+}
+
+.legal__h {
+  margin: 0;
+  font-family: var(--font-quiet);
+  font-size: var(--t-head);
+  line-height: var(--t-head-line);
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  color: var(--c-bone);
+  text-wrap: balance;
+}
+
+.legal__lead {
+  margin: var(--s-lg) 0 0;
+  font-family: var(--font-offer);
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--c-body-dark); /* bone at 85% */
+}
+
+.legal__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--s-lg);
+  margin: var(--s-lg) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Every link on these pages: bone, underlined, a 48px target (BUILD-LAW
+   Touch), the icon set's arrow after the words where there was a "→". */
+.legal__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-sm);
+  min-height: 48px;
+  color: var(--c-bone); /* 16.32:1 */
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+  transition: opacity var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .legal__link:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+/* The four highlights: two across from 768, a hairline above each. */
+.legal__highlights {
+  display: grid;
+  gap: var(--s-lg) var(--s-xl);
+  margin: var(--s-2xl) 0 0;
+}
+
+@media (min-width: 768px) {
+  .legal__highlights {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.legal__hl {
+  padding-top: var(--s-md);
+  border-top: 1px solid var(--c-rule-dark);
+}
+
+.legal__hl-t {
+  font-family: var(--font-quiet);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-bone);
+}
+
+.legal__hl-d {
+  margin: var(--s-sm) 0 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-body-dark);
+}
+
+.legal__summary {
+  margin: var(--s-2xl) 0 0;
+}
+
+.legal__summary-l,
+.legal__entity-l {
+  margin: 0 0 var(--s-sm);
+}
+
+.legal__p {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-body-dark); /* bone at 85% */
+}
+
+.legal__p strong {
+  font-weight: 700;
+  color: var(--c-bone);
+}
+
+.legal__sec {
+  margin: var(--s-2xl) 0 0;
+  scroll-margin-top: 96px;
+}
+
+.legal__h2 {
+  margin: 0 0 var(--s-md);
+  font-family: var(--font-quiet);
+  font-size: 27px;
+  line-height: 36px;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  color: var(--c-bone);
+  text-wrap: balance;
+}
+
+.legal__block + .legal__block {
+  margin-top: var(--s-lg);
+}
+
+.legal__h3 {
+  margin: 0 0 var(--s-sm);
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  font-weight: 700;
+  color: var(--c-bone);
+}
+
+.legal__notice {
+  margin-top: var(--s-2xl);
+  padding-top: var(--s-lg);
+  border-top: 1px solid var(--c-rule-dark);
+}
+
+.legal__entity {
+  margin: var(--s-2xl) 0 0;
+}
+
+.legal__facts {
+  display: grid;
+  gap: var(--s-md);
+  margin: var(--s-lg) 0 0;
+}
+
+@media (min-width: 768px) {
+  .legal__facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.legal__facts dd {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-bone);
+}
+
+/* A value that is plain text sits on the label's 48px rhythm too, so a
+   row of two reads level with a row of two links. */
+.legal__facts dd:not(:has(a)) {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+}
+
+.legal__cross {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--s-xl);
+  margin: var(--s-2xl) 0 0;
+}
+
+.legal__copy {
+  margin: var(--s-md) 0 0;
+}
+
+/* /thanks: the call, the site's yellow primary. */
+.legal__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px; /* BUILD-LAW Touch */
+  margin-top: var(--s-xl);
+  padding: var(--s-md) var(--s-lg);
+  border-radius: var(--r-btn);
+  background: var(--c-accent-ground);
+  color: var(--c-asphalt); /* 9.46:1 */
+  font-family: var(--font-brand);
+  font-size: var(--t-btn);
+  line-height: var(--t-btn-line);
+  font-weight: var(--t-weight-btn);
+  letter-spacing: normal;
+  text-decoration: none;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .legal__cta:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+.legal__cta:active,
+.legal__link:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .legal__cta:active,
+  .legal__link:active {
+    transform: none;
+  }
+}
