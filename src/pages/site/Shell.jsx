@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import Header from '../../components/site/Header.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
-import StickyCta from '../../components/site/StickyCta.jsx';
 import Marginalia from '../../components/site/Marginalia.jsx';
 import { setHead } from './head.js';
 import '../../styles/tokens.css';
@@ -84,8 +83,6 @@ export default function Shell({
             bare once sat on the UA's white body on six pages. */}
         {meta ? <FooterForm form={footerForm} /> : null}
       </main>
-      {/* Below 768, once the page head has gone (StickyCta.jsx). */}
-      <StickyCta />
       {/* The margin labels, from 1024 (Marginalia.jsx). */}
       <Marginalia />
     </>

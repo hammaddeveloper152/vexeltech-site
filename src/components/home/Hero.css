@@ -603,7 +603,8 @@
      padding-top     the bar's height + 24px (the bar stands over the hero)
      headline        Monigue, clamp(40px, 11vw, 56px), line-height 0.95, a
                      box two lines tall so a cut never moves the stack (every
-                     line is two lines or fewer: 42.9px at 390)
+                     line is two lines or fewer: 42.9px at 390), the line
+                     at the box's top
      offer line      14px Satoshi, 16px under the headline
      the call        16px under the offer line; full width below 768
      frame           24px under the call, the measure's width, radius 16,
@@ -629,11 +630,16 @@
     padding: 0;
   }
 
+  /* TOP-ALIGNED IN ITS BOX, 2026-09-30 (the founder). The box stays two
+     lines tall so a cut never moves the stack, but a one-line line now sits
+     straight under the bar's 24px and the spare line falls below it, between
+     the headline and the offer line. */
   .hero[data-mode] .hero__headline {
     margin: 0 0 var(--s-md);
     font-size: clamp(40px, 11vw, 56px);
     line-height: 0.95;
     height: calc(2 * 0.95em);
+    align-content: start;
   }
 
   .hero[data-mode] :is(.hero__headline, .hero__support)::before {

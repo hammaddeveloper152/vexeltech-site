@@ -42,9 +42,25 @@ html[data-ground='light'] .bar .wm__dot {
   color: var(--c-accent-text-light); /* deep amber, 4.82:1 on cream */
 }
 
+/* The current page by tone on cream, 2026-09-30: the bar's pair is bone
+   against steel-lift, and bone on cream is invisible, so here it is asphalt
+   (15.75:1) against steel (7.20:1). Hover is the yellow block, asphalt. */
 html[data-ground='light'] .bar__link,
 html[data-ground='light'] .bar__panel-link {
-  color: var(--c-asphalt); /* 15.75:1: steel-lift would be 2.27 */
+  color: var(--c-steel); /* 7.20:1: steel-lift would be 2.27 */
+}
+
+html[data-ground='light'] :is(.bar__link, .bar__panel-link)[aria-current='page'] {
+  color: var(--c-asphalt); /* 15.75:1 */
+}
+
+/* The hover block's words stay asphalt here: the steel above out-ranks the
+   bar's own hover colour (0-2-1 against 0-2-0), which would paint steel on
+   yellow. */
+@media (hover: hover) and (pointer: fine) {
+  html[data-ground='light'] :is(.bar__link, .bar__panel-link):hover {
+    color: var(--c-asphalt);
+  }
 }
 
 html[data-ground='light'] .bar__menu {

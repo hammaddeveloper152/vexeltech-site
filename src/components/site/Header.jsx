@@ -12,7 +12,7 @@
    It was also wrong on its own terms: a full reload on every internal click
    re-parses the bundle, re-runs the hero entrance and throws away scroll
    position, on a site that is one bundle already. */
-import React, { useEffect, useId, useRef, useState } from 'react';
+import React, { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { IconClose, IconMenu } from './Icons.jsx';
 import Wordmark from './Wordmark.jsx';
@@ -78,6 +78,41 @@ const SOLID_AFTER = 80; // px of scroll
 export default function Header({ over = false }) {
   const [open, setOpen] = useState(false);
   const [solid, setSolid] = useState(!over);
+  const barRef = useRef(null);
+  /* ONE YELLOW CALL PER SCREEN ON A PHONE, 2026-09-30 (the founder). Below
+     768 the bar's call is held while the hero's call is on screen, and fades
+     in once the hero's call has scrolled above the bar. A page with no hero
+     call never holds it; from 768 up it is always shown. A layout effect, so
+     the held state is set before the first paint and the call never flashes
+     in and out on load. */
+  const [held, setHeld] = useState(false);
+  useLayoutEffect(() => {
+    const heroCall = document.querySelector('.hero__actions .hero__cta');
+    if (!heroCall) {
+      setHeld(false);
+      return undefined;
+    }
+    const phone = window.matchMedia('(max-width: 767px)');
+    let raf = 0;
+    const read = () => {
+      raf = 0;
+      const barBottom = barRef.current ? barRef.current.getBoundingClientRect().bottom : 0;
+      setHeld(phone.matches && heroCall.getBoundingClientRect().bottom > barBottom);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(read);
+    };
+    read();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    phone.addEventListener('change', read);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      phone.removeEventListener('change', read);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
 
   /* OVER A HERO THE BAR HAS TWO STATES, 2026-09-15, by the user. At the top
      it is a gradient over the picture; after 80px of scroll it is the solid
@@ -178,9 +213,11 @@ export default function Header({ over = false }) {
      band, and the gradient's strength is walked over the film. See Header.css. */
   return (
     <header
+      ref={barRef}
       className="vt bar"
       data-over={over ? 'true' : 'false'}
       data-solid={solid ? 'true' : 'false'}
+      data-call={held ? 'held' : 'shown'}
     >
       <div className="bar__inner">
         <Link className="bar__brand" to="/" aria-label="Vexeltech, home">

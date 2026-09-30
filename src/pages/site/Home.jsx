@@ -11,7 +11,6 @@ import RouteBand from '../../components/site/RouteBand.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import { CallBand } from './parts.jsx';
-import StickyCta from '../../components/site/StickyCta.jsx';
 import Marginalia from '../../components/site/Marginalia.jsx';
 import { setHead } from './head.js';
 import '../../styles/tokens.css';
@@ -139,8 +138,6 @@ export default function Home() {
         />
         <FooterForm />
       </main>
-      {/* Below 768, once the hero has gone (StickyCta.jsx, 2026-09-24). */}
-      <StickyCta />
       {/* The margin labels, from 1024 (Marginalia.jsx). */}
       <Marginalia />
     </>

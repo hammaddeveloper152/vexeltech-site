@@ -416,12 +416,44 @@
   color: var(--c-asphalt);
 }
 
-/* THE CURRENT PAGE carries the hover block at rest, 2026-09-30 (the
-   founder). Asphalt on machine yellow, 9.46:1. */
+/* THE CURRENT PAGE IS MARKED BY TEXT TONE ONLY, 2026-09-30 (the founder):
+   bone against steel, no block and no dot, so the bar has one yellow control
+   at rest, the call. The resting tone is steel-lift, 7.55:1 on the base:
+   steel itself is 2.42:1 there and fails 4.5, so the founder's fallback
+   applies. The current page is bone, 16.32:1. The panel takes the same pair.
+   Hover on any link, the current one included, is still the yellow block. */
+.bar__panel-link {
+  color: var(--c-steel-lift);
+}
+
 .bar__link[aria-current='page'],
 .bar__panel-link[aria-current='page'] {
-  background: var(--c-accent-ground);
-  color: var(--c-asphalt);
+  color: var(--c-bone);
+}
+
+/* ---- The held call, below 768 (2026-09-30, the founder) -----------------
+
+   While the hero's call is on screen the bar's call is held: invisible, out
+   of the tab order, its box kept so nothing in the bar moves. It fades in
+   over 150ms once the hero's call has scrolled above the bar. Opacity only;
+   visibility follows the fade out and leads the fade in. */
+@media (max-width: 767px) {
+  .bar__inner > .bar__cta {
+    transition:
+      opacity 150ms var(--ease-reveal),
+      transform var(--d-press) var(--ease-reveal),
+      visibility 0s linear 0s;
+  }
+
+  .bar[data-call='held'] .bar__inner > .bar__cta {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 150ms var(--ease-reveal),
+      transform var(--d-press) var(--ease-reveal),
+      visibility 0s linear 150ms;
+  }
 }
 
 /* ---- Hover, gated to real pointers ------------------------------------- */
