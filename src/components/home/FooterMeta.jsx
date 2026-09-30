@@ -92,7 +92,7 @@ export default function FooterMeta() {
             {PAGES.map(({ id, label, href }) => (
               <li key={id}>
                 <Link className="foot__page" to={href}>
-                  <span className="tl">{label}</span>
+                  {label}
                 </Link>
               </li>
             ))}

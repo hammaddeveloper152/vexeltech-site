@@ -274,31 +274,59 @@
   transform: scale(0.97);
 }
 
+/* THE HEADER'S GEOMETRY, 2026-09-30 (the founder): the pages take the bar's
+   control box (`--hdr-*`, tokens.css) so header and footer match. 4px between
+   blocks so two never touch; 8px between wrapped rows keeps the 48px pitch,
+   so the hit areas never overlap; the negative margin keeps the first word on
+   the column's edge. */
 .foot__pages {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  column-gap: var(--s-lg);
-  margin: 0;
+  column-gap: var(--s-xs);
+  row-gap: var(--s-sm);
+  margin: 0 0 0 calc(-1 * var(--hdr-px));
   padding: 0;
   list-style: none;
 }
 
-/* A row is 48px tall, BUILD-LAW Touch. The hover is the site's text-link
-   highlighter (`.tl`, tokens.css): it replaced the steel colour swap. */
+/* The block is the link's own box, 40px, with the 48px target on its
+   `::before` (BUILD-LAW Touch). The footer's own type stays: Clash Medium
+   20px uppercase. */
 .foot__page {
+  position: relative;
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
-  min-height: 48px;
+  height: var(--hdr-h);
+  padding: 0 var(--hdr-px);
+  border-radius: var(--hdr-r);
   font-family: var(--font-quiet);
   font-size: 20px;
-  line-height: 1.2;
+  line-height: 1;
+  white-space: nowrap;
   font-weight: var(--t-weight-quiet);
   letter-spacing: normal;
   text-transform: uppercase;
   color: var(--c-asphalt); /* 15.75:1 */
   text-decoration: none;
   transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.foot__page::before {
+  content: '';
+  position: absolute;
+  inset: var(--hdr-hit) 0;
+}
+
+/* Hover: the header's block, instant. Two classes, so it outranks About's
+   bone footer links (light.css, html[data-ground='light'] :is(.foot__page),
+   0-2-1): bone on yellow would be the dead-override defect BUILD-LAW names. */
+@media (hover: hover) and (pointer: fine) {
+  .foot__pages .foot__page:hover {
+    background: var(--c-accent-ground);
+    color: var(--c-asphalt);
+  }
 }
 
 .foot__page:active {

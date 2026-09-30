@@ -13,7 +13,7 @@
    re-parses the bundle, re-runs the hero entrance and throws away scroll
    position, on a site that is one bundle already. */
 import React, { useEffect, useId, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { IconClose, IconMenu } from './Icons.jsx';
 import Wordmark from './Wordmark.jsx';
 import './Header.css';
@@ -191,9 +191,11 @@ export default function Header({ over = false }) {
           <ul className="bar__list">
             {NAV.map(({ id, label, href }) => (
               <li key={id}>
-                <Link className="bar__link" to={href}>
-                  <span className="tl">{label}</span>
-                </Link>
+                {/* NavLink marks the current page with aria-current="page",
+                    which carries the same block as hover (Header.css). */}
+                <NavLink className="bar__link" to={href}>
+                  {label}
+                </NavLink>
               </li>
             ))}
           </ul>
@@ -202,6 +204,12 @@ export default function Header({ over = false }) {
         <Link className="bar__cta" to="/contact-us">
           {CTA}
         </Link>
+
+        {/* THE CALL IS IN THE BAR FROM 375 UP, 2026-09-30 (the founder's
+            header geometry fix): wordmark, call and menu at 390, the wordmark
+            at its sm size below 768 so the three fit. Below 375 they cannot
+            (13px over at 360), so there the call is in the panel instead.
+            See Header.css. */}
 
         {/* The icon is the whole content of this control, so the control
             carries the label. DESIGN.md Iconography: the label says what the
@@ -240,9 +248,9 @@ export default function Header({ over = false }) {
           <ul className="bar__panel-list">
             {NAV.map(({ id, label, href }) => (
               <li key={id}>
-                <Link className="bar__panel-link" to={href} onClick={() => setOpen(false)}>
-                  <span className="tl">{label}</span>
-                </Link>
+                <NavLink className="bar__panel-link" to={href} onClick={() => setOpen(false)}>
+                  {label}
+                </NavLink>
               </li>
             ))}
           </ul>

@@ -148,25 +148,53 @@
 .bar__list {
   display: flex;
   align-items: center;
-  gap: var(--s-lg);
+  /* 4px, so two hover blocks never touch (2026-09-30). */
+  gap: var(--s-xs);
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+/* ---- ONE CONTROL GEOMETRY, 2026-09-30 (the founder) ----------------------
+
+   Every nav link, the call and the menu button are the same box: 40px tall,
+   14px either side, 6px radius, 14px type, line-height 1 (tokens.css,
+   `--hdr-*`). The hover block is the link's own background, so it is exactly
+   the link's box and the same shape on every label. The 48px target is the
+   `::before` below, which paints nothing (BUILD-LAW Touch). */
+.bar__link,
+.bar__cta,
+.bar__menu,
+.bar__panel-link {
+  position: relative;
+  box-sizing: border-box;
+  height: var(--hdr-h);
+  min-height: 0;
+  padding: 0 var(--hdr-px);
+  border-radius: var(--hdr-r);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.bar__link::before,
+.bar__cta::before,
+.bar__menu::before,
+.bar__panel-link::before {
+  content: '';
+  position: absolute;
+  inset: var(--hdr-hit) 0;
 }
 
 .bar__link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
   /* 48 wide as well (BUILD-LAW Touch, "anything inside a nav"): "Pricing"
      measured 41.1px wide in the release audit, 2026-09-25. */
   min-width: 48px;
-  /* The quiet label, 2026-09-24: 13px Satoshi, sentence case, steel-lift,
-     7.4:1 on the base. It was 12px uppercase in white. */
+  /* 14px Satoshi, sentence case, steel-lift on the base. */
   font-family: var(--font-offer);
-  font-size: var(--t-label-q);
-  line-height: var(--t-label-q-line);
+  font-size: var(--hdr-fs);
   font-weight: var(--t-weight-label);
   letter-spacing: normal;
   text-transform: none;
@@ -189,10 +217,9 @@
    the white-at-12% border, white label at 17.77:1. */
 
 .bar__cta {
-  display: none;
+  display: inline-flex;
   align-items: center;
-  min-height: 48px;
-  padding: var(--s-sm) var(--s-md);
+  flex: none;
   background: transparent;
   border: 1px solid var(--c-rule-dark);
   color: var(--c-bone); /* 16.32:1 on the base */
@@ -300,14 +327,11 @@
      Ground is unchanged: transparent with the 12% border. The hero's own note
      still holds — two filled calls in a frame is a composition that has not
      decided. */
-  border-radius: var(--r-btn);
   font-family: var(--font-brand);
-  font-size: var(--t-btn);
-  line-height: var(--t-btn-line);
+  font-size: var(--hdr-fs);
   font-weight: var(--t-weight-btn);
   letter-spacing: normal;
   text-decoration: none;
-  white-space: nowrap;
   transition:
     opacity var(--d-press) var(--ease-reveal),
     transform var(--d-press) var(--ease-reveal);
@@ -319,20 +343,29 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  /* Square, because the content is a glyph rather than a word. BUILD-LAW:
-     48px minimum on both axes, and the icon is 24px, so the padding is what
-     makes the target rather than the mark. */
-  min-width: 48px;
-  min-height: 48px;
-  padding: var(--s-sm);
+  /* Square, because the content is a glyph rather than a word: the header
+     box on both axes, 40 by 40 at the 6px radius, the icon 24 inside it.
+     The 48px target is the shared `::before`, widened here to 48 across. */
+  width: var(--hdr-h);
+  padding: 0;
   background: none;
   border: 1px solid var(--c-rule-dark);
-  border-radius: var(--r-sm);
   color: var(--c-bone);
   cursor: pointer;
   transition:
     opacity var(--d-press) var(--ease-reveal),
     transform var(--d-press) var(--ease-reveal);
+}
+
+/* The call and the menu carry a 1px border, and a positioned pseudo-element
+   is measured from inside it, so their target reaches 1px further to make
+   the same 48. Measured 46 before this (`.measure/header.mjs`). */
+.bar__cta::before {
+  inset: calc(var(--hdr-hit) - 1px) -1px;
+}
+
+.bar__menu::before {
+  inset: calc(var(--hdr-hit) - 1px);
 }
 
 /* ---- The panel ---------------------------------------------------------- */
@@ -357,10 +390,12 @@
   list-style: none;
 }
 
+/* The panel's links take the header box and its block, at the panel's own
+   h3 type. No negative margin: pulled onto the panel's edge the block sat 2px
+   from the screen, and unpulled the words line up with the call's below 375. */
 .bar__panel-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  min-height: 48px;
   font-family: var(--font-brand);
   font-size: var(--t-h3-size);
   line-height: var(--t-h3-line);
@@ -368,11 +403,6 @@
   letter-spacing: var(--t-track-h3);
   color: var(--c-bone);
   text-decoration: none;
-}
-
-.bar__cta--panel {
-  display: inline-flex;
-  justify-self: start;
 }
 
 /* THE PRIMARY IS ALWAYS THE YELLOW BUTTON, 2026-09-24 (the founder's
@@ -383,15 +413,30 @@
 .bar__cta {
   background: var(--c-accent-ground);
   border-color: var(--c-accent-ground);
-  border-radius: var(--r-btn);
+  color: var(--c-asphalt);
+}
+
+/* THE CURRENT PAGE carries the hover block at rest, 2026-09-30 (the
+   founder). Asphalt on machine yellow, 9.46:1. */
+.bar__link[aria-current='page'],
+.bar__panel-link[aria-current='page'] {
+  background: var(--c-accent-ground);
   color: var(--c-asphalt);
 }
 
 /* ---- Hover, gated to real pointers ------------------------------------- */
 
 @media (hover: hover) and (pointer: fine) {
-  /* The nav links take the site's text-link hover, the highlighter
-     (`.tl`, tokens.css, 2026-09-24), in place of the opacity dip. */
+  /* The nav links: a solid yellow block on the link's own box, asphalt
+     words, instant (nothing transitions the background). No underline, no
+     scale, nothing moves. The call keeps the primary buttons' own hover,
+     the opacity dip, as the hero's call does. */
+  .bar__link:hover,
+  .bar__panel-link:hover {
+    background: var(--c-accent-ground);
+    color: var(--c-asphalt);
+  }
+
   .bar__cta:hover,
   .bar__menu:hover {
     opacity: var(--hover-opacity);
@@ -436,20 +481,42 @@
 
 /* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------ */
 
+/* THE PHONE BAR, 2026-09-30 (the founder): wordmark, call and menu. The
+   content box at 390 is 358px; the md wordmark (203) + call (161) + menu (40)
+   and two 24px gaps is 453, 95 over. So below 768 the wordmark takes its sm
+   size (16px, 124 wide) and the gaps are 8px: 341, 17px spare at 390 and 2
+   at 375. Below 375 it cannot fit (13 over at 360), so the call moves into
+   the open panel there, the one place it is not in the bar. */
+.bar__cta--panel {
+  display: none;
+  justify-self: start;
+}
+
+@media (max-width: 767px) {
+  .bar__inner {
+    gap: var(--s-sm);
+  }
+
+  .bar__brand .wm--md {
+    font-size: var(--t-body-size);
+  }
+}
+
+@media (max-width: 374px) {
+  .bar__inner > .bar__cta {
+    display: none;
+  }
+
+  .bar__cta--panel {
+    display: inline-flex;
+  }
+}
+
 @media (min-width: 768px) {
   .bar__inner {
     padding: var(--s-sm) var(--s-xl);
   }
 
-  .bar__cta {
-    display: inline-flex;
-  }
-
-  /* The bar's call is visible from here up, so the panel does not repeat it.
-     Two of them would be the same call twice in one frame. */
-  .bar__cta--panel {
-    display: none;
-  }
 }
 
 @media (min-width: 1024px) {
