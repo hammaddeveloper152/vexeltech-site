@@ -1,5 +1,5 @@
-/* filmhero.mjs: the film behind the words below 1024, 2026-09-30 (the
-   founder).
+/* filmhero.mjs: the film behind the copy, 2026-09-30 (the founder): below
+   1024 first, then at every width once the pinned reveal was deleted.
 
    CONTRAST ON PAINTED PIXELS. For each width and each of three film frames
    (0s, 2s, 4s; the film held on the frame), two captures of the same frame:
@@ -14,9 +14,14 @@
    and the median, and the pixel count. The copy's text-shadow is off in
    both captures, so a pass here is conservative.
 
-   Also: the scrim's foot stop, the bar's ground over the film at scroll 0
-   and 400, the header call's state, the film's source and preload, frames
-   at scroll 0 and 400, and 1280 (the pin, unchanged). Console errors.
+   Also: the scrim's foot stop, the bar's ground over the film, the header
+   call's state, the film's source and preload, whether the hero is pinned
+   (it must not be, at any width), frames at scroll 0 and 400 below 1024 and
+   at 0, 300 and 700 from 1024, and the sweep for copy under a bare bar.
+   Console errors.
+
+   The ScrollTrigger count is a separate script, `.measure/herotriggers.mjs`,
+   because it needs the dev server's module graph.
 
    Usage: node .measure/filmhero.mjs [base] [scrimFoot]
    (scrimFoot sets --scrim-foot on the hero to try a deeper foot stop.)
@@ -32,6 +37,10 @@ const OUT = path.join(HERE, 'out', 'filmhero');
 fs.mkdirSync(OUT, { recursive: true });
 const BASE = process.argv[2] || 'http://localhost:4173';
 const FOOT = process.argv[3] || '';
+/* SCRIM_MID=0.6 tries a different 50% stop on the desktop scrim; DESK=1 walks
+   1280 and 1536 only. Both are for finding a value, not for the record. */
+const MID = process.env.SCRIM_MID || '';
+const DESK_ONLY = process.env.DESK === '1';
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const lum = ([r, g, b]) => {
@@ -70,16 +79,19 @@ const TARGETS = () => {
   const sw = document.querySelector('.hero__line .brush__t');
   add('headline', line, sw ? { exclude: box(sw.closest('.brush')) } : {});
   add('headline, swash word', sw);
+  add('sub', document.querySelector('.hero__sub'));
   add('offer line', document.querySelector('.hero__price'));
-  add('call', document.querySelector('.hero__actions .hero__cta'));
+  add('call', document.querySelector('.hero__actions .hero__cta:not(.hero__cta--line)'));
+  add('ask a question', document.querySelector('.hero__cta--line'));
   add('wordmark', document.querySelector('.bar .wm__word'));
+  document.querySelectorAll('.bar__link').forEach((a) => add(`nav ${a.textContent.trim()}`, a));
   const menu = document.querySelector('.bar__menu');
   if (menu && menu.offsetParent) add('menu glyph', menu.querySelector('svg'), { ink: rgb(getComputedStyle(menu).color) });
   return out;
 };
 
 const HIDE = `
-  .hero__line, .hero__line *, .hero__price, .hero__actions .hero__cta, .bar .wm__word {
+  .hero__line, .hero__line *, .hero__sub, .hero__price, .hero__actions .hero__cta, .bar .wm__word, .bar__link {
     color: transparent !important; text-shadow: none !important;
   }
   .bar__menu svg { visibility: hidden !important; }
@@ -129,7 +141,8 @@ const errors = [];
 const b = await puppeteer.launch({ headless: 'new', args: ['--autoplay-policy=no-user-gesture-required'] });
 const report = { scrimFoot: FOOT || '0.92 (CSS)', sizes: {} };
 
-for (const [w, h] of [[390, 844], [430, 932], [768, 1024]]) {
+for (const [w, h] of (DESK_ONLY ? [[1280, 800], [1536, 864]] : [[390, 844], [430, 932], [768, 1024], [1280, 800], [1536, 864]])) {
+  const desk = w >= 1024;
   const p = await b.newPage();
   p.on('console', (m) => m.type() === 'error' && errors.push(`${w}: ${m.text()}`));
   p.on('pageerror', (e) => errors.push(`${w}: ${e.message}`));
@@ -137,6 +150,11 @@ for (const [w, h] of [[390, 844], [430, 932], [768, 1024]]) {
   await p.goto(BASE + '/', { waitUntil: 'networkidle0' });
   await p.evaluate(() => document.fonts.ready);
   if (FOOT) await p.evaluate((f) => document.querySelector('.hero').style.setProperty('--scrim-foot', f), FOOT);
+  if (MID && desk) {
+    await p.addStyleTag({
+      content: `.hero[data-mode] .hero__frame::after { background: linear-gradient(to top, rgb(11 11 13 / var(--scrim-foot, 0.9)) 0%, rgb(11 11 13 / ${MID}) 50%, rgb(11 11 13 / 0.1) 100%) !important; }`,
+    });
+  }
   await wait(1200);
   const r = {};
   r.film = await p.evaluate(() => {
@@ -158,6 +176,21 @@ for (const [w, h] of [[390, 844], [430, 932], [768, 1024]]) {
       bodyPadBottom: getComputedStyle(document.querySelector('.hero__body')).paddingBottom,
       gapFootToCall: Math.round(hero.bottom - document.querySelector('.hero__actions .hero__cta').getBoundingClientRect().bottom),
       callW: Math.round(document.querySelector('.hero__actions .hero__cta').getBoundingClientRect().width),
+      copyLeft: Math.round(document.querySelector('.hero__headline').getBoundingClientRect().left),
+      wordmarkLeft: Math.round(document.querySelector('.bar__brand .wm').getBoundingClientRect().left),
+      copyW: Math.round(Math.max(...[...document.querySelectorAll('.hero__headline, .hero__support')].map((e) => e.getBoundingClientRect().width))),
+      headlineSize: getComputedStyle(document.querySelector('.hero__headline')).fontSize,
+      order: [...document.querySelectorAll('.hero__headline, .hero__sub, .hero__price, .hero__actions')]
+        .filter((e) => e.offsetParent !== null)
+        .map((e) => [e.className.split(' ')[0], Math.round(e.getBoundingClientRect().top), Math.round(e.getBoundingClientRect().bottom)]),
+      askBesideCall: (() => {
+        const a = document.querySelector('.hero__cta--line');
+        const c = document.querySelector('.hero__actions .hero__cta:not(.hero__cta--line)');
+        if (!a || !a.offsetParent) return 'hidden';
+        const ar = a.getBoundingClientRect();
+        const cr = c.getBoundingClientRect();
+        return ar.left > cr.right && ar.top < cr.bottom && ar.bottom > cr.top;
+      })(),
     };
   });
   const barState = () =>
@@ -172,6 +205,16 @@ for (const [w, h] of [[390, 844], [430, 932], [768, 1024]]) {
       };
     });
   r.bar0 = await barState();
+  /* The scroll-0 frame waits for a line fully in: a line leaves over 200ms
+     before each cut, and a frame caught in that fade shows no headline. */
+  for (let i = 0; i < 40; i++) {
+    const shown = await p.evaluate(() => {
+      const l = document.querySelector('.hero__line');
+      return !!l && l.getAttribute('data-leaving') !== 'true' && getComputedStyle(l).opacity === '1';
+    });
+    if (shown) break;
+    await wait(100);
+  }
   await p.screenshot({ path: path.join(OUT, `${w}-scroll0.png`) });
 
   /* Contrast on three frames. */
@@ -213,10 +256,13 @@ for (const [w, h] of [[390, 844], [430, 932], [768, 1024]]) {
     delete v.play;
     v.play();
   });
-  await p.evaluate(() => window.scrollTo({ top: 400, behavior: 'instant' }));
-  await wait(900);
-  r.bar400 = await barState();
-  await p.screenshot({ path: path.join(OUT, `${w}-scroll400.png`) });
+  for (const y of desk ? [300, 700] : [400]) {
+    await p.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), y);
+    await wait(900);
+    r[`bar${y}`] = await barState();
+    r[`heroTop${y}`] = await p.evaluate(() => Math.round(document.querySelector('.hero').getBoundingClientRect().top));
+    await p.screenshot({ path: path.join(OUT, `${w}-scroll${y}.png`) });
+  }
   /* Past the hero's call: the ground and the call come back. */
   const past = await p.evaluate(() => {
     const c = document.querySelector('.hero__actions .hero__cta').getBoundingClientRect();
@@ -250,34 +296,6 @@ for (const [w, h] of [[390, 844], [430, 932], [768, 1024]]) {
   }
   r.sweep = { stepsWithCopyUnderBareBar: under, groundBackFrom: groundFrom, headerCallShownFrom: callFrom };
   report.sizes[`${w}x${h}`] = r;
-  await p.close();
-}
-
-/* 1280: the pinned reveal, unchanged. */
-{
-  const p = await b.newPage();
-  p.on('console', (m) => m.type() === 'error' && errors.push(`1280: ${m.text()}`));
-  p.on('pageerror', (e) => errors.push(`1280: ${e.message}`));
-  await p.setViewport({ width: 1280, height: 800 });
-  await p.goto(BASE + '/', { waitUntil: 'networkidle0' });
-  await wait(1500);
-  const at0 = await p.evaluate(() => ({
-    pin: !!document.querySelector('.hero').closest('.pin-spacer'),
-    src: document.querySelector('.hero__spot').currentSrc.split('/').pop(),
-    frameTransform: getComputedStyle(document.querySelector('.hero__frame')).transform,
-    scrim: getComputedStyle(document.querySelector('.hero__frame'), '::after').content,
-    sub: getComputedStyle(document.querySelector('.hero__sub')).display,
-    bar: document.querySelector('.bar').getAttribute('data-film'),
-  }));
-  await p.screenshot({ path: path.join(OUT, '1280-scroll0.png') });
-  await p.evaluate(() => window.scrollTo({ top: 400, behavior: 'instant' }));
-  await wait(900);
-  const at400 = await p.evaluate(() => ({
-    heroTop: Math.round(document.querySelector('.hero').getBoundingClientRect().top),
-    frameTransform: getComputedStyle(document.querySelector('.hero__frame')).transform,
-  }));
-  await p.screenshot({ path: path.join(OUT, '1280-scroll400.png') });
-  report.desktop1280 = { at0, at400 };
   await p.close();
 }
 

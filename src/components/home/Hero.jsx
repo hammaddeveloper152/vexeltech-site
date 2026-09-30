@@ -1,6 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeroSurface from './HeroSurface.jsx';
 import { videoAllowed } from './Video.jsx';
@@ -100,40 +98,20 @@ function Line({ text, leaving }) {
   );
 }
 
-gsap.registerPlugin(ScrollTrigger);
-
-/* THE REVEAL, 2026-09-25 (the founder's Genesis pass). On load the copy
-   stands on the dark ground with no film behind it; the film is below it in
-   a frame, 60% of the measure wide, centred, its corners at 24px, its first
-   poster showing and then playing. The hero is pinned for 100vh of scroll,
-   and over it the frame grows to the whole viewport and loses its corners,
-   moving up behind the headline. The zoned shades that keep the copy legible
-   over the film fade in as it arrives (full by 30% of the way), so the copy
-   keeps its contrast at every step; measured in DESIGN.md.
-
-   Transform for the size and place (the frame is the hero's own size, scaled
-   down); `clip-path` for the corners (BUILD-LAW Motion names it for masked
-   reveals); opacity for the shades. Reduced motion (the still mode) holds
-   the first state, with no pin and no scrub. The surface mode has no film
-   and no frame.
-
-   THE REVEAL IS DESKTOP ONLY, 1024 AND UP, 2026-09-30 (the founder). Below
-   1024 there is no pin, no hold and no scale: the film is the hero, full
-   bleed behind the copy, and it autoplays and loops (Hero.css, THE FILM
-   BEHIND THE WORDS). gsap.matchMedia reverts the trigger and its pin when
-   the width crosses 1024. */
+/* THE REVEAL IS DELETED, 2026-09-30 (the founder). From the Genesis pass
+   (2026-09-25) the film stood in a frame 60% of the measure wide under the
+   copy, and a ScrollTrigger pinned the hero for 100vh while the frame grew to
+   the viewport; from earlier the same day, 1024 and up only. The film is the
+   hero at every width now: full bleed behind the copy, fixed in place, no
+   pin, no scale, nothing tied to scroll (Hero.css, THE FILM BEHIND THE COPY).
+   ScrollTrigger is still registered by smoothScroll.js for the sections that
+   use it; the hero makes no trigger. Its record is in DESIGN.md. */
 const NARROW = NARROW_QUERY;
-const FRAME_SHARE = 0.6;
-const FRAME_GAP = 40;
 
 export default function Hero() {
-  const sectionRef = useRef(null);
-  const bodyRef = useRef(null);
-  const frameRef = useRef(null);
   const [mode, setMode] = useState(pickMode);
-  /* Below 1024 the mobile cut, which autoplays and loops. Decided at mount
-     for the source and the attributes (see NARROW_QUERY); the loop follows
-     the width (below). */
+  /* Below 1024 the mobile cut, from 1024 the desktop encode. Decided at
+     mount (see NARROW_QUERY). Both autoplay and loop. */
   const [narrow] = useState(
     () => typeof window !== 'undefined' && window.matchMedia(NARROW).matches
   );
@@ -163,13 +141,9 @@ export default function Hero() {
     v.muted = true;
     v.defaultMuted = true;
 
-    /* The static hero loops; the desktop spot plays once and holds. */
-    const narrowMq = window.matchMedia(NARROW);
-    const setLoop = () => {
-      v.loop = narrowMq.matches;
-    };
-    setLoop();
-    narrowMq.addEventListener('change', setLoop);
+    /* It loops at every width (2026-09-30). The desktop spot played once and
+       held its last frame until the film became the hero everywhere. */
+    v.loop = true;
 
     let raf = 0;
     const read = () => {
@@ -205,9 +179,10 @@ export default function Hero() {
        pass): the poster (a frame from the first second) holds until the
        browser says the clip can run to the end without stalling, so the
        lines never wait on a buffering film. */
-    /* Below 1024 it does not wait: a phone may never report canplaythrough
-       before playback starts, and the film is the first thing on screen. */
-    let ready = v.readyState >= 4 || narrowMq.matches;
+    /* It does not wait for canplaythrough any more, at any width: the element
+       autoplays (2026-09-30), and a phone may never report canplaythrough
+       before playback starts. The energy pass's wait is superseded. */
+    let ready = true;
     const onReady = () => {
       ready = true;
       sync();
@@ -242,6 +217,10 @@ export default function Hero() {
     v.addEventListener('seeked', onSeeked);
     v.addEventListener('error', onError, true);
     document.addEventListener('visibilitychange', sync);
+    /* The element autoplays (2026-09-30), so it can be playing before these
+       listeners exist, and its one `playing` event is then gone: no frame
+       loop, and no headline line would ever mount. Start it by hand. */
+    if (!v.paused) onPlaying();
     sync();
 
     return () => {
@@ -252,81 +231,13 @@ export default function Hero() {
       v.removeEventListener('seeked', onSeeked);
       v.removeEventListener('error', onError, true);
       document.removeEventListener('visibilitychange', sync);
-      narrowMq.removeEventListener('change', setLoop);
       v.pause();
     };
   }, [mode]);
 
-  /* The reveal (see above). */
-  useLayoutEffect(() => {
-    const sec = sectionRef.current;
-    const body = bodyRef.current;
-    const frame = frameRef.current;
-    if (!sec || !body || !frame) return undefined;
-    const small = () => {
-      const s = sec.getBoundingClientRect();
-      const b = body.getBoundingClientRect();
-      const inset = parseFloat(getComputedStyle(sec).getPropertyValue('--hero-inset')) || 0;
-      const w = (s.width - 2 * inset) * FRAME_SHARE;
-      const sc = w / s.width;
-      return { x: (s.width - w) / 2, y: b.bottom - s.top + FRAME_GAP, sc, r: 24 / sc };
-    };
-    const mm = gsap.matchMedia();
-    mm.add(
-      { wide: '(min-width: 1024px)', reduce: '(prefers-reduced-motion: reduce)' },
-      (ctx) => {
-        const { wide, reduce } = ctx.conditions;
-        if (!wide) return undefined;
-        sec.style.setProperty('--shade-in', '0');
-        if (reduce || mode !== 'spot') {
-          const k = small();
-          gsap.set(frame, { x: k.x, y: k.y, scale: k.sc, '--frame-r': `${k.r}px`, '--note-k': 1 / k.sc });
-          return () => {
-            gsap.set(frame, { clearProps: 'all' });
-            sec.style.removeProperty('--shade-in');
-          };
-        }
-        gsap.fromTo(
-          frame,
-          {
-            x: () => small().x,
-            y: () => small().y,
-            scale: () => small().sc,
-            '--frame-r': () => `${small().r}px`,
-          },
-          {
-            x: 0,
-            y: 0,
-            scale: 1,
-            '--frame-r': '0px',
-            ease: 'none',
-            scrollTrigger: {
-              trigger: sec,
-              start: 'top top',
-              end: '+=100%',
-              pin: true,
-              scrub: true,
-              invalidateOnRefresh: true,
-              onUpdate: (self) => {
-                sec.style.setProperty('--shade-in', String(Math.min(1, self.progress / 0.3)));
-                frame.style.setProperty('--note-k', String(1 / gsap.getProperty(frame, 'scale')));
-              },
-              onRefresh: () => frame.style.setProperty('--note-k', String(1 / gsap.getProperty(frame, 'scale'))),
-            },
-          }
-        );
-        return () => {
-          gsap.set(frame, { clearProps: 'all' });
-          sec.style.removeProperty('--shade-in');
-        };
-      }
-    );
-    return () => mm.revert();
-  }, [mode]);
-
   const src = narrow ? SPOT.mobile : SPOT.wide;
 
-  /* THE COPY'S ENTRANCE BELOW 1024 (2026-09-30): it fades up 12px over
+  /* THE COPY'S ENTRANCE, AT EVERY WIDTH (2026-09-30): it fades up 12px over
      500ms once the fonts are ready (Hero.css), so the headline never arrives
      in the fallback face. A 2.5s ceiling, so a font that never loads cannot
      hold the copy back. Reduced motion shows it at once (CSS). */
@@ -345,11 +256,10 @@ export default function Hero() {
     return () => clearTimeout(id);
   }, []);
 
-  /* THE NOTE, 2026-09-25 (the founder): out of the copy stack and into the
-     frame's lower-left corner, 14px, over the poster and then the film, so
-     the stack is short enough for the frame to show at rest. The frame is
-     scaled down at rest, so the note is scaled back up by the inverse
-     (`--note-k`, set by the reveal) and stays 14px and 24px in. */
+  /* THE NOTE. It stood in the frame's lower-left corner from 2026-09-25; with
+     the film behind the copy nothing else is painted over the film
+     (2026-09-30), so it is out of the frame. Only the surface mode, which
+     has no film, keeps it in the stack. */
   const note = (
     <p className="hero__note">
       You'll see the work before you owe us anything. Ten seconds to decide, not ten meetings.
@@ -363,11 +273,10 @@ export default function Hero() {
       aria-labelledby="hero-h"
       data-mode={mode}
       data-in={copyIn ? 'true' : 'false'}
-      ref={sectionRef}
     >
-      {/* THE FRAME the film stands in (the reveal, above). */}
+      {/* THE FRAME the film stands in: the hero's own box, never moved. */}
       {mode !== 'surface' ? (
-        <div className="hero__frame" ref={frameRef}>
+        <div className="hero__frame">
           {mode === 'spot' ? (
             <video
               ref={videoRef}
@@ -375,8 +284,8 @@ export default function Hero() {
               poster={src.first}
               muted
               playsInline
-              autoPlay={narrow}
-              loop={narrow}
+              autoPlay
+              loop
               /* Metadata only on the mobile cut: autoplay fetches what it
                  plays, and nothing more is asked for up front. */
               preload={narrow ? 'metadata' : 'auto'}
@@ -400,8 +309,6 @@ export default function Hero() {
               <img className="hero__spot" src={SPOT.wide.poster} alt="" decoding="async" />
             </picture>
           ) : null}
-          <span className="hero__frame-shade" aria-hidden="true" />
-          {note}
         </div>
       ) : null}
 
@@ -411,7 +318,7 @@ export default function Hero() {
           (`--grain`, tokens.css) at 3%, 2026-09-24. */}
       <span className="hero__grain" aria-hidden="true" />
 
-      <div className="hero__body" ref={bodyRef}>
+      <div className="hero__body">
         {/* ONE ACCESSIBLE NAME, AND IT IS THE HEADLINE THAT STAYS. Four lines
             announced as they cut would be a screen reader talking over a film
             it cannot see; the final line is the sentence the page is about.
@@ -456,9 +363,8 @@ export default function Hero() {
             Live in four business days.
           </p>
 
-          {/* The note stands in the frame's lower left since 2026-09-25 (see
-              `note` above); only the surface mode, which has no frame, keeps
-              it in the stack. */}
+          {/* Only the surface mode, which has no film, keeps the note (see
+              `note` above). */}
           {mode === 'surface' ? note : null}
         </div>
       </div>

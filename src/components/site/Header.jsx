@@ -86,7 +86,7 @@ export default function Header({ over = false }) {
      the held state is set before the first paint and the call never flashes
      in and out on load. */
   const [held, setHeld] = useState(false);
-  /* THE BAR OVER THE FILM, 2026-09-30 (the founder): below 1024 on home the
+  /* THE BAR OVER THE FILM, 2026-09-30 (the founder): at every width on home the
      film is the hero, and the bar has no ground while the hero is in view.
      ITS GROUND COMES BACK WHEN THE HERO'S COPY REACHES IT, 24px early so the
      250ms fade is done before a letter passes under. The brief's trigger was
@@ -104,7 +104,6 @@ export default function Header({ over = false }) {
       return undefined;
     }
     const phone = window.matchMedia('(max-width: 767px)');
-    const narrow = window.matchMedia('(max-width: 1023px)');
     let raf = 0;
     const read = () => {
       raf = 0;
@@ -113,7 +112,7 @@ export default function Header({ over = false }) {
       const copy = document.querySelector('.hero__headline');
       const clear = copy ? copy.getBoundingClientRect().top > barBottom + 24 : inView;
       setHeld(phone.matches && inView);
-      setFilm(narrow.matches && clear ? 'true' : 'false');
+      setFilm(clear ? 'true' : 'false');
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(read);
@@ -122,12 +121,10 @@ export default function Header({ over = false }) {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     phone.addEventListener('change', read);
-    narrow.addEventListener('change', read);
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
       phone.removeEventListener('change', read);
-      narrow.removeEventListener('change', read);
       cancelAnimationFrame(raf);
     };
   }, []);
