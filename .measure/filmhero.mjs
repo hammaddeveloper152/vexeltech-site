@@ -40,6 +40,8 @@ const FOOT = process.argv[3] || '';
 /* SCRIM_MID=0.6 tries a different 50% stop on the desktop scrim; DESK=1 walks
    1280 and 1536 only. Both are for finding a value, not for the record. */
 const MID = process.env.SCRIM_MID || '';
+/* SCRIM_70=0.35 adds a stop at 70% (with SCRIM_MID), desktop only. */
+const S70 = process.env.SCRIM_70 || '';
 const DESK_ONLY = process.env.DESK === '1';
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -152,7 +154,7 @@ for (const [w, h] of (DESK_ONLY ? [[1280, 800], [1536, 864]] : [[390, 844], [430
   if (FOOT) await p.evaluate((f) => document.querySelector('.hero').style.setProperty('--scrim-foot', f), FOOT);
   if (MID && desk) {
     await p.addStyleTag({
-      content: `.hero[data-mode] .hero__frame::after { background: linear-gradient(to top, rgb(11 11 13 / var(--scrim-foot, 0.9)) 0%, rgb(11 11 13 / ${MID}) 50%, rgb(11 11 13 / 0.1) 100%) !important; }`,
+      content: `.hero[data-mode] .hero__frame::after { background: linear-gradient(to top, rgb(11 11 13 / var(--scrim-foot, 0.9)) 0%, rgb(11 11 13 / ${MID}) 50%,${S70 ? ` rgb(11 11 13 / ${S70}) 70%,` : ''} rgb(11 11 13 / 0.1) 100%) !important; }`,
     });
   }
   await wait(1200);

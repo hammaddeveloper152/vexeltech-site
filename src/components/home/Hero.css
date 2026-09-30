@@ -592,29 +592,41 @@
 /* ---- From 1024 ------------------------------------------------------------
 
    THE COPY STANDS IN THE BAR'S GRID: 1200 wide, centred, 64 each side, so the
-   headline and the wordmark share a left edge. 64 at the foot. At most 720
-   wide, so the right of the film stays clear.
+   headline and the wordmark share a left edge.
+
+   LIFTED TO THE LOWER THIRD (2026-09-30, the founder): the copy block's foot
+   stands at 18% of the hero's height from its bottom, not 64px, so the
+   headline lands in the lower third of the film rather than on its edge.
+   The hero's height is the larger of 100svh and its 720px floor, so the
+   lift is 18% of that. At most 880 wide (it was 720), so both halves of
+   every rotating line fit the two-line box without wrapping.
 
    THE HEADLINE keeps its desktop size, the smaller of the width-derived size
-   and the height guard, and is CAPPED at 720 / 6.227: its widest line is
-   6.102em, so at the uncapped 130px (1280 x 800) it ran to 793px and a 720
-   column would have set four lines in a two-line box. 115.6px at the cap. */
+   and the height guard, and keeps its CAP of 115.6px (720 / 6.227, set when
+   the column was 720; kept as the cap when the column widened). Its widest
+   line is 6.102em, 705px at the cap, inside the 880. */
 @media (min-width: 1024px) {
   .hero[data-mode] {
     min-height: 720px;
   }
 
-  /* THE 50% STOP IS 0.65, not the brief's 0.45 (the founder's decision
-     after it was measured). At 0.45 the headline's first line, which sits
-     33 to 58% up the frame, read 2.81:1 at 1280 and 3.03:1 at 1536 on the
-     film's bright city frames; a 0.96 foot stop moved nothing, since the
-     line is set by the middle stop. 0.65 is the lowest tested step where
-     every frame passes: 4.91:1 worst at 1280, 5.71:1 at 1536. */
+  /* THE SCRIM: 0.90 at the foot, 0.70 at 50%, 0.55 at 70%, 0.10 at the top
+     (the founder's decisions, each after it was measured).
+
+     The brief's 0.45 at 50% failed first: the headline's top line read
+     2.81:1 at 1280, and a 0.96 foot moved nothing, so 50% went to 0.65.
+     Then the copy was lifted to the lower third, which put that line 59 to
+     68% up the frame, and it failed again at 3.44:1. 0.70 at 50% still
+     failed (3.82:1). The brief's next step, a 0.35 stop at 70%, made it
+     WORSE (2.91:1): 0.70 at 50% fading to 0.10 is already 0.46 at 70%, so a
+     0.35 stop there lightens the band. 0.55 at 70% is the lowest tested stop
+     that passes on every frame: 4.86:1 worst at 1280, 5.25:1 at 1536. */
   .hero[data-mode] .hero__frame::after {
     background: linear-gradient(
       to top,
       rgb(11 11 13 / var(--scrim-foot, 0.9)) 0%,
-      rgb(11 11 13 / 0.65) 50%,
+      rgb(11 11 13 / 0.7) 50%,
+      rgb(11 11 13 / 0.55) 70%,
       rgb(11 11 13 / 0.1) 100%
     );
   }
@@ -622,11 +634,11 @@
   .hero[data-mode] .hero__body {
     width: min(100%, 1200px);
     margin-inline: auto;
-    padding: 0 var(--s-2xl) 64px;
+    padding: 0 var(--s-2xl) calc(max(100svh, 720px) * 0.18);
   }
 
   .hero[data-mode] :is(.hero__headline, .hero__support) {
-    max-width: 720px;
+    max-width: 880px;
   }
 
   .hero[data-mode] .hero__headline {
