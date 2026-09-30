@@ -11,9 +11,10 @@ import './FooterForm.css';
    everything centred, 24px between rows. Grain at 3%, as on every cream
    panel.
 
-     row 1   RICHMOND, TX              mono 12px uppercase, steel
-     row 2   the email                 16px asphalt link (added later the
-                                       same day, the founder)
+     row 1   the email                 16px asphalt link (added later the
+                                       same day, the founder). The city line
+                                       above it came out 2026-09-30 (the
+                                       founder): no location on public pages
      row 3   the five pages            Clash Medium 20px uppercase, asphalt,
                                        40px apart, steel on hover
      row 4   LinkedIn, Instagram and   32px yellow circles, asphalt marks from
@@ -32,7 +33,7 @@ import './FooterForm.css';
    and its four places for yellow; DESIGN.md records both.
 
    The email confirmed 2026-09-08. The address is in index.html's JSON-LD as
-   a `PostalAddress`; the band names the city. */
+   a `PostalAddress`; since 2026-09-30 the band names no location. */
 const EMAIL = 'info@vexeltechsolutions.com';
 /* The month is content/company.js's (2026-09-25). */
 const BOOKING = `Booking projects for ${company.bookingMonth}`;
@@ -64,7 +65,7 @@ const YEAR = 2026;
    page: a cream block inset 16px from the viewport on every side, 32px
    radius, 96px of padding (see FooterForm.css for the phone's), the grain
    kept. Left: "Let's talk." in Clash Display Medium, 96px (56 on a phone),
-   asphalt, and the copyright at the bottom left. Right: the email, the city,
+   asphalt, and the copyright at the bottom left. Right: the email,
    the pages, the socials when they are set, and the booking line with a
    yellow dot that pulses. One loose swash, 48px thick and 420px long, runs
    off the block's top right corner at -35 degrees, cut by its radius;
@@ -83,8 +84,6 @@ export default function FooterMeta() {
         <a className="foot__email" href={`mailto:${EMAIL}`}>
           {EMAIL}
         </a>
-
-        <p className="foot__city">Richmond, TX</p>
 
         {/* A named landmark, so it is not confused with the bar's "Main". */}
         <nav className="foot__nav" aria-label="Site">

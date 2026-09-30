@@ -611,7 +611,9 @@
      offer line      14px Satoshi, 16px under the headline
      the call        16px under the offer line; full width below 768,
                      natural width from 768 to 1023
-     padding         16px each side, 40px + the safe area at the foot
+     padding         16px each side below 768 and 40px from 768 (the bar's
+                     `--s-xl`),
+                     40px + the safe area at the foot
 
    The sub and "Ask a question" stand down here, as before; from 1024 they
    are unchanged. The bar stands over the film (Header.css, `data-film`).
@@ -731,6 +733,15 @@
 @media (max-width: 767px) {
   .hero[data-mode] .hero__actions .hero__cta {
     flex: 1 1 100%;
+  }
+}
+
+/* From 768 to 1023 the copy takes the bar's side padding, `--s-xl`, 40px
+   (the brief said 32; the bar measures 40), so the headline and the
+   wordmark share a left edge at x 40 (2026-09-30, the founder). */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero[data-mode] .hero__body {
+    padding-inline: var(--s-xl);
   }
 }
 

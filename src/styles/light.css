@@ -98,6 +98,6 @@ html[data-ground='light'] :is(.foot__big, .foot__email, .foot__page) {
   color: var(--c-bone); /* 16.32:1 on black */
 }
 
-html[data-ground='light'] :is(.foot__city, .foot__booking, .foot__legal) {
+html[data-ground='light'] :is(.foot__booking, .foot__legal) {
   color: var(--c-steel-lift); /* 7.4:1 on black; steel would be 2.4 */
 }

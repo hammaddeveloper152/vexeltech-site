@@ -105,7 +105,7 @@ export default function AboutPage() {
       <section className="vt ab3-def" aria-labelledby="ab3-def-h">
         <div className="ab3__in ab3-def__in">
           <h2 className="ab3-def__k lbl" id="ab3-def-h">
-            Founded 2026, Richmond, TX
+            Founded 2026
           </h2>
           <p className="ab3-def__p">
             VexelTech Solutions is a technology company that builds the website, the marketing and the
