@@ -131,8 +131,7 @@
    and clip-path, BUILD-LAW Motion's own terms. The film fills the frame as
    it filled the hero.
 
-   Below 768 there is no pin: the frame stands in the flow under the copy at
-   the measure's width, 4:5, corners at 24px, the tall cut in it. */
+   Below 1024 there is no pin: see THE STATIC HERO at the foot of this file. */
 .hero__frame {
   position: absolute;
   inset: 0;
@@ -141,23 +140,6 @@
   transform-origin: 0 0;
   clip-path: inset(0 round var(--frame-r, 0px));
   pointer-events: none;
-}
-
-@media (max-width: 767px) {
-  .hero__frame {
-    position: relative;
-    inset: auto;
-    order: 2;
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    margin-top: var(--s-lg);
-    border-radius: 24px;
-    clip-path: none;
-  }
-
-  .hero__body {
-    order: 1;
-  }
 }
 
 /* THE FRAME SHOWS AT REST, 2026-09-25 (the founder): at least 180px of it
@@ -607,5 +589,135 @@
     max-width: 32ch;
     font-size: var(--t-quote-size);
     line-height: var(--t-quote-line);
+  }
+}
+
+/* ==========================================================================
+   THE STATIC HERO, BELOW 1024, 2026-09-30 (the founder's mobile hero fix).
+
+   The pinned reveal is desktop only (Hero.jsx). Below 1024 the hero is the
+   copy and then the frame, in the flow, top to bottom: headline, offer line,
+   primary call, frame. No 100svh, no centring, no spacer: the gap on load was
+   the section's own min-height with its content centred in it.
+
+     padding-top     the bar's height + 24px (the bar stands over the hero)
+     headline        Monigue, clamp(40px, 11vw, 56px), line-height 0.95, a
+                     box two lines tall so a cut never moves the stack (every
+                     line is two lines or fewer: 42.9px at 390)
+     offer line      14px Satoshi, 16px under the headline
+     the call        16px under the offer line; full width below 768
+     frame           24px under the call, the measure's width, radius 16,
+                     4:5 below 768 (the tall cut), 16:10 from 768 to 1023
+
+   The sub and "Ask a question" are not in the brief's list and stand down
+   here; from 1024 they are unchanged. The copy stands on the dark ground,
+   not over the film, so the two shade zones stand down too.
+
+   `.hero[data-mode]` ties the `.hero:not([data-mode='surface'])` rules above
+   on specificity (0-3-0 with a class after it), and this block comes last,
+   so it wins. Keep it at the foot of the file. */
+@media (max-width: 1023px) {
+  .hero[data-mode] {
+    min-height: 0;
+    align-content: start;
+    padding: calc(var(--bar-h) + var(--s-lg)) var(--hero-inset) var(--s-lg);
+  }
+
+  .hero[data-mode] .hero__body {
+    order: 1;
+    align-self: start;
+    padding: 0;
+  }
+
+  .hero[data-mode] .hero__headline {
+    margin: 0 0 var(--s-md);
+    font-size: clamp(40px, 11vw, 56px);
+    line-height: 0.95;
+    height: calc(2 * 0.95em);
+  }
+
+  .hero[data-mode] :is(.hero__headline, .hero__support)::before {
+    display: none;
+  }
+
+  .hero[data-mode] .hero__support {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+  }
+
+  .hero[data-mode] :is(.hero__sub, .hero__cta--line) {
+    display: none;
+  }
+
+  .hero[data-mode] .hero__price {
+    order: 1;
+    margin: 0 0 var(--s-md);
+    font-family: var(--font-offer);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: var(--t-weight-body);
+  }
+
+  .hero[data-mode] .hero__actions {
+    order: 2;
+    margin: 0;
+  }
+
+  .hero[data-mode] .hero__note {
+    order: 3;
+  }
+
+  .hero[data-mode] .hero__frame {
+    position: relative;
+    inset: auto;
+    order: 2;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    margin-top: var(--s-lg);
+    border-radius: 16px;
+    clip-path: inset(0 round 16px);
+    transform-origin: 50% 50%;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero[data-mode] .hero__actions .hero__cta {
+    flex: 1 1 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero[data-mode] .hero__frame {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* THE ENTRANCE BELOW 1024, the only motion there: the frame from 0.6 to 1
+   opacity and 0.96 to 1 scale over 600ms on the reveal curve, once, on load.
+   Nothing is tied to scroll. Reduced motion keeps the fade and drops the
+   scale (BUILD-LAW Motion). `backwards` only, so nothing stays pinned. */
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .hero[data-mode] .hero__frame {
+    animation: hero-frame-in 600ms var(--ease-reveal) backwards;
+  }
+}
+
+@media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
+  .hero[data-mode] .hero__frame {
+    animation: hero-frame-fade 600ms var(--ease-reveal) backwards;
+  }
+}
+
+@keyframes hero-frame-in {
+  from {
+    opacity: 0.6;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes hero-frame-fade {
+  from {
+    opacity: 0.6;
   }
 }

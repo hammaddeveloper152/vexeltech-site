@@ -113,10 +113,16 @@ gsap.registerPlugin(ScrollTrigger);
 
    Transform for the size and place (the frame is the hero's own size, scaled
    down); `clip-path` for the corners (BUILD-LAW Motion names it for masked
-   reveals); opacity for the shades. Below 768 there is no pin: the frame
-   stands under the copy at the measure's width. Reduced motion (the still
-   mode) holds the first state, with no pin and no scrub. The surface mode has
-   no film and no frame. */
+   reveals); opacity for the shades. Reduced motion (the still mode) holds
+   the first state, with no pin and no scrub. The surface mode has no film
+   and no frame.
+
+   THE REVEAL IS DESKTOP ONLY, 1024 AND UP, 2026-09-30 (the founder). Below
+   1024 there is no pin, no 100vh hold and no scale: the hero is static, the
+   copy then the frame in the flow, and the film autoplays and loops in it
+   (Hero.css, the static hero). gsap.matchMedia reverts the trigger and its
+   pin when the width crosses 1024. */
+const NARROW = '(max-width: 1023px)';
 const FRAME_SHARE = 0.6;
 const FRAME_GAP = 40;
 
@@ -128,6 +134,11 @@ export default function Hero() {
   /* The cut is chosen with the mode and kept: see TALL_QUERY. */
   const [tall] = useState(
     () => typeof window !== 'undefined' && window.matchMedia(TALL_QUERY).matches
+  );
+  /* Below 1024 the film autoplays and loops (the static hero). Decided at
+     mount for the attribute; the loop follows the width (below). */
+  const [narrow] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(NARROW).matches
   );
   /* null until the first frame is actually playing, so no line enters over a
      frame that has not decoded yet. */
@@ -154,6 +165,14 @@ export default function Hero() {
        unmuted element is the one autoplay is refused for. */
     v.muted = true;
     v.defaultMuted = true;
+
+    /* The static hero loops; the desktop spot plays once and holds. */
+    const narrowMq = window.matchMedia(NARROW);
+    const setLoop = () => {
+      v.loop = narrowMq.matches;
+    };
+    setLoop();
+    narrowMq.addEventListener('change', setLoop);
 
     let raf = 0;
     const read = () => {
@@ -189,7 +208,9 @@ export default function Hero() {
        pass): the poster (a frame from the first second) holds until the
        browser says the clip can run to the end without stalling, so the
        lines never wait on a buffering film. */
-    let ready = v.readyState >= 4;
+    /* Below 1024 it does not wait: a phone may never report canplaythrough
+       before playback starts, and the film is the first thing on screen. */
+    let ready = v.readyState >= 4 || narrowMq.matches;
     const onReady = () => {
       ready = true;
       sync();
@@ -234,6 +255,7 @@ export default function Hero() {
       v.removeEventListener('seeked', onSeeked);
       v.removeEventListener('error', onError, true);
       document.removeEventListener('visibilitychange', sync);
+      narrowMq.removeEventListener('change', setLoop);
       v.pause();
     };
   }, [mode]);
@@ -254,7 +276,7 @@ export default function Hero() {
     };
     const mm = gsap.matchMedia();
     mm.add(
-      { wide: '(min-width: 768px)', reduce: '(prefers-reduced-motion: reduce)' },
+      { wide: '(min-width: 1024px)', reduce: '(prefers-reduced-motion: reduce)' },
       (ctx) => {
         const { wide, reduce } = ctx.conditions;
         if (!wide) return undefined;
@@ -331,6 +353,8 @@ export default function Hero() {
               poster={src.first}
               muted
               playsInline
+              autoPlay={narrow}
+              loop={narrow}
               preload="auto"
               /* Decoration under the copy, not content: the lines carry what the
                  film says, and the h1 carries the lines. */
