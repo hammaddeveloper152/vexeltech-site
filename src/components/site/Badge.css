@@ -35,3 +35,11 @@
     pointer-events: none;
   }
 }
+
+/* Square below 1024 with the cards it sits on (2026-10-01, the founder). It
+   shows from 768, so this is 768 to 1023; below 768 there is no badge. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .badge {
+    transform: none;
+  }
+}

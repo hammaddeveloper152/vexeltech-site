@@ -79,6 +79,14 @@
   }
 }
 
+/* 16px between the cards below 1024, now that they sit square (2026-10-01,
+   the founder); 24 from 1024, where they tilt. */
+@media (max-width: 1023px) {
+  .services__grid {
+    gap: var(--s-md);
+  }
+}
+
 /* The reveal, 70ms apart, transform and opacity only. On the cell, not the
    card: the card's own hover lift has its own 200ms transition. */
 .services__cell {

@@ -441,7 +441,8 @@
                      below 768      768 to 1023     1024 and up
      side padding    16             40 (the bar's)  the bar's grid: 1200 wide,
                                                     centred, 64 each side
-     foot padding    40 + safe area 40 + safe area  64
+     foot padding    18% of the hero at every width (2026-10-01; it was
+                     40 + the safe area below 1024 and 64 from 1024)
      copy            headline, offer line, call     headline, sub, offer
                                                     line, call and "Ask a
                                                     question" side by side,
@@ -564,6 +565,14 @@
 
   .hero[data-mode] :is(.hero__sub, .hero__cta--line) {
     display: none;
+  }
+
+  /* LIFTED, 2026-10-01 (the founder), to match the desktop rule: the copy
+     block's foot stands at 18% of the hero's height from its bottom, where
+     it was 40px plus the safe area. The hero is the larger of 100svh and
+     its 640px floor here. 18% clears any home indicator's safe area. */
+  .hero[data-mode] .hero__body {
+    padding-bottom: calc(max(100svh, 640px) * 0.18);
   }
 
   .hero[data-mode] .hero__price {

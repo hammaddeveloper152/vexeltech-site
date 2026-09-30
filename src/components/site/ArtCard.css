@@ -226,6 +226,15 @@
   transform: rotate(var(--tilt, 0deg));
 }
 
+/* CARD TILT IS DESKTOP ONLY, 2026-10-01 (the founder): below 1024 the cards
+   sit square. The press still scales them (`.art--link:active` outranks
+   this at 0-2-0). */
+@media (max-width: 1023px) {
+  .art--colour {
+    transform: none;
+  }
+}
+
 .art--branding {
   --tone: var(--c-accent-ground);
 }
