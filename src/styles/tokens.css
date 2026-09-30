@@ -986,8 +986,10 @@ main#main footer.foot {
    box it replaces. ONLY ONCE THE STROKE IS DRAWN: until then the word keeps
    its line's own colour, because asphalt with no stroke behind it is asphalt
    on the dark ground, 1.13:1 (the contrast walk caught it before the draw).
-   The change is instant, not a colour transition. */
-.brush--hl[data-drawn='true'] .brush__t {
+   The change is instant, not a colour transition. Since 2026-09-30 it waits
+   for the END of the draw (`data-inked`, Brush.jsx): keyed to its start, the
+   unstroked end of the word was asphalt on the dark ground for 200ms. */
+.brush--hl[data-inked='true'] .brush__t {
   color: var(--c-asphalt);
 }
 
