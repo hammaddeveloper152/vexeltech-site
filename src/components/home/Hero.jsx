@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import HeroSurface from './HeroSurface.jsx';
 import { videoAllowed } from './Video.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
-import { CUTS, EXIT_MS, LINES, SPOT, TALL_QUERY } from './heroSpot.js';
+import { CUTS, EXIT_MS, LINES, NARROW_QUERY, SPOT } from './heroSpot.js';
 import './Hero.css';
 import Brush from '../site/Brush.jsx';
 
@@ -118,11 +118,11 @@ gsap.registerPlugin(ScrollTrigger);
    and no frame.
 
    THE REVEAL IS DESKTOP ONLY, 1024 AND UP, 2026-09-30 (the founder). Below
-   1024 there is no pin, no 100vh hold and no scale: the hero is static, the
-   copy then the frame in the flow, and the film autoplays and loops in it
-   (Hero.css, the static hero). gsap.matchMedia reverts the trigger and its
-   pin when the width crosses 1024. */
-const NARROW = '(max-width: 1023px)';
+   1024 there is no pin, no hold and no scale: the film is the hero, full
+   bleed behind the copy, and it autoplays and loops (Hero.css, THE FILM
+   BEHIND THE WORDS). gsap.matchMedia reverts the trigger and its pin when
+   the width crosses 1024. */
+const NARROW = NARROW_QUERY;
 const FRAME_SHARE = 0.6;
 const FRAME_GAP = 40;
 
@@ -131,12 +131,9 @@ export default function Hero() {
   const bodyRef = useRef(null);
   const frameRef = useRef(null);
   const [mode, setMode] = useState(pickMode);
-  /* The cut is chosen with the mode and kept: see TALL_QUERY. */
-  const [tall] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia(TALL_QUERY).matches
-  );
-  /* Below 1024 the film autoplays and loops (the static hero). Decided at
-     mount for the attribute; the loop follows the width (below). */
+  /* Below 1024 the mobile cut, which autoplays and loops. Decided at mount
+     for the source and the attributes (see NARROW_QUERY); the loop follows
+     the width (below). */
   const [narrow] = useState(
     () => typeof window !== 'undefined' && window.matchMedia(NARROW).matches
   );
@@ -327,7 +324,26 @@ export default function Hero() {
     return () => mm.revert();
   }, [mode]);
 
-  const src = tall ? SPOT.tall : SPOT.wide;
+  const src = narrow ? SPOT.mobile : SPOT.wide;
+
+  /* THE COPY'S ENTRANCE BELOW 1024 (2026-09-30): it fades up 12px over
+     500ms once the fonts are ready (Hero.css), so the headline never arrives
+     in the fallback face. A 2.5s ceiling, so a font that never loads cannot
+     hold the copy back. Reduced motion shows it at once (CSS). */
+  const [copyIn, setCopyIn] = useState(false);
+  useEffect(() => {
+    let done = false;
+    const go = () => {
+      if (!done) {
+        done = true;
+        setCopyIn(true);
+      }
+    };
+    const id = setTimeout(go, 2500);
+    if (document.fonts) document.fonts.ready.then(go);
+    else go();
+    return () => clearTimeout(id);
+  }, []);
 
   /* THE NOTE, 2026-09-25 (the founder): out of the copy stack and into the
      frame's lower-left corner, 14px, over the poster and then the film, so
@@ -342,7 +358,13 @@ export default function Hero() {
   const shot = mode === 'spot' ? state.shot : LINES.length - 1;
 
   return (
-    <section className="vt hero" aria-labelledby="hero-h" data-mode={mode} ref={sectionRef}>
+    <section
+      className="vt hero"
+      aria-labelledby="hero-h"
+      data-mode={mode}
+      data-in={copyIn ? 'true' : 'false'}
+      ref={sectionRef}
+    >
       {/* THE FRAME the film stands in (the reveal, above). */}
       {mode !== 'surface' ? (
         <div className="hero__frame" ref={frameRef}>
@@ -355,7 +377,9 @@ export default function Hero() {
               playsInline
               autoPlay={narrow}
               loop={narrow}
-              preload="auto"
+              /* Metadata only on the mobile cut: autoplay fetches what it
+                 plays, and nothing more is asked for up front. */
+              preload={narrow ? 'metadata' : 'auto'}
               /* Decoration under the copy, not content: the lines carry what the
                  film says, and the h1 carries the lines. */
               aria-hidden="true"
@@ -372,7 +396,7 @@ export default function Hero() {
               a rotated phone can take the other crop without restarting anything. */}
           {mode === 'still' ? (
             <picture>
-              <source media={TALL_QUERY} srcSet={SPOT.tall.poster} type="image/webp" />
+              <source media={NARROW_QUERY} srcSet={SPOT.mobile.poster} type="image/webp" />
               <img className="hero__spot" src={SPOT.wide.poster} alt="" decoding="async" />
             </picture>
           ) : null}

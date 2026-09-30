@@ -131,7 +131,8 @@
    and clip-path, BUILD-LAW Motion's own terms. The film fills the frame as
    it filled the hero.
 
-   Below 1024 there is no pin: see THE STATIC HERO at the foot of this file. */
+   Below 1024 there is no pin: see THE FILM BEHIND THE WORDS at the foot of
+   this file. */
 .hero__frame {
   position: absolute;
   inset: 0;
@@ -593,47 +594,99 @@
 }
 
 /* ==========================================================================
-   THE STATIC HERO, BELOW 1024, 2026-09-30 (the founder's mobile hero fix).
+   THE FILM BEHIND THE WORDS, BELOW 1024, 2026-09-30 (the founder). It
+   replaces the static hero of the same day (copy, then a 4:5 frame).
 
-   The pinned reveal is desktop only (Hero.jsx). Below 1024 the hero is the
-   copy and then the frame, in the flow, top to bottom: headline, offer line,
-   primary call, frame. No 100svh, no centring, no spacer: the gap on load was
-   the section's own min-height with its content centred in it.
+   The pinned reveal is desktop only (Hero.jsx). Below 1024 the film IS the
+   hero: full bleed, edge to edge, no radius, 100svh (640px at the least),
+   the mobile cut cover-fit and centred. One scrim on top of it, a gradient
+   from the foot, plus the brief's top scrim under the bar (measured need,
+   below), and nothing else painted over the film: the grain, the note and
+   its corner shade, and the two shade zones all stand down here.
+   The copy stands at the foot, above the scrim:
 
-     padding-top     the bar's height + 24px (the bar stands over the hero)
      headline        Monigue, clamp(40px, 11vw, 56px), line-height 0.95, a
-                     box two lines tall so a cut never moves the stack (every
-                     line is two lines or fewer: 42.9px at 390), the line
-                     at the box's top
+                     box two lines tall with the line at its top, so a cut
+                     never moves the stack
      offer line      14px Satoshi, 16px under the headline
-     the call        16px under the offer line; full width below 768
-     frame           24px under the call, the measure's width, radius 16,
-                     4:5 below 768 (the tall cut), 16:10 from 768 to 1023
+     the call        16px under the offer line; full width below 768,
+                     natural width from 768 to 1023
+     padding         16px each side, 40px + the safe area at the foot
 
-   The sub and "Ask a question" are not in the brief's list and stand down
-   here; from 1024 they are unchanged. The copy stands on the dark ground,
-   not over the film, so the two shade zones stand down too.
+   The sub and "Ask a question" stand down here, as before; from 1024 they
+   are unchanged. The bar stands over the film (Header.css, `data-film`).
 
    `.hero[data-mode]` ties the `.hero:not([data-mode='surface'])` rules above
    on specificity (0-3-0 with a class after it), and this block comes last,
    so it wins. Keep it at the foot of the file. */
 @media (max-width: 1023px) {
   .hero[data-mode] {
-    min-height: 0;
-    align-content: start;
-    padding: calc(var(--bar-h) + var(--s-lg)) var(--hero-inset) var(--s-lg);
-  }
-
-  .hero[data-mode] .hero__body {
-    order: 1;
-    align-self: start;
+    height: 100svh;
+    min-height: 640px;
+    align-content: end;
     padding: 0;
   }
 
-  /* TOP-ALIGNED IN ITS BOX, 2026-09-30 (the founder). The box stays two
-     lines tall so a cut never moves the stack, but a one-line line now sits
-     straight under the bar's 24px and the spare line falls below it, between
-     the headline and the offer line. */
+  /* The frame is the hero's own box: no margin, no radius, no scale. */
+  .hero[data-mode] .hero__frame {
+    position: absolute;
+    inset: 0;
+    width: auto;
+    margin: 0;
+    border-radius: 0;
+    clip-path: none;
+    transform: none;
+  }
+
+  .hero[data-mode] .hero__spot {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* THE SCRIM, the only thing over the film: asphalt from the foot. The
+     foot stop is the brief's 0.92, measured against the copy on three
+     frames of the film (`.measure/filmhero.mjs`, DESIGN.md). */
+  .hero[data-mode] .hero__frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to top,
+      rgb(11 11 13 / var(--scrim-foot, 0.92)) 0%,
+      rgb(11 11 13 / 0.55) 45%,
+      rgb(11 11 13 / 0.15) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* THE TOP SCRIM, the brief's own remedy for the bar over the film: at 768
+     on the film's 2s frame a lit building sits behind the wordmark's end and
+     the word measured 3.27:1 at its worst pixel. Asphalt at 60% at the top,
+     to nothing at 120px. It is the only other thing over the film. */
+  /* z 2: at z 1 it came before the film in the tree and painted UNDER it,
+     measured unchanged with it in place. The foot scrim comes after the
+     film, so z 1 is enough there. */
+  .hero[data-mode] .hero__frame::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 2;
+    height: 120px;
+    background: linear-gradient(to bottom, rgb(11 11 13 / 0.6), rgb(11 11 13 / 0) 120px);
+    pointer-events: none;
+  }
+
+  .hero[data-mode] :is(.hero__grain, .hero__frame-shade, .hero__frame .hero__note) {
+    display: none;
+  }
+
+  .hero[data-mode] .hero__body {
+    align-self: end;
+    padding: 0 var(--s-md) calc(40px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* The line at the top of its two-line box, the spare line below it. */
   .hero[data-mode] .hero__headline {
     margin: 0 0 var(--s-md);
     font-size: clamp(40px, 11vw, 56px);
@@ -673,18 +726,6 @@
   .hero[data-mode] .hero__note {
     order: 3;
   }
-
-  .hero[data-mode] .hero__frame {
-    position: relative;
-    inset: auto;
-    order: 2;
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    margin-top: var(--s-lg);
-    border-radius: 16px;
-    clip-path: inset(0 round 16px);
-    transform-origin: 50% 50%;
-  }
 }
 
 @media (max-width: 767px) {
@@ -693,37 +734,19 @@
   }
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
-  .hero[data-mode] .hero__frame {
-    aspect-ratio: 16 / 10;
-  }
-}
-
-/* THE ENTRANCE BELOW 1024, the only motion there: the frame from 0.6 to 1
-   opacity and 0.96 to 1 scale over 600ms on the reveal curve, once, on load.
-   Nothing is tied to scroll. Reduced motion keeps the fade and drops the
-   scale (BUILD-LAW Motion). `backwards` only, so nothing stays pinned. */
+/* THE ENTRANCE BELOW 1024, the only motion there: the copy fades up 12px
+   over 500ms on the reveal curve once the fonts are ready (`data-in`,
+   Hero.jsx). The film does not scale or pin. Hidden-at-rest lives inside
+   no-preference only, so with reduced motion the copy is simply there. */
 @media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
-  .hero[data-mode] .hero__frame {
-    animation: hero-frame-in 600ms var(--ease-reveal) backwards;
+  .hero[data-mode] .hero__body {
+    transition:
+      opacity 500ms var(--ease-reveal),
+      transform 500ms var(--ease-reveal);
   }
-}
 
-@media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
-  .hero[data-mode] .hero__frame {
-    animation: hero-frame-fade 600ms var(--ease-reveal) backwards;
-  }
-}
-
-@keyframes hero-frame-in {
-  from {
-    opacity: 0.6;
-    transform: scale(0.96);
-  }
-}
-
-@keyframes hero-frame-fade {
-  from {
-    opacity: 0.6;
+  .hero[data-mode][data-in='false'] .hero__body {
+    opacity: 0;
+    transform: translateY(12px);
   }
 }

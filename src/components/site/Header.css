@@ -107,6 +107,18 @@
   opacity: 1;
 }
 
+/* OVER THE FILM, below 1024 on home (2026-09-30, the founder): no ground at
+   all, neither the gradient nor the solid, while the hero is in view
+   (`data-film`, Header.jsx). Once the hero's copy is 24px from the bar the
+   solid ground returns on the usual fade, so no copy passes under a bare
+   bar. */
+@media (max-width: 1023px) {
+  .bar[data-over='true'][data-film='true']::before,
+  .bar[data-over='true'][data-film='true']::after {
+    opacity: 0;
+  }
+}
+
 /* Reduced motion: the state swaps, nothing fades. */
 @media (prefers-reduced-motion: reduce) {
   .bar[data-over='true']::before,

@@ -47,19 +47,23 @@ export const LINES = [
 
 export const FINAL_LINE = LINES[LINES.length - 1];
 
-/* Under 768 the tall cut: 608 by 1080, a 9:16 crop of the source. Centre crop
-   for shots 1, 2 and 4; shot 3 is cropped to the window holding the most lit
-   screen, so the wall fills the frame rather than the dark room beside it.
+/* BELOW 1024 THE MOBILE CUT, 2026-09-30 (the founder: the film behind the
+   words). 406 by 720, a 9:16 crop, encoded from the tall cut of 2026-09-14
+   so its crops carry over: centre for shots 1, 2 and 4, and shot 3 cropped
+   to the window holding the most lit screen. H.264 at CRF 20 with faststart
+   (779 KB) and VP9 at CRF 31 (342 KB), no audio; the brief's ceiling is
+   720px tall and 2.5 MB. The 608 by 1080 tall cut it came from is kept in
+   raw-assets/hero as the source for any re-encode, and is not shipped.
 
    Chosen ONCE, at mount. A reader who rotates a phone mid-spot keeps the cut
    they started on rather than restarting the clip at a different ratio. */
-export const TALL_QUERY = '(max-width: 767px)';
+export const NARROW_QUERY = '(max-width: 1023px)';
 
 /* `poster` is the film's LAST frame, the reduced-motion still. `first` is
-   a frame from its first second (0.5s, the phone on the desk), exported
-   2026-09-24 from the webm of each cut: the video element's own poster,
-   which is what shows until the clip can play through and what stays if
-   autoplay is refused. */
+   a frame from its first second (0.5s, the phone on the desk): the video
+   element's own poster, which is what shows until the clip plays and what
+   stays if autoplay is refused. The mobile one is a JPEG, 12.6 KB (the
+   brief's ceiling is 60). */
 export const SPOT = {
   wide: {
     webm: '/assets/hero/hero-spot.webm',
@@ -67,10 +71,10 @@ export const SPOT = {
     poster: '/assets/hero/hero-spot-poster.webp',
     first: '/assets/hero/hero-spot-first.webp',
   },
-  tall: {
-    webm: '/assets/hero/hero-spot-tall.webm',
-    mp4: '/assets/hero/hero-spot-tall.mp4',
+  mobile: {
+    webm: '/assets/hero/hero-spot-m.webm',
+    mp4: '/assets/hero/hero-spot-m.mp4',
     poster: '/assets/hero/hero-spot-tall-poster.webp',
-    first: '/assets/hero/hero-spot-tall-first.webp',
+    first: '/assets/hero/hero-spot-m-first.jpg',
   },
 };
