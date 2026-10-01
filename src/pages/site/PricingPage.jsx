@@ -127,6 +127,8 @@ export default function PricingPage() {
     <Shell
       title={`Website design pricing: ${money(FIGURES.website)} flat, branding from ${money(FIGURES.brandingBasic)} | VexelTech`}
       path="/pricing"
+      /* No in-page form, 2026-10-01 (the storytelling pass). */
+      footerForm={false}
       description={`How much does a small business website cost? ${money(FIGURES.website)} flat for six pages in four business days. Branding ${money(FIGURES.brandingBasic)} or ${money(FIGURES.brandingAdvance)}. Marketing and automation by written quote.`}
     >
       {/* 1. THE HEAD. */}
@@ -168,9 +170,9 @@ export default function PricingPage() {
                 </p>
                 <h3 className="pr-col__name">{c.name}</h3>
                 <p className="pr-col__line">{c.line}</p>
-                {/* The Websites figure carries the brush stroke (life pass 3). */}
+                {/* The Websites figure's brush stroke came off (the storytelling pass, 2026-10-01: the swash is home's "Yet." and one word per page, nothing else). */}
                 <p className="pr-col__price">
-                  {c.id === 'websites' ? <Brush>{c.price}</Brush> : c.price}
+                  {c.price}
                 </p>
                 <p className="pr-col__sub">{c.sub}</p>
                 <div className="pr-col__get">

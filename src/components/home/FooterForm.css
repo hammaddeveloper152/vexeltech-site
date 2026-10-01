@@ -213,21 +213,7 @@
   }
 }
 
-/* The corner swash: 48px, 420px long, -35 degrees, off the top right
-   corner and cut by the block's radius. Hidden below 768. */
-.foot__swash {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .foot__swash {
-    position: absolute;
-    top: -8px;
-    right: -170px;
-    z-index: 0;
-    display: block;
-  }
-}
+/* The corner swash came off, 2026-10-01 (the storytelling pass). */
 
 .foot__band :focus-visible {
   outline-color: var(--c-asphalt);

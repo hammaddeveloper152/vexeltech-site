@@ -49,7 +49,6 @@
    case, 44px at 1280 and 32px at 390, normal tracking, bone, 16.32:1. It was
    Monigue uppercase at display / 2, 95px at 1280. Monigue is the home hero
    headline's and the About statement's alone now. */
-.fail__h,
 .services__h,
 .about__h,
 .counters__h,
@@ -74,7 +73,6 @@
    and turned so it reads bottom to top. Centred in the 64px gutter, and gone
    below 1024 where the gutter is 16 to 40px. Decorative: each section's own
    heading names it. */
-.fail,
 .about,
 .services,
 .route-band {

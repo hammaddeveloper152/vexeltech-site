@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Scribble from '../../components/site/Scribble.jsx';
 import './pages.css';
 
 /* The three shapes every non-home page is built from.
@@ -60,11 +59,10 @@ export function PageHead({ title, lead, id = 'pg-h', step = 'heading' }) {
 export function CallBand({ heading, note = null }) {
   return (
     <section className="vt callband" aria-labelledby="callband-h">
+      {/* The scribble under the heading came off everywhere, 2026-10-01
+          (the storytelling pass). */}
       <h2 className="callband__h" id="callband-h">
-        <span className="callband__word">
-          {heading}
-          <Scribble />
-        </span>
+        {heading}
       </h2>
       {note ? <p className="callband__note">{note}</p> : null}
       <Link className="callband__cta" to={CALL_HREF}>

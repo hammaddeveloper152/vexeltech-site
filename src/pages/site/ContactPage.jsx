@@ -2,8 +2,8 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 import Shell from './Shell.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import LeadForm from '../../components/site/LeadForm.jsx';
+import ContactTimeline from '../../components/story/ContactTimeline.jsx';
 import { IconArrowDownRight, IconPause, IconPlay } from '../../components/site/Icons.jsx';
-import { FACTS } from '../../content/facts.js';
 import './contact.css';
 
 /* THE CONTACT PAGE, 2026-09-25 (the founder's contact pass, after
@@ -108,19 +108,9 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="vt ct-facts" aria-labelledby="ct-facts-h">
-        <h2 className="ct-facts__h" id="ct-facts-h">
-          Who we are
-        </h2>
-        <dl className="ct-facts__row">
-          {FACTS.map(([k, v]) => (
-            <div className="ct-facts__tile" key={k}>
-              <dt className="ct-facts__k lbl">{k}</dt>
-              <dd className="ct-facts__v">{v}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
+      {/* WHAT HAPPENS AFTER YOU SEND, under the form: the timeline that
+          replaced the tiles (the storytelling pass, 2026-10-01). */}
+      <ContactTimeline />
 
       <FooterForm form={false} />
     </Shell>
