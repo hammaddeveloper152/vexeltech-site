@@ -225,22 +225,10 @@
   color: var(--c-steel);
 }
 
-/* THE ASPHALT OUTLINE, the kit's secondary button, 2026-09-21 (storyboard:
-   one button pair, yellow primary and asphalt outline secondary). Label and
-   edge are asphalt on cream, 15.7:1. */
-.about__link {
-  background: transparent;
-  border-color: var(--c-asphalt);
-  color: var(--c-asphalt); /* 15.7:1 on cream */
-  box-shadow: none;
-}
-
-.about__go {
-  color: var(--c-asphalt); /* 15.7:1 on cream */
-}
-
-/* THE TILES (2026-09-25, restored after the three-colour pass): TEAM lilac,
-   BUILD mint, AFTER coral, PRICE yellow, every word asphalt: 8.68:1, 5.62,
+/* THE TILES (2026-09-25, restored after the three-colour pass), by
+   position: the first lilac, the second mint, the third coral, the fourth
+   yellow (since COPY V3, Website, Build, After launch, Ownership; they were
+   TEAM, BUILD, AFTER and PRICE), every word asphalt: 8.68:1, 5.62,
    5.87 and 9.46. The label is asphalt too (steel would be 3.97, 2.57, 2.68
    and 4.32 on them). */
 .about__row:nth-child(1) {

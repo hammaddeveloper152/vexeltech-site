@@ -12,11 +12,17 @@
      - "Not " followed by a capital, more than once on a page
      - the banned strings: SaaS, mobile applications, web apps, Most picked,
        Fifty-two, Startups, Entrepreneurs, Founders
-     - V2.1's banned words (2026-10-01, the founder: no self-explanation),
-       any case, whole words: coded, design system, page builder, theme,
-       themes, outsourced, generated, and "this site" except in the
-       refusals band's "It's on this site". Checked in the rendered text and
-       in each page's title and meta description.
+     - V2.1's and V3's banned words (2026-10-01, the founder), any case,
+       whole words: coded, design system, page builder, theme(s),
+       outsourced, generated, template(s), affordable, cheap (and cheaper,
+       cheapest), agency-level, dominate, skyrocket, startups, entrepreneurs,
+       founders, and "this site". Two exceptions: the refusals band's "It's
+       on this site" and About's "Startups raising a round". Checked in the
+       rendered text and in each page's title and meta description.
+     - repeats are split (V3): ALLOWED where every page's copy of the
+       sentence sits in the shared footer, a button or link, the facts block
+       (home and Contact), the closing call (home and Services) or a margin
+       label; FLAGGED otherwise.
      - every $ figure, against 299, 449, 700, 999, 150, 15 and 300
      - exclamation marks
 
@@ -26,6 +32,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import puppeteer from 'puppeteer';
+import { LINES as HERO_LINES } from '../src/components/home/heroSpot.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const TAG = process.argv[2] || 'after';
@@ -36,18 +43,23 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const PUBLIC = ['/', '/services', '/pricing', '/about-us', '/contact-us', '/thanks'];
 const LEGAL = ['/privacy-policy', '/terms-of-service'];
-const BANNED = ['SaaS', 'mobile applications', 'web apps', 'Most picked', 'Fifty-two', 'Startups', 'Entrepreneurs', 'Founders'];
+const BANNED = ['SaaS', 'mobile applications', 'web apps', 'Most picked', 'Fifty-two'];
+/* Startups, Entrepreneurs and Founders moved into SELF below, any case, 2026-10-01. */
 /* 300 joined the list on 2026-10-01: V2's budget bands (Up to $300, $300 to
    $700) are derived from the prices, the founder's decision. */
-const SELF = /(coded|design system|page builders?|themes?|outsourced|generated|this site)/gi;
-const SELF_OK = "It's on this site";
-const selfHits = (t) => [...t.replaceAll(SELF_OK, '').matchAll(SELF)].map((m) => m[0]);
+const SELF =
+  /\b(coded|design systems?|page builders?|themes?|outsourced|generated|templates?|affordab\w*|cheap\w*|agency-level|dominat\w*|skyrocket\w*|startups?|entrepreneurs?|founders?|this site)\b/gi;
+const SELF_OK = ["It's on this site", 'Startups raising a round'];
+const selfHits = (t) => [...SELF_OK.reduce((x, ok) => x.replaceAll(ok, ''), t).matchAll(SELF)].map((m) => m[0]);
+/* The shared text a repeat may sit in (V3's allowances). */
+const SHARED = 'footer.foot, .callband, .about__rows, .ct-facts__row, a, button, .marg';
 const FIGURES = new Set(['299', '449', '700', '999', '150', '15', '300']);
 
 const errors = [];
 const b = await puppeteer.launch({ headless: 'new', args: ['--autoplay-policy=no-user-gesture-required'] });
 const texts = {};
 const meta = {};
+const shared = {};
 for (const route of [...PUBLIC, ...LEGAL]) {
   const p = await b.newPage();
   p.on('console', (m) => m.type() === 'error' && errors.push(`${route}: ${m.text()}`));
@@ -69,9 +81,12 @@ for (const route of [...PUBLIC, ...LEGAL]) {
   });
   await wait(800);
   const t = await p.evaluate(() => document.querySelector('main')?.innerText || document.body.innerText);
-  /* The hero's headline rotates: its four lines are read from the source by
-     the checks below as well, so the dump of / carries all four. */
-  texts[route] = t;
+  /* The hero's headline rotates and only the line on screen is in the page
+     text, so the dump of / carries all four from the source (heroSpot.js),
+     and the checks read them. (This comment claimed it before 2026-10-01;
+     the code did not do it.) */
+  texts[route] = route === '/' ? `${t}\n${HERO_LINES.join('\n')}` : t;
+  shared[route] = await p.evaluate((sel) => [...document.querySelectorAll(sel)].map((e) => e.innerText).join('\n'), SHARED);
   meta[route] = await p.evaluate(() => `${document.title}
 ${document.querySelector('meta[name="description"]')?.content || ''}`);
   fs.writeFileSync(path.join(OUT, `${route.replace(/\//g, '_') || '_home'}.txt`), t);
@@ -108,7 +123,12 @@ for (const route of [...PUBLIC, ...LEGAL]) {
   const bang = t.match(/[^\n]*![^\n]*/g);
   if (bang) report.bangs[route] = bang.slice(0, 5);
 }
-for (const [s, routes] of seen) if (routes.length > 1) report.repeats.push({ s, routes });
+report.repeatsAllowed = [];
+for (const [s, routes] of seen) {
+  if (routes.length < 2) continue;
+  const ok = routes.every((r) => shared[r].includes(s));
+  (ok ? report.repeatsAllowed : report.repeats).push({ s, routes });
+}
 report.consoleErrors = errors;
 fs.writeFileSync(path.join(OUT, 'checks.json'), JSON.stringify(report, null, 2));
 console.log(JSON.stringify(report, null, 1));

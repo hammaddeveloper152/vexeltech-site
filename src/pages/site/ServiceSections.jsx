@@ -81,6 +81,9 @@ export default function ServiceSections({ disciplines }) {
                   {d.name}
                 </h2>
                 <p className="svc2__promise">{d.promise}</p>
+                {/* THE TRADES LINE, COPY V3, 2026-10-01: Websites' H3, a 14px
+                    mono line under the promise (services.css). */}
+                {d.trades ? <h3 className="svc2__trades">{d.trades}</h3> : null}
 
                 <ul className="svc2__list">
                   {d.cards.map(({ title }) => (
@@ -92,6 +95,9 @@ export default function ServiceSections({ disciplines }) {
                     </li>
                   ))}
                 </ul>
+                {/* BIGGER BUILDS, COPY V3, 2026-10-01: Websites' line under its
+                    items, in the fact register. */}
+                {d.bigger ? <p className="svc2__fact svc2__bigger">Bigger builds: {d.bigger}</p> : null}
               </div>
 
               <div className="svc2__right">
@@ -100,9 +106,11 @@ export default function ServiceSections({ disciplines }) {
                     {figure}
                   </p>
                 ) : (
-                  <p className="svc2__oncall">On the call</p>
+                  /* "Per workflow" for Automation: V3's grid price
+                     (VEXELTECH-COPY.md, Pricing, The grid). */
+                  <p className="svc2__oncall">{d.id === 'automation' ? 'Per workflow' : 'On the call'}</p>
                 )}
-                <p className="svc2__fact">Turnaround: {d.turnaround}</p>
+                <p className="svc2__fact">Terms: {d.terms}</p>
                 <p className="svc2__fact">
                   Good fit if {d.fit.charAt(0).toLowerCase() + d.fit.slice(1)}
                 </p>

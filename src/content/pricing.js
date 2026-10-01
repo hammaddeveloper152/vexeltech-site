@@ -133,14 +133,15 @@ export const BRANDING = [
     id: 'branding-basic',
     name: 'Basic',
     figure: 'brandingBasic',
-    /* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Branding tiers). */
+    /* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Branding). Not
+       rendered; it waits for the structure pass. */
     turnaround: 'two business days',
     features: [
       'Logo design, five concepts',
-      'Brand guideline',
-      'Stationery: card, letterhead, envelope, favicon, email signature',
+      'Brand guidelines',
+      'Stationery: card, letterhead, envelope, favicon, signature',
       'Logo sizes for social',
-      'Unlimited revisions before files are released',
+      'Unlimited revisions before files',
     ],
   },
   {
@@ -150,11 +151,11 @@ export const BRANDING = [
     turnaround: 'one business day',
     features: [
       'Logo design, eight concepts',
-      'Colour variations of the mark',
-      'Social kit: banners and cover images',
-      'Brand guideline',
-      'Stationery: card, letterhead, envelope, favicon, email signature',
-      'Unlimited revisions before files are released',
+      'Colour variations',
+      'Social kit: banners and covers',
+      'Brand guidelines',
+      'Stationery: card, letterhead, envelope, favicon, signature',
+      'Unlimited revisions before files',
     ],
   },
 ];
@@ -165,28 +166,28 @@ export const WEBSITES = [
     id: 'website',
     name: 'A website',
     figure: 'website',
-    /* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, The website): the
-       $700 site defined once. */
+    /* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Pricing, The website). Not
+       rendered; it waits for the structure pass. */
     turnaround: 'four business days',
     features: [
-      'Up to six pages, designed for your business',
-      'Built fast, built to last, nothing to renew',
-      'Mobile first, under two seconds to load on a phone',
-      'Quote and contact forms to your inbox, click to call, booking link',
-      'Search set up: titles, descriptions, sitemap, Google Business Profile connected',
-      'Live on your own domain, in your name',
-      'Thirty days of changes and maintenance',
+      'Six pages structured for your trade',
+      'Mobile-first, click to call and quote form above the fold',
+      'Core Web Vitals in the green',
+      'Local search setup: titles, schema, sitemap, Google Business Profile connected',
+      'Call and form tracking',
+      'Live on your domain, in your name',
+      'Thirty days of maintenance',
     ],
     bigger: 'Stores, portals, custom backends and apps are priced on the call.',
   },
 ];
 
-/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Marketing and
+/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Marketing and
    automation columns). */
 export const MARKETING_LINE =
-  'Priced on the call, month to month. Google ads, Meta ads, SEO and AI search, tracking, social content.';
+  'Google Business Profile, Local Service Ads, Google Ads, Meta ads, local SEO and AI search, monthly reporting. Month to month.';
 export const AUTOMATIONS = {
-  note: 'Priced per workflow. Missed call text back, quotes, invoices, booking, AI agents.',
+  note: 'Missed-call text-back, quote follow-up, invoice reminders, online booking, review requests, AI agents. Per workflow.',
 };
 
 export const BUNDLE = {
@@ -200,10 +201,10 @@ export const BUNDLE = {
     { label: 'The website', from: WEBSITES[0] },
     { label: 'Branding, advance', from: BRANDING[1] },
   ],
-  /* COPY V2, 2026-10-01: the $150 is derived (bundleSaving). */
+  /* COPY V3, 2026-10-01: the $150 is derived (bundleSaving). */
   line: () => {
     const b = bundleSaving();
-    return b ? `The website and Advance branding together, ${money(b.saving)} less than separately.` : null;
+    return b ? `The website and Advance branding. ${money(b.saving)} less than separately.` : null;
   },
 };
 
@@ -260,34 +261,34 @@ export const CUSTOM = {
    SUPPLIED BY THE FOUNDER, 2026-09-10. The twelve lines below are verbatim.
    The card's pending rows are gone and nothing else moved, which is what the
    reservation was built to do. */
-/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Custom card). */
+/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Custom card). */
 export const NEEDS = {
   branding: [
-    "Your trade and who you're up against",
-    'How many places the mark has to live',
-    'Anything that exists and has to stay',
+    'Your trade and your market',
+    'Where the mark has to live',
+    'What exists and has to stay',
   ],
   websites: [
-    'How many pages and what each one is for',
-    'What it connects to: booking, payments, CRM',
+    'Pages and what each one is for',
+    'Booking, payments or CRM to connect',
     'Where your visitors come from',
   ],
   marketing: [
-    'Your market and your competitors',
-    'The monthly budget range',
-    "What you've tried and what it returned",
+    'Your service area and competitors',
+    'Monthly ad budget range',
+    "What's been tried and what it returned",
   ],
   automation: [
     'The tools you already use',
     'The job that eats the most hours a week',
-    'How many a day it has to handle',
+    'Daily volume it has to handle',
   ],
 };
 
 /* The line under the intake rows. Founder-supplied, and it is the one thing on
    the Custom card that is a commitment rather than a question. */
 export const CUSTOM_TERMS =
-  'Every custom job is priced on the call and in writing before any work starts.';
+  'Every custom job is priced on the call and confirmed in writing before any work starts.';
 
 /* COPY V2, 2026-10-01: the ladder reads the tiers above rather than
    carrying its own cut of them, so the $700 site and the two branding tiers

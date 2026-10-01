@@ -29,43 +29,12 @@ import './Faq.css';
 
    Budget: 150 to 250 characters an answer. Measured after the rewrite.
 */
-const ITEMS = [
-  {
-    id: 'one',
-    q: 'How long does it take?',
-    a: "Four business days to build your site. Then the revision rounds start, and it changes with each one until it's the site you actually wanted. We don't put a cap on how many.",
-  },
-  {
-    /* ARGUMENT TWO, and the reason this answer was rewritten. It used to say
-       "Yes, 100% ownership", which is abstract: a reader cannot picture it
-       and every agency claims it. What they are afraid of is being locked
-       in, and the concrete version of not being locked in is whose hosting
-       it sits on and whose name is on the credentials. The founder's own
-       words. */
-    id: 'two',
-    q: 'Do I actually own it?',
-    a: "Yes, and it isn't just a word. When it's live and approved it transfers to your hosting, with all the credentials and the ownership under your name. You own everything you paid for.",
-  },
-  {
-    /* ARGUMENT ONE, and this slot was the price placeholder until the price
-       moved to /pricing. It is the strongest thing the founder says and it
-       was buried in a pricing bullet reading "Unlimited revisions". A bullet
-       states a deliverable; this states what the deliverable is FOR. */
-    id: 'three',
-    q: 'What if I want changes?',
-    a: "Then you ask, and we change it. Revisions here are a conversation, not a negotiation. A dedicated team stays on your project, so there's none of the nuisance other agencies make of it.",
-  },
-  {
-    id: 'four',
-    q: 'What happens after launch?',
-    a: "Thirty days of support and maintenance, at no cost. It's part of the work rather than a retainer, so there's nothing extra to pay in the month after you go live.",
-  },
-];
-
+/* HOME'S FOUR QUESTIONS ARE GONE, 2026-10-01 (COPY V3 gives home none):
+   the accordion now renders only the questions its route passes. */
 /* `items` and `id` let a second route mount the same accordion with its own
    questions (About, 2026-09-23). `id` prefixes every DOM id, so two instances
-   never collide; home passes neither and its ids are unchanged. */
-export default function Faq({ items = ITEMS, id: base = 'faq' }) {
+   never collide. */
+export default function Faq({ items, id: base = 'faq' }) {
   const [openId, setOpenId] = useState(null);
 
   /* One piece of state, set synchronously. The entrance is a keyframe

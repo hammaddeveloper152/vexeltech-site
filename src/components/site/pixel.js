@@ -11,7 +11,7 @@
    into a script call and a pixel ID is a number.
 
    Events: PageView on every route (Tracking in main.jsx); Lead on the
-   in-page success of the contact form and the Plan Builder, once per
+   in-page success of the contact form (the Plan Builder's, until 2026-10-01), once per
    submission, and on /thanks for the legacy form. The loader is Meta's own
    snippet, reduced to what it does: queue calls on a stub `fbq` until
    fbevents.js arrives and replays them. */

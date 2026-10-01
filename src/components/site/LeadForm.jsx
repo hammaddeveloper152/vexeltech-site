@@ -328,8 +328,8 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
           {status === 'sent' ? (
             <span className="lf__ok">
               <IconCheck className="i i--sm lf__ok-mark" />
-              {/* VEXELTECH-COPY.md (V2), the forms' success, verbatim. */}
-              Got it. A person replies within one business day.
+              {/* VEXELTECH-COPY.md (V3), the forms' success, verbatim. */}
+              Received. A written reply within one business day.
             </span>
           ) : null}
           {status === 'failed' ? (

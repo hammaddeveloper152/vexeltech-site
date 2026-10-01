@@ -350,6 +350,17 @@
   color: var(--c-steel); /* 7.20:1 */
 }
 
+/* THE FOOTNOTE under the grid (COPY V3, 2026-10-01): the columns' sub-line
+   type, steel on cream, under the four columns at the measure. */
+.pr-grid__note {
+  max-width: 72ch;
+  margin: var(--s-xl) 0 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-steel); /* 7.20:1 on cream */
+}
+
 .pr-col__get {
   padding-top: var(--s-lg);
 }

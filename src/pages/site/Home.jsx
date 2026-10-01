@@ -6,7 +6,6 @@ import Services from '../../components/home/Services.jsx';
 import WordBand from '../../components/home/WordBand.jsx';
 import About from '../../components/home/About.jsx';
 import CounterRow from '../../components/home/CounterRow.jsx';
-import Faq from '../../components/home/Faq.jsx';
 import RouteBand from '../../components/site/RouteBand.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
@@ -62,20 +61,22 @@ import '../../styles/lit.css';
    section numbers in the build brief were a build sequence, not a page
    order, so do not reorder to match them. */
 
-/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Metadata). */
-const TITLE = 'Websites, branding, marketing and automation for local service businesses | VexelTech';
+/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Metadata). */
+const TITLE = 'Website design for small business, $700 flat | VexelTech';
 const DESCRIPTION =
-  'Websites $700 flat, branding from $299, for US local service businesses. One team, live in four business days.';
+  'Website design, branding, local SEO, ads and automation for US home service businesses. Websites $700 flat, live in four business days.';
 
 /* The retired Process component's four step descriptions, carried as one
    line under stops 01 to 04 of the route, and the user's line for stop 05
    (2026-09-21). */
-/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Home, How it works). */
+/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Home, How it works): each
+   step's first sentence is the stop's title (RouteBand.jsx), the rest its
+   line. */
 const STEP_LINES = [
-  "You tell us what the business does and what's going wrong. We tell you what we'd fix first and what it costs.",
-  'Logo concepts, or the site design, shown to you and changed until you say yes.',
-  'Four business days for a website, one to two for branding. You check it on your own phone before it goes live.',
-  'Domain, hosting, files and code in your name, with thirty days of changes included.',
+  "Fifteen minutes. Your trade, your area, what's not working. You get a written number the same day.",
+  'Logo concepts or the site design, shown before anything is billed.',
+  'Four business days for a website. One to two for branding.',
+  'Domain, hosting, files and code in your name. Thirty days of maintenance included.',
 ];
 
 export default function Home() {
@@ -129,12 +130,12 @@ export default function Home() {
         {/* The $700 at 240px is the band's object; `promise.webp` came off
             2026-09-22 with every other unfilled slot. */}
         <PromiseBand id="promise-h" />
-        <Faq />
-        {/* The closing call, between Questions and the form: the founder's
-            line and subline, 2026-09-24. */}
+        {/* Questions came off, 2026-10-01: V3 gives home none
+            (VEXELTECH-COPY.md, COPY V3). */}
+        {/* The closing call, before the form. COPY V3, 2026-10-01. */}
         <CallBand
           heading="Which one is costing you most?"
-          note="Fifteen minutes on the phone. We'll tell you what we'd fix first, and it isn't always the expensive one."
+          note="Fifteen minutes on the phone and a written number. Usually it's not the expensive one."
         />
         <FooterForm />
       </main>

@@ -74,8 +74,8 @@ export default function Services() {
           <h2 className="services__h" id="services-h">
             What we do
           </h2>
-          {/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Home, What we do). */}
-          <p className="services__lead">Four jobs, one team, one invoice.</p>
+          {/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Home, What we do). */}
+          <p className="services__lead">Four disciplines. One team.</p>
         </div>
         <div className="services__grid" ref={ref} data-revealed={revealed ? 'true' : 'false'}>
           {/* The reveal moves the cell and the hover moves the card, so the

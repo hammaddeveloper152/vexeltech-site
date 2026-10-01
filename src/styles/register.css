@@ -108,35 +108,8 @@
 /* STATIC, NEVER YELLOW (2026-09-25, the founder): steel-lift on the dark
    ground (above), DEEP AMBER on a cream sheet, 4.82:1 (steel-lift there is
    2.27:1). */
-:is(.panel-sec, .plan) .marg {
+.panel-sec .marg {
   color: var(--c-accent-text-light);
-}
-
-/* ---- About --------------------------------------------------------------
-   A CREAM BAND, 2026-09-14. No carrier: the call is ASPHALT, by the user's
-   decision, and its colours are agency.css's, restated there for the light
-   ground. This sets only the call's size, which is the hero call's own
-   steps.
-
-   The 4:5 portrait plate and its ratio label are gone from the markup — the
-   mascot stands in the section instead — so their rules went with them. */
-.about__link {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s-sm);
-  min-height: 48px;
-  /* The button, 2026-09-24: 14px Clash Medium, 6px radius, at every width
-     (it used the hero call's steps, body to h3). */
-  padding: var(--s-md) var(--s-lg);
-  border: 1px solid transparent;
-  border-radius: var(--r-btn);
-  font-family: var(--font-brand);
-  font-size: var(--t-btn);
-  line-height: var(--t-btn-line);
-  font-weight: var(--t-weight-btn);
-  letter-spacing: normal;
-  text-transform: none;
-  text-decoration: none;
 }
 
 /* ---- Counter row --------------------------------------------------------

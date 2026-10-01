@@ -800,19 +800,16 @@ html {
    section, with a shadow thrown upward (0 -12px 40px, black at 35%). The
    bottom edge stays square. The section before takes 40px more at its foot,
    so the sheet overlaps only that added space and nothing moves. The
-   Plan Builder's band is a sheet too (plan.css carries its own cream), and
-   the footer's cream band is the last sheet on every page (FooterForm.css).
+   footer's cream band is the last sheet on every page (FooterForm.css).
    The grain follows the corners. */
-.panel-sec,
-.plan {
+.panel-sec {
   z-index: 1;
   margin-top: -40px;
   border-radius: 40px 40px 0 0;
   box-shadow: 0 -12px 40px rgb(0 0 0 / 35%);
 }
 
-.panel-sec::after,
-.plan::after {
+.panel-sec::after {
   border-radius: inherit;
 }
 
@@ -838,37 +835,15 @@ main#main > div.vt {
   padding-bottom: 0;
 }
 
-main#main :is(section, header).vt:is(.panel-sec, .plan) {
+main#main :is(section, header).vt.panel-sec {
   padding-bottom: 96px;
-}
-
-/* About's black block keeps its own padding at its foot, as at its head:
-   32 on a phone, 64 from 768, 96 from 1024 (aboutpage.css). */
-main#main :is(section, header).vt.ab3-do {
-  padding-bottom: 32px;
-}
-
-@media (min-width: 768px) {
-  main#main :is(section, header).vt.ab3-do {
-    padding-bottom: 64px;
-  }
-}
-
-@media (min-width: 1024px) {
-  main#main :is(section, header).vt.ab3-do {
-    padding-bottom: 96px;
-  }
 }
 
 /* The same weight as the rule above (an element, the id, two classes), so
    these win on order: at a lower weight the general rule beat them and the
    sheet's pull-up overlapped the content above it by 40px. */
-main#main :is(section, header, div).vt:has(+ :is(.panel-sec, .plan)) {
+main#main :is(section, header, div).vt:has(+ .panel-sec) {
   padding-bottom: calc(var(--s-section) / 2 + 40px);
-}
-
-main#main :is(section, header, div).vt:has(+ .ab3-do) {
-  padding-bottom: calc(var(--s-section) / 2);
 }
 
 main#main :is(section, header, div).vt:has(+ footer.foot),
@@ -1013,23 +988,13 @@ main#main footer.foot {
 }
 
 /* THE SEND BUTTON'S ARROW, 2026-09-25 (the founder's life pass 2): after
-   the label on the contact form's submit and the Plan Builder's, sliding
-   4px right on a real pointer's hover. Transform only (BUILD-LAW Motion). */
+   the label on the contact form's submit, sliding 4px right on a real
+   pointer's hover (LeadForm.css). Transform only (BUILD-LAW Motion). The
+   Plan Builder's send went with it (COPY V3, 2026-10-01). */
 .send__go {
   transition: transform var(--d-press) var(--ease-reveal);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .plan__send:hover .send__go {
-    transform: translateX(4px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .plan__send:hover .send__go {
-    transform: none;
-  }
-}
 
 /* THE HIGHLIGHTER BOX (`.hl`) IS GONE, 2026-09-25 (the Genesis pass): the
    one highlighted word a page gives is the swash now (Brush.jsx, `.brush--hl`

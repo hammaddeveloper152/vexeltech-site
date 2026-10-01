@@ -81,7 +81,9 @@ const TARGETS = () => {
   const sw = document.querySelector('.hero__line .brush__t');
   add('headline', line, sw ? { exclude: box(sw.closest('.brush')) } : {});
   add('headline, swash word', sw);
-  add('sub', document.querySelector('.hero__sub'));
+  /* COPY V3, 2026-10-01: the sub is gone; the eyebrow and the promise line. */
+  add('eyebrow', document.querySelector('.hero__eyebrow'));
+  add('promise line', document.querySelector('.hero__promise'));
   add('offer line', document.querySelector('.hero__price'));
   add('call', document.querySelector('.hero__actions .hero__cta:not(.hero__cta--line)'));
   add('ask a question', document.querySelector('.hero__cta--line'));
@@ -93,7 +95,7 @@ const TARGETS = () => {
 };
 
 const HIDE = `
-  .hero__line, .hero__line *, .hero__sub, .hero__price, .hero__actions .hero__cta, .bar .wm__word, .bar__link {
+  .hero__line, .hero__line *, .hero__eyebrow, .hero__promise, .hero__price, .hero__actions .hero__cta, .bar .wm__word, .bar__link {
     color: transparent !important; text-shadow: none !important;
   }
   .bar__menu svg { visibility: hidden !important; }

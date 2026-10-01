@@ -19,26 +19,26 @@ export const DISCIPLINES = [
     id: 'branding',
     Art: IsoBranding,
     discipline: 'Branding',
-    /* COPY V2, 2026-10-01: the four lines (VEXELTECH-COPY.md, Home, What
-       we do). The $299 is the token's. */
-    line: `A mark people remember. Logo, brand guideline, stationery and social kit, from ${money(FIGURES.brandingBasic)}.`,
+    /* COPY V3, 2026-10-01: the four noun stacks (VEXELTECH-COPY.md, Home,
+       What we do). The $299 and $700 are the tokens'. */
+    line: `Logo design, brand guidelines, stationery, social kit. From ${money(FIGURES.brandingBasic)}.`,
   },
   {
     id: 'websites',
     Art: IsoWebsites,
     discipline: 'Websites',
-    line: `Up to six pages, built for your business. ${money(FIGURES.website)}, live in four business days.`,
+    line: `Six-page conversion-focused site, mobile-first, Core Web Vitals green, on your domain. ${money(FIGURES.website)}.`,
   },
   {
     id: 'marketing',
     Art: IsoMarketing,
     discipline: 'Marketing',
-    line: 'Google and Meta ads pointed at your phone, with the landing page fixed first.',
+    line: 'Google Business Profile, Local Service Ads, Google Ads, Meta ads, local SEO and AI search.',
   },
   {
     id: 'automation',
     Art: IsoAutomation,
     discipline: 'Automation',
-    line: "Quotes, follow-ups, invoices and bookings that run while you're on a job.",
+    line: 'Missed-call text-back, quote follow-up, invoice reminders, online booking, AI agents.',
   },
 ];

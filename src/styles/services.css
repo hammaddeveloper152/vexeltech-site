@@ -244,6 +244,30 @@
   color: var(--c-steel); /* 7.20:1 on cream */
 }
 
+/* COPY V3, 2026-10-01. THE TRADES LINE, Websites' H3: a 14px mono line under
+   the promise, pulled up to it from the promise's 40px foot, in the fact
+   colours. BIGGER BUILDS sits under the items in the fact register. */
+.svc2__trades {
+  max-width: 54ch;
+  margin: calc(var(--s-md) - var(--s-xl)) 0 var(--s-xl);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--c-steel-lift);
+}
+
+.svc2__d--cream .svc2__trades {
+  color: var(--c-steel);
+}
+
+.svc2__bigger {
+  margin: var(--s-lg) 0 0;
+  max-width: 54ch;
+}
+
 .svc2__right .svc2__cta,
 .svc2__right .svc2__link {
   margin-top: var(--s-lg);

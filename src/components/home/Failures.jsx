@@ -23,26 +23,28 @@ import './Failures.css';
    reader hears the list's count and not "01" read out before each title. */
 /* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Home, What it costs you): each
    row's first sentence is the title, the rest the line. */
+/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Home, What it costs you): each
+   row's label is the title, its line the body. */
 const FAILURES = [
   {
     id: 'find',
-    statement: 'They search and find someone else.',
-    consequence: 'No site, or a site Google skips, and the job goes to the company it found instead.',
+    statement: 'Not in the Map Pack.',
+    consequence: "The search for your trade in your town lists three competitors, and you're not one of them.",
   },
   {
     id: 'call',
-    statement: "The ads run and the phone doesn't.",
-    consequence: "Money goes out every month, clicks land on a page that doesn't convert, and nobody can tell you why.",
+    statement: 'Ad spend without a cost per lead.',
+    consequence: 'Money goes out every month and nobody can say what a lead cost.',
   },
   {
     id: 'miss',
-    statement: 'You miss the call.',
-    consequence: "You're on a roof or under a sink. The caller tries the next number on the list.",
+    statement: 'The missed call.',
+    consequence: "You're on a job. The caller dials the next number on the list.",
   },
   {
     id: 'remember',
-    statement: 'They forget your name.',
-    consequence: 'Work with no mark on it is work the next customer never hears about.',
+    statement: 'No name on the work.',
+    consequence: "Every job you finish advertises someone else's brand, or nobody's.",
   },
 ];
 

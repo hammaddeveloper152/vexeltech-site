@@ -4,82 +4,78 @@
    2026-09-24 so /pricing's grid reads the same six items and the same calls
    rather than a second copy of them. */
 
-/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Services). The page renders each
-   card's title; the line under it is V2's and waits for the structure pass
-   (DESIGN.md, COPY V2, the gap list), as does Websites' `bigger`. Prices are
-   tokens: the page reads FIGURES, and `price` here is built from them. */
 import { FIGURES, money } from './pricing.js';
 
+/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Services): the promises, the six
+   items with their lines, the terms, the fit lines and the calls. `terms`
+   is V3's Terms line, shown after "Terms:"; it replaced `price` and
+   `turnaround`. Websites carries the trades line (`trades`, an H3 under the
+   promise) and `bigger`, both shown. Figures are tokens. */
 export const DISCIPLINES = [
   {
     id: 'branding',
     name: 'Branding',
-    promise:
-      'The mark a customer remembers after the job is done, designed by hand and shown to you before you pay.',
+    promise: 'A mark that holds up on the truck, the invoice and the search result.',
     cards: [
-      { title: 'Logo design', line: 'Five concepts on Basic, eight on Advance, each one drawn for your trade.' },
-      { title: 'Brand guideline', line: 'Colours, type and spacing written down, so the van, the invoice and the site match.' },
-      { title: 'Stationery', line: 'Business card, letterhead, envelope and email signature.' },
-      { title: 'Social kit', line: 'Profile marks, banners and cover images sized for every platform (Advance).' },
-      { title: 'Colour variations', line: 'The mark in full colour, one colour and reversed (Advance).' },
-      { title: 'Files', line: 'Every format, including the ones your printer and your sign shop will ask for.' },
+      { title: 'Logo design', line: 'Five concepts on Basic, eight on Advance.' },
+      { title: 'Brand guidelines', line: 'Colour, type and spacing, written down.' },
+      { title: 'Stationery', line: 'Business card, letterhead, envelope, email signature.' },
+      { title: 'Social kit', line: 'Profile marks, banners and covers, sized per platform. Advance.' },
+      { title: 'Colour variations', line: 'Full colour, one colour, reversed. Advance.' },
+      { title: 'Files', line: 'Every format your printer, sign shop and web team will ask for.' },
     ],
-    price: `Basic ${money(FIGURES.brandingBasic)}. Advance ${money(FIGURES.brandingAdvance)}.`,
-    turnaround: 'One to two business days.',
-    fit: "You have a business and no mark, or a mark you're embarrassed to put on the truck.",
+    terms: `Basic ${money(FIGURES.brandingBasic)}. Advance ${money(FIGURES.brandingAdvance)}. One to two business days.`,
+    fit: "You're quoting jobs under a name with no mark, or a mark you wouldn't put on a truck.",
     call: { label: 'Get a custom quote', primary: true },
   },
   {
     id: 'websites',
     name: 'Websites',
-    promise:
-      'A site built for your business, live on your domain in four business days.',
+    promise: 'A conversion-focused site for your trade, live in four business days.',
+    trades: 'Plumber, HVAC, electrician, roofing, cleaning, dental and contractor website design.',
     cards: [
-      { title: 'Design', line: 'Up to six pages, laid out for your trade and your area, mobile first.' },
-      { title: 'Built to last', line: 'Fast, secure and simple to update. No platform fee to keep it online.' },
-      { title: 'Forms and calls', line: 'Quote and contact forms wired to your inbox, click to call, a booking link if you use one.' },
-      { title: 'Search', line: 'Titles, descriptions, sitemap and your Google Business Profile connected, so the site is found.' },
-      { title: 'Speed', line: 'Built to load in under two seconds on a phone, which Google rewards and callers notice.' },
-      { title: 'Care', line: 'Thirty days of changes and maintenance after launch, included.' },
+      { title: 'Six pages', line: 'Home, services, service area, about, reviews, contact. Structured for your trade.' },
+      { title: 'Mobile-first', line: 'Click to call, quote form and booking link above the fold on a phone.' },
+      { title: 'Speed', line: 'Core Web Vitals in the green. Fast pages rank and convert.' },
+      { title: 'Local search', line: 'Titles, schema, sitemap and Google Business Profile connected.' },
+      { title: 'Forms and tracking', line: 'Every call and form tracked to its source.' },
+      { title: 'Thirty days of maintenance', line: 'Changes and fixes after launch, included.' },
     ],
-    bigger: 'Online stores, customer portals, custom backends and apps are scoped and priced on the call.',
-    price: `${money(FIGURES.website)}, one price.`,
-    turnaround: 'Four business days from the day we have your content.',
-    fit: "You have no site, or a site nobody finds, or a site that looks like everyone else's.",
+    bigger: 'Stores, customer portals, custom backends and apps. Scoped and priced on the call.',
+    terms: `${money(FIGURES.website)}, one price. Four business days from the day we have your content. Domain, hosting and code in your name.`,
+    fit: "You have no site, a site that isn't in the Map Pack, or a site that gets traffic and no calls.",
     call: { label: 'Get a custom quote', primary: true },
   },
   {
     id: 'marketing',
     name: 'Marketing',
-    promise: 'Ads measured by one number, the calls they bring in.',
+    promise: 'Campaigns measured in cost per lead, not impressions.',
     cards: [
-      { title: 'Landing page first', line: 'Ad spend goes to a page that converts before another dollar goes to ads.' },
-      { title: 'Google ads', line: 'Search campaigns for the jobs you want, in the zip codes you serve.' },
-      { title: 'Meta ads', line: 'Facebook and Instagram campaigns built for leads, with the creative made by us.' },
-      { title: 'SEO and AI search', line: 'The work that gets you found in Google and in the answers people now ask AI for.' },
-      { title: 'Tracking', line: 'Every call and form tied back to the ad that caused it, reported in plain language monthly.' },
-      { title: 'Social content', line: 'Posts and reels from your real jobs, scheduled and managed.' },
+      { title: 'Google Business Profile', line: 'Optimisation, posts, photos, review requests and responses. The Map Pack.' },
+      { title: 'Local Service Ads', line: 'Google Guaranteed setup and management, pay per lead.' },
+      { title: 'Google Ads', line: 'Search campaigns by trade and zip code. Conversion tracking from day one.' },
+      { title: 'Meta ads', line: 'Facebook and Instagram lead campaigns with creative from your real jobs.' },
+      { title: 'Local SEO and AI search', line: 'Service-area pages, citations, and the content answer engines cite.' },
+      { title: 'Reporting', line: 'Leads, cost per lead and booked jobs, monthly, in plain language.' },
     ],
-    price: 'Priced on the call, in writing before anything runs. Month to month.',
-    turnaround: 'Campaigns live within the first week after the page is ready.',
-    fit: "You're spending on ads and can't say what they returned, or you've never spent and want to start right.",
+    terms: 'Priced on the call, in writing before anything runs. Month to month.',
+    fit: "You're spending on ads and can't name your cost per lead, or you're ready to start and want it set up right.",
     call: { label: 'Ask a question', primary: false },
   },
   {
     id: 'automation',
     name: 'Automation',
-    promise: 'The jobs that eat your week, done without you.',
+    promise: "The follow-up that runs while you're on the job.",
     cards: [
-      { title: 'Missed call text back', line: "A caller you couldn't answer gets a text in under a minute, with a way to book." },
-      { title: 'Quotes and follow-ups', line: 'Quotes go out from a template you approve, and chase themselves until answered.' },
-      { title: 'Invoices and reminders', line: 'Sent on completion, reminded on schedule, paid online.' },
-      { title: 'Booking and routing', line: 'Jobs land on the right calendar, the right person, with the address and the notes.' },
-      { title: 'AI agents', line: 'Answer the questions you answer ten times a day, on your site and your channels, on your rules.' },
-      { title: 'Workflows', line: 'The tools you already use, connected so nobody retypes anything.' },
+      { title: 'Missed-call text-back', line: 'A text to every unanswered caller within sixty seconds, with a booking link.' },
+      { title: 'Quote follow-up', line: "Quotes sent from your template, with a follow-up cadence until they're answered." },
+      { title: 'Invoice reminders', line: 'Sent on completion, chased on schedule, paid online.' },
+      { title: 'Online booking', line: 'Jobs land on the right calendar with the address and notes.' },
+      { title: 'Review requests', line: 'A request after every finished job, routed to Google.' },
+      { title: 'AI agents', line: 'Answer, qualify and book from your site and your channels, on your rules.' },
     ],
-    price: 'Priced on the call, in writing before any work starts.',
-    turnaround: 'Scoped per workflow. Most run within two weeks.',
-    fit: 'You or your staff send the same message, quote or reminder every day by hand.',
+    terms: 'Priced per workflow, in writing before any work starts. Most workflows run within two weeks.',
+    fit: 'Your team sends the same text, quote or reminder by hand every day.',
     call: { label: 'Ask a question', primary: false },
   },
 ];

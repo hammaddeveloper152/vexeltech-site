@@ -2,8 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Brush from '../../components/site/Brush.jsx';
 import Shell from './Shell.jsx';
-import { CallBand } from './parts.jsx';
-import PlanBuilder from './PlanBuilder.jsx';
 import Faq from '../../components/home/Faq.jsx';
 import { DISCIPLINES } from '../../content/services.js';
 import { FIGURES, money } from '../../content/pricing.js';
@@ -40,8 +38,8 @@ const GRID = {
     sub: 'one time',
   },
   websites: { price: money(FIGURES.website), sub: 'one time, four business days', picked: true },
-  marketing: { price: 'On the call', sub: 'monthly, after a call' },
-  automation: { price: 'On the call', sub: 'per workflow, after a call' },
+  marketing: { price: 'On the call', sub: 'monthly, no contract' },
+  automation: { price: 'Per workflow', sub: 'one time per workflow' },
 };
 
 const COLUMNS = DISCIPLINES.map((d) => ({
@@ -61,67 +59,70 @@ const COLUMNS = DISCIPLINES.map((d) => ({
 
 /* The founder's table, verbatim, in the grid's column order. */
 /* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, What's in every project). */
+/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Pricing, What's in every
+   project). */
 const ROWS = [
-  ['Turnaround', ['1 to 2 days', '4 days', 'first week', 'per workflow']],
-  ['Revisions', ['as many as it takes, before files', 'as many as it takes, before launch', 'ongoing', 'ongoing']],
-  ['Ownership', ['files, yours', 'domain and code, yours', 'ad accounts, yours', 'tools and access, yours']],
-  ['Support after launch', ['30 days', '30 days', 'monthly', 'monthly']],
-  ['Payment', ['flat, on approval', 'flat, on approval', 'monthly', 'per workflow']],
+  ['Turnaround', ['1 to 2 business days', '4 business days', 'live in week one', 'per workflow']],
+  ['Revisions', ['unlimited before files', 'unlimited before launch', 'ongoing', 'ongoing']],
+  ['Ownership', ['files', 'domain, hosting, code', 'ad accounts and data', 'tools and access']],
+  ['After launch', ['30 days', '30 days', 'monthly', 'monthly']],
+  ['Payment', ['on approval', 'on approval', 'monthly', 'on approval']],
 ];
 
 /* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Questions). The $700
    and the $299 are the tokens; the $15 is a domain's cost, not a price of
    ours. */
+/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Questions), in V3's
+   order. */
 const QUESTIONS = [
   {
-    id: 'whole',
-    q: `Is ${money(FIGURES.website)} really the whole price?`,
-    a: "Yes. Design, code, testing, launch on your domain and thirty days of changes. The only thing not in it is a domain name if you don't own one yet, about $15 a year, in your name.",
+    id: 'cost',
+    q: 'How much does a small business website cost?',
+    a: `${money(FIGURES.website)}, flat, for six pages, four business days and thirty days of maintenance. A domain name, if you don't own one, is about $15 a year in your name.`,
   },
   {
     id: 'need',
     q: 'What do you need from me?',
-    a: "Your services and the areas you cover, photos of real jobs, your logo if you have one, and the things you'd say to a customer on the phone. We take it from there.",
+    a: 'Your services and service area, photos of real jobs, your logo if you have one, and the things you say to customers on the phone.',
   },
   {
     id: 'call',
     q: 'What does "on the call" mean?',
-    a: "Marketing and automation depend on your ad spend, your area and the tools you use, so we price them after a fifteen-minute call. You get the number in writing before anything starts.",
+    a: 'Marketing and automation depend on your ad spend, your area and your tools. We price them after a fifteen-minute call and confirm in writing before anything starts.',
   },
   {
     id: 'deposit',
     q: 'Do you take a deposit?',
-    a: 'No. You see concepts, or the site design, before you pay. The invoice comes after you approve the build.',
+    a: 'No. You approve concepts or the site design first. The invoice follows approval.',
   },
   {
     id: 'logo',
     q: 'What if I only want the logo?',
-    a: `Then that's what you buy. Basic branding is ${money(FIGURES.brandingBasic)} on its own.`,
+    a: `Basic branding is ${money(FIGURES.brandingBasic)} on its own.`,
   },
 ];
 
 export default function PricingPage() {
   return (
     <Shell
-      title="Pricing | VexelTech"
+      title={`Website design pricing: ${money(FIGURES.website)} flat, branding from ${money(FIGURES.brandingBasic)} | VexelTech`}
       path="/pricing"
-      description={`Flat prices on branding and websites. ${money(FIGURES.brandingBasic)} to ${money(FIGURES.brandingAdvance)} for branding, ${money(FIGURES.website)} for a six-page website, marketing and automation priced on a call.`}
+      description={`How much does a small business website cost? ${money(FIGURES.website)} flat for six pages in four business days. Branding ${money(FIGURES.brandingBasic)} or ${money(FIGURES.brandingAdvance)}. Marketing and automation by written quote.`}
     >
       {/* 1. THE HEAD. */}
       <header className="vt pr-head">
         <div className="pr__in">
           <p className="pr-head__eyebrow lbl">Pricing</p>
           <h1 className="pr-head__h" id="pg-h">
-            {/* COPY V2, 2026-10-01. The page's one highlighted word moved
-                from "needs" (not in V2) to "written". */}
-            Flat prices on the build. A{' '}
-            <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">written</Brush> number on
-            everything else.
+            {/* COPY V3, 2026-10-01. The page's one highlighted word moved
+                from "written" (not in V3) to "Flat-rate". */}
+            <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">Flat-rate</Brush> website
+            design and branding. Marketing and automation by quote.
           </h1>
           <p className="pr-head__lead">
-            Branding and websites are fixed prices. Marketing and automation depend on your market and
-            your tools, so they&apos;re priced on a call and confirmed in writing before anything
-            starts.
+            A six-page website is {money(FIGURES.website)}. Branding is {money(FIGURES.brandingBasic)} or{' '}
+            {money(FIGURES.brandingAdvance)}. Marketing and automation depend on your market, your ad
+            spend and your tools, so they&apos;re priced on a call and confirmed in writing.
           </p>
         </div>
       </header>
@@ -141,9 +142,9 @@ export default function PricingPage() {
                 <span className="pr-col__glow" aria-hidden="true" />
                 <span className="pr-col__bg" aria-hidden="true" />
                 <p className="pr-col__tag-row">
-                  {/* COPY V2, 2026-10-01: "Flat price" replaces "Most picked",
-                      a claim about buyers nothing evidenced. */}
-                  {c.picked ? <span className="pr-col__tag">Flat price</span> : null}
+                  {/* COPY V3, 2026-10-01: "Flat rate" (V2's "Flat price"
+                      replaced "Most picked", a claim nothing evidenced). */}
+                  {c.picked ? <span className="pr-col__tag">Flat rate</span> : null}
                 </p>
                 <h3 className="pr-col__name">{c.name}</h3>
                 <p className="pr-col__line">{c.line}</p>
@@ -175,6 +176,11 @@ export default function PricingPage() {
               </li>
             ))}
           </ul>
+          {/* THE FOOTNOTE, COPY V3, 2026-10-01: under the grid, in the panel. */}
+          <p className="pr-grid__note">
+            Marketing scales with ad spend and service area. Automation scales with the number of
+            workflows and the tools they connect.
+          </p>
         </div>
       </section>
 
@@ -237,18 +243,12 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* 4. NOT SURE? The Plan Builder as built, with the founder's heading. */}
-      <PlanBuilder heading="Four questions, then a plan with a number on it." />
+      {/* THE PLAN BUILDER AND THE CLOSING CALL CAME OFF, 2026-10-01: COPY
+          V3 gives them no lines (DESIGN.md, COPY V3). */}
 
-      {/* 5. QUESTIONS. The home accordion, the founder's four. */}
+      {/* 4. QUESTIONS. The accordion, V3's five. Then the form from the
+             Shell. */}
       <Faq items={QUESTIONS} id="pr-faq" />
-
-      {/* 6. The closing call, then the form from the Shell. */}
-      {/* The founder's line with its question mark, 2026-09-24. */}
-      <CallBand
-        heading="Not sure which one you need?"
-        note="Tell us about the business and we'll say which of these we'd start with. Sometimes it's the cheapest one on this page."
-      />
     </Shell>
   );
 }

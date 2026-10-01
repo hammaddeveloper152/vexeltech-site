@@ -51,18 +51,21 @@ import Brush from '../../components/site/Brush.jsx';
 export default function ServicesPage() {
   return (
     <Shell
-      title="Services | VexelTech"
+      title="Contractor website design, local SEO, ads and automation | VexelTech"
       path="/services"
-      description="Branding, websites, marketing and automation for plumbers, HVAC, electricians, roofers, cleaners, dentists and contractors. One team, one invoice."
+      description="Plumber, HVAC, electrician, roofing, cleaning and dental website design, Google Business Profile and Local Service Ads management, missed-call text-back and booking automation."
     >
-      {/* The page's one highlighted word, 2026-09-24: `.hl`, tokens.css. */}
+      {/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Services, and Metadata).
+          The page's one highlighted word is the H1's last, "contractors"
+          (it was "do" in "What we do"). */}
       <PageHead
         title={
           <>
-            What we <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">do</Brush>
+            Website design, local SEO, ads and automation for{' '}
+            <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">contractors</Brush>
           </>
         }
-        lead="Four disciplines, built by one team so they work as one system. Start with the one that hurts."
+        lead="Four disciplines, built to work as one system. Start with the one that's costing you jobs."
       />
 
       {/* NOT INSIDE `Section`, 2026-09-23. (Since 2026-09-24 the cream
@@ -80,7 +83,7 @@ export default function ServicesPage() {
       {/* TALK TO US: the closing call. */}
       <CallBand
         heading="Which one is costing you most?"
-        note="Fifteen minutes on the phone and we'll tell you what we'd fix first. It isn't always the expensive one."
+        note="Fifteen minutes on the phone and a written number. Usually it's not the expensive one."
       />
     </Shell>
   );

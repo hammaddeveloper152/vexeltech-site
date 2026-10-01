@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { IconArrowUpRight } from '../site/Icons.jsx';
 import { useReveal } from './hooks.js';
 import { FACTS } from '../../content/facts.js';
 import './About.css';
@@ -31,14 +29,12 @@ import './About.css';
    The copy is the founder's third sentence, unchanged. The section heading is
    still visually hidden and still a placeholder: a visible heading above a
    statement would be a fifth thing competing for one job. */
-/* COPY V2.1, 2026-10-01 (VEXELTECH-COPY.md, Home, Who we are). The link
-   label has no V2 line and stays until the structure pass (DESIGN.md, COPY
-   V2, the gap list). */
+/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Home, Who we are). The "How we
+   work" link has no V3 line and is removed. */
 const COPY = {
-  statement: 'One team for the whole job.',
+  statement: 'Websites, ads and automation for the trades.',
   support:
-    'VexelTech builds the website, runs the ads and sets up the automation behind local service businesses across the US. One brief, one team, one invoice, and a named person who picks up when you call.',
-  link: 'How we work',
+    'VexelTech builds the website people land on, the campaigns that send them there, and the follow-up that catches the call. One team, one brief, one invoice, and a named person on the phone.',
 };
 
 /* THE FOUR ROWS: the founder's words, verbatim, in content/facts.js since
@@ -68,12 +64,6 @@ export default function About() {
           <p className="about__support" style={{ '--i': 2 }}>
             {COPY.support}
           </p>
-
-          <Link className="about__link" to="/about-us" style={{ '--i': 3 }}>
-            {COPY.link}
-            {/* Decorative: the label is the link's accessible name. */}
-            <IconArrowUpRight className="i about__go" />
-          </Link>
         </div>
 
         {/* THE MASCOT IS GONE, 2026-09-25 (the founder's launch batch), and

@@ -4,8 +4,8 @@
    The four tags a paid click lands with are read from the landing URL once,
    at load, and kept in sessionStorage for the rest of the visit, so a reader
    who lands on /pricing from an ad and sends the form from /contact-us three
-   pages later still sends the tags the ad put on the URL. Both forms (the
-   footer form and the Plan Builder) post them as hidden fields.
+   pages later still sends the tags the ad put on the URL. The form posts
+   them as hidden fields (the Plan Builder did too, until 2026-10-01).
 
    A landing URL WITH tags replaces what is stored; a URL without them leaves
    it alone, because every internal page after the landing page has none.

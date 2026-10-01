@@ -82,9 +82,9 @@ function Marquee() {
 export default function ContactPage() {
   return (
     <Shell
-      title="Contact | VexelTech"
+      title="Get a custom quote | VexelTech"
       path="/contact-us"
-      description="Fifteen minutes on the phone and a written number. Tell us about your business."
+      description="Tell us your trade and your area. A written number within one business day."
       meta={false}
     >
       <section className="vt ct-hero" aria-labelledby="ct-h">
@@ -94,9 +94,10 @@ export default function ContactPage() {
         <Marquee />
         <p className="ct-hero__line">
           <IconArrowDownRight className="i ct-hero__arrow" />
+          {/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Contact, Lead). */}
           <span>
-            Tell us about the business and what you need. A person replies within one business day
-            with a number or a question.
+            Tell us the trade, the area and what&apos;s not working. A written number within one
+            business day.
           </span>
         </p>
       </section>

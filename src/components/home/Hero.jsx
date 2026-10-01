@@ -339,6 +339,11 @@ export default function Hero() {
             announced as they cut would be a screen reader talking over a film
             it cannot see. (The name is the visible line since 2026-09-25,
             below.) */}
+        {/* THE EYEBROW, COPY V3, 2026-10-01: 12px mono uppercase in
+            steel-lift, above the headline, from 1024 only (Hero.css). */}
+        <p className="hero__eyebrow lbl">
+          Websites, branding, marketing and automation for home service businesses
+        </p>
         <h1 className="hero__headline" id="hero-h">
           {/* THE NAME IS THE VISIBLE LINE, 2026-09-25 (the founder's content
               audit): the h1 reads what it shows. It was the final line in a
@@ -358,11 +363,8 @@ export default function Hero() {
             block's bottom, and falls to nothing at 62% of the width. See
             `.hero__support::before`. Nothing about the stack's layout changes. */}
         <div className="hero__support">
-          {/* COPY V2.1, 2026-10-01 (VEXELTECH-COPY.md, Home, Hero). */}
-          <p className="hero__sub">
-            Websites, branding, marketing and automation for local service businesses. One team,
-            one invoice.
-          </p>
+          {/* The sub is gone, 2026-10-01: V3 gives the hero none; the
+              eyebrow above the headline replaces it. */}
 
           {/* Sentence case in the SOURCE, not a text-transform. Case is copy. */}
           <div className="hero__actions">
@@ -382,6 +384,10 @@ export default function Hero() {
             Websites {money(FIGURES.website)} flat. Branding from {money(FIGURES.brandingBasic)}.
             Live in four business days.
           </p>
+
+          {/* THE PROMISE LINE, COPY V3, 2026-10-01: under the calls, 12px
+              mono in steel-lift, at every width. */}
+          <p className="hero__promise">A written number within one business day.</p>
 
           {/* Only the surface mode, which has no film, keeps the note (see
               `note` above). */}

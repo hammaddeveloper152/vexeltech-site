@@ -172,7 +172,7 @@
   text-shadow: 0 2px 24px rgb(0 0 0 / 60%);
 }
 
-.hero:not([data-mode='surface']) :is(.hero__sub, .hero__price, .hero__note, .hero__cta--line) {
+.hero:not([data-mode='surface']) :is(.hero__eyebrow, .hero__price, .hero__promise, .hero__note, .hero__cta--line) {
   text-shadow: 0 1px 12px rgb(0 0 0 / 60%);
 }
 
@@ -252,16 +252,31 @@
      1280       185px       27 / 36    18 / 28
      1920       287.8px     40 / 52    18 / 28
 
-   Satoshi: the sub EXPLAINS. */
-.hero__sub {
-  margin: 0 0 var(--s-lg);
-  max-width: 60ch;
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  /* BONE over the film, with the copy zone and its own shadow under it. The
-     walked ratio is in DESIGN.md. */
+   The sub is gone (COPY V3, 2026-10-01); the eyebrow above the headline
+   and the promise line under the calls take its place. */
+
+/* THE EYEBROW, COPY V3: the site's mono label (`.lbl`, 12px uppercase),
+   with the copy's soft shadow, from 1024 only. IN BONE, NOT STEEL-LIFT (the
+   founder, 2026-10-01, when the conflict was raised): it stands higher up
+   the film than any other line, where the scrim is lightest, and steel-lift
+   measured 1.95:1 at its worst pixel and 2.5:1 at its 1st percentile at
+   1280 (.measure/filmhero.mjs). Bone: 1st percentile 5.78:1 or better on
+   every frame at 1280 and 1536, worst pixel 4.21:1 at 1280 on the 2s frame,
+   an edge pixel like the headline's own 4.42. */
+.hero__eyebrow {
+  display: none;
+  margin: 0 0 var(--s-md);
   color: var(--c-bone);
-  text-wrap: pretty;
+}
+
+/* THE PROMISE LINE, COPY V3: 12px mono in steel-lift, sentence case, under
+   the calls at every width. */
+.hero__promise {
+  margin: var(--s-md) 0 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--c-steel-lift);
 }
 
 /* ---- Actions ------------------------------------------------------------ */
@@ -403,10 +418,8 @@
 }
 
 @media (min-width: 1024px) {
-  .hero__sub {
-    max-width: 44ch;
-    font-size: var(--t-h3-size);
-    line-height: 36px; /* 1.333, on the 4px baseline */
+  .hero__eyebrow {
+    display: block;
   }
 
   .hero {
@@ -416,14 +429,6 @@
 
   .hero__headline {
     font-size: min(calc((100vw - 2 * var(--s-2xl)) / 6.227), calc((100svh - 360px) / 1.76));
-  }
-}
-
-@media (min-width: 1920px) {
-  .hero__sub {
-    max-width: 32ch;
-    font-size: var(--t-quote-size);
-    line-height: var(--t-quote-line);
   }
 }
 
@@ -528,11 +533,6 @@
   width: auto;
 }
 
-.hero[data-mode] .hero__sub {
-  order: 1;
-  margin: 0 0 var(--s-md);
-}
-
 .hero[data-mode] .hero__price {
   order: 2;
   margin: 0 0 var(--s-md);
@@ -544,8 +544,12 @@
   margin: 0;
 }
 
-.hero[data-mode] .hero__note {
+.hero[data-mode] .hero__promise {
   order: 4;
+}
+
+.hero[data-mode] .hero__note {
+  order: 5;
 }
 
 /* ---- Below 1024: the mobile pass, unchanged ---------------------------- */
@@ -565,7 +569,7 @@
     pointer-events: none;
   }
 
-  .hero[data-mode] :is(.hero__sub, .hero__cta--line) {
+  .hero[data-mode] .hero__cta--line {
     display: none;
   }
 

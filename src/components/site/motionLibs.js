@@ -5,7 +5,9 @@
    the page has painted:
 
      /          ScrollTrigger and Lenis (WordBand, RouteBand, smoothScroll.js)
-     /pricing   GSAP core only (the Plan Builder's tweens)
+
+   /pricing loaded GSAP core for the Plan Builder's tweens until COPY V3
+   (2026-10-01) took the builder off; `loadGsap` stays as loadScroll's part.
 
    Every other route fetches none of them. Nothing a reader sees first waits
    on them: the scrubs and tweens start a frame or two after they land, and

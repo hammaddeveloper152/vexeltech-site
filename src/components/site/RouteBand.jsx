@@ -41,13 +41,13 @@ import '../../styles/route.css';
    The five stops are the About brief's, the user's own copy; the five lines
    are the retired Process's four and the user's line for stop 05. */
 
-/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Home, How it works): four
-   steps. Stop 05 has no V2 line and is gone. */
+/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Home, How it works): four
+   steps, each titled by its first word. */
 const STOPS = [
-  ['01', 'A fifteen-minute call.'],
-  ['02', 'You see it before you pay.'],
-  ['03', 'We build it.'],
-  ['04', "It's yours."],
+  ['01', 'Call.'],
+  ['02', 'Approve.'],
+  ['03', 'Launch.'],
+  ['04', 'Own.'],
 ];
 
 /* The margin label is Marginalia.jsx's since 2026-09-25; the `marg` prop is

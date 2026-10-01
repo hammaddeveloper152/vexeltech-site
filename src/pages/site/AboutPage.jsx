@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { IconArrowUpRight } from '../../components/site/Icons.jsx';
 import Shell from './Shell.jsx';
 import Brush from '../../components/site/Brush.jsx';
 import '../../styles/aboutpage.css';
@@ -23,32 +21,20 @@ import '../../styles/light.css';
      3  Definition   cream   one centred sentence under its mono label
      4  Contact      cream   clients and partners, a label, a line, the email
 
+   SINCE COPY V3 (2026-10-01) ONLY BLOCK 1 IS BUILT: 2, 3 and 4 had no V3
+   lines and came off.
+
    Taken off: Where we come from, What we build it around (the cards), Who we
    are for, Key facts, Questions, the founder's note, the closing call and the
    contact form. The footer block closes the page without the form (Shell's
    `footerForm={false}`). The history of the page is in git and DESIGN.md. */
 
-const EMAIL = 'info@vexeltechsolutions.com';
-
-/* The founder's list: each discipline and, beside it, an example of it. */
-const DO = [
-  ['Branding', 'Logos and stationery'],
-  ['Websites', 'Ecommerce stores'],
-  ['Marketing', 'Google and Meta ads'],
-  ['Automation', 'Quotes, invoices and follow-ups'],
-];
-
-const CONTACTS = [
-  { id: 'clients', label: 'Clients', line: 'Want a quote or a straight answer first?' },
-  { id: 'partners', label: 'Partners', line: 'Agencies and referrers who want a build partner.' },
-];
-
 export default function AboutPage() {
   return (
     <Shell
-      title="About us | VexelTech"
+      title="About VexelTech: websites, ads and automation for the trades"
       path="/about-us"
-      description="VexelTech builds the website, runs the ads and sets up the automation behind US local service businesses, as one team."
+      description="One team for the website, the campaigns and the follow-up behind US home service businesses. Flat prices, four-day builds, everything in your name."
       footerForm={false}
       light
     >
@@ -56,79 +42,29 @@ export default function AboutPage() {
       <section className="vt ab3-hero" aria-labelledby="ab3-hero-h">
         <div className="ab3__in">
           <h1 className="ab3-hero__h" id="ab3-hero-h">
-            {/* The page's one highlighted word: the swash (Brush.jsx). */}
-            We build the system that makes the{' '}
+            {/* COPY V3, 2026-10-01. The page's one highlighted word, the
+                swash (Brush.jsx), moved from "phone" to "called." */}
+            Found, trusted,{' '}
             <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">
-              phone
-            </Brush>{' '}
-            ring.
+              called.
+            </Brush>
           </h1>
           <div className="ab3-hero__cols">
-            {/* COPY V2.1, 2026-10-01 (VEXELTECH-COPY.md, About us, Hero
-                statement): one line; the second paragraph has no V2 line. */}
+            {/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, About us, Hero
+                statement). */}
             <p className="ab3-hero__p">
-              The site people land on, the ads that send them there, and the follow-up that catches
-              the call. One team builds all three, so they work as one.
+              The site a customer lands on, the campaigns that send them there, and the follow-up
+              that catches the call. One team builds all three.
             </p>
           </div>
         </div>
       </section>
 
-      {/* 2. WHAT WE DO, an inset black block on the light page. */}
-      <section className="vt ab3-do" aria-labelledby="ab3-do-h">
-        <div className="ab3__in">
-          <h2 className="ab3-do__h" id="ab3-do-h">
-            What we do
-          </h2>
-          <ul className="ab3-do__list">
-            {DO.map(([name, example]) => (
-              <li className="ab3-do__row" key={name}>
-                <span className="ab3-do__name">{name}</span>
-                <span className="ab3-do__ex">{example}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="ab3-do__more">
-            <Link className="ab3-do__link" to="/#how-it-works">
-              See how a project runs, step by step
-              <IconArrowUpRight className="i i--sm ab3-do__go" />
-            </Link>
-          </p>
-        </div>
-      </section>
-
-      {/* 3. THE DEFINITION. The mono label is the section's heading. */}
-      <section className="vt ab3-def" aria-labelledby="ab3-def-h">
-        <div className="ab3__in ab3-def__in">
-          <h2 className="ab3-def__k lbl" id="ab3-def-h">
-            Founded 2026
-          </h2>
-          <p className="ab3-def__p">
-            VexelTech Solutions is a technology company that builds the website, the marketing and the
-            automation behind US local service businesses, at flat prices from $299.
-          </p>
-        </div>
-      </section>
-
-      {/* 4. CONTACT. */}
-      <section className="vt ab3-contact" aria-labelledby="ab3-contact-h">
-        <div className="ab3__in">
-          <h2 className="skip-h" id="ab3-contact-h">
-            Contact
-          </h2>
-          <div className="ab3-contact__cols">
-            {CONTACTS.map(({ id, label, line }) => (
-              <div className="ab3-contact__col" key={id}>
-                <p className="ab3-contact__k lbl">{label}</p>
-                <p className="ab3-contact__line">{line}</p>
-                <a className="ab3-contact__email" href={`mailto:${EMAIL}`}>
-                  {EMAIL}
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* WHAT WE DO, THE DEFINITION AND CONTACT CAME OFF, 2026-10-01:
+          COPY V3 gives them no lines. V3's About sections (Where we come
+          from, What we build it around, Who we are for, How we work with
+          you, Key facts, Questions, the closing call) wait for the
+          structure pass (DESIGN.md, COPY V3). */}
     </Shell>
   );
 }

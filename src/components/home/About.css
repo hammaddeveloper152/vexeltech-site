@@ -64,28 +64,7 @@
   text-wrap: pretty;
 }
 
-.about__link {
-  display: inline-flex;
-  align-items: center;
-  justify-self: start;
-  gap: var(--s-sm);
-  /* BUILD-LAW: 48px minimum tap target, padding counts toward it. */
-  min-height: 48px;
-  transition:
-    transform var(--d-press) var(--ease-reveal),
-    opacity var(--d-press) var(--ease-reveal);
-}
-
-/* The hover is opacity alone: the 1px nudge came off, 2026-09-21. */
-@media (hover: hover) and (pointer: fine) {
-  .about__link:hover {
-    opacity: var(--hover-opacity);
-  }
-}
-
-.about__link:active {
-  transform: scale(0.97);
-}
+/* The "How we work" link came off, 2026-10-01 (COPY V3), with its rules. */
 
 
 /* ---- THE TILES, 2026-09-25 (the founder's life pass) ----------------------
@@ -142,16 +121,14 @@
 @media (prefers-reduced-motion: no-preference) {
   .about__inner[data-revealed='false'] .about__rows,
   .about__inner[data-revealed='false'] .about__statement,
-  .about__inner[data-revealed='false'] .about__support,
-  .about__inner[data-revealed='false'] .about__link {
+  .about__inner[data-revealed='false'] .about__support {
     opacity: 0;
     transform: translateY(var(--s-sm));
   }
 
   .about__rows,
   .about__statement,
-  .about__support,
-  .about__link {
+  .about__support {
     transition:
       opacity var(--d-panel) var(--ease-reveal),
       transform var(--d-panel) var(--ease-reveal);
@@ -164,24 +141,13 @@
 @media (prefers-reduced-motion: reduce) {
   .about__inner[data-revealed='false'] .about__rows,
   .about__inner[data-revealed='false'] .about__statement,
-  .about__inner[data-revealed='false'] .about__support,
-  .about__inner[data-revealed='false'] .about__link {
+  .about__inner[data-revealed='false'] .about__support {
     opacity: 0;
   }
 
   .about__rows,
   .about__statement,
-  .about__support,
-  .about__link {
+  .about__support {
     transition: opacity var(--d-panel) var(--ease-reveal);
-  }
-
-  .about__link:hover {
-    opacity: var(--hover-opacity);
-    transform: none;
-  }
-
-  .about__link:active {
-    transform: none;
   }
 }
