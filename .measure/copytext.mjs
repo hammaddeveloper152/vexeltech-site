@@ -24,7 +24,9 @@
      - repeats are split (V3): ALLOWED where every page's copy of the
        sentence sits in the shared footer, a button or link, the facts block
        (home and Contact), the closing call (home and Services) or a margin
-       label; FLAGGED otherwise.
+       label; FLAGGED otherwise. Also ALLOWED (the founder, 2026-10-02): a
+       sentence that sits in a pricing "Full list" panel (.pr-col__full),
+       which repeats the Services item lines by design.
      - every $ figure, against 299, 449, 700, 999, 150, 15 and 300
      - exclamation marks
 
@@ -66,6 +68,7 @@ const b = await puppeteer.launch({ headless: 'new', args: ['--autoplay-policy=no
 const texts = {};
 const meta = {};
 const shared = {};
+const fullList = {};
 for (const route of [...PUBLIC, ...LEGAL]) {
   const p = await b.newPage();
   p.on('console', (m) => m.type() === 'error' && errors.push(`${route}: ${m.text()}`));
@@ -93,6 +96,9 @@ for (const route of [...PUBLIC, ...LEGAL]) {
      the code did not do it.) */
   texts[route] = route === '/' ? `${t}\n${HERO_LINES.join('\n')}` : t;
   shared[route] = await p.evaluate((sel) => [...document.querySelectorAll(sel)].map((e) => e.innerText).join('\n'), SHARED);
+  /* Every pricing Full list panel, open or not (textContent reads a hidden
+     panel too). */
+  fullList[route] = await p.evaluate(() => [...document.querySelectorAll('.pr-col__full')].map((e) => e.textContent).join('\n'));
   meta[route] = await p.evaluate(() => `${document.title}
 ${document.querySelector('meta[name="description"]')?.content || ''}`);
   fs.writeFileSync(path.join(OUT, `${route.replace(/\//g, '_') || '_home'}.txt`), t);
@@ -132,7 +138,7 @@ for (const route of [...PUBLIC, ...LEGAL]) {
 report.repeatsAllowed = [];
 for (const [s, routes] of seen) {
   if (routes.length < 2) continue;
-  const ok = routes.every((r) => shared[r].includes(s));
+  const ok = routes.every((r) => shared[r].includes(s)) || (routes.includes('/pricing') && fullList['/pricing'].includes(s));
   (ok ? report.repeatsAllowed : report.repeats).push({ s, routes });
 }
 report.consoleErrors = errors;

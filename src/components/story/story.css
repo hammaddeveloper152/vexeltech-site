@@ -463,19 +463,29 @@
   background: var(--c-cream);
 }
 
+/* 140px below 1024; 180px from 1024 (the two fixes, 2026-10-02: about 60%
+   of the tile's height at 1280). The keyline scales with the drawing: 3
+   units on the 280 drawing is 1.5px at 140 and about 1.9px at 180, the
+   connectors 4 units. */
 .gd__scene {
   display: block;
   width: 140px;
   height: 140px;
 }
 
+@media (min-width: 1024px) {
+  .gd__scene {
+    width: 180px;
+    height: 180px;
+  }
+}
+
 .gd__scene path,
 .gd__scene circle {
   stroke: var(--c-asphalt);
-  stroke-width: 1.5px;
+  stroke-width: 3;
   stroke-linejoin: round;
   stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
 }
 
 .gd__scene .iso-t {
@@ -500,7 +510,7 @@
 
 .gd__scene .iso-arc {
   fill: none;
-  stroke-width: 2px;
+  stroke-width: 4;
 }
 
 .gd__scene .iso-dot {
@@ -796,6 +806,49 @@
 }
 
 .eb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* THE PHONES (the two fixes, 2026-10-02): three frames, each the hairline
+   frame with a 12px radius at 390:844, 24px apart and centred across the
+   content width from 768 (280px each at 1280); below 768 a sideways swipe,
+   each 70% of the width so the second peeks, snapping. */
+.eb-phones {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 70%;
+  gap: 24px;
+  margin: 0;
+  padding: 0 0 var(--s-sm);
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+}
+
+@media (min-width: 768px) {
+  .eb-phones {
+    grid-auto-columns: minmax(0, 280px);
+    justify-content: center;
+    overflow: visible;
+    padding-bottom: 0;
+  }
+}
+
+.eb-phone {
+  scroll-snap-align: start;
+  overflow: hidden;
+  aspect-ratio: 390 / 844;
+  border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+  border-radius: 12px;
+}
+
+.eb-phone img {
   display: block;
   width: 100%;
   height: 100%;

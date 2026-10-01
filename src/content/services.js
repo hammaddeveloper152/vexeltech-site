@@ -17,9 +17,12 @@ import { FIGURES, money } from './pricing.js';
 
    `image` (the five fixes, 2026-10-02): the discipline's EVIDENCE BAND, a
    real 16:10 image under its promise (components/story/EvidenceBand.jsx).
-   null renders nothing and the section is list-only. Websites has the
-   Zions Caregivers site's second screen (not a Recent work image: BUILD-LAW
-   rule 0); Branding, Marketing and Automation wait for real material. */
+   null renders nothing and the section is list-only. An image is `{ src,
+   src720, alt }` (one 16:10 image) or `{ phones: [{ src, alt }] }` (phone
+   captures side by side). Websites has three phone captures (the two fixes,
+   2026-10-02: a phone capture and a desktop capture of the same site are
+   different images under BUILD-LAW rule 0); Branding, Marketing and
+   Automation wait for real material. */
 export const DISCIPLINES = [
   {
     id: 'branding',
@@ -53,9 +56,11 @@ export const DISCIPLINES = [
     bigger: 'Stores, customer portals, custom backends and apps. Scoped and priced on the call.',
     terms: `${money(FIGURES.website)}, one price. Four business days from the day we have your content. Domain, hosting and code in your name.`,
     image: {
-      src: '/work/band-websites.jpg',
-      src720: '/work/band-websites-720.jpg',
-      alt: 'The Zions Caregivers website, its second screen.',
+      phones: [
+        { src: '/work/baseline-books-phone.jpg', alt: 'The Baseline Bookkeeping website on a phone.' },
+        { src: '/work/artiora-phone.jpg', alt: 'The ARTIORA Luxury Villa website on a phone.' },
+        { src: '/work/onesix-phone.jpg', alt: 'The OneSix website on a phone.' },
+      ],
     },
     fit: 'You have no site, a site nobody finds, or a site that gets traffic and no enquiries.',
     call: { label: 'Get a custom quote', primary: true },

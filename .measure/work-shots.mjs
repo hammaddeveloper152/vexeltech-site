@@ -7,17 +7,15 @@
      public/work/<slug>-720.jpg     720 x 450, the same view at half density,
                                     for phones
 
-   And the Websites evidence band on /services (2026-10-02): Zions
-   Caregivers' second screen, scrolled one viewport down, 1440 x 900 and its
-   720 version (the phone capture of baseline-books.com it replaced is
-   deleted):
+   And the Websites evidence band on /services (2026-10-02): three phone
+   captures, each the first viewport at 390 x 844 at 2x:
 
-     public/work/band-websites.jpg, band-websites-720.jpg
+     public/work/<slug>-phone.jpg   (baseline-books, artiora, onesix)
 
    Nothing on a site is clicked: a cookie or consent banner, if a site shows
    one, is in the capture as the site shows it, and is reported.
 
-   Usage: node .measure/work-shots.mjs [slug ...]   (no slugs: all) */
+   Usage: node .measure/work-shots.mjs [slug ... | phones]   (no args: all) */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -62,14 +60,22 @@ for (const w of WORK) {
   await shot(b, w.url, { width: 1440, height: 900, dpr: 0.5 }, `${w.slug}-720.jpg`);
   report.push(`${w.slug}: done`);
 }
-/* THE WEBSITES EVIDENCE BAND on /services (2026-10-02): a different image
-   from every Recent work plate (BUILD-LAW rule 0: nothing appears twice),
-   so Zions Caregivers' SECOND screen, scrolled one viewport down, at
-   1440 x 900. The founder chose a different site's second screen. */
-if (!only.length || only.includes('band')) {
-  await shot(b, 'https://zionscaregivers.com/', { width: 1440, height: 900, dpr: 1, scrollY: 900 }, 'band-websites.jpg');
-  await shot(b, 'https://zionscaregivers.com/', { width: 1440, height: 900, dpr: 0.5, scrollY: 900 }, 'band-websites-720.jpg');
-  report.push('band-websites: done');
+/* THE WEBSITES EVIDENCE BAND on /services (2026-10-02, the founder's two
+   fixes): three phone captures, each the site's first viewport at 390 x 844
+   at 2x density (780 x 1688 pixels). A phone capture and a desktop capture
+   of the same site count as different images under BUILD-LAW rule 0 (the
+   founder's ruling), so baseline-books and artiora appear here and in
+   Recent work. They replaced Zions Caregivers' second screen. */
+const PHONES = [
+  ['baseline-books', 'https://www.baseline-books.com/'],
+  ['artiora', 'https://artluxuryvilla.com/'],
+  ['onesix', 'https://www.onesix.ai/'],
+];
+if (!only.length || only.includes('phones')) {
+  for (const [slug, url] of PHONES) {
+    await shot(b, url, { width: 390, height: 844, dpr: 2 }, `${slug}-phone.jpg`);
+    report.push(`${slug}-phone: done`);
+  }
 }
 await b.close();
 console.log(report.join('\n'));
