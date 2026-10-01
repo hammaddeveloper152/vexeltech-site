@@ -30,47 +30,56 @@ const STOPS = [
   },
 ];
 
-/* A word, set in mono at 14 units (14px: the drawing is never drawn larger
-   than 1:1), centred on (x, y). */
-function Word({ x, y, label, acc = false, i }) {
+/* THE AUDIT, 2026-10-02 (the founder): louder. The words are Clash Display
+   24px (18 below 768), the lines 2px, and the diagram is HTML, not a
+   drawing: a word is type, a line is a 2px rule between words, and each
+   stage is centred in a plate of one height so the three line up.
+   Follow-up, the last thing the story adds, is deep amber, the light
+   ground's yellow (yellow itself is 1.66:1 on cream). Decorative: the
+   stops' titles and lines carry what it says. */
+function W({ children, acc = false, i }) {
   return (
-    <text className={`gd__w st-rv${acc ? ' gd__w--acc' : ''}`} x={x} y={y + 5} textAnchor="middle" style={{ '--i': i }}>
-      {label}
-    </text>
+    <span className={`gd__w st-rv${acc ? ' gd__w--acc' : ''}`} style={{ '--i': i }}>
+      {children}
+    </span>
   );
 }
 
-function Link({ d, i }) {
-  return <path className="gd__l st-rv" d={d} style={{ '--i': i }} />;
+function H({ i }) {
+  return <span className="gd__h st-rv" style={{ '--i': i }} />;
 }
 
-/* REAL OVER DRAWN, 2026-10-02 (the founder): the boxes came off; the
-   diagram is the words and 1px lines between them. Each stage on the same
-   244 x 122 drawing, the words on two columns (x 57 and 187) and two rows
-   (y 25 and 97), the middle row (y 61) for the first two stages. The lines
-   stop 8 units short of each word. Follow-up, the last thing the story
-   adds, is the accent: deep amber, the light ground's yellow (yellow itself
-   is 1.66:1 on cream). */
+function V({ i }) {
+  return <span className="gd__v st-rv" style={{ '--i': i }} />;
+}
+
 const STAGES = [
-  () => <Word x={122} y={61} label="Ads" i={0} />,
   () => (
-    <>
-      <Word x={57} y={61} label="Ads" i={1} />
-      <Link d="M79 61 L160 61" i={2} />
-      <Word x={187} y={61} label="Page" i={3} />
-    </>
+    <div className="gd__row">
+      <W i={0}>Ads</W>
+    </div>
   ),
   () => (
-    <>
-      <Word x={57} y={25} label="Brand" i={4} />
-      <Link d="M89 25 L160 25" i={5} />
-      <Word x={187} y={25} label="Site" i={6} />
-      <Link d="M187 38 L187 84" i={7} />
-      <Word x={187} y={97} label="Follow-up" acc i={9} />
-      <Link d="M136 97 L79 97" i={8} />
-      <Word x={57} y={97} label="Ads" i={7} />
-      <Link d="M57 84 L57 38" i={8} />
-    </>
+    <div className="gd__row">
+      <W i={1}>Ads</W>
+      <H i={2} />
+      <W i={3}>Page</W>
+    </div>
+  ),
+  () => (
+    <div className="gd__ring">
+      <W i={4}>Brand</W>
+      <H i={5} />
+      <W i={6}>Site</W>
+      <V i={8} />
+      <span />
+      <V i={7} />
+      <W i={7}>Ads</W>
+      <H i={8} />
+      <W acc i={9}>
+        Follow-up
+      </W>
+    </div>
   ),
 ];
 
@@ -87,10 +96,8 @@ export default function GrowthDiagram() {
             const Stage = STAGES[k];
             return (
               <li className="gd__stop" key={n}>
-                <div className="gd__plate">
-                  <svg className="gd__svg" viewBox="0 0 244 122" aria-hidden="true" focusable="false">
-                    <Stage />
-                  </svg>
+                <div className="gd__plate" aria-hidden="true">
+                  <Stage />
                 </div>
                 <p className="gd__n st-mono">{n}</p>
                 <h3 className="gd__t">{t}</h3>

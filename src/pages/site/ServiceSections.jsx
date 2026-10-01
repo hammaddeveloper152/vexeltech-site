@@ -87,9 +87,6 @@ export default function ServiceSections({ disciplines }) {
                   {d.name}
                 </h2>
                 <p className="svc2__promise">{d.promise}</p>
-                {/* THE SEO LINE, COPY V3.1, 2026-10-01: Websites' H3, a 14px
-                    mono line under the promise (services.css). */}
-                {d.seo ? <h3 className="svc2__seo">{d.seo}</h3> : null}
               </div>
 
               {d.image ? (

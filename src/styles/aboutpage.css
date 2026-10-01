@@ -69,3 +69,48 @@
 /* The structure pass's fit cards and key-facts rows (2026-10-01) came off
    the same day with the storytelling pass: FitLedger and TermsSheet
    (components/story/) are About's objects now. */
+
+/* ---- Who we are for beside How we work with you (the audit, 2026-10-02) ---
+   From 1024 the two share one row inside the measure: the ledger 40%, the
+   terms sheet 60%, 24px apart, tops aligned; the pair carries the section
+   space above it and the two sections inside give up their own padding
+   (the id in the selector out-ranks the rhythm rule in tokens.css). Below
+   1024 the wrapper does nothing and they stack as before.
+
+   In the 40% column the ledger's two lists stack (two columns of it at
+   about 460px would set three words to a line).
+
+   THE MARGIN LABELS: a label sits at half the inset from its section's
+   left, so inside the pair the ledger's is moved back out to the page's
+   gutter, and the sheet's, which would land in the 24px between the two,
+   is not shown. */
+@media (min-width: 1024px) {
+  .ab3-pair {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
+    gap: 24px;
+    align-items: start;
+    width: min(100% - 2 * var(--inset), 1200px);
+    margin: 0 auto;
+    padding-top: var(--s-section);
+  }
+
+  main#main .ab3-pair > section.vt {
+    padding: 0;
+  }
+
+  .ab3-pair .fl__cols {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-xl);
+  }
+
+  .ab3-pair > section:first-child .marg {
+    top: 0;
+    left: calc(-1 * var(--inset) / 2);
+  }
+
+  .ab3-pair > section + section .marg {
+    display: none;
+  }
+}
+

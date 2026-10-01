@@ -9,8 +9,9 @@ import { FIGURES, money } from './pricing.js';
 /* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Services): the promises, the six
    items with their lines, the terms, the fit lines and the calls. `terms`
    is V3's Terms line, shown after "Terms:"; it replaced `price` and
-   `turnaround`. Websites carries the SEO line (`seo`, an H3 under the
-   promise; V3's trades line until V3.1) and `bigger`, both shown. Each
+   `turnaround`. Websites carries `bigger`, shown. (Its SEO line came off
+   in the audit, 2026-10-02: the phrase lives in the title and the
+   description only.) Each
    card's `line` shows under its title on /services (the structure pass).
    Figures are tokens.
 
@@ -42,7 +43,6 @@ export const DISCIPLINES = [
     id: 'websites',
     name: 'Websites',
     promise: 'A conversion-focused site for your business, live in four business days.',
-    seo: 'Small business website design for services, clinics, real estate, hospitality and retail.',
     cards: [
       { title: 'Six pages', line: 'Home, services, about, reviews, contact and one more for what you sell most. Structured for your business.' },
       { title: 'Mobile-first', line: 'Click to call, enquiry form and booking link above the fold on a phone.' },

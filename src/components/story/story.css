@@ -341,46 +341,80 @@
   }
 }
 
-/* The drawing is 244 x 122, drawn at 1:1 (244px) where the column allows,
-   so the words are 14px; at 768 the column is narrower and it scales to
-   fit (about 12px). The hairline under it runs the column. */
+/* THE AUDIT, 2026-10-02: the diagram in type. Each stop's plate is one
+   height and centres its stage, so the three stand level; the hairline
+   under it runs the column. Words Clash Display 24px (18 below 768), lines
+   2px asphalt, Follow-up deep amber (4.82:1 on cream). */
 .gd__plate {
+  display: grid;
+  place-items: center;
+  min-height: 132px;
   padding-bottom: var(--s-md);
   border-bottom: 1px solid var(--st-hair);
 }
 
-.gd__svg {
-  display: block;
-  width: min(100%, 244px);
-  height: auto;
-  aspect-ratio: 244 / 122;
-  overflow: visible;
+@media (min-width: 768px) {
+  .gd__plate {
+    min-height: 168px;
+  }
 }
 
-/* The words: JetBrains Mono 14px uppercase, the label tracking; asphalt on
-   cream (15.75:1), Follow-up in deep amber (4.82:1). The lines 1px. */
 .gd__w {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  fill: var(--c-asphalt);
+  font-family: var(--font-brand);
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: normal;
+  white-space: nowrap;
+  color: var(--c-asphalt);
+}
+
+@media (min-width: 768px) {
+  .gd__w {
+    font-size: 24px;
+  }
 }
 
 .gd__w--acc {
-  fill: var(--c-accent-text-light);
+  color: var(--c-accent-text-light);
 }
 
-.gd__l {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1px;
-  vector-effect: non-scaling-stroke;
+/* A row: word, line, word. */
+.gd__row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-sm);
 }
 
-.gd__svg .st-rv {
-  transform-box: fill-box;
-  transform-origin: center;
+/* The ring: a 3 x 3 grid, words in the corners, lines between them; the
+   vertical lines centre under their words. */
+.gd__ring {
+  display: grid;
+  grid-template-columns: auto minmax(24px, 56px) auto;
+  grid-template-rows: auto 28px auto;
+  align-items: center;
+  justify-items: center;
+  column-gap: var(--s-sm);
+  row-gap: var(--s-xs);
+}
+
+.gd__h {
+  display: block;
+  width: 100%;
+  min-width: 24px;
+  height: 2px;
+  background: var(--c-asphalt);
+}
+
+.gd__row .gd__h {
+  width: 48px;
+}
+
+.gd__v {
+  display: block;
+  width: 2px;
+  height: 100%;
+  background: var(--c-asphalt);
 }
 
 .gd__n {

@@ -16,8 +16,8 @@ import '../../styles/light.css';
      the statement                the Monigue line, the swash on "called."
      Where we come from           GrowthDiagram: one diagram that grows
      What we build it around      BuildAround: four statements with marks
-     Who we are for               FitLedger: the two-column ledger
-     How we work with you         TermsSheet: the steps and the key facts
+     Who we are for               FitLedger: the ledger      } side by side
+     How we work with you         TermsSheet: steps and facts } from 1024
      Questions                    the FAQ accordion
      the closing call             CallBand
 
@@ -85,8 +85,13 @@ export default function AboutPage() {
 
       <GrowthDiagram />
       <BuildAround />
-      <FitLedger />
-      <TermsSheet />
+      {/* Who we are for and How we work with you side by side from 1024,
+          the ledger 40% and the sheet 60% (the audit, 2026-10-02);
+          stacked below (aboutpage.css). */}
+      <div className="vt ab3-pair">
+        <FitLedger />
+        <TermsSheet />
+      </div>
       <Faq items={QUESTIONS} id="ab3-faq" />
       <CallBand heading="Tell us what's going wrong." note="Fifteen minutes on the phone. Nothing to pay for the answer." />
     </Shell>
