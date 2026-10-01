@@ -38,10 +38,12 @@ const render = () => {
 };
 
 /* THE FULL STYLESHEET LOADS WITHOUT BLOCKING (vite.config.js, critical CSS,
-   2026-09-25). Home renders now, on the inlined above-the-fold rules, and
-   re-measures its ScrollTriggers once the rest lands. Every other route
-   waits for it, so nothing paints unstyled. In dev there is no such link and
-   everything renders at once. */
+   2026-09-25). EVERY ROUTE renders now, on the inlined above-the-fold rules
+   (2026-10-01, the founder; home only until then, while the other routes
+   waited for the full sheet, which was most of /services' LCP), and
+   re-measures its ScrollTriggers once the rest lands. The inlined list is
+   every public route's above-the-fold classes (.measure/critical-classes.mjs).
+   In dev there is no such link and everything renders at once. */
 const sheet = document.querySelector('link[data-vt-css]');
 const cssLoaded = !sheet || sheet.media === 'all'
   ? Promise.resolve()
@@ -51,9 +53,5 @@ const cssLoaded = !sheet || sheet.media === 'all'
       setTimeout(resolve, 4000);
     });
 
-if (window.location.pathname === '/') {
-  render();
-  cssLoaded.then(() => requestAnimationFrame(() => ScrollTrigger.refresh()));
-} else {
-  cssLoaded.then(render);
-}
+render();
+cssLoaded.then(() => requestAnimationFrame(() => ScrollTrigger.refresh()));

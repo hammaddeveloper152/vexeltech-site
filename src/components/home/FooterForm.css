@@ -284,7 +284,11 @@
   justify-content: flex-start;
   column-gap: var(--s-xs);
   row-gap: var(--s-sm);
-  margin: 0 0 0 calc(-1 * var(--hdr-px));
+  margin: 0 0 0 calc(-1 * var(--foot-page-px));
+  /* 12px each side inside the shared 40px box, where the header's is 14
+     (2026-10-01, the founder): with "About us" and "Contact us" the five
+     pages wrapped to two rows at 1280. */
+  --foot-page-px: 12px;
   padding: 0;
   list-style: none;
 }
@@ -298,7 +302,7 @@
   display: inline-flex;
   align-items: center;
   height: var(--hdr-h);
-  padding: 0 var(--hdr-px);
+  padding: 0 var(--foot-page-px);
   border-radius: var(--hdr-r);
   font-family: var(--font-quiet);
   font-size: 20px;

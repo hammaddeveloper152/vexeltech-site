@@ -1,5 +1,8 @@
-/* critical-classes.mjs: which classes paint above the fold on home, at a
-   phone, a tablet and a laptop, before any scroll. The build's critical-CSS
+/* critical-classes.mjs: which classes paint above the fold on EVERY public
+   route (home, /services, /pricing, /about-us, /contact-us; every route
+   since 2026-10-01, home only before), at a phone, a tablet and a laptop,
+   before any scroll. The list is their union: the site is one document, so
+   one inlined sheet serves every route. The build's critical-CSS
    plugin (vite.config.js) inlines the rules that use only these classes, and
    loads the full stylesheet without blocking.
 
@@ -19,10 +22,13 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const BASE = process.argv[2] || 'http://localhost:4173';
 const b = await puppeteer.launch({ headless: 'new' });
 const found = new Set();
+const ROUTES = ['/', '/services', '/pricing', '/about-us', '/contact-us'];
+const perRoute = {};
+for (const route of ROUTES) {
 for (const [w, h] of [[390, 844], [768, 1024], [1280, 800], [1440, 900]]) {
   const p = await b.newPage();
   await p.setViewport({ width: w, height: h });
-  await p.goto(BASE + '/', { waitUntil: 'networkidle0' });
+  await p.goto(BASE + route, { waitUntil: 'networkidle0' });
   await p.evaluate(() => document.fonts.ready);
   await new Promise((r) => setTimeout(r, 1500));
   const cls = await p.evaluate(() => {
@@ -52,9 +58,12 @@ for (const [w, h] of [[390, 844], [768, 1024], [1280, 800], [1440, 900]]) {
     return [...out];
   });
   cls.forEach((c) => found.add(c));
+  perRoute[route] = (perRoute[route] || new Set());
+  cls.forEach((c) => perRoute[route].add(c));
   await p.close();
+}
 }
 await b.close();
 const list = [...found].sort();
 fs.writeFileSync(path.join(HERE, '..', 'src', 'critical-classes.json'), JSON.stringify(list, null, 1) + '\n');
-console.log(list.length, 'classes');
+console.log(list.length, 'classes, the union of', Object.entries(perRoute).map(([r, s]) => `${r} ${s.size}`).join(', '));

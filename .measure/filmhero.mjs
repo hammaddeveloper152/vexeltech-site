@@ -174,7 +174,6 @@ for (const [w, h] of (DESK_ONLY ? [[1280, 800], [1536, 864]] : [[390, 844], [430
       frame: [Math.round(fr.left), Math.round(fr.top), Math.round(fr.width), Math.round(fr.height)],
       radius: getComputedStyle(document.querySelector('.hero__frame')).borderTopLeftRadius,
       pin: !!document.querySelector('.hero').closest('.pin-spacer'),
-      copyIn: document.querySelector('.hero').getAttribute('data-in'),
       bodyPadBottom: getComputedStyle(document.querySelector('.hero__body')).paddingBottom,
       gapFootToCall: Math.round(hero.bottom - document.querySelector('.hero__actions .hero__cta').getBoundingClientRect().bottom),
       callW: Math.round(document.querySelector('.hero__actions .hero__cta').getBoundingClientRect().width),

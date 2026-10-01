@@ -18,18 +18,22 @@ import Brush from '../site/Brush.jsx';
 
    ---- Three modes, decided once at mount -------------------------------------
 
-     spot     the film plays once, muted, inline, no loop. Each line fades up
-              on its cut and fades out 200ms before the next. On end the last
-              frame holds, and so does the last line.
+     spot     the film plays, muted, inline, looping (2026-09-30). Line 1 is
+              there from the first paint (2026-10-01); each later line fades
+              up on its cut and fades out 200ms before the next.
 
      still    REDUCED MOTION. The poster, which is the film's last frame, and
-              the final line, with nothing animating. An autoplay the
-              browser refuses no longer lands here (2026-09-24): the film's
-              own first-second poster stays, with the final line.
+              line 1, with nothing animating. An autoplay the browser refuses
+              does not land here (2026-09-24): the film's own first-second
+              poster stays, with line 1.
 
      surface  SAVE-DATA, A SLOW CONNECTION, OR NO PLAYABLE VIDEO. The lit shader
-              and the final line, fading up once. No bytes of film or poster
-              are requested, which is what Save-Data asks for.
+              and line 1. No bytes of film or poster are requested, which is
+              what Save-Data asks for.
+
+   UNTIL 2026-10-01 the still, the surface and a refused autoplay showed the
+   final line instead; the founder's perf pass put line 1 in every first
+   paint.
 
    The gates are `videoAllowed()`, shared with the work grid so they cannot
    drift. One of its four does not apply here and it is worth saying which:
@@ -79,10 +83,16 @@ function shotAt(t) {
    the copy in heroSpot.js stays the only place the line is written. */
 const HIGHLIGHT = 'Yet.';
 
-function Line({ text, leaving }) {
+/* `enter`: the line fades up as it mounts. The FIRST line of a visit does
+   not: it is in the first paint, unanimated (2026-10-01). */
+function Line({ text, leaving, enter }) {
   const at = text.lastIndexOf(HIGHLIGHT);
   return (
-    <span className="hero__line" data-leaving={leaving ? 'true' : 'false'}>
+    <span
+      className="hero__line"
+      data-leaving={leaving ? 'true' : 'false'}
+      data-enter={enter ? 'true' : 'false'}
+    >
       {at < 0 ? (
         text
       ) : (
@@ -199,13 +209,9 @@ export default function Hero() {
       const p = v.play();
       if (p && typeof p.catch === 'function') {
         p.catch((e) => {
-          /* AUTOPLAY REFUSED: THE POSTER STAYS (2026-09-24). The element
-             keeps its first-second poster and the headline takes its final
-             line, the one the page is about. It used to switch to the still
-             (the last frame). */
-          if (e && e.name === 'NotAllowedError' && v.currentTime === 0) {
-            setState({ shot: LINES.length - 1, leaving: false });
-          }
+          /* AUTOPLAY REFUSED: THE POSTER STAYS (2026-09-24), and the
+             headline keeps line 1, which it has shown since the first paint
+             (2026-10-01; it switched to the final line until then). */
           if (e && e.name === 'NotSupportedError') setMode('surface');
         });
       }
@@ -237,24 +243,15 @@ export default function Hero() {
 
   const src = narrow ? SPOT.mobile : SPOT.wide;
 
-  /* THE COPY'S ENTRANCE, AT EVERY WIDTH (2026-09-30): it fades up 12px over
-     500ms once the fonts are ready (Hero.css), so the headline never arrives
-     in the fallback face. A 2.5s ceiling, so a font that never loads cannot
-     hold the copy back. Reduced motion shows it at once (CSS). */
-  const [copyIn, setCopyIn] = useState(false);
-  useEffect(() => {
-    let done = false;
-    const go = () => {
-      if (!done) {
-        done = true;
-        setCopyIn(true);
-      }
-    };
-    const id = setTimeout(go, 2500);
-    if (document.fonts) document.fonts.ready.then(go);
-    else go();
-    return () => clearTimeout(id);
-  }, []);
+  /* THE HEADLINE PAINTS FIRST, 2026-10-01 (the founder). Line 1 is on
+     screen from the first render, before the film has loaded or played, in
+     every mode: the film's frames may advance the rotation and never gate
+     the first line. It was measured as the home LCP element with 2.45s of
+     render delay, because it mounted only once the film was playing and the
+     copy then waited for the fonts before fading in. The copy's entrance is
+     now a 12px rise that starts at once, with no opacity (Hero.css). */
+  const advanced = useRef(false);
+  if (state.shot !== null && state.shot !== 0) advanced.current = true;
 
   /* THE NOTE. It stood in the frame's lower-left corner from 2026-09-25; with
      the film behind the copy nothing else is painted over the film
@@ -265,14 +262,15 @@ export default function Hero() {
       You'll see the work before you owe us anything. Ten seconds to decide, not ten meetings.
     </p>
   );
-  const shot = mode === 'spot' ? state.shot : LINES.length - 1;
+  /* Line 1 until the film says otherwise; the still and the surface modes
+     show line 1 too (2026-10-01; they showed the final line). */
+  const shot = mode === 'spot' ? (state.shot ?? 0) : 0;
 
   return (
     <section
       className="vt hero"
       aria-labelledby="hero-h"
       data-mode={mode}
-      data-in={copyIn ? 'true' : 'false'}
     >
       {/* THE FRAME the film stands in: the hero's own box, never moved. */}
       {mode !== 'surface' ? (
@@ -321,17 +319,20 @@ export default function Hero() {
       <div className="hero__body">
         {/* ONE ACCESSIBLE NAME, AND IT IS THE HEADLINE THAT STAYS. Four lines
             announced as they cut would be a screen reader talking over a film
-            it cannot see; the final line is the sentence the page is about.
-            Every visible line is aria-hidden. */}
+            it cannot see. (The name is the visible line since 2026-09-25,
+            below.) */}
         <h1 className="hero__headline" id="hero-h">
           {/* THE NAME IS THE VISIBLE LINE, 2026-09-25 (the founder's content
               audit): the h1 reads what it shows. It was the final line in a
               clipped span, with the shown line aria-hidden, so the name and
               the headline differed for three of the four shots, and a
               crawler read the two run together. */}
-          {shot !== null ? (
-            <Line key={shot} text={LINES[shot]} leaving={mode === 'spot' && state.leaving} />
-          ) : null}
+          <Line
+            key={shot}
+            text={LINES[shot]}
+            leaving={mode === 'spot' && state.leaving}
+            enter={advanced.current}
+          />
         </h1>
 
         {/* The support stack, in one box so its shade zone has one to stand

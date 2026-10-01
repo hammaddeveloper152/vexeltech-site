@@ -4,27 +4,28 @@ import react from '@vitejs/plugin-react';
 
 /* ---- CRITICAL CSS, 2026-09-25 (the founder's release-audit addendum) -----
 
-   Home's above-the-fold rules are inlined into index.html and the full
+   Every public route's above-the-fold rules are inlined into index.html and the full
    stylesheet loads without blocking (`media="print"`, switched to `all` on
    load). The rules kept are the ones whose selectors use only classes that
-   paint above the fold on home at 390, 768, 1280 and 1440 before any scroll
+   paint above the fold on any public route at 390, 768, 1280 and 1440
+   before any scroll
    (`src/critical-classes.json`, written by `.measure/critical-classes.mjs`;
    it is a build input, so it lives in src/, not in .measure/, whose *.json
    are ignored measurement output),
    plus every rule with no class at all (:root, html, body, elements),
    @font-face, and the @keyframes the kept rules name.
 
-   Every other route waits for the full stylesheet before it renders
-   (src/main.jsx), so nothing else can paint unstyled; its content is drawn
-   by script, so the wait costs it nothing it had before. Home renders at
-   once on the inlined rules and refreshes its ScrollTriggers when the rest
-   lands.
+   Every route renders at once on the inlined rules and refreshes its
+   ScrollTriggers when the rest lands (src/main.jsx). Until 2026-10-01 only
+   home did, and every other route waited for the full stylesheet, which
+   was most of /services' measured LCP.
 
    If the class list goes stale, the full stylesheet still styles
    everything: the cost is a flash above the fold, never a broken page.
 
-   The Clash Display preload is injected here too, because its file name is
-   hashed at build time and index.html cannot name it. */
+   The Clash Display and Satoshi preloads are injected here too, because
+   their file names are hashed at build time and index.html cannot name
+   them. */
 
 const EXTRA = ['skip'];
 
@@ -137,10 +138,14 @@ function criticalCss() {
           const name = f.prelude.replace(/^@(-webkit-)?keyframes\s+/, '').trim();
           if (new RegExp(`(animation(-name)?:[^;}]*\\b${name}\\b)`).test(crit)) crit += `${f.prelude}{${f.body}}`;
         }
-        const clash = Object.values(ctx.bundle).find((a) => a.type === 'asset' && /clash-display-variable-[\w-]+\.woff2$/.test(a.fileName));
-        const preload = clash
-          ? `<link rel="preload" href="/${clash.fileName}" as="font" type="font/woff2" crossorigin>\n    `
-          : '';
+        /* Clash (headings) and, since 2026-10-01, Satoshi (body: /services'
+           LCP is a Satoshi paragraph). Both hashed, so injected here; Monigue
+           is preloaded from index.html. One document, so every route. */
+        const preload = [/clash-display-variable-[\w-]+\.woff2$/, /satoshi-variable-[\w-]+\.woff2$/]
+          .map((re) => Object.values(ctx.bundle).find((a) => a.type === 'asset' && re.test(a.fileName)))
+          .filter(Boolean)
+          .map((a) => `<link rel="preload" href="/${a.fileName}" as="font" type="font/woff2" crossorigin>\n    `)
+          .join('');
         return html.replace(
           link[0],
           `${preload}<style data-vt-critical>${crit}</style>\n    ` +

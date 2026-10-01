@@ -372,7 +372,9 @@
 @media (prefers-reduced-motion: no-preference) {
   /* `backwards`, never `forwards`: nothing is left pinned on the line, and the
      exit's opacity transition is not fighting a filled animation. */
-  .hero__line {
+  /* Not the first line of a visit: it is in the first paint, unanimated
+     (`data-enter`, Hero.jsx, 2026-10-01). */
+  .hero__line[data-enter='true'] {
     animation: hero-line-in var(--d-drop) var(--ease-reveal) backwards;
   }
 
@@ -661,19 +663,20 @@
   }
 }
 
-/* THE ENTRANCE, the hero's only motion, at every width: the copy fades up
-   12px over 500ms on the reveal curve once the fonts are ready (`data-in`,
-   Hero.jsx). The film never moves. Hidden-at-rest lives inside
-   no-preference only, so with reduced motion the copy is simply there. */
+/* THE ENTRANCE, the hero's only motion, at every width: the copy rises 12px
+   over 500ms on the reveal curve, starting at once. It does NOT fade and does
+   NOT wait for the fonts (2026-10-01, the founder: the headline paints
+   first). The fade from 0 kept the headline out of the first paint and was
+   the home LCP's render delay. Transform only; reduced motion drops it, and
+   the copy is simply there. The film never moves. */
 @media (prefers-reduced-motion: no-preference) {
   .hero[data-mode] .hero__body {
-    transition:
-      opacity 500ms var(--ease-reveal),
-      transform 500ms var(--ease-reveal);
+    animation: hero-copy-rise 500ms var(--ease-reveal) backwards;
   }
 
-  .hero[data-mode][data-in='false'] .hero__body {
-    opacity: 0;
-    transform: translateY(12px);
+  @keyframes hero-copy-rise {
+    from {
+      transform: translateY(12px);
+    }
   }
 }
