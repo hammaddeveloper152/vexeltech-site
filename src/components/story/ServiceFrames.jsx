@@ -7,8 +7,8 @@ import './story.css';
    asphalt on the cream ones), one accent each in the discipline's colour.
 
      Branding     one mark on a sign, an invoice header and a business
-                  profile card. The mark is a NEUTRAL PLACEHOLDER (a ring
-                  and a bar), not anybody's logo.
+                  profile card. Until the founder supplies a real mark, a
+                  SAMPLE MONOGRAM ("AB" in a circle) and a Sample tag.
      Websites     a phone, the above-the-fold anatomy labelled: call, form,
                   booking, and the fold itself, dashed.
      Marketing    a reporting card: spend, leads, cost per lead, tagged
@@ -29,22 +29,42 @@ const ACC = {
   automation: 'var(--c-mint)',
 };
 
-function Mark({ x, y, s = 1 }) {
+/* THE MARK SLOT (the founder, 2026-10-01). `src` is the real mark when it
+   is supplied (an image, drawn into the same 32-unit circle); until then a
+   SAMPLE MONOGRAM, two letters in a yellow circle, and the frame carries a
+   Sample tag like the report card's. */
+function Mark({ x, y, s = 1, src = null }) {
   return (
     <g transform={`translate(${x} ${y}) scale(${s})`}>
-      <circle className="kl-acc" cx="0" cy="0" r="14" />
-      <circle className="kl" cx="0" cy="0" r="14" />
-      <rect className="kl-ink" x="-6" y="-2" width="12" height="4" rx="2" />
+      {src ? (
+        <image href={src} x="-16" y="-16" width="32" height="32" preserveAspectRatio="xMidYMid meet" />
+      ) : (
+        <>
+          <circle className="kl-acc" cx="0" cy="0" r="16" />
+          <circle className="kl" cx="0" cy="0" r="16" />
+          <text className="sf__mono" x="0" y="5.2" textAnchor="middle">
+            AB
+          </text>
+        </>
+      )}
     </g>
   );
 }
 
-function BrandingFrame() {
+function BrandingFrame({ mark = null }) {
   return (
     <svg className="sf__svg sf__svg--wide" viewBox="0 0 480 320" aria-hidden="true" focusable="false">
+      {mark ? null : (
+        <>
+          <rect className="kl-acc" x="392" y="0" width="80" height="26" rx="13" />
+          <text className="kl-text kl-text--lg kl-text--ink" x="432" y="19" textAnchor="middle">
+            Sample
+          </text>
+        </>
+      )}
       {/* The sign. */}
       <rect className="kl" x="16" y="40" width="200" height="110" rx="8" />
-      <Mark x={64} y={95} s={1.6} />
+      <Mark x={64} y={95} s={1.6} src={mark} />
       <rect className="kl-bar" x="104" y="84" width="92" height="10" rx="5" />
       <rect className="kl-bar" x="104" y="102" width="64" height="6" rx="3" opacity="0.5" />
       <line className="kl kl--2" x1="56" y1="150" x2="56" y2="214" />
@@ -55,7 +75,7 @@ function BrandingFrame() {
       </text>
       {/* The invoice header. */}
       <path className="kl" d="M248 40 L464 40 Q472 40 472 48 L472 150 L248 150 L248 48 Q248 40 256 40 Z" />
-      <Mark x={276} y={70} />
+      <Mark x={276} y={70} src={mark} />
       <text className="kl-text kl-text--lg" x="374" y="77">
         Invoice
       </text>
@@ -64,7 +84,7 @@ function BrandingFrame() {
       <line className="kl" x1="248" y1="136" x2="472" y2="136" />
       {/* The business profile card. */}
       <rect className="kl" x="248" y="172" width="224" height="132" rx="12" />
-      <Mark x={280} y={204} />
+      <Mark x={280} y={204} src={mark} />
       <rect className="kl-bar" x="304" y="196" width="110" height="9" rx="4.5" />
       <rect className="kl-bar" x="304" y="212" width="70" height="6" rx="3" opacity="0.5" />
       <path className="kl" d="M276 250 Q276 240 284 240 Q292 240 292 250 Q292 258 284 266 Q276 258 276 250 Z" />
@@ -185,11 +205,12 @@ const FRAMES = {
   automation: AutomationFrame,
 };
 
-export default function ServiceFrame({ id }) {
+/* `mark`: the founder's real mark for the Branding frame, when supplied. */
+export default function ServiceFrame({ id, mark = null }) {
   const Frame = FRAMES[id];
   return (
     <figure className={`sf sf--${id}`} style={{ '--acc': ACC[id] }}>
-      <Frame />
+      <Frame mark={mark} />
     </figure>
   );
 }

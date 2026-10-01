@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { IconArrowUpRight } from '../../components/site/Icons.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
+import ServiceFrame from '../../components/story/ServiceFrames.jsx';
 
 /* THE FOUR DISCIPLINES ON /services, AS ALTERNATING BANDS, 2026-09-23.
 
@@ -76,7 +77,11 @@ export default function ServiceSections({ disciplines }) {
             aria-labelledby={`svc-${d.id}`}
           >
             <div className={`svc2__in${cream ? ' panel' : ''}`}>
-              <div className="svc2__left">
+              {/* ONE FRAME PER DISCIPLINE, 2026-10-01 (the storytelling
+                  pass): the frame beside the list from 1024, left on the
+                  dark bands and right on the cream ones, as the grounds
+                  alternate; above the list below 1024 (services.css). */}
+              <div className="svc2__head">
                 <h2 className="svc2__name" id={`svc-${d.id}`}>
                   {d.name}
                 </h2>
@@ -84,7 +89,13 @@ export default function ServiceSections({ disciplines }) {
                 {/* THE SEO LINE, COPY V3.1, 2026-10-01: Websites' H3, a 14px
                     mono line under the promise (services.css). */}
                 {d.seo ? <h3 className="svc2__seo">{d.seo}</h3> : null}
+              </div>
 
+              <div className="svc2__frame">
+                <ServiceFrame id={d.id} />
+              </div>
+
+              <div className="svc2__left">
                 <ul className="svc2__list">
                   {d.cards.map(({ title, line }) => (
                     <li className="svc2__item" key={title}>

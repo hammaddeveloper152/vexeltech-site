@@ -107,15 +107,62 @@
   margin: 0 auto;
 }
 
-/* 60/40 from 1024: the checklist needs the measure, the price needs room for
-   a 160px figure and nothing else. Below that they stack and the price leads,
-   because on a phone the figure is what the reader is scrolling for. */
+/* THE FRAME BESIDE THE LIST, 2026-10-01 (the storytelling pass). Four
+   areas: the head (name, promise, SEO line), the frame, the list and the
+   price column. Below 1024 they stack, the frame between the promise and
+   the list. From 1024 the frame takes a 5fr column spanning the other
+   three, which stack in a 7fr column beside it: left on the dark bands,
+   right on the cream ones, so the frame changes side as the ground does.
+   The 60/40 list-and-price split it replaced is in git. */
+.svc2__in {
+  grid-template-areas: 'head' 'frame' 'list' 'right';
+  row-gap: var(--s-xl);
+}
+
+.svc2__head {
+  grid-area: head;
+  min-width: 0;
+}
+
+/* The row gap spaces the areas, so the head's last line gives up its own
+   foot. */
+.svc2__head > :last-child {
+  margin-bottom: 0;
+}
+
+.svc2__frame {
+  grid-area: frame;
+  min-width: 0;
+}
+
+.svc2__left {
+  grid-area: list;
+}
+
+.svc2__right {
+  grid-area: right;
+}
+
 @media (min-width: 1024px) {
   .svc2__in {
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-areas:
+      'frame head'
+      'frame list'
+      'frame right';
+    grid-template-rows: auto auto 1fr;
     column-gap: var(--s-3xl);
     align-items: start;
   }
+
+  .svc2__d--cream .svc2__in {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-areas:
+      'head frame'
+      'list frame'
+      'right frame';
+  }
+
 }
 
 .svc2__left {

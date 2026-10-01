@@ -31,7 +31,7 @@ const STOPS = [
   },
 ];
 
-function Box({ x, y, w = 120, h = 50, label, acc = false, i }) {
+function Box({ x, y, w = 110, h = 46, label, acc = false, i }) {
   return (
     <g className="st-rv" style={{ '--i': i }}>
       <rect className={acc ? 'kl kl-acc' : 'kl'} x={x} y={y} width={w} height={h} rx="10" />
@@ -46,26 +46,30 @@ function Link({ d, i }) {
   return <path className="kl kl--2 st-rv" d={d} style={{ '--i': i }} />;
 }
 
-/* Each stage on the same 360 x 200 drawing, so the three read as one. */
+/* Each stage on the same 244 x 122 drawing, so the three read as one: two
+   columns of 110-unit boxes 20 apart, two rows 30 apart. Tight to the
+   boxes, so at 1280 the drawing fills its column and the boxes carry about
+   the weight of the statements under them (the founder, 2026-10-01: about
+   1.4x what they were; 1.35x is what three columns allow). */
 const STAGES = [
-  () => <Box x={120} y={75} label="Ads" i={0} />,
+  () => <Box x={67} y={38} label="Ads" i={0} />,
   () => (
     <>
-      <Box x={40} y={75} label="Ads" i={1} />
-      <Link d="M160 100 L200 100" i={2} />
-      <Box x={200} y={75} label="Page" i={3} />
+      <Box x={2} y={38} label="Ads" i={1} />
+      <Link d="M112 61 L132 61" i={2} />
+      <Box x={132} y={38} label="Page" i={3} />
     </>
   ),
   () => (
     <>
-      <Box x={40} y={30} label="Brand" i={4} />
-      <Link d="M160 55 L200 55" i={5} />
-      <Box x={200} y={30} label="Site" i={6} />
-      <Link d="M260 80 L260 120" i={7} />
-      <Box x={200} y={120} label="Follow-up" acc i={9} />
-      <Link d="M200 145 L160 145" i={8} />
-      <Box x={40} y={120} label="Ads" i={7} />
-      <Link d="M100 120 L100 80" i={8} />
+      <Box x={2} y={2} label="Brand" i={4} />
+      <Link d="M112 25 L132 25" i={5} />
+      <Box x={132} y={2} label="Site" i={6} />
+      <Link d="M187 48 L187 74" i={7} />
+      <Box x={132} y={74} label="Follow-up" acc i={9} />
+      <Link d="M132 97 L112 97" i={8} />
+      <Box x={2} y={74} label="Ads" i={7} />
+      <Link d="M57 74 L57 48" i={8} />
     </>
   ),
 ];
@@ -83,9 +87,11 @@ export default function GrowthDiagram() {
             const Stage = STAGES[k];
             return (
               <li className="gd__stop" key={n}>
-                <svg className="gd__svg" viewBox="0 0 360 200" aria-hidden="true" focusable="false">
-                  <Stage />
-                </svg>
+                <div className="gd__plate">
+                  <svg className="gd__svg" viewBox="0 0 244 122" aria-hidden="true" focusable="false">
+                    <Stage />
+                  </svg>
+                </div>
                 <p className="gd__n st-mono">{n}</p>
                 <h3 className="gd__t">{t}</h3>
                 <p className="gd__d st-soft">{d}</p>

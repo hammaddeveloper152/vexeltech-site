@@ -5,14 +5,16 @@ import './story.css';
 /* WHAT IT COSTS YOU, AS FOUR FRAMES (the storytelling pass, 2026-10-01).
    Each row of home's ledger gets the screen or object where that cost is
    seen: the search that lists three others, the ads panel with no cost per
-   lead, the lock screen with the missed call, the van door with no name.
+   lead, the lock screen with the missed call, the shopfront with no name
+   (it was a van door until 2026-10-01, the founder: a storefront reads for
+   every small business, not only the trades).
    Flat, keyline, cream on the dark ground, 4:3, one accent each, and the
    accent is always the missing thing:
 
      search     yellow   the empty fourth result, dashed
      ads        coral    the cost-per-lead slot, empty
      phone      mint     the missed call's mark
-     van        lilac    the blank panel where a name would go
+     shop       lilac    the blank sign panel where a name would go
 
    No result titles, no figures, no times: bars stand for text (BUILD-LAW
    Truth). The rows' words are VEXELTECH-COPY.md V3.1's, unchanged. */
@@ -43,7 +45,7 @@ const ROWS = [
     id: 'remember',
     statement: 'No name on the work.',
     consequence: "Every job you finish advertises someone else's brand, or nobody's.",
-    Frame: VanFrame,
+    Frame: ShopFrame,
     acc: 'var(--c-lilac)',
   },
 ];
@@ -121,20 +123,18 @@ function PhoneFrame() {
   );
 }
 
-/* The side of a van, the door blank. */
-function VanFrame() {
+/* A shopfront: a window, a door, and the sign panel above them blank. */
+function ShopFrame() {
   return (
     <Svg>
-      <path
-        className="kl"
-        d="M28 228 L28 96 Q28 82 42 82 L284 82 Q298 82 306 92 L360 154 Q370 166 370 180 L370 228 L338 228 A34 34 0 0 0 270 228 L132 228 A34 34 0 0 0 64 228 Z"
-      />
-      <circle className="kl" cx="98" cy="232" r="24" />
-      <circle className="kl" cx="304" cy="232" r="24" />
-      <path className="kl" d="M296 100 L344 154 L296 154 Z" />
-      <rect className="kl" x="160" y="96" width="112" height="124" rx="4" />
-      <rect className="kl-ink" x="252" y="156" width="12" height="4" rx="2" />
-      <rect className="kl-acc-line kl--dash" x="172" y="112" width="68" height="44" rx="4" />
+      <line className="kl" x1="32" y1="56" x2="368" y2="56" />
+      <rect className="kl" x="48" y="56" width="304" height="206" />
+      <rect className="kl-acc-line kl--dash" x="72" y="74" width="256" height="44" rx="4" />
+      <line className="kl" x1="48" y1="136" x2="352" y2="136" />
+      <rect className="kl" x="68" y="154" width="164" height="94" rx="2" />
+      <line className="kl" x1="150" y1="154" x2="150" y2="248" />
+      <rect className="kl" x="252" y="154" width="80" height="108" rx="2" />
+      <rect className="kl-ink" x="316" y="204" width="4" height="14" rx="2" />
       <line className="kl" x1="20" y1="262" x2="380" y2="262" />
     </Svg>
   );

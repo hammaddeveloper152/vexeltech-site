@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 import Shell from './Shell.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import LeadForm from '../../components/site/LeadForm.jsx';
+import ContactTimeline from '../../components/story/ContactTimeline.jsx';
 import { IconArrowDownRight, IconPause, IconPlay } from '../../components/site/Icons.jsx';
 import './contact.css';
 
@@ -107,9 +108,9 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* The tiles came off, 2026-10-01 (the storytelling pass); the
-          timeline (components/story/ContactTimeline.jsx) takes their place
-          once it is approved and wired. */}
+      {/* WHAT HAPPENS AFTER YOU SEND, under the form: the timeline that
+          replaced the tiles (the storytelling pass, 2026-10-01). */}
+      <ContactTimeline />
 
       <FooterForm form={false} />
     </Shell>

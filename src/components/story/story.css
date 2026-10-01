@@ -269,10 +269,6 @@
   object-position: top;
 }
 
-.rw__slot {
-  opacity: 0.8;
-}
-
 .rw__name {
   margin: var(--s-md) 0 var(--s-xs);
   font-family: var(--font-quiet);
@@ -389,14 +385,26 @@
   }
 }
 
-.gd__svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 360 / 200;
+/* The drawing is 244 x 122. Below 768 it is held at 264px wide, so a box
+   is the 119px it was; from 768 it fills its column (at 1280, 368px: a box
+   about 166px, 1.35x). The hairline under it runs the column. */
+.gd__plate {
   padding-bottom: var(--s-md);
   border-bottom: 1px solid var(--st-hair);
+}
+
+.gd__svg {
+  display: block;
+  width: min(100%, 264px);
+  height: auto;
+  aspect-ratio: 244 / 122;
   overflow: visible;
+}
+
+@media (min-width: 768px) {
+  .gd__svg {
+    width: 100%;
+  }
 }
 
 .gd__svg .st-rv {
@@ -660,4 +668,27 @@
 
 .sf__svg--wide {
   max-width: 520px;
+}
+
+/* The sample monogram's letters: Clash Display, asphalt on the yellow. */
+.sf__mono {
+  font-family: var(--font-brand);
+  font-size: 15px; /* 11.2px at 390, the type floor */
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  fill: var(--c-asphalt);
+}
+
+/* The plate is one link to the live site. */
+.rw__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rw__link:hover .rw__name {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
 }
