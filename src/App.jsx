@@ -79,6 +79,10 @@ if (typeof window !== 'undefined') {
    is local and the gap is a frame or two. */
 const LegalPage = lazy(() => import('./pages/site/LegalPage.jsx'));
 const ThanksPage = lazy(() => import('./pages/site/ThanksPage.jsx'));
+/* THE STORYTELLING PREVIEW, 2026-10-01 (`storytelling` branch only): each
+   new component on its ground before it goes into a page. noindex, linked
+   from nowhere; it comes out when the components are wired. */
+const StoryPage = lazy(() => import('./pages/site/StoryPage.jsx'));
 
 export default function App() {
   return (
@@ -162,6 +166,7 @@ export default function App() {
         {/* THE NOT-FOUND ROUTE IS THE REBUILD'S, 2026-09-15. It was the legacy
             NotFound in the legacy shell; `/404` names it and `*` catches the
             rest. */}
+        <Route path="/story/:id" element={<StoryPage />} />
         <Route path="/404" element={<NotFoundPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

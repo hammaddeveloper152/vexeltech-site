@@ -1,8 +1,6 @@
 import React from 'react';
 import Shell from './Shell.jsx';
 import Brush from '../../components/site/Brush.jsx';
-import RouteBand from '../../components/site/RouteBand.jsx';
-import Services from '../../components/home/Services.jsx';
 import Faq from '../../components/home/Faq.jsx';
 import { CallBand } from './parts.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
@@ -13,10 +11,10 @@ import '../../styles/light.css';
    structure pass (2026-10-01, the founder) from components that already
    exist, in the brief's order:
 
-     1  Where we come from        RouteBand, three stops, still
-     2  What we build it around   home's discipline cards (Services.jsx)
+     1  Where we come from        (off, the storytelling pass)
+     2  What we build it around   (off, the storytelling pass)
      3  Who we are for            two cream cards, A fit and Not a fit
-     4  How we work with you      RouteBand, four stops, still
+     4  How we work with you      (off, the storytelling pass)
      5  Key facts                 hairline rows, the mono label left
      6  Questions                 the FAQ accordion, four questions
      7  The closing call          CallBand
@@ -33,24 +31,6 @@ const EMAIL = 'info@vexeltechsolutions.com';
 const PHONE = '(385) 284-3265';
 const PHONE_HREF = 'tel:+13852843265';
 
-const ORIGIN_STOPS = [
-  ['01', 'The ads.'],
-  ['02', 'The build.'],
-  ['03', 'The whole thing.'],
-];
-const ORIGIN_LINES = [
-  'We started as a paid media team running Google and Meta campaigns for small businesses. Most of the spend died on the page after the click.',
-  'So we built the pages, then the whole site, then the follow-up that runs after the call.',
-  "VexelTech, 2026. Branding, website, marketing and automation from one team at flat prices, for businesses that can't carry four vendors.",
-];
-
-const AROUND = {
-  branding: "A customer decides if you're real in ten seconds. The mark does that before you speak.",
-  websites: 'People scan for a number, a price and a reason to trust you. All three above the fold.',
-  marketing: 'An ad is only as good as the page after the click and the phone after the page.',
-  automation: 'A missed call answered by text in sixty seconds is still a customer.',
-};
-
 const FIT = [
   {
     id: 'fit',
@@ -62,19 +42,6 @@ const FIT = [
     label: 'Not a fit',
     line: 'Agencies wanting white-label work. Startups raising a round. Anyone who wants a retainer instead of a result.',
   },
-];
-
-const WORK_STOPS = [
-  ['01', 'One person.'],
-  ['02', 'Approval first.'],
-  ['03', 'Ownership.'],
-  ['04', 'Thirty days.'],
-];
-const WORK_LINES = [
-  'A name and a US number, on your account from the first call.',
-  'Concepts, then the build, then the invoice.',
-  'Domain, hosting, code and credentials in your name from day one.',
-  'Maintenance included after launch. After that, you call us when you need us.',
 ];
 
 const FACTS = [
@@ -157,12 +124,10 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 1. WHERE WE COME FROM. Home's route, three stops, drawn. */}
-      <RouteBand id="ab3-from-h" heading="Where we come from" stops={ORIGIN_STOPS} lines={ORIGIN_LINES} still />
-
-      {/* 2. WHAT WE BUILD IT AROUND. Home's four discipline cards, in their
-             colours, with About's line on each and no lead. */}
-      <Services id="ab3-around-h" heading="What we build it around" lead={null} lines={AROUND} />
+      {/* WHERE WE COME FROM AND WHAT WE BUILD IT AROUND came off with home's
+          route and discipline cards, 2026-10-01 (the storytelling pass):
+          components/story/GrowthDiagram.jsx and BuildAround.jsx take their
+          places once approved and wired. */}
 
       {/* 3. WHO WE ARE FOR. Two cream cards, side by side from 768. */}
       <section className="vt ab3-fit" aria-labelledby="ab3-fit-h">
@@ -181,8 +146,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 4. HOW WE WORK WITH YOU. The same route, four stops. */}
-      <RouteBand id="ab3-work-h" heading="How we work with you" stops={WORK_STOPS} lines={WORK_LINES} still />
+      {/* HOW WE WORK WITH YOU came off with the route (the storytelling
+          pass); the terms sheet (components/story/TermsSheet.jsx) carries it
+          with the key facts once approved and wired. */}
 
       {/* 5. KEY FACTS. Hairline rows, the label in mono on the left. */}
       <section className="vt ab3-facts" aria-labelledby="ab3-facts-h">

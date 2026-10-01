@@ -3,7 +3,6 @@ import { company } from '../../content/company.js';
 import { Link } from 'react-router-dom';
 import { IconFacebook, IconInstagram, IconLinkedIn } from '../site/Icons.jsx';
 import { SOCIAL_URLS } from '../../content/socials.js';
-import Brush from '../site/Brush.jsx';
 import './FooterForm.css';
 
 /* THE FOOTER BAND, 2026-09-24 (the founder's Flesh and Bones pass), on every
@@ -78,7 +77,7 @@ const YEAR = 2026;
 export default function FooterMeta() {
   return (
     <div className="foot__band">
-      <Brush mark width={420} thickness={48} angle={-35} opacity={0.9} className="foot__swash" />
+      {/* The corner swash came off (the storytelling pass, 2026-10-01: the swash is home's "Yet." and one word per page, nothing else). */}
 
       <div className="foot__big-col">
         <p className="foot__big">Let&apos;s talk.</p>

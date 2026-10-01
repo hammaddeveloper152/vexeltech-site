@@ -1,6 +1,5 @@
 import React from 'react';
 import { useReveal } from './hooks.js';
-import Brush from '../site/Brush.jsx';
 import './Failures.css';
 
 /* The four failures. Sits between the hero and Services, and names what is
@@ -63,12 +62,7 @@ export default function Failures() {
           <h2 className="fail__h" id="fail-h">
             What it costs you
           </h2>
-          {/* Two loose swashes under the intro, from 1024 (the Genesis pass):
-              260 and 320px, -6 and 4 degrees, at 0.85. Decorative. */}
-          <div className="fail__marks" aria-hidden="true">
-            <Brush mark width={260} angle={-6} opacity={0.85} />
-            <Brush mark width={320} angle={4} opacity={0.85} />
-          </div>
+          {/* The two loose swashes came off (the storytelling pass, 2026-10-01: the swash is home's "Yet." and one word per page, nothing else). */}
         </div>
         {/* A 2 x 2 from 1024, one column below it. No numerals since life
             pass 3: the list is still ordered, and a screen reader still

@@ -3,7 +3,6 @@ import Shell from './Shell.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import LeadForm from '../../components/site/LeadForm.jsx';
 import { IconArrowDownRight, IconPause, IconPlay } from '../../components/site/Icons.jsx';
-import { FACTS } from '../../content/facts.js';
 import './contact.css';
 
 /* THE CONTACT PAGE, 2026-09-25 (the founder's contact pass, after
@@ -108,19 +107,9 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="vt ct-facts" aria-labelledby="ct-facts-h">
-        <h2 className="ct-facts__h" id="ct-facts-h">
-          Who we are
-        </h2>
-        <dl className="ct-facts__row">
-          {FACTS.map(([k, v]) => (
-            <div className="ct-facts__tile" key={k}>
-              <dt className="ct-facts__k lbl">{k}</dt>
-              <dd className="ct-facts__v">{v}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
+      {/* The tiles came off, 2026-10-01 (the storytelling pass); the
+          timeline (components/story/ContactTimeline.jsx) takes their place
+          once it is approved and wired. */}
 
       <FooterForm form={false} />
     </Shell>

@@ -176,7 +176,7 @@ html[data-ground='light'] :is(.faq__mark, .faq__item[data-open='true'] .faq__mar
 }
 
 /* THE CLOSING CALL: the heading asphalt (machine yellow is 1.66:1 on
-   cream), the scribble keeps its yellow as a mark, the note steel. */
+   cream), the note steel. */
 html[data-ground='light'] .callband__h {
   color: var(--c-asphalt);
 }

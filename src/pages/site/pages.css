@@ -121,14 +121,6 @@
   }
 }
 
-/* The words' own box, as wide as their widest line, so the scribble runs
-   their width; its space under them is the scribble's own height plus 8. */
-.callband__word {
-  position: relative;
-  display: inline-block;
-  padding-bottom: calc(0.43em + 8px); /* the scribble is 0.43em tall */
-}
-
 .callband__note {
   max-width: 560px;
   margin: var(--s-lg) auto 0;
@@ -168,42 +160,6 @@
 
 .callband__cta:active {
   transform: scale(0.97);
-}
-
-.scribble {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: block;
-  overflow: visible;
-}
-
-.scribble path {
-  fill: none;
-  stroke: var(--c-accent-draw-dark);
-  stroke-width: var(--scribble-w, 3px);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-}
-
-.scribble__a {
-  transition: stroke-dashoffset 360ms var(--ease-reveal);
-}
-
-.scribble__b {
-  transition: stroke-dashoffset 240ms var(--ease-reveal) 360ms;
-}
-
-.scribble[data-drawn='true'] path {
-  stroke-dashoffset: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scribble path {
-    transition: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
