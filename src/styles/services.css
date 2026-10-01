@@ -195,6 +195,35 @@
   border-bottom-color: rgb(11 11 13 / 12%);
 }
 
+/* THE ITEM'S LINE, 2026-10-01 (the structure pass): the name, then its one
+   line from services.js at 14px in steel-lift (7.4:1 on the base; steel on
+   a cream band, 7.20:1). The dot stands level with the name, not the
+   pair: 9px down is half the name's 24px line less half the 6px dot. */
+.svc2__item:has(.svc2__item-d) {
+  align-items: start;
+}
+
+.svc2__item:has(.svc2__item-d) .lmark {
+  margin-top: 9px;
+}
+
+.svc2__item-w {
+  display: grid;
+  gap: var(--s-xs);
+  min-width: 0;
+}
+
+.svc2__item-d {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-steel-lift);
+  text-wrap: pretty;
+}
+
+.svc2__d--cream .svc2__item-d {
+  color: var(--c-steel);
+}
+
 /* The mark is the list mark since 2026-09-25 (`.lmark`, tokens.css). */
 
 /* ---- The right column: the price IS the visual ------------------------- */
@@ -244,10 +273,10 @@
   color: var(--c-steel); /* 7.20:1 on cream */
 }
 
-/* COPY V3, 2026-10-01. THE TRADES LINE, Websites' H3: a 14px mono line under
+/* COPY V3.1, 2026-10-01. THE SEO LINE, Websites' H3: a 14px mono line under
    the promise, pulled up to it from the promise's 40px foot, in the fact
    colours. BIGGER BUILDS sits under the items in the fact register. */
-.svc2__trades {
+.svc2__seo {
   max-width: 54ch;
   margin: calc(var(--s-md) - var(--s-xl)) 0 var(--s-xl);
   font-family: var(--font-mono);
@@ -259,7 +288,7 @@
   color: var(--c-steel-lift);
 }
 
-.svc2__d--cream .svc2__trades {
+.svc2__d--cream .svc2__seo {
   color: var(--c-steel);
 }
 

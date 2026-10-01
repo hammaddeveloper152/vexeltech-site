@@ -61,19 +61,19 @@ import '../../styles/lit.css';
    section numbers in the build brief were a build sequence, not a page
    order, so do not reorder to match them. */
 
-/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Metadata). */
+/* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Metadata). */
 const TITLE = 'Website design for small business, $700 flat | VexelTech';
 const DESCRIPTION =
-  'Website design, branding, local SEO, ads and automation for US home service businesses. Websites $700 flat, live in four business days.';
+  'Website design, branding, local SEO, ads and automation for US small businesses. Websites $700 flat, live in four business days.';
 
 /* The retired Process component's four step descriptions, carried as one
    line under stops 01 to 04 of the route, and the user's line for stop 05
    (2026-09-21). */
-/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Home, How it works): each
+/* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Home, How it works): each
    step's first sentence is the stop's title (RouteBand.jsx), the rest its
    line. */
 const STEP_LINES = [
-  "Fifteen minutes. Your trade, your area, what's not working. You get a written number the same day.",
+  "Fifteen minutes. Your business, your market, what's not working. You get a written number the same day.",
   'Logo concepts or the site design, shown before anything is billed.',
   'Four business days for a website. One to two for branding.',
   'Domain, hosting, files and code in your name. Thirty days of maintenance included.',

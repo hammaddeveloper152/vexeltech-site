@@ -52,6 +52,14 @@
   color: var(--c-body-dark); /* bone at 85% */
 }
 
+/* /thanks' phone, 2026-10-01: a link in the sentence, the sentence's colour,
+   underlined. */
+.legal__lead a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .legal__meta {
   display: flex;
   flex-wrap: wrap;

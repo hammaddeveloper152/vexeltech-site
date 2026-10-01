@@ -170,8 +170,8 @@ export const WEBSITES = [
        rendered; it waits for the structure pass. */
     turnaround: 'four business days',
     features: [
-      'Six pages structured for your trade',
-      'Mobile-first, click to call and quote form above the fold',
+      'Six pages structured for your business',
+      'Mobile-first, click to call and enquiry form above the fold',
       'Core Web Vitals in the green',
       'Local search setup: titles, schema, sitemap, Google Business Profile connected',
       'Call and form tracking',
@@ -264,7 +264,7 @@ export const CUSTOM = {
 /* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Custom card). */
 export const NEEDS = {
   branding: [
-    'Your trade and your market',
+    'Your business and your market',
     'Where the mark has to live',
     'What exists and has to stay',
   ],

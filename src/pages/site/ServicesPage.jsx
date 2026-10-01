@@ -51,21 +51,21 @@ import Brush from '../../components/site/Brush.jsx';
 export default function ServicesPage() {
   return (
     <Shell
-      title="Contractor website design, local SEO, ads and automation | VexelTech"
+      title="Small business website design, local SEO, ads and automation | VexelTech"
       path="/services"
-      description="Plumber, HVAC, electrician, roofing, cleaning and dental website design, Google Business Profile and Local Service Ads management, missed-call text-back and booking automation."
+      description="Website design, Google Business Profile and Google Ads management, Meta ads, missed-call text-back and booking automation for small businesses across the US."
     >
-      {/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Services, and Metadata).
-          The page's one highlighted word is the H1's last, "contractors"
-          (it was "do" in "What we do"). */}
+      {/* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Services, and Metadata).
+          The page's one highlight is "small business", the founder's pick
+          (it was "contractors" in V3, "do" before that). */}
       <PageHead
         title={
           <>
             Website design, local SEO, ads and automation for{' '}
-            <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">contractors</Brush>
+            <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">small business</Brush>
           </>
         }
-        lead="Four disciplines, built to work as one system. Start with the one that's costing you jobs."
+        lead="Four disciplines, built to work as one system. Start with the one that's costing you customers."
       />
 
       {/* NOT INSIDE `Section`, 2026-09-23. (Since 2026-09-24 the cream

@@ -98,3 +98,90 @@ html[data-ground='light'] :is(.foot__big, .foot__email, .foot__page) {
 html[data-ground='light'] :is(.foot__booking, .foot__legal) {
   color: var(--c-steel-lift); /* 7.4:1 on black; steel would be 2.4 */
 }
+
+/* The legal line's links take its colour, not the page links' bone. */
+html[data-ground='light'] .foot__legal .foot__page {
+  color: var(--c-steel-lift);
+}
+
+/* ---- About's shared sections, the structure pass (2026-10-01) -------------
+
+   Each is a component built for the dark ground, given this ground's
+   colours, and nothing else changed. Every pair on cream: asphalt 15.75:1,
+   steel 7.20, deep amber 4.82.
+
+   THE ROUTE (Where we come from, How we work with you): drawn and still
+   (RouteBand's `still`). Ink asphalt, lines steel, the rest dot steel, the
+   line deep amber, the light ground's stroke; a reached numeral takes the
+   ink, as on home. */
+html[data-ground='light'] .route-band {
+  --route-ink: var(--c-asphalt);
+  --route-soft: var(--c-steel);
+  --route-rest: var(--c-steel);
+  --route-line: var(--c-accent-draw-light);
+}
+
+/* THE DISCIPLINE CARDS (What we build it around): the cards keep their
+   colours, asphalt on each; the heading goes asphalt. */
+html[data-ground='light'] .services__h {
+  color: var(--c-asphalt);
+}
+
+/* THE QUESTIONS: asphalt on the ground, hairlines asphalt at 15% (the
+   pricing grid's), the open row without the dark card's fill, its answer in
+   steel. */
+html[data-ground='light'] .faq {
+  color: var(--c-asphalt);
+}
+
+/* agency.css and register.css set these by class, so they are named here. */
+html[data-ground='light'] :is(.faq__h, .faq__q, .faq__q-t) {
+  color: var(--c-asphalt); /* 15.75:1 on cream */
+}
+
+html[data-ground='light'] :is(.faq__list, .faq__item) {
+  border-color: rgb(23 24 26 / 15%);
+}
+
+html[data-ground='light'] .faq__item {
+  border-bottom-color: rgb(23 24 26 / 15%);
+}
+
+html[data-ground='light'] .faq__rule {
+  background: var(--c-steel);
+}
+
+/* The open row has no card here, so it keeps its hairline and its drawn
+   rule (the dark card hides both). */
+html[data-ground='light'] .faq__item[data-open='true'] {
+  background-color: transparent;
+  box-shadow: none;
+  border-bottom-color: rgb(23 24 26 / 15%);
+}
+
+html[data-ground='light'] .faq__item[data-open='true'] .faq__rule {
+  background: var(--c-steel);
+}
+
+html[data-ground='light'] .faq__item[data-open='true'] .faq__q-t {
+  color: var(--c-asphalt);
+}
+
+html[data-ground='light'] :is(.faq__a, .faq__item[data-open='true'] .faq__a) {
+  color: var(--c-steel);
+}
+
+html[data-ground='light'] :is(.faq__mark, .faq__item[data-open='true'] .faq__mark) {
+  color: var(--c-steel);
+}
+
+/* THE CLOSING CALL: the heading asphalt (machine yellow is 1.66:1 on
+   cream), the scribble keeps its yellow as a mark, the note steel. */
+html[data-ground='light'] .callband__h {
+  color: var(--c-asphalt);
+}
+
+html[data-ground='light'] .callband__note {
+  color: var(--c-steel);
+}
+

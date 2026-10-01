@@ -54,7 +54,13 @@ const STOPS = [
    gone. */
 /* `sectionId`: the section's own anchor, `how-it-works` on home since
    2026-09-25, so About's line can link to it (`/#how-it-works`). */
-export default function RouteBand({ id, heading, lines, sectionId = null }) {
+/* `stops` and `still`, 2026-10-01 (the structure pass): About lists its own
+   stops (Where we come from, How we work with you) on the same component.
+   `still` renders the drawn state, the line full and every stop reached,
+   with no trigger and no animation library: the reduced-motion path, for
+   every reader. On About it is the light page's (light.css). Home passes
+   neither, and its route is unchanged. */
+export default function RouteBand({ id, heading, lines, sectionId = null, stops = STOPS, still = false }) {
   const sectionRef = useRef(null);
   const listRef = useRef(null);
   const stopRefs = useRef([]);
@@ -77,7 +83,7 @@ export default function RouteBand({ id, heading, lines, sectionId = null }) {
       list.style.setProperty('--line-end', `${r.bottom - (nr.top + nr.height / 2)}px`);
     };
 
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (still || matchMedia('(prefers-reduced-motion: reduce)').matches) {
       measureEnd();
       list.style.setProperty('--drawn', '1');
       light(stops.length);
@@ -148,7 +154,7 @@ export default function RouteBand({ id, heading, lines, sectionId = null }) {
         </h2>
 
         <ol className="route" ref={listRef}>
-          {STOPS.map(([n, title], i) => (
+          {stops.map(([n, title], i) => (
             <li
               className="route__stop"
               key={n}

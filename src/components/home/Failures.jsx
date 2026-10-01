@@ -23,13 +23,13 @@ import './Failures.css';
    reader hears the list's count and not "01" read out before each title. */
 /* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Home, What it costs you): each
    row's first sentence is the title, the rest the line. */
-/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Home, What it costs you): each
+/* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Home, What it costs you): each
    row's label is the title, its line the body. */
 const FAILURES = [
   {
     id: 'find',
-    statement: 'Not in the Map Pack.',
-    consequence: "The search for your trade in your town lists three competitors, and you're not one of them.",
+    statement: 'Not found.',
+    consequence: "Someone searches for what you do and sees three competitors. You're not one of them.",
   },
   {
     id: 'call',
@@ -39,7 +39,7 @@ const FAILURES = [
   {
     id: 'miss',
     statement: 'The missed call.',
-    consequence: "You're on a job. The caller dials the next number on the list.",
+    consequence: "You're with a customer. The caller dials the next number on the list.",
   },
   {
     id: 'remember',

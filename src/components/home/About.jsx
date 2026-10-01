@@ -29,12 +29,12 @@ import './About.css';
    The copy is the founder's third sentence, unchanged. The section heading is
    still visually hidden and still a placeholder: a visible heading above a
    statement would be a fifth thing competing for one job. */
-/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Home, Who we are). The "How we
+/* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Home, Who we are). The "How we
    work" link has no V3 line and is removed. */
 const COPY = {
-  statement: 'Websites, ads and automation for the trades.',
+  statement: 'Websites, ads and automation for small business.',
   support:
-    'VexelTech builds the website people land on, the campaigns that send them there, and the follow-up that catches the call. One team, one brief, one invoice, and a named person on the phone.',
+    'VexelTech builds the website people land on, the campaigns that send them there, and the follow-up that catches the enquiry. One team, one brief, one invoice, and a named person on the phone.',
 };
 
 /* THE FOUR ROWS: the founder's words, verbatim, in content/facts.js since

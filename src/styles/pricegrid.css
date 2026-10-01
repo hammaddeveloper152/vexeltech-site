@@ -371,6 +371,21 @@
   color: var(--c-steel); /* 7.20:1 */
 }
 
+/* THE TIER LISTS (2026-10-01, the structure pass): each under its own mono
+   label, 32px below the list above; Websites' bigger-builds line under its
+   list in the column's sub-line type. */
+.pr-col__tier {
+  padding-top: var(--s-xl);
+}
+
+.pr-col__note {
+  margin: var(--s-md) 0 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-steel); /* 7.20:1 on cream */
+}
+
 .pr-col__list {
   display: grid;
   gap: 0;

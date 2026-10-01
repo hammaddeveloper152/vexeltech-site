@@ -245,6 +245,39 @@
   color: var(--c-steel); /* 7.20:1 */
 }
 
+/* THE LEGAL LINE'S LINKS, 2026-10-01 (the structure pass): Privacy and
+   Terms in the page links' box (`.foot__page`: 40px, the 48px target, the
+   radius, the hover block), in the legal line's own type and colour, 12px
+   each side inside the box, the first word on the line after the year. */
+.foot__legal {
+  --foot-page-px: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--s-xs);
+}
+
+.foot__legal > span {
+  margin-right: calc(var(--s-md) - var(--s-xs));
+}
+
+.foot__legal .foot__page {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: inherit;
+}
+
+/* Hover: the page links' block. Four classes, so it outranks the light
+   page's colour for these links (light.css). */
+@media (hover: hover) and (pointer: fine) {
+  .foot__band .foot__legal .foot__page:hover {
+    background: var(--c-accent-ground);
+    color: var(--c-asphalt);
+  }
+}
+
 /* The email: 16px asphalt, underlined, a 48px target (BUILD-LAW Touch). */
 .foot__email {
   display: inline-flex;

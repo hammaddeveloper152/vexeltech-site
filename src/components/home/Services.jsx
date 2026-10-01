@@ -64,18 +64,27 @@ import './Services.css';
    are deleted from the build. (plates.css itself went 2026-09-24, above.) */
 
 
-export default function Services() {
+/* `id`, `heading`, `lead` and `lines`, 2026-10-01 (the structure pass):
+   About's "What we build it around" is the same four cards with its own
+   heading, no lead and its own line per card (`lines`, by discipline id).
+   Home passes none of them and is unchanged. */
+export default function Services({
+  id = 'services-h',
+  heading = 'What we do',
+  /* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Home, What we do). */
+  lead = 'Four disciplines. One team.',
+  lines = null,
+}) {
   const [ref, revealed] = useReveal();
   return (
-    <section className="vt services" aria-labelledby="services-h">
+    <section className="vt services" aria-labelledby={id}>
       {/* The margin label is Marginalia.jsx's since 2026-09-25. */}
       <div className="services__in">
         <div className="services__head">
-          <h2 className="services__h" id="services-h">
-            What we do
+          <h2 className="services__h" id={id}>
+            {heading}
           </h2>
-          {/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Home, What we do). */}
-          <p className="services__lead">Four disciplines. One team.</p>
+          {lead ? <p className="services__lead">{lead}</p> : null}
         </div>
         <div className="services__grid" ref={ref} data-revealed={revealed ? 'true' : 'false'}>
           {/* The reveal moves the cell and the hover moves the card, so the
@@ -86,7 +95,7 @@ export default function Services() {
                 num={String(i + 1).padStart(2, '0')}
                 Art={Art}
                 name={discipline}
-                line={line}
+                line={lines ? lines[id] : line}
                 href={`/services#${id}`}
                 variant="colour"
                 tone={id}

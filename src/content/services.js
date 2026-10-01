@@ -6,16 +6,18 @@
 
 import { FIGURES, money } from './pricing.js';
 
-/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Services): the promises, the six
+/* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Services): the promises, the six
    items with their lines, the terms, the fit lines and the calls. `terms`
    is V3's Terms line, shown after "Terms:"; it replaced `price` and
-   `turnaround`. Websites carries the trades line (`trades`, an H3 under the
-   promise) and `bigger`, both shown. Figures are tokens. */
+   `turnaround`. Websites carries the SEO line (`seo`, an H3 under the
+   promise; V3's trades line until V3.1) and `bigger`, both shown. Each
+   card's `line` shows under its title on /services (the structure pass).
+   Figures are tokens. */
 export const DISCIPLINES = [
   {
     id: 'branding',
     name: 'Branding',
-    promise: 'A mark that holds up on the truck, the invoice and the search result.',
+    promise: 'A mark that holds up on the sign, the invoice and the search result.',
     cards: [
       { title: 'Logo design', line: 'Five concepts on Basic, eight on Advance.' },
       { title: 'Brand guidelines', line: 'Colour, type and spacing, written down.' },
@@ -25,17 +27,17 @@ export const DISCIPLINES = [
       { title: 'Files', line: 'Every format your printer, sign shop and web team will ask for.' },
     ],
     terms: `Basic ${money(FIGURES.brandingBasic)}. Advance ${money(FIGURES.brandingAdvance)}. One to two business days.`,
-    fit: "You're quoting jobs under a name with no mark, or a mark you wouldn't put on a truck.",
+    fit: "You're trading under a name with no mark, or a mark you wouldn't put on a sign.",
     call: { label: 'Get a custom quote', primary: true },
   },
   {
     id: 'websites',
     name: 'Websites',
-    promise: 'A conversion-focused site for your trade, live in four business days.',
-    trades: 'Plumber, HVAC, electrician, roofing, cleaning, dental and contractor website design.',
+    promise: 'A conversion-focused site for your business, live in four business days.',
+    seo: 'Small business website design for services, clinics, real estate, hospitality and retail.',
     cards: [
-      { title: 'Six pages', line: 'Home, services, service area, about, reviews, contact. Structured for your trade.' },
-      { title: 'Mobile-first', line: 'Click to call, quote form and booking link above the fold on a phone.' },
+      { title: 'Six pages', line: 'Home, services, about, reviews, contact and one more for what you sell most. Structured for your business.' },
+      { title: 'Mobile-first', line: 'Click to call, enquiry form and booking link above the fold on a phone.' },
       { title: 'Speed', line: 'Core Web Vitals in the green. Fast pages rank and convert.' },
       { title: 'Local search', line: 'Titles, schema, sitemap and Google Business Profile connected.' },
       { title: 'Forms and tracking', line: 'Every call and form tracked to its source.' },
@@ -43,7 +45,7 @@ export const DISCIPLINES = [
     ],
     bigger: 'Stores, customer portals, custom backends and apps. Scoped and priced on the call.',
     terms: `${money(FIGURES.website)}, one price. Four business days from the day we have your content. Domain, hosting and code in your name.`,
-    fit: "You have no site, a site that isn't in the Map Pack, or a site that gets traffic and no calls.",
+    fit: 'You have no site, a site nobody finds, or a site that gets traffic and no enquiries.',
     call: { label: 'Get a custom quote', primary: true },
   },
   {
@@ -51,12 +53,14 @@ export const DISCIPLINES = [
     name: 'Marketing',
     promise: 'Campaigns measured in cost per lead, not impressions.',
     cards: [
-      { title: 'Google Business Profile', line: 'Optimisation, posts, photos, review requests and responses. The Map Pack.' },
+      /* "The Map Pack." came off this line when it met the banned list
+         (the founder, 2026-10-01; the copy file was changed to match). */
+      { title: 'Google Business Profile', line: 'Optimisation, posts, photos, review requests and responses.' },
       { title: 'Local Service Ads', line: 'Google Guaranteed setup and management, pay per lead.' },
-      { title: 'Google Ads', line: 'Search campaigns by trade and zip code. Conversion tracking from day one.' },
-      { title: 'Meta ads', line: 'Facebook and Instagram lead campaigns with creative from your real jobs.' },
+      { title: 'Google Ads', line: 'Search campaigns by service and area. Conversion tracking from day one.' },
+      { title: 'Meta ads', line: 'Facebook and Instagram lead campaigns with creative from your real work.' },
       { title: 'Local SEO and AI search', line: 'Service-area pages, citations, and the content answer engines cite.' },
-      { title: 'Reporting', line: 'Leads, cost per lead and booked jobs, monthly, in plain language.' },
+      { title: 'Reporting', line: 'Leads, cost per lead and booked customers, monthly, in plain language.' },
     ],
     terms: 'Priced on the call, in writing before anything runs. Month to month.',
     fit: "You're spending on ads and can't name your cost per lead, or you're ready to start and want it set up right.",
@@ -68,10 +72,12 @@ export const DISCIPLINES = [
     promise: "The follow-up that runs while you're on the job.",
     cards: [
       { title: 'Missed-call text-back', line: 'A text to every unanswered caller within sixty seconds, with a booking link.' },
-      { title: 'Quote follow-up', line: "Quotes sent from your template, with a follow-up cadence until they're answered." },
+      /* "from your template" came off this line when it met the banned
+         list (the founder, 2026-10-01; the copy file was changed to match). */
+      { title: 'Quote follow-up', line: "Quotes sent with a follow-up cadence until they're answered." },
       { title: 'Invoice reminders', line: 'Sent on completion, chased on schedule, paid online.' },
-      { title: 'Online booking', line: 'Jobs land on the right calendar with the address and notes.' },
-      { title: 'Review requests', line: 'A request after every finished job, routed to Google.' },
+      { title: 'Online booking', line: 'Appointments land on the right calendar with the details attached.' },
+      { title: 'Review requests', line: 'A request after every completed job or visit, routed to Google.' },
       { title: 'AI agents', line: 'Answer, qualify and book from your site and your channels, on your rules.' },
     ],
     terms: 'Priced per workflow, in writing before any work starts. Most workflows run within two weeks.',

@@ -4,7 +4,7 @@ import Brush from '../../components/site/Brush.jsx';
 import Shell from './Shell.jsx';
 import Faq from '../../components/home/Faq.jsx';
 import { DISCIPLINES } from '../../content/services.js';
-import { FIGURES, money } from '../../content/pricing.js';
+import { BRANDING, FIGURES, WEBSITES, money } from '../../content/pricing.js';
 import '../../styles/pricegrid.css';
 
 /* THE PRICING PAGE, REBUILT 2026-09-24 ON THE MELIUS PATTERN (the founder),
@@ -42,6 +42,26 @@ const GRID = {
   automation: { price: 'Per workflow', sub: 'one time per workflow' },
 };
 
+/* THE TIER LISTS IN THE GRID, 2026-10-01 (the structure pass): the branding
+   tiers and the website's features from pricing.js, saved until now and not
+   rendered, shown in their columns under What you get, each under a label
+   that names the tier, its price and its turnaround (VEXELTECH-COPY.md
+   V3.1, Pricing, Branding and The website). Figures are tokens. */
+const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+const TIERS = {
+  branding: BRANDING.map((t) => ({
+    id: t.id,
+    label: `${t.name}, ${money(FIGURES[t.figure])}, ${t.turnaround}`,
+    items: t.features,
+  })),
+  websites: WEBSITES.map((t) => ({
+    id: t.id,
+    label: `The website, ${money(FIGURES[t.figure])}, ${t.turnaround}`,
+    items: t.features,
+    note: t.bigger ? `Bigger builds: ${t.bigger}` : null,
+  })),
+};
+
 const COLUMNS = DISCIPLINES.map((d) => ({
   id: d.id,
   name: d.name,
@@ -72,7 +92,7 @@ const ROWS = [
 /* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Questions). The $700
    and the $299 are the tokens; the $15 is a domain's cost, not a price of
    ours. */
-/* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Questions), in V3's
+/* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Questions), in V3's
    order. */
 const QUESTIONS = [
   {
@@ -83,7 +103,7 @@ const QUESTIONS = [
   {
     id: 'need',
     q: 'What do you need from me?',
-    a: 'Your services and service area, photos of real jobs, your logo if you have one, and the things you say to customers on the phone.',
+    a: 'Your services and where you sell them, photos of real work, your logo if you have one, and the things you say to customers on the phone.',
   },
   {
     id: 'call',
@@ -163,6 +183,20 @@ export default function PricingPage() {
                       </li>
                     ))}
                   </ul>
+                  {(TIERS[c.id] || []).map((t) => (
+                    <div className="pr-col__tier" key={t.id}>
+                      <p className="pr-col__label lbl">{cap(t.label)}</p>
+                      <ul className="pr-col__list">
+                        {t.items.map((item) => (
+                          <li className="pr-col__item" key={item}>
+                            <span className="lmark" aria-hidden="true" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                      {t.note ? <p className="pr-col__note">{t.note}</p> : null}
+                    </div>
+                  ))}
                 </div>
                 <Link
                   className={`pr-col__btn${c.primary ? ' pr-col__btn--primary' : ''}`}

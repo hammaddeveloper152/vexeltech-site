@@ -82,7 +82,18 @@ export default function FooterMeta() {
 
       <div className="foot__big-col">
         <p className="foot__big">Let&apos;s talk.</p>
-        <p className="foot__legal">© {YEAR} VexelTech</p>
+        {/* THE LEGAL LINE, 2026-10-01 (the structure pass, VEXELTECH-COPY.md
+            Footer): the year and VexelTech, then Privacy and Terms in the
+            page links' 40px box. */}
+        <div className="foot__legal">
+          <span>© {YEAR} VexelTech</span>
+          <Link className="foot__page" to="/privacy-policy">
+            Privacy
+          </Link>
+          <Link className="foot__page" to="/terms-of-service">
+            Terms
+          </Link>
+        </div>
       </div>
 
       <div className="foot__meta">

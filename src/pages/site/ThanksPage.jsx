@@ -9,27 +9,33 @@ import './legal.css';
    of our team will review your project details and reach out within 24
    hours."). The "/ 01" after the label came off: one page, nothing to
    number. The forms confirm in place, so this route is only reached by a
-   direct visit or an old link. noindex, as before. */
+   direct visit or an old link. noindex, as before.
+
+   THE STRUCTURE PASS, 2026-10-01 (the founder): the heading is "Received."
+   and the line is the founder's, with the phone as a call link. Sentence
+   case throughout (the badge, the call and the title were title case), and
+   the line saying what VexelTech is not ("not generic pitch decks") is
+   gone. */
 export default function ThanksPage() {
   return (
     <Shell
-      title="Submission Received | VexelTech"
+      title="Submission received | VexelTech"
       description="Thank you for reaching out to VexelTech Solutions. We will review your request and get back to you shortly."
       footerForm={false}
       noindex
     >
       <section className="vt legal legal--thanks" aria-labelledby="thanks-h">
         <div className="legal__in">
-          <p className="legal__badge lbl">Submission Confirmed</p>
+          <p className="legal__badge lbl">Submission confirmed</p>
           <h1 className="legal__h" id="thanks-h">
-            We&apos;ve Received Your Request
+            Received.
           </h1>
           <p className="legal__lead">
-            Thank you for reaching out to VexelTech. We show up with actual work built, not generic pitch decks.
-            You&apos;ll hear from a person within one business day.
+            A written reply within one business day. If it&apos;s urgent, call{' '}
+            <a href="tel:+13852843265">(385) 284-3265</a>.
           </p>
           <Link className="legal__cta" to="/">
-            Return to Homepage
+            Return to homepage
           </Link>
         </div>
       </section>

@@ -16,9 +16,11 @@
        whole words: coded, design system, page builder, theme(s),
        outsourced, generated, template(s), affordable, cheap (and cheaper,
        cheapest), agency-level, dominate, skyrocket, startups, entrepreneurs,
-       founders, and "this site". Two exceptions: the refusals band's "It's
-       on this site" and About's "Startups raising a round". Checked in the
-       rendered text and in each page's title and meta description.
+       founders, and "this site"; V3.1 adds contractor(s), trade(s), Map
+       Pack and home service(s). The exceptions: the refusals band's "It's
+       on this site", About's "Startups raising a round", and on About only
+       the fit list's "Contractors". Checked in the rendered text and in each
+       page's title and meta description.
      - repeats are split (V3): ALLOWED where every page's copy of the
        sentence sits in the shared footer, a button or link, the facts block
        (home and Contact), the closing call (home and Services) or a margin
@@ -48,9 +50,13 @@ const BANNED = ['SaaS', 'mobile applications', 'web apps', 'Most picked', 'Fifty
 /* 300 joined the list on 2026-10-01: V2's budget bands (Up to $300, $300 to
    $700) are derived from the prices, the founder's decision. */
 const SELF =
-  /\b(coded|design systems?|page builders?|themes?|outsourced|generated|templates?|affordab\w*|cheap\w*|agency-level|dominat\w*|skyrocket\w*|startups?|entrepreneurs?|founders?|this site)\b/gi;
+  /\b(coded|design systems?|page builders?|themes?|outsourced|generated|templates?|affordab\w*|cheap\w*|agency-level|dominat\w*|skyrocket\w*|startups?|entrepreneurs?|founders?|this site|contractors?|trades?|map pack|home services?)\b/gi;
+/* The exceptions. The About one holds on About only: the fit list's
+   "Contractors" (V3.1, 2026-10-01). */
 const SELF_OK = ["It's on this site", 'Startups raising a round'];
-const selfHits = (t) => [...SELF_OK.reduce((x, ok) => x.replaceAll(ok, ''), t).matchAll(SELF)].map((m) => m[0]);
+const SELF_OK_ROUTE = { '/about-us': ['Contractors, clinics, real estate'] };
+const selfHits = (t, route) =>
+  [...[...SELF_OK, ...(SELF_OK_ROUTE[route] || [])].reduce((x, ok) => x.replaceAll(ok, ''), t).matchAll(SELF)].map((m) => m[0]);
 /* The shared text a repeat may sit in (V3's allowances). */
 const SHARED = 'footer.foot, .callband, .about__rows, .ct-facts__row, a, button, .marg';
 const FIGURES = new Set(['299', '449', '700', '999', '150', '15', '300']);
@@ -118,7 +124,7 @@ for (const route of [...PUBLIC, ...LEGAL]) {
   report.notCap[route] = nc;
   const hits = BANNED.filter((w) => t.includes(w));
   if (hits.length) report.banned[route] = hits;
-  const self = [...selfHits(t), ...selfHits(meta[route]).map((w) => `meta: ${w}`)];
+  const self = [...selfHits(t, route), ...selfHits(meta[route], route).map((w) => `meta: ${w}`)];
   if (self.length) report.selfExplaining[route] = self;
   const bang = t.match(/[^\n]*![^\n]*/g);
   if (bang) report.bangs[route] = bang.slice(0, 5);

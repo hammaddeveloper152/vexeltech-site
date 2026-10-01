@@ -81,17 +81,22 @@ export default function ServiceSections({ disciplines }) {
                   {d.name}
                 </h2>
                 <p className="svc2__promise">{d.promise}</p>
-                {/* THE TRADES LINE, COPY V3, 2026-10-01: Websites' H3, a 14px
+                {/* THE SEO LINE, COPY V3.1, 2026-10-01: Websites' H3, a 14px
                     mono line under the promise (services.css). */}
-                {d.trades ? <h3 className="svc2__trades">{d.trades}</h3> : null}
+                {d.seo ? <h3 className="svc2__seo">{d.seo}</h3> : null}
 
                 <ul className="svc2__list">
-                  {d.cards.map(({ title }) => (
+                  {d.cards.map(({ title, line }) => (
                     <li className="svc2__item" key={title}>
                       {/* Decorative: the item says the thing, and a list of
                           six ticks read aloud is six words nobody needs. */}
                       <span className="lmark" aria-hidden="true" />
-                      {title}
+                      {/* THE ITEM'S LINE under its name, 2026-10-01 (the
+                          structure pass): services.js's `line`, 14px. */}
+                      <span className="svc2__item-w">
+                        <span className="svc2__item-t">{title}</span>
+                        {line ? <span className="svc2__item-d">{line}</span> : null}
+                      </span>
                     </li>
                   ))}
                 </ul>

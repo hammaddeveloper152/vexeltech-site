@@ -339,10 +339,10 @@ export default function Hero() {
             announced as they cut would be a screen reader talking over a film
             it cannot see. (The name is the visible line since 2026-09-25,
             below.) */}
-        {/* THE EYEBROW, COPY V3, 2026-10-01: 12px mono uppercase in
+        {/* THE EYEBROW, COPY V3.1, 2026-10-01: 12px mono uppercase in
             steel-lift, above the headline, from 1024 only (Hero.css). */}
         <p className="hero__eyebrow lbl">
-          Websites, branding, marketing and automation for home service businesses
+          Websites, branding, marketing and automation for small business
         </p>
         <h1 className="hero__headline" id="hero-h">
           {/* THE NAME IS THE VISIBLE LINE, 2026-09-25 (the founder's content
