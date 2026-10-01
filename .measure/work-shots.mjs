@@ -7,11 +7,12 @@
      public/work/<slug>-720.jpg     720 x 450, the same view at half density,
                                     for phones
 
-   And the Websites frame on /services: baseline-books.com at 390 x 844, its
-   first viewport, at 2x density so it is sharp in the device frame on a
-   high-density phone (780 x 1688 pixels; the layout is the 390 one):
+   And the Websites evidence band on /services (2026-10-02): Zions
+   Caregivers' second screen, scrolled one viewport down, 1440 x 900 and its
+   720 version (the phone capture of baseline-books.com it replaced is
+   deleted):
 
-     public/work/baseline-books-390.jpg
+     public/work/band-websites.jpg, band-websites-720.jpg
 
    Nothing on a site is clicked: a cookie or consent banner, if a site shows
    one, is in the capture as the site shows it, and is reported.
@@ -30,7 +31,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const only = process.argv.slice(2);
 const report = [];
 
-async function shot(b, url, { width, height, dpr }, file) {
+async function shot(b, url, { width, height, dpr, scrollY = 0 }, file) {
   const p = await b.newPage();
   await p.setViewport({ width, height, deviceScaleFactor: dpr });
   try {
@@ -40,8 +41,8 @@ async function shot(b, url, { width, height, dpr }, file) {
   }
   await p.evaluate(() => document.fonts && document.fonts.ready);
   await wait(2000);
-  await p.evaluate(() => window.scrollTo(0, 0));
-  await wait(300);
+  await p.evaluate((y) => window.scrollTo(0, y), scrollY);
+  await wait(scrollY ? 1500 : 300);
   const banner = await p.evaluate(() =>
     [...document.querySelectorAll('body *')].some((e) => {
       const t = (e.innerText || '').toLowerCase();
@@ -61,9 +62,14 @@ for (const w of WORK) {
   await shot(b, w.url, { width: 1440, height: 900, dpr: 0.5 }, `${w.slug}-720.jpg`);
   report.push(`${w.slug}: done`);
 }
-if (!only.length || only.includes('baseline-books')) {
-  await shot(b, 'https://www.baseline-books.com/', { width: 390, height: 844, dpr: 2 }, 'baseline-books-390.jpg');
-  report.push('baseline-books-390: done');
+/* THE WEBSITES EVIDENCE BAND on /services (2026-10-02): a different image
+   from every Recent work plate (BUILD-LAW rule 0: nothing appears twice),
+   so Zions Caregivers' SECOND screen, scrolled one viewport down, at
+   1440 x 900. The founder chose a different site's second screen. */
+if (!only.length || only.includes('band')) {
+  await shot(b, 'https://zionscaregivers.com/', { width: 1440, height: 900, dpr: 1, scrollY: 900 }, 'band-websites.jpg');
+  await shot(b, 'https://zionscaregivers.com/', { width: 1440, height: 900, dpr: 0.5, scrollY: 900 }, 'band-websites-720.jpg');
+  report.push('band-websites: done');
 }
 await b.close();
 console.log(report.join('\n'));

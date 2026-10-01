@@ -1,6 +1,5 @@
 import React from 'react';
 import Shell from './Shell.jsx';
-import Brush from '../../components/site/Brush.jsx';
 import Faq from '../../components/home/Faq.jsx';
 import GrowthDiagram from '../../components/story/GrowthDiagram.jsx';
 import BuildAround from '../../components/story/BuildAround.jsx';
@@ -16,8 +15,8 @@ import '../../styles/light.css';
      the statement                the Monigue line, the swash on "called."
      Where we come from           GrowthDiagram: one diagram that grows
      What we build it around      BuildAround: four statements with marks
-     Who we are for               FitLedger: the ledger      } side by side
-     How we work with you         TermsSheet: steps and facts } from 1024
+     Who we are for               FitLedger: mint and coral sheets
+     How we work with you         TermsSheet: the terms document
      Questions                    the FAQ accordion
      the closing call             CallBand
 
@@ -67,12 +66,10 @@ export default function AboutPage() {
       <section className="vt ab3-hero" aria-labelledby="ab3-hero-h">
         <div className="ab3__in">
           <h1 className="ab3-hero__h" id="ab3-hero-h">
-            {/* COPY V3.1, 2026-10-01. The page's one highlighted word, the
-                swash (Brush.jsx), is "called." (it was "phone" before V3). */}
-            Found, trusted,{' '}
-            <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">
-              called.
-            </Brush>
+            {/* COPY V3.1, 2026-10-01. No swash here since 2026-10-02 (the
+                five fixes): About's one swash is the terms document's
+                signature (TermsSheet.jsx). */}
+            Found, trusted, called.
           </h1>
           <div className="ab3-hero__cols">
             <p className="ab3-hero__p">
@@ -85,13 +82,11 @@ export default function AboutPage() {
 
       <GrowthDiagram />
       <BuildAround />
-      {/* Who we are for and How we work with you side by side from 1024,
-          the ledger 40% and the sheet 60% (the audit, 2026-10-02);
-          stacked below (aboutpage.css). */}
-      <div className="vt ab3-pair">
-        <FitLedger />
-        <TermsSheet />
-      </div>
+      {/* Who we are for and How we work with you, each at the full width
+          again (the five fixes, 2026-10-02: the two colour sheets stand side
+          by side, which the 40% column of the audit's pair could not hold). */}
+      <FitLedger />
+      <TermsSheet />
       <Faq items={QUESTIONS} id="ab3-faq" />
       <CallBand heading="Tell us what's going wrong." note="Fifteen minutes on the phone. Nothing to pay for the answer." />
     </Shell>

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Brush from '../../components/site/Brush.jsx';
 import Shell from './Shell.jsx';
 import Faq from '../../components/home/Faq.jsx';
 import { DISCIPLINES } from '../../content/services.js';
-import { BRANDING, FIGURES, WEBSITES, money } from '../../content/pricing.js';
+import { BRANDING, BUNDLE, FIGURES, WEBSITES, money } from '../../content/pricing.js';
 import '../../styles/pricegrid.css';
 
 /* THE PRICING PAGE, REBUILT 2026-09-24 ON THE MELIUS PATTERN (the founder),
@@ -60,6 +60,17 @@ const TIERS = {
     items: t.features,
     note: t.bigger ? `Bigger builds: ${t.bigger}` : null,
   })),
+};
+
+/* THE FULL LIST, 2026-10-02 (the founder's five fixes): every column shows
+   exactly its six What you get lines; the detail is behind a "Full list"
+   toggle under them. Branding: the Basic and Advance tiers. Websites: the
+   website's features and bigger builds. Marketing and Automation: their six
+   lines from services.js, each item's name and line. */
+const DETAIL = {
+  ...TIERS,
+  marketing: [{ id: 'marketing-lines', label: null, rows: DISCIPLINES[2].cards }],
+  automation: [{ id: 'automation-lines', label: null, rows: DISCIPLINES[3].cards }],
 };
 
 const COLUMNS = DISCIPLINES.map((d) => ({
@@ -123,6 +134,7 @@ const QUESTIONS = [
 ];
 
 export default function PricingPage() {
+  const [open, setOpen] = useState(null);
   return (
     <Shell
       title={`Website design pricing: ${money(FIGURES.website)} flat, branding from ${money(FIGURES.brandingBasic)} | VexelTech`}
@@ -185,20 +197,48 @@ export default function PricingPage() {
                       </li>
                     ))}
                   </ul>
-                  {(TIERS[c.id] || []).map((t) => (
-                    <div className="pr-col__tier" key={t.id}>
-                      <p className="pr-col__label lbl">{cap(t.label)}</p>
-                      <ul className="pr-col__list">
-                        {t.items.map((item) => (
-                          <li className="pr-col__item" key={item}>
-                            <span className="lmark" aria-hidden="true" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                      {t.note ? <p className="pr-col__note">{t.note}</p> : null}
-                    </div>
-                  ))}
+                  {/* THE TOGGLE: closed by default, one open at a time. The
+                      panel is laid out or `hidden`, and its contents rise in
+                      over 200ms on opacity and transform (BUILD-LAW Motion
+                      forbids animating height; the FAQ's technique). */}
+                  <button
+                    type="button"
+                    className="pr-col__more"
+                    aria-expanded={open === c.id}
+                    aria-controls={`pr-full-${c.id}`}
+                    onClick={() => setOpen((o) => (o === c.id ? null : c.id))}
+                  >
+                    Full list
+                    <span className="pr-col__more-mark" aria-hidden="true">
+                      +
+                    </span>
+                  </button>
+                  <div className="pr-col__full" id={`pr-full-${c.id}`} hidden={open !== c.id}>
+                    {(DETAIL[c.id] || []).map((t) => (
+                      <div className="pr-col__tier" key={t.id}>
+                        {t.label ? <p className="pr-col__label lbl">{cap(t.label)}</p> : null}
+                        <ul className="pr-col__list">
+                          {t.items
+                            ? t.items.map((item) => (
+                                <li className="pr-col__item" key={item}>
+                                  <span className="lmark" aria-hidden="true" />
+                                  {item}
+                                </li>
+                              ))
+                            : t.rows.map(({ title, line }) => (
+                                <li className="pr-col__item pr-col__item--d" key={title}>
+                                  <span className="lmark" aria-hidden="true" />
+                                  <span>
+                                    <span className="pr-col__item-t">{title}</span>
+                                    <span className="pr-col__item-d">{line}</span>
+                                  </span>
+                                </li>
+                              ))}
+                        </ul>
+                        {t.note ? <p className="pr-col__note">{t.note}</p> : null}
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 <Link
                   className={`pr-col__btn${c.primary ? ' pr-col__btn--primary' : ''}`}
@@ -212,6 +252,18 @@ export default function PricingPage() {
               </li>
             ))}
           </ul>
+          {/* THE BUNDLE, its own row under the grid (the five fixes,
+              2026-10-02): name, price, line and call. The figure is the
+              token; the line is derived (pricing.js). */}
+          <div className="pr-bundle">
+            <h3 className="pr-bundle__name">{BUNDLE.name}</h3>
+            <p className="pr-bundle__price">{money(FIGURES.bundle)}</p>
+            <p className="pr-bundle__line">{BUNDLE.line()}</p>
+            <Link className="pr-col__btn pr-bundle__btn" to="/contact-us">
+              Get a custom quote
+              <span className="skip-h">, {BUNDLE.name}</span>
+            </Link>
+          </div>
           {/* THE FOOTNOTE, COPY V3, 2026-10-01: under the grid, in the panel. */}
           <p className="pr-grid__note">
             Marketing scales with ad spend and service area. Automation scales with the number of

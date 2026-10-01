@@ -15,12 +15,11 @@ import { FIGURES, money } from './pricing.js';
    card's `line` shows under its title on /services (the structure pass).
    Figures are tokens.
 
-   `image` (real over drawn, 2026-10-02): the discipline's real material,
-   shown beside its list (components/story/ServiceImage.jsx). null renders
-   nothing and the list runs full width. Websites has the live
-   baseline-books.com on a phone; Branding, Marketing and Automation wait
-   for a real mark on a photographed object, a real report and a real text
-   thread. */
+   `image` (the five fixes, 2026-10-02): the discipline's EVIDENCE BAND, a
+   real 16:10 image under its promise (components/story/EvidenceBand.jsx).
+   null renders nothing and the section is list-only. Websites has the
+   Zions Caregivers site's second screen (not a Recent work image: BUILD-LAW
+   rule 0); Branding, Marketing and Automation wait for real material. */
 export const DISCIPLINES = [
   {
     id: 'branding',
@@ -54,11 +53,9 @@ export const DISCIPLINES = [
     bigger: 'Stores, customer portals, custom backends and apps. Scoped and priced on the call.',
     terms: `${money(FIGURES.website)}, one price. Four business days from the day we have your content. Domain, hosting and code in your name.`,
     image: {
-      src: '/work/baseline-books-390.jpg',
-      alt: 'The Baseline Bookkeeping website on a phone, its first screen.',
-      width: 780,
-      height: 1688,
-      device: true,
+      src: '/work/band-websites.jpg',
+      src720: '/work/band-websites-720.jpg',
+      alt: 'The Zions Caregivers website, its second screen.',
     },
     fit: 'You have no site, a site nobody finds, or a site that gets traffic and no enquiries.',
     call: { label: 'Get a custom quote', primary: true },

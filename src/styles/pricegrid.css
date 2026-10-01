@@ -254,6 +254,13 @@
   opacity: 1;
 }
 
+/* The buttons share one baseline across the four columns (the five fixes,
+   2026-10-02): the lifted column's button takes the lift back, on the
+   `translate` property, so its press scale (transform) still works. */
+.pr-col[data-picked='true'] .pr-col__btn {
+  translate: 0 4px;
+}
+
 .pr-col[data-picked='true']::before,
 .pr-col[data-picked='true'] + .pr-col::before {
   opacity: 0;
@@ -371,9 +378,149 @@
   color: var(--c-steel); /* 7.20:1 */
 }
 
+/* THE FULL LIST (the five fixes, 2026-10-02). Six What you get lines per
+   column, then the toggle: mono 12px uppercase, steel on cream (7.20:1), a
+   48px target, a plus that turns 45 degrees open. The panel is laid out or
+   hidden; its contents rise in over 200ms on the reveal curve, opacity and
+   transform only (BUILD-LAW Motion; height is never animated). Its tier
+   lists sit under their own mono labels, as before. */
+.pr-col__more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-sm);
+  min-height: 48px;
+  margin: var(--s-sm) 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+  cursor: pointer;
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.pr-col__more:active {
+  transform: scale(0.97);
+}
+
+.pr-col__more-mark {
+  font-size: 16px;
+  line-height: 16px;
+  transition: transform 200ms var(--ease-reveal);
+}
+
+.pr-col__more[aria-expanded='true'] .pr-col__more-mark {
+  transform: rotate(45deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pr-col__more:hover {
+    color: var(--c-asphalt);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pr-col__full:not([hidden]) {
+    animation: pr-full-in 200ms var(--ease-reveal) both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pr-col__more:active {
+    transform: none;
+  }
+}
+
+@keyframes pr-full-in {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--s-sm) * -1));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Marketing's and Automation's detail rows: the item's name, then its line
+   in the column's sub-line type. */
+.pr-col__item--d {
+  align-items: start;
+}
+
+.pr-col__item--d .lmark {
+  margin-top: 9px;
+}
+
+.pr-col__item-t {
+  display: block;
+}
+
+.pr-col__item-d {
+  display: block;
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  color: var(--c-steel); /* 7.20:1 on cream */
+}
+
+/* THE BUNDLE ROW, under the grid (the five fixes, 2026-10-02): a hairline,
+   then the name, the price, the line and the call; in one row from 768,
+   stacked below. */
+.pr-bundle {
+  display: grid;
+  gap: var(--s-sm);
+  margin-top: var(--s-2xl);
+  padding-top: var(--s-xl);
+  border-top: 1px solid rgb(23 24 26 / 15%);
+}
+
+@media (min-width: 768px) {
+  .pr-bundle {
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    column-gap: var(--s-xl);
+    align-items: center;
+  }
+}
+
+.pr-bundle__name {
+  margin: 0;
+  font-family: var(--font-quiet);
+  font-size: var(--t-h3-size);
+  line-height: var(--t-h3-line);
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-asphalt);
+}
+
+.pr-bundle__price {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: 40px;
+  line-height: 1.1;
+  font-weight: 400;
+  color: var(--c-asphalt);
+}
+
+.pr-bundle__line {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-steel); /* 7.20:1 */
+}
+
+.pr-bundle__btn {
+  align-self: center;
+  margin-top: 0;
+}
+
 /* THE TIER LISTS (2026-10-01, the structure pass): each under its own mono
    label, 32px below the list above; Websites' bigger-builds line under its
-   list in the column's sub-line type. */
+   list in the column's sub-line type. Inside the full list since
+   2026-10-02. */
 .pr-col__tier {
   padding-top: var(--s-xl);
 }

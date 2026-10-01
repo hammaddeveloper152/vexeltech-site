@@ -175,74 +175,176 @@
   line-height: 28px;
 }
 
-/* ---- 2. Recent work: the strip of plates -------------------------------
-   The strip runs past the measure to the viewport's right edge, starting on
-   the measure's left; it scrolls sideways with snap. */
-.rw {
-  padding-inline: 0;
-}
-
-.rw .st-in {
-  padding-inline: var(--inset);
-  box-sizing: content-box;
-  max-width: 1200px;
-  width: auto;
-}
-
-.rw__strip {
-  --rw-start: max(var(--inset), calc((100vw - 1200px) / 2));
+/* ---- 2. Recent work, the showcase (the five fixes, 2026-10-02) --------
+   Grid areas: the stage (the plates), the text, the controls. From 1024 the
+   text and controls stand in a 40% column beside the 60% stage; below, the
+   stage leads at full width. The track moves by one plate (its width less
+   the peek) on --i, 400ms on the reveal curve; a drag adds --drag live. */
+.rw2 {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: min(82vw, 380px);
-  gap: var(--s-lg);
-  margin: 0;
-  padding: 0 var(--inset) var(--s-md) var(--rw-start);
-  list-style: none;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline-start: var(--rw-start);
-  scrollbar-width: thin;
+  grid-template-areas: 'stage' 'text' 'ctrl';
+  row-gap: var(--s-lg);
+  --peek: 24px;
 }
 
-.rw__plate {
-  scroll-snap-align: start;
+@media (min-width: 1024px) {
+  .rw2 {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      'text stage'
+      'ctrl stage';
+    column-gap: var(--s-xl);
+    --peek: 32px;
+  }
+}
+
+.rw2__stage {
+  grid-area: stage;
   min-width: 0;
+  overflow: hidden;
+  touch-action: pan-y;
+  cursor: grab;
 }
 
-.rw__frame {
+.rw2__track {
+  display: flex;
+  gap: var(--s-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform: translateX(calc(var(--i) * (var(--peek) - 100%) + var(--drag, 0px)));
+  transition: transform 400ms var(--ease-reveal);
+}
+
+.rw2__track[data-dragging='true'] {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rw2__track,
+  .rw2__plate {
+    transition: none;
+  }
+}
+
+.rw2__plate {
+  flex: 0 0 calc(100% - var(--peek) - var(--s-md));
+  min-width: 0;
+  opacity: 0.6;
+  transition: opacity 400ms var(--ease-reveal);
+}
+
+.rw2__plate[data-current='true'] {
+  opacity: 1;
+}
+
+.rw2__link {
+  display: block;
   overflow: hidden;
+  aspect-ratio: 16 / 10;
   border: 1px solid var(--st-hair);
   border-radius: 8px;
-  aspect-ratio: 16 / 10;
 }
 
-.rw__frame img {
+.rw2__link img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top;
+  pointer-events: none;
 }
 
-.rw__name {
-  margin: var(--s-md) 0 var(--s-xs);
+.rw2__text {
+  grid-area: text;
+  min-width: 0;
+}
+
+.rw2__name {
+  margin: 0 0 var(--s-sm);
   font-family: var(--font-quiet);
-  font-size: 20px;
-  line-height: 28px;
+  font-size: 32px;
+  line-height: 1.2;
   font-weight: var(--t-weight-quiet);
   color: var(--st-head);
 }
 
-.rw__where {
-  margin: 0 0 var(--s-sm);
+.rw2__where {
+  margin: 0 0 var(--s-md);
 }
 
-.rw__line {
+.rw2__line {
   margin: 0;
   font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.rw2__ctrl {
+  grid-area: ctrl;
+  display: flex;
+  align-items: center;
+  gap: var(--s-lg);
+}
+
+@media (min-width: 1024px) {
+  .rw2__ctrl {
+    align-self: end;
+  }
+}
+
+.rw2__count {
+  margin: 0;
+}
+
+.rw2__arrows {
+  display: flex;
+  gap: var(--s-sm);
+}
+
+/* The arrows: the shared 40px control box (--hdr-h, --hdr-r) with a
+   hairline keyline and the 48px target on ::before (BUILD-LAW Touch). */
+.rw2__arrow {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: var(--hdr-h);
+  height: var(--hdr-h);
+  padding: 0;
+  border: 1px solid var(--st-hair);
+  border-radius: var(--hdr-r);
+  background: transparent;
+  color: var(--st-head);
+  cursor: pointer;
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.rw2__arrow::before {
+  content: '';
+  position: absolute;
+  inset: var(--hdr-hit);
+}
+
+.rw2__arrow--prev .i {
+  transform: rotate(180deg);
+}
+
+.rw2__arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.rw2__arrow:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rw2__arrow:hover:not(:disabled) {
+    background: var(--c-accent-ground);
+    border-color: var(--c-accent-ground);
+    color: var(--c-asphalt);
+  }
 }
 
 /* ---- 3. Contact: the timeline -------------------------------------------
@@ -341,80 +443,69 @@
   }
 }
 
-/* THE AUDIT, 2026-10-02: the diagram in type. Each stop's plate is one
-   height and centres its stage, so the three stand level; the hairline
-   under it runs the column. Words Clash Display 24px (18 below 768), lines
-   2px asphalt, Follow-up deep amber (4.82:1 on cream). */
-.gd__plate {
+/* DRAWN (the five fixes, 2026-10-02). Each stop a cream tile, 16px
+   radius, its edge the page's hairline (the page is cream too); the scene
+   at 140px, centred, its foot on the shared baseline. The light palette of
+   the card illustrations, restated here for the scenes (ArtCard.css owns
+   the cards'): keyline asphalt 1.5px, TOP white, LEFT cream, RIGHT bone,
+   the one yellow, connectors 2px, dots asphalt. The tiles build 100ms
+   apart. */
+.gd__stops {
+  --stagger: 100ms;
+}
+
+.gd__tile {
   display: grid;
   place-items: center;
-  min-height: 132px;
-  padding-bottom: var(--s-md);
-  border-bottom: 1px solid var(--st-hair);
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--st-hair);
+  border-radius: 16px;
+  background: var(--c-cream);
 }
 
-@media (min-width: 768px) {
-  .gd__plate {
-    min-height: 168px;
-  }
-}
-
-.gd__w {
-  font-family: var(--font-brand);
-  font-size: 18px;
-  line-height: 1.2;
-  font-weight: var(--t-weight-quiet);
-  letter-spacing: normal;
-  white-space: nowrap;
-  color: var(--c-asphalt);
-}
-
-@media (min-width: 768px) {
-  .gd__w {
-    font-size: 24px;
-  }
-}
-
-.gd__w--acc {
-  color: var(--c-accent-text-light);
-}
-
-/* A row: word, line, word. */
-.gd__row {
-  display: flex;
-  align-items: center;
-  gap: var(--s-sm);
-}
-
-/* The ring: a 3 x 3 grid, words in the corners, lines between them; the
-   vertical lines centre under their words. */
-.gd__ring {
-  display: grid;
-  grid-template-columns: auto minmax(24px, 56px) auto;
-  grid-template-rows: auto 28px auto;
-  align-items: center;
-  justify-items: center;
-  column-gap: var(--s-sm);
-  row-gap: var(--s-xs);
-}
-
-.gd__h {
+.gd__scene {
   display: block;
-  width: 100%;
-  min-width: 24px;
-  height: 2px;
-  background: var(--c-asphalt);
+  width: 140px;
+  height: 140px;
 }
 
-.gd__row .gd__h {
-  width: 48px;
+.gd__scene path,
+.gd__scene circle {
+  stroke: var(--c-asphalt);
+  stroke-width: 1.5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
 }
 
-.gd__v {
-  display: block;
-  width: 2px;
-  height: 100%;
-  background: var(--c-asphalt);
+.gd__scene .iso-t {
+  fill: var(--c-shop-white);
+}
+
+.gd__scene .iso-l {
+  fill: var(--c-cream);
+}
+
+.gd__scene .iso-r {
+  fill: var(--c-bone);
+}
+
+.gd__scene .iso-y {
+  fill: var(--c-accent-ground);
+}
+
+.gd__scene .iso-d {
+  fill: var(--c-asphalt);
+}
+
+.gd__scene .iso-arc {
+  fill: none;
+  stroke-width: 2px;
+}
+
+.gd__scene .iso-dot {
+  fill: var(--c-asphalt);
+  stroke: none;
 }
 
 .gd__n {
@@ -492,85 +583,127 @@
   }
 }
 
-/* ---- 6. About, Who we are for: the ledger -------------------------------
-   Two columns from 768; each a mono head and hairline rows, the mark in a
-   24px gutter in mono. */
-.fl__cols {
+/* ---- 6. About, Who we are for: two colour sheets (2026-10-02) ---------
+   Mint (A fit) and coral (Not a fit), 24px radius, 32px padding; side by
+   side from 1024, stacked below. Asphalt on both (measured in the checks),
+   the hairlines asphalt at 20%. */
+.fl__sheets {
   display: grid;
-  gap: var(--s-2xl);
+  gap: var(--s-lg);
 }
 
-@media (min-width: 768px) {
-  .fl__cols {
+@media (min-width: 1024px) {
+  .fl__sheets {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--s-xl);
   }
+}
+
+.fl__sheet {
+  padding: 32px;
+  border-radius: 24px;
+  color: var(--c-asphalt);
+}
+
+.fl__sheet--fit {
+  background: var(--c-mint);
+}
+
+.fl__sheet--not {
+  background: var(--c-coral);
 }
 
 .fl__head {
   margin: 0 0 var(--s-md);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-asphalt);
 }
 
 .fl__rows {
   margin: 0;
   padding: 0;
   list-style: none;
-  border-top: 1px solid var(--st-hair);
 }
 
 .fl__row {
-  display: grid;
-  grid-template-columns: 24px minmax(0, 1fr);
-  gap: var(--s-sm);
   padding: var(--s-md) 0;
-  border-bottom: 1px solid var(--st-hair);
-}
-
-.fl__mark {
-  font-family: var(--font-mono);
-  font-size: 16px;
+  border-top: 1px solid rgb(23 24 26 / 20%);
+  font-family: var(--font-quiet);
+  font-size: 20px;
   line-height: 28px;
-  color: var(--st-soft);
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-asphalt);
+  text-wrap: pretty;
 }
 
-.fl__t {
-  font-family: var(--font-offer);
-  font-size: 18px;
-  line-height: 28px;
-  color: var(--st-head);
+.fl__row:last-child {
+  padding-bottom: 0;
 }
 
-/* ---- 7. About, the terms sheet ------------------------------------------
-   One document: cream, 32px radius, the hairline its edge; 64px inside from
-   768, 24px below. Steps in a 3-column row (numeral, title, line) from 1024,
-   stacked below; a hairline; the facts as label | value rows. */
-.ts__sheet {
+/* ---- 7. About, How we work with you: the document (2026-10-02) --------
+   Cream, 24px radius, a 2px hairline (asphalt at 15%), turned -1 degree
+   from 1024; 48px inside, 24 on a phone. Header row, clauses, Schedule,
+   the signature swash. */
+.ts__doc {
   padding: var(--s-lg);
-  border: 1px solid var(--st-hair);
-  border-radius: 32px;
+  border: 2px solid var(--st-hair);
+  border-radius: 24px;
   background: var(--c-cream);
 }
 
 @media (min-width: 768px) {
-  .ts__sheet {
-    padding: var(--s-2xl);
+  .ts__doc {
+    padding: 48px;
   }
 }
 
-.ts__h {
-  margin: 0 0 var(--s-xl);
+@media (min-width: 1024px) {
+  .ts__doc {
+    transform: rotate(-1deg);
+  }
+}
+
+.ts__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-md);
+  padding-bottom: var(--s-md);
+  margin-bottom: var(--s-xl);
+  border-bottom: 1px solid var(--st-hair);
+}
+
+.ts__wm {
+  color: var(--c-asphalt);
+}
+
+/* On cream the wordmark's full stop is deep amber, as in the bar on the
+   light page (light.css). */
+.ts__wm .wm__dot {
+  color: var(--c-accent-text-light);
+}
+
+.ts__title {
+  margin: 0;
   font-family: var(--font-quiet);
-  font-size: var(--t-head);
-  line-height: var(--t-head-line);
+  font-size: 24px;
+  line-height: 1.2;
   font-weight: var(--t-weight-quiet);
-  color: var(--st-head);
+  color: var(--c-asphalt);
+}
+
+.ts__year {
+  margin: 0 0 0 auto;
 }
 
 .ts__steps {
   display: grid;
   gap: var(--s-lg);
-  margin: 0 0 var(--s-2xl);
-  padding: 0 0 var(--s-2xl);
+  margin: 0 0 var(--s-xl);
+  padding: 0 0 var(--s-xl);
   list-style: none;
   border-bottom: 1px solid var(--st-hair);
 }
@@ -579,12 +712,15 @@
   display: grid;
   grid-template-columns: 40px minmax(0, 1fr);
   column-gap: var(--s-md);
-  row-gap: var(--s-xs);
 }
 
 .ts__n {
-  grid-row: span 2;
   line-height: 28px;
+}
+
+.ts__body {
+  display: grid;
+  gap: var(--s-xs);
 }
 
 .ts__t {
@@ -592,25 +728,14 @@
   font-size: 20px;
   line-height: 28px;
   font-weight: var(--t-weight-quiet);
-  color: var(--st-head);
+  color: var(--c-asphalt);
 }
 
 .ts__d {
   font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-}
-
-@media (min-width: 1024px) {
-  .ts__step {
-    grid-template-columns: 40px 220px minmax(0, 1fr);
-    column-gap: var(--s-lg);
-    align-items: baseline;
-  }
-
-  .ts__n {
-    grid-row: auto;
-  }
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--c-steel); /* 7.20:1 on cream */
 }
 
 .ts__k-h {
@@ -630,7 +755,7 @@
 
 @media (min-width: 768px) {
   .ts__row {
-    grid-template-columns: 200px minmax(0, 1fr);
+    grid-template-columns: 160px minmax(0, 1fr);
     gap: var(--s-lg);
     align-items: baseline;
   }
@@ -641,7 +766,7 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-  color: var(--st-head);
+  color: var(--c-asphalt);
 }
 
 .ts__a {
@@ -653,44 +778,28 @@
   text-underline-offset: 3px;
 }
 
-/* ---- 8. Services: the discipline's real material (ServiceImage) -------
-   Real over drawn, 2026-10-02. A phone screenshot sits in a plain device
-   frame (12px radius, a 2px hairline in the band's ink at 15%, no notch);
-   anything else in an 8px frame with a hairline. At most 320px wide for the
-   phone, the column for the rest. */
-.si {
+.ts__sign {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--s-xl);
+}
+
+/* ---- 8. Services: the evidence band (EvidenceBand), 2026-10-02 ---------
+   16:10, the Recent work plates' frame: 8px radius and a hairline in the
+   band's ink at 15%. */
+.eb {
   margin: 0;
-}
-
-.si img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.si:not(.si--device) {
   overflow: hidden;
-  border: 1px solid var(--st-hair, rgb(23 24 26 / 15%));
+  aspect-ratio: 16 / 10;
+  border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
   border-radius: 8px;
 }
 
-.si--device {
-  width: min(100%, 320px);
-  overflow: hidden;
-  border: 2px solid color-mix(in srgb, currentColor 15%, transparent);
-  border-radius: 12px;
-}
-
-/* The Recent work plate is one link to the live site. */
-.rw__link {
+.eb img {
   display: block;
-  color: inherit;
-  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .rw__link:hover .rw__name {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-}

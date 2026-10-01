@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { IconArrowUpRight } from '../../components/site/Icons.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
-import ServiceImage from '../../components/story/ServiceImage.jsx';
+import EvidenceBand from '../../components/story/EvidenceBand.jsx';
 
 /* THE FOUR DISCIPLINES ON /services, AS ALTERNATING BANDS, 2026-09-23.
 
@@ -76,12 +76,7 @@ export default function ServiceSections({ disciplines }) {
             className={`vt svc2__d svc2__d--${d.id}${cream ? ' svc2__d--cream panel-sec' : ''}`}
             aria-labelledby={`svc-${d.id}`}
           >
-            <div className={`svc2__in${cream ? ' panel' : ''}${d.image ? '' : ' svc2__in--full'}`}>
-              {/* THE DISCIPLINE'S REAL MATERIAL (real over drawn,
-                  2026-10-02): beside the list from 1024, left on the dark
-                  bands and right on the cream ones; above the list below
-                  1024. Without it the list runs full width
-                  (`svc2__in--full`, services.css). */}
+            <div className={`svc2__in${cream ? ' panel' : ''}`}>
               <div className="svc2__head">
                 <h2 className="svc2__name" id={`svc-${d.id}`}>
                   {d.name}
@@ -89,9 +84,12 @@ export default function ServiceSections({ disciplines }) {
                 <p className="svc2__promise">{d.promise}</p>
               </div>
 
+              {/* THE EVIDENCE BAND (the five fixes, 2026-10-02): a real
+                  image under the promise when the discipline has one;
+                  without one the section is list-only (services.css). */}
               {d.image ? (
-                <div className="svc2__frame">
-                  <ServiceImage image={d.image} />
+                <div className="svc2__band">
+                  <EvidenceBand image={d.image} />
                 </div>
               ) : null}
 
