@@ -6,9 +6,10 @@ import './story.css';
    2026-10-02). It replaced the one-plate showcase.
 
    THE TRACK starts on the content column's left edge and runs out past the
-   right edge of the viewport: plates 34vw wide from 1024 (three and a half
-   in view, the fourth cut on purpose), 78vw below (1.2 in view), 24px
-   apart. Each plate is the live site's 1440 x 900 capture at 16:10, 6px
+   right edge of the viewport: plates 27vw wide from 1280 (3.4 in view,
+   the fourth cut by the edge), 31vw from 1024, 44vw from 768, 78vw below
+   (1.2 in view), 24px apart (widths from the seven corrections,
+   2026-10-02). Each plate is the live site's 1440 x 900 capture at 16:10, 6px
    radius, no border; under it the name (18px, bone), the sector and city
    (mono 11px, steel-lift) and the one line (steel-lift). The whole plate is
    one link to the live site, in a new tab.
@@ -231,7 +232,7 @@ export default function RecentTrack() {
                   <img
                     src={`/work/${w.slug}-720.jpg`}
                     srcSet={`/work/${w.slug}-720.jpg 720w, /work/${w.slug}.jpg 1440w`}
-                    sizes="(min-width: 1024px) 34vw, 78vw"
+                    sizes="(min-width: 1280px) 27vw, (min-width: 1024px) 31vw, (min-width: 768px) 44vw, 78vw"
                     alt={`${w.name}, the live site`}
                     width="1440"
                     height="900"

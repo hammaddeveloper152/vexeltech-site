@@ -1,6 +1,5 @@
 import React from 'react';
 import Wordmark from '../site/Wordmark.jsx';
-import Brush from '../site/Brush.jsx';
 import './story.css';
 
 /* HOW WE WORK WITH YOU, A REAL SHEET (the founder's six fixes,
@@ -15,9 +14,10 @@ import './story.css';
      the clauses  four, 28px apart: the number in mono 11px deep amber
                   (5.43:1 on white), the title in the display face 20px
                   asphalt, the line 15px steel
-     the foot     a 1px rule, then "Signed for VexelTech" in mono 11px at
-                  the left and the yellow swash at the right, 96px wide: the
-                  one swash on About (the site's count stays four)
+     the foot     a 1px rule, then one row: "Signed for VexelTech" in mono
+                  11px at the left and the wordmark at 14px, all black, at
+                  the right. The swash signature came off in the seven
+                  corrections (2026-10-02); the site's swash count is three
 
    STEEL, NOT STEEL-LIFT, for the lines: the brief named steel-lift, which
    is 2.6:1 on white and fails its own 4.5:1 check; steel is 7.6:1.
@@ -55,9 +55,7 @@ export default function TermsCard() {
           </ol>
           <footer className="tc__foot">
             <p className="tc__signed">Signed for VexelTech</p>
-            <span className="tc__sign" aria-hidden="true">
-              <Brush mark width={96} angle={-6} opacity={0.9} />
-            </span>
+            <Wordmark size="sm" className="tc__wm" />
           </footer>
         </article>
       </div>

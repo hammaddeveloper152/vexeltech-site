@@ -16,44 +16,10 @@
    site shows it (Recent work's screenshots, the Websites phone); where it
    does not, type. The drawn frames, the grey text bars, the dashed
    "missing" outlines and the sample tags are gone; what is drawn now is
-   only the About marks (icons for their statements), the growth diagram
-   (words and lines), the timeline and the ledger. Text in a drawing stays
+   only the timeline. The About marks went in the seven corrections
+   (2026-10-02), and the keyline classes with them. Text in a drawing stays
    at 11px or more at 390 (BUILD-LAW Type floor).
    ========================================================================== */
-
-.kl {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.5px;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
-}
-
-.kl--2 {
-  stroke-width: 2px;
-}
-
-.kl-ink {
-  fill: currentColor;
-}
-
-/* THE ONE ACCENT per object, set by the object's `--acc`. */
-.kl-acc {
-  fill: var(--acc);
-}
-
-.kl-text {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  letter-spacing: 0.04em;
-  fill: currentColor;
-}
-
-.kl-text--ink {
-  fill: var(--c-asphalt);
-}
-
 
 /* A section's own head, shared by the objects that stand as sections. */
 .st-sec {
@@ -179,7 +145,9 @@
    The section's own sides are 0 so the track can run edge to edge; the
    head and the rail stand in the content column. The track's first plate
    starts on the column's left edge (--rt-start) and the plates run out past
-   the right edge. Plates 34vw from 1024, 78vw below, 24px apart. */
+   the right edge. Plates 27vw from 1280 (3.4 in view, the fourth cut by the
+   right edge), 31vw from 1024, 44vw from 768, 78vw below; 24px apart
+   (the seven corrections, 2026-10-02). */
 .rt {
   --rt-start: max(var(--inset), calc((100vw - 1200px) / 2));
   padding-inline: 0;
@@ -210,9 +178,21 @@
   flex: 0 0 78vw;
 }
 
+@media (min-width: 768px) {
+  .rt__item {
+    flex-basis: 44vw;
+  }
+}
+
 @media (min-width: 1024px) {
   .rt__item {
-    flex-basis: 34vw;
+    flex-basis: 31vw;
+  }
+}
+
+@media (min-width: 1280px) {
+  .rt__item {
+    flex-basis: 27vw;
   }
 }
 
@@ -470,9 +450,11 @@
   text-wrap: pretty;
 }
 
-/* ---- 5. About, What we build it around: statements with marks ----------
-   Each row: the 120 x 80 mark, then the mono label and the statement. Rows
-   split by hairlines; no cards. */
+/* ---- 5. About, What we build it around: four labelled lines ----------
+   The seven corrections (2026-10-02): the marks are gone. One column on the
+   content column's left edge: the discipline in mono 11px deep amber
+   (4.82:1 on cream), then the line. Rows split by hairlines; no cards, no
+   icon column, no gutter. */
 .ba__rows {
   margin: 0;
   padding: 0;
@@ -481,30 +463,18 @@
 }
 
 .ba__row {
-  display: grid;
-  grid-template-columns: 96px minmax(0, 1fr);
-  gap: var(--s-lg);
-  align-items: start;
   padding: var(--s-xl) 0;
   border-bottom: 1px solid var(--st-hair);
 }
 
-@media (min-width: 768px) {
-  .ba__row {
-    grid-template-columns: 144px minmax(0, 1fr);
-    gap: var(--s-xl);
-  }
-}
-
-.ba__mark {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 120 / 80;
-}
-
 .ba__k {
   margin: 0 0 var(--s-sm);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-accent-text-light);
 }
 
 .ba__line {
@@ -729,6 +699,17 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--c-steel); /* 7.6:1 on white */
+}
+
+/* The foot's wordmark: 14px and all black, the mark and the full stop
+   included (the seven corrections, 2026-10-02). It replaced the swash. */
+.tc__foot .wm,
+.tc__foot .wm__dot {
+  color: var(--c-asphalt);
+}
+
+.tc__foot .wm__mark {
+  fill: var(--c-asphalt);
 }
 
 /* ---- 8. Services: the evidence band (EvidenceBand), 2026-10-02 ---------
