@@ -12,6 +12,11 @@
      - "Not " followed by a capital, more than once on a page
      - the banned strings: SaaS, mobile applications, web apps, Most picked,
        Fifty-two, Startups, Entrepreneurs, Founders
+     - V2.1's banned words (2026-10-01, the founder: no self-explanation),
+       any case, whole words: coded, design system, page builder, theme,
+       themes, outsourced, generated, and "this site" except in the
+       refusals band's "It's on this site". Checked in the rendered text and
+       in each page's title and meta description.
      - every $ figure, against 299, 449, 700, 999, 150, 15 and 300
      - exclamation marks
 
@@ -34,11 +39,15 @@ const LEGAL = ['/privacy-policy', '/terms-of-service'];
 const BANNED = ['SaaS', 'mobile applications', 'web apps', 'Most picked', 'Fifty-two', 'Startups', 'Entrepreneurs', 'Founders'];
 /* 300 joined the list on 2026-10-01: V2's budget bands (Up to $300, $300 to
    $700) are derived from the prices, the founder's decision. */
+const SELF = /(coded|design system|page builders?|themes?|outsourced|generated|this site)/gi;
+const SELF_OK = "It's on this site";
+const selfHits = (t) => [...t.replaceAll(SELF_OK, '').matchAll(SELF)].map((m) => m[0]);
 const FIGURES = new Set(['299', '449', '700', '999', '150', '15', '300']);
 
 const errors = [];
 const b = await puppeteer.launch({ headless: 'new', args: ['--autoplay-policy=no-user-gesture-required'] });
 const texts = {};
+const meta = {};
 for (const route of [...PUBLIC, ...LEGAL]) {
   const p = await b.newPage();
   p.on('console', (m) => m.type() === 'error' && errors.push(`${route}: ${m.text()}`));
@@ -63,12 +72,14 @@ for (const route of [...PUBLIC, ...LEGAL]) {
   /* The hero's headline rotates: its four lines are read from the source by
      the checks below as well, so the dump of / carries all four. */
   texts[route] = t;
+  meta[route] = await p.evaluate(() => `${document.title}
+${document.querySelector('meta[name="description"]')?.content || ''}`);
   fs.writeFileSync(path.join(OUT, `${route.replace(/\//g, '_') || '_home'}.txt`), t);
   await p.close();
 }
 await b.close();
 
-const report = { dashes: {}, repeats: [], notCap: {}, banned: {}, figures: {}, bangs: {} };
+const report = { dashes: {}, repeats: [], notCap: {}, banned: {}, selfExplaining: {}, figures: {}, bangs: {} };
 const sentences = (t) =>
   t
     .split(/\n+/)
@@ -92,6 +103,8 @@ for (const route of [...PUBLIC, ...LEGAL]) {
   report.notCap[route] = nc;
   const hits = BANNED.filter((w) => t.includes(w));
   if (hits.length) report.banned[route] = hits;
+  const self = [...selfHits(t), ...selfHits(meta[route]).map((w) => `meta: ${w}`)];
+  if (self.length) report.selfExplaining[route] = self;
   const bang = t.match(/[^\n]*![^\n]*/g);
   if (bang) report.bangs[route] = bang.slice(0, 5);
 }

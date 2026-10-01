@@ -79,9 +79,9 @@ const QUESTIONS = [
     a: "Yes. Design, code, testing, launch on your domain and thirty days of changes. The only thing not in it is a domain name if you don't own one yet, about $15 a year, in your name.",
   },
   {
-    id: 'coded',
-    q: `How is a coded site ${money(FIGURES.website)}?`,
-    a: "Because we've built the system we build on. The design system, the components and the build are ours, so our developers spend the four days on your business rather than on scaffolding.",
+    id: 'need',
+    q: 'What do you need from me?',
+    a: "Your services and the areas you cover, photos of real jobs, your logo if you have one, and the things you'd say to a customer on the phone. We take it from there.",
   },
   {
     id: 'call',
@@ -105,7 +105,7 @@ export default function PricingPage() {
     <Shell
       title="Pricing | VexelTech"
       path="/pricing"
-      description={`Flat prices on branding and websites. ${money(FIGURES.brandingBasic)} to ${money(FIGURES.brandingAdvance)} for branding, ${money(FIGURES.website)} for a coded six-page website, marketing and automation priced on a call.`}
+      description={`Flat prices on branding and websites. ${money(FIGURES.brandingBasic)} to ${money(FIGURES.brandingAdvance)} for branding, ${money(FIGURES.website)} for a six-page website, marketing and automation priced on a call.`}
     >
       {/* 1. THE HEAD. */}
       <header className="vt pr-head">

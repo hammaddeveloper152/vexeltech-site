@@ -170,7 +170,7 @@ export const WEBSITES = [
     turnaround: 'four business days',
     features: [
       'Up to six pages, designed for your business',
-      'Coded by our team on our own design system',
+      'Built fast, built to last, nothing to renew',
       'Mobile first, under two seconds to load on a phone',
       'Quote and contact forms to your inbox, click to call, booking link',
       'Search set up: titles, descriptions, sitemap, Google Business Profile connected',

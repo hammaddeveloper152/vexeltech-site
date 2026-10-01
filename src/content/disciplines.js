@@ -27,7 +27,7 @@ export const DISCIPLINES = [
     id: 'websites',
     Art: IsoWebsites,
     discipline: 'Websites',
-    line: `Up to six pages, designed and coded for your business. ${money(FIGURES.website)}, live in four business days.`,
+    line: `Up to six pages, built for your business. ${money(FIGURES.website)}, live in four business days.`,
   },
   {
     id: 'marketing',

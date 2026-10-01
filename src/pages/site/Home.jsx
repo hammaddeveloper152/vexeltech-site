@@ -65,7 +65,7 @@ import '../../styles/lit.css';
 /* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Metadata). */
 const TITLE = 'Websites, branding, marketing and automation for local service businesses | VexelTech';
 const DESCRIPTION =
-  'Websites $700 flat, branding from $299, designed and coded by one team for US local service businesses. Live in four business days.';
+  'Websites $700 flat, branding from $299, for US local service businesses. One team, live in four business days.';
 
 /* The retired Process component's four step descriptions, carried as one
    line under stops 01 to 04 of the route, and the user's line for stop 05

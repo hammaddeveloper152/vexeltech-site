@@ -31,13 +31,13 @@ import './About.css';
    The copy is the founder's third sentence, unchanged. The section heading is
    still visually hidden and still a placeholder: a visible heading above a
    statement would be a fifth thing competing for one job. */
-/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Home, Who we are). The link
+/* COPY V2.1, 2026-10-01 (VEXELTECH-COPY.md, Home, Who we are). The link
    label has no V2 line and stays until the structure pass (DESIGN.md, COPY
    V2, the gap list). */
 const COPY = {
-  statement: 'We write the code, draw the mark and run the ads ourselves.',
+  statement: 'One team for the whole job.',
   support:
-    "VexelTech is a team of designers, developers and media buyers who build the whole system behind a local service business: the site people land on, the ads that send them there, and the automation that answers when you can't. Nothing is bought off a shelf. Every page on this site was designed and coded by the same people who will build yours.",
+    'VexelTech builds the website, runs the ads and sets up the automation behind local service businesses across the US. One brief, one team, one invoice, and a named person who picks up when you call.',
   link: 'How we work',
 };
 

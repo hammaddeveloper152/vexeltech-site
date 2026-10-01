@@ -48,7 +48,7 @@ export default function AboutPage() {
     <Shell
       title="About us | VexelTech"
       path="/about-us"
-      description="VexelTech designs and codes the website, runs the ads and builds the automation behind US local service businesses, as one team."
+      description="VexelTech builds the website, runs the ads and sets up the automation behind US local service businesses, as one team."
       footerForm={false}
       light
     >
@@ -64,12 +64,11 @@ export default function AboutPage() {
             ring.
           </h1>
           <div className="ab3-hero__cols">
-            {/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, About us, Hero
+            {/* COPY V2.1, 2026-10-01 (VEXELTECH-COPY.md, About us, Hero
                 statement): one line; the second paragraph has no V2 line. */}
             <p className="ab3-hero__p">
-              A local service business doesn&apos;t need a designer, a developer, an ad agency and an
-              automation consultant. It needs the four to be one team with one plan. That&apos;s what
-              VexelTech is.
+              The site people land on, the ads that send them there, and the follow-up that catches
+              the call. One team builds all three, so they work as one.
             </p>
           </div>
         </div>

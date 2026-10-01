@@ -23,9 +23,9 @@ import '../../styles/promise.css';
 
 /* COPY V2, 2026-10-01: V2 writes this band under About ("Flat prices
    band"); the band lives on home, so its copy is applied here, the one
-   place it renders (DESIGN.md, COPY V2). */
+   place it renders (DESIGN.md, COPY V2). V2.1 drops the first refusal, so
+   three. */
 const REFUSALS = [
-  "We don't use themes or page builders. Every site is designed and coded by our team.",
   "We don't hide the price until a call. It's on this site.",
   "We don't keep your files. Domain, hosting, code and credentials move to your name.",
   "We don't sell retainers on branding or websites. Marketing is month to month.",
@@ -36,7 +36,7 @@ export default function PromiseBand({ id }) {
     <section className="vt ab3-price promise panel-sec" aria-labelledby={id}>
       <div className="promise__in panel">
         <h2 className="promise__h ab3-price__h" id={id}>
-          Flat prices, and four things we don&apos;t do.
+          Flat prices, and three things we don&apos;t do.
         </h2>
         <div className="ab3-price__cols">
           <div className="ab3-price__fig">

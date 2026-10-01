@@ -33,10 +33,10 @@ export const DISCIPLINES = [
     id: 'websites',
     name: 'Websites',
     promise:
-      'A site designed and coded for your business, not assembled from a theme, live on your domain in four business days.',
+      'A site built for your business, live on your domain in four business days.',
     cards: [
       { title: 'Design', line: 'Up to six pages, laid out for your trade and your area, mobile first.' },
-      { title: 'Code', line: 'Written by our developers on our own design system. No page builders, no plugins to break.' },
+      { title: 'Built to last', line: 'Fast, secure and simple to update. No platform fee to keep it online.' },
       { title: 'Forms and calls', line: 'Quote and contact forms wired to your inbox, click to call, a booking link if you use one.' },
       { title: 'Search', line: 'Titles, descriptions, sitemap and your Google Business Profile connected, so the site is found.' },
       { title: 'Speed', line: 'Built to load in under two seconds on a phone, which Google rewards and callers notice.' },
