@@ -8,25 +8,30 @@ import './story.css';
    city, and one line of what the job was, the proof unit V3.1 names (and
    the shape monolog's success stories take: the work, the name, one line).
 
-   THE DATA IS content/work.js. A plate is a real entry: a name and a
-   screenshot at /public/work/<slug>.jpg, 16:10. THE SECTION RENDERS NOTHING
-   until there are three (BUILD-LAW Truth: no invented clients), so on the
-   page today it is absent, not empty.
+   THE DATA IS content/work.js: the founder's sites, each screenshot the live
+   site's first viewport at 1440 x 900 (.measure/work-shots.mjs). THE SECTION
+   RENDERS NOTHING with fewer than three entries (BUILD-LAW Truth, Real over
+   drawn).
 
    The strip scrolls sideways with snap at every width: three plates and a
    peek at 1280, one and a peek at 390. Each plate opens the live site. */
-function Browser({ slug }) {
+/* The screenshot in a plain frame: 8px radius, a hairline, nothing drawn
+   (real over drawn, 2026-10-02: the browser chrome drawing came off). The
+   720 file for phones, the 1440 one from 768. Decorative: the name under it
+   says whose site it is, and the link is the plate. */
+function Shot({ slug }) {
   return (
     <div className="rw__frame">
-      <svg className="rw__chrome" viewBox="0 0 400 28" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-        <circle className="kl" cx="16" cy="14" r="4" />
-        <circle className="kl" cx="30" cy="14" r="4" />
-        <circle className="kl" cx="44" cy="14" r="4" />
-      </svg>
-      <span className="rw__url" aria-hidden="true" />
-      <div className="rw__shot">
-        <img src={`/work/${slug}.jpg`} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
-      </div>
+      <img
+        src={`/work/${slug}-720.jpg`}
+        srcSet={`/work/${slug}-720.jpg 720w, /work/${slug}.jpg 1440w`}
+        sizes="(min-width: 768px) 380px, 82vw"
+        alt=""
+        width="1440"
+        height="900"
+        loading="lazy"
+        decoding="async"
+      />
     </div>
   );
 }
@@ -45,7 +50,7 @@ export default function RecentWork() {
         {REAL_WORK.map((w) => (
           <li className="rw__plate" key={w.slug}>
             <a className="rw__link" href={w.url || undefined} target="_blank" rel="noopener noreferrer">
-              <Browser slug={w.slug} />
+              <Shot slug={w.slug} />
               <p className="rw__name">{w.name}</p>
               <p className="rw__where st-mono">
                 {w.industry}, {w.city}

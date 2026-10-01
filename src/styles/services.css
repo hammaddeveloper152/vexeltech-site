@@ -162,7 +162,15 @@
       'list frame'
       'right frame';
   }
+}
 
+/* NO MATERIAL YET (real over drawn, 2026-10-02): head, list and price in
+   one column at the full measure. */
+.svc2__in--full,
+.svc2__d--cream .svc2__in--full {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'head' 'list' 'right';
+  grid-template-rows: none;
 }
 
 .svc2__left {

@@ -12,10 +12,13 @@
    (`vector-effect: non-scaling-stroke`), so a frame at 390 and at 1280 has
    the same 1.5px line.
 
-   Text inside a drawing is a UI label only ("Cost per lead", "Missed
-   call"), set at 14 drawing units so it never renders under 12px at 390
-   (BUILD-LAW Type floor). Anything a client would say, any figure, any name
-   is a bar or an empty slot: BUILD-LAW Truth.
+   REAL OVER DRAWN, 2026-10-02 (BUILD-LAW): where a real thing exists the
+   site shows it (Recent work's screenshots, the Websites phone); where it
+   does not, type. The drawn frames, the grey text bars, the dashed
+   "missing" outlines and the sample tags are gone; what is drawn now is
+   only the About marks (icons for their statements), the growth diagram
+   (words and lines), the timeline and the ledger. Text in a drawing stays
+   at 11px or more at 390 (BUILD-LAW Type floor).
    ========================================================================== */
 
 .kl {
@@ -31,16 +34,6 @@
   stroke-width: 2px;
 }
 
-.kl--dash {
-  stroke-dasharray: 6 6;
-}
-
-/* Text bars: the keyline's own ink at low weight, standing for words. */
-.kl-bar {
-  fill: currentColor;
-  opacity: 0.35;
-}
-
 .kl-ink {
   fill: currentColor;
 }
@@ -48,15 +41,6 @@
 /* THE ONE ACCENT per object, set by the object's `--acc`. */
 .kl-acc {
   fill: var(--acc);
-}
-
-.kl-acc-line {
-  fill: none;
-  stroke: var(--acc);
-  stroke-width: 2px;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
 }
 
 .kl-text {
@@ -70,10 +54,6 @@
   fill: var(--c-asphalt);
 }
 
-/* For the widest drawing (480 units), so the label stays over 11px at 390. */
-.kl-text--lg {
-  font-size: 18px;
-}
 
 /* A section's own head, shared by the objects that stand as sections. */
 .st-sec {
@@ -155,44 +135,44 @@
   }
 }
 
-/* ---- 1. What it costs you: four frames --------------------------------- */
-.cf__rows {
+/* ---- 1. What it costs you, as type (real over drawn, 2026-10-02) -------
+   The label in Clash Display 32px (bone), the line in Satoshi 18px
+   steel-lift, a hairline above each row; two columns from 1024. */
+.cr__rows {
   display: grid;
-  gap: var(--s-2xl) var(--s-xl);
+  column-gap: var(--s-xl);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-@media (min-width: 768px) {
-  .cf__rows {
+@media (min-width: 1024px) {
+  .cr__rows {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-.cf__svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  margin-bottom: var(--s-lg);
+.cr__row {
+  padding: var(--s-xl) 0;
+  border-top: 1px solid var(--st-hair);
 }
 
-.cf__t {
+.cr__t {
   margin: 0 0 var(--s-sm);
   font-family: var(--font-quiet);
-  font-size: var(--t-h3-size);
-  line-height: var(--t-h3-line);
+  font-size: 32px;
+  line-height: 1.2;
   font-weight: var(--t-weight-quiet);
   color: var(--st-head);
+  text-wrap: balance;
 }
 
-.cf__b {
+.cr__b {
   max-width: 44ch;
   margin: 0;
   font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
+  font-size: 18px;
+  line-height: 28px;
 }
 
 /* ---- 2. Recent work: the strip of plates -------------------------------
@@ -231,37 +211,13 @@
 }
 
 .rw__frame {
-  position: relative;
-  border: 1.5px solid currentColor;
-  border-radius: 12px;
   overflow: hidden;
-}
-
-.rw__chrome {
-  display: block;
-  width: 100%;
-  height: 28px;
-  border-bottom: 1.5px solid currentColor;
-}
-
-.rw__url {
-  position: absolute;
-  top: 9px;
-  left: 64px;
-  right: 16px;
-  height: 10px;
-  border-radius: 5px;
-  background: currentColor;
-  opacity: 0.18;
-}
-
-.rw__shot {
-  display: grid;
-  place-items: center;
+  border: 1px solid var(--st-hair);
+  border-radius: 8px;
   aspect-ratio: 16 / 10;
 }
 
-.rw__shot img {
+.rw__frame img {
   display: block;
   width: 100%;
   height: 100%;
@@ -385,9 +341,9 @@
   }
 }
 
-/* The drawing is 244 x 122. Below 768 it is held at 264px wide, so a box
-   is the 119px it was; from 768 it fills its column (at 1280, 368px: a box
-   about 166px, 1.35x). The hairline under it runs the column. */
+/* The drawing is 244 x 122, drawn at 1:1 (244px) where the column allows,
+   so the words are 14px; at 768 the column is narrower and it scales to
+   fit (about 12px). The hairline under it runs the column. */
 .gd__plate {
   padding-bottom: var(--s-md);
   border-bottom: 1px solid var(--st-hair);
@@ -395,16 +351,31 @@
 
 .gd__svg {
   display: block;
-  width: min(100%, 264px);
+  width: min(100%, 244px);
   height: auto;
   aspect-ratio: 244 / 122;
   overflow: visible;
 }
 
-@media (min-width: 768px) {
-  .gd__svg {
-    width: 100%;
-  }
+/* The words: JetBrains Mono 14px uppercase, the label tracking; asphalt on
+   cream (15.75:1), Follow-up in deep amber (4.82:1). The lines 1px. */
+.gd__w {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--c-asphalt);
+}
+
+.gd__w--acc {
+  fill: var(--c-accent-text-light);
+}
+
+.gd__l {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
 }
 
 .gd__svg .st-rv {
@@ -431,10 +402,6 @@
   font-family: var(--font-offer);
   font-size: var(--t-body-size);
   line-height: var(--t-body-line);
-}
-
-.gd {
-  --acc: var(--c-accent-ground);
 }
 
 /* ---- 5. About, What we build it around: statements with marks ----------
@@ -652,34 +619,35 @@
   text-underline-offset: 3px;
 }
 
-/* ---- 8. Services: one frame per discipline -----------------------------
-   The frame takes the band's ink. Wide frames (branding, marketing) fill the
-   column; the tall ones (phone, thread) stop at 360px. */
-.sf {
+/* ---- 8. Services: the discipline's real material (ServiceImage) -------
+   Real over drawn, 2026-10-02. A phone screenshot sits in a plain device
+   frame (12px radius, a 2px hairline in the band's ink at 15%, no notch);
+   anything else in an 8px frame with a hairline. At most 320px wide for the
+   phone, the column for the rest. */
+.si {
   margin: 0;
 }
 
-.sf__svg {
+.si img {
   display: block;
   width: 100%;
-  max-width: 360px;
   height: auto;
 }
 
-.sf__svg--wide {
-  max-width: 520px;
+.si:not(.si--device) {
+  overflow: hidden;
+  border: 1px solid var(--st-hair, rgb(23 24 26 / 15%));
+  border-radius: 8px;
 }
 
-/* The sample monogram's letters: Clash Display, asphalt on the yellow. */
-.sf__mono {
-  font-family: var(--font-brand);
-  font-size: 15px; /* 11.2px at 390, the type floor */
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  fill: var(--c-asphalt);
+.si--device {
+  width: min(100%, 320px);
+  overflow: hidden;
+  border: 2px solid color-mix(in srgb, currentColor 15%, transparent);
+  border-radius: 12px;
 }
 
-/* The plate is one link to the live site. */
+/* The Recent work plate is one link to the live site. */
 .rw__link {
   display: block;
   color: inherit;

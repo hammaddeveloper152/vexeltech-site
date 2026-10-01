@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Header from '../../components/site/Header.jsx';
 import Hero from '../../components/home/Hero.jsx';
-import CostFrames from '../../components/story/CostFrames.jsx';
+import CostRows from '../../components/story/CostRows.jsx';
 import RecentWork from '../../components/story/RecentWork.jsx';
 import Services from '../../components/home/Services.jsx';
 import WordBand from '../../components/home/WordBand.jsx';
@@ -122,9 +122,9 @@ export default function Home() {
           back into the bar, which is the thing the link just skipped. */}
       <main id="main" tabIndex={-1}>
         <Hero />
-        {/* What it costs you, as four frames (the storytelling pass,
-            2026-10-01): CostFrames replaces the four text rows. */}
-        <CostFrames />
+        {/* What it costs you, as type (real over drawn, 2026-10-02): the
+            four drawn frames came off. */}
+        <CostRows />
         <About />
         <Services />
         {/* Recent work, between What we do and the flat-prices band. It

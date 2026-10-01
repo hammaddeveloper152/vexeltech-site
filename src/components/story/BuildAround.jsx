@@ -9,7 +9,7 @@ import './story.css';
    automation mint). No cards.
 
      Branding     a stopwatch, ten seconds swept: "decides in ten seconds"
-     Websites     a page, a number above the dashed fold
+     Websites     a page, a number above the fold line
      Marketing    click, page, phone: three objects on one chain
      Automation   a text bubble marked 60s
 
@@ -72,10 +72,10 @@ function FoldMark() {
     <Svg>
       <rect className="kl" x="36" y="4" width="48" height="72" rx="6" />
       <rect className="kl-acc" x="44" y="14" width="32" height="10" rx="3" />
-      <rect className="kl-bar" x="44" y="30" width="24" height="5" rx="2.5" />
-      <line className="kl kl--dash" x1="28" y1="44" x2="92" y2="44" />
-      <rect className="kl-bar" x="44" y="54" width="32" height="4" rx="2" opacity="0.5" />
-      <rect className="kl-bar" x="44" y="63" width="22" height="4" rx="2" opacity="0.5" />
+      <line className="kl" x1="44" y1="32" x2="68" y2="32" />
+      <line className="kl" x1="28" y1="44" x2="92" y2="44" />
+      <line className="kl" x1="44" y1="56" x2="76" y2="56" />
+      <line className="kl" x1="44" y1="65" x2="66" y2="65" />
     </Svg>
   );
 }
@@ -87,8 +87,8 @@ function ChainMark() {
       <path className="kl" d="M8 26 L8 50 L14 44 L19 54 L23 52 L18 42 L26 42 Z" />
       <line className="kl kl--2" x1="30" y1="40" x2="42" y2="40" />
       <rect className="kl" x="44" y="22" width="28" height="36" rx="4" />
-      <rect className="kl-bar" x="49" y="29" width="18" height="4" rx="2" />
-      <rect className="kl-bar" x="49" y="37" width="12" height="4" rx="2" />
+      <line className="kl" x1="49" y1="31" x2="67" y2="31" />
+      <line className="kl" x1="49" y1="39" x2="61" y2="39" />
       <line className="kl kl--2" x1="74" y1="40" x2="86" y2="40" />
       <rect className="kl-acc" x="92" y="18" width="24" height="44" rx="5" />
       <rect className="kl" x="92" y="18" width="24" height="44" rx="5" />

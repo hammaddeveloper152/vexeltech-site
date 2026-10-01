@@ -12,7 +12,14 @@ import { FIGURES, money } from './pricing.js';
    `turnaround`. Websites carries the SEO line (`seo`, an H3 under the
    promise; V3's trades line until V3.1) and `bigger`, both shown. Each
    card's `line` shows under its title on /services (the structure pass).
-   Figures are tokens. */
+   Figures are tokens.
+
+   `image` (real over drawn, 2026-10-02): the discipline's real material,
+   shown beside its list (components/story/ServiceImage.jsx). null renders
+   nothing and the list runs full width. Websites has the live
+   baseline-books.com on a phone; Branding, Marketing and Automation wait
+   for a real mark on a photographed object, a real report and a real text
+   thread. */
 export const DISCIPLINES = [
   {
     id: 'branding',
@@ -27,6 +34,7 @@ export const DISCIPLINES = [
       { title: 'Files', line: 'Every format your printer, sign shop and web team will ask for.' },
     ],
     terms: `Basic ${money(FIGURES.brandingBasic)}. Advance ${money(FIGURES.brandingAdvance)}. One to two business days.`,
+    image: null,
     fit: "You're trading under a name with no mark, or a mark you wouldn't put on a sign.",
     call: { label: 'Get a custom quote', primary: true },
   },
@@ -45,6 +53,13 @@ export const DISCIPLINES = [
     ],
     bigger: 'Stores, customer portals, custom backends and apps. Scoped and priced on the call.',
     terms: `${money(FIGURES.website)}, one price. Four business days from the day we have your content. Domain, hosting and code in your name.`,
+    image: {
+      src: '/work/baseline-books-390.jpg',
+      alt: 'The Baseline Bookkeeping website on a phone, its first screen.',
+      width: 780,
+      height: 1688,
+      device: true,
+    },
     fit: 'You have no site, a site nobody finds, or a site that gets traffic and no enquiries.',
     call: { label: 'Get a custom quote', primary: true },
   },
@@ -63,6 +78,7 @@ export const DISCIPLINES = [
       { title: 'Reporting', line: 'Leads, cost per lead and booked customers, monthly, in plain language.' },
     ],
     terms: 'Priced on the call, in writing before anything runs. Month to month.',
+    image: null,
     fit: "You're spending on ads and can't name your cost per lead, or you're ready to start and want it set up right.",
     call: { label: 'Ask a question', primary: false },
   },
@@ -81,6 +97,7 @@ export const DISCIPLINES = [
       { title: 'AI agents', line: 'Answer, qualify and book from your site and your channels, on your rules.' },
     ],
     terms: 'Priced per workflow, in writing before any work starts. Most workflows run within two weeks.',
+    image: null,
     fit: 'Your team sends the same text, quote or reminder by hand every day.',
     call: { label: 'Ask a question', primary: false },
   },

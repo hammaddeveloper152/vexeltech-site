@@ -9,8 +9,11 @@
    any text under 11px inside a story object or a Services frame (SVG text
    at its rendered size: font size times the drawing's scale), are listed.
 
-   Usage: node .measure/wired.mjs [base]
-   Frames go to .measure/out/story/wired/. */
+   Usage: node .measure/wired.mjs [base] [out-subdir] [routes,comma,separated]
+   Frames go to .measure/out/story/wired/ (or .measure/out/<out-subdir>/).
+   2026-10-02 (real over drawn): the objects are CostRows (.cr), Recent work
+   (.rw), the timeline (.ctl), the growth diagram (.gd), BuildAround (.ba),
+   the ledger (.fl), the terms sheet (.ts) and ServiceImage (.si). */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -18,12 +21,12 @@ import puppeteer from 'puppeteer';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const BASE = process.argv[2] || 'http://localhost:4173';
-const OUT = path.join(HERE, 'out', 'story', 'wired');
+const OUT = process.argv[3] ? path.join(HERE, 'out', process.argv[3]) : path.join(HERE, 'out', 'story', 'wired');
 fs.mkdirSync(OUT, { recursive: true });
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-const ROUTES = ['/', '/services', '/pricing', '/about-us', '/contact-us', '/thanks', '/privacy-policy', '/terms-of-service', '/no-such-page'];
+const ROUTES = process.argv[4] ? process.argv[4].split(',') : ['/', '/services', '/pricing', '/about-us', '/contact-us', '/thanks', '/privacy-policy', '/terms-of-service', '/no-such-page'];
 /* The objects, by their root class. */
-const OBJECTS = ['.cf', '.rw', '.ctl', '.gd', '.ba', '.fl', '.ts', '.sf'];
+const OBJECTS = ['.cr', '.rw', '.ctl', '.gd', '.ba', '.fl', '.ts', '.si'];
 const errors = [];
 const small = [];
 
