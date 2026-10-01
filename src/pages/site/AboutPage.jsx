@@ -48,7 +48,7 @@ export default function AboutPage() {
     <Shell
       title="About us | VexelTech"
       path="/about-us"
-      description="VexelTech Solutions is a technology company that builds the website, the marketing and the automation behind US local service businesses, at flat prices from $299."
+      description="VexelTech designs and codes the website, runs the ads and builds the automation behind US local service businesses, as one team."
       footerForm={false}
       light
     >
@@ -64,15 +64,12 @@ export default function AboutPage() {
             ring.
           </h1>
           <div className="ab3-hero__cols">
+            {/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, About us, Hero
+                statement): one line; the second paragraph has no V2 line. */}
             <p className="ab3-hero__p">
-              A local business doesn&apos;t need a designer. It needs a website that converts, ads that
-              point at it, and the automation that catches every call and quote behind them. That&apos;s
-              one system, and we build the whole of it.
-            </p>
-            <p className="ab3-hero__p">
-              We work with owner-run trades and services across the US: plumbing, HVAC, electrical,
-              roofing, dental, cleaning. Flat prices, four business days, and a team that stays on the
-              project after launch. You see the work before you owe us anything.
+              A local service business doesn&apos;t need a designer, a developer, an ad agency and an
+              automation consultant. It needs the four to be one team with one plan. That&apos;s what
+              VexelTech is.
             </p>
           </div>
         </div>

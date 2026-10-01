@@ -36,14 +36,19 @@ import './FooterForm.css';
    a `PostalAddress`; since 2026-09-30 the band names no location. */
 const EMAIL = 'info@vexeltechsolutions.com';
 /* The month is content/company.js's (2026-09-25). */
-const BOOKING = `Booking projects for ${company.bookingMonth}`;
+/* COPY V2, 2026-10-01: "Taking bookings for October 2026." */
+const BOOKING = `Taking bookings for ${company.bookingMonth}.`;
+/* COPY V2, 2026-10-01: the phone, supplied by the founder in V2 (it was
+   already in the legal pages). */
+const PHONE = '(385) 284-3265';
+const PHONE_HREF = 'tel:+13852843265';
 
 const PAGES = [
   { id: 'home', label: 'Home', href: '/' },
   { id: 'services', label: 'Services', href: '/services' },
   { id: 'pricing', label: 'Pricing', href: '/pricing' },
-  { id: 'about', label: 'About', href: '/about-us' },
-  { id: 'contact', label: 'Contact', href: '/contact-us' },
+  { id: 'about', label: 'About us', href: '/about-us' },
+  { id: 'contact', label: 'Contact us', href: '/contact-us' },
 ];
 
 /* The founder's three accounts. Only an account with a URL in
@@ -83,6 +88,10 @@ export default function FooterMeta() {
       <div className="foot__meta">
         <a className="foot__email" href={`mailto:${EMAIL}`}>
           {EMAIL}
+        </a>
+
+        <a className="foot__email" href={PHONE_HREF}>
+          {PHONE}
         </a>
 
         {/* A named landmark, so it is not confused with the bar's "Main". */}

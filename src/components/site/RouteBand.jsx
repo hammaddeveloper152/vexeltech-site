@@ -44,12 +44,13 @@ gsap.registerPlugin(ScrollTrigger);
    The five stops are the About brief's, the user's own copy; the five lines
    are the retired Process's four and the user's line for stop 05. */
 
+/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Home, How it works): four
+   steps. Stop 05 has no V2 line and is gone. */
 const STOPS = [
-  ['01', 'A call, not a pitch'],
-  ['02', 'We design it and show you'],
-  ['03', 'We build and test it'],
-  ['04', 'It goes live on your domain'],
-  ['05', "Thirty days of support, then it's yours"],
+  ['01', 'A fifteen-minute call.'],
+  ['02', 'You see it before you pay.'],
+  ['03', 'We build it.'],
+  ['04', "It's yours."],
 ];
 
 /* The margin label is Marginalia.jsx's since 2026-09-25; the `marg` prop is

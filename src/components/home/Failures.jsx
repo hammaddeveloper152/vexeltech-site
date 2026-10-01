@@ -21,26 +21,28 @@ import './Failures.css';
 
    The numerals are an ordered list's own count shown in type, so a screen
    reader hears the list's count and not "01" read out before each title. */
+/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Home, What it costs you): each
+   row's first sentence is the title, the rest the line. */
 const FAILURES = [
   {
     id: 'find',
-    statement: "They can't find you",
-    consequence: 'No online presence, so the search that should have found you finds nobody.',
+    statement: 'They search and find someone else.',
+    consequence: 'No site, or a site Google skips, and the job goes to the company it found instead.',
   },
   {
     id: 'call',
-    statement: 'Not enough are calling',
-    consequence: "The marketing budget goes out every month and the leads don't come back.",
+    statement: "The ads run and the phone doesn't.",
+    consequence: "Money goes out every month, clicks land on a page that doesn't convert, and nobody can tell you why.",
   },
   {
     id: 'miss',
-    statement: 'You miss the ones who do',
-    consequence: 'A missed call is a job that goes to whoever picked up instead.',
+    statement: 'You miss the call.',
+    consequence: "You're on a roof or under a sink. The caller tries the next number on the list.",
   },
   {
     id: 'remember',
-    statement: "They don't remember you",
-    consequence: 'Work with no name on it is work the next customer never hears about.',
+    statement: 'They forget your name.',
+    consequence: 'Work with no mark on it is work the next customer never hears about.',
   },
 ];
 
@@ -59,7 +61,6 @@ export default function Failures() {
           <h2 className="fail__h" id="fail-h">
             What it costs you
           </h2>
-          <p className="fail__intro">Four ways a local business loses money before anyone notices.</p>
           {/* Two loose swashes under the intro, from 1024 (the Genesis pass):
               260 and 320px, -6 and 4 degrees, at 0.85. Decorative. */}
           <div className="fail__marks" aria-hidden="true">

@@ -41,7 +41,8 @@ export const EXIT_MS = 200;
 export const LINES = [
   "Nobody's calling.",
   "They can't find you. Yet.",
-  'We build the thing that finds them.',
+  /* COPY V2, 2026-10-01: line 3. */
+  'We build the site, the ads and the follow-up.',
   'Not a proposal. The finished thing.',
 ];
 

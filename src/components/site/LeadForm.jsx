@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { IconArrowRight, IconCheck, IconCross } from './Icons.jsx';
 import { UTM_KEYS, getUtm } from './utm.js';
 import { trackPixel } from './pixel.js';
+import { budgetBands } from '../../content/pricing.js';
 import './LeadForm.css';
 
 /* THE LEAD FORM, 2026-09-25 (the founder's contact pass). One form, two
@@ -24,20 +25,26 @@ import './LeadForm.css';
    That cannot be verified from here. */
 
 const FIELDS = [
-  { id: 'name', ph: 'Your name *', type: 'text', autoComplete: 'name' },
-  { id: 'phone', ph: 'Your phone *', type: 'tel', autoComplete: 'tel' },
-  { id: 'email', ph: 'Your email *', type: 'email', autoComplete: 'email' },
+  /* COPY V2, 2026-10-01: Name, Phone, Email. */
+  { id: 'name', ph: 'Name *', type: 'text', autoComplete: 'name' },
+  { id: 'phone', ph: 'Phone *', type: 'tel', autoComplete: 'tel' },
+  { id: 'email', ph: 'Email *', type: 'email', autoComplete: 'email' },
 ];
 
 /* The founder's five, verbatim. */
-const NEEDS = ['Branding', 'Websites', 'Marketing', 'Automation', 'Not sure yet'];
+const NEEDS = ['Branding', 'Website', 'Marketing', 'Automation', 'Not sure'];
 
 /* The founder's budget bands for the contact page, verbatim (2026-09-25).
    Single select and not required. */
-const BUDGETS = ['Under $500', '$500 to $1,000', '$1,000 to $2,500', 'Not sure yet'];
+/* COPY V2, 2026-10-01: the three bands, derived from the prices
+   (content/pricing.js, budgetBands): Up to $300, $300 to $700, $700 or
+   more. */
+const BUDGETS = budgetBands();
 
 /* The founder's placeholder, contact page and footer form (2026-09-25). */
-const MESSAGE_PH = 'Tell us about your business and what you need *';
+/* COPY V2, 2026-10-01: the footer form's fourth field is "Message"; the
+   contact form's is "Tell us about your business and what you need". */
+const MESSAGE_LABEL = { footer: 'Message', contact: 'Tell us about your business and what you need' };
 
 export function validate(id, value) {
   const v = value.trim();
@@ -285,7 +292,7 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
           {pad(msgIndex)}
         </span>
         <label className="lf__sr" htmlFor={fid('message')}>
-          Tell us about your business and what you need
+          {needs ? MESSAGE_LABEL.contact : MESSAGE_LABEL.footer}
         </label>
         <textarea
           className="lf__input lf__textarea"
@@ -293,7 +300,7 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
           name="message"
           rows={1}
           ref={msgRef}
-          placeholder={MESSAGE_PH}
+          placeholder={`${needs ? MESSAGE_LABEL.contact : MESSAGE_LABEL.footer} *`}
           value={values.message}
           onChange={set('message')}
           onBlur={check('message')}
@@ -311,7 +318,7 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
           data-ready={ready ? 'true' : 'false'}
           aria-disabled={ready ? undefined : 'true'}
         >
-          {status === 'sending' ? 'Sending' : 'Send message'}
+          {status === 'sending' ? 'Sending' : 'Send'}
           <IconArrowRight className="i send__go" />
         </button>
 
@@ -321,8 +328,8 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
           {status === 'sent' ? (
             <span className="lf__ok">
               <IconCheck className="i i--sm lf__ok-mark" />
-              {/* VEXELTECH-COPY.md, Contact form, verbatim. */}
-              Got it. You&apos;ll hear from a person, not an autoresponder, within one business day.
+              {/* VEXELTECH-COPY.md (V2), the forms' success, verbatim. */}
+              Got it. A person replies within one business day.
             </span>
           ) : null}
           {status === 'failed' ? (

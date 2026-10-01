@@ -62,20 +62,20 @@ import '../../styles/lit.css';
    section numbers in the build brief were a build sequence, not a page
    order, so do not reorder to match them. */
 
-const TITLE = 'Websites, marketing and automation for local service businesses | VexelTech';
+/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Metadata). */
+const TITLE = 'Websites, branding, marketing and automation for local service businesses | VexelTech';
 const DESCRIPTION =
-  'Flat prices for US local service businesses. Websites $700, branding from $299, live in four business days. You see the work before you owe anything.';
+  'Websites $700 flat, branding from $299, designed and coded by one team for US local service businesses. Live in four business days.';
 
 /* The retired Process component's four step descriptions, carried as one
    line under stops 01 to 04 of the route, and the user's line for stop 05
    (2026-09-21). */
+/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Home, How it works). */
 const STEP_LINES = [
-  "Fifteen minutes on the phone. You tell us what's wrong and what you're after, and we listen before we price anything.",
-  'Onboarding and research first, then design starts: the brand work for branding, the UI and UX for the site.',
-  'Four business days to build it, then testing. You look at it and tell us what to change, as many times as it takes.',
-  'It moves to your hosting, with every credential and the ownership under your name. You own everything you paid for.',
-  /* Stop 05, the user's line, 2026-09-21. */
-  "Thirty days of support included. After that it's a conversation, not a contract.",
+  "You tell us what the business does and what's going wrong. We tell you what we'd fix first and what it costs.",
+  'Logo concepts, or the site design, shown to you and changed until you say yes.',
+  'Four business days for a website, one to two for branding. You check it on your own phone before it goes live.',
+  'Domain, hosting, files and code in your name, with thirty days of changes included.',
 ];
 
 export default function Home() {
@@ -133,8 +133,8 @@ export default function Home() {
         {/* The closing call, between Questions and the form: the founder's
             line and subline, 2026-09-24. */}
         <CallBand
-          heading="Not sure where to start?"
-          note="Fifteen minutes on the phone. We tell you what we would fix first."
+          heading="Which one is costing you most?"
+          note="Fifteen minutes on the phone. We'll tell you what we'd fix first, and it isn't always the expensive one."
         />
         <FooterForm />
       </main>

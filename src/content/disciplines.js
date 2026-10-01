@@ -4,6 +4,7 @@ import {
   IsoMarketing,
   IsoWebsites,
 } from '../components/site/Illustrations.jsx';
+import { FIGURES, money } from './pricing.js';
 
 /* THE FOUR DISCIPLINES AS CARDS, home's What we do. Each card's artwork is
    its isometric illustration since 2026-09-24 (components/site/
@@ -18,24 +19,26 @@ export const DISCIPLINES = [
     id: 'branding',
     Art: IsoBranding,
     discipline: 'Branding',
-    line: 'A name people remember. Logo, guidelines, stationery and a social kit.',
+    /* COPY V2, 2026-10-01: the four lines (VEXELTECH-COPY.md, Home, What
+       we do). The $299 is the token's. */
+    line: `A mark people remember. Logo, brand guideline, stationery and social kit, from ${money(FIGURES.brandingBasic)}.`,
   },
   {
     id: 'websites',
     Art: IsoWebsites,
     discipline: 'Websites',
-    line: 'A site that sells while you sleep. Custom, four business days, thirty days of care.',
+    line: `Up to six pages, designed and coded for your business. ${money(FIGURES.website)}, live in four business days.`,
   },
   {
     id: 'marketing',
     Art: IsoMarketing,
     discipline: 'Marketing',
-    line: 'Ads pointed at the phone. Google and Meta ads, lead generation.',
+    line: 'Google and Meta ads pointed at your phone, with the landing page fixed first.',
   },
   {
     id: 'automation',
     Art: IsoAutomation,
     discipline: 'Automation',
-    line: "The week's small jobs, done without you. Quotes, follow-ups, invoices, bookings.",
+    line: "Quotes, follow-ups, invoices and bookings that run while you're on a job.",
   },
 ];

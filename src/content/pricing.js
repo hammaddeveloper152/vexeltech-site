@@ -133,28 +133,28 @@ export const BRANDING = [
     id: 'branding-basic',
     name: 'Basic',
     figure: 'brandingBasic',
+    /* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Branding tiers). */
+    turnaround: 'two business days',
     features: [
-      'Custom logo design, 5 concepts',
-      'Unlimited revisions',
-      'All file formats delivered within 2 business days',
-      'Logo sizes optimized for social media',
+      'Logo design, five concepts',
       'Brand guideline',
-      'Stationery design: business card, cover letter, envelope design, favicon, email signature',
+      'Stationery: card, letterhead, envelope, favicon, email signature',
+      'Logo sizes for social',
+      'Unlimited revisions before files are released',
     ],
   },
   {
     id: 'branding-advance',
     name: 'Advance',
     figure: 'brandingAdvance',
+    turnaround: 'one business day',
     features: [
-      'Custom logo design, 8 concepts',
-      'Unlimited revisions',
-      'All file formats delivered within 1 business day',
-      'Logo sizes optimized for social media',
+      'Logo design, eight concepts',
+      'Colour variations of the mark',
+      'Social kit: banners and cover images',
       'Brand guideline',
-      'Stationery design: business card, cover letter, envelope design, favicon, email signature',
-      'Colour variations of the logo',
-      'Social media kit, banners and cover profiles',
+      'Stationery: card, letterhead, envelope, favicon, email signature',
+      'Unlimited revisions before files are released',
     ],
   },
 ];
@@ -165,66 +165,28 @@ export const WEBSITES = [
     id: 'website',
     name: 'A website',
     figure: 'website',
+    /* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, The website): the
+       $700 site defined once. */
+    turnaround: 'four business days',
     features: [
-      'Custom website design, up to 6 pages',
-      'Custom UI and UX design',
-      'Contact Us form integration',
-      'CTA integration',
-      'Social media icons',
-      'Payment gateway integration',
-      'Custom backend',
-      'SEO friendly content',
-      '30 days of maintenance',
+      'Up to six pages, designed for your business',
+      'Coded by our team on our own design system',
+      'Mobile first, under two seconds to load on a phone',
+      'Quote and contact forms to your inbox, click to call, booking link',
+      'Search set up: titles, descriptions, sitemap, Google Business Profile connected',
+      'Live on your own domain, in your name',
+      'Thirty days of changes and maintenance',
     ],
+    bigger: 'Stores, portals, custom backends and apps are priced on the call.',
   },
 ];
 
-/* Every marketing category ends in a quote. That is the sheet's own line:
-   "Custom-scoped services, every category ends with a personalized quote." */
-export const MARKETING = [
-  {
-    id: 'seo',
-    name: 'SEO services',
-    features: [
-      'Google ranking and website optimization',
-      'Keyword hunting',
-      'Backlinks',
-      'Blog writing',
-      'CRO, conversion rate optimization',
-      'Website content management',
-    ],
-  },
-  {
-    id: 'meta',
-    name: 'Meta ads',
-    features: [
-      'Ad creative creation',
-      'Offer building',
-      'Campaign creation',
-      'Lead generation',
-      'Social media account optimization',
-      'Social media management and content calendar',
-    ],
-  },
-  {
-    id: 'ppc',
-    name: 'Google PPC',
-    features: [
-      'Keyword research and campaign structuring',
-      'Google search and display ad creation',
-      'Campaign setup and launch',
-      'Conversion tracking setup',
-      'Bid management and budget optimization',
-      'Landing page recommendations',
-      'Performance reporting and optimization',
-    ],
-  },
-];
-
-/* The sheet gives automations no list and no figure, only a scoping rule. */
+/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Marketing and
+   automation columns). */
+export const MARKETING_LINE =
+  'Priced on the call, month to month. Google ads, Meta ads, SEO and AI search, tracking, social content.';
 export const AUTOMATIONS = {
-  note:
-    'Every automation project is scoped individually based on tools, workflows, and integrations required.',
+  note: 'Priced per workflow. Missed call text back, quotes, invoices, booking, AI agents.',
 };
 
 export const BUNDLE = {
@@ -238,6 +200,11 @@ export const BUNDLE = {
     { label: 'The website', from: WEBSITES[0] },
     { label: 'Branding, advance', from: BRANDING[1] },
   ],
+  /* COPY V2, 2026-10-01: the $150 is derived (bundleSaving). */
+  line: () => {
+    const b = bundleSaving();
+    return b ? `The website and Advance branding together, ${money(b.saving)} less than separately.` : null;
+  },
 };
 
 /* ==========================================================================
@@ -293,26 +260,27 @@ export const CUSTOM = {
    SUPPLIED BY THE FOUNDER, 2026-09-10. The twelve lines below are verbatim.
    The card's pending rows are gone and nothing else moved, which is what the
    reservation was built to do. */
+/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Custom card). */
 export const NEEDS = {
   branding: [
-    'Your market and who you are up against',
-    'How many touchpoints the identity has to cover',
-    'What already exists that has to survive',
+    "Your trade and who you're up against",
+    'How many places the mark has to live',
+    'Anything that exists and has to stay',
   ],
   websites: [
-    'How many pages and what each one has to do',
-    'What it connects to: booking, payments, CRM, forms',
-    'Where the visitors come from',
+    'How many pages and what each one is for',
+    'What it connects to: booking, payments, CRM',
+    'Where your visitors come from',
   ],
   marketing: [
-    'The market and the competition in it',
+    'Your market and your competitors',
     'The monthly budget range',
-    'What has been tried and what it returned',
+    "What you've tried and what it returned",
   ],
   automation: [
-    'The tools already in use',
-    'The workflow that eats the most hours each week',
-    'The volume it has to handle',
+    'The tools you already use',
+    'The job that eats the most hours a week',
+    'How many a day it has to handle',
   ],
 };
 
@@ -321,72 +289,27 @@ export const NEEDS = {
 export const CUSTOM_TERMS =
   'Every custom job is priced on the call and in writing before any work starts.';
 
+/* COPY V2, 2026-10-01: the ladder reads the tiers above rather than
+   carrying its own cut of them, so the $700 site and the two branding tiers
+   are each written once. */
 export const LADDER = {
   branding: {
     label: 'Branding',
     lead: 'branding-advance',
     /* 449 - 299, derived. Never typed. */
     delta: () => FIGURES.brandingAdvance - FIGURES.brandingBasic,
-    tiers: [
-      {
-        id: 'branding-basic',
-        name: 'Basic',
-        figure: 'brandingBasic',
-        turnaround: '2 business days',
-        features: [
-          'Custom logo design, 5 concepts',
-          'Brand guideline',
-          'Stationery design: card, letter, envelope, favicon, signature',
-          'Logo sizes optimized for social media',
-          'Unlimited revisions',
-        ],
-      },
-      {
-        id: 'branding-advance',
-        name: 'Advance',
-        figure: 'brandingAdvance',
-        turnaround: '1 business day',
-        turnaroundDelta: true,
-        features: [
-          { t: 'Custom logo design, 8 concepts', delta: true },
-          { t: 'Colour variations of the logo', delta: true },
-          { t: 'Social media kit, banners and cover profiles', delta: true },
-          { t: 'Brand guideline' },
-          { t: 'Stationery design: card, letter, envelope, favicon, signature' },
-          { t: 'Unlimited revisions' },
-        ],
-      },
-    ],
+    tiers: BRANDING,
   },
-
   websites: {
     label: 'Websites',
     lead: 'website',
-    tiers: [
-      {
-        id: 'website',
-        name: 'A website',
-        figure: 'website',
-        turnaround: '4 business days',
-        features: [
-          'Custom website design, up to 6 pages',
-          'Custom UI and UX design',
-          'Custom backend',
-          'Payment gateway integration',
-          'SEO friendly content',
-          '30 days of maintenance',
-        ],
-      },
-    ],
+    tiers: WEBSITES,
   },
-
   marketing: {
     label: 'Marketing',
     tiers: [],
-    why:
-      'What marketing costs depends on your market and who you are up against, so every category ends with a quote rather than a number on a card.',
+    why: MARKETING_LINE,
   },
-
   automation: {
     label: 'Automation',
     tiers: [],

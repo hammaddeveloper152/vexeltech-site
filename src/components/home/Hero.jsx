@@ -339,9 +339,10 @@ export default function Hero() {
             block's bottom, and falls to nothing at 62% of the width. See
             `.hero__support::before`. Nothing about the stack's layout changes. */}
         <div className="hero__support">
+          {/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Home, Hero). */}
           <p className="hero__sub">
-            One team for branding, websites, marketing and automation. Not four agencies
-            who don't talk to each other.
+            Websites, branding, marketing and automation for local service businesses, designed
+            and coded by one team.
           </p>
 
           {/* Sentence case in the SOURCE, not a text-transform. Case is copy. */}

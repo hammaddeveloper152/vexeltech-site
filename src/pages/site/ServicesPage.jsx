@@ -53,7 +53,7 @@ export default function ServicesPage() {
     <Shell
       title="Services | VexelTech"
       path="/services"
-      description="Branding, websites, marketing and automation for local service businesses. Flat prices, one team."
+      description="Branding, websites, marketing and automation for plumbers, HVAC, electricians, roofers, cleaners, dentists and contractors. One team, one invoice."
     >
       {/* The page's one highlighted word, 2026-09-24: `.hl`, tokens.css. */}
       <PageHead
@@ -62,7 +62,7 @@ export default function ServicesPage() {
             What we <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">do</Brush>
           </>
         }
-        lead="Four disciplines and one team. Not four agencies who don't talk to each other, and not four invoices."
+        lead="Four disciplines, built by one team so they work as one system. Start with the one that hurts."
       />
 
       {/* NOT INSIDE `Section`, 2026-09-23. (Since 2026-09-24 the cream

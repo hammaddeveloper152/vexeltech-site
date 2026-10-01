@@ -34,25 +34,23 @@ import '../../styles/pricegrid.css';
    three, and the only yellow in the grid. The other three columns' buttons
    are asphalt with a cream label. */
 
-const firstSentence = (text) => {
-  const at = text.indexOf('. ');
-  return at < 0 ? text : text.slice(0, at + 1);
-};
-
 const GRID = {
   branding: {
     price: `${money(FIGURES.brandingBasic)} to ${money(FIGURES.brandingAdvance)}`,
     sub: 'one time',
   },
   websites: { price: money(FIGURES.website), sub: 'one time, four business days', picked: true },
-  marketing: { price: 'On the call', sub: 'monthly, after a scoping call' },
-  automation: { price: 'On the call', sub: 'scoped per workflow' },
+  marketing: { price: 'On the call', sub: 'monthly, after a call' },
+  automation: { price: 'On the call', sub: 'per workflow, after a call' },
 };
 
 const COLUMNS = DISCIPLINES.map((d) => ({
   id: d.id,
   name: d.name,
-  line: firstSentence(d.promise),
+  /* COPY V2, 2026-10-01: the grid gives no line under a column's name, so
+     the row is left empty (it is a row of the shared subgrid, so the
+     element stays and the buttons stay aligned). */
+  line: null,
   items: d.cards.map((c) => c.title),
   call: d.call.label,
   /* The button follows its label (2026-09-24): the primary is yellow, the
@@ -62,36 +60,43 @@ const COLUMNS = DISCIPLINES.map((d) => ({
 }));
 
 /* The founder's table, verbatim, in the grid's column order. */
+/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, What's in every project). */
 const ROWS = [
   ['Turnaround', ['1 to 2 days', '4 days', 'first week', 'per workflow']],
-  /* Corrected by the founder, 2026-09-24: home is right, there is no cap.
-     The brief's "unlimited before build" and "two rounds" are superseded. */
-  ['Revisions', ['as many as it takes, before build', 'as many as it takes, before launch', 'ongoing', 'ongoing']],
-  ['Ownership', ['yours', 'yours, domain and code', 'yours, ad accounts', 'yours, tools and access']],
+  ['Revisions', ['as many as it takes, before files', 'as many as it takes, before launch', 'ongoing', 'ongoing']],
+  ['Ownership', ['files, yours', 'domain and code, yours', 'ad accounts, yours', 'tools and access, yours']],
   ['Support after launch', ['30 days', '30 days', 'monthly', 'monthly']],
-  ['Payment', ['flat, on approval', 'flat, on approval', 'monthly', 'monthly']],
+  ['Payment', ['flat, on approval', 'flat, on approval', 'monthly', 'per workflow']],
 ];
 
+/* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Questions). The $700
+   and the $299 are the tokens; the $15 is a domain's cost, not a price of
+   ours. */
 const QUESTIONS = [
   {
     id: 'whole',
-    q: 'Is $700 really the whole price?',
-    a: 'Yes. Design, build, testing, launch on your domain and thirty days of support. The only thing not in it is a domain name if you do not own one yet, which is about $15 a year and goes in your name.',
+    q: `Is ${money(FIGURES.website)} really the whole price?`,
+    a: "Yes. Design, code, testing, launch on your domain and thirty days of changes. The only thing not in it is a domain name if you don't own one yet, about $15 a year, in your name.",
+  },
+  {
+    id: 'coded',
+    q: `How is a coded site ${money(FIGURES.website)}?`,
+    a: "Because we've built the system we build on. The design system, the components and the build are ours, so our developers spend the four days on your business rather than on scaffolding.",
   },
   {
     id: 'call',
     q: 'What does "on the call" mean?',
-    a: 'Marketing and automation depend on your ad spend, your locations and the tools you already use, so we price them after a fifteen-minute call. You get a written number before anything starts.',
+    a: "Marketing and automation depend on your ad spend, your area and the tools you use, so we price them after a fifteen-minute call. You get the number in writing before anything starts.",
   },
   {
     id: 'deposit',
     q: 'Do you take a deposit?',
-    a: 'No. You see concepts before you pay for anything. The invoice comes after you approve the build.',
+    a: 'No. You see concepts, or the site design, before you pay. The invoice comes after you approve the build.',
   },
   {
     id: 'logo',
     q: 'What if I only want the logo?',
-    a: 'Then that is what you buy. Basic branding is $299 on its own, no website required.',
+    a: `Then that's what you buy. Basic branding is ${money(FIGURES.brandingBasic)} on its own.`,
   },
 ];
 
@@ -100,17 +105,23 @@ export default function PricingPage() {
     <Shell
       title="Pricing | VexelTech"
       path="/pricing"
-      description="Flat prices for every job that needs doing. Branding and websites are fixed. Marketing and automation are scoped on a call."
+      description={`Flat prices on branding and websites. ${money(FIGURES.brandingBasic)} to ${money(FIGURES.brandingAdvance)} for branding, ${money(FIGURES.website)} for a coded six-page website, marketing and automation priced on a call.`}
     >
       {/* 1. THE HEAD. */}
       <header className="vt pr-head">
         <div className="pr__in">
           <p className="pr-head__eyebrow lbl">Pricing</p>
           <h1 className="pr-head__h" id="pg-h">
-            Flat prices for every job that <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">needs</Brush> doing.
+            {/* COPY V2, 2026-10-01. The page's one highlighted word moved
+                from "needs" (not in V2) to "written". */}
+            Flat prices on the build. A{' '}
+            <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">written</Brush> number on
+            everything else.
           </h1>
           <p className="pr-head__lead">
-            Branding and websites are fixed. Marketing and automation are scoped on a call.
+            Branding and websites are fixed prices. Marketing and automation depend on your market and
+            your tools, so they&apos;re priced on a call and confirmed in writing before anything
+            starts.
           </p>
         </div>
       </header>
@@ -130,7 +141,9 @@ export default function PricingPage() {
                 <span className="pr-col__glow" aria-hidden="true" />
                 <span className="pr-col__bg" aria-hidden="true" />
                 <p className="pr-col__tag-row">
-                  {c.picked ? <span className="pr-col__tag">Most picked</span> : null}
+                  {/* COPY V2, 2026-10-01: "Flat price" replaces "Most picked",
+                      a claim about buyers nothing evidenced. */}
+                  {c.picked ? <span className="pr-col__tag">Flat price</span> : null}
                 </p>
                 <h3 className="pr-col__name">{c.name}</h3>
                 <p className="pr-col__line">{c.line}</p>

@@ -84,7 +84,7 @@ export default function ContactPage() {
     <Shell
       title="Contact | VexelTech"
       path="/contact-us"
-      description="Tell us about the business. A person replies within one business day."
+      description="Fifteen minutes on the phone and a written number. Tell us about your business."
       meta={false}
     >
       <section className="vt ct-hero" aria-labelledby="ct-h">
@@ -94,7 +94,10 @@ export default function ContactPage() {
         <Marquee />
         <p className="ct-hero__line">
           <IconArrowDownRight className="i ct-hero__arrow" />
-          <span>Tell us about the business. A person replies within one business day.</span>
+          <span>
+            Tell us about the business and what you need. A person replies within one business day
+            with a number or a question.
+          </span>
         </p>
       </section>
 

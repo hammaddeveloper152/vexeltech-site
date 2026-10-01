@@ -21,11 +21,14 @@ import '../../styles/promise.css';
 
    EVERY LINE IS THE ABOUT BRIEF'S, which is the user's own copy. */
 
+/* COPY V2, 2026-10-01: V2 writes this band under About ("Flat prices
+   band"); the band lives on home, so its copy is applied here, the one
+   place it renders (DESIGN.md, COPY V2). */
 const REFUSALS = [
-  "No retainers on branding or websites. Marketing is month to month, cancel any time. Thirty days of support are included, after that it's a conversation.",
-  "We don't use templates. Every build starts from your business.",
+  "We don't use themes or page builders. Every site is designed and coded by our team.",
   "We don't hide the price until a call. It's on this site.",
   "We don't keep your files. Domain, hosting, code and credentials move to your name.",
+  "We don't sell retainers on branding or websites. Marketing is month to month.",
 ];
 
 export default function PromiseBand({ id }) {
@@ -33,7 +36,7 @@ export default function PromiseBand({ id }) {
     <section className="vt ab3-price promise panel-sec" aria-labelledby={id}>
       <div className="promise__in panel">
         <h2 className="promise__h ab3-price__h" id={id}>
-          Flat prices, and a short list of things we refuse to do.
+          Flat prices, and four things we don&apos;t do.
         </h2>
         <div className="ab3-price__cols">
           <div className="ab3-price__fig">

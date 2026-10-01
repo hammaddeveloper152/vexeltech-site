@@ -576,9 +576,9 @@ export default function PlanBuilder({ heading = null }) {
                     the placeholder is the label, a mono index above, the
                     real label visually hidden (LeadForm.jsx's field). */}
                 {[
-                  ['name', 'Your name', 'text', 'name'],
-                  ['email', 'Your email', 'email', 'email'],
-                  ['phone', 'Your phone', 'tel', 'tel'],
+                  ['name', 'Name', 'text', 'name'],
+                  ['email', 'Email', 'email', 'email'],
+                  ['phone', 'Phone', 'tel', 'tel'],
                 ].map(([id, label, type, auto], i) => (
                   <p className="plan__field" key={id}>
                     <span className="plan__idx" aria-hidden="true">
@@ -618,7 +618,7 @@ export default function PlanBuilder({ heading = null }) {
               <div className="plan__nav plan__nav--result">
                 {status === 'sent' ? (
                   <p className="plan__ok" role="status">
-                    <IconCheck className="i i--sm plan__ok-mark" /> Message sent.
+                    <IconCheck className="i i--sm plan__ok-mark" /> Got it. A person replies within one business day.
                   </p>
                 ) : (
                   <>
@@ -632,7 +632,7 @@ export default function PlanBuilder({ heading = null }) {
                       {/* The site's send button, 2026-09-25 (life pass 2): "Send
                           message" and the arrow that slides on hover. It
                           read "Send this plan to us". */}
-                      {status === 'sending' ? 'Sending' : 'Send message'}
+                      {status === 'sending' ? 'Sending' : 'Send'}
                       <IconArrowRight className="i send__go" />
                     </button>
                     {status === 'failed' ? (

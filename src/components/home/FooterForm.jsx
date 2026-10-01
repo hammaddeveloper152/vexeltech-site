@@ -40,10 +40,6 @@ export default function FooterForm({ form = true }) {
 
         <LeadForm idPrefix="ff" labelledBy="foot-h" />
 
-        {/* The line that answers the form. */}
-        <p className="foot__lead-p">
-          You&apos;ll hear from a person within one business day.
-        </p>
       </div>
 
       {/* The footer block, inset (FooterMeta.jsx). */}
