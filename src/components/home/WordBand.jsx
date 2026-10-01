@@ -1,10 +1,7 @@
 import React, { useLayoutEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useSmoothScroll } from './smoothScroll.js';
+import { loadScroll } from '../site/motionLibs.js';
 import './WordBand.css';
-
-gsap.registerPlugin(ScrollTrigger);
 
 /* THE WORDMARK BAND, 2026-09-24 (the founder's Monolog pass). It replaces
    the strike ticker under What we do: "VEXELTECH" in Clash Display Medium,
@@ -29,23 +26,33 @@ export default function WordBand() {
 
   useLayoutEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        wordRef.current,
-        { xPercent: 3 },
-        {
-          xPercent: -3,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: bandRef.current,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true,
-          },
-        }
-      );
-    }, bandRef);
-    return () => ctx.revert();
+    /* The scrub starts when ScrollTrigger lands, after the first paint
+       (motionLibs.js, 2026-10-01). The band is below the fold. */
+    let ctx = null;
+    let live = true;
+    loadScroll().then(({ gsap }) => {
+      if (!live) return;
+      ctx = gsap.context(() => {
+        gsap.fromTo(
+          wordRef.current,
+          { xPercent: 3 },
+          {
+            xPercent: -3,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: bandRef.current,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: true,
+            },
+          }
+        );
+      }, bandRef);
+    });
+    return () => {
+      live = false;
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   return (

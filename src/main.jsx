@@ -1,6 +1,9 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+/* Every stylesheet, in the order the cascade depends on, ahead of anything
+   else (vite.config.js, `vt-css-order`, 2026-10-01). */
+import 'virtual:vt-css';
 import './styles/tokens.css';
 import App from './App.jsx';
 /* A band's photograph is fetched when the band is nearly on screen, not when
@@ -10,7 +13,7 @@ import { startBands } from './styles/bands.js';
 import PageTransition from './components/site/PageTransition.jsx';
 import Tracking from './components/site/Tracking.jsx';
 import { captureUtm } from './components/site/utm.js';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { refreshScroll } from './components/site/motionLibs.js';
 
 /* The landing URL's UTM tags, read once before anything renders, so both
    forms find them wherever the reader goes next (utm.js). */
@@ -43,7 +46,9 @@ const render = () => {
    waited for the full sheet, which was most of /services' LCP), and
    re-measures its ScrollTriggers once the rest lands. The inlined list is
    every public route's above-the-fold classes (.measure/critical-classes.mjs).
-   In dev there is no such link and everything renders at once. */
+   In dev there is no such link and everything renders at once. Only a route
+   that has loaded ScrollTrigger has triggers to re-measure (motionLibs.js,
+   2026-10-01); one that loads it later measures on creation. */
 const sheet = document.querySelector('link[data-vt-css]');
 const cssLoaded = !sheet || sheet.media === 'all'
   ? Promise.resolve()
@@ -54,4 +59,4 @@ const cssLoaded = !sheet || sheet.media === 'all'
     });
 
 render();
-cssLoaded.then(() => requestAnimationFrame(() => ScrollTrigger.refresh()));
+cssLoaded.then(() => requestAnimationFrame(refreshScroll));

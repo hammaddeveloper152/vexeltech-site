@@ -1,4 +1,6 @@
 import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -124,7 +126,9 @@ function criticalCss() {
       order: 'post',
       handler(html, ctx) {
         if (!ctx.bundle) return html;
-        const link = html.match(/<link rel="stylesheet" crossorigin href="(\/assets\/index-[^"]+\.css)">/);
+        /* `index-` while CSS was split per chunk, `style-` since it is one
+           file (cssCodeSplit: false, 2026-10-01). */
+        const link = html.match(/<link rel="stylesheet" crossorigin href="(\/assets\/(?:index|style)-[^"]+\.css)">/);
         if (!link) return html;
         const href = link[1];
         const asset = Object.values(ctx.bundle).find((a) => a.type === 'asset' && `/${a.fileName}` === href);
@@ -157,4 +161,122 @@ function criticalCss() {
   };
 }
 
-export default defineConfig({ plugins: [react(), criticalCss()] });
+/* ---- THE LANDING ROUTE'S CHUNK, PRELOADED, 2026-10-01 (the founder's
+   bundle split) --------------------------------------------------------------
+
+   Every page is its own chunk (App.jsx), so the page a reader lands on is
+   only asked for once the main script has run: a second round trip before
+   anything paints. A small inline script ahead of the main one reads the
+   path and adds a modulepreload for that route's chunk and the shared chunks
+   it imports, so they download beside the main script instead of after it.
+
+   The table names each page's module once; the paths are App.jsx's, aliases
+   included. A path missing here still works and only loses the preload. */
+const ROUTE_PAGES = {
+  'Home.jsx': ['/'],
+  'ServicesPage.jsx': ['/services'],
+  'PricingPage.jsx': ['/pricing', '/packages'],
+  'AboutPage.jsx': ['/about-us', '/about'],
+  'ContactPage.jsx': ['/contact-us', '/contact'],
+};
+
+function routePreload() {
+  return {
+    name: 'vt-route-preload',
+    apply: 'build',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, ctx) {
+        if (!ctx.bundle) return html;
+        const chunks = Object.values(ctx.bundle).filter((c) => c.type === 'chunk');
+        const entry = chunks.find((c) => c.isEntry);
+        const map = {};
+        for (const [file, paths] of Object.entries(ROUTE_PAGES)) {
+          const chunk = chunks.find((c) => c.facadeModuleId && c.facadeModuleId.replace(/\\/g, '/').endsWith(`/pages/site/${file}`));
+          if (!chunk) throw new Error(`vt-route-preload: no chunk for ${file}`);
+          const files = [chunk.fileName, ...chunk.imports.filter((f) => f !== entry.fileName)].map((f) => `/${f}`);
+          for (const path of paths) map[path] = files;
+        }
+        const script =
+          `<script>(function(){var m=${JSON.stringify(map)};` +
+          `var p=location.pathname.replace(/\\/+$/,'')||'/';` +
+          `(m[p]||[]).forEach(function(h){var l=document.createElement('link');` +
+          `l.rel='modulepreload';l.crossOrigin='';l.href=h;document.head.appendChild(l);});})();</script>\n    `;
+        return html.replace(/<script type="module" crossorigin/, (m) => script + m);
+      },
+    },
+  };
+}
+
+/* ---- ONE STYLESHEET, IN THE ORDER IT HAD, 2026-10-01 ----------------------
+
+   With every page its own chunk, Vite would split each page's CSS into a
+   file of its own, loaded when the chunk is; the critical-CSS pass above
+   reads one sheet, so the CSS stays one file (`cssCodeSplit: false`).
+
+   THE ORDER IS THE CASCADE, and chunking changes it. Vite writes a merged
+   sheet chunk by chunk, so the shared chunks' CSS (register.css among it)
+   landed ahead of the section sheets it must follow, and home's What we do
+   came out 24px shorter at 1280. So the order is fixed here, independent
+   of the chunks: `virtual:vt-css` imports every stylesheet in the order the
+   eager build met them, walking the imports from main.jsx in source order
+   with each `page(() => import(...))` taken where it stands, and the plain
+   `lazy(() => import(...))` pages (legal, /thanks) last, where their sheet
+   loaded before. main.jsx imports it first, so every sheet is the main
+   chunk's and the merged file keeps this order. Checked byte for byte
+   against the eager build's sheet (`.measure/split.mjs` notes). */
+const CSS_ORDER = 'virtual:vt-css';
+
+function cssOrder() {
+  const src = fileURLToPath(new URL('./src/', import.meta.url));
+  const strip = (s) => s.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  const resolveFile = (from, spec) => {
+    if (!spec.startsWith('.')) return null;
+    const base = path.resolve(path.dirname(from), spec);
+    for (const f of [base, `${base}.js`, `${base}.jsx`]) if (fs.existsSync(f) && fs.statSync(f).isFile()) return f;
+    return null;
+  };
+  const walk = () => {
+    const seen = new Set();
+    const css = [];
+    const late = [];
+    const visit = (file) => {
+      if (seen.has(file)) return;
+      seen.add(file);
+      if (file.endsWith('.css')) {
+        css.push(file);
+        return;
+      }
+      const code = strip(fs.readFileSync(file, 'utf8'));
+      const re = /\bimport\s+(?:[^'"`;]*?\s+from\s+)?['"]([^'"]+)['"]|(\blazy\(\s*\(\)\s*=>\s*)?\bimport\(\s*['"]([^'"]+)['"]\s*\)/g;
+      for (const m of code.matchAll(re)) {
+        const spec = m[1] || m[3];
+        const f = resolveFile(file, spec);
+        if (!f) continue;
+        if (m[2]) late.push(f);
+        else visit(f);
+      }
+    };
+    visit(path.join(src, 'main.jsx'));
+    for (let i = 0; i < late.length; i += 1) visit(late[i]);
+    return css;
+  };
+  return {
+    name: 'vt-css-order',
+    enforce: 'pre',
+    resolveId(id) {
+      return id === CSS_ORDER ? `\0${CSS_ORDER}` : null;
+    },
+    load(id) {
+      if (id !== `\0${CSS_ORDER}`) return null;
+      const files = walk();
+      files.forEach((f) => this.addWatchFile(f));
+      return files.map((f) => `import ${JSON.stringify(f.replace(/\\/g, '/'))};`).join('\n');
+    },
+  };
+}
+
+export default defineConfig({
+  plugins: [cssOrder(), react(), criticalCss(), routePreload()],
+  build: { cssCodeSplit: false },
+});

@@ -277,14 +277,16 @@
    control box (`--hdr-*`, tokens.css) so header and footer match. 4px between
    blocks so two never touch; 8px between wrapped rows keeps the 48px pitch,
    so the hit areas never overlap; the negative margin keeps the first word on
-   the column's edge. */
+   the column's edge. The last word's block may hang the same 12px past the
+   right edge (2026-10-01): at 16px the five pages need 510px and the column
+   is 508 with the left hang alone, so they still wrapped at 1280. */
 .foot__pages {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   column-gap: var(--s-xs);
   row-gap: var(--s-sm);
-  margin: 0 0 0 calc(-1 * var(--foot-page-px));
+  margin: 0 calc(-1 * var(--foot-page-px));
   /* 12px each side inside the shared 40px box, where the header's is 14
      (2026-10-01, the founder): with "About us" and "Contact us" the five
      pages wrapped to two rows at 1280. */
@@ -294,8 +296,9 @@
 }
 
 /* The block is the link's own box, 40px, with the 48px target on its
-   `::before` (BUILD-LAW Touch). The footer's own type stays: Clash Medium
-   20px uppercase. */
+   `::before` (BUILD-LAW Touch). The footer's own type: Clash Medium
+   uppercase, 16px since 2026-10-01 (the founder: one step down from 20 so
+   the five pages sit on one row at 1280; the 40px box stays). */
 .foot__page {
   position: relative;
   box-sizing: border-box;
@@ -305,7 +308,7 @@
   padding: 0 var(--foot-page-px);
   border-radius: var(--hdr-r);
   font-family: var(--font-quiet);
-  font-size: 20px;
+  font-size: 16px;
   line-height: 1;
   white-space: nowrap;
   font-weight: var(--t-weight-quiet);

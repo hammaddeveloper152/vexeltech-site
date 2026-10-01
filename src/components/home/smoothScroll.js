@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Lenis from 'lenis';
+import { loadScroll } from '../site/motionLibs.js';
 
-gsap.registerPlugin(ScrollTrigger);
+/* ASYNC SINCE 2026-10-01 (the founder's bundle split): GSAP, ScrollTrigger
+   and Lenis arrive after the first paint (motionLibs.js), so everything below
+   starts when they land rather than at mount. */
 
 /* Lenis, wired as smoothing and nothing else.
 
@@ -22,6 +22,7 @@ let lenis = null;
 let tick = null;
 let refs = 0;
 let fontsArmed = false;
+let teardown = null;
 
 /* ScrollTrigger measures once, when a trigger is created, and again only on
    resize. The webfonts land later than that on a cold cache: Monigue, Clash
@@ -41,7 +42,7 @@ let fontsArmed = false;
    been requested. `loadingdone` covers any face that starts loading later
    than the first batch. Recorded in BUILD-LAW under what the detector
    cannot see. */
-function refreshWhenFontsLand() {
+function refreshWhenFontsLand(ScrollTrigger) {
   if (fontsArmed || !document.fonts) return;
   fontsArmed = true;
   const refresh = () => ScrollTrigger.refresh();
@@ -55,21 +56,22 @@ export function getLenis() {
 
 export function useSmoothScroll() {
   useEffect(() => {
-    /* Before the reduced-motion return: the Services pin and any trigger that
-       survives the preference still measure against the fallback layout. */
-    refreshWhenFontsLand();
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    /* Switched off entirely under reduced motion, not reduced. There is no
+       gentler version of easing someone's scroll, and interposing anything
+       between a reader and the scroll position is exactly what the
+       preference asks you not to do. ScrollTrigger falls back to the native
+       scroll on its own. */
+    if (!reduce) refs += 1;
+    let live = true;
 
-    /* Switched off entirely, not reduced. There is no gentler version of
-       easing someone's scroll, and interposing anything between a reader and
-       the scroll position is exactly what the preference asks you not to do.
-       ScrollTrigger falls back to the native scroll on its own. */
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return undefined;
-    }
+    loadScroll().then(({ gsap, ScrollTrigger, Lenis }) => {
+      /* Before the reduced-motion check: the Services pin and any trigger
+         that survives the preference still measure against the fallback
+         layout. */
+      refreshWhenFontsLand(ScrollTrigger);
+      if (reduce || !live || refs === 0 || lenis) return;
 
-    refs += 1;
-
-    if (!lenis) {
       lenis = new Lenis({
         smoothWheel: true,
         wheelMultiplier: 1,
@@ -87,16 +89,22 @@ export function useSmoothScroll() {
          ticker and Lenis on different clocks and shows up as the pinned track
          jumping. */
       gsap.ticker.lagSmoothing(0);
-    }
+      teardown = () => {
+        gsap.ticker.remove(tick);
+        lenis.off('scroll', ScrollTrigger.update);
+        lenis.destroy();
+        lenis = null;
+        tick = null;
+        teardown = null;
+      };
+    });
 
     return () => {
+      live = false;
+      if (reduce) return;
       refs -= 1;
-      if (refs > 0 || !lenis) return;
-      gsap.ticker.remove(tick);
-      lenis.off('scroll', ScrollTrigger.update);
-      lenis.destroy();
-      lenis = null;
-      tick = null;
+      if (refs > 0 || !teardown) return;
+      teardown();
     };
   }, []);
 }

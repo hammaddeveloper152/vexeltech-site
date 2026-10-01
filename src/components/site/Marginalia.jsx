@@ -1,6 +1,5 @@
 import { useLayoutEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useSmoothScroll } from '../home/smoothScroll.js';
 import '../../styles/marginalia.css';
 
 /* THE MARGINALIA, site-wide, 2026-09-25 (the founder's launch batch).
@@ -16,14 +15,14 @@ import '../../styles/marginalia.css';
    with its heading. STATIC: steel-lift on the dark ground, deep amber on a
    cream sheet, never yellow (register.css). Hidden below 1024.
 
-   LENIS ON EVERY PAGE stays from the batch: this component starts it
-   wherever it is mounted; smoothScroll.js ref-counts it, so home's two
-   callers share one. */
+   LENIS IS HOME'S ONLY, 2026-10-01 (the founder's bundle split: routes with
+   no scroll animation do not ship GSAP, ScrollTrigger or Lenis). This
+   component started it on every page from the launch batch; it no longer
+   does, and home's WordBand starts it there (smoothScroll.js). */
 const SECTIONS = ':scope > section, :scope > header, :scope > footer, :scope > div > section';
 
 export default function Marginalia() {
   const { pathname } = useLocation();
-  useSmoothScroll();
 
   useLayoutEffect(() => {
     const main = document.getElementById('main');

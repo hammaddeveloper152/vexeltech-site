@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
+import { gsapNow, loadGsap } from '../../components/site/motionLibs.js';
 import {
   IconArrowRight,
   IconCheck,
@@ -128,7 +128,8 @@ function rationale(a, t) {
 function Choice({ pressed, onPick, className, children, label }) {
   const ref = useRef(null);
   const pick = () => {
-    if (!reduced() && ref.current) {
+    const gsap = gsapNow();
+    if (gsap && !reduced() && ref.current) {
       gsap.fromTo(ref.current, { scale: 1 }, { scale: 1.04, duration: 0.125, yoyo: true, repeat: 1, ease: 'power1.out' });
     }
     onPick();
@@ -174,6 +175,15 @@ export default function PlanBuilder({ heading = null }) {
   const primaryRef = useRef(null);
   const busy = useRef(false);
 
+  /* GSAP ARRIVES AFTER THE FIRST PAINT, 2026-10-01 (the founder's bundle
+     split; motionLibs.js). Until it lands every tween below is skipped and
+     its element stands at rest, which is where the tween would end. The
+     builder is below the fold, so the first question's entrance plays off
+     screen either way. */
+  useEffect(() => {
+    loadGsap();
+  }, []);
+
   const t = ticket(a);
   const answered =
     step === 0 ? !!a.trade :
@@ -187,6 +197,11 @@ export default function PlanBuilder({ heading = null }) {
     /* Four nodes at 0, 1/3, 2/3 and 1: the fill reaches the node of the step
        the reader is on, and is full on the last step and the result. */
     const done = Math.min(step, 3) / 3;
+    const gsap = gsapNow();
+    if (!gsap) {
+      if (fillRef.current) fillRef.current.style.transform = `scaleX(${done})`;
+      return;
+    }
     if (fillRef.current) {
       gsap.to(fillRef.current, { scaleX: done, duration: reduced() ? 0.15 : 0.4, ease: 'power2.out' });
     }
@@ -197,7 +212,8 @@ export default function PlanBuilder({ heading = null }) {
   /* ---- The incoming question and its cards. ---- */
   useLayoutEffect(() => {
     const el = qRef.current;
-    if (!el) return;
+    const gsap = gsapNow();
+    if (!el || !gsap) return;
     if (reduced()) {
       gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.15 });
       return;
@@ -222,7 +238,8 @@ export default function PlanBuilder({ heading = null }) {
       setShownTotal(t.total);
       return undefined;
     }
-    if (reduced()) {
+    const gsap = gsapNow();
+    if (reduced() || !gsap) {
       setShownTotal(t.total);
       return undefined;
     }
@@ -257,9 +274,10 @@ export default function PlanBuilder({ heading = null }) {
     const merged = t.bundle && !prevBundle.current;
     const split = !t.bundle && prevBundle.current;
     prevBundle.current = t.bundle;
+    const gsap = gsapNow();
     ids.forEach((id) => {
       const el = lineRefs.current[id];
-      if (!el) return;
+      if (!el || !gsap) return;
       if (reduced()) {
         if (!seen.current.has(id)) gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.15 });
         return;
@@ -279,7 +297,8 @@ export default function PlanBuilder({ heading = null }) {
   const toggleService = (id) => {
     const next = { ...a.services, [id]: !a.services[id] };
     const willBundle = next.branding && a.tier === 'advance' && next.website;
-    if (willBundle && !t.bundle && !reduced()) {
+    const gsap = gsapNow();
+    if (willBundle && !t.bundle && !reduced() && gsap) {
       const b = lineRefs.current.branding;
       const w = lineRefs.current.website;
       const parts = [b, w].filter(Boolean);
@@ -295,7 +314,8 @@ export default function PlanBuilder({ heading = null }) {
 
   const setTier = (tier) => {
     const willBundle = a.services.branding && tier === 'advance' && a.services.website;
-    if (willBundle && !t.bundle && !reduced()) {
+    const gsap = gsapNow();
+    if (willBundle && !t.bundle && !reduced() && gsap) {
       const b = lineRefs.current.branding;
       const w = lineRefs.current.website;
       if (b && w) {
@@ -312,7 +332,8 @@ export default function PlanBuilder({ heading = null }) {
   const go = (n) => {
     if (busy.current) return;
     const el = qRef.current;
-    if (!el || reduced()) {
+    const gsap = gsapNow();
+    if (!el || reduced() || !gsap) {
       setStep(n);
       return;
     }

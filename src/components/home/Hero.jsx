@@ -67,12 +67,24 @@ function pickMode() {
   return plays ? 'spot' : 'surface';
 }
 
-/* Which shot a time is in, and whether its line has started leaving. */
-function shotAt(t) {
+/* Which shot a time is in, and whether its line has started leaving.
+
+   LINE 1 HOLDS ACROSS CUT 1 ON THE FIRST PASS, 2026-10-01 (the founder's
+   bundle split). The rotation's first cut must not fire before 2.5s, so line
+   1 is the largest paint in the LCP window. Cut 1 is at 1.875s of the film,
+   which on a warm load is well inside 2.5s of the page, and a line moved off
+   its cut would no longer change with the picture. So on the film's first
+   pass the first shot's line stays through the second shot and the rotation
+   starts at cut 2 (6.042s), with line 3. Line 2 first shows on the second
+   pass, on its own cut, and every pass after the first runs as cut. */
+function shotAt(t, firstPass) {
   let i = 0;
   while (i + 1 < CUTS.length && t >= CUTS[i + 1]) i += 1;
   const next = CUTS[i + 1];
-  return { shot: i, leaving: next !== undefined && t >= next - EXIT_MS / 1000 };
+  const leaving = next !== undefined && t >= next - EXIT_MS / 1000;
+  if (firstPass && i === 0) return { shot: 0, leaving: false };
+  if (firstPass && i === 1) return { shot: 0, leaving };
+  return { shot: i, leaving };
 }
 
 /* One line of copy. Keyed by shot at the call site, so every cut mounts a
@@ -156,8 +168,14 @@ export default function Hero() {
     v.loop = true;
 
     let raf = 0;
+    /* The first pass ends when the loop wraps the clock back. */
+    let firstPass = true;
+    let last = 0;
     const read = () => {
-      const next = shotAt(v.currentTime);
+      const t = v.currentTime;
+      if (t + 1 < last) firstPass = false;
+      last = t;
+      const next = shotAt(t, firstPass);
       setState((s) => (s.shot === next.shot && s.leaving === next.leaving ? s : next));
     };
     const tick = () => {

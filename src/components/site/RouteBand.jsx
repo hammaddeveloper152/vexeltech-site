@@ -1,9 +1,6 @@
 import React, { useLayoutEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { loadScroll } from './motionLibs.js';
 import '../../styles/route.css';
-
-gsap.registerPlugin(ScrollTrigger);
 
 /* THE ROUTE, HOME'S DEVICE (2026-09-21, by the user: it appears once on the
    site). Five stops, vertical: the line runs down the left through the five
@@ -100,31 +97,42 @@ export default function RouteBand({ id, heading, lines, sectionId = null }) {
       marks = tops.map((t) => (span > 0 ? (t - tops[0]) / span : 0));
     };
 
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top 70%',
-        end: 'bottom 30%',
-        scrub: true,
-        /* Re-derived on every refresh, so a late webfont cannot leave the
-           marks measured against a layout no reader sees. */
-        onRefresh: measureMarks,
-        onUpdate: (self) => {
-          const d = self.progress;
-          list.style.setProperty('--drawn', String(d));
-          /* Reached stays reached: the line is what moves back, not the
-             numerals. A stop that has been lit is a stop the reader has
-             passed, and un-lighting it on the way up would say otherwise. */
-          let n = 0;
-          for (let i = 0; i < marks.length; i += 1) if (d >= marks[i]) n = i + 1;
-          const now = stops.filter((el) => el.getAttribute('data-reached') === 'true').length;
-          if (n > now) light(n);
-        },
-      });
-    }, section);
+    /* The scrub starts when ScrollTrigger lands, after the first paint
+       (motionLibs.js, 2026-10-01). Until then the line rests undrawn and
+       every numeral in steel-lift, which is its state above the section. */
+    let ctx = null;
+    let live = true;
+    loadScroll().then(({ gsap, ScrollTrigger }) => {
+      if (!live) return;
+      ctx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top 70%',
+          end: 'bottom 30%',
+          scrub: true,
+          /* Re-derived on every refresh, so a late webfont cannot leave the
+             marks measured against a layout no reader sees. */
+          onRefresh: measureMarks,
+          onUpdate: (self) => {
+            const d = self.progress;
+            list.style.setProperty('--drawn', String(d));
+            /* Reached stays reached: the line is what moves back, not the
+               numerals. A stop that has been lit is a stop the reader has
+               passed, and un-lighting it on the way up would say otherwise. */
+            let n = 0;
+            for (let i = 0; i < marks.length; i += 1) if (d >= marks[i]) n = i + 1;
+            const now = stops.filter((el) => el.getAttribute('data-reached') === 'true').length;
+            if (n > now) light(n);
+          },
+        });
+      }, section);
+    });
 
     measureMarks();
-    return () => ctx.revert();
+    return () => {
+      live = false;
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   return (
