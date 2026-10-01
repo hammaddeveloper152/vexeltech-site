@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { IconArrowUpRight } from '../../components/site/Icons.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
 import EvidenceBand from '../../components/story/EvidenceBand.jsx';
+import DevicePhones from '../../components/story/DevicePhones.jsx';
 
 /* THE FOUR DISCIPLINES ON /services, AS ALTERNATING BANDS, 2026-09-23.
 
@@ -87,9 +88,9 @@ export default function ServiceSections({ disciplines }) {
               {/* THE EVIDENCE BAND (the five fixes, 2026-10-02): a real
                   image under the promise when the discipline has one;
                   without one the section is list-only (services.css). */}
-              {d.image ? (
+              {d.image || d.phones ? (
                 <div className="svc2__band">
-                  <EvidenceBand image={d.image} />
+                  {d.phones ? <DevicePhones phones={d.phones} /> : <EvidenceBand image={d.image} />}
                 </div>
               ) : null}
 

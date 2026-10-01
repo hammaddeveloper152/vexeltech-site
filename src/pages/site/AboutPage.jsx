@@ -1,10 +1,10 @@
 import React from 'react';
 import Shell from './Shell.jsx';
 import Faq from '../../components/home/Faq.jsx';
-import GrowthDiagram from '../../components/story/GrowthDiagram.jsx';
+import OriginStory from '../../components/story/OriginStory.jsx';
 import BuildAround from '../../components/story/BuildAround.jsx';
-import FitLedger from '../../components/story/FitLedger.jsx';
-import TermsSheet from '../../components/story/TermsSheet.jsx';
+import FitColumns from '../../components/story/FitColumns.jsx';
+import TermsCard from '../../components/story/TermsCard.jsx';
 import { CallBand } from './parts.jsx';
 import '../../styles/aboutpage.css';
 import '../../styles/light.css';
@@ -12,11 +12,12 @@ import '../../styles/light.css';
 /* THE ABOUT PAGE, ONE OBJECT PER SECTION (the storytelling pass,
    2026-10-01, the founder):
 
-     the statement                the Monigue line, the swash on "called."
-     Where we come from           GrowthDiagram: one diagram that grows
+     the statement                the Monigue line, no swash (it moved to
+                                  the Terms sheet's signature)
+     Where we come from           OriginStory: three stories in type
      What we build it around      BuildAround: four statements with marks
-     Who we are for               FitLedger: mint and coral sheets
-     How we work with you         TermsSheet: the terms document
+     Who we are for               FitColumns: two columns, a rule between
+     How we work with you         TermsCard: a white sheet, four clauses
      Questions                    the FAQ accordion
      the closing call             CallBand
 
@@ -80,13 +81,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <GrowthDiagram />
+      <OriginStory />
       <BuildAround />
       {/* Who we are for and How we work with you, each at the full width
           again (the five fixes, 2026-10-02: the two colour sheets stand side
           by side, which the 40% column of the audit's pair could not hold). */}
-      <FitLedger />
-      <TermsSheet />
+      <FitColumns />
+      <TermsCard />
       <Faq items={QUESTIONS} id="ab3-faq" />
       <CallBand heading="Tell us what's going wrong." note="Fifteen minutes on the phone. Nothing to pay for the answer." />
     </Shell>

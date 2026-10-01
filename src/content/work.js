@@ -16,6 +16,8 @@
    An entry shows when it has a name and is not `shown: false`. THE SECTION
    RENDERS NOTHING until three entries show (BUILD-LAW Truth, and Real over
    drawn: no placeholder plates). */
+/* The order is the founder's (2026-10-02, six fixes): Baseline, ARTIORA,
+   OneSix, Zions, AltaVia, EdgeQ; Christal Clear hidden. */
 export const WORK = [
   {
     slug: 'baseline-books',
@@ -26,14 +28,6 @@ export const WORK = [
     url: 'https://www.baseline-books.com/',
   },
   {
-    slug: 'zions-caregivers',
-    name: 'Zions Caregivers',
-    industry: 'Care services',
-    city: 'Ohio',
-    line: 'Website',
-    url: 'https://zionscaregivers.com/',
-  },
-  {
     slug: 'artiora',
     name: 'ARTIORA Luxury Villa',
     industry: 'Hospitality',
@@ -42,20 +36,28 @@ export const WORK = [
     url: 'https://artluxuryvilla.com/',
   },
   {
-    slug: 'altavia',
-    name: 'AltaVia Group',
-    industry: 'Consulting',
-    city: 'US and Latin America',
-    line: 'Website',
-    url: 'https://altavianexus.com',
-  },
-  {
     slug: 'onesix',
     name: 'OneSix',
     industry: 'Data and AI consulting',
     city: 'US',
     line: 'Website',
     url: 'https://www.onesix.ai/',
+  },
+  {
+    slug: 'zions-caregivers',
+    name: 'Zions Caregivers',
+    industry: 'Care services',
+    city: 'Ohio',
+    line: 'Website',
+    url: 'https://zionscaregivers.com/',
+  },
+  {
+    slug: 'altavia',
+    name: 'AltaVia Group',
+    industry: 'Consulting',
+    city: 'US and Latin America',
+    line: 'Website',
+    url: 'https://altavianexus.com',
   },
   {
     slug: 'edgeq',

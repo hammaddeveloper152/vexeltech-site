@@ -29,7 +29,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const only = process.argv.slice(2);
 const report = [];
 
-async function shot(b, url, { width, height, dpr, scrollY = 0 }, file) {
+async function shot(b, url, { width, height, dpr, scrollY = 0, clipH = 0 }, file) {
   const p = await b.newPage();
   await p.setViewport({ width, height, deviceScaleFactor: dpr });
   try {
@@ -49,7 +49,11 @@ async function shot(b, url, { width, height, dpr, scrollY = 0 }, file) {
     })
   );
   if (banner) report.push(`${url} ${width}: a cookie or consent banner is showing in the capture`);
-  await p.screenshot({ path: path.join(OUT, file), type: 'jpeg', quality: 82 });
+  /* clipH: a capture taller than the viewport, from the top of the page
+     laid out at the viewport's size (the phones, so the device's hover can
+     scroll the screen). */
+  const clip = clipH ? { x: 0, y: 0, width, height: clipH } : undefined;
+  await p.screenshot({ path: path.join(OUT, file), type: 'jpeg', quality: 82, clip, captureBeyondViewport: !!clipH });
   await p.close();
 }
 
@@ -61,8 +65,10 @@ for (const w of WORK) {
   report.push(`${w.slug}: done`);
 }
 /* THE WEBSITES EVIDENCE BAND on /services (2026-10-02, the founder's two
-   fixes): three phone captures, each the site's first viewport at 390 x 844
-   at 2x density (780 x 1688 pixels). A phone capture and a desktop capture
+   fixes): three phone captures, each the site laid out at 390 x 844 at 2x,
+   captured 1180 tall from the top (780 x 2360 pixels): the first viewport
+   and the next 336px, so the device frame's hover can scroll the screen
+   (the six fixes, 2026-10-02). A phone capture and a desktop capture
    of the same site count as different images under BUILD-LAW rule 0 (the
    founder's ruling), so baseline-books and artiora appear here and in
    Recent work. They replaced Zions Caregivers' second screen. */
@@ -73,7 +79,7 @@ const PHONES = [
 ];
 if (!only.length || only.includes('phones')) {
   for (const [slug, url] of PHONES) {
-    await shot(b, url, { width: 390, height: 844, dpr: 2 }, `${slug}-phone.jpg`);
+    await shot(b, url, { width: 390, height: 844, dpr: 2, clipH: 1180 }, `${slug}-phone.jpg`);
     report.push(`${slug}-phone: done`);
   }
 }
