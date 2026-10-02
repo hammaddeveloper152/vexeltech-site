@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import Header from '../../components/site/Header.jsx';
 import Hero from '../../components/home/Hero.jsx';
-import CostRows from '../../components/story/CostRows.jsx';
-import RecentTrack from '../../components/story/RecentTrack.jsx';
+import KineticCosts from '../../components/final/KineticCosts.jsx';
+import WorkAccordion from '../../components/final/WorkAccordion.jsx';
 import Services from '../../components/home/Services.jsx';
 import WordBand from '../../components/home/WordBand.jsx';
 import About from '../../components/home/About.jsx';
@@ -122,15 +122,15 @@ export default function Home() {
           back into the bar, which is the thing the link just skipped. */}
       <main id="main" tabIndex={-1}>
         <Hero />
-        {/* What it costs you, as type (real over drawn, 2026-10-02): the
-            four drawn frames came off. */}
-        <CostRows />
+        {/* What it costs you, kinetic type on a spine (the final pass,
+            2026-10-03). */}
+        <KineticCosts />
         <About />
         <Services />
         {/* Recent work, between What we do and the flat-prices band: the
-            full-bleed drag track (six fixes, 2026-10-02). It renders nothing
-            until content/work.js has three real entries. */}
-        <RecentTrack />
+            full-width accordion (the final pass, 2026-10-03). It renders
+            nothing until content/work.js has three real entries. */}
+        <WorkAccordion />
         <WordBand />
         <RouteBand id="how-h" sectionId="how-it-works" heading="How it works" lines={STEP_LINES} />
         <CounterRow band />

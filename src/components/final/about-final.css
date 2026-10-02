@@ -1,0 +1,111 @@
+/* ---- About, the final pass (2026-10-03): the year rail (YearRail.jsx)
+   and the build-around figures (BuildAround.jsx). ------------------------ */
+
+/* ---- The year rail ------------------------------------------------------ */
+.yr {
+  position: relative;
+  max-width: 760px;
+  margin-bottom: var(--s-xl);
+  padding-top: 12px;
+}
+
+.yr__line {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--c-steel);
+}
+
+.yr__fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 3px;
+  background: var(--c-accent-ground);
+  transform-origin: 0 50%;
+  transition: transform 1200ms var(--ease-reveal);
+}
+
+.yr[data-armed='true'] .yr__fill {
+  transform: scaleX(0);
+}
+
+.yr__years {
+  position: relative;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.yr__year {
+  position: absolute;
+  top: 0;
+  left: var(--at);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  color: var(--c-steel); /* 7.2:1 on cream */
+  transform: translateX(-50%);
+}
+
+.yr__year[data-at='0'] {
+  transform: none;
+}
+
+.yr__year[data-at='100'] {
+  transform: translateX(-100%);
+}
+
+/* The tick: 1px down from the line to the year. */
+.yr__year::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 1px;
+  height: 9px;
+  background: var(--c-steel);
+}
+
+.yr__year[data-at='0']::before {
+  left: 0;
+}
+
+.yr__year[data-at='100']::before {
+  left: auto;
+  right: 0;
+}
+
+/* ---- What we build it around: the figure column ----------------------- */
+.ba__row {
+  display: grid;
+  gap: var(--s-sm);
+}
+
+@media (min-width: 768px) {
+  .ba__row {
+    grid-template-columns: 160px minmax(0, 1fr);
+    column-gap: var(--s-lg);
+    align-items: start;
+  }
+
+  .ba__fig {
+    grid-row: 1 / span 2;
+  }
+}
+
+.ba__fig {
+  margin: 0;
+  font-family: var(--font-quiet);
+  font-size: 56px;
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-accent-text-light); /* deep amber, 4.82:1 on cream */
+}

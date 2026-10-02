@@ -36,7 +36,7 @@
   clip-path: inset(50%);
 }
 
-/* ---- Stacked below 768: the copy, then the rows under it. ---------------- */
+/* ---- One column: the copy, then the ledger under it. -------------------- */
 .about__inner {
   width: min(100%, 1200px);
   margin: 0 auto;
@@ -67,66 +67,19 @@
 /* The "How we work" link came off, 2026-10-01 (COPY V3), with its rules. */
 
 
-/* ---- THE TILES, 2026-09-25 (the founder's life pass) ----------------------
-   The launch batch's three rows are three tiles now: lilac, mint, coral,
-   16px radius, 16px apart, stacked in the right column, the same copy, the
-   mono label above the line in Clash Display Medium 27px. Right of the copy
-   from 768, vertically centred against it; stacked under it below. Colour
-   is agency.css's. */
-/* FOUR TILES IN A 2 x 2 from 768 (life pass 3: PRICE, yellow, is the
-   fourth), 16px apart; stacked below 768. */
-.about__rows {
-  display: grid;
-  gap: var(--s-md);
-  margin: 0;
-}
-
-@media (min-width: 768px) {
-  .about__rows {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-.about__row {
-  display: grid;
-  gap: var(--s-sm);
-  padding: var(--s-lg);
-  border-radius: 16px;
-}
-
-.about__row-k {
-  margin: 0;
-}
-
-.about__row-v {
-  margin: 0;
-  font-family: var(--font-brand);
-  font-size: var(--t-h3-size); /* 27px */
-  line-height: var(--t-h3-line);
-  font-weight: var(--t-weight-quiet); /* 500, Medium */
-  letter-spacing: normal;
-  text-wrap: balance;
-}
-
-@media (min-width: 768px) {
-  .about__inner {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: var(--s-2xl);
-    align-items: center;
-  }
-}
+/* ---- THE TILES CAME OFF, 2026-10-03 (the final pass): the four colour
+   tiles are a cream ledger now, FactLedger.jsx under the copy at the full
+   width, so the panel is one column at every width. */
 
 /* ---- Reveal. Four things arriving, so 70ms per item ---------------------- */
 
 @media (prefers-reduced-motion: no-preference) {
-  .about__inner[data-revealed='false'] .about__rows,
   .about__inner[data-revealed='false'] .about__statement,
   .about__inner[data-revealed='false'] .about__support {
     opacity: 0;
     transform: translateY(var(--s-sm));
   }
 
-  .about__rows,
   .about__statement,
   .about__support {
     transition:
@@ -139,13 +92,11 @@
 /* Reduced motion: keep the fade, drop the travel and the stagger with it. The
    float is `.float` in tokens.css and does not run under reduce either. */
 @media (prefers-reduced-motion: reduce) {
-  .about__inner[data-revealed='false'] .about__rows,
   .about__inner[data-revealed='false'] .about__statement,
   .about__inner[data-revealed='false'] .about__support {
     opacity: 0;
   }
 
-  .about__rows,
   .about__statement,
   .about__support {
     transition: opacity var(--d-panel) var(--ease-reveal);

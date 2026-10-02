@@ -4,6 +4,12 @@ import { IconArrowUpRight } from '../../components/site/Icons.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
 import EvidenceBand from '../../components/story/EvidenceBand.jsx';
 import DevicePhones from '../../components/story/DevicePhones.jsx';
+import BrandBand from '../../components/final/BrandBand.jsx';
+import AdsBand from '../../components/final/AdsBand.jsx';
+import TextBackBand from '../../components/final/TextBackBand.jsx';
+
+/* The proof bands, by services.js's `proof` (the final pass, 2026-10-03). */
+const PROOF = { brand: BrandBand, ads: AdsBand, textback: TextBackBand };
 
 /* THE FOUR DISCIPLINES ON /services, AS ALTERNATING BANDS, 2026-09-23.
 
@@ -88,9 +94,15 @@ export default function ServiceSections({ disciplines }) {
               {/* THE EVIDENCE BAND (the five fixes, 2026-10-02): a real
                   image under the promise when the discipline has one;
                   without one the section is list-only (services.css). */}
-              {d.image || d.phones ? (
+              {d.image || d.phones || d.proof ? (
                 <div className="svc2__band">
-                  {d.phones ? <DevicePhones phones={d.phones} /> : <EvidenceBand image={d.image} />}
+                  {d.proof ? (
+                    React.createElement(PROOF[d.proof])
+                  ) : d.phones ? (
+                    <DevicePhones phones={d.phones} />
+                  ) : (
+                    <EvidenceBand image={d.image} />
+                  )}
                 </div>
               ) : null}
 

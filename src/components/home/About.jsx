@@ -1,6 +1,6 @@
 import React from 'react';
 import { useReveal } from './hooks.js';
-import { FACTS } from '../../content/facts.js';
+import FactLedger from '../final/FactLedger.jsx';
 import './About.css';
 
 /* The about section. Between the work wall and the counter row.
@@ -37,8 +37,6 @@ const COPY = {
     'VexelTech builds the website people land on, the campaigns that send them there, and the follow-up that catches the enquiry. One team, one brief, one invoice, and a named person on the phone.',
 };
 
-/* THE FOUR ROWS: the founder's words, verbatim, in content/facts.js since
-   2026-09-25, so the contact page's tiles read the same words. */
 export default function About() {
   const [ref, revealed] = useReveal();
 
@@ -66,16 +64,9 @@ export default function About() {
           </p>
         </div>
 
-        {/* THE MASCOT IS GONE, 2026-09-25 (the founder's launch batch), and
-            its asset with it. */}
-        <dl className="about__rows" style={{ '--i': 4 }}>
-          {FACTS.map(([k, v]) => (
-            <div className="about__row" key={k}>
-              <dt className="about__row-k lbl">{k}</dt>
-              <dd className="about__row-v">{v}</dd>
-            </div>
-          ))}
-        </dl>
+        {/* THE FACTS, a cream ledger (the final pass, 2026-10-03). It
+            replaced the four colour tiles and content/facts.js. */}
+        <FactLedger />
       </div>
     </section>
   );

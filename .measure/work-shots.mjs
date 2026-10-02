@@ -1,11 +1,13 @@
 /* work-shots.mjs: the Recent work screenshots, 2026-10-02 (the founder's
    "real over drawn"). Each site in src/content/work.js is opened at
-   1440 x 900, after network idle, the fonts and a settle, and its FIRST
-   VIEWPORT (not the full page) is saved as a JPEG at quality 82:
+   1440 x 900, after network idle, the fonts and a settle, and the page from
+   its top is saved as a JPEG at quality 82, 2700 TALL (three viewports) since
+   the final pass (2026-10-03): the accordion's active panel scrolls its
+   capture upward, and a 900-tall capture fills a 620-tall panel with nothing
+   left to scroll.
 
-     public/work/<slug>.jpg        1440 x 900, 16:10, desktop
-     public/work/<slug>-720.jpg     720 x 450, the same view at half density,
-                                    for phones
+     public/work/<slug>.jpg        1440 x 2700, the page laid out at 1440 x 900
+     public/work/<slug>-720.jpg     720 x 1350, the same at half density
 
    And the Websites evidence band on /services (2026-10-02): three phone
    captures, each the first viewport at 390 x 844 at 2x:
@@ -51,7 +53,7 @@ async function shot(b, url, { width, height, dpr, scrollY = 0, clipH = 0 }, file
   if (banner) report.push(`${url} ${width}: a cookie or consent banner is showing in the capture`);
   /* clipH: a capture taller than the viewport, from the top of the page
      laid out at the viewport's size (the phones, so the device's hover can
-     scroll the screen). */
+     scroll the screen; the desktop captures, so the accordion's can). */
   const clip = clipH ? { x: 0, y: 0, width, height: clipH } : undefined;
   await p.screenshot({ path: path.join(OUT, file), type: 'jpeg', quality: 82, clip, captureBeyondViewport: !!clipH });
   await p.close();
@@ -60,8 +62,8 @@ async function shot(b, url, { width, height, dpr, scrollY = 0, clipH = 0 }, file
 const b = await puppeteer.launch({ headless: 'new' });
 for (const w of WORK) {
   if (!w.url || (only.length && !only.includes(w.slug))) continue;
-  await shot(b, w.url, { width: 1440, height: 900, dpr: 1 }, `${w.slug}.jpg`);
-  await shot(b, w.url, { width: 1440, height: 900, dpr: 0.5 }, `${w.slug}-720.jpg`);
+  await shot(b, w.url, { width: 1440, height: 900, dpr: 1, clipH: 2700 }, `${w.slug}.jpg`);
+  await shot(b, w.url, { width: 1440, height: 900, dpr: 0.5, clipH: 2700 }, `${w.slug}-720.jpg`);
   report.push(`${w.slug}: done`);
 }
 /* THE WEBSITES EVIDENCE BAND on /services (2026-10-02, the founder's two

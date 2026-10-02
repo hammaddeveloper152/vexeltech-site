@@ -1,4 +1,5 @@
 import React from 'react';
+import YearRail from '../final/YearRail.jsx';
 import './story.css';
 
 /* WHERE WE COME FROM, AS TYPE (the founder's six fixes, 2026-10-02). The
@@ -32,6 +33,8 @@ export default function OriginStory() {
         <h2 className="st-h" id="os-h">
           Where we come from
         </h2>
+        {/* The year rail (the final pass, 2026-10-03). */}
+        <YearRail />
         <ol className="os__list">
           {STORIES.map(({ k, p }) => (
             <li className="os__item" key={k}>

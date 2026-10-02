@@ -225,32 +225,9 @@
   color: var(--c-steel);
 }
 
-/* THE TILES (2026-09-25, restored after the three-colour pass), by
-   position: the first lilac, the second mint, the third coral, the fourth
-   yellow (since COPY V3, Website, Build, After launch, Ownership; they were
-   TEAM, BUILD, AFTER and PRICE), every word asphalt: 8.68:1, 5.62,
-   5.87 and 9.46. The label is asphalt too (steel would be 3.97, 2.57, 2.68
-   and 4.32 on them). */
-.about__row:nth-child(1) {
-  background: var(--c-lilac);
-}
-
-.about__row:nth-child(2) {
-  background: var(--c-mint);
-}
-
-.about__row:nth-child(3) {
-  background: var(--c-coral);
-}
-
-.about__row:nth-child(4) {
-  background: var(--c-accent-ground);
-}
-
-.about__row-k,
-.about__row-v {
-  color: var(--c-asphalt);
-}
+/* THE TILES' COLOURS CAME OFF, 2026-10-03 (the final pass): the facts are
+   a cream ledger with no fills (FactLedger.jsx). Colour on home lives in
+   What we do only. */
 
 
 /* THE ARC RECORD, kept because it is the kind of thing that gets tried again:

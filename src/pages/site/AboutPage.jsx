@@ -12,8 +12,7 @@ import '../../styles/light.css';
 /* THE ABOUT PAGE, ONE OBJECT PER SECTION (the storytelling pass,
    2026-10-01, the founder):
 
-     the statement                the Monigue line, no swash (it moved to
-                                  the Terms sheet's signature)
+     the statement                the Monigue line, lit word by word on load
      Where we come from           OriginStory: three stories in type
      What we build it around      BuildAround: four statements with marks
      Who we are for               FitColumns: two columns, a rule between
@@ -54,6 +53,9 @@ const QUESTIONS = [
   },
 ];
 
+/* The statement, word by word, the full stop last. */
+const LIT = ['Found,', 'trusted,', 'called', '.'];
+
 export default function AboutPage() {
   return (
     <Shell
@@ -67,10 +69,31 @@ export default function AboutPage() {
       <section className="vt ab3-hero" aria-labelledby="ab3-hero-h">
         <div className="ab3__in">
           <h1 className="ab3-hero__h" id="ab3-hero-h">
-            {/* COPY V3.1, 2026-10-01. No swash here since 2026-10-02 (the
-                five fixes): About's one swash is the terms document's
-                signature (TermsSheet.jsx). */}
-            Found, trusted, called.
+            {/* COPY V3.1, 2026-10-01. THE WORDS LIGHT IN TURN on load (the
+                final pass, 2026-10-03): steel to asphalt, 400ms each, 200ms
+                apart, then the full stop, once, by an asphalt copy of each
+                fading in over it (aboutpage.css). Reduced motion: asphalt
+                from the start. */}
+            {LIT.map((w, i) => (
+              <React.Fragment key={w}>
+                {i > 0 && w !== '.' ? ' ' : null}
+                {w === 'called' ? null : w === '.' ? (
+                  /* "called" and its full stop share a line. */
+                  <span className="ab3-nowrap">
+                    <span className="ab3-lit" data-w="called" style={{ '--i': i - 1 }}>
+                      called
+                    </span>
+                    <span className="ab3-lit" data-w="." style={{ '--i': i }}>
+                      .
+                    </span>
+                  </span>
+                ) : (
+                  <span className="ab3-lit" data-w={w} style={{ '--i': i }}>
+                    {w}
+                  </span>
+                )}
+              </React.Fragment>
+            ))}
           </h1>
           <div className="ab3-hero__cols">
             <p className="ab3-hero__p">

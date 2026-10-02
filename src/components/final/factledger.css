@@ -1,0 +1,61 @@
+/* ---- Who we are, the fact ledger (the final pass, 2026-10-03).
+   FactLedger.jsx has the rules in words. The figure stands above the label
+   by order, not by markup: a term (dt) is the label. -------------------- */
+.fl2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1px solid rgb(23 24 26 / 15%);
+}
+
+@media (min-width: 768px) {
+  .fl2 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.fl2__cell {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: var(--s-sm);
+  padding: var(--s-lg) var(--s-md) var(--s-lg) 0;
+  border-bottom: 1px solid rgb(23 24 26 / 15%);
+}
+
+/* The hairline between cells: the left edge of every cell but a row's
+   first. */
+.fl2__cell:nth-child(2n) {
+  padding-left: var(--s-md);
+  border-left: 1px solid rgb(23 24 26 / 15%);
+}
+
+@media (min-width: 768px) {
+  .fl2__cell {
+    border-bottom: 0;
+  }
+
+  .fl2__cell:nth-child(n + 2) {
+    padding-left: var(--s-md);
+    border-left: 1px solid rgb(23 24 26 / 15%);
+  }
+}
+
+.fl2__fig {
+  margin: 0;
+  font-family: var(--font-quiet);
+  font-size: 64px;
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-asphalt); /* 15.75:1 on cream */
+}
+
+.fl2__label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--c-steel); /* 7.2:1 on cream */
+}

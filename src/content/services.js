@@ -21,8 +21,12 @@ import { FIGURES, money } from './pricing.js';
    src720, alt }`, one 16:10 image. `phones` (the six fixes, 2026-10-02):
    phone captures in device frames (components/story/DevicePhones.jsx);
    Websites has three (a phone capture and a desktop capture of the same
-   site are different images under BUILD-LAW rule 0). Branding, Marketing
-   and Automation wait for real material. */
+   site are different images under BUILD-LAW rule 0).
+
+   `proof` (the final pass, 2026-10-03): the band the other three carry
+   above their lists, one object each in components/final/: 'brand'
+   (BrandBand, Christal Clear Properties' marks), 'ads' (AdsBand, a Google
+   Ads summary) and 'textback' (TextBackBand, the missed-call thread). */
 export const DISCIPLINES = [
   {
     id: 'branding',
@@ -38,6 +42,7 @@ export const DISCIPLINES = [
     ],
     terms: `Basic ${money(FIGURES.brandingBasic)}. Advance ${money(FIGURES.brandingAdvance)}. One to two business days.`,
     image: null,
+    proof: 'brand',
     fit: "You're trading under a name with no mark, or a mark you wouldn't put on a sign.",
     call: { label: 'Get a custom quote', primary: true },
   },
@@ -80,6 +85,7 @@ export const DISCIPLINES = [
     ],
     terms: 'Priced on the call, in writing before anything runs. Month to month.',
     image: null,
+    proof: 'ads',
     fit: "You're spending on ads and can't name your cost per lead, or you're ready to start and want it set up right.",
     call: { label: 'Ask a question', primary: false },
   },
@@ -99,6 +105,7 @@ export const DISCIPLINES = [
     ],
     terms: 'Priced per workflow, in writing before any work starts. Most workflows run within two weeks.',
     image: null,
+    proof: 'textback',
     fit: 'Your team sends the same text, quote or reminder by hand every day.',
     call: { label: 'Ask a question', primary: false },
   },
