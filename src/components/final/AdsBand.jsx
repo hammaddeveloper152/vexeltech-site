@@ -1,24 +1,34 @@
 import React, { useRef } from 'react';
-import { useSeen } from '../site/useOnce.js';
+import { useCountOnLoad } from '../site/useCountOnLoad.js';
+import BrowserFrame from './BrowserFrame.jsx';
 import './proof.css';
 
-/* SERVICES, THE MARKETING BAND (the final pass, 2026-10-03). A client's
-   Google Ads performance summary, the founder's capture, in a plain browser
-   frame across the content width: a 1px steel border, 6px radius, and a 32px
-   title bar with three hollow 10px circles at the left and the date range in
-   mono at the centre.
+/* SERVICES, THE MARKETING BAND (final pass 2, 2026-10-03): the figures
+   lead, the capture is the receipt.
 
-   TWO CALLOUTS, yellow 2px rounded rectangles round "234.00" (Conversions)
-   and "$30.11" (Cost / conv.). They are drawn in the capture's own
-   coordinates (an SVG on the image's 1175 x 310 box, measured off the
-   pixels), so they hold at every width. They draw in by stroke-dashoffset
-   (a named exception in BUILD-LAW Motion), 600ms after the frame enters the
-   view, one after the other. Reduced motion: drawn from the start.
+     the period   mono 11px over the row, in the yellow text accent (9.46:1
+                  on the dark ground). The brief named deep amber, which is
+                  for light grounds and fails 4.5:1 here.
+     the figures  three, in Clash Display at 96px in bone (64 below 768),
+                  each with its label under it in mono 11px steel-lift. They
+                  are the capture's own: 680 clicks, 234 conversions (234.00
+                  in the capture), $30.11 per conversion. Painted at their
+                  values from the first frame; they count up over 900ms only
+                  if the band is on screen at load (useCountOnLoad).
+     the receipt  the capture in the plain browser frame with its two yellow
+                  callouts, at 60% of the content width and right-aligned
+                  from 768 (the full width below: at 60% of a phone the
+                  figures in it are too small to read), then the caption in
+                  mono 11px steel-lift.
 
-   The caption is the founder's. No figure on the page is written; the two
-   are the capture's. ads-nov-2025.png stays in public/proof, unused. */
-const W = 1175;
-const H = 310;
+   Nothing starts hidden. No other figure is written. */
+const FIGS = [
+  { pre: '', to: 680, dp: 0, label: 'Clicks' },
+  { pre: '', to: 234, dp: 0, label: 'Conversions' },
+  { pre: '$', to: 30.11, dp: 2, label: 'Cost per conversion' },
+];
+
+/* The callouts, in the capture's 1175 x 310 pixels: "234.00" and "$30.11". */
 const MARKS = [
   { id: 'conv', x: 176, y: 69, w: 87, h: 34 },
   { id: 'cpc', x: 445, y: 66, w: 83, h: 37 },
@@ -26,37 +36,34 @@ const MARKS = [
 
 export default function AdsBand() {
   const ref = useRef(null);
-  const armed = useSeen(ref);
+  useCountOnLoad(ref, '.ab__n');
   return (
-    <figure className="ab" ref={ref} data-armed={armed ? 'true' : 'false'}>
-      <div className="ab__frame">
-        <div className="ab__bar" aria-hidden="true">
-          <span className="ab__dots">
-            <span className="ab__dot" />
-            <span className="ab__dot" />
-            <span className="ab__dot" />
-          </span>
-          <span className="ab__title">Google Ads. Jan 1 to Feb 25, 2026</span>
-        </div>
-        <div className="ab__shot">
-          <img
-            src="/proof/ads-jan-feb-2026.png"
-            alt="Google Ads performance summary, January 1 to February 25, 2026: 680 clicks, 234.00 conversions, $10.36 average cost per click, $30.11 cost per conversion."
-            width={W}
-            height={H}
-            loading="lazy"
-            decoding="async"
-          />
-          <svg className="ab__marks" viewBox={`0 0 ${W} ${H}`} aria-hidden="true" focusable="false">
-            {MARKS.map((m, i) => (
-              <rect key={m.id} className="ab__mark" x={m.x} y={m.y} width={m.w} height={m.h} rx="6" pathLength="100" style={{ '--i': i }} />
-            ))}
-          </svg>
-        </div>
+    <figure className="ab" ref={ref}>
+      <p className="ab__period">Google Ads, one client account, Jan 1 to Feb 25, 2026</p>
+      <dl className="ab__figs">
+        {FIGS.map(({ pre, to, dp, label }) => (
+          <div className="ab__fig" key={label}>
+            <dt className="ab__label">{label}</dt>
+            <dd className="ab__val">
+              {pre}
+              <span className="ab__n" data-to={to} data-dp={dp}>
+                {to.toFixed(dp)}
+              </span>
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <div className="ab__receipt">
+        <BrowserFrame
+          title="Google Ads. Jan 1 to Feb 25, 2026"
+          src="/proof/ads-jan-feb-2026.png"
+          alt="Google Ads performance summary, January 1 to February 25, 2026: 680 clicks, 234.00 conversions, $10.36 average cost per click, $30.11 cost per conversion."
+          width={1175}
+          height={310}
+          marks={MARKS}
+        />
+        <figcaption className="ab__cap">Conversions as reported by Google Ads. Client name withheld.</figcaption>
       </div>
-      <figcaption className="ab__cap">
-        One client account, small business, US. Conversions as reported by Google Ads. Client name withheld.
-      </figcaption>
     </figure>
   );
 }

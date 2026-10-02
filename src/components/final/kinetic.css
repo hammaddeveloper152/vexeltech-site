@@ -67,9 +67,7 @@
 .kc__w {
   position: relative;
   display: inline-block;
-  transition:
-    opacity 600ms var(--ease-reveal),
-    transform 600ms var(--ease-reveal);
+  transition: transform 600ms var(--ease-reveal);
   transition-delay: calc(var(--i) * var(--stagger));
 }
 
@@ -97,9 +95,10 @@
   text-wrap: pretty;
 }
 
-/* The entrance's start, held only while it is owed (useOnce). */
+/* The entrance's start, held only while it is owed (useOnce): 24px down
+   and fully visible (BUILD-LAW Motion, 2026-10-03: an entrance never hides
+   content). */
 .kc__row[data-armed='true'] .kc__w {
-  opacity: 0;
   transform: translateY(24px);
 }
 

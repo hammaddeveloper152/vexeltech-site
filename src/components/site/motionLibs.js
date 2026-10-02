@@ -5,8 +5,9 @@
    the page has painted:
 
      /          ScrollTrigger and Lenis (WordBand, RouteBand, smoothScroll.js)
-     /about-us  GSAP and ScrollTrigger, no Lenis (the final pass,
-                2026-10-03: the year rail and the build-around figures)
+     (/about-us loaded GSAP and ScrollTrigger for the final pass's year
+     rail and figures; final pass 2, 2026-10-03, took both off, and About
+     loads none again. `loadTrigger` below is home's What it costs you.)
 
    /pricing loaded GSAP core for the Plan Builder's tweens until COPY V3
    (2026-10-01) took the builder off; `loadGsap` stays as loadScroll's part.

@@ -6,8 +6,8 @@ import './accordion.css';
    replaced the drag track, its DRAG disc and its rail.
 
    SIX PANELS IN ONE ROW, edge to edge across the viewport, 2px apart on
-   black, the row 620px tall from 1280 and 520 from 1024. A resting panel
-   grows 1, the active one 4; the first is active to start. A mouse sets the
+   black, the row 560px tall from 1280 and 520 from 1024. A resting panel
+   grows 1, the active one 3 (final pass 2); the first is active to start. A mouse sets the
    active panel by hovering, a touch by tapping (a tap on the active panel
    follows its link), the arrow keys move it when a panel has focus, and
    focus itself sets it. The panels change size by flex-grow over 600ms,
@@ -15,12 +15,10 @@ import './accordion.css';
    the founder and recorded in BUILD-LAW Motion. The row's height is fixed,
    so nothing around it moves.
 
-   EACH PANEL is its site's capture, centred, at the active panel's width
-   whichever panel it is in, so it never rescales while the row moves. The
-   active panel's capture scrolls up the page and back, 12s each way,
-   linear, by transform, so the site reads as live; the captures are three
-   viewports tall for this (.measure/work-shots.mjs). A resting panel is
-   dimmed by a black layer at 45% (the capture at 55%).
+   EACH PANEL is its site's first screen, the 1440 x 900 capture
+   (.measure/work-shots.mjs), cover-fit and centred, still: no scroll inside
+   a panel (final pass 2). A resting panel is dimmed by a static black layer
+   at 60% (the capture at 40%), with no transition on it.
 
    THE CAPTION, bottom left at 24px: in the active panel the name at 22px in
    bone and the sector and city in mono 11px steel-lift, over a scrim from
@@ -32,8 +30,8 @@ import './accordion.css';
    open, by flex-grow in a column of fixed height. A resting panel's name
    reads across there, not up: a stacked panel is wider than it is tall.
 
-   Reduced motion: the panels change size with no transition, the capture
-   stands at the top of the page, the captions change with no fade.
+   Reduced motion: the panels change size with no transition and the
+   captions change with no fade.
 
    THE SECTION RENDERS NOTHING with fewer than three entries (BUILD-LAW
    Truth, Real over drawn). */
@@ -94,10 +92,10 @@ export default function WorkAccordion() {
                   <img
                     src={`/work/${w.slug}-720.jpg`}
                     srcSet={`/work/${w.slug}-720.jpg 720w, /work/${w.slug}.jpg 1440w`}
-                    sizes="(min-width: 1024px) 45vw, 100vw"
+                    sizes="(min-width: 1024px) 40vw, 100vw"
                     alt={`${w.name}, the live site`}
                     width="1440"
-                    height="2700"
+                    height="900"
                     loading="lazy"
                     decoding="async"
                     draggable="false"

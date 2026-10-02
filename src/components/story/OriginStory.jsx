@@ -1,6 +1,6 @@
-import React from 'react';
-import YearRail from '../final/YearRail.jsx';
-import './story.css';
+import React from "react";
+import BrowserFrame from "../final/BrowserFrame.jsx";
+import "./story.css";
 
 /* WHERE WE COME FROM, AS TYPE (the founder's six fixes, 2026-10-02). The
    isometric scenes, their tiles and their generator are deleted. One
@@ -10,18 +10,25 @@ import './story.css';
    rule above the first and below the last.
 
    The words are VEXELTECH-COPY.md V3.1's, About, Where we come from: the
-   label is the stop's numeral and title, the paragraph its line. */
+   label is the stop's numeral and title, the paragraph its line.
+
+   FINAL PASS 2 (2026-10-03): the year rail is deleted. The paragraphs stand
+   in a left column at most 560px wide; the right column holds the first
+   thing we ran, the November 2025 Google Ads capture, in the plain browser
+   frame (BUILD-LAW rule 0, as amended), with the founder's caption in mono
+   11px steel (7.2:1 on cream). Below 1024 the frame sits under the
+   paragraphs. The capture appears on this page only. */
 const STORIES = [
   {
-    k: '01 The ads',
-    p: 'We started as a paid media team running Google and Meta campaigns for small businesses. Most of the spend died on the page after the click.',
+    k: "01 The ads",
+    p: "We started as a paid media team running Google and Meta campaigns for small businesses. Most of the spend died on the page after the click.",
   },
   {
-    k: '02 The build',
-    p: 'So we built the pages, then the whole site, then the follow-up that runs after the call.',
+    k: "02 The build",
+    p: "So we built the pages, then the whole site, then the follow-up that runs after the call.",
   },
   {
-    k: '03 The whole thing',
+    k: "03 The whole thing",
     p: "VexelTech, 2026. Branding, website, marketing and automation from one team at flat prices, for businesses that can't carry four vendors.",
   },
 ];
@@ -33,16 +40,30 @@ export default function OriginStory() {
         <h2 className="st-h" id="os-h">
           Where we come from
         </h2>
-        {/* The year rail (the final pass, 2026-10-03). */}
-        <YearRail />
-        <ol className="os__list">
-          {STORIES.map(({ k, p }) => (
-            <li className="os__item" key={k}>
-              <p className="os__k">{k}</p>
-              <p className="os__p">{p}</p>
-            </li>
-          ))}
-        </ol>
+        <div className="os__cols">
+          <ol className="os__list">
+            {STORIES.map(({ k, p }) => (
+              <li className="os__item" key={k}>
+                <p className="os__k">{k}</p>
+                <p className="os__p">{p}</p>
+              </li>
+            ))}
+          </ol>
+          <figure className="os__proof">
+            <BrowserFrame
+              light
+              title="Google Ads. Nov 1 to Nov 30, 2025"
+              src="/proof/ads-nov-2025.png"
+              alt="Google Ads performance summary, November 1 to November 30, 2025: 418 clicks, 122.00 conversions, $10.13 average cost per click, $34.69 cost per conversion."
+              width={1166}
+              height={308}
+            />
+            <figcaption className="os__cap">
+              The first thing we ran. 418 clicks, 122 conversions, $34.69 per
+              conversion. Client name withheld.
+            </figcaption>
+          </figure>
+        </div>
       </div>
     </section>
   );

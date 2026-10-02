@@ -84,18 +84,16 @@
   color: var(--st-soft);
 }
 
-/* ONE REVEAL, the site's: opacity and a small rise, on the reveal curve,
-   staggered 70ms by `--i`. Reduced motion: no travel, no stagger. */
+/* ONE REVEAL, the site's: a small rise on the reveal curve, staggered 70ms
+   by `--i`. NO FADE since 2026-10-03 (BUILD-LAW Motion: an entrance never
+   hides content). Reduced motion: no travel. */
 @media (prefers-reduced-motion: no-preference) {
   [data-revealed='false'] .st-rv {
-    opacity: 0;
     transform: translateY(var(--s-sm));
   }
 
   .st-rv {
-    transition:
-      opacity var(--d-panel) var(--ease-reveal),
-      transform var(--d-panel) var(--ease-reveal);
+    transition: transform var(--d-panel) var(--ease-reveal);
     transition-delay: calc(var(--i, 0) * var(--stagger));
   }
 }
@@ -186,8 +184,36 @@
    One column, 760px at most; a 1px rule above the first and below the
    last; 40px between the stories; the label mono 11px deep amber, the
    paragraph the display face 26px / 1.35 in asphalt. */
+/* Final pass 2: the paragraphs in a left column at most 560px, the
+   November capture at the right from 1024; stacked below. */
+.os__cols {
+  display: grid;
+  gap: var(--s-2xl);
+}
+
+@media (min-width: 1024px) {
+  .os__cols {
+    grid-template-columns: minmax(0, 560px) minmax(0, 1fr);
+    column-gap: var(--s-3xl);
+    align-items: start;
+  }
+}
+
+.os__proof {
+  margin: 0;
+}
+
+.os__cap {
+  margin-top: var(--s-md);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  color: var(--c-steel); /* 7.2:1 on cream */
+}
+
 .os__list {
-  max-width: 760px;
+  max-width: 560px;
   margin: 0;
   padding: var(--s-xl) 0;
   list-style: none;

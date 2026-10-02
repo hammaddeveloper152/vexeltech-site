@@ -393,9 +393,10 @@
     animation: hero-line-in var(--d-drop) var(--ease-reveal) backwards;
   }
 
+  /* A rise with no fade (BUILD-LAW Motion, 2026-10-03: an entrance never
+     hides content). The outgoing line's fade is an exit and stays. */
   @keyframes hero-line-in {
     from {
-      opacity: 0;
       transform: translateY(var(--s-sm));
     }
   }

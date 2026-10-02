@@ -20,8 +20,8 @@ import './kinetic.css';
    moves (BUILD-LAW Motion: transform and opacity). The segment moves by
    transform (translateY, and scaleY from a 1px line).
 
-   THE ENTRANCE: each headline arrives word by word, opacity 0 and 24px
-   down, 70ms apart (BUILD-LAW's stagger; the brief's 60 was ruled out by
+   THE ENTRANCE: each headline's words rise from 24px down, visible
+   throughout (final pass 2: an entrance never hides content), 70ms apart (BUILD-LAW's stagger; the brief's 60 was ruled out by
    the founder), when its row is 20% into the viewport. Once (useOnce).
    Reduced motion: every word in place from the start and the bone moves
    with no fade.

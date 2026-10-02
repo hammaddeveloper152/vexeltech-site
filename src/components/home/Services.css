@@ -98,26 +98,16 @@
   z-index: calc(4 - var(--i));
 }
 
+/* AN ENTRANCE NEVER HIDES CONTENT (BUILD-LAW Motion, 2026-10-03): the rise
+   stays, the fade is gone; opacity is 1 from the first paint. Reduced
+   motion: nothing moves. */
 @media (prefers-reduced-motion: no-preference) {
   .services__grid[data-revealed='false'] .services__cell {
-    opacity: 0;
     transform: translateY(var(--s-sm));
   }
 
   .services__cell {
-    transition:
-      opacity var(--d-panel) var(--ease-reveal),
-      transform var(--d-panel) var(--ease-reveal);
+    transition: transform var(--d-panel) var(--ease-reveal);
     transition-delay: calc(var(--i) * var(--stagger));
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .services__grid[data-revealed='false'] .services__cell {
-    opacity: 0;
-  }
-
-  .services__cell {
-    transition: opacity var(--d-panel) var(--ease-reveal);
   }
 }

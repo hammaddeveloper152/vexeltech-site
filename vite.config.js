@@ -197,11 +197,25 @@ function routePreload() {
           const files = [chunk.fileName, ...chunk.imports.filter((f) => f !== entry.fileName)].map((f) => `/${f}`);
           for (const path of paths) map[path] = files;
         }
+        /* A ROUTE'S LARGEST PAINT, preloaded with its chunks (final pass 2,
+           2026-10-03): on /services that is the Branding band's signage
+           plate, which otherwise waits for the page's chunk to render it
+           (LCP 4.97s with it lazy; BrandBand.jsx). */
+        const img = {
+          '/services': {
+            href: '/brand/ccp-signage-800.jpg',
+            srcset: '/brand/ccp-signage-800.jpg 800w, /brand/ccp-signage.jpg 1600w',
+            sizes: '(min-width: 768px) 42vw, 100vw',
+          },
+        };
         const script =
-          `<script>(function(){var m=${JSON.stringify(map)};` +
+          `<script>(function(){var m=${JSON.stringify(map)},g=${JSON.stringify(img)};` +
           `var p=location.pathname.replace(/\\/+$/,'')||'/';` +
           `(m[p]||[]).forEach(function(h){var l=document.createElement('link');` +
-          `l.rel='modulepreload';l.crossOrigin='';l.href=h;document.head.appendChild(l);});})();</script>\n    `;
+          `l.rel='modulepreload';l.crossOrigin='';l.href=h;document.head.appendChild(l);});` +
+          `var i=g[p];if(i){var k=document.createElement('link');k.rel='preload';k.as='image';` +
+          `k.href=i.href;k.setAttribute('imagesrcset',i.srcset);k.setAttribute('imagesizes',i.sizes);` +
+          `k.setAttribute('fetchpriority','high');document.head.appendChild(k);}})();</script>\n    `;
         return html.replace(/<script type="module" crossorigin/, (m) => script + m);
       },
     },

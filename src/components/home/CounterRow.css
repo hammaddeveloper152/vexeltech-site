@@ -172,29 +172,17 @@
 
 /* One observer drives both the fade and the count, through the section's own
    data attribute, so the figures start moving as the block arrives. */
+/* AN ENTRANCE NEVER HIDES CONTENT (BUILD-LAW Motion, 2026-10-03): the rise
+   stays, the fade is gone; opacity is 1 from the first paint. Reduced
+   motion: nothing moves. */
 @media (prefers-reduced-motion: no-preference) {
   .counters[data-revealed='false'] .counters__item {
-    opacity: 0;
     transform: translateY(var(--s-sm));
   }
 
   .counters__item {
-    transition:
-      opacity var(--d-panel) var(--ease-reveal),
-      transform var(--d-panel) var(--ease-reveal);
+    transition: transform var(--d-panel) var(--ease-reveal);
     transition-delay: calc(var(--i) * var(--stagger));
-  }
-}
-
-/* Reduced motion: keep the fade, drop the travel, and drop the stagger with
-   it. The stagger goes with the movement, not with the opacity. */
-@media (prefers-reduced-motion: reduce) {
-  .counters[data-revealed='false'] .counters__item {
-    opacity: 0;
-  }
-
-  .counters__item {
-    transition: opacity var(--d-panel) var(--ease-reveal);
   }
 }
 

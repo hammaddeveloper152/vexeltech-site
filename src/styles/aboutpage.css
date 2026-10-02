@@ -40,38 +40,25 @@
   text-wrap: balance;
 }
 
-/* THE WORDS LIGHT IN TURN (the final pass, 2026-10-03): each word is steel
-   (7.2:1 on cream) with an asphalt copy over it (`::after`, from `data-w`)
-   that fades in, 400ms, 200ms after the word before, the full stop last.
-   Opacity only (BUILD-LAW Motion). Reduced motion: asphalt from the start. */
-.ab3-nowrap {
-  white-space: nowrap;
-}
-
-.ab3-lit {
-  position: relative;
+/* THE WORDS RISE IN TURN (final pass 2, 2026-10-03, the founder): each word
+   from 24px below to its place, 400ms on the reveal curve, 200ms apart,
+   once on load. Asphalt and fully visible throughout (BUILD-LAW Motion: an
+   entrance never hides content). Reduced motion: still. It replaced the
+   final pass's steel-to-asphalt lighting. */
+.ab3-rise {
   display: inline-block;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .ab3-lit {
-    color: var(--c-steel);
-  }
-
-  .ab3-lit::after {
-    content: attr(data-w);
-    position: absolute;
-    inset: 0;
-    color: var(--c-asphalt);
-    opacity: 0;
-    animation: ab3-lit 400ms linear forwards;
-    animation-delay: calc(300ms + var(--i) * 200ms);
+  .ab3-rise {
+    animation: ab3-rise 400ms var(--ease-reveal) backwards;
+    animation-delay: calc(var(--i) * 200ms);
   }
 }
 
-@keyframes ab3-lit {
-  to {
-    opacity: 1;
+@keyframes ab3-rise {
+  from {
+    transform: translateY(24px);
   }
 }
 
@@ -82,42 +69,7 @@
 }
 
 @media (min-width: 1024px) {
-  /* THE WORDS LIGHT IN TURN (the final pass, 2026-10-03): each word is steel
-   (7.2:1 on cream) with an asphalt copy over it (`::after`, from `data-w`)
-   that fades in, 400ms, 200ms after the word before, the full stop last.
-   Opacity only (BUILD-LAW Motion). Reduced motion: asphalt from the start. */
-.ab3-nowrap {
-  white-space: nowrap;
-}
-
-.ab3-lit {
-  position: relative;
-  display: inline-block;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .ab3-lit {
-    color: var(--c-steel);
-  }
-
-  .ab3-lit::after {
-    content: attr(data-w);
-    position: absolute;
-    inset: 0;
-    color: var(--c-asphalt);
-    opacity: 0;
-    animation: ab3-lit 400ms linear forwards;
-    animation-delay: calc(300ms + var(--i) * 200ms);
-  }
-}
-
-@keyframes ab3-lit {
-  to {
-    opacity: 1;
-  }
-}
-
-.ab3-hero__cols {
+  .ab3-hero__cols {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: var(--s-2xl);
   }

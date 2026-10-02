@@ -72,33 +72,19 @@
    width, so the panel is one column at every width. */
 
 /* ---- Reveal. Four things arriving, so 70ms per item ---------------------- */
-
+/* AN ENTRANCE NEVER HIDES CONTENT (BUILD-LAW Motion, 2026-10-03): the rise
+   stays, the fade is gone; opacity is 1 from the first paint. Reduced
+   motion: nothing moves. */
 @media (prefers-reduced-motion: no-preference) {
   .about__inner[data-revealed='false'] .about__statement,
   .about__inner[data-revealed='false'] .about__support {
-    opacity: 0;
     transform: translateY(var(--s-sm));
   }
 
   .about__statement,
   .about__support {
-    transition:
-      opacity var(--d-panel) var(--ease-reveal),
-      transform var(--d-panel) var(--ease-reveal);
+    transition: transform var(--d-panel) var(--ease-reveal);
     transition-delay: calc(var(--i) * var(--stagger));
   }
 }
 
-/* Reduced motion: keep the fade, drop the travel and the stagger with it. The
-   float is `.float` in tokens.css and does not run under reduce either. */
-@media (prefers-reduced-motion: reduce) {
-  .about__inner[data-revealed='false'] .about__statement,
-  .about__inner[data-revealed='false'] .about__support {
-    opacity: 0;
-  }
-
-  .about__statement,
-  .about__support {
-    transition: opacity var(--d-panel) var(--ease-reveal);
-  }
-}

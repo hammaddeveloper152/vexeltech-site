@@ -247,25 +247,14 @@
   animation: faq-in var(--d-panel) var(--ease-reveal) both;
 }
 
+/* No fade since 2026-10-03 (BUILD-LAW Motion: an entrance never hides
+   content). */
 @keyframes faq-in {
   from {
-    opacity: 0;
     transform: translateY(calc(var(--s-md) * -1));
   }
   to {
-    opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* Kept at top level rather than nested inside the reduced-motion block: a
-   @keyframes inside @media is valid CSS but tooling handles it unevenly. */
-@keyframes faq-in-reduced {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
 
@@ -292,11 +281,9 @@
 
 @keyframes faq-line {
   from {
-    opacity: 0;
     transform: translateY(var(--s-sm));
   }
   to {
-    opacity: 1;
     transform: translateY(0);
   }
 }
@@ -365,9 +352,9 @@
    fade stays, the slide and the press scale go. */
 
 @media (prefers-reduced-motion: reduce) {
-  /* Keep the fade, drop the travel. */
+  /* Nothing moves: the answer is there when the row opens. */
   .faq__panel[data-open='true'] .faq__panel-in {
-    animation: faq-in-reduced var(--d-panel) var(--ease-reveal) both;
+    animation: none;
   }
 
   .faq__mark {

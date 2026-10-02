@@ -12,7 +12,7 @@ import '../../styles/light.css';
 /* THE ABOUT PAGE, ONE OBJECT PER SECTION (the storytelling pass,
    2026-10-01, the founder):
 
-     the statement                the Monigue line, lit word by word on load
+     the statement                the Monigue line, its words rising on load
      Where we come from           OriginStory: three stories in type
      What we build it around      BuildAround: four statements with marks
      Who we are for               FitColumns: two columns, a rule between
@@ -53,8 +53,8 @@ const QUESTIONS = [
   },
 ];
 
-/* The statement, word by word, the full stop last. */
-const LIT = ['Found,', 'trusted,', 'called', '.'];
+/* The statement, word by word. */
+const WORDS = ['Found,', 'trusted,', 'called.'];
 
 export default function AboutPage() {
   return (
@@ -69,29 +69,17 @@ export default function AboutPage() {
       <section className="vt ab3-hero" aria-labelledby="ab3-hero-h">
         <div className="ab3__in">
           <h1 className="ab3-hero__h" id="ab3-hero-h">
-            {/* COPY V3.1, 2026-10-01. THE WORDS LIGHT IN TURN on load (the
-                final pass, 2026-10-03): steel to asphalt, 400ms each, 200ms
-                apart, then the full stop, once, by an asphalt copy of each
-                fading in over it (aboutpage.css). Reduced motion: asphalt
-                from the start. */}
-            {LIT.map((w, i) => (
+            {/* COPY V3.1, 2026-10-01. THE WORDS RISE IN TURN on load (final
+                pass 2, 2026-10-03, the founder): each from 24px below to its
+                place, 400ms, 200ms apart, once, black and fully visible
+                throughout (BUILD-LAW Motion: an entrance never hides
+                content). Reduced motion: still. */}
+            {WORDS.map((w, i) => (
               <React.Fragment key={w}>
-                {i > 0 && w !== '.' ? ' ' : null}
-                {w === 'called' ? null : w === '.' ? (
-                  /* "called" and its full stop share a line. */
-                  <span className="ab3-nowrap">
-                    <span className="ab3-lit" data-w="called" style={{ '--i': i - 1 }}>
-                      called
-                    </span>
-                    <span className="ab3-lit" data-w="." style={{ '--i': i }}>
-                      .
-                    </span>
-                  </span>
-                ) : (
-                  <span className="ab3-lit" data-w={w} style={{ '--i': i }}>
-                    {w}
-                  </span>
-                )}
+                {i > 0 ? ' ' : null}
+                <span className="ab3-rise" style={{ '--i': i }}>
+                  {w}
+                </span>
               </React.Fragment>
             ))}
           </h1>
