@@ -26,7 +26,7 @@ fs.mkdirSync(OUT, { recursive: true });
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const ROUTES = process.argv[4] ? process.argv[4].split(',') : ['/', '/services', '/pricing', '/about-us', '/contact-us', '/thanks', '/privacy-policy', '/terms-of-service', '/no-such-page'];
 /* The objects, by their root class. */
-const OBJECTS = ['.kc', '.fl2', '.wa', '.bb', '.dp', '.ab', '.tb', '.ab3-hero', '.os', '.ba', '.fc', '.tc'];
+const OBJECTS = ['.kc', '.fl2', '.wa', '.id', '.dp', '.bm', '.tb', '.ab3-hero', '.rl', '.os', '.al', '.fc', '.tc'];
 const errors = [];
 const small = [];
 

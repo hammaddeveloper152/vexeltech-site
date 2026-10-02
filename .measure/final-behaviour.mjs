@@ -11,10 +11,12 @@
                 the accordion edge to edge, 560 tall at 1280, the active
                 panel 3 to 1, hover and keys move it, the phone's first tap
                 opens a panel and the second its site
-     services   the plates at opacity 1, the figures final, the callouts
-                painted, the whole thread painted and the loop running only
-                on screen
-     about      the statement's words at opacity 1 from the first frame
+     services   the identity sheet's lines drawn and swatches in place, the
+                client faces loaded there and not on home, the benchmark
+                figures painted and the bars at their widths, the whole
+                thread painted and the loop running only on screen
+     about      the statement's words at opacity 1 from the first frame;
+                the side labels 01 to 07; the grounds; the record's figures
      reduced    every object in its final state with nothing moving
      rule 0     each file referenced by one page, once
 
@@ -46,7 +48,9 @@ const to = (p, sel, block = 'center') =>
 /* Text-carrying elements in <main> whose painted opacity is below 1. */
 const hidden = (p) =>
   p.evaluate(() => {
-    const STATE = '.wa__cap, .wa__side, .tb__typing, .marg';
+    /* States, and the identity sheet's two stand-in specimens, which are at
+       half strength by design, not by entrance. */
+    const STATE = '.wa__cap, .wa__side, .tb__typing, .marg, .id__aa--stand';
     const bad = [];
     for (const el of document.querySelectorAll('main *')) {
       if (el.closest(STATE)) continue;
@@ -147,12 +151,26 @@ await p.close();
 
 /* ---- services ---- */
 p = await open('/services');
-out.figuresAtLoad = await p.evaluate(() => [...document.querySelectorAll('.ab__val')].map((x) => x.textContent));
-out.calloutsAtLoad = await p.evaluate(() => [...document.querySelectorAll('.bf__mark')].map((x) => getComputedStyle(x).strokeDashoffset));
+out.benchAtLoad = await p.evaluate(() => [...document.querySelectorAll('.bm__fig')].map((x) => x.textContent).join(' '));
 out.threadAtLoad = await p.evaluate(() => [...document.querySelectorAll('.tb__msg')].map((m) => m.dataset.shown).join(' '));
-await to(p, '.bb');
-await wait(1200);
-out.plates = await p.evaluate(() => [...document.querySelectorAll('.bb__plate')].map((x) => `${getComputedStyle(x).opacity} ${getComputedStyle(x).transform}`));
+out.clientFontsBeforeSheet = await p.evaluate(() => [...document.fonts].filter((f) => f.family.includes('CCP')).map((f) => `${f.family} ${f.status}`).join(', '));
+await to(p, '.id');
+await wait(1500);
+out.identity = await p.evaluate(() => ({
+  lines: [...document.querySelectorAll('.id__line')].map((x) => getComputedStyle(x).strokeDashoffset).join(' '),
+  swatches: [...document.querySelectorAll('.id__swatch')].map((x) => `${getComputedStyle(x).opacity}/${getComputedStyle(x).transform}`).join(' '),
+  fonts: [...document.fonts].filter((f) => f.family.includes('CCP')).map((f) => `${f.family} ${f.status}`).join(', '),
+  aa: [...document.querySelectorAll('.id__aa')].map((x) => getComputedStyle(x).fontFamily.split(',')[0]).join(' | '),
+  signH: Math.round(document.querySelector('.id__sign').getBoundingClientRect().height),
+  sheetH: Math.round(document.querySelector('.id__sheet').getBoundingClientRect().height),
+}));
+await to(p, '.bm');
+await wait(1500);
+out.bench = await p.evaluate(() =>
+  [...document.querySelectorAll('.bm__row')].map((r) =>
+    [...r.querySelectorAll('.bm__line')].map((l) => `${l.querySelector('.bm__fig').textContent}:${Math.round(l.querySelector('.bm__bar').getBoundingClientRect().width)}`).join(' ')
+  )
+);
 await to(p, '.tb');
 const seq = [];
 for (let i = 0; i < 8; i += 1) {
@@ -165,10 +183,19 @@ await wait(600);
 out.threadOffScreen = await p.evaluate(() => [...document.querySelectorAll('.tb__msg')].map((m) => m.dataset.shown).join(' '));
 await p.close();
 
+p = await open('/', { settle: true });
+out.clientFontsOnHome = await p.evaluate(() => [...document.fonts].filter((f) => f.family.includes('CCP')).map((f) => `${f.family} ${f.status}`).join(', '));
+await p.close();
+
 /* ---- about ---- */
 p = await open('/about-us', { settle: false });
 await p.waitForSelector('.ab3-rise');
 out.statementFirstFrame = await p.evaluate(() => [...document.querySelectorAll('.ab3-rise')].map((x) => getComputedStyle(x).opacity).join(' '));
+await p.close();
+p = await open('/about-us');
+out.aboutLabels = await p.evaluate(() => [...document.querySelectorAll('.marg')].map((x) => x.textContent).join(' / '));
+out.aboutGrounds = await p.evaluate(() => [...document.querySelectorAll('main > section, main > div > section')].map((x) => `${x.className.split(' ').slice(-1)[0]}:${getComputedStyle(x).backgroundColor}`).join(' '));
+out.record = await p.evaluate(() => [...document.querySelectorAll('.rl__fig')].map((x) => x.textContent).join(' '));
 await p.close();
 
 /* ---- reduced motion ---- */
@@ -179,13 +206,7 @@ out.reducedThread = await p.evaluate(() => [...document.querySelectorAll('.tb__m
 await p.close();
 
 /* ---- rule 0 ---- */
-const FILES = [
-  '/proof/ads-jan-feb-2026.png',
-  '/proof/ads-nov-2025.png',
-  '/brand/ccp-signage.jpg',
-  '/brand/ccp-lockup-dark.jpg',
-  '/brand/ccp-teal.jpg',
-];
+const FILES = ['/proof/ads-nov-2025.png', '/brand/ccp-main.svg', '/brand/ccp-signage.jpg'];
 const work = ['baseline-books', 'artiora', 'onesix', 'zions-caregivers', 'altavia', 'edgeq'];
 const counts = {};
 for (const r of ['/', '/services', '/pricing', '/about-us', '/contact-us']) {

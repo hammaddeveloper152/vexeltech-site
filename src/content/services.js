@@ -25,8 +25,9 @@ import { FIGURES, money } from './pricing.js';
 
    `proof` (the final pass, 2026-10-03): the band the other three carry
    above their lists, one object each in components/final/: 'brand'
-   (BrandBand, Christal Clear Properties' marks), 'ads' (AdsBand, a Google
-   Ads summary) and 'textback' (TextBackBand, the missed-call thread). */
+   (IdentitySheet, Christal Clear Properties' identity), 'ads'
+   (BenchmarkBand, two campaigns against the US search average) and
+   'textback' (TextBackBand, the missed-call thread). */
 export const DISCIPLINES = [
   {
     id: 'branding',

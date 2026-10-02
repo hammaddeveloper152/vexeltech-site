@@ -1,0 +1,144 @@
+/* ---- About's two dark bands (2026-10-03, the founder): The record
+   (RecordLedger.jsx) and What we build it around (AroundLines.jsx). ------ */
+
+/* A dark band on the light page: the base ground, edge to edge with square
+   edges, 96px above and below. The side label takes the dark ground's ink. */
+.st-sec.ab-dark {
+  padding-block: 96px;
+  background: var(--c-base);
+}
+
+/* THE VERTICAL RHYTHM (tokens.css) takes every section's foot to 0 and
+   gives it back to a section with its own ground; a dark band is one, so it
+   keeps its 96, and the section before it takes 64 to its edge, as the
+   rule sets for About's black block. */
+main#main section.vt.ab-dark {
+  padding-bottom: 96px;
+}
+
+main#main section.vt:has(+ section.ab-dark) {
+  padding-bottom: 64px;
+}
+
+html[data-ground='light'] .ab-dark .marg {
+  color: var(--c-steel-lift); /* 7.6:1 on the base */
+}
+
+/* ---- The record --------------------------------------------------------- */
+.rl__cells {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1px solid var(--c-rule-dark);
+}
+
+@media (min-width: 768px) {
+  .rl__cells {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.rl__cell {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: var(--s-sm);
+  padding: var(--s-lg) var(--s-md) var(--s-lg) 0;
+  border-bottom: 1px solid var(--c-rule-dark);
+}
+
+.rl__cell:nth-child(2n) {
+  padding-left: var(--s-md);
+  border-left: 1px solid var(--c-rule-dark);
+}
+
+@media (min-width: 768px) {
+  .rl__cell {
+    border-bottom: 0;
+  }
+
+  .rl__cell:nth-child(n + 2) {
+    padding-left: var(--s-md);
+    border-left: 1px solid var(--c-rule-dark);
+  }
+}
+
+.rl__fig {
+  margin: 0;
+  font-family: var(--font-quiet);
+  font-size: 64px;
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--c-bone); /* 16.4:1 on the base */
+}
+
+/* Four across at 768 leaves a $70.11 at 64px about 150px: it steps down
+   until the row is wide enough. */
+@media (max-width: 1279px) {
+  .rl__fig {
+    font-size: clamp(40px, 5vw, 64px);
+  }
+}
+
+.rl__label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--c-steel-lift); /* 7.6:1 on the base */
+}
+
+.rl__note {
+  margin: var(--s-lg) 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  color: var(--c-steel-lift); /* 7.6:1 on the base */
+}
+
+/* ---- What we build it around ------------------------------------------ */
+.al__rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.al__row {
+  padding: var(--s-xl) 0;
+  border-top: 1px solid var(--c-steel);
+}
+
+.al__row:last-child {
+  border-bottom: 1px solid var(--c-steel);
+}
+
+.al__k {
+  margin: 0 0 var(--s-sm);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-accent-text-dark); /* 9.46:1 on the base */
+}
+
+.al__line {
+  max-width: 28ch;
+  margin: 0;
+  font-family: var(--font-quiet);
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-bone); /* 16.4:1 on the base */
+  text-wrap: pretty;
+}
+
+@media (min-width: 768px) {
+  .al__line {
+    font-size: 40px;
+  }
+}

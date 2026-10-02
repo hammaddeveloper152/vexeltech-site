@@ -245,49 +245,8 @@
   text-wrap: pretty;
 }
 
-/* ---- 5. About, What we build it around: four labelled lines ----------
-   The seven corrections (2026-10-02): the marks are gone. One column on the
-   content column's left edge: the discipline in mono 11px deep amber
-   (4.82:1 on cream), then the line. Rows split by hairlines; no cards, no
-   icon column, no gutter. */
-.ba__rows {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--st-hair);
-}
-
-.ba__row {
-  padding: var(--s-xl) 0;
-  border-bottom: 1px solid var(--st-hair);
-}
-
-.ba__k {
-  margin: 0 0 var(--s-sm);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--c-accent-text-light);
-}
-
-.ba__line {
-  max-width: 30ch;
-  margin: 0;
-  font-family: var(--font-quiet);
-  font-size: 26px;
-  line-height: 1.2;
-  font-weight: var(--t-weight-quiet);
-  color: var(--st-head);
-  text-wrap: pretty;
-}
-
-@media (min-width: 768px) {
-  .ba__line {
-    font-size: 32px;
-  }
-}
+/* ---- 5. What we build it around is AroundLines since 2026-10-03, on the
+   dark (components/final/about-bands.css). */
 
 /* ---- 6. About, Who we are for, two columns (six fixes, 2026-10-02) -----
    Split by a 1px steel rule: vertical from 768, horizontal between them

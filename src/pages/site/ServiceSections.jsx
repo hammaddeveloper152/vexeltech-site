@@ -4,12 +4,13 @@ import { IconArrowUpRight } from '../../components/site/Icons.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
 import EvidenceBand from '../../components/story/EvidenceBand.jsx';
 import DevicePhones from '../../components/story/DevicePhones.jsx';
-import BrandBand from '../../components/final/BrandBand.jsx';
-import AdsBand from '../../components/final/AdsBand.jsx';
+import IdentitySheet from '../../components/final/IdentitySheet.jsx';
+import BenchmarkBand from '../../components/final/BenchmarkBand.jsx';
 import TextBackBand from '../../components/final/TextBackBand.jsx';
 
-/* The proof bands, by services.js's `proof` (the final pass, 2026-10-03). */
-const PROOF = { brand: BrandBand, ads: AdsBand, textback: TextBackBand };
+/* The proof bands, by services.js's `proof` (the final pass, 2026-10-03;
+   the identity sheet and the benchmark the same day, later). */
+const PROOF = { brand: IdentitySheet, ads: BenchmarkBand, textback: TextBackBand };
 
 /* THE FOUR DISCIPLINES ON /services, AS ALTERNATING BANDS, 2026-09-23.
 

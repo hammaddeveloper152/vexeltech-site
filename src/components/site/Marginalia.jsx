@@ -40,7 +40,9 @@ export default function Marginalia() {
       const label = document.createElement('span');
       label.className = 'marg';
       label.setAttribute('aria-hidden', 'true');
-      label.textContent = `${String(i + 1).padStart(2, '0')} ${h.textContent.trim()}`;
+      /* A section may name its label itself (`data-marg`, About's "The
+         record", 2026-10-03); otherwise the label is its heading. */
+      label.textContent = `${String(i + 1).padStart(2, '0')} ${s.dataset.marg || h.textContent.trim()}`;
       s.classList.add('has-marg');
       s.appendChild(label);
       return { s, h, label };

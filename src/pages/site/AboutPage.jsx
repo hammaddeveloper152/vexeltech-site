@@ -2,7 +2,8 @@ import React from 'react';
 import Shell from './Shell.jsx';
 import Faq from '../../components/home/Faq.jsx';
 import OriginStory from '../../components/story/OriginStory.jsx';
-import BuildAround from '../../components/story/BuildAround.jsx';
+import RecordLedger from '../../components/final/RecordLedger.jsx';
+import AroundLines from '../../components/final/AroundLines.jsx';
 import FitColumns from '../../components/story/FitColumns.jsx';
 import TermsCard from '../../components/story/TermsCard.jsx';
 import { CallBand } from './parts.jsx';
@@ -13,8 +14,9 @@ import '../../styles/light.css';
    2026-10-01, the founder):
 
      the statement                the Monigue line, its words rising on load
-     Where we come from           OriginStory: three stories in type
-     What we build it around      BuildAround: four statements with marks
+     The record (dark)            RecordLedger: what we have shipped
+     Where we come from           OriginStory: the stories, the November capture
+     What we build it around      AroundLines (dark): four lines
      Who we are for               FitColumns: two columns, a rule between
      How we work with you         TermsCard: a white sheet, four clauses
      Questions                    the FAQ accordion
@@ -92,8 +94,12 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* THE BANDS, 2026-10-03 (the founder): cream, dark, cream, dark, then
+          cream to the close. The side labels number 01 to 07 in this order
+          (Marginalia). */}
+      <RecordLedger />
       <OriginStory />
-      <BuildAround />
+      <AroundLines />
       {/* Who we are for and How we work with you, each at the full width
           again (the five fixes, 2026-10-02: the two colour sheets stand side
           by side, which the 40% column of the audit's pair could not hold). */}

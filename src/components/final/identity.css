@@ -1,0 +1,250 @@
+/* ---- Services, Branding: the identity sheet (IdentitySheet.jsx). -------- */
+
+/* The client's two open-licence faces, self-hosted (public/fonts/client,
+   SIL OFL 1.1, Latin subset). A face is fetched only when text uses it, and
+   only the identity sheet does, so they load on /services alone. */
+@font-face {
+  font-family: 'CCP Sora';
+  src: url('/fonts/client/sora-400-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CCP Great Vibes';
+  src: url('/fonts/client/great-vibes-400-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.id {
+  display: grid;
+  gap: var(--s-md);
+  margin: 0;
+  padding: var(--s-md);
+  border-radius: 8px;
+  background: var(--c-cream);
+}
+
+@media (min-width: 1024px) {
+  .id {
+    grid-template-columns: 58fr 42fr;
+    align-items: stretch;
+  }
+}
+
+/* The sheet: white, the Terms sheet's radius and shadow. */
+.id__sheet {
+  min-width: 0;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 6%),
+    0 24px 48px rgb(0 0 0 / 10%);
+}
+
+.id__row {
+  margin: 0;
+  padding: var(--s-lg);
+  border-bottom: 1px solid rgb(23 24 26 / 12%);
+}
+
+.id__row:last-child {
+  border-bottom: 0;
+}
+
+/* 1. The mark in its clear-space grid. */
+.id__mark {
+  display: grid;
+  place-items: center;
+  height: 320px;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.id__grid {
+  position: relative;
+}
+
+.id__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.id__line {
+  fill: none;
+  stroke: var(--c-steel);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 600ms var(--ease-reveal);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .id[data-armed='true'] .id__line {
+    stroke-dashoffset: 100;
+  }
+}
+
+.id__logo {
+  position: absolute;
+  display: block;
+}
+
+.id__x {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1;
+  color: var(--c-steel); /* 7.6:1 on white */
+  transform: translate(-50%, -50%);
+}
+
+/* 2. The palette. */
+.id__palette {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+  list-style: none;
+}
+
+.id__swatch {
+  display: grid;
+  gap: var(--s-sm);
+  min-width: 0;
+  transition: transform 500ms var(--ease-reveal);
+  transition-delay: calc(var(--i) * var(--stagger));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .id[data-armed='true'] .id__swatch {
+    transform: translateY(16px);
+  }
+}
+
+.id__chip {
+  display: block;
+  height: 56px;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgb(23 24 26 / 10%); /* holds #F0F0F0 on white */
+}
+
+.id__hex {
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  color: var(--c-steel); /* 7.6:1 on white */
+}
+
+/* 3. The type. */
+.id__type {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-lg) var(--s-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .id__type {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.id__face {
+  display: grid;
+  gap: var(--s-sm);
+  min-width: 0;
+}
+
+.id__name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--c-steel); /* 7.6:1 on white */
+}
+
+.id__aa {
+  font-size: 40px;
+  line-height: 1.1;
+  color: var(--c-asphalt); /* 17.8:1 on white */
+}
+
+.id__aa--sora {
+  font-family: 'CCP Sora', var(--font-offer);
+}
+
+.id__aa--vibes {
+  font-family: 'CCP Great Vibes', var(--font-offer);
+}
+
+/* A commercial face the site does not hold: the display face at half
+   strength, so it reads as standing in. */
+.id__aa--stand {
+  font-family: var(--font-quiet);
+  font-weight: var(--t-weight-quiet);
+  opacity: 0.5;
+}
+
+.id__lic {
+  margin: var(--s-md) 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--c-steel); /* 7.6:1 on white */
+}
+
+/* 4. The foot. */
+.id__foot {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--c-steel); /* 7.6:1 on white */
+}
+
+/* The signage: the sheet's full height from 1024, 4:5 below. */
+.id__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-sm);
+  min-width: 0;
+}
+
+.id__sign {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: 4px;
+}
+
+@media (min-width: 1024px) {
+  .id__sign {
+    flex: 1 1 0;
+    min-height: 0;
+    aspect-ratio: auto;
+  }
+}
+
+.id__sign img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.id__cap {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--c-steel); /* 7.2:1 on cream */
+}
