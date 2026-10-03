@@ -72,14 +72,22 @@ for (const w of WORK) {
    (the six fixes, 2026-10-02). A phone capture and a desktop capture
    of the same site count as different images under BUILD-LAW rule 0 (the
    founder's ruling), so baseline-books and artiora appear here and in
-   Recent work. They replaced Zions Caregivers' second screen. */
+   Recent work. They replaced Zions Caregivers' second screen.
+
+   2026-10-03 (the final artifacts pass): Zions Caregivers' first screen
+   takes Baseline's place in the band, because Baseline's phone capture
+   moved to the Marketing band's search-to-call stage and a capture appears
+   once. `phones:<slug>` captures one phone only. */
 const PHONES = [
   ['baseline-books', 'https://www.baseline-books.com/'],
   ['artiora', 'https://artluxuryvilla.com/'],
   ['onesix', 'https://www.onesix.ai/'],
+  ['zions-caregivers', 'https://zionscaregivers.com/'],
 ];
-if (!only.length || only.includes('phones')) {
+const onePhone = only.filter((a) => a.startsWith('phones:')).map((a) => a.slice(7));
+if (!only.length || only.includes('phones') || onePhone.length) {
   for (const [slug, url] of PHONES) {
+    if (onePhone.length && !onePhone.includes(slug)) continue;
     await shot(b, url, { width: 390, height: 844, dpr: 2, clipH: 1180 }, `${slug}-phone.jpg`);
     report.push(`${slug}-phone: done`);
   }

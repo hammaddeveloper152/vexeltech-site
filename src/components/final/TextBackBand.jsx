@@ -79,7 +79,7 @@ export default function TextBackBand() {
   }, []);
 
   return (
-    <figure className="tb" ref={ref}>
+    <figure className="tb" ref={ref} data-artifact="TextBackBand">
       <div className="tb__col">
         <p className="tb__head">{THREAD.number}</p>
         <ol className="tb__thread">

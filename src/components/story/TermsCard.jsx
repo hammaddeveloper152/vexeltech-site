@@ -33,7 +33,7 @@ const CLAUSES = [
 
 export default function TermsCard() {
   return (
-    <section className="vt st-sec st--light tc" aria-labelledby="tc-h">
+    <section className="vt st-sec st--light tc" aria-labelledby="tc-h" data-artifact="TermsCard">
       <div className="st-in">
         <h2 className="st-h" id="tc-h">
           How we work with you

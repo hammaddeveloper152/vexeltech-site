@@ -24,7 +24,7 @@ import './story.css';
 export default function DevicePhones({ phones }) {
   if (!phones || !phones.length) return null;
   return (
-    <ul className="dp">
+    <ul className="dp" data-artifact="DevicePhones" data-device="phone silhouette">
       {phones.map((p) => (
         <li className="dp__phone" key={p.src}>
           <span className="dp__screen">

@@ -2,8 +2,7 @@ import React from 'react';
 import Shell from './Shell.jsx';
 import Faq from '../../components/home/Faq.jsx';
 import OriginStory from '../../components/story/OriginStory.jsx';
-import RecordLedger from '../../components/final/RecordLedger.jsx';
-import AroundLines from '../../components/final/AroundLines.jsx';
+import WeekStrip from '../../components/artifacts/WeekStrip.jsx';
 import FitColumns from '../../components/story/FitColumns.jsx';
 import TermsCard from '../../components/story/TermsCard.jsx';
 import { CallBand } from './parts.jsx';
@@ -14,9 +13,8 @@ import '../../styles/light.css';
    2026-10-01, the founder):
 
      the statement                the Monigue line, its words rising on load
-     The record (dark)            RecordLedger: what we have shipped
-     Where we come from           OriginStory: the stories, the November capture
-     What we build it around      AroundLines (dark): four lines
+     Where we come from           OriginStory: one paragraph, the November capture
+     Four business days (dark)    WeekStrip: the week, Monday to live
      Who we are for               FitColumns: two columns, a rule between
      How we work with you         TermsCard: a white sheet, four clauses
      Questions                    the FAQ accordion
@@ -24,7 +22,9 @@ import '../../styles/light.css';
 
    It replaced home's route (twice), home's discipline cards, the fit cards
    and the facts table, all of which repeated objects found elsewhere on the
-   site.
+   site. The final artifacts pass (2026-10-03, the founder) took out The
+   record and What we build it around (their lines are in the archive
+   section of VEXELTECH-COPY.md) and put the week strip in.
 
    THE LIGHT PAGE since the three-colour pass (2026-09-25): a cream ground
    for the whole route (Shell's `light`, light.css). The footer block closes
@@ -63,7 +63,7 @@ export default function AboutPage() {
     <Shell
       title="About VexelTech: websites, ads and automation for small business"
       path="/about-us"
-      description="One team for the website, the campaigns and the follow-up behind US small businesses. Flat prices, four-day builds, everything in your name."
+      description="One team for the website, the campaigns and the follow-up behind small businesses. Flat prices, four-day builds, everything in your name."
       footerForm={false}
       light
     >
@@ -94,12 +94,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* THE BANDS, 2026-10-03 (the founder): cream, dark, cream, dark, then
-          cream to the close. The side labels number 01 to 07 in this order
-          (Marginalia). */}
-      <RecordLedger />
+      {/* THE BANDS, the final artifacts pass (2026-10-03, the founder):
+          cream, cream, dark, then cream to the close. The side labels number
+          01 to 06 in this order (Marginalia). */}
       <OriginStory />
-      <AroundLines />
+      <WeekStrip />
       {/* Who we are for and How we work with you, each at the full width
           again (the five fixes, 2026-10-02: the two colour sheets stand side
           by side, which the 40% column of the audit's pair could not hold). */}

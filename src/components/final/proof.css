@@ -1,6 +1,6 @@
 /* ---- Services, the Automation band's thread (TextBackBand.jsx). The
-   Branding and Marketing bands have their own sheets (identity.css,
-   benchmark.css). Nothing here starts hidden (BUILD-LAW Motion: an
+   Branding and Marketing bands have their own sheet since the final
+   artifacts pass (components/artifacts/artifacts.css). Nothing here starts hidden (BUILD-LAW Motion: an
    entrance never hides content). -------------------------------------- */
 
 /* THE CAPTIONS are sentences, so they are set in sentence case: the mono

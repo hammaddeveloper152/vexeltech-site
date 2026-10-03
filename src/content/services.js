@@ -24,10 +24,13 @@ import { FIGURES, money } from './pricing.js';
    site are different images under BUILD-LAW rule 0).
 
    `proof` (the final pass, 2026-10-03): the band the other three carry
-   above their lists, one object each in components/final/: 'brand'
-   (IdentitySheet, Christal Clear Properties' identity), 'ads'
-   (BenchmarkBand, two campaigns against the US search average) and
-   'textback' (TextBackBand, the missed-call thread). */
+   above their lists, one object each: 'brand' (artifacts/MarkEverywhere,
+   Christal Clear's mark on the surfaces it was delivered on), 'ads'
+   (artifacts/SearchToCall, a search to a call, on Baseline's site) and
+   'textback' (final/TextBackBand, the missed-call thread), since the final
+   artifacts pass, 2026-10-03. The Websites phones lead with Zions
+   Caregivers since that pass: Baseline's phone capture moved to the
+   Marketing stage, and a capture appears once (BUILD-LAW rule 0). */
 export const DISCIPLINES = [
   {
     id: 'branding',
@@ -63,7 +66,7 @@ export const DISCIPLINES = [
     terms: `${money(FIGURES.website)}, one price. Four business days from the day we have your content. Domain, hosting and code in your name.`,
     image: null,
     phones: [
-      { src: '/work/baseline-books-phone.jpg', alt: 'The Baseline Bookkeeping website on a phone.' },
+      { src: '/work/zions-caregivers-phone.jpg', alt: 'The Zions Caregivers website on a phone.' },
       { src: '/work/artiora-phone.jpg', alt: 'The ARTIORA Luxury Villa website on a phone.' },
       { src: '/work/onesix-phone.jpg', alt: 'The OneSix website on a phone.' },
     ],

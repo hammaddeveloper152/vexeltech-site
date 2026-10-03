@@ -7,16 +7,18 @@
                 <main> paints below opacity 1 (the product of its own and its
                 ancestors'), states excepted: the accordion's captions belong
                 to a panel's state, a typing indicator to the thread's loop
-     home       the spine segment beside the active row; the ledger final;
+     home       the ledger final;
                 the accordion edge to edge, 560 tall at 1280, the active
                 panel 3 to 1, hover and keys move it, the phone's first tap
                 opens a panel and the second its site
-     services   the identity sheet's lines drawn and swatches in place, the
-                client faces loaded there and not on home, the benchmark
-                figures painted and the bars at their widths, the whole
+     services   the client face loaded there and not on home, the whole
                 thread painted and the loop running only on screen
      about      the statement's words at opacity 1 from the first frame;
-                the side labels 01 to 07; the grounds; the record's figures
+                the side labels 01 to 06; the grounds
+
+   THE FINAL ARTIFACTS PASS (2026-10-03) took out the spine, the identity
+   sheet, the benchmark and the record, and their measurements with them.
+   The four artifacts that replaced them are measured by final5.mjs.
      reduced    every object in its final state with nothing moving
      rule 0     each file referenced by one page, once
 
@@ -48,9 +50,8 @@ const to = (p, sel, block = 'center') =>
 /* Text-carrying elements in <main> whose painted opacity is below 1. */
 const hidden = (p) =>
   p.evaluate(() => {
-    /* States, and the identity sheet's two stand-in specimens, which are at
-       half strength by design, not by entrance. */
-    const STATE = '.wa__cap, .wa__side, .tb__typing, .marg, .id__aa--stand';
+    /* States, not entrances. */
+    const STATE = '.wa__cap, .wa__side, .tb__typing, .marg';
     const bad = [];
     for (const el of document.querySelectorAll('main *')) {
       if (el.closest(STATE)) continue;
@@ -82,20 +83,6 @@ for (const route of ['/', '/services', '/about-us']) {
 
 /* ---- home ---- */
 let p = await open('/');
-for (const i of [0, 3]) {
-  await p.evaluate((n) => {
-    const r = document.querySelectorAll('.kc__row')[n];
-    window.scrollTo(0, r.getBoundingClientRect().top + window.scrollY + r.offsetHeight / 2 - window.innerHeight / 2);
-  }, i);
-  await wait(900);
-  out[`spine row ${i}`] = await p.evaluate(() => {
-    const rows = [...document.querySelectorAll('.kc__row')];
-    const on = rows.findIndex((x) => x.dataset.on === 'true');
-    const seg = document.querySelector('.kc__seg').getBoundingClientRect();
-    const row = rows[on].getBoundingClientRect();
-    return { on, segTop: Math.round(seg.top - row.top), segH: Math.round(seg.height - row.height) };
-  });
-}
 await to(p, '.fl2');
 out.ledger = await p.evaluate(() => [...document.querySelectorAll('.fl2__fig')].map((x) => x.textContent));
 await to(p, '.wa__row');
@@ -151,26 +138,8 @@ await p.close();
 
 /* ---- services ---- */
 p = await open('/services');
-out.benchAtLoad = await p.evaluate(() => [...document.querySelectorAll('.bm__fig')].map((x) => x.textContent).join(' '));
 out.threadAtLoad = await p.evaluate(() => [...document.querySelectorAll('.tb__msg')].map((m) => m.dataset.shown).join(' '));
 out.clientFontsBeforeSheet = await p.evaluate(() => [...document.fonts].filter((f) => f.family.includes('CCP')).map((f) => `${f.family} ${f.status}`).join(', '));
-await to(p, '.id');
-await wait(1500);
-out.identity = await p.evaluate(() => ({
-  lines: [...document.querySelectorAll('.id__line')].map((x) => getComputedStyle(x).strokeDashoffset).join(' '),
-  swatches: [...document.querySelectorAll('.id__swatch')].map((x) => `${getComputedStyle(x).opacity}/${getComputedStyle(x).transform}`).join(' '),
-  fonts: [...document.fonts].filter((f) => f.family.includes('CCP')).map((f) => `${f.family} ${f.status}`).join(', '),
-  aa: [...document.querySelectorAll('.id__aa')].map((x) => getComputedStyle(x).fontFamily.split(',')[0]).join(' | '),
-  signH: Math.round(document.querySelector('.id__sign').getBoundingClientRect().height),
-  sheetH: Math.round(document.querySelector('.id__sheet').getBoundingClientRect().height),
-}));
-await to(p, '.bm');
-await wait(1500);
-out.bench = await p.evaluate(() =>
-  [...document.querySelectorAll('.bm__row')].map((r) =>
-    [...r.querySelectorAll('.bm__line')].map((l) => `${l.querySelector('.bm__fig').textContent}:${Math.round(l.querySelector('.bm__bar').getBoundingClientRect().width)}`).join(' ')
-  )
-);
 await to(p, '.tb');
 const seq = [];
 for (let i = 0; i < 8; i += 1) {
@@ -195,7 +164,6 @@ await p.close();
 p = await open('/about-us');
 out.aboutLabels = await p.evaluate(() => [...document.querySelectorAll('.marg')].map((x) => x.textContent).join(' / '));
 out.aboutGrounds = await p.evaluate(() => [...document.querySelectorAll('main > section, main > div > section')].map((x) => `${x.className.split(' ').slice(-1)[0]}:${getComputedStyle(x).backgroundColor}`).join(' '));
-out.record = await p.evaluate(() => [...document.querySelectorAll('.rl__fig')].map((x) => x.textContent).join(' '));
 await p.close();
 
 /* ---- reduced motion ---- */
@@ -219,6 +187,7 @@ for (const r of ['/', '/services', '/pricing', '/about-us', '/contact-us']) {
   });
   const srcs = await p.evaluate(() => [...document.querySelectorAll('img')].map((i) => new URL(i.currentSrc || i.src).pathname));
   for (const s of srcs) {
+    /* (A file twice on one page shows as the route twice.) */
     const key = s.replace(/-(720|800)(?=\.jpg$)/, '');
     counts[key] = counts[key] || [];
     counts[key].push(r);
@@ -226,7 +195,7 @@ for (const r of ['/', '/services', '/pricing', '/about-us', '/contact-us']) {
   await p.close();
 }
 out.rule0 = Object.fromEntries(
-  [...FILES, ...work.map((w) => `/work/${w}.jpg`), ...['baseline-books', 'artiora', 'onesix'].map((w) => `/work/${w}-phone.jpg`)].map((f) => [f, (counts[f] || []).join(',') || 'nowhere'])
+  [...FILES, ...work.map((w) => `/work/${w}.jpg`), ...['baseline-books', 'artiora', 'onesix', 'zions-caregivers'].map((w) => `/work/${w}-phone.jpg`)].map((f) => [f, (counts[f] || []).join(',') || 'nowhere'])
 );
 await b.close();
 console.log(JSON.stringify(out, null, 1));

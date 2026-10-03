@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Header from '../../components/site/Header.jsx';
 import Hero from '../../components/home/Hero.jsx';
-import KineticCosts from '../../components/final/KineticCosts.jsx';
+import CostScenes from '../../components/artifacts/CostScenes.jsx';
 import WorkAccordion from '../../components/final/WorkAccordion.jsx';
 import Services from '../../components/home/Services.jsx';
 import WordBand from '../../components/home/WordBand.jsx';
@@ -65,7 +65,7 @@ import '../../styles/lit.css';
 /* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Metadata). */
 const TITLE = 'Website design for small business, $700 flat | VexelTech';
 const DESCRIPTION =
-  'Website design, branding, local SEO, ads and automation for US small businesses. Websites $700 flat, live in four business days.';
+  'Website design, branding, local SEO, ads and automation for small businesses. Websites $700 flat, live in four business days.';
 
 /* The retired Process component's four step descriptions, carried as one
    line under stops 01 to 04 of the route, and the user's line for stop 05
@@ -122,9 +122,9 @@ export default function Home() {
           back into the bar, which is the thing the link just skipped. */}
       <main id="main" tabIndex={-1}>
         <Hero />
-        {/* What it costs you, kinetic type on a spine (the final pass,
+        {/* What it costs you, the four scenes (the final artifacts pass,
             2026-10-03). */}
-        <KineticCosts />
+        <CostScenes />
         <About />
         <Services />
         {/* Recent work, between What we do and the flat-prices band: the

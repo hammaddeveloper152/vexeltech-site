@@ -27,7 +27,7 @@ export default function BrowserFrame({ title, src, alt, width, height, marks = [
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className={`bf${light ? ' bf--light' : ''}`} ref={ref} data-draw={draw ? 'true' : 'false'}>
+    <div className={`bf${light ? ' bf--light' : ''}`} ref={ref} data-draw={draw ? 'true' : 'false'} data-artifact="BrowserFrame" data-device="browser frame">
       <div className="bf__bar" aria-hidden="true">
         <span className="bf__dots">
           <span className="bf__dot" />

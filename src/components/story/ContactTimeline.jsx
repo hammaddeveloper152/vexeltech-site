@@ -21,7 +21,7 @@ const POINTS = [
 
 export default function ContactTimeline() {
   return (
-    <section className="vt st-sec st--dark ctl" aria-label="What happens after you send">
+    <section className="vt st-sec st--dark ctl" aria-label="What happens after you send" data-artifact="ContactTimeline">
       <div className="st-in">
         <ol className="ctl__rail">
           {POINTS.map(({ id, label, lit }, i) => (

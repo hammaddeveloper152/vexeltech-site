@@ -99,8 +99,8 @@
 }
 
 /* ---- 1 and 2 came off with the final pass (2026-10-03): What it costs
-   you is KineticCosts and Recent work is WorkAccordion, each with its own
-   sheet in components/final/. */
+   you is CostScenes (components/artifacts/, since the final artifacts
+   pass) and Recent work is WorkAccordion (components/final/). */
 
 /* ---- 3. Contact: the timeline -------------------------------------------
    One hairline rail, four 14px points: keyline rings, the second filled in
@@ -212,41 +212,22 @@
   color: var(--c-steel); /* 7.2:1 on cream */
 }
 
-.os__list {
+/* The final artifacts pass (2026-10-03): the three stories are one
+   measured paragraph, 22px, at most 560px. The labels and the rules came
+   off with the list. */
+.os__p {
   max-width: 560px;
   margin: 0;
-  padding: var(--s-xl) 0;
-  list-style: none;
-  border-top: 1px solid var(--st-hair);
-  border-bottom: 1px solid var(--st-hair);
-}
-
-.os__item + .os__item {
-  margin-top: 40px;
-}
-
-.os__k {
-  margin: 0 0 var(--s-sm);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--c-accent-text-light); /* 4.82:1 on cream */
-}
-
-.os__p {
-  margin: 0;
   font-family: var(--font-quiet);
-  font-size: 26px;
-  line-height: 1.35;
+  font-size: 22px;
+  line-height: 1.4;
   font-weight: var(--t-weight-quiet);
   color: var(--c-asphalt); /* 15.75:1 on cream */
   text-wrap: pretty;
 }
 
-/* ---- 5. What we build it around is AroundLines since 2026-10-03, on the
-   dark (components/final/about-bands.css). */
+/* ---- 5. What we build it around is deleted (the final artifacts pass,
+   2026-10-03); its lines are in VEXELTECH-COPY.md's archive section. */
 
 /* ---- 6. About, Who we are for, two columns (six fixes, 2026-10-02) -----
    Split by a 1px steel rule: vertical from 768, horizontal between them

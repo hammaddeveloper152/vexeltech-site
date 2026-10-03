@@ -32,7 +32,7 @@ const REFUSALS = [
 
 export default function PromiseBand({ id }) {
   return (
-    <section className="vt ab3-price promise panel-sec" aria-labelledby={id}>
+    <section className="vt ab3-price promise panel-sec" aria-labelledby={id} data-artifact="PromiseBand">
       <div className="promise__in panel">
         <h2 className="promise__h ab3-price__h" id={id}>
           Flat prices, and three things we don&apos;t do.

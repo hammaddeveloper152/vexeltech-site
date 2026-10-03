@@ -17,13 +17,14 @@ import './story.css';
 
    The sentences are VEXELTECH-COPY.md V3.1's, verbatim, split at their full
    stops; "Contractors, clinics, real estate" is the check's About exception
-   and stays one item. */
+   and stays one item. "wherever you are" is the founder's, 2026-10-03: no
+   geography fences the audience. */
 const COLS = [
   {
     id: 'fit',
     head: 'A fit',
     rows: [
-      'Owner-run businesses, one to fifty people.',
+      'Owner-run businesses, one to fifty people, wherever you are.',
       'Contractors, clinics, real estate, bookkeeping, hospitality, consultancies, local retail.',
       'You answer your own phone, or you want to stop having to.',
     ],
@@ -41,7 +42,7 @@ const COLS = [
 
 export default function FitColumns() {
   return (
-    <section className="vt st-sec st--light fc" aria-labelledby="fc-h">
+    <section className="vt st-sec st--light fc" aria-labelledby="fc-h" data-artifact="FitColumns">
       <div className="st-in">
         <h2 className="st-h" id="fc-h">
           Who we are for

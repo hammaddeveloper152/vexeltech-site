@@ -29,6 +29,16 @@
        which repeats the Services item lines by design.
      - every $ figure, against 299, 449, 700, 999, 150, 15 and 300
      - exclamation marks
+     - THE DEVICE CHECK (the final artifacts pass, 2026-10-03, the
+       founder): every artifact component carries `data-artifact` (its
+       name) and, where it is one of the named devices, `data-device`
+       (ledger, phone silhouette, stage, week strip, browser frame). The
+       check lists each component and the page it renders on, and FAILS
+       if a component or a device renders on more than one page, or twice
+       on one page. The browser frame is excepted (BUILD-LAW rule 0, the
+       founder's amendment of 2026-10-03). The brief's "big-line list" and
+       "map" have no component: the big lines went with KineticCosts and
+       AroundLines, and the map was never built.
 
    Usage: node .measure/copytext.mjs [tag] [base]
    (tag names the dump folder: before, after.) */
@@ -69,6 +79,7 @@ const texts = {};
 const meta = {};
 const shared = {};
 const fullList = {};
+const artifacts = {};
 for (const route of [...PUBLIC, ...LEGAL]) {
   const p = await b.newPage();
   p.on('console', (m) => m.type() === 'error' && errors.push(`${route}: ${m.text()}`));
@@ -99,6 +110,9 @@ for (const route of [...PUBLIC, ...LEGAL]) {
   /* Every pricing Full list panel, open or not (textContent reads a hidden
      panel too). */
   fullList[route] = await p.evaluate(() => [...document.querySelectorAll('.pr-col__full')].map((e) => e.textContent).join('\n'));
+  artifacts[route] = await p.evaluate(() =>
+    [...document.querySelectorAll('[data-artifact]')].map((e) => [e.dataset.artifact, e.dataset.device || ''])
+  );
   meta[route] = await p.evaluate(() => `${document.title}
 ${document.querySelector('meta[name="description"]')?.content || ''}`);
   fs.writeFileSync(path.join(OUT, `${route.replace(/\//g, '_') || '_home'}.txt`), t);
@@ -140,6 +154,29 @@ for (const [s, routes] of seen) {
   if (routes.length < 2) continue;
   const ok = routes.every((r) => shared[r].includes(s)) || (routes.includes('/pricing') && fullList['/pricing'].includes(s));
   (ok ? report.repeatsAllowed : report.repeats).push({ s, routes });
+}
+/* The device check. */
+report.artifacts = {};
+report.deviceFailures = [];
+const pagesOf = (key) => {
+  const on = {};
+  for (const route of PUBLIC) for (const [name, device] of artifacts[route] || []) {
+    const k = key(name, device);
+    if (!k) continue;
+    on[k] = on[k] || {};
+    on[k][route] = (on[k][route] || 0) + 1;
+  }
+  return on;
+};
+const byName = pagesOf((name) => name);
+for (const [name, on] of Object.entries(byName)) {
+  report.artifacts[name] = Object.entries(on).map(([r, n]) => (n > 1 ? `${r} x${n}` : r)).join(', ');
+  if (Object.keys(on).length > 1 || Object.values(on).some((n) => n > 1)) report.deviceFailures.push(`component ${name}: ${report.artifacts[name]}`);
+}
+const byDevice = pagesOf((name, device) => (device && device !== 'browser frame' ? device : null));
+for (const [device, on] of Object.entries(byDevice)) {
+  if (Object.keys(on).length > 1 || Object.values(on).some((n) => n > 1))
+    report.deviceFailures.push(`device ${device}: ${Object.entries(on).map(([r, n]) => `${r} x${n}`).join(', ')}`);
 }
 report.consoleErrors = errors;
 fs.writeFileSync(path.join(OUT, 'checks.json'), JSON.stringify(report, null, 2));

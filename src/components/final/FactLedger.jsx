@@ -24,7 +24,7 @@ export default function FactLedger() {
   const ref = useRef(null);
   useCountOnLoad(ref, '.fl2__n');
   return (
-    <dl className="fl2" ref={ref}>
+    <dl className="fl2" ref={ref} data-artifact="FactLedger" data-device="ledger">
       {CELLS.map(({ pre, n, label }) => (
         <div className="fl2__cell" key={label}>
           <dt className="fl2__label">{label}</dt>

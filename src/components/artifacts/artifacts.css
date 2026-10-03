@@ -1,0 +1,889 @@
+/* ==========================================================================
+   THE ARTIFACTS (the final artifacts pass, 2026-10-03, the founder). Four
+   looping objects, one per section: CostScenes (home), MarkEverywhere and
+   SearchToCall (/services), WeekStrip (About). The loop is loop.js.
+
+   One language for all four: the site's faces, 1px steel hairlines, 6px
+   radii, the palette, no icons, no illustrations. Every position is a
+   transform written from the timeline, every reveal a clip-path or a
+   scale, so nothing animates layout and no opacity starts below 1
+   (BUILD-LAW Motion). STEEL-LIFT, NOT STEEL, for text on the dark grounds:
+   steel is 2.4:1 there and fails 4.5:1.
+   ========================================================================== */
+
+/* ---- Shared ------------------------------------------------------------ */
+.cs-y {
+  color: var(--c-accent-text-dark); /* 9.46:1 on the dark grounds */
+}
+
+.cs-caret {
+  display: inline-block;
+  width: 1px;
+  height: 16px;
+  margin-left: 2px;
+  vertical-align: middle;
+  background: var(--c-bone);
+}
+
+/* ==== HOME: THE FOUR SCENES (CostScenes.jsx) ============================ */
+.cs__body {
+  display: grid;
+  gap: var(--s-xl);
+}
+
+@media (min-width: 1024px) {
+  .cs__body {
+    grid-template-columns: 560px minmax(0, 1fr);
+    gap: var(--s-2xl);
+    align-items: center;
+  }
+}
+
+.cs-panel {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  clip-path: inset(0 round 6px);
+  border: 1px solid var(--c-steel);
+  border-radius: 6px;
+  background: var(--c-ground-mid);
+  color: var(--c-bone);
+}
+
+@media (min-width: 1024px) {
+  .cs-panel {
+    width: 560px;
+    height: 400px;
+  }
+}
+
+.cs-slot {
+  position: absolute;
+  inset: 0;
+  padding: var(--s-md);
+}
+
+@media (min-width: 768px) {
+  .cs-slot {
+    padding: var(--s-lg);
+  }
+}
+
+.cs-s {
+  position: relative;
+  height: 100%;
+}
+
+/* The call and the sign stand at the panel's middle; the search and the
+   ledger read from the top. */
+.cs-missed,
+.cs-name {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Scene 1: the search. */
+.cs-field,
+.sc__field {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin: 0;
+  padding: 0 12px;
+  border: 1px solid var(--c-steel);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 20px;
+  white-space: nowrap;
+  color: var(--c-bone); /* 16.4:1 */
+}
+
+.cs-results {
+  display: grid;
+  gap: 4px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 1024px) {
+  .cs-results {
+    gap: var(--s-sm);
+    margin-top: var(--s-md);
+  }
+}
+
+.cs-res {
+  display: flex;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+@media (min-width: 1024px) {
+  .cs-res {
+    padding: 8px 0;
+  }
+}
+
+.cs-res__n {
+  flex: none;
+  width: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 20px;
+  color: var(--c-steel-lift); /* 7.6:1 */
+}
+
+.cs-res__w {
+  display: grid;
+}
+
+.cs-res__t {
+  font-family: var(--font-offer);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-bone);
+}
+
+.cs-res__t.cs-y {
+  color: var(--c-accent-text-dark);
+}
+
+.cs-res__d {
+  font-family: var(--font-offer);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--c-steel-lift);
+}
+
+/* Scene 2: the ledger. */
+.cs-ledger {
+  margin: 0;
+}
+
+.cs-led {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-md);
+  padding: 14px 0;
+  border-bottom: 1px solid var(--c-steel);
+}
+
+@media (min-width: 1024px) {
+  .cs-led {
+    padding: 22px 0;
+  }
+}
+
+.cs-led dt {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--c-steel-lift);
+}
+
+.cs-led dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 28px;
+  line-height: 32px;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-bone);
+}
+
+.cs-q {
+  display: inline-block;
+  color: var(--c-accent-text-dark);
+}
+
+.cs-note,
+.wk__cap,
+.sc__cap,
+.me__cap {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+}
+
+.cs-note {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  color: var(--c-steel-lift);
+}
+
+/* Scene 3: the missed call. */
+.cs-call {
+  display: grid;
+  gap: 6px;
+  padding: var(--s-md);
+  border: 1px solid var(--c-steel);
+  border-radius: 6px;
+  background: var(--c-lit-raised);
+}
+
+.cs-call__k {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--c-steel-lift); /* 5.3:1 on lit-raised */
+}
+
+.cs-call__n {
+  font-family: var(--font-offer);
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--c-bone);
+}
+
+.cs-call__b {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-family: var(--font-offer);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-steel-lift);
+}
+
+/* Greyed: the number takes the secondary ink, a state, not a fade. */
+.cs-call--missed .cs-call__n {
+  color: var(--c-steel-lift);
+}
+
+.cs-log {
+  margin: var(--s-md) 0 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--c-steel-lift);
+}
+
+.cs-log--y {
+  margin-top: var(--s-sm);
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-accent-text-dark);
+}
+
+/* Scene 4: no name on the work. */
+.cs-sign {
+  height: 56px;
+  border: 1px solid var(--c-steel);
+  border-radius: 6px;
+  background: var(--c-base);
+}
+
+.cs-receipt {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--s-sm);
+  margin: var(--s-xl) 0 0;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-steel-lift);
+}
+
+.cs-blank {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 32px;
+}
+
+.cs-blank__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--c-bone);
+  transform-origin: 0 50%;
+}
+
+.cs-blank__mask {
+  position: absolute;
+  right: 0;
+  bottom: 4px;
+  display: block;
+  overflow: hidden;
+  clip-path: inset(0);
+}
+
+.cs-nobody {
+  display: block;
+  font-family: var(--font-offer);
+  font-size: 20px;
+  line-height: 26px;
+}
+
+/* The headlines. */
+.cs__rows {
+  display: grid;
+  gap: var(--s-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs__t {
+  margin: 0;
+}
+
+.cs__btn {
+  display: block;
+  min-height: 48px;
+  margin: 0;
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-quiet);
+  font-size: 32px;
+  line-height: 1.15;
+  font-weight: var(--t-weight-quiet);
+  text-align: left;
+  color: var(--c-steel-lift); /* 7.6:1 on the dark ground */
+  cursor: pointer;
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.cs__row[data-on='true'] .cs__btn {
+  color: var(--c-bone); /* 16.4:1 */
+}
+
+.cs__btn:active {
+  transform: scale(0.97);
+}
+
+.cs__btn:focus-visible {
+  outline: var(--focus-ring) solid var(--c-focus);
+  outline-offset: var(--focus-offset);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cs__btn:hover {
+    color: var(--c-bone);
+  }
+}
+
+.cs__b {
+  max-width: 46ch;
+  margin: var(--s-xs) 0 0;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-steel-lift);
+  text-wrap: pretty;
+}
+
+/* ==== SERVICES, BRANDING: ONE MARK, EVERYWHERE (MarkEverywhere.jsx) ===== */
+@font-face {
+  font-family: 'CCP Sora';
+  src: url('/fonts/client/sora-400-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* The cream band: Branding is the first discipline and its section is
+   dark, so the artifact carries its own cream ground, as the identity
+   sheet did. */
+.me {
+  display: grid;
+  gap: var(--s-lg);
+  margin: 0;
+  padding: var(--s-md);
+  border-radius: 8px;
+  background: var(--c-cream);
+}
+
+.me__main,
+.me__side {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-width: 0;
+}
+
+/* From 1024: 60 / 40, and the photograph runs the stage's full height
+   (the two columns share their rows: stage and photograph, then the two
+   captions). */
+@media (min-width: 1024px) {
+  .me {
+    grid-template-columns: 60fr 40fr;
+    grid-template-rows: auto auto;
+    column-gap: var(--s-lg);
+    row-gap: 12px;
+  }
+
+  .me__main,
+  .me__side {
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    gap: 0;
+  }
+}
+
+.me__stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  clip-path: inset(0 round 6px);
+  border: 1px solid var(--c-steel);
+  border-radius: 6px;
+  background: var(--c-cream);
+}
+
+.me__comp {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.me__s {
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+
+.me__sign {
+  display: flex;
+  align-items: center;
+  padding-left: 68px;
+  background: #232735;
+}
+
+.me__stage--n .me__sign {
+  padding-left: 44px;
+}
+
+.me__sign-w {
+  font-family: 'CCP Sora', var(--font-offer);
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.08em;
+  color: #fff; /* 15.2:1 on the sign */
+}
+
+.me__card,
+.me__letter,
+.me__env {
+  border: 1px solid rgb(23 24 26 / 15%);
+  background: #fff;
+}
+
+/* The card's 2px rule along its foot, in the client's teal. */
+.me__card {
+  border-bottom: 2px solid #1ba1a8;
+}
+
+.me__card-w {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  font-family: 'CCP Sora', var(--font-offer);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.06em;
+  color: #2e3242; /* 12.6:1 on white */
+}
+
+.me__stage--n .me__card-w {
+  left: 10px;
+  right: 60px;
+  bottom: 8px;
+}
+
+.me__letter-w {
+  position: absolute;
+  left: 14px;
+  top: 70px;
+  display: grid;
+  font-family: 'CCP Sora', var(--font-offer);
+  font-size: 11px;
+  line-height: 16px;
+  white-space: nowrap;
+  color: var(--c-steel); /* 7.6:1 on white */
+}
+
+.me__stage--n .me__letter-w {
+  left: 8px;
+  top: 40px;
+}
+
+.me__mark {
+  position: absolute;
+  display: block;
+  transform-origin: 0 0;
+}
+
+.me__mark--white {
+  filter: brightness(0) invert(1);
+}
+
+.me__strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  height: 2px;
+}
+
+.me__strip span {
+  flex: 1;
+  transform-origin: 0 50%;
+}
+
+.me__cap {
+  color: var(--c-steel); /* 7.2:1 on cream */
+}
+
+.me__photo {
+  display: block;
+  overflow: hidden;
+  border-radius: 6px;
+  aspect-ratio: 1;
+}
+
+@media (min-width: 1024px) {
+  .me__photo {
+    aspect-ratio: auto;
+  }
+}
+
+.me__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==== SERVICES, MARKETING: FROM SEARCH TO CALL (SearchToCall.jsx) ====== */
+.sc {
+  display: grid;
+  gap: var(--s-md);
+  margin: 0;
+}
+
+.sc__stage {
+  display: grid;
+  grid-auto-rows: 280px;
+  overflow: hidden;
+  clip-path: inset(0 round 6px);
+  border: 1px solid var(--c-steel);
+  border-radius: 6px;
+  background: var(--c-ground-mid);
+}
+
+@media (min-width: 1024px) {
+  .sc__stage {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: 380px;
+  }
+}
+
+.sc__f {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  padding: var(--s-md);
+}
+
+.sc__f + .sc__f {
+  border-top: 1px solid var(--c-steel);
+}
+
+@media (min-width: 1024px) {
+  .sc__f {
+    padding: 20px;
+  }
+
+  .sc__f + .sc__f {
+    border-top: 0;
+    border-left: 1px solid var(--c-steel);
+  }
+}
+
+.sc__k {
+  margin: 0 0 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: var(--c-steel-lift);
+}
+
+.sc__res {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sc__row {
+  display: grid;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+@media (min-width: 1024px) {
+  .sc__res {
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .sc__row {
+    padding: 8px;
+  }
+}
+
+.sc__row--flash {
+  background: rgb(240 179 35 / 10%);
+}
+
+.sc__tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--c-accent-text-dark);
+}
+
+.sc__t {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--c-bone);
+}
+
+.sc__t--other {
+  color: var(--c-steel-lift);
+}
+
+.sc__u {
+  font-family: var(--font-offer);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--c-steel-lift);
+}
+
+.sc__d {
+  font-family: var(--font-offer);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--c-steel-lift);
+}
+
+.sc__cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--c-bone);
+}
+
+.sc__glide {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 10px;
+  white-space: nowrap;
+}
+
+.sc__clip {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  min-height: 0;
+  overflow: hidden;
+  clip-path: inset(0);
+}
+
+.sc__shot {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 390 / 590;
+  overflow: hidden;
+  border: 1px solid var(--c-steel);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.sc__shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.sc__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.sc__ring rect {
+  fill: none;
+  stroke: var(--c-accent-ground);
+  stroke-width: 3px;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 100;
+}
+
+.sc__clip--c {
+  align-items: center;
+}
+
+.sc__call {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  max-width: 300px;
+  padding: var(--s-md);
+  border: 1px solid var(--c-steel);
+  border-radius: 6px;
+  background: var(--c-lit-raised);
+}
+
+.sc__call-k,
+.sc__call-s {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--c-steel-lift); /* 5.3:1 on lit-raised */
+}
+
+.sc__call-s {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sc__call-n {
+  font-family: var(--font-offer);
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--c-bone);
+}
+
+.sc__call-a {
+  font-family: var(--font-offer);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-accent-text-dark);
+}
+
+.sc__cap {
+  max-width: 90ch;
+  color: var(--c-steel-lift); /* 7.6:1 */
+}
+
+/* ==== ABOUT: FOUR BUSINESS DAYS (WeekStrip.jsx) ========================= */
+.wk__days {
+  display: grid;
+  gap: var(--s-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .wk__days {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+.wk__cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 180px;
+  padding: var(--s-md);
+  overflow: hidden;
+  clip-path: inset(0 round 6px);
+  border: 1px solid var(--c-steel);
+  border-radius: 6px;
+}
+
+.wk__bar,
+.wk__fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: var(--c-accent-ground);
+}
+
+.wk__bar {
+  height: 4px;
+  transform-origin: 0 50%;
+}
+
+.wk__fill {
+  bottom: 0;
+  transform-origin: 50% 0;
+}
+
+.wk__d {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: var(--c-steel-lift); /* 7.6:1 */
+}
+
+.wk__cell--lit .wk__d {
+  color: var(--c-base); /* 10.1:1 on yellow */
+}
+
+.wk__mask {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  clip-path: inset(0);
+}
+
+.wk__line {
+  display: block;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-bone);
+}
+
+.wk__cell--live .wk__line {
+  font-family: var(--font-quiet);
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-bone); /* until the yellow lands: it is clipped out then,
+                           and a pair it ever paints is one that passes */
+}
+
+.wk__cell--lit .wk__line {
+  color: var(--c-base); /* 10.1:1 on yellow */
+}
+
+.wk__cap {
+  margin-top: var(--s-lg);
+  color: var(--c-steel-lift);
+}

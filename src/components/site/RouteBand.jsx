@@ -143,6 +143,7 @@ export default function RouteBand({ id, heading, lines, sectionId = null, stops 
 
   return (
     <section
+      data-artifact="RouteBand"
       className="vt route-band route-band--open"
       id={sectionId || undefined}
       aria-labelledby={id}

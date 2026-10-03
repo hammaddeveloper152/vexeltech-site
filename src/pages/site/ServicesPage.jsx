@@ -55,7 +55,7 @@ export default function ServicesPage() {
       path="/services"
       /* No in-page form, 2026-10-01 (the storytelling pass). */
       footerForm={false}
-      description="Website design, Google Business Profile and Google Ads management, Meta ads, missed-call text-back and booking automation for small businesses across the US."
+      description="Website design, Google Business Profile and Google Ads management, Meta ads, missed-call text-back and booking automation for small businesses."
     >
       {/* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Services, and Metadata).
           The page's one highlight is "small business", the founder's pick
