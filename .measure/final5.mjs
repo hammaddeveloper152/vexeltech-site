@@ -10,16 +10,17 @@
                  load or at any captured frame
      rows        home's scenes: a headline click jumps to its scene
 
-   Usage: node .measure/final5.mjs [base]   (default http://localhost:4173) */
+   Usage: node .measure/final5.mjs [base] [folder]   (default http://localhost:4173, final5) */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import puppeteer from 'puppeteer';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const OUT = path.join(HERE, 'out', 'final5');
-fs.mkdirSync(OUT, { recursive: true });
 const BASE = process.argv[2] || 'http://localhost:4173';
+/* The folder under out/ (final6 since the founder's corrections). */
+const OUT = path.join(HERE, 'out', process.argv[3] || 'final5');
+fs.mkdirSync(OUT, { recursive: true });
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const ARTIFACTS = [

@@ -85,13 +85,17 @@
          OUT 2026-09-25 with the note: the About rebuild no longer names a
          founder, and structured data states nothing the page does not.
          `sameAs` is ABSENT because no social URL is set (content/socials.js):
-         add them here when they land. -->
+         add them here when they land.
+
+         2026-10-03 (the founder, final6, "open gate"): the description is
+         the home meta description, and areaServed is US, GB, IE, EU and AU
+         on both nodes, in place of the United States alone. -->
     <script type="application/ld+json">
       {
         "@context":"https://schema.org",
         "@graph":[
-          {"@type":"Organization","@id":"https://vexeltechsolutions.com/#organization","name":"VexelTech Solutions","url":"https://vexeltechsolutions.com/","description":"VexelTech Solutions is a technology company that builds the website, the marketing and the automation behind US local service businesses, at flat prices from $299.","foundingDate":"2026","areaServed":{"@type":"Country","name":"United States"},"email":"info@vexeltechsolutions.com","address":{"@type":"PostalAddress","streetAddress":"6619 Elks Trce","addressLocality":"Richmond","addressRegion":"TX","postalCode":"77406","addressCountry":"US"}},
-          {"@type":"ProfessionalService","@id":"https://vexeltechsolutions.com/#service","name":"VexelTech Solutions","parentOrganization":{"@id":"https://vexeltechsolutions.com/#organization"},"areaServed":{"@type":"Country","name":"United States"},"priceRange":"$$","hasOfferCatalog":{"@type":"OfferCatalog","name":"Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Brand Identity Design","url":"https://vexeltechsolutions.com/services#branding"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Website Design and Development","url":"https://vexeltechsolutions.com/services#websites"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Digital Marketing","url":"https://vexeltechsolutions.com/services#marketing"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Marketing Automation","url":"https://vexeltechsolutions.com/services#automation"}}]}},
+          {"@type":"Organization","@id":"https://vexeltechsolutions.com/#organization","name":"VexelTech Solutions","url":"https://vexeltechsolutions.com/","description":"Website design, branding, local SEO, ads and automation for small businesses. Websites $700 flat, live in four business days.","foundingDate":"2026","areaServed":["US","GB","IE","EU","AU"],"email":"info@vexeltechsolutions.com","address":{"@type":"PostalAddress","streetAddress":"6619 Elks Trce","addressLocality":"Richmond","addressRegion":"TX","postalCode":"77406","addressCountry":"US"}},
+          {"@type":"ProfessionalService","@id":"https://vexeltechsolutions.com/#service","name":"VexelTech Solutions","parentOrganization":{"@id":"https://vexeltechsolutions.com/#organization"},"areaServed":["US","GB","IE","EU","AU"],"priceRange":"$$","hasOfferCatalog":{"@type":"OfferCatalog","name":"Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Brand Identity Design","url":"https://vexeltechsolutions.com/services#branding"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Website Design and Development","url":"https://vexeltechsolutions.com/services#websites"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Digital Marketing","url":"https://vexeltechsolutions.com/services#marketing"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Marketing Automation","url":"https://vexeltechsolutions.com/services#automation"}}]}},
           {"@type":"WebSite","@id":"https://vexeltechsolutions.com/#website","url":"https://vexeltechsolutions.com/","name":"VexelTech Solutions","publisher":{"@id":"https://vexeltechsolutions.com/#organization"}}
         ]
       }

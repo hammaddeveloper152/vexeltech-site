@@ -464,7 +464,7 @@
 }
 
 .me__stage--n .me__sign {
-  padding-left: 44px;
+  padding-left: 40px;
 }
 
 .me__sign-w {
@@ -475,11 +475,15 @@
   color: #fff; /* 15.2:1 on the sign */
 }
 
+/* Paper on cream (final6): white, a 1px rule at 8% black and a soft drop,
+   so the three paper surfaces read as paper. The sign band is a sign and
+   takes neither. */
 .me__card,
 .me__letter,
 .me__env {
-  border: 1px solid rgb(23 24 26 / 15%);
+  border: 1px solid rgb(0 0 0 / 8%);
   background: #fff;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
 }
 
 /* The card's 2px rule along its foot, in the client's teal. */
@@ -507,8 +511,8 @@
 
 .me__letter-w {
   position: absolute;
-  left: 14px;
-  top: 70px;
+  left: 20px;
+  top: 84px;
   display: grid;
   font-family: 'CCP Sora', var(--font-offer);
   font-size: 11px;
@@ -518,8 +522,8 @@
 }
 
 .me__stage--n .me__letter-w {
-  left: 8px;
-  top: 40px;
+  left: 7px;
+  top: 38px;
 }
 
 .me__mark {
@@ -534,11 +538,8 @@
 
 .me__strip {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
   display: flex;
-  height: 2px;
+  height: 4px;
 }
 
 .me__strip span {

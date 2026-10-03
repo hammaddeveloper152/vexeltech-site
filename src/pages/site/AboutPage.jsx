@@ -36,7 +36,7 @@ const QUESTIONS = [
   {
     id: 'us',
     q: 'Do you work outside the US?',
-    a: 'No. The copy, the ad targeting and the hours are built for US customers.',
+    a: 'Yes. Most of our clients are in the US. We work with the UK, Europe and Australia on the same terms, with calls set to your hours.',
   },
   {
     id: 'industry',

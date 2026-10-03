@@ -11,15 +11,16 @@ import './artifacts.css';
    under it.
 
    THE STAGE opens on Christal Clear's main mark, centred at 160px. After 1s
-   it shrinks to the top-left corner while the surfaces the client actually
-   received land around it, 180ms apart, each with the mark already on it:
-   the mark on each is a copy that travels from the centre. THE SURFACES ARE
+   it shrinks onto the letterhead while the surfaces the client actually
+   received land in their slots, 180ms apart, each with the mark already on
+   it: the mark on each other surface is a copy that travels from the
+   centre. THE SURFACES ARE
    THE DELIVERED ONES (the founder, 2026-10-03, rewriting BUILD-LAW's Real
    over drawn: a scene may show a mark being applied, never work as
    delivered that was not): the sign band, the business card, the
    letterhead and the envelope. The brief's app tile, browser tab and social
    avatar came out with that ruling. Then the five palette values draw as a
-   2px strip along the stage's foot. Hold, rest, loop (loop.js).
+   4px strip on the bottom margin. Hold, rest, loop (loop.js).
 
    TWO COMPOSITIONS, NOT ONE SCALED (BUILD-LAW Type floor: text in a drawing
    stays at 11px or more at 390). A 640 x 480 stage scaled to a phone would
@@ -34,34 +35,52 @@ import './artifacts.css';
 const RATIO = 504.38 / 408.54;
 const PALETTE = ['#2E3242', '#232735', '#1BA1A8', '#9BF9FE', '#F0F0F0'];
 
-/* x, y, w, h of each surface; m: the mark's box inside the stage; e: where
-   the surface enters from (an offset that puts it outside the stage). */
+/* THE SLOTS (the founder's correction, 2026-10-03, final6): the surfaces
+   stand in fixed slots on a 24px inner margin, not scattered.
+
+     letterhead   200 x 283 (A4), top-left
+     sign band    368 x 64 to its right, top-aligned
+     card         220 x 126 under the sign band, left-aligned with it
+     envelope     132 x 66 (DL) to the card's right, bottom-aligned with it
+     palette      a 4px strip margin to margin, on the bottom margin
+
+   x, y, w, h of each surface; m: the mark's box inside the stage; e: where
+   the surface enters from (an offset that puts it outside the stage). THE
+   MAIN MARK SHRINKS INTO THE LETTERHEAD: it is the letterhead's mark, so
+   the letterhead lands with it, and the copies travel to the other three
+   in the founder's order (sign band, card, envelope).
+
+   On a phone the stacked layout as built, in the same order, at 326 x 244. Its letterhead
+   moved up to the top-left corner the main mark used to hold, since the
+   main mark now lands on the letterhead. */
 const WIDE = {
   w: 640,
   h: 480,
   big: 160,
-  main: { x: 32, y: 32, s: 72 },
-  sign: { x: 300, y: 372, w: 300, h: 64, m: { x: 316, y: 380, s: 40 }, e: [0, 160] },
-  card: { x: 136, y: 56, w: 220, h: 126, m: { x: 150, y: 70, s: 40 }, e: [0, -220] },
-  letter: { x: 432, y: 40, w: 160, h: 226, m: { x: 446, y: 54, s: 32 }, e: [260, 0] },
-  env: { x: 48, y: 236, w: 220, h: 110, m: { x: 62, y: 286, s: 40 }, e: [-320, 0] },
+  letter: { x: 24, y: 24, w: 200, h: 283, m: { x: 44, y: 44, s: 40 }, e: [-260, 0] },
+  sign: { x: 248, y: 24, w: 368, h: 64, m: { x: 264, y: 32, s: 40 }, e: [0, -120] },
+  card: { x: 248, y: 112, w: 220, h: 126, m: { x: 262, y: 126, s: 40 }, e: [420, 0] },
+  env: { x: 484, y: 172, w: 132, h: 66, m: { x: 494, y: 196, s: 24 }, e: [180, 0] },
+  strip: { x: 24, y: 452, w: 592 },
 };
+/* 326 x 244: the stage's own size at 390, inside the cream panel's 16px
+   padding (it was drawn at 358 x 268, the content width, and clipped 32px
+   at 390; found in final6's frames). */
 const NARROW = {
-  w: 358,
-  h: 268,
-  big: 112,
-  main: { x: 12, y: 12, s: 40 },
-  sign: { x: 12, y: 222, w: 334, h: 36, m: { x: 22, y: 226, s: 24 }, e: [0, 80] },
-  card: { x: 132, y: 12, w: 214, h: 112, m: { x: 142, y: 20, s: 28 }, e: [0, -150] },
-  letter: { x: 12, y: 74, w: 104, h: 140, m: { x: 20, y: 82, s: 22 }, e: [-160, 0] },
-  env: { x: 132, y: 136, w: 150, h: 76, m: { x: 140, y: 172, s: 26 }, e: [260, 0] },
+  w: 326,
+  h: 244,
+  big: 104,
+  letter: { x: 12, y: 12, w: 96, h: 136, m: { x: 19, y: 19, s: 20 }, e: [-150, 0] },
+  sign: { x: 12, y: 196, w: 302, h: 32, m: { x: 20, y: 199, s: 21 }, e: [0, 80] },
+  card: { x: 120, y: 12, w: 194, h: 104, m: { x: 129, y: 19, s: 26 }, e: [240, 0] },
+  env: { x: 120, y: 124, w: 136, h: 64, m: { x: 128, y: 150, s: 24 }, e: [240, 0] },
+  strip: { x: 12, y: 234, w: 302 },
 };
-const ORDER = ['sign', 'card', 'letter', 'env'];
+const ORDER = ['letter', 'sign', 'card', 'env'];
 const T_MOVE = 1000;
-const T_LAND = 1100;
 const GAP = 180;
 const MOVE = 700;
-const T_STRIP = 2900;
+const T_STRIP = 2800;
 const TOTAL = 4600;
 
 const box = (b) => ({ left: b.x, top: b.y, width: b.w, height: b.h });
@@ -95,8 +114,7 @@ export default function MarkEverywhere() {
   }, []);
 
   const L = wide ? WIDE : NARROW;
-  const pMain = step(t, T_MOVE, MOVE);
-  const p = (name) => step(t, T_LAND + ORDER.indexOf(name) * GAP, MOVE);
+  const p = (name) => step(t, T_MOVE + ORDER.indexOf(name) * GAP, MOVE);
   const enter = (name) => {
     const [ex, ey] = L[name].e;
     const k = 1 - p(name);
@@ -122,7 +140,7 @@ export default function MarkEverywhere() {
             </div>
             <div className="me__s me__env" style={enter('env')} />
 
-            {ORDER.map((name) => (
+            {ORDER.filter((name) => name !== 'letter').map((name) => (
               <img
                 key={name}
                 className={`me__mark${name === 'sign' ? ' me__mark--white' : ''}`}
@@ -131,18 +149,15 @@ export default function MarkEverywhere() {
                 style={markAt(L, L[name].m, p(name))}
               />
             ))}
-            <img
-              className="me__mark me__mark--main"
-              src="/brand/ccp-main.svg"
-              alt=""
-              style={markAt(L, { x: L.main.x, y: L.main.y, s: L.main.s }, pMain)}
-            />
-          </div>
-          <span className="me__strip">
+            {/* The main mark: opens centred and large, lands on the
+                letterhead. */}
+            <img className="me__mark me__mark--main" src="/brand/ccp-main.svg" alt="" style={markAt(L, L.letter.m, p('letter'))} />
+            <span className="me__strip" style={{ left: L.strip.x, top: L.strip.y, width: L.strip.w }}>
             {PALETTE.map((hex, j) => (
               <span key={hex} style={{ background: hex, transform: `scaleX(${step(t, T_STRIP + j * 120, 400)})` }} />
             ))}
-          </span>
+            </span>
+          </div>
         </div>
         <figcaption className="me__cap">
           Christal Clear Properties. Identity, stationery, signage. Real estate, St. Simons Island GA.
