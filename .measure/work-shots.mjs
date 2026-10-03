@@ -75,9 +75,9 @@ for (const w of WORK) {
    Recent work. They replaced Zions Caregivers' second screen.
 
    2026-10-03 (the final artifacts pass): Zions Caregivers' first screen
-   takes Baseline's place in the band, because Baseline's phone capture
-   moved to the Marketing band's search-to-call stage and a capture appears
-   once. `phones:<slug>` captures one phone only. */
+   took Baseline's place in the band for one pass; since final7 the band is
+   Baseline, OneSix and ARTIORA again and the Zions phone file is deleted
+   (this list can recapture it). `phones:<slug>` captures one phone only. */
 const PHONES = [
   ['baseline-books', 'https://www.baseline-books.com/'],
   ['artiora', 'https://artluxuryvilla.com/'],

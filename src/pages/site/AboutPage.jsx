@@ -3,6 +3,7 @@ import Shell from './Shell.jsx';
 import Faq from '../../components/home/Faq.jsx';
 import OriginStory from '../../components/story/OriginStory.jsx';
 import WeekStrip from '../../components/artifacts/WeekStrip.jsx';
+import OneTeam from '../../components/artifacts/OneTeam.jsx';
 import FitColumns from '../../components/story/FitColumns.jsx';
 import TermsCard from '../../components/story/TermsCard.jsx';
 import { CallBand } from './parts.jsx';
@@ -13,7 +14,8 @@ import '../../styles/light.css';
    2026-10-01, the founder):
 
      the statement                the Monigue line, its words rising on load
-     Where we come from           OriginStory: one paragraph, the November capture
+     One team (dark)              OneTeam: four lanes into one
+     Where we come from           OriginStory: one paragraph, the years over it
      Four business days (dark)    WeekStrip: the week, Monday to live
      Who we are for               FitColumns: two columns, a rule between
      How we work with you         TermsCard: a white sheet, four clauses
@@ -94,9 +96,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* THE BANDS, the final artifacts pass (2026-10-03, the founder):
-          cream, cream, dark, then cream to the close. The side labels number
-          01 to 06 in this order (Marginalia). */}
+      {/* THE BANDS, final7 (2026-10-03, the founder): cream, dark, cream,
+          dark, then cream to the close. Dark bands 96 above and below, cream
+          bands 80 (about-bands.css). The side labels number 01 to 07 in this
+          order (Marginalia). */}
+      <OneTeam />
       <OriginStory />
       <WeekStrip />
       {/* Who we are for and How we work with you, each at the full width

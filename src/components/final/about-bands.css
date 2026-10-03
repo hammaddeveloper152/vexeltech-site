@@ -24,3 +24,17 @@ main#main section.vt:has(+ section.ab-dark) {
 html[data-ground='light'] .ab-dark .marg {
   color: var(--c-steel-lift); /* 7.6:1 on the base */
 }
+
+/* ---- FINAL7 (2026-10-03, the founder): the page alternates evenly. Dark
+   bands 96 above and below (above); every cream band after the statement 80
+   above and below, the statement 80 below. These out-rank THE VERTICAL
+   RHYTHM's section feet (tokens.css) on this page only: the light ground is
+   About's alone. Two cream bands meeting sit 160 apart, the rhythm's cap. */
+html[data-ground='light'] main#main section.vt:not(.ab-dark):not(.ab3-hero) {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+html[data-ground='light'] main#main section.vt.ab3-hero {
+  padding-bottom: 80px;
+}

@@ -17,13 +17,13 @@ import { prefersReduced } from '../site/useOnce.js';
 
    `seek(ms)` moves the playhead; under reduced motion it moves it too, so
    an artifact with chapters (home's four scenes) can show each chapter's
-   own held frame. `first` is where the first play starts (home's scenes
+   own held frame. `stop()` ends the loop on its final frame. `first` is where the first play starts (home's scenes
    start past their slide, since scene 1 is already on the panel). */
 export const REST = 5000;
 
 export function useLoop(ref, total, { start = total, first = 0 } = {}) {
   const [t, setT] = useState(start);
-  const clock = useRef({ base: 0, at: start, live: false, raf: 0, seen: false });
+  const clock = useRef({ base: 0, at: start, live: false, raf: 0, seen: false, stopped: false });
 
   useEffect(() => {
     const el = ref.current;
@@ -37,7 +37,7 @@ export function useLoop(ref, total, { start = total, first = 0 } = {}) {
       c.raf = requestAnimationFrame(tick);
     };
     const play = () => {
-      if (c.live) return;
+      if (c.live || c.stopped) return;
       c.live = true;
       /* The first time in view, from the top; after a pause, from where it
          stopped. */
@@ -55,6 +55,7 @@ export function useLoop(ref, total, { start = total, first = 0 } = {}) {
     const io = new IntersectionObserver((es) => (es[0].isIntersecting ? play() : pause()), { threshold: 0.25 });
     io.observe(el);
     c.play = play;
+    c.pause = pause;
     return () => {
       io.disconnect();
       pause();
@@ -70,7 +71,15 @@ export function useLoop(ref, total, { start = total, first = 0 } = {}) {
     c.base = performance.now() - ms;
     setT(Math.min(ms, total));
   };
-  return [t, seek];
+  /* Stop for good on the final frame (the brand you type: the visitor's
+     own name takes over the stage). */
+  const stop = () => {
+    const c = clock.current;
+    c.stopped = true;
+    if (c.pause) c.pause();
+    setT(total);
+  };
+  return [t, seek, stop];
 }
 
 /* The reveal curve, cubic-bezier(.23, 1, .32, 1), solved for x. */

@@ -24,13 +24,15 @@ import { FIGURES, money } from './pricing.js';
    site are different images under BUILD-LAW rule 0).
 
    `proof` (the final pass, 2026-10-03): the band the other three carry
-   above their lists, one object each: 'brand' (artifacts/MarkEverywhere,
-   Christal Clear's mark on the surfaces it was delivered on), 'ads'
-   (artifacts/SearchToCall, a search to a call, on Baseline's site) and
-   'textback' (final/TextBackBand, the missed-call thread), since the final
-   artifacts pass, 2026-10-03. The Websites phones lead with Zions
-   Caregivers since that pass: Baseline's phone capture moved to the
-   Marketing stage, and a capture appears once (BUILD-LAW rule 0). */
+   above their lists, one object each: 'brand' (artifacts/BrandYouType,
+   the visitor's own name made into a brand), 'ads' (artifacts/SearchToCall,
+   a search to a call for "Your business") and 'textback'
+   (final/TextBackBand, the missed-call thread). Since final7 (2026-10-03)
+   neither stage carries a client name or capture, so Baseline's phone is
+   back in the Websites band, first. The founder left the third phone to
+   us: OneSix stays and Zions Caregivers came out, because OneSix's first
+   screen is the cleaner capture and Zions' is mostly two photographed
+   faces. */
 export const DISCIPLINES = [
   {
     id: 'branding',
@@ -66,9 +68,9 @@ export const DISCIPLINES = [
     terms: `${money(FIGURES.website)}, one price. Four business days from the day we have your content. Domain, hosting and code in your name.`,
     image: null,
     phones: [
-      { src: '/work/zions-caregivers-phone.jpg', alt: 'The Zions Caregivers website on a phone.' },
-      { src: '/work/artiora-phone.jpg', alt: 'The ARTIORA Luxury Villa website on a phone.' },
+      { src: '/work/baseline-books-phone.jpg', alt: 'The Baseline Bookkeeping website on a phone.' },
       { src: '/work/onesix-phone.jpg', alt: 'The OneSix website on a phone.' },
+      { src: '/work/artiora-phone.jpg', alt: 'The ARTIORA Luxury Villa website on a phone.' },
     ],
     fit: 'You have no site, a site nobody finds, or a site that gets traffic and no enquiries.',
     call: { label: 'Get a custom quote', primary: true },

@@ -32,11 +32,10 @@
      - THE DEVICE CHECK (the final artifacts pass, 2026-10-03, the
        founder): every artifact component carries `data-artifact` (its
        name) and, where it is one of the named devices, `data-device`
-       (ledger, phone silhouette, stage, week strip, browser frame). The
-       check lists each component and the page it renders on, and FAILS
-       if a component or a device renders on more than one page, or twice
-       on one page. The browser frame is excepted (BUILD-LAW rule 0, the
-       founder's amendment of 2026-10-03). The brief's "big-line list" and
+       (ledger, phone silhouette, stage, week strip). The check lists each
+       component and the page it renders on, and FAILS if a component or a
+       device renders on more than one page, or twice on one page. (The
+       browser frame was excepted; it is deleted since final7.) The brief's "big-line list" and
        "map" have no component: the big lines went with KineticCosts and
        AroundLines, and the map was never built.
 

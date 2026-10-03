@@ -184,43 +184,23 @@
    One column, 760px at most; a 1px rule above the first and below the
    last; 40px between the stories; the label mono 11px deep amber, the
    paragraph the display face 26px / 1.35 in asphalt. */
-/* Final pass 2: the paragraphs in a left column at most 560px, the
-   November capture at the right from 1024; stacked below. */
-.os__cols {
-  display: grid;
-  gap: var(--s-2xl);
-}
-
-@media (min-width: 1024px) {
-  .os__cols {
-    grid-template-columns: minmax(0, 560px) minmax(0, 1fr);
-    column-gap: var(--s-3xl);
-    align-items: start;
-  }
-}
-
-.os__proof {
-  margin: 0;
-}
-
-.os__cap {
-  margin-top: var(--s-md);
+/* Final7 (2026-10-03): one paragraph, 26px, at most 640px, no image; the
+   years over it in mono 11px deep amber. */
+.os__k {
+  margin: 0 0 var(--s-md);
   font-family: var(--font-mono);
   font-size: 11px;
   line-height: 16px;
-  letter-spacing: 0.02em;
-  color: var(--c-steel); /* 7.2:1 on cream */
+  letter-spacing: 0.04em;
+  color: var(--c-accent-text-light); /* 4.82:1 on cream */
 }
 
-/* The final artifacts pass (2026-10-03): the three stories are one
-   measured paragraph, 22px, at most 560px. The labels and the rules came
-   off with the list. */
 .os__p {
-  max-width: 560px;
+  max-width: 640px;
   margin: 0;
   font-family: var(--font-quiet);
-  font-size: 22px;
-  line-height: 1.4;
+  font-size: 26px;
+  line-height: 1.35;
   font-weight: var(--t-weight-quiet);
   color: var(--c-asphalt); /* 15.75:1 on cream */
   text-wrap: pretty;

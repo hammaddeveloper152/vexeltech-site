@@ -174,7 +174,8 @@ out.reducedThread = await p.evaluate(() => [...document.querySelectorAll('.tb__m
 await p.close();
 
 /* ---- rule 0 ---- */
-const FILES = ['/proof/ads-nov-2025.png', '/brand/ccp-main.svg', '/brand/ccp-signage.jpg'];
+/* final7: the /brand files and the November capture are deleted. */
+const FILES = [];
 const work = ['baseline-books', 'artiora', 'onesix', 'zions-caregivers', 'altavia', 'edgeq'];
 const counts = {};
 for (const r of ['/', '/services', '/pricing', '/about-us', '/contact-us']) {
@@ -195,7 +196,7 @@ for (const r of ['/', '/services', '/pricing', '/about-us', '/contact-us']) {
   await p.close();
 }
 out.rule0 = Object.fromEntries(
-  [...FILES, ...work.map((w) => `/work/${w}.jpg`), ...['baseline-books', 'artiora', 'onesix', 'zions-caregivers'].map((w) => `/work/${w}-phone.jpg`)].map((f) => [f, (counts[f] || []).join(',') || 'nowhere'])
+  [...FILES, ...work.map((w) => `/work/${w}.jpg`), ...['baseline-books', 'artiora', 'onesix'].map((w) => `/work/${w}-phone.jpg`)].map((f) => [f, (counts[f] || []).join(',') || 'nowhere'])
 );
 await b.close();
 console.log(JSON.stringify(out, null, 1));

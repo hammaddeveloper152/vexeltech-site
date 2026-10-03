@@ -25,8 +25,9 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const ARTIFACTS = [
   { name: 'CostScenes', route: '/', times: [700, 2600, 3900, 5000, 7400, 9600, 11900, 15000] },
-  { name: 'MarkEverywhere', route: '/services', times: [300, 1400, 1900, 3200, 4500] },
+  { name: 'BrandYouType', route: '/services', times: [600, 1300, 2000, 2400, 2800, 3600] },
   { name: 'SearchToCall', route: '/services', times: [900, 2600, 3500, 4600, 5400, 7700] },
+  { name: 'OneTeam', route: '/about-us', times: [400, 1200, 2200, 3000, 3700] },
   { name: 'WeekStrip', route: '/about-us', times: [600, 1500, 2900, 3500] },
 ];
 

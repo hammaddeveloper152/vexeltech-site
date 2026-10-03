@@ -1,5 +1,4 @@
 import React from "react";
-import BrowserFrame from "../final/BrowserFrame.jsx";
 import "./story.css";
 
 /* WHERE WE COME FROM, AS TYPE (the founder's six fixes, 2026-10-02). The
@@ -15,6 +14,11 @@ import "./story.css";
    are joined into one paragraph at 22px, at most 560px, every sentence
    kept in order; the labels (01 The ads, 02 The build, 03 The whole thing)
    came off with the list.
+
+   FINAL7 (2026-10-03, the founder): no image. The November capture and the
+   browser frame are deleted. The paragraph is 26px in the display face, at
+   most 640px, under one mono 11px line in deep amber, "2023, 2025, 2026"
+   (4.82:1 on cream). The years are the founder's.
 
    FINAL PASS 2 (2026-10-03): the year rail is deleted. The paragraphs stand
    in a left column at most 560px wide; the right column holds the first
@@ -32,23 +36,8 @@ export default function OriginStory() {
         <h2 className="st-h" id="os-h">
           Where we come from
         </h2>
-        <div className="os__cols">
-          <p className="os__p">{STORY}</p>
-          <figure className="os__proof">
-            <BrowserFrame
-              light
-              title="Google Ads. Nov 1 to Nov 30, 2025"
-              src="/proof/ads-nov-2025.png"
-              alt="Google Ads performance summary, November 1 to November 30, 2025: 418 clicks, 122.00 conversions, $10.13 average cost per click, $34.69 cost per conversion."
-              width={1166}
-              height={308}
-            />
-            <figcaption className="os__cap">
-              The first thing we ran. 418 clicks, 122 conversions, $34.69 per
-              conversion. Client name withheld.
-            </figcaption>
-          </figure>
-        </div>
+        <p className="os__k">2023, 2025, 2026</p>
+        <p className="os__p">{STORY}</p>
       </div>
     </section>
   );
