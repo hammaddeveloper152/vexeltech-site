@@ -33,9 +33,10 @@ const COLS = [
     id: 'not',
     head: 'Not a fit',
     rows: [
+      /* COPY V3.5, 2026-10-05. */
       'Agencies wanting white-label work.',
-      'Startups raising a round.',
       'Anyone who wants a retainer instead of a result.',
+      'Anyone who needs it yesterday. Four business days is the fastest honest answer.',
     ],
   },
 ];

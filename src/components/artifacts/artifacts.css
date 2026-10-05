@@ -411,7 +411,9 @@
   .by__panel {
     grid-template-columns: 36fr 64fr;
     gap: var(--s-xl);
-    height: 520px;
+    /* 680 since final9 (2026-10-05): the guideline sheet and the post, and
+       the delivery row, under the three surfaces. It was 520. */
+    height: 680px;
   }
 }
 
@@ -522,6 +524,38 @@
   letter-spacing: 0.02em;
 }
 
+/* The drawn mark (final9): a 2px stroke in A, a fill layer under the
+   initials, and the initials clipped by the square so they rise into it. */
+.by__mark--drawn {
+  position: relative;
+  overflow: hidden;
+  clip-path: inset(0 round 20px);
+}
+
+.by__mark-line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.by__mark-line rect {
+  fill: none;
+  stroke-width: 2px;
+  stroke-dasharray: 100;
+}
+
+.by__mark-fill {
+  position: absolute;
+  inset: 0;
+}
+
+.by__mark-ini {
+  position: relative;
+  display: block;
+}
+
 .by__mark--sm {
   width: 36px;
   height: 36px;
@@ -625,6 +659,147 @@
   font-weight: var(--t-weight-quiet);
 }
 
+/* ---- The second applications row and the delivery row (final9) ---- */
+.by__apps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--s-md);
+}
+
+/* The guideline sheet: 240 x 160, white paper on the cream stage. */
+.by__guide {
+  position: relative;
+  display: block;
+  flex: none;
+  box-sizing: border-box;
+  width: 240px;
+  height: 160px;
+  border: 1px solid rgb(0 0 0 / 8%);
+  border-radius: 6px;
+  background: var(--c-shop-white);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
+}
+
+.by__guide-k {
+  position: absolute;
+  left: 14px;
+  top: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: var(--c-steel); /* 8.03:1 on white */
+}
+
+/* The clear-space box: 96 square at (14, 44), the mark 56 square inside it
+   with 20px clear on every side, ticks on the top and left gaps. */
+.by__guide-lines {
+  position: absolute;
+  left: 14px;
+  top: 44px;
+  width: 96px;
+  height: 96px;
+  overflow: visible;
+}
+
+.by__guide-lines rect,
+.by__guide-lines path {
+  fill: none;
+  stroke: var(--c-steel);
+  stroke-width: 1px;
+  stroke-dasharray: 100;
+  vector-effect: non-scaling-stroke;
+}
+
+.by__mark--guide {
+  position: absolute;
+  left: 34px;
+  top: 64px;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  font-size: 22px;
+}
+
+/* The type scale: "Aa" at 28 and 14 in the display face. */
+.by__aa {
+  position: absolute;
+  left: 132px;
+  top: 52px;
+  display: grid;
+  gap: 8px;
+  font-family: var(--font-quiet);
+  font-weight: var(--t-weight-quiet);
+  line-height: 1;
+}
+
+.by__aa-l {
+  font-size: 28px;
+}
+
+.by__aa-s {
+  font-size: 14px;
+}
+
+/* The social post: 160 square in A, the wordmark small in B top-left, a
+   3px B rule across its middle. */
+.by__post {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 160px;
+  height: 160px;
+  border-radius: 6px;
+}
+
+.by__post-w {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 12px;
+  overflow: hidden;
+  font-family: var(--font-quiet);
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.by__post-rule {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 78px;
+  height: 3px;
+}
+
+/* The delivery row: on the stage's bottom edge, four pills in the neutral
+   with a 1px steel stroke. */
+.by__files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.by__file {
+  padding: 4px 10px;
+  border: 1px solid var(--c-steel);
+  border-radius: 999px;
+  background: #f7f5ef;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: var(--c-steel); /* 7.6:1 on the neutral */
+}
+
 /* Under the panel, on the dark section: steel-lift, not the brief's steel
    (2.4:1 on the dark ground). */
 .by__cap {
@@ -645,8 +820,9 @@
 
 .sc__stage {
   display: grid;
-  /* Frame B 340 when stacked: the screen's words keep their own sizes. */
-  grid-template-rows: 280px 340px 280px;
+  /* Stacked below 1024: A holds four results, A2 the 300 feed card, B 340
+     so the screen's words keep their own sizes, C the call and the lead. */
+  grid-template-rows: 500px 360px 340px 420px;
   overflow: hidden;
   clip-path: inset(0 round 6px);
   border: 1px solid var(--c-steel);
@@ -654,10 +830,12 @@
   background: var(--c-ground-mid);
 }
 
+/* Four frames in 2 x 2 from 1024 (final9): A and A2 above, B and C below,
+   so the feed card keeps its 320 x 300. It was three across, 380 tall. */
 @media (min-width: 1024px) {
   .sc__stage {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: 380px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: 440px 420px;
   }
 }
 
@@ -681,7 +859,14 @@
 
   .sc__f + .sc__f {
     border-top: 0;
+  }
+
+  .sc__f:nth-child(even) {
     border-left: 1px solid var(--c-steel);
+  }
+
+  .sc__f:nth-child(n + 3) {
+    border-top: 1px solid var(--c-steel);
   }
 }
 
@@ -739,7 +924,22 @@
 }
 
 .sc__t--other {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-bone); /* 16.3:1; it was steel-lift until final9 */
+}
+
+/* The organic rows' line and URL (final9): steel-lift on the dark frame,
+   where the brief's steel is 2.4:1. */
+.sc__o {
+  font-family: var(--font-offer);
+  font-size: 12px;
+  line-height: 16px;
   color: var(--c-steel-lift);
+}
+
+.sc__u--o {
+  font-size: 11px;
 }
 
 .sc__u {
@@ -856,8 +1056,12 @@
   stroke-dasharray: 100;
 }
 
+/* C: the call card, and the lead card under it (final9). */
 .sc__clip--c {
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
 .sc__call {
@@ -898,6 +1102,126 @@
   font-size: 14px;
   line-height: 20px;
   color: var(--disc-text, var(--c-accent-text-dark)); /* coral on lit-raised, 2026-10-05 */
+}
+
+/* ---- A2, the feed card (final9) ---- */
+.sc__clip--s {
+  align-items: flex-start;
+}
+
+.sc__feed {
+  display: grid;
+  grid-template-rows: auto 160px auto auto;
+  gap: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 320px;
+  height: 300px;
+  padding: 12px;
+  overflow: hidden;
+  border: 1px solid var(--c-steel);
+  border-radius: 6px;
+  background: var(--c-lit-raised);
+}
+
+.sc__feed-h {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sc__feed-av {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--disc, var(--c-accent-ground));
+}
+
+.sc__feed-n {
+  font-family: var(--font-offer);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-bone);
+}
+
+.sc__feed-sp {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--c-steel-lift);
+}
+
+/* The image area: the discipline colour at 20% over the card. */
+.sc__feed-img {
+  display: grid;
+  place-items: center;
+  margin: 0 -12px;
+  background: color-mix(in srgb, var(--disc, var(--c-accent-ground)) 20%, var(--c-lit-raised));
+}
+
+.sc__feed-wm {
+  font-family: var(--font-quiet);
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-bone);
+}
+
+.sc__feed-l {
+  font-family: var(--font-offer);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--c-steel-lift);
+}
+
+/* "Send message": a text button in the colour. Its flash is a tint behind
+   the words, so the words themselves never dim. */
+.sc__feed-go {
+  justify-self: start;
+  margin-left: -6px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-family: var(--font-offer);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: var(--t-weight-btn);
+  color: var(--disc-text, var(--c-accent-text-dark));
+}
+
+.sc__feed-go--flash {
+  background: color-mix(in srgb, var(--disc, var(--c-accent-ground)) 18%, transparent);
+}
+
+.sc__lead-w {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.sc__lead {
+  display: grid;
+  gap: 2px;
+  padding: 12px var(--s-md);
+  border: 1px solid var(--c-steel);
+  border-radius: 6px;
+  background: var(--c-lit-raised);
+}
+
+.sc__lead-l {
+  font-family: var(--font-offer);
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--c-bone);
+}
+
+.sc__lead-note {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--c-steel-lift); /* the brief's steel is 2.4:1 on the dark frame */
 }
 
 .sc__cap {

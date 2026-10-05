@@ -32,6 +32,17 @@ import './artifacts.css';
    paints passes 4.5:1 for all five sets: B on A 5.23 (charcoal and coral)
    to 10.79 (navy and sand); A on the neutral 10.58 to 14.42.
 
+   RICHER, 2026-10-05 (the founder's final9). After the three surfaces, each
+   step 300ms after the last: a guideline sheet (240 x 160, white, "Clear
+   space" in mono 11px, the mark in a 1px steel box with its x-gap ticks,
+   and "Aa" at 28px and 14px in the display face; its lines draw in), a
+   social post (160 x 160 in A, the wordmark small in B top-left, a 3px B
+   rule across its middle) and a delivery row on the stage's bottom edge:
+   four pills, SVG, PNG, PDF guide and Fonts, sliding in 80ms apart. The
+   mark is no longer shown whole: its square draws as a 2px stroke, fills,
+   and the initials slide up into it over 240ms. The panel is 680 tall from
+   1024 to hold the two new rows.
+
    Nothing starts hidden: the first paint is the finished stage. The steps
    draw (the palette by clip-path), resize (the mark from its centre) or move
    in from outside the stage (the surfaces); the wordmark types. Reduced
@@ -54,6 +65,11 @@ const T_WORD = T_TYPE + DEMO.length * PER_CHAR;
 const T_MARK = T_WORD + 300;
 const T_PAL = T_MARK + 300;
 const T_SURF = T_PAL + 300;
+/* The surfaces land 640ms after they start (the tile's 140 and its 500). */
+const T_GUIDE = T_SURF + 640 + 300;
+const T_SOCIAL = T_GUIDE + 300;
+const T_FILES = T_SOCIAL + 300;
+const FILES = ['SVG', 'PNG', 'PDF guide', 'Fonts'];
 const TOTAL = 7000;
 
 function setFor(name) {
@@ -127,8 +143,15 @@ export default function BrandYouType() {
      row wraps and the band takes the width. */
   const signW = inner >= 520 ? Math.max(240, Math.min(360, inner - 220 - 72 - 40)) : Math.min(360, inner);
   const fsSign = fit(name, signW - 48, 28);
-  const pMark = k(T_MARK);
+  /* The mark: the square's 2px stroke draws (220ms), the fill rises in it
+     by clip-path (160ms, no opacity), the initials rise into it (240ms). */
+  const pStroke = k(T_MARK, 220);
+  const pFill = k(T_MARK + 160, 160);
+  const pIni = k(T_MARK + 220, 240);
   const pPal = k(T_PAL);
+  const pGuideIn = k(T_GUIDE, 500);
+  const pGuideLines = k(T_GUIDE + 300, 400);
+  const pSocial = k(T_SOCIAL, 500);
 
   return (
     <figure className="by" ref={ref} data-artifact="BrandYouType">
@@ -158,8 +181,14 @@ export default function BrandYouType() {
           </p>
 
           <div className="by__row">
-            <span className="by__mark" style={{ background: a, color: b, transform: `scale(${pMark})` }}>
-              {ini}
+            <span className="by__mark by__mark--drawn" style={{ color: b }}>
+              <svg className="by__mark-line" viewBox="0 0 96 96" aria-hidden="true" focusable="false">
+                <rect x="1" y="1" width="94" height="94" rx="19" pathLength="100" style={{ stroke: a, strokeDashoffset: 100 * (1 - pStroke) }} />
+              </svg>
+              <span className="by__mark-fill" style={{ background: a, clipPath: `inset(${(1 - pFill) * 100}% 0 0 0)` }} />
+              <span className="by__mark-ini" style={{ transform: `translateY(${(1 - pIni) * 100}%)` }}>
+                {ini}
+              </span>
             </span>
             <ul className="by__pal" style={{ clipPath: `inset(0 ${(1 - pPal) * 100}% 0 0)` }}>
               {[a, b, NEUTRAL].map((hex) => (
@@ -193,6 +222,43 @@ export default function BrandYouType() {
               {ini}
             </span>
           </div>
+
+          <div className="by__apps">
+            <span className="by__guide" style={{ transform: `translateY(${(1 - pGuideIn) * 360}px)` }}>
+              <span className="by__guide-k">Clear space</span>
+              <svg className="by__guide-lines" viewBox="0 0 96 96" aria-hidden="true" focusable="false">
+                <rect x="0.5" y="0.5" width="95" height="95" pathLength="100" style={{ strokeDashoffset: 100 * (1 - pGuideLines) }} />
+                {/* The x-gap ticks: the clear space, 20px, marked on the
+                    top and left edges between the box and the mark. */}
+                <path
+                  d="M 38 4 L 38 20 M 58 4 L 58 20 M 4 38 L 20 38 M 4 58 L 20 58"
+                  pathLength="100"
+                  style={{ strokeDashoffset: 100 * (1 - pGuideLines) }}
+                />
+              </svg>
+              <span className="by__mark by__mark--guide" style={{ background: a, color: b }}>
+                {ini}
+              </span>
+              <span className="by__aa" style={{ color: a }}>
+                <span className="by__aa-l">Aa</span>
+                <span className="by__aa-s">Aa</span>
+              </span>
+            </span>
+            <span className="by__post" style={{ background: a, transform: `translateY(${(1 - pSocial) * 360}px)` }}>
+              <span className="by__post-w" style={{ color: b }}>
+                {name}
+              </span>
+              <span className="by__post-rule" style={{ background: b }} />
+            </span>
+          </div>
+
+          <ul className="by__files">
+            {FILES.map((f, i) => (
+              <li className="by__file" key={f} style={{ transform: `translateY(${(1 - k(T_FILES + i * 80, 300)) * 80}px)` }}>
+                {f}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
       <figcaption className="by__cap">Name, mark, palette, applications. Delivered as files you own.</figcaption>

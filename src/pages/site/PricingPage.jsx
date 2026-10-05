@@ -103,33 +103,43 @@ const ROWS = [
 /* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Questions). The $700
    and the $299 are the tokens; the $15 is a domain's cost, not a price of
    ours. */
-/* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Questions), in V3's
-   order. */
+/* COPY V3.5, 2026-10-05 (VEXELTECH-COPY.md, Pricing, Questions): seven,
+   in the founder's order. The $700 and the $299 are the tokens. */
 const QUESTIONS = [
   {
     id: 'cost',
     q: 'How much does a small business website cost?',
-    a: `${money(FIGURES.website)}, flat, for six pages, four business days and thirty days of maintenance. A domain name, if you don't own one, is about $15 a year in your name.`,
+    a: `${money(FIGURES.website)}, flat. That covers six pages, a build in four business days from your content, and thirty days of maintenance after launch. The only extra is a domain if you don't own one, about $15 a year, registered in your name.`,
   },
   {
     id: 'need',
     q: 'What do you need from me?',
-    a: 'Your services and where you sell them, photos of real work, your logo if you have one, and the things you say to customers on the phone.',
+    a: 'The services you sell and where you sell them, photos of real work, your logo if you have one, and the things you find yourself saying to customers on the phone. That last one writes half the site.',
   },
   {
     id: 'call',
     q: 'What does "on the call" mean?',
-    a: 'Marketing and automation depend on your ad spend, your area and your tools. We price them after a fifteen-minute call and confirm in writing before anything starts.',
+    a: 'Marketing and automation depend on your ad budget, your area and the tools you already use, so a price on a page would be a guess. We take fifteen minutes to understand it, then put a number in writing before anything starts.',
   },
   {
     id: 'deposit',
     q: 'Do you take a deposit?',
-    a: 'No. You approve concepts or the site design first. The invoice follows approval.',
+    a: "No. You approve concepts or the site design first, and the invoice follows your approval. If you don't like what you see, you haven't paid for it.",
   },
   {
     id: 'logo',
     q: 'What if I only want the logo?',
-    a: `Basic branding is ${money(FIGURES.brandingBasic)} on its own.`,
+    a: `Basic branding is ${money(FIGURES.brandingBasic)} on its own: concepts, final files and the guidance to use them. Nothing else is bundled in.`,
+  },
+  {
+    id: 'marketing',
+    q: 'How long does marketing take to work?',
+    a: 'Ads can bring calls in the first week. Local search takes longer, usually a few months to move. We tell you which is which before you spend, and we report cost per lead monthly, not impressions.',
+  },
+  {
+    id: 'after',
+    q: 'What happens after the thirty days?',
+    a: 'Your site keeps running. It is yours. When you need a change, call; small changes are priced small, and there is no retainer unless you ask for one.',
   },
 ];
 
@@ -334,7 +344,7 @@ export default function PricingPage() {
       {/* THE PLAN BUILDER AND THE CLOSING CALL CAME OFF, 2026-10-01: COPY
           V3 gives them no lines (DESIGN.md, COPY V3). */}
 
-      {/* 4. QUESTIONS. The accordion, V3's five. Then the form from the
+      {/* 4. QUESTIONS. The accordion, V3.5's seven. Then the form from the
              Shell. */}
       <Faq items={QUESTIONS} id="pr-faq" />
     </Shell>

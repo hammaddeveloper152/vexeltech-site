@@ -79,15 +79,16 @@
   outline-color: var(--c-asphalt);
 }
 
-/* THE DISCIPLINE COLOURS, 2026-10-05 (the founder's pre-launch pass). Each
-   band takes its discipline's colour, the same value as home's What we do
-   cards, where the page had yellow: the side label, the 4px rule beside
-   the price, the price or its statement, and the artifact's live mark.
-   Body text stays bone or asphalt.
+/* THE DISCIPLINE COLOURS. The list marks take the section's discipline
+   colour (2026-09-25), and the artifacts read the band's values for their
+   live marks (2026-10-05). The side label, the 4px rule and the price
+   carried the colour for one pass (final8) and returned to yellow and the
+   band's ink in the next (final9, 2026-10-05): on /services the accents
+   are inside the artifacts only.
 
      --disc        the fill: list marks, the text-back's sent bubbles
-     --disc-text   text and marks on the band's own ground: the bright value
-                   on a dark band, the INK on a cream one (tokens.css)
+     --disc-text   text in an artifact on the band's own ground: the bright
+                   value on a dark band, the INK on a cream one (tokens.css)
      --disc-cream  marks on a cream surface inside the band (the brand
                    stage, the phone screen): always the ink
 
@@ -114,13 +115,6 @@
   --disc: var(--c-mint);
   --disc-text: var(--c-mint-ink); /* 5.03:1 on cream */
   --disc-cream: var(--c-mint-ink);
-}
-
-/* The side label. register.css's `.panel-sec .marg` (deep amber on cream,
-   steel-lift on dark) is imported last, so this rule outranks it on
-   specificity rather than order. */
-main .svc2__d .marg {
-  color: var(--disc-text);
 }
 
 .svc2__in {
@@ -313,18 +307,17 @@ main .svc2__d .marg {
 .svc2__fig,
 .svc2__oncall {
   margin: 0 0 var(--s-md);
-  /* The 4px bar left of the price and the price itself, in the
-     discipline's colour (2026-10-05; machine yellow and the band's ink
-     until then). */
+  /* The 4px bar left of the price, machine yellow (it was the discipline's
+     colour until the three-colour pass, and again for final8 only). */
   padding-left: 20px;
-  border-left: 4px solid var(--disc-text);
-  color: var(--disc-text);
+  border-left: 4px solid var(--c-accent-ground);
   font-family: var(--font-quiet);
   font-size: 56px;
   line-height: 1.05;
   font-weight: 400;
   letter-spacing: normal;
   text-transform: none;
+  color: inherit;
   text-wrap: balance;
 }
 

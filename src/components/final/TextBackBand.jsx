@@ -22,17 +22,28 @@ import './proof.css';
    full thread stays. Every message keeps its place throughout, so nothing
    around the thread moves.
 
+   THE SYSTEM LOG, 2026-10-05 (the founder's final9). Beside the thread
+   from 1024 (under it below), a 1px steel-ruled column in mono 12px: what
+   happens around the three bubbles, each line arriving with its bubble and
+   the rest 300ms apart after the last. The time is in the discipline's ink
+   (mint ink, 5.03:1 on cream: mint itself is 2.77) and the event asphalt
+   (the brief's bone is 1.1:1 on the cream band). The rest is 5s now; it
+   was 6. The caption sits under both columns.
+
    The drawn thread is a founder-ruled exception to BUILD-LAW "Real over
    drawn" until a real capture of the text-back replaces it. */
 const GAPS = [0, 1200, 2500, 1500];
 const TYPING = 800;
-const HOLD = 6000;
+const HOLD = 5000;
+const STEP = 300;
 const ALL = THREAD.lines.length;
+const LOGS = THREAD.log.length;
 
 export default function TextBackBand() {
   const ref = useRef(null);
   const [shown, setShown] = useState(ALL);
   const [typing, setTyping] = useState(-1);
+  const [logged, setLogged] = useState(LOGS);
 
   useEffect(() => {
     const el = ref.current;
@@ -43,22 +54,32 @@ export default function TextBackBand() {
       timers = [];
       setTyping(-1);
       setShown(ALL);
+      setLogged(LOGS);
     };
     const at = (ms, fn) => timers.push(setTimeout(fn, ms));
     const play = () => {
       try {
         setShown(0);
         setTyping(-1);
+        setLogged(0);
         let t = 400;
+        const lineAt = [];
         THREAD.lines.forEach((line, i) => {
           t += GAPS[i];
+          lineAt.push(t);
           if (line.kind !== 'system') at(t - TYPING, () => setTyping(i));
           at(t, () => {
             setTyping(-1);
             setShown(i + 1);
           });
         });
-        at(t + HOLD, play);
+        /* The log: in step with its bubble, then 300ms apart. */
+        let l = 0;
+        THREAD.log.forEach((entry, i) => {
+          l = entry.with !== undefined ? lineAt[entry.with] : l + STEP;
+          at(l, () => setLogged(i + 1));
+        });
+        at(Math.max(t, l) + HOLD, play);
       } catch {
         stop();
       }
@@ -80,24 +101,34 @@ export default function TextBackBand() {
 
   return (
     <figure className="tb" ref={ref} data-artifact="TextBackBand">
-      <div className="tb__col">
-        <p className="tb__head">{THREAD.number}</p>
-        <ol className="tb__thread">
-          {THREAD.lines.map((line, i) => (
-            <li
-              key={i}
-              className={`tb__msg tb__msg--${line.kind}`}
-              data-shown={i < shown ? 'true' : 'false'}
-              data-typing={i === typing ? 'true' : 'false'}
-            >
-              <span className="tb__text">{line.text}</span>
-              {line.kind === 'system' ? null : (
-                <span className="tb__typing" aria-hidden="true">
-                  <span />
-                  <span />
-                  <span />
-                </span>
-              )}
+      <div className="tb__cols">
+        <div className="tb__col">
+          <p className="tb__head">{THREAD.number}</p>
+          <ol className="tb__thread">
+            {THREAD.lines.map((line, i) => (
+              <li
+                key={i}
+                className={`tb__msg tb__msg--${line.kind}`}
+                data-shown={i < shown ? 'true' : 'false'}
+                data-typing={i === typing ? 'true' : 'false'}
+              >
+                <span className="tb__text">{line.text}</span>
+                {line.kind === 'system' ? null : (
+                  <span className="tb__typing" aria-hidden="true">
+                    <span />
+                    <span />
+                    <span />
+                  </span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
+        <ol className="tb__log">
+          {THREAD.log.map(({ time, event }, i) => (
+            <li className="tb__log-l" key={`${time} ${event}`} data-shown={i < logged ? 'true' : 'false'}>
+              <span className="tb__log-t">{time}</span>
+              <span className="tb__log-e">{event}</span>
             </li>
           ))}
         </ol>

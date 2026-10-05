@@ -18,7 +18,7 @@
      colours  the painted colour of every discipline accent on /services and
               the home cards, for the contrast check
 
-   Usage: node .measure/final8.mjs [base]   (default http://localhost:4173) */
+   Usage: node .measure/final8.mjs [base] [folder]   (default http://localhost:4173, final8) */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -26,7 +26,8 @@ import puppeteer from 'puppeteer';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const BASE = process.argv[2] || 'http://localhost:4173';
-const OUT = path.join(HERE, 'out', 'final8');
+/* The folder under out/ (final9 since the founder's content pass). */
+const OUT = path.join(HERE, 'out', process.argv[3] || 'final8');
 fs.mkdirSync(path.join(OUT, 'pages'), { recursive: true });
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 const errors = [];

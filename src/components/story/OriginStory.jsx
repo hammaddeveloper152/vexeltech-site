@@ -26,8 +26,9 @@ import "./story.css";
    frame (BUILD-LAW rule 0, as amended), with the founder's caption in mono
    11px steel (7.2:1 on cream). Below 1024 the frame sits under the
    paragraphs. The capture appears on this page only. */
+/* COPY V3.5, 2026-10-05: one paragraph, the founder's. */
 const STORY =
-  "We started as a paid media team running Google and Meta campaigns for small businesses. Most of the spend died on the page after the click. So we built the pages, then the whole site, then the follow-up that runs after the call. VexelTech, 2026. Branding, website, marketing and automation from one team at flat prices, for businesses that can't carry four vendors.";
+  "We started in paid media, running Google and Meta campaigns for small businesses, and we watched the same thing happen every month: good ads sending people to pages that lost them, and calls ringing out while the owner was working. So we started building the pages. Then the whole site. Then the follow-up that runs after the call. By 2026 that had become VexelTech: branding, websites, marketing and automation from one team, at flat prices, for businesses that can't carry four vendors and shouldn't have to.";
 
 export default function OriginStory() {
   return (

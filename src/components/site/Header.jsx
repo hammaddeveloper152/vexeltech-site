@@ -254,8 +254,13 @@ export default function Header({ over = false }) {
           </ul>
         </nav>
 
+        {/* THE SHORT LABEL BELOW 430, 2026-10-05 (the founder's final9):
+            at 16px / 700 the full label makes the phone bar 426px wide, so
+            below 430 the bar's call reads "Get a quote" (Header.css). The
+            hero's and every other call keep the full label. */}
         <Link className="bar__cta" to="/contact-us">
-          {CTA}
+          <span className="bar__cta-full">{CTA}</span>
+          <span className="bar__cta-short">Get a quote</span>
         </Link>
 
         {/* THE CALL IS IN THE BAR FROM 375 UP, 2026-09-30 (the founder's

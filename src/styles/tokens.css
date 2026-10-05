@@ -914,24 +914,24 @@ main#main footer.foot {
    40 is the VISIBLE box. BUILD-LAW Touch wants 48 and counts padding, not
    paint, so each control carries `--hdr-hit`: a transparent pseudo-element
    4px above and below the box, which takes the pointer and paints nothing. */
-/* MORE PRESENCE, 2026-10-05 (the founder's pre-launch pass): the bar is
-   56px (48 below 768), the links and the call 15px, and the call 44px tall
-   in the same box. `--bar-h` is the bar's height, read by the hero, which
-   starts under it. */
+/* BOLDER, 2026-10-05 (the founder's final9, after final8's 56 / 15 / 44):
+   the bar is 64px (52 below 768), the links and the call 16px, and the
+   call 48px tall in the same box, so its painted box is its target.
+   `--bar-h` is the bar's height, read by the hero, which starts under it. */
 :root {
   --hdr-h: 40px;
-  --hdr-cta-h: 44px;
+  --hdr-cta-h: 48px;
   --hdr-px: 14px;
   --hdr-r: 6px;
-  --hdr-fs: 15px;
+  --hdr-fs: 16px;
   --hdr-hit: calc((48px - var(--hdr-h)) / -2);
   --hdr-cta-hit: calc((48px - var(--hdr-cta-h)) / -2);
-  --bar-h: 56px;
+  --bar-h: 64px;
 }
 
 @media (max-width: 767px) {
   :root {
-    --bar-h: 48px;
+    --bar-h: 52px;
   }
 }
 

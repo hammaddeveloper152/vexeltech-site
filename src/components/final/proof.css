@@ -150,6 +150,63 @@
   }
 }
 
+/* ---- The two columns and the system log (final9, 2026-10-05) ---- */
+.tb__cols {
+  display: grid;
+  gap: var(--s-lg);
+  justify-items: center;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .tb__cols {
+    grid-template-columns: 360px minmax(0, 420px);
+    justify-content: center;
+    align-items: start;
+    gap: var(--s-2xl);
+  }
+}
+
+.tb__log {
+  width: min(100%, 420px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--c-steel);
+  border-bottom: 1px solid var(--c-steel);
+}
+
+.tb__log-l {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: var(--s-md);
+  padding: 10px 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 18px;
+  transition:
+    opacity 400ms var(--ease-reveal),
+    transform 400ms var(--ease-reveal);
+}
+
+.tb__log-l + .tb__log-l {
+  border-top: 1px solid var(--c-line);
+}
+
+.tb__log-t {
+  color: var(--disc-text, var(--c-accent-text-light)); /* mint ink, 5.03:1 on cream */
+}
+
+.tb__log-e {
+  color: var(--c-asphalt); /* 15.75:1 on cream */
+}
+
+/* Only while the loop replays, which starts from the full log. */
+.tb__log-l[data-shown='false'] {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
 .tb__cap {
   font-family: var(--font-mono);
   font-size: 11px;

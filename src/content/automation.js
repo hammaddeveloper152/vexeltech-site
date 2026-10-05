@@ -7,7 +7,12 @@
    text-back replaces it.
 
    `number` is the business line the thread is with; `kind` is who speaks:
-   the system line, sent (the business, yellow) or received (the caller). */
+   the system line, sent (the business, in the discipline's colour) or
+   received (the caller).
+
+   THE SYSTEM LOG, 2026-10-05 (the founder's final9): what happens around
+   the thread, beside it. Each entry's `with` is the thread line it lands
+   with; entries without one follow the last, 300ms apart. */
 export const THREAD = {
   number: '(385) 284-3265',
   lines: [
@@ -16,5 +21,15 @@ export const THREAD = {
     { kind: 'received', text: 'Hi, need a quote for a kitchen remodel' },
     { kind: 'sent', text: 'Got it. Sending a couple of times for a quick call. Watch for a text from this number.' },
   ],
-  caption: 'Missed-call text-back. Replies in under sixty seconds, every time.',
+  log: [
+    { time: '2:14 PM', event: 'Missed call', with: 0 },
+    { time: '2:14 PM', event: 'Text sent, 4 seconds', with: 1 },
+    { time: '2:16 PM', event: 'Reply received', with: 2 },
+    { time: '2:16 PM', event: 'Booking link sent', with: 3 },
+    { time: '2:19 PM', event: 'Booked, Thu 10:00' },
+    { time: 'Thu 9:00', event: 'Reminder sent' },
+    { time: 'Thu 11:30', event: 'Invoice sent' },
+    { time: 'Sat 10:00', event: 'Review request sent' },
+  ],
+  caption: 'One missed call, handled end to end. Replies in under sixty seconds, every time.',
 };
