@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { prefersReduced } from '../site/useOnce.js';
 import { THREAD } from '../../content/automation.js';
+import { HOLD, LEAVE, THRESHOLDS, halfInView, leaving } from '../artifacts/loop.js';
 import './proof.css';
 
 /* SERVICES, THE AUTOMATION BAND (the final pass, 2026-10-03; final pass 2
@@ -27,14 +28,19 @@ import './proof.css';
    happens around the three bubbles, each line arriving with its bubble and
    the rest 300ms apart after the last. The time is in the discipline's ink
    (mint ink, 5.03:1 on cream: mint itself is 2.77) and the event asphalt
-   (the brief's bone is 1.1:1 on the cream band). The rest is 5s now; it
-   was 6. The caption sits under both columns.
+   (the brief's bone is 1.1:1 on the cream band). The caption sits under
+   both columns.
+
+   ARTIFACTS REST FULL, 2026-10-06 (loop.js has the rule): the whole
+   thread and log are painted at rest, on the first paint, off screen and
+   under reduced motion. A play starts only with half the band in view: the
+   full thread wipes away over 300ms, replays, and the full state holds 6s
+   before any replay.
 
    The drawn thread is a founder-ruled exception to BUILD-LAW "Real over
    drawn" until a real capture of the text-back replaces it. */
 const GAPS = [0, 1200, 2500, 1500];
 const TYPING = 800;
-const HOLD = 5000;
 const STEP = 300;
 const ALL = THREAD.lines.length;
 const LOGS = THREAD.log.length;
@@ -44,63 +50,113 @@ export default function TextBackBand() {
   const [shown, setShown] = useState(ALL);
   const [typing, setTyping] = useState(-1);
   const [logged, setLogged] = useState(LOGS);
+  const [leave, setLeave] = useState(0);
 
   useEffect(() => {
     const el = ref.current;
     if (!el || prefersReduced() || typeof IntersectionObserver === 'undefined') return undefined;
     let timers = [];
-    const stop = () => {
+    let raf = 0;
+    let busy = false;
+    let inView = false;
+    let holdUntil = 0;
+    const clear = () => {
       timers.forEach(clearTimeout);
       timers = [];
+      cancelAnimationFrame(raf);
+      raf = 0;
+    };
+    /* Off screen, or on any error: the full thread and log. */
+    const full = () => {
+      clear();
+      busy = false;
+      setLeave(0);
       setTyping(-1);
       setShown(ALL);
       setLogged(LOGS);
     };
     const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+    const replay = () => {
+      setLeave(0);
+      setShown(0);
+      setTyping(-1);
+      setLogged(0);
+      let t = 0;
+      const lineAt = [];
+      THREAD.lines.forEach((line, i) => {
+        t += GAPS[i];
+        lineAt.push(t);
+        if (line.kind !== 'system') at(t - TYPING, () => setTyping(i));
+        at(t, () => {
+          setTyping(-1);
+          setShown(i + 1);
+        });
+      });
+      /* The log: in step with its bubble, then 300ms apart. */
+      let l = 0;
+      THREAD.log.forEach((entry, i) => {
+        l = entry.with !== undefined ? lineAt[entry.with] : l + STEP;
+        at(l, () => setLogged(i + 1));
+      });
+      at(Math.max(t, l), () => {
+        /* Every timer of this play has fired. */
+        timers = [];
+        busy = false;
+        holdUntil = performance.now() + HOLD;
+        if (inView) play();
+      });
+    };
+    /* A play: the full state wipes away over 300ms, then the thread replays. */
     const play = () => {
       try {
-        setShown(0);
-        setTyping(-1);
-        setLogged(0);
-        let t = 400;
-        const lineAt = [];
-        THREAD.lines.forEach((line, i) => {
-          t += GAPS[i];
-          lineAt.push(t);
-          if (line.kind !== 'system') at(t - TYPING, () => setTyping(i));
-          at(t, () => {
-            setTyping(-1);
-            setShown(i + 1);
+        if (busy) return;
+        const now = performance.now();
+        if (now < holdUntil) {
+          at(holdUntil - now, () => {
+            timers = [];
+            if (inView) play();
           });
-        });
-        /* The log: in step with its bubble, then 300ms apart. */
-        let l = 0;
-        THREAD.log.forEach((entry, i) => {
-          l = entry.with !== undefined ? lineAt[entry.with] : l + STEP;
-          at(l, () => setLogged(i + 1));
-        });
-        at(Math.max(t, l) + HOLD, play);
+          return;
+        }
+        busy = true;
+        const t0 = now;
+        const tick = (n) => {
+          const p = (n - t0) / LEAVE;
+          if (p >= 1) {
+            raf = 0;
+            replay();
+            return;
+          }
+          setLeave(p);
+          raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
       } catch {
-        stop();
+        full();
       }
     };
     const io = new IntersectionObserver(
       (entries) => {
-        const on = entries.some((e) => e.isIntersecting);
-        if (on && !timers.length) play();
-        else if (!on && timers.length) stop();
+        const e = entries[entries.length - 1];
+        if (halfInView(e)) {
+          inView = true;
+          if (!busy && !timers.length) play();
+          return;
+        }
+        inView = false;
+        if (!e.isIntersecting) full();
       },
-      { threshold: 0.5 }
+      { threshold: THRESHOLDS }
     );
     io.observe(el);
     return () => {
       io.disconnect();
-      timers.forEach(clearTimeout);
+      clear();
     };
   }, []);
 
   return (
-    <figure className="tb" ref={ref} data-artifact="TextBackBand">
+    <figure className="tb" ref={ref} data-artifact="TextBackBand" {...leaving(leave)}>
       <div className="tb__cols">
         <div className="tb__col">
           <p className="tb__head">{THREAD.number}</p>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Brush from '../../components/site/Brush.jsx';
 import Shell from './Shell.jsx';
@@ -6,6 +6,7 @@ import Faq from '../../components/home/Faq.jsx';
 import { DISCIPLINES } from '../../content/services.js';
 import { BRANDING, BUNDLE, FIGURES, WEBSITES, money } from '../../content/pricing.js';
 import '../../styles/pricegrid.css';
+import { setFaqLd } from './head.js';
 
 /* THE PRICING PAGE, REBUILT 2026-09-24 ON THE MELIUS PATTERN (the founder),
    after the quiet pass, so it inherits its type and panel rules.
@@ -145,6 +146,8 @@ const QUESTIONS = [
 
 export default function PricingPage() {
   const [open, setOpen] = useState(null);
+  /* The questions as FAQPage data (head.js, 2026-10-05). */
+  useEffect(() => setFaqLd(QUESTIONS), []);
   return (
     <Shell
       title={`Website design pricing: ${money(FIGURES.website)} flat, branding from ${money(FIGURES.brandingBasic)} | VexelTech`}

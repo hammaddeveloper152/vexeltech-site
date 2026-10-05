@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useLoop, step } from './loop.js';
+import { useLoop, step, leaving } from './loop.js';
 import './artifacts.css';
 import '../final/about-bands.css';
 
@@ -80,7 +80,7 @@ export default function OneTeam() {
   const ref = useRef(null);
   const paths = useRef([]);
   const trails = useRef([]);
-  const [t] = useLoop(ref, TOTAL);
+  const [t, , , leave] = useLoop(ref, TOTAL);
   const [box, setBox] = useState({ w: 1152, h: 360 });
 
   useEffect(() => {
@@ -117,7 +117,7 @@ export default function OneTeam() {
         <h2 className="st-h" id="ot-h">
           Four disciplines. One team.
         </h2>
-        <div className={`ot__stage${L.vertical ? ' ot__stage--v' : ''}`} ref={ref}>
+        <div className={`ot__stage${L.vertical ? ' ot__stage--v' : ''}`} ref={ref} {...leaving(leave)}>
           <svg className="ot__svg" width={box.w} height={box.h} aria-hidden="true" focusable="false">
             {L.lanes.map((d, i) => (
               <path

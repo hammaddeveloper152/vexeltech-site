@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useLoop, step, lin } from './loop.js';
+import { useLoop, step, lin, leaving } from './loop.js';
 import { prefersReduced } from '../site/useOnce.js';
 import './artifacts.css';
 
@@ -20,7 +20,10 @@ import './artifacts.css';
    Every word inside the panel is the founder's, from the brief.
 
    The loop (loop.js): first paint and reduced motion show scene 1's held
-   frame; reduced motion shows each scene's held frame on a click. */
+   frame; reduced motion shows each scene's held frame on a click. Since
+   2026-10-06 (artifacts rest full) the stage plays only with half of it in
+   view, as a rebuild, holds 6s at the end, and off screen shows the held
+   frame of the scene it was in. */
 const ROWS = [
   {
     id: 'find',
@@ -162,7 +165,13 @@ const SCENES = [SceneFind, SceneSpend, SceneMissed, SceneName];
 
 export default function CostScenes() {
   const ref = useRef(null);
-  const [t, seek] = useLoop(ref, TOTAL, { start: HELD, first: SLIDE });
+  /* At rest each scene shows its own held frame: the one the playhead is
+     in when the stage leaves the screen, scene 1's on the first paint. */
+  const [t, seek, , leave] = useLoop(ref, TOTAL, {
+    start: HELD,
+    first: SLIDE,
+    rest: (at) => Math.min(ROWS.length - 1, Math.floor(at / SCENE)) * SCENE + HELD,
+  });
   const i = Math.min(ROWS.length - 1, Math.floor(t / SCENE));
   const lt = t - i * SCENE;
   const prev = (i + ROWS.length - 1) % ROWS.length;
@@ -174,7 +183,7 @@ export default function CostScenes() {
         <h2 className="st-h" id="kc-h">
           What it costs you
         </h2>
-        <div className="cs__body" ref={ref}>
+        <div className="cs__body" ref={ref} {...leaving(leave)}>
           <div className="cs-panel" aria-hidden="true">
             {SCENES.map((Scene, n) => {
               let x = 100;

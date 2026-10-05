@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Shell from './Shell.jsx';
 import Faq from '../../components/home/Faq.jsx';
 import OriginStory from '../../components/story/OriginStory.jsx';
@@ -7,6 +7,7 @@ import OneTeam from '../../components/artifacts/OneTeam.jsx';
 import FitColumns from '../../components/story/FitColumns.jsx';
 import TermsCard from '../../components/story/TermsCard.jsx';
 import { CallBand } from './parts.jsx';
+import { setFaqLd } from './head.js';
 import { FIGURES, money } from '../../content/pricing.js';
 import '../../styles/aboutpage.css';
 import '../../styles/light.css';
@@ -74,6 +75,8 @@ const QUESTIONS = [
 const WORDS = ['Found,', 'trusted,', 'called.'];
 
 export default function AboutPage() {
+  /* The questions as FAQPage data (head.js, 2026-10-05). */
+  useEffect(() => setFaqLd(QUESTIONS), []);
   return (
     <Shell
       title="About VexelTech: websites, ads and automation for small business"

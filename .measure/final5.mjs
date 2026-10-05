@@ -10,6 +10,15 @@
                  load or at any captured frame
      rows        home's scenes: a headline click jumps to its scene
 
+   ARTIFACTS REST FULL (2026-10-06, final10). A frame's ms is counted from
+   the moment the stage is scrolled half into view, so the first 300 are the
+   leave and the build's own clock starts at 300 (t150 is mid-leave). Added:
+     restAtLoad  the painted state at load, with the stage under half in
+                 view, equals the reduced-motion (complete) state
+     offFull     scrolled off mid-play, the painted state equals the complete
+                 state (for home's scenes: the held frame of its scene)
+     leaveSeen   data-leaving was set during the first 300ms
+
    Usage: node .measure/final5.mjs [base] [folder]   (default http://localhost:4173, final5) */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -24,17 +33,24 @@ fs.mkdirSync(OUT, { recursive: true });
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const ARTIFACTS = [
-  { name: 'CostScenes', route: '/', times: [700, 2600, 3900, 5000, 7400, 9600, 11900, 15000] },
-  { name: 'BrandYouType', route: '/services', times: [1300, 1950, 2300, 3000, 3600, 4000, 4500] },
-  { name: 'SearchToCall', route: '/services', times: [900, 2600, 3600, 4500, 5800, 7200, 9000, 10400] },
-  { name: 'OneTeam', route: '/about-us', times: [400, 1200, 2200, 2950, 3200, 3700] },
-  { name: 'WeekStrip', route: '/about-us', times: [600, 1000, 1600, 2300, 2900, 3200] },
+  { name: 'CostScenes', route: '/', times: [150, 1000, 2900, 4200, 5300, 7700, 9900, 12200, 15300] },
+  { name: 'BrandYouType', route: '/services', times: [150, 1600, 2250, 2600, 3300, 3900, 4300, 4800] },
+  { name: 'SearchToCall', route: '/services', times: [150, 1200, 2900, 3900, 4800, 6100, 7500, 9300, 10700] },
+  { name: 'TextBackBand', route: '/services', times: [150, 600, 1800, 4300, 5800, 7000] },
+  { name: 'OneTeam', route: '/about-us', times: [150, 700, 1500, 2500, 3250, 3500, 4000] },
+  { name: 'WeekStrip', route: '/about-us', times: [150, 900, 1300, 1900, 2600, 3200, 3500] },
 ];
+const rest = {};
+/* The painted markup. An empty style attribute, which React leaves once
+   the leave's `--leave` is removed, paints nothing and is dropped. */
+const snapOf = (p, s) => p.evaluate((q) => document.querySelector(q).innerHTML.replace(/ style=""/g, ''), s);
 
 const report = {};
 const b = await puppeteer.launch({ headless: 'new' });
 for (const width of [1280, 390]) {
-  for (const reduced of [false, true]) {
+  /* Reduced first: its painted state is the complete state the motion
+     run is compared against. */
+  for (const reduced of [true, false]) {
     for (const a of ARTIFACTS) {
       const p = await b.newPage();
       await p.setViewport({ width, height: width > 500 ? 800 : 844, deviceScaleFactor: 1 });
@@ -54,22 +70,42 @@ for (const width of [1280, 390]) {
         }, sel);
       r.opacityAtLoad = await dim();
       const el = await p.$(sel);
+      const restKey = `${a.name}-${width}`;
       if (reduced) {
+        rest[restKey] = await snapOf(p, sel);
         await p.evaluate((s) => document.querySelector(s).scrollIntoView({ block: 'center' }), sel);
         await wait(1500);
         await el.screenshot({ path: path.join(OUT, `${a.name}-${width}-reduced.png`) });
         await p.close();
         continue;
       }
+      /* At load: is the stage under half in view, and if so is it at rest? */
+      const underHalf = await p.evaluate((s) => {
+        const b = document.querySelector(s).getBoundingClientRect();
+        const vis = Math.max(0, Math.min(b.bottom, innerHeight) - Math.max(b.top, 0));
+        return vis < Math.min(b.height, innerHeight) * 0.5;
+      }, sel);
+      if (underHalf) r.restAtLoad = (await snapOf(p, sel)) === rest[restKey];
       await p.evaluate((s) => document.querySelector(s).scrollIntoView({ block: 'center' }), sel);
       const t0 = Date.now();
       r.dim = [];
+      r.leaveSeen = false;
+      const watchLeave = (async () => {
+        while (Date.now() - t0 < 600) {
+          if (await p.evaluate((s) => !!document.querySelector(`${s}[data-leaving], ${s} [data-leaving]`), sel)) {
+            r.leaveSeen = true;
+            return;
+          }
+          await wait(30);
+        }
+      })();
       for (const ms of a.times) {
         const left = ms - (Date.now() - t0);
         if (left > 0) await wait(left);
         await el.screenshot({ path: path.join(OUT, `${a.name}-${width}-t${ms}.png`) });
         r.dim.push(...(await dim()));
       }
+      await watchLeave;
       /* Paused off screen: scroll away, read the painted state twice. */
       const snap = () => p.evaluate((s) => document.querySelector(s).innerHTML.length + ':' + document.querySelector(s).innerHTML.slice(0, 4000), sel);
       await p.evaluate(() => window.scrollTo(0, 0));
@@ -86,6 +122,23 @@ for (const width of [1280, 390]) {
         r.clickThird = await p.evaluate(() => [...document.querySelectorAll('.cs__btn')].map((x) => x.getAttribute('aria-pressed')).join(' '));
       }
       await p.close();
+
+      /* Scrolled off mid-play (1.3s into the build): the complete state. */
+      const q = await b.newPage();
+      await q.setViewport({ width, height: width > 500 ? 800 : 844, deviceScaleFactor: 1 });
+      await q.goto(BASE + a.route, { waitUntil: 'networkidle0' });
+      await q.evaluate(() => document.fonts.ready);
+      await q.evaluate((s) => document.querySelector(s).scrollIntoView({ block: 'center' }), sel);
+      await wait(1600);
+      r.midPlayDiffers = (await snapOf(q, sel)) !== rest[restKey];
+      await q.evaluate((s) => {
+        const el = document.querySelector(s);
+        const top = el.getBoundingClientRect().top + scrollY;
+        window.scrollTo(0, top > innerHeight * 2 ? 0 : document.documentElement.scrollHeight);
+      }, sel);
+      await wait(500);
+      r.offFull = (await snapOf(q, sel)) === rest[restKey];
+      await q.close();
     }
   }
 }

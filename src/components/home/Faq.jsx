@@ -34,7 +34,11 @@ import './Faq.css';
 /* `items` and `id` let a second route mount the same accordion with its own
    questions (About, 2026-09-23). `id` prefixes every DOM id, so two instances
    never collide. */
-export default function Faq({ items, id: base = 'faq' }) {
+/* THE ROWS ALONE, 2026-10-05 (the founder's services substance pass): the
+   same rows, state and line stagger, without the section and its "Questions"
+   heading, so a /services band can carry two questions under its own h2.
+   `Faq` below is this list inside its section. */
+export function FaqList({ items, id: base = 'faq' }) {
   const [openId, setOpenId] = useState(null);
 
   /* One piece of state, set synchronously. The entrance is a keyframe
@@ -79,71 +83,76 @@ export default function Faq({ items, id: base = 'faq' }) {
   }, [openId, base]);
 
   return (
+    <div className="faq__list" ref={listRef}>
+      {items.map(({ id, q, a }) => {
+        const open = openId === id;
+        return (
+          <div className="faq__item" key={id} data-open={open ? 'true' : 'false'}>
+            {/* The row's own hairline, drawn over the static one on
+                hover. Separate element because it scales from the left,
+                and a border cannot be transformed. */}
+            <span className="faq__rule" aria-hidden="true" />
+
+            <h3 className="faq__q">
+              <button
+                className="faq__btn"
+                type="button"
+                id={`${base}-btn-${id}`}
+                aria-expanded={open}
+                aria-controls={`${base}-panel-${id}`}
+                onClick={() => toggle(id)}
+              >
+                <span className="faq__q-t">{q}</span>
+                {/* Now a real icon. Iconography was unassigned when this
+                    was a typed glyph; it is assigned to DESIGN.md and the
+                    plus is Phosphor at the small station. The rotation is
+                    unchanged: transform, on the panel's own duration and
+                    curve. Decorative, because the question beside it and
+                    aria-expanded on the button already say the whole
+                    thing. */}
+                <span className="faq__mark" data-open={open}>
+                  <IconPlus className="i" />
+                </span>
+              </button>
+            </h3>
+
+            <div
+              className="faq__panel"
+              id={`${base}-panel-${id}`}
+              role="region"
+              aria-labelledby={`${base}-btn-${id}`}
+              hidden={!open}
+              data-open={open}
+            >
+              <div className="faq__panel-in">
+                {/* Split into words so they can be grouped into their
+                    rendered lines. Inline spans inside a paragraph, so
+                    the text an assistive technology reads is unchanged. */}
+                <p className="faq__a">
+                  {a.split(' ').map((word, w) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <span className="faq__w" key={`${word}-${w}`}>
+                      {word}{' '}
+                    </span>
+                  ))}
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+export default function Faq({ items, id: base = 'faq' }) {
+  return (
     <section className="vt faq" aria-labelledby={`${base}-h`}>
       <div className="faq__inner">
         <h2 className="faq__h" id={`${base}-h`}>
           Questions
         </h2>
-
-        <div className="faq__list" ref={listRef}>
-          {items.map(({ id, q, a }) => {
-            const open = openId === id;
-            return (
-              <div className="faq__item" key={id} data-open={open ? 'true' : 'false'}>
-                {/* The row's own hairline, drawn over the static one on
-                    hover. Separate element because it scales from the left,
-                    and a border cannot be transformed. */}
-                <span className="faq__rule" aria-hidden="true" />
-
-                <h3 className="faq__q">
-                  <button
-                    className="faq__btn"
-                    type="button"
-                    id={`${base}-btn-${id}`}
-                    aria-expanded={open}
-                    aria-controls={`${base}-panel-${id}`}
-                    onClick={() => toggle(id)}
-                  >
-                    <span className="faq__q-t">{q}</span>
-                    {/* Now a real icon. Iconography was unassigned when this
-                        was a typed glyph; it is assigned to DESIGN.md and the
-                        plus is Phosphor at the small station. The rotation is
-                        unchanged: transform, on the panel's own duration and
-                        curve. Decorative, because the question beside it and
-                        aria-expanded on the button already say the whole
-                        thing. */}
-                    <span className="faq__mark" data-open={open}>
-                      <IconPlus className="i" />
-                    </span>
-                  </button>
-                </h3>
-
-                <div
-                  className="faq__panel"
-                  id={`${base}-panel-${id}`}
-                  role="region"
-                  aria-labelledby={`${base}-btn-${id}`}
-                  hidden={!open}
-                  data-open={open}
-                >
-                  <div className="faq__panel-in">
-                    {/* Split into words so they can be grouped into their
-                        rendered lines. Inline spans inside a paragraph, so
-                        the text an assistive technology reads is unchanged. */}
-                    <p className="faq__a">
-                      {a.split(' ').map((word, w) => (
-                        // eslint-disable-next-line react/no-array-index-key
-                        <span className="faq__w" key={`${word}-${w}`}>
-                          {word}{' '}
-                        </span>
-                      ))}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <FaqList items={items} id={base} />
       </div>
     </section>
   );

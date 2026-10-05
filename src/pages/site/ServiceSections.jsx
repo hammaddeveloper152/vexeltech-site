@@ -7,6 +7,8 @@ import DevicePhones from '../../components/story/DevicePhones.jsx';
 import BrandYouType from '../../components/artifacts/BrandYouType.jsx';
 import SearchToCall from '../../components/artifacts/SearchToCall.jsx';
 import TextBackBand from '../../components/final/TextBackBand.jsx';
+import { SpecSheet, HowItGoes, TwoQuestions } from '../../components/story/Substance.jsx';
+import { SUBSTANCE } from '../../content/substance.js';
 
 /* The proof bands, by services.js's `proof` (the final pass, 2026-10-03;
    since the final artifacts pass, 2026-10-03; since final7 the brand you
@@ -72,6 +74,11 @@ function priceOf(id) {
   return null;
 }
 
+/* THE SUBSTANCE, 2026-10-05 (the founder's services substance pass). The
+   order inside each section: the head, the artifact, the list with the
+   price column (its figure, terms and fit), then the spec sheet, how it
+   goes, two questions, and the call last. The call left the price column
+   for the foot. The dark and cream alternation is unchanged. */
 export default function ServiceSections({ disciplines }) {
   return (
     <div className="svc2">
@@ -143,6 +150,23 @@ export default function ServiceSections({ disciplines }) {
                 <p className="svc2__fact">
                   Good fit if {d.fit.charAt(0).toLowerCase() + d.fit.slice(1)}
                 </p>
+              </div>
+
+              {SUBSTANCE[d.id] ? (
+                <>
+                  <div className="svc2__spec">
+                    <SpecSheet rows={SUBSTANCE[d.id].spec} label={`${d.name}, the spec`} />
+                  </div>
+                  <div className="svc2__how">
+                    <HowItGoes steps={SUBSTANCE[d.id].steps} label={`${d.name}, how it goes`} />
+                  </div>
+                  <div className="svc2__qs">
+                    <TwoQuestions items={SUBSTANCE[d.id].questions} id={`svc-${d.id}-faq`} />
+                  </div>
+                </>
+              ) : null}
+
+              <div className="svc2__call">
                 <Link className={d.call.primary ? 'svc2__cta' : 'svc2__link'} to="/contact-us">
                   {d.call.label}
                   {/* The outline link's arrow, 2026-09-24: every outline link

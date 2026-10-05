@@ -7,6 +7,12 @@
    labels' capitals are for labels. */
 
 /* ---- Automation: the text-back thread ---------------------------------- */
+
+/* The leave (loop.js, artifacts rest full, 2026-10-06): the full thread and
+   log wipe away bottom up over 300ms before a replay. Only while it runs. */
+.tb[data-leaving] .tb__cols > * {
+  clip-path: inset(0 0 calc(var(--leave, 0) * 100%) 0);
+}
 .tb {
   display: grid;
   justify-items: center;
@@ -68,8 +74,10 @@
 
 .tb__text {
   display: block;
+  /* inset(0) at rest, so the clip below interpolates rather than snaps. */
+  clip-path: inset(0);
   transition:
-    opacity 400ms var(--ease-reveal),
+    clip-path 400ms var(--ease-reveal),
     transform 400ms var(--ease-reveal);
 }
 
@@ -91,9 +99,11 @@
   background: #e2e2e4; /* asphalt on it, 13.4:1 */
 }
 
-/* Only while the loop replays, which starts from the full thread. */
+/* Only while the loop replays, which starts from the full thread. A
+   bubble waiting its turn is clipped away, not faded (artifacts rest full,
+   2026-10-06: no content dims), and rises 6px into place as it arrives. */
 .tb__msg[data-shown='false'] .tb__text {
-  opacity: 0;
+  clip-path: inset(0 0 100% 0);
   transform: translateY(6px);
 }
 
@@ -106,8 +116,10 @@
   padding: 14px;
   border-radius: 16px;
   background: #e2e2e4;
-  opacity: 0;
-  transition: opacity 200ms linear;
+  /* Hidden by a clip, not opacity (2026-10-06): nothing on the band paints
+     below opacity 1 at rest. */
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 200ms linear;
 }
 
 .tb__msg--sent .tb__typing {
@@ -119,7 +131,7 @@
 }
 
 .tb__msg[data-typing='true'] .tb__typing {
-  opacity: 1;
+  clip-path: inset(0);
 }
 
 .tb__typing span {
@@ -127,14 +139,18 @@
   height: 6px;
   border-radius: 50%;
   background: var(--c-steel);
+}
+
+/* The dots pulse only while the indicator shows. */
+.tb__msg[data-typing='true'] .tb__typing span {
   animation: tb-dot 900ms linear infinite;
 }
 
-.tb__typing span:nth-child(2) {
+.tb__msg[data-typing='true'] .tb__typing span:nth-child(2) {
   animation-delay: 150ms;
 }
 
-.tb__typing span:nth-child(3) {
+.tb__msg[data-typing='true'] .tb__typing span:nth-child(3) {
   animation-delay: 300ms;
 }
 
@@ -178,6 +194,7 @@
 
 .tb__log-l {
   display: grid;
+  clip-path: inset(0);
   grid-template-columns: 80px 1fr;
   gap: var(--s-md);
   padding: 10px 0;
@@ -185,7 +202,7 @@
   font-size: 12px;
   line-height: 18px;
   transition:
-    opacity 400ms var(--ease-reveal),
+    clip-path 400ms var(--ease-reveal),
     transform 400ms var(--ease-reveal);
 }
 
@@ -201,9 +218,10 @@
   color: var(--c-asphalt); /* 15.75:1 on cream */
 }
 
-/* Only while the loop replays, which starts from the full log. */
+/* Only while the loop replays, which starts from the full log: clipped
+   away, not faded, as the bubbles are. */
 .tb__log-l[data-shown='false'] {
-  opacity: 0;
+  clip-path: inset(0 0 100% 0);
   transform: translateY(6px);
 }
 

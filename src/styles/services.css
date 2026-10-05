@@ -132,7 +132,7 @@
    side by side 60/40 from 1024 and stacked below. Nothing alternates sides
    (the frame that changed sides with the ground is gone). */
 .svc2__in {
-  grid-template-areas: 'head' 'band' 'list' 'right';
+  grid-template-areas: 'head' 'band' 'list' 'right' 'spec' 'how' 'qs' 'call';
   row-gap: 0;
 }
 
@@ -173,7 +173,11 @@
     grid-template-areas:
       'head head'
       'band band'
-      'list right';
+      'list right'
+      'spec spec'
+      'how how'
+      'qs qs'
+      'call call';
     column-gap: var(--s-3xl);
     align-items: start;
   }
@@ -346,9 +350,174 @@
   max-width: 54ch;
 }
 
-.svc2__right .svc2__cta,
-.svc2__right .svc2__link {
-  margin-top: var(--s-lg);
+/* ---- THE SUBSTANCE, 2026-10-05 (the founder's services substance pass) --
+
+   Under the list and the price: the spec sheet, how it goes, two
+   questions, then the call. Full content width, 64px apart. Inks: on a dark
+   band mono labels steel-lift (7.30 on the drift), values bone (15.77); on
+   a cream band labels steel (7.20), values asphalt (15.75). Rules are 1px
+   steel on both. */
+.svc2__spec {
+  grid-area: spec;
+  min-width: 0;
+  margin-top: var(--s-2xl);
+}
+
+.svc2__how {
+  grid-area: how;
+  min-width: 0;
+  margin-top: var(--s-2xl);
+}
+
+.svc2__qs {
+  grid-area: qs;
+  min-width: 0;
+  margin-top: var(--s-2xl);
+}
+
+.svc2__call {
+  grid-area: call;
+  margin-top: var(--s-2xl);
+}
+
+/* The spec sheet: a ruled table, two columns from 1024. */
+.sub-spec {
+  display: grid;
+  margin: 0;
+  border-top: 1px solid var(--c-steel);
+}
+
+@media (min-width: 1024px) {
+  .sub-spec {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--s-2xl);
+  }
+}
+
+.sub-spec__row {
+  display: grid;
+  grid-template-columns: minmax(96px, 1fr) minmax(0, 2.4fr);
+  gap: var(--s-md);
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--c-steel);
+}
+
+.sub-spec__k {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: var(--c-steel-lift);
+}
+
+.sub-spec__v {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-bone);
+}
+
+/* How it goes: four in a row from 768, one 1px rule across their tops;
+   stacked below, the rule runs down the left. */
+.sub-how {
+  display: grid;
+  gap: var(--s-lg);
+  margin: 0;
+  padding: 0 0 0 var(--s-lg);
+  list-style: none;
+  border-left: 1px solid var(--c-steel);
+}
+
+@media (min-width: 768px) {
+  .sub-how {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--s-xl);
+    padding: var(--s-lg) 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--c-steel);
+  }
+}
+
+.sub-how__step {
+  display: grid;
+  align-content: start;
+  gap: var(--s-xs);
+}
+
+.sub-how__n {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: var(--c-steel-lift);
+}
+
+.sub-how__t {
+  margin-top: var(--s-xs);
+  font-family: var(--font-quiet);
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-bone);
+}
+
+.sub-how__l {
+  font-family: var(--font-offer);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-steel-lift);
+}
+
+/* Two questions: the site's accordion rows without their section's padding
+   or heading. */
+.sub-qs.faq {
+  padding: 0;
+  color: inherit;
+}
+
+/* The cream bands' inks, restating light.css's About set for a cream panel
+   on a dark page. */
+.svc2__d--cream .sub-spec__k,
+.svc2__d--cream .sub-how__n,
+.svc2__d--cream .sub-how__l {
+  color: var(--c-steel); /* 7.20:1 on cream */
+}
+
+.svc2__d--cream .sub-spec__v,
+.svc2__d--cream .sub-how__t {
+  color: var(--c-asphalt); /* 15.75:1 */
+}
+
+.svc2__d--cream .sub-qs :is(.faq__q, .faq__q-t),
+.svc2__d--cream .sub-qs .faq__item[data-open='true'] .faq__q-t {
+  color: var(--c-asphalt);
+}
+
+.svc2__d--cream .sub-qs :is(.faq__list, .faq__item),
+.svc2__d--cream .sub-qs .faq__item[data-open='true'] {
+  border-color: rgb(23 24 26 / 15%);
+}
+
+.svc2__d--cream .sub-qs .faq__item[data-open='true'] {
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0; /* no card on cream, so no card corners on its hairline */
+}
+
+.svc2__d--cream .sub-qs .faq__rule,
+.svc2__d--cream .sub-qs .faq__item[data-open='true'] .faq__rule {
+  background: var(--c-steel);
+}
+
+.svc2__d--cream .sub-qs :is(.faq__a, .faq__mark),
+.svc2__d--cream .sub-qs .faq__item[data-open='true'] :is(.faq__a, .faq__mark) {
+  color: var(--c-steel); /* 7.20:1 */
+}
+
+.svc2__d--cream .sub-qs :focus-visible {
+  outline-color: var(--c-asphalt);
 }
 
 /* ---- The call ------------------------------------------------------------

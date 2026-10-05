@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { useLoop, step, lin } from './loop.js';
+import { useLoop, step, lin, leaving } from './loop.js';
 import './artifacts.css';
 
 /* SERVICES, MARKETING: FROM SEARCH TO CALL, FOR THE VISITOR (2026-10-03,
@@ -63,7 +63,7 @@ export default function SearchToCall() {
   const glide = useRef(null);
   const frameS = useRef(null);
   const sendBtn = useRef(null);
-  const [t] = useLoop(ref, TOTAL);
+  const [t, , , leave] = useLoop(ref, TOTAL);
   const [geo, setGeo] = useState({ gx: 0, gy: 0, cx: 0, cy: 0, ox: 0, oy: 0, sx: 0, sy: 0, so: 0, sp: 0 });
 
   /* Where the glider starts (over the sponsored title) and where the
@@ -121,7 +121,7 @@ export default function SearchToCall() {
   const pLead = step(t, 9750, 500);
 
   return (
-    <figure className="sc" ref={ref} data-artifact="SearchToCall">
+    <figure className="sc" ref={ref} data-artifact="SearchToCall" {...leaving(leave)}>
       <div className="sc__stage" aria-hidden="true">
         <div className="sc__f sc__f--a" ref={frameA}>
           <p className="sc__k">Search</p>

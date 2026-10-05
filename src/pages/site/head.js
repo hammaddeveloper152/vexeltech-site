@@ -66,3 +66,27 @@ export function setHead({ title, description, path, noindex = false }) {
     document.head.querySelector('meta[name="robots"]')?.remove();
   };
 }
+
+/* THE FAQ STRUCTURED DATA, 2026-10-05 (the founder's services substance
+   pass): one FAQPage block per page that shows questions (/services, /about-us
+   and /pricing), built from the same `{ q, a }` items the page renders, so
+   the data and the page cannot say different things. Removed on unmount, so
+   a client-side hop never carries one page's questions to another. */
+export function setFaqLd(items) {
+  if (typeof document === 'undefined' || !items || !items.length) return () => {};
+  const el = document.createElement('script');
+  el.type = 'application/ld+json';
+  el.dataset.faq = 'true';
+  el.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  });
+  document.head.querySelectorAll('script[data-faq]').forEach((n) => n.remove());
+  document.head.appendChild(el);
+  return () => el.remove();
+}

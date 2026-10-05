@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 /* THE 24 PHOSPHOR IMPORTS AND THE `Icon` FIELDS ARE GONE, 2026-09-23. The
    sub-service cards came off with the band rebuild and nothing renders an
    icon on this page any more, but the imports stayed and the bundler kept
@@ -10,6 +10,8 @@ import Shell from './Shell.jsx';
 import { PageHead, CallBand } from './parts.jsx';
 import ServiceSections from './ServiceSections.jsx';
 import { DISCIPLINES } from '../../content/services.js';
+import { SUBSTANCE } from '../../content/substance.js';
+import { setFaqLd } from './head.js';
 import '../../styles/services.css';
 import Brush from '../../components/site/Brush.jsx';
 
@@ -48,7 +50,12 @@ import Brush from '../../components/site/Brush.jsx';
 /* The data moved to `src/content/services.js`, 2026-09-24, because the
    pricing grid reads the same six items and calls: one source, two pages. */
 
+/* The eight questions, two per discipline in page order, as FAQPage data
+   (head.js, 2026-10-05). */
+const QUESTIONS = DISCIPLINES.flatMap((d) => (SUBSTANCE[d.id] ? SUBSTANCE[d.id].questions : []));
+
 export default function ServicesPage() {
+  useEffect(() => setFaqLd(QUESTIONS), []);
   return (
     <Shell
       title="Small business website design, local SEO, ads and automation | VexelTech"

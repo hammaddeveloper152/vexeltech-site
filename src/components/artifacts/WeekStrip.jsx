@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useLoop, step } from './loop.js';
+import { useLoop, step, leaving } from './loop.js';
 import './artifacts.css';
 import '../final/about-bands.css';
 
@@ -40,14 +40,14 @@ function reach(t) {
 
 export default function WeekStrip() {
   const ref = useRef(null);
-  const [t] = useLoop(ref, TOTAL);
+  const [t, , , leave] = useLoop(ref, TOTAL);
   return (
     <section className="vt st-sec st--dark ab-dark wk" aria-labelledby="wk-h" data-artifact="WeekStrip" data-device="week rail">
       <div className="st-in">
         <h2 className="st-h" id="wk-h">
           Four business days from content to live
         </h2>
-        <div className="wk__track" ref={ref}>
+        <div className="wk__track" ref={ref} {...leaving(leave)}>
           <span className="wk__rail" aria-hidden="true">
             <span className="wk__fill" style={{ '--p': reach(t) }} />
           </span>

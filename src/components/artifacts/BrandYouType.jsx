@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useLoop, step, lin } from './loop.js';
+import { useLoop, step, lin, leaving } from './loop.js';
 import './artifacts.css';
 
 /* SERVICES, BRANDING: THE BRAND YOU TYPE (2026-10-03, the founder, final7).
@@ -70,6 +70,12 @@ const T_GUIDE = T_SURF + 640 + 300;
 const T_SOCIAL = T_GUIDE + 300;
 const T_FILES = T_SOCIAL + 300;
 const FILES = ['SVG', 'PNG', 'PDF guide', 'Fonts'];
+/* How far the pieces travel to arrive (2026-10-06): from below the stage's
+   foot, which is 680 tall from 1024 since final9 (320 had left the surfaces
+   peeking in at the foot), and the initials from below the 96px mark (a
+   share of their own height left them showing in the empty square). */
+const RISE = 640;
+const RISE_INI = 72;
 const TOTAL = 7000;
 
 function setFor(name) {
@@ -103,7 +109,7 @@ function fit(text, avail, max) {
 export default function BrandYouType() {
   const ref = useRef(null);
   const stageRef = useRef(null);
-  const [t, , stop] = useLoop(ref, TOTAL);
+  const [t, , stop, leave] = useLoop(ref, TOTAL);
   const [value, setValue] = useState('');
   const [typed, setTyped] = useState(false);
   const [w, setW] = useState(0);
@@ -154,7 +160,7 @@ export default function BrandYouType() {
   const pSocial = k(T_SOCIAL, 500);
 
   return (
-    <figure className="by" ref={ref} data-artifact="BrandYouType">
+    <figure className="by" ref={ref} data-artifact="BrandYouType" {...leaving(leave)}>
       <div className="by__panel">
         <div className="by__field">
           <label className="by__label" htmlFor="by-name">
@@ -186,7 +192,7 @@ export default function BrandYouType() {
                 <rect x="1" y="1" width="94" height="94" rx="19" pathLength="100" style={{ stroke: a, strokeDashoffset: 100 * (1 - pStroke) }} />
               </svg>
               <span className="by__mark-fill" style={{ background: a, clipPath: `inset(${(1 - pFill) * 100}% 0 0 0)` }} />
-              <span className="by__mark-ini" style={{ transform: `translateY(${(1 - pIni) * 100}%)` }}>
+              <span className="by__mark-ini" style={{ transform: `translateY(${(1 - pIni) * RISE_INI}px)` }}>
                 {ini}
               </span>
             </span>
@@ -203,11 +209,11 @@ export default function BrandYouType() {
           <div className="by__surfaces">
             <span
               className="by__sign"
-              style={{ width: signW, background: a, color: b, fontSize: fsSign, transform: `translateY(${(1 - k(T_SURF, 500)) * 320}px)` }}
+              style={{ width: signW, background: a, color: b, fontSize: fsSign, transform: `translateY(${(1 - k(T_SURF, 500)) * RISE}px)` }}
             >
               {name}
             </span>
-            <span className="by__card" style={{ transform: `translateY(${(1 - k(T_SURF + 70, 500)) * 320}px)` }}>
+            <span className="by__card" style={{ transform: `translateY(${(1 - k(T_SURF + 70, 500)) * RISE}px)` }}>
               <span className="by__mark by__mark--sm" style={{ background: a, color: b }}>
                 {ini}
               </span>
@@ -217,14 +223,14 @@ export default function BrandYouType() {
             </span>
             <span
               className="by__tile"
-              style={{ background: a, color: b, transform: `translateY(${(1 - k(T_SURF + 140, 500)) * 320}px)` }}
+              style={{ background: a, color: b, transform: `translateY(${(1 - k(T_SURF + 140, 500)) * RISE}px)` }}
             >
               {ini}
             </span>
           </div>
 
           <div className="by__apps">
-            <span className="by__guide" style={{ transform: `translateY(${(1 - pGuideIn) * 360}px)` }}>
+            <span className="by__guide" style={{ transform: `translateY(${(1 - pGuideIn) * RISE}px)` }}>
               <span className="by__guide-k">Clear space</span>
               <svg className="by__guide-lines" viewBox="0 0 96 96" aria-hidden="true" focusable="false">
                 <rect x="0.5" y="0.5" width="95" height="95" pathLength="100" style={{ strokeDashoffset: 100 * (1 - pGuideLines) }} />
@@ -244,7 +250,7 @@ export default function BrandYouType() {
                 <span className="by__aa-s">Aa</span>
               </span>
             </span>
-            <span className="by__post" style={{ background: a, transform: `translateY(${(1 - pSocial) * 360}px)` }}>
+            <span className="by__post" style={{ background: a, transform: `translateY(${(1 - pSocial) * RISE}px)` }}>
               <span className="by__post-w" style={{ color: b }}>
                 {name}
               </span>

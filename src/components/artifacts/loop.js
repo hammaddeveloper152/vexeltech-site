@@ -2,84 +2,188 @@ import { useEffect, useRef, useState } from 'react';
 import { prefersReduced } from '../site/useOnce.js';
 
 /* THE ARTIFACT LOOP (the final artifacts pass, 2026-10-03, the founder).
-   Every artifact on the site is a timeline of `total` ms that plays, rests
-   5s on its final frame, and plays again.
+   Every artifact on the site is a timeline of `total` ms that each artifact
+   draws itself from: positions as transforms, draws as clip-path or
+   stroke-dashoffset, counts and typing as text. So any `t` is one exact
+   frame, and a jump (`seek`) is exact.
 
-     the first paint   the final frame (`t = total`), so nothing an artifact
-                       says is hidden before it moves (BUILD-LAW Motion)
-     in view           plays from 0, loops with the rest
-     off screen        paused where it is
-     reduced motion    the final frame, never moving
+   ARTIFACTS REST FULL, 2026-10-06 (the founder's services substance pass,
+   BUILD-LAW Motion). An artifact is never seen empty or half built:
 
-   Each artifact draws itself from `t` alone: positions as transforms,
-   draws as clip-path or stroke-dashoffset, counts and typing as text. So a
-   paused or reduced artifact is one frame, and a jump (`seek`) is exact.
+     at rest           the complete frame (`rest(t)`, the last frame by
+                       default): on the first paint, off screen and under
+                       reduced motion
+     plays when        at least half of the stage is in view (half of the
+                       viewport, for a stage taller than two viewports)
+     a play            a REBUILD: the complete frame leaves over 300ms
+                       (`leave`, 0 to 1, which the artifact turns into a
+                       clip-path wipe with `leaving()`), then the timeline
+                       runs from `first` to the end, as built
+     after a play      the complete frame holds for 6s before any replay,
+                       in view or not
+     off screen        the play stops and the complete frame is painted
+     reduced motion    the complete frame, no loop
 
-   `seek(ms)` moves the playhead; under reduced motion it moves it too, so
-   an artifact with chapters (home's four scenes) can show each chapter's
-   own held frame. `stop()` ends the loop on its final frame. `first` is where the first play starts (home's scenes
-   start past their slide, since scene 1 is already on the panel). */
-export const REST = 5000;
+   `seek(ms)` (home's four scenes, a headline click) plays on from `ms`
+   when motion is allowed and the stage is in view; otherwise it paints
+   `ms`, which the caller passes as a complete frame. `stop()` ends the loop
+   for good on the last frame (the brand you type, once the visitor types).
+   `rest(t)` maps the playhead to the complete frame it belongs to: the
+   last frame by default; the current scene's held frame for home's
+   scenes. */
+export const LEAVE = 300;
+export const HOLD = 6000;
 
-export function useLoop(ref, total, { start = total, first = 0 } = {}) {
+/* In view enough to play: half the stage, or half the viewport when the
+   stage is taller than two viewports and half of it can never show. */
+export function halfInView(entry) {
+  if (!entry.isIntersecting) return false;
+  const vh = entry.rootBounds ? entry.rootBounds.height : window.innerHeight;
+  const need = Math.min(entry.boundingClientRect.height, vh) * 0.5;
+  return entry.intersectionRect.height >= need - 1;
+}
+
+export const THRESHOLDS = Array.from({ length: 21 }, (_, i) => i / 20);
+
+/* The leave, for the element whose children wipe away: a data attribute
+   while leaving and the progress as `--leave` (artifacts.css). Nothing is
+   clipped at rest, so shadows and rings outside a box keep painting. */
+export const leaving = (leave) => ({
+  'data-leaving': leave > 0 ? 'true' : undefined,
+  style: leave > 0 ? { '--leave': leave } : undefined,
+});
+
+export function useLoop(ref, total, { start = total, first = 0, rest = () => total } = {}) {
   const [t, setT] = useState(start);
-  const clock = useRef({ base: 0, at: start, live: false, raf: 0, seen: false, stopped: false });
+  const [leave, setLeave] = useState(0);
+  const clock = useRef({
+    phase: 'rest',
+    base: 0,
+    t: start,
+    inView: false,
+    holdUntil: 0,
+    raf: 0,
+    timer: 0,
+    stopped: false,
+    motion: false,
+  });
+
+  const paint = (ms) => {
+    clock.current.t = ms;
+    setT(ms);
+  };
 
   useEffect(() => {
     const el = ref.current;
     const c = clock.current;
     if (!el || prefersReduced() || typeof IntersectionObserver === 'undefined') return undefined;
-    const cycle = total + REST;
-    const tick = (now) => {
-      const e = (now - c.base) % cycle;
-      c.at = e;
-      setT(Math.min(e, total));
-      c.raf = requestAnimationFrame(tick);
-    };
-    const play = () => {
-      if (c.live || c.stopped) return;
-      c.live = true;
-      /* The first time in view, from the top; after a pause, from where it
-         stopped. */
-      if (!c.seen) {
-        c.seen = true;
-        c.at = first;
-      }
-      c.base = performance.now() - c.at;
-      c.raf = requestAnimationFrame(tick);
-    };
-    const pause = () => {
-      c.live = false;
+    c.motion = true;
+
+    const cancel = () => {
       cancelAnimationFrame(c.raf);
+      clearTimeout(c.timer);
+      c.raf = 0;
+      c.timer = 0;
     };
-    const io = new IntersectionObserver((es) => (es[0].isIntersecting ? play() : pause()), { threshold: 0.25 });
+    const tick = (now) => {
+      if (c.phase === 'leave') {
+        const p = (now - c.base) / LEAVE;
+        if (p >= 1) {
+          c.phase = 'build';
+          c.base = now - first;
+          setLeave(0);
+          paint(first);
+        } else {
+          setLeave(p);
+        }
+        c.raf = requestAnimationFrame(tick);
+        return;
+      }
+      if (c.phase === 'build') {
+        const e = now - c.base;
+        if (e >= total) {
+          paint(total);
+          c.phase = 'rest';
+          c.holdUntil = now + HOLD;
+          c.raf = 0;
+          if (c.inView) c.begin();
+          return;
+        }
+        paint(e);
+        c.raf = requestAnimationFrame(tick);
+      }
+    };
+    /* Start a play, or wait out the hold and then start one. */
+    const begin = () => {
+      if (c.stopped || c.phase !== 'rest') return;
+      const now = performance.now();
+      clearTimeout(c.timer);
+      if (now < c.holdUntil) {
+        c.timer = setTimeout(() => {
+          if (c.inView) begin();
+        }, c.holdUntil - now);
+        return;
+      }
+      c.phase = 'leave';
+      c.base = now;
+      c.raf = requestAnimationFrame(tick);
+    };
+    c.tick = tick;
+    c.cancel = cancel;
+    c.begin = begin;
+
+    const io = new IntersectionObserver(
+      (es) => {
+        const e = es[es.length - 1];
+        if (halfInView(e)) {
+          c.inView = true;
+          if (c.phase === 'rest') begin();
+          return;
+        }
+        c.inView = false;
+        /* Off screen: the complete frame. Between half and none in view a
+           play that has started runs on, and none starts. */
+        if (!e.isIntersecting) {
+          cancel();
+          c.phase = 'rest';
+          setLeave(0);
+          paint(rest(c.t));
+        }
+      },
+      { threshold: THRESHOLDS }
+    );
     io.observe(el);
-    c.play = play;
-    c.pause = pause;
     return () => {
       io.disconnect();
-      pause();
+      cancel();
     };
-    // total is fixed for an artifact's life.
+    // total, first and rest are fixed for an artifact's life.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const seek = (ms) => {
     const c = clock.current;
-    c.at = ms;
-    c.seen = true;
-    c.base = performance.now() - ms;
-    setT(Math.min(ms, total));
+    if (c.motion && c.inView && !c.stopped && c.tick) {
+      c.cancel();
+      c.phase = 'build';
+      c.base = performance.now() - ms;
+      setLeave(0);
+      paint(ms);
+      c.raf = requestAnimationFrame(c.tick);
+      return;
+    }
+    setLeave(0);
+    paint(ms);
   };
-  /* Stop for good on the final frame (the brand you type: the visitor's
-     own name takes over the stage). */
   const stop = () => {
     const c = clock.current;
     c.stopped = true;
-    if (c.pause) c.pause();
-    setT(total);
+    if (c.cancel) c.cancel();
+    c.phase = 'rest';
+    setLeave(0);
+    paint(total);
   };
-  return [t, seek, stop];
+  return [t, seek, stop, leave];
 }
 
 /* The reveal curve, cubic-bezier(.23, 1, .32, 1), solved for x. */

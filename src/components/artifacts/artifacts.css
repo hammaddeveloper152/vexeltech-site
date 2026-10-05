@@ -383,6 +383,22 @@
   text-wrap: pretty;
 }
 
+/* ==== THE LEAVE: ARTIFACTS REST FULL (loop.js, 2026-10-06) ============= */
+
+/* A play opens with the complete frame wiping away over 300ms, bottom up,
+   by clip-path (BUILD-LAW Motion's named exception), before the build runs
+   as made. `data-leaving` is only set while it runs, so nothing is clipped
+   at rest and every shadow and ring outside a box keeps painting. The
+   frame of each stage stays; what it holds leaves. The text-back's rule is
+   in proof.css, with the band. */
+.by[data-leaving] .by__stage > *,
+.sc[data-leaving] .sc__f > *,
+.cs__body[data-leaving] .cs-panel > *,
+.ot__stage[data-leaving] > *,
+.wk__track[data-leaving] > * {
+  clip-path: inset(0 0 calc(var(--leave, 0) * 100%) 0);
+}
+
 /* ==== SERVICES, BRANDING: THE BRAND YOU TYPE (BrandYouType.jsx) ======== */
 .by {
   display: grid;
