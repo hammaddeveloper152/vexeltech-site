@@ -31,7 +31,13 @@ import { prefersReduced } from '../site/useOnce.js';
    `rest(t)` maps the playhead to the complete frame it belongs to: the
    last frame by default; the current scene's held frame for home's
    scenes. */
-export const LEAVE = 300;
+/* ARTIFACTS REST FULL, START SOFT (2026-10-06, the founder's quality pass;
+   it replaces the 300ms clip-path wipe): a play opens with a 400ms
+   crossfade from the finished state to the first frame. The finished state
+   fades out over the first half, the first frame is painted at the middle,
+   and it fades in over the second half, so nothing leaves or arrives with
+   a snap. `leaving(leave)` turns the 0 to 1 progress into that opacity. */
+export const LEAVE = 400;
 export const HOLD = 6000;
 
 /* In view enough to play: half the stage, or half the viewport when the
@@ -48,9 +54,10 @@ export const THRESHOLDS = Array.from({ length: 21 }, (_, i) => i / 20);
 /* The leave, for the element whose children wipe away: a data attribute
    while leaving and the progress as `--leave` (artifacts.css). Nothing is
    clipped at rest, so shadows and rings outside a box keep painting. */
+export const fadeOf = (leave) => (leave < 0.5 ? 1 - 2 * leave : 2 * leave - 1);
 export const leaving = (leave) => ({
   'data-leaving': leave > 0 ? 'true' : undefined,
-  style: leave > 0 ? { '--leave': leave } : undefined,
+  style: leave > 0 ? { '--leave': leave, '--fade': fadeOf(leave) } : undefined,
 });
 
 export function useLoop(ref, total, { start = total, first = 0, rest = () => total } = {}) {
@@ -94,6 +101,9 @@ export function useLoop(ref, total, { start = total, first = 0, rest = () => tot
           setLeave(0);
           paint(first);
         } else {
+          /* The middle of the crossfade: the first frame replaces the
+             finished one while the stage is at its faintest. */
+          if (p >= 0.5 && c.t !== first) paint(first);
           setLeave(p);
         }
         c.raf = requestAnimationFrame(tick);

@@ -34,9 +34,9 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const ARTIFACTS = [
   { name: 'CostScenes', route: '/', times: [150, 1000, 2900, 4200, 5300, 7700, 9900, 12200, 15300] },
-  { name: 'BrandYouType', route: '/services', times: [150, 1600, 2250, 2600, 3300, 3900, 4300, 4800] },
-  { name: 'SearchToCall', route: '/services', times: [150, 1200, 2900, 3900, 4800, 6100, 7500, 9300, 10700] },
-  { name: 'TextBackBand', route: '/services', times: [150, 600, 1800, 4300, 5800, 7000] },
+  { name: 'BrandYouType', route: '/services', times: [700, 1700, 2400, 3000, 3900, 4300, 5100, 6100] },
+  { name: 'SearchToCall', route: '/services', times: [700, 1600, 2400, 2900, 3700, 5000, 6800, 8800] },
+  { name: 'TextBackBand', route: '/services', times: [1000, 2400, 3800, 4700, 5500, 7000, 8400, 9600] },
   { name: 'OneTeam', route: '/about-us', times: [150, 700, 1500, 2500, 3250, 3500, 4000] },
   { name: 'WeekStrip', route: '/about-us', times: [150, 900, 1300, 1900, 2600, 3200, 3500] },
 ];
@@ -60,15 +60,27 @@ for (const width of [1280, 390]) {
       const sel = `[data-artifact="${a.name}"]`;
       const key = `${a.name}-${width}${reduced ? '-reduced' : ''}`;
       const r = (report[key] = {});
-      /* Below opacity 1 anywhere inside the artifact. */
-      const dim = () =>
-        p.evaluate((s) => {
-          const el = document.querySelector(s);
-          return [...el.querySelectorAll('*')]
-            .filter((n) => parseFloat(getComputedStyle(n).opacity) < 1)
-            .map((n) => n.className.baseVal ?? n.className);
-        }, sel);
-      r.opacityAtLoad = await dim();
+      /* Below opacity 1 anywhere inside the artifact. Split since the
+         quality pass (2026-10-06): an element that carries content (text
+         or an image in it) against an empty decorative layer (a sheen, a
+         ripple, a press tint), which rests invisible until it flashes.
+         BUILD-LAW Motion's rule is about content; the empty layers are
+         reported, not hidden. */
+      const dim = (which = 'content') =>
+        p.evaluate(
+          (s, which) => {
+            const el = document.querySelector(s);
+            const content = (n) => n.textContent.trim() !== '' || n.tagName === 'IMG' || !!n.querySelector('img');
+            return [...el.querySelectorAll('*')]
+              .filter((n) => parseFloat(getComputedStyle(n).opacity) < 1)
+              .filter((n) => (which === 'content' ? content(n) : !content(n)))
+              .map((n) => n.className.baseVal ?? n.className);
+          },
+          sel,
+          which
+        );
+      r.opacityAtLoad = await dim('content');
+      r.decorativeAtLoad = await dim('empty');
       const el = await p.$(sel);
       const restKey = `${a.name}-${width}`;
       if (reduced) {

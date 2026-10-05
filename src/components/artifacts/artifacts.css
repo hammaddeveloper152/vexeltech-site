@@ -385,18 +385,19 @@
 
 /* ==== THE LEAVE: ARTIFACTS REST FULL (loop.js, 2026-10-06) ============= */
 
-/* A play opens with the complete frame wiping away over 300ms, bottom up,
-   by clip-path (BUILD-LAW Motion's named exception), before the build runs
-   as made. `data-leaving` is only set while it runs, so nothing is clipped
-   at rest and every shadow and ring outside a box keeps painting. The
-   frame of each stage stays; what it holds leaves. The text-back's rule is
-   in proof.css, with the band. */
+/* START SOFT (2026-10-06, the founder's quality pass; it replaced the
+   300ms clip-path wipe of earlier the same day). A play opens with a 400ms
+   crossfade: what the stage holds fades out, the first frame is painted at
+   the middle, and it fades in, before the build runs as made. The frame of
+   each stage stays. `data-leaving` is only set while it runs. The
+   text-back's rule is in proof.css, with the band. */
 .by[data-leaving] .by__stage > *,
-.sc[data-leaving] .sc__f > *,
 .cs__body[data-leaving] .cs-panel > *,
 .ot__stage[data-leaving] > *,
 .wk__track[data-leaving] > * {
-  clip-path: inset(0 0 calc(var(--leave, 0) * 100%) 0);
+  /* The soft start (2026-10-06): a crossfade through the first frame, in
+     place of the clip-path wipe. */
+  opacity: var(--fade, 1);
 }
 
 /* ==== SERVICES, BRANDING: THE BRAND YOU TYPE (BrandYouType.jsx) ======== */
@@ -502,30 +503,6 @@
   border-radius: 6px;
 }
 
-.by__word {
-  margin: 0;
-  min-height: 1.1em;
-  font-family: var(--font-quiet);
-  line-height: 1.1;
-  font-weight: var(--t-weight-quiet);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.by__caret {
-  height: 0.8em;
-  /* The discipline's ink on the cream stage (2026-10-05). */
-  background: var(--disc-cream, currentColor);
-}
-
-.by__row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: var(--s-lg);
-}
-
 .by__mark {
   display: inline-grid;
   place-items: center;
@@ -539,45 +516,8 @@
   font-weight: var(--t-weight-quiet);
   letter-spacing: 0.02em;
 }
-
 /* The drawn mark (final9): a 2px stroke in A, a fill layer under the
    initials, and the initials clipped by the square so they rise into it. */
-.by__mark--drawn {
-  position: relative;
-  overflow: hidden;
-  clip-path: inset(0 round 20px);
-}
-
-.by__mark-line {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.by__mark-line rect {
-  fill: none;
-  stroke-width: 2px;
-  stroke-dasharray: 100;
-}
-
-.by__mark-fill {
-  position: absolute;
-  inset: 0;
-}
-
-.by__mark-ini {
-  position: relative;
-  display: block;
-}
-
-.by__mark--sm {
-  width: 36px;
-  height: 36px;
-  border-radius: 7.5px;
-  font-size: 15px;
-}
 
 .by__pal {
   display: flex;
@@ -610,78 +550,9 @@
   color: var(--c-steel); /* 7.2:1 */
 }
 
-.by__surfaces {
-  display: flex;
-  margin-top: auto;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: var(--s-md);
-}
-
-.by__sign {
-  display: flex;
-  flex: none;
-  align-items: center;
-  box-sizing: border-box;
-  max-width: 100%;
-  height: 72px;
-  padding: 0 24px;
-  border-radius: 6px;
-  font-family: var(--font-quiet);
-  line-height: 1;
-  font-weight: var(--t-weight-quiet);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
 /* Paper on cream, as the stage before it set it. */
-.by__card {
-  position: relative;
-  display: block;
-  box-sizing: border-box;
-  width: 220px;
-  height: 126px;
-  padding: 14px;
-  border: 1px solid rgb(0 0 0 / 8%);
-  border-radius: 6px;
-  background: #f7f5ef;
-  box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
-}
-
-.by__card-n {
-  position: absolute;
-  left: 14px;
-  right: 14px;
-  bottom: 12px;
-  overflow: hidden;
-  font-family: var(--font-offer);
-  font-size: 11px;
-  line-height: 16px;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.by__tile {
-  display: grid;
-  place-items: center;
-  width: 72px;
-  height: 72px;
-  border-radius: 16px;
-  font-family: var(--font-quiet);
-  font-size: 26px;
-  line-height: 1;
-  font-weight: var(--t-weight-quiet);
-}
 
 /* ---- The second applications row and the delivery row (final9) ---- */
-.by__apps {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: var(--s-md);
-}
 
 /* The guideline sheet: 240 x 160, white paper on the cream stage. */
 .by__guide {
@@ -757,41 +628,8 @@
 .by__aa-s {
   font-size: 14px;
 }
-
 /* The social post: 160 square in A, the wordmark small in B top-left, a
    3px B rule across its middle. */
-.by__post {
-  position: relative;
-  display: block;
-  flex: none;
-  width: 160px;
-  height: 160px;
-  border-radius: 6px;
-}
-
-.by__post-w {
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  top: 12px;
-  overflow: hidden;
-  font-family: var(--font-quiet);
-  font-size: 11px;
-  line-height: 16px;
-  font-weight: var(--t-weight-quiet);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.by__post-rule {
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  top: 78px;
-  height: 3px;
-}
 
 /* The delivery row: on the stage's bottom edge, four pills in the neutral
    with a 1px steel stroke. */
@@ -834,411 +672,22 @@
   margin: 0;
 }
 
-.sc__stage {
-  display: grid;
-  /* Stacked below 1024: A holds four results, A2 the 300 feed card, B 340
-     so the screen's words keep their own sizes, C the call and the lead. */
-  grid-template-rows: 500px 360px 340px 420px;
-  overflow: hidden;
-  clip-path: inset(0 round 6px);
-  border: 1px solid var(--c-steel);
-  border-radius: 6px;
-  background: var(--c-ground-mid);
-}
-
 /* Four frames in 2 x 2 from 1024 (final9): A and A2 above, B and C below,
    so the feed card keeps its 320 x 300. It was three across, 380 tall. */
-@media (min-width: 1024px) {
-  .sc__stage {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: 440px 420px;
-  }
-}
-
-.sc__f {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 0;
-  padding: var(--s-md);
-}
-
-.sc__f + .sc__f {
-  border-top: 1px solid var(--c-steel);
-}
-
-@media (min-width: 1024px) {
-  .sc__f {
-    padding: 20px;
-  }
-
-  .sc__f + .sc__f {
-    border-top: 0;
-  }
-
-  .sc__f:nth-child(even) {
-    border-left: 1px solid var(--c-steel);
-  }
-
-  .sc__f:nth-child(n + 3) {
-    border-top: 1px solid var(--c-steel);
-  }
-}
-
-.sc__k {
-  margin: 0 0 10px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  letter-spacing: 0.04em;
-  color: var(--c-steel-lift);
-}
-
-.sc__res {
-  display: grid;
-  gap: 4px;
-  margin: 8px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.sc__row {
-  display: grid;
-  padding: 4px 8px;
-  border-radius: 6px;
-}
-
-@media (min-width: 1024px) {
-  .sc__res {
-    gap: 6px;
-    margin-top: 12px;
-  }
-
-  .sc__row {
-    padding: 8px;
-  }
-}
-
-.sc__row--flash {
-  background: rgb(240 179 35 / 10%);
-}
-
-.sc__tag {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  color: var(--c-accent-text-dark);
-}
-
-.sc__t {
-  margin: 0;
-  font-family: var(--font-offer);
-  font-size: 16px;
-  line-height: 22px;
-  color: var(--c-bone);
-}
-
-.sc__t--other {
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--c-bone); /* 16.3:1; it was steel-lift until final9 */
-}
 
 /* The organic rows' line and URL (final9): steel-lift on the dark frame,
    where the brief's steel is 2.4:1. */
-.sc__o {
-  font-family: var(--font-offer);
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--c-steel-lift);
-}
-
-.sc__u--o {
-  font-size: 11px;
-}
-
-.sc__u {
-  font-family: var(--font-offer);
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--c-steel-lift);
-}
-
-.sc__d {
-  font-family: var(--font-offer);
-  font-size: 13px;
-  line-height: 18px;
-  color: var(--c-steel-lift);
-}
-
-.sc__cursor {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--c-bone);
-}
-
-.sc__glide {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 10px;
-  white-space: nowrap;
-}
-
-.sc__clip {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  min-height: 0;
-  overflow: hidden;
-  clip-path: inset(0);
-}
-
-.sc__screen {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  box-sizing: border-box;
-  height: 100%;
-  aspect-ratio: 390 / 520;
-  padding: 14px;
-  border: 1px solid var(--c-steel);
-  border-radius: 24px;
-  background: var(--c-cream);
-}
-
-.sc__status {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--c-steel); /* 7.2:1 on cream */
-}
-
-.sc__wm {
-  margin-top: auto;
-  font-family: var(--font-quiet);
-  font-size: 22px;
-  line-height: 26px;
-  font-weight: var(--t-weight-quiet);
-  color: var(--c-base); /* 17.5:1 on cream */
-}
-
-.sc__open {
-  font-family: var(--font-offer);
-  font-size: 15px;
-  line-height: 20px;
-  color: var(--c-steel); /* 7.2:1 */
-}
-
-.sc__btn {
-  position: relative;
-  display: grid;
-  place-items: center;
-  height: 48px;
-  margin-top: 6px;
-  border-radius: 6px;
-  background: var(--c-accent-ground);
-  font-family: var(--font-quiet);
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: var(--t-weight-btn);
-  color: var(--c-asphalt); /* 9.46:1 on yellow */
-}
 
 /* The ring: 5px outside the button, drawn by stroke-dashoffset. */
-.sc__ring {
-  position: absolute;
-  inset: -6px;
-  width: calc(100% + 12px);
-  height: calc(100% + 12px);
-  overflow: visible;
-}
-
-.sc__ring rect {
-  x: 1.5px;
-  y: 1.5px;
-  width: calc(100% - 3px);
-  height: calc(100% - 3px);
-  fill: none;
-  /* The discipline's ink on the cream screen (2026-10-05): coral itself is
-     2.66:1 there, its ink 5.07. */
-  stroke: var(--disc-cream, var(--c-accent-ground));
-  stroke-width: 3px;
-  stroke-dasharray: 100;
-}
 
 /* C: the call card, and the lead card under it (final9). */
-.sc__clip--c {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-}
-
-.sc__call {
-  display: grid;
-  gap: 6px;
-  width: 100%;
-  max-width: 300px;
-  padding: var(--s-md);
-  border: 1px solid var(--c-steel);
-  border-radius: 6px;
-  background: var(--c-lit-raised);
-}
-
-.sc__call-k,
-.sc__call-s {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  color: var(--c-steel-lift); /* 5.3:1 on lit-raised */
-}
-
-.sc__call-s {
-  margin-top: 6px;
-  font-size: 13px;
-  line-height: 20px;
-  font-variant-numeric: tabular-nums;
-}
-
-.sc__call-n {
-  font-family: var(--font-offer);
-  font-size: 18px;
-  line-height: 24px;
-  color: var(--c-bone);
-}
-
-.sc__call-a {
-  font-family: var(--font-offer);
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--disc-text, var(--c-accent-text-dark)); /* coral on lit-raised, 2026-10-05 */
-}
 
 /* ---- A2, the feed card (final9) ---- */
-.sc__clip--s {
-  align-items: flex-start;
-}
-
-.sc__feed {
-  display: grid;
-  grid-template-rows: auto 160px auto auto;
-  gap: 10px;
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 320px;
-  height: 300px;
-  padding: 12px;
-  overflow: hidden;
-  border: 1px solid var(--c-steel);
-  border-radius: 6px;
-  background: var(--c-lit-raised);
-}
-
-.sc__feed-h {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.sc__feed-av {
-  flex: none;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--disc, var(--c-accent-ground));
-}
-
-.sc__feed-n {
-  font-family: var(--font-offer);
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--c-bone);
-}
-
-.sc__feed-sp {
-  margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  color: var(--c-steel-lift);
-}
 
 /* The image area: the discipline colour at 20% over the card. */
-.sc__feed-img {
-  display: grid;
-  place-items: center;
-  margin: 0 -12px;
-  background: color-mix(in srgb, var(--disc, var(--c-accent-ground)) 20%, var(--c-lit-raised));
-}
-
-.sc__feed-wm {
-  font-family: var(--font-quiet);
-  font-size: 22px;
-  line-height: 26px;
-  font-weight: var(--t-weight-quiet);
-  color: var(--c-bone);
-}
-
-.sc__feed-l {
-  font-family: var(--font-offer);
-  font-size: 13px;
-  line-height: 18px;
-  color: var(--c-steel-lift);
-}
 
 /* "Send message": a text button in the colour. Its flash is a tint behind
    the words, so the words themselves never dim. */
-.sc__feed-go {
-  justify-self: start;
-  margin-left: -6px;
-  padding: 2px 6px;
-  border-radius: 6px;
-  font-family: var(--font-offer);
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: var(--t-weight-btn);
-  color: var(--disc-text, var(--c-accent-text-dark));
-}
-
-.sc__feed-go--flash {
-  background: color-mix(in srgb, var(--disc, var(--c-accent-ground)) 18%, transparent);
-}
-
-.sc__lead-w {
-  display: grid;
-  gap: 6px;
-  width: 100%;
-  max-width: 300px;
-}
-
-.sc__lead {
-  display: grid;
-  gap: 2px;
-  padding: 12px var(--s-md);
-  border: 1px solid var(--c-steel);
-  border-radius: 6px;
-  background: var(--c-lit-raised);
-}
-
-.sc__lead-l {
-  font-family: var(--font-offer);
-  font-size: 13px;
-  line-height: 20px;
-  color: var(--c-bone);
-}
-
-.sc__lead-note {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  color: var(--c-steel-lift); /* the brief's steel is 2.4:1 on the dark frame */
-}
 
 .sc__cap {
   max-width: 90ch;

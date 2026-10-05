@@ -41,7 +41,7 @@ export const DISCIPLINES = [
     cards: [
       { title: 'Logo design', line: 'Real directions to choose between, so the mark you keep is one you picked.' },
       { title: 'Brand guidelines', line: 'Your printer, sign shop and web team all apply the mark the same way.' },
-      { title: 'Stationery', line: 'Every card, letter and email you send carries the same mark, signature included.' },
+      { title: 'Stationery', line: 'Every card, letter and envelope you send carries the same mark.' },
       { title: 'Social kit', line: 'On Advance, your business looks the same wherever people follow you.' },
       { title: 'Colour variations', line: 'Full colour, one colour, reversed. Advance.' },
       { title: 'Files', line: 'Every format your printer, sign shop and web team will ask for.' },

@@ -1,193 +1,193 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { prefersReduced } from '../site/useOnce.js';
+import React, { useRef } from 'react';
 import { THREAD } from '../../content/automation.js';
-import { HOLD, LEAVE, THRESHOLDS, halfInView, leaving } from '../artifacts/loop.js';
+import { useLoop, step, leaving } from '../artifacts/loop.js';
+import PhoneShell from '../artifacts/PhoneShell.jsx';
 import './proof.css';
 
-/* SERVICES, THE AUTOMATION BAND (the final pass, 2026-10-03; final pass 2
-   the same day). The missed-call text-back as a thread of messages in a
-   plain 360px column on the cream band, centred, between a 1px steel rule
-   above and below so it reads as a placed object: no device (the founder's
-   ruling, so BUILD-LAW rule 0 holds with the Websites band's phones), a grey
-   header line carrying the number in mono, then the bubbles. The words are
-   content/automation.js's and are written nowhere else.
+/* SERVICES, AUTOMATION: THE MISSED CALL (rebuilt 2026-10-06, the founder's
+   quality pass). Three objects on the cream band, 32px apart from 1024 and
+   stacked below, the phone first:
 
-   THE WHOLE THREAD IS PAINTED FROM THE FIRST FRAME (BUILD-LAW Motion: an
-   entrance never hides content). The typing loop runs only while the band
-   is on screen and motion is allowed: it clears the bubbles and plays them
-   back from the visible thread (the system line; 1.2s later the first sent
-   bubble; 2.5s later the reply; 1.5s later the second sent bubble; each
-   after a three-dot typing indicator in its own place, arriving over
-   400ms), holds 6s, and plays again. Off screen, the loop stops and the
-   full thread stands. With no IntersectionObserver, or on any error, the
-   full thread stays. Every message keeps its place throughout, so nothing
-   around the thread moves.
+     the phone     a PhoneShell 320 wide, a white screen: the number in a
+                   grey header, the missed-call line, then the three
+                   bubbles as built (sent in the discipline's colour with
+                   asphalt words, received grey), each after a typing
+                   indicator in its own place
+     the calendar  a 300 x 300 white card with a paper gradient and two
+                   shadows: a month grid in mono 11px with no month name or
+                   year (a picture of a calendar, not a dated claim), the
+                   booking's week highlighted, and under it Thursday's
+                   10:00 slot, which fills with the discipline's colour and
+                   "Kitchen quote, 10:00" when the thread reaches the
+                   booking, and a check draws
+     the receipt   260 wide, white, its bottom edge torn (a radial-gradient
+                   mask), four mono rows: the PAID stamp lands on the third
+                   with a 60ms overshoot, and five stars fill on the fourth
 
-   THE SYSTEM LOG, 2026-10-05 (the founder's final9). Beside the thread
-   from 1024 (under it below), a 1px steel-ruled column in mono 12px: what
-   happens around the three bubbles, each line arriving with its bubble and
-   the rest 300ms apart after the last. The time is in the discipline's ink
-   (mint ink, 5.03:1 on cream: mint itself is 2.77) and the event asphalt
-   (the brief's bone is 1.1:1 on the cream band). The caption sits under
-   both columns.
+   The final9 system log is gone: the calendar and the receipt carry what
+   it listed. The words are content/automation.js's.
 
-   ARTIFACTS REST FULL, 2026-10-06 (loop.js has the rule): the whole
-   thread and log are painted at rest, on the first paint, off screen and
-   under reduced motion. A play starts only with half the band in view: the
-   full thread wipes away over 300ms, replays, and the full state holds 6s
-   before any replay.
+   ARTIFACTS REST FULL, START SOFT (loop.js): the finished stage on the
+   first paint, off screen and under reduced motion; a play only at half
+   in view, opening with the 400ms crossfade to the first frame (what moves
+   is the `tb-x` layer; the phone, the card and the paper stay), then the
+   build, then 6s held. Motion is transform, clip-path and
+   stroke-dashoffset; nothing in the build fades.
 
    The drawn thread is a founder-ruled exception to BUILD-LAW "Real over
    drawn" until a real capture of the text-back replaces it. */
-const GAPS = [0, 1200, 2500, 1500];
-const TYPING = 800;
-const STEP = 300;
-const ALL = THREAD.lines.length;
-const LOGS = THREAD.log.length;
+
+/* When each bubble lands; its typing indicator shows for the 600ms before
+   (the system line has none). */
+const AT = [300, 1300, 2800, 3900];
+const TYPING = 600;
+const T_BOOK = 4500;
+const T_CHECK = T_BOOK + 400;
+const T_RCPT = 5400;
+const ROW_GAP = 300;
+const T_STAMP = T_RCPT + 2 * ROW_GAP + 300;
+const T_REVIEW = T_STAMP + 500;
+const T_STARS = T_REVIEW + 300;
+const STAR_GAP = 150;
+const TOTAL = T_STARS + 4 * STAR_GAP + 200 + 500;
+
+/* A generic month: 30 days from a Wednesday, five weeks. The booking's
+   week is the third, its Thursday the 16th. */
+const OFFSET = 2;
+const DAYS_IN = 30;
+const WEEK = 2;
+const THU = 3;
+const CELLS = Array.from({ length: 35 }, (_, i) => {
+  const d = i - OFFSET + 1;
+  return d >= 1 && d <= DAYS_IN ? d : null;
+});
+
+/* In by a rise and a clip from below; nothing at rest is clipped. */
+const arrive = (p, rise = 8) =>
+  p >= 1 ? undefined : { clipPath: `inset(0 0 ${(1 - p) * 100}% 0)`, transform: `translateY(${(1 - p) * rise}px)` };
+
+/* The stamp: from 1.5 to 0.94 over 180ms, then the 60ms overshoot back
+   to 1. */
+function stampScale(t) {
+  if (t < T_STAMP) return 0;
+  const e = t - T_STAMP;
+  if (e < 180) return 1.5 - 0.56 * step(e, 0, 180);
+  if (e < 240) return 0.94 + 0.06 * ((e - 180) / 60);
+  return 1;
+}
 
 export default function TextBackBand() {
   const ref = useRef(null);
-  const [shown, setShown] = useState(ALL);
-  const [typing, setTyping] = useState(-1);
-  const [logged, setLogged] = useState(LOGS);
-  const [leave, setLeave] = useState(0);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || prefersReduced() || typeof IntersectionObserver === 'undefined') return undefined;
-    let timers = [];
-    let raf = 0;
-    let busy = false;
-    let inView = false;
-    let holdUntil = 0;
-    const clear = () => {
-      timers.forEach(clearTimeout);
-      timers = [];
-      cancelAnimationFrame(raf);
-      raf = 0;
-    };
-    /* Off screen, or on any error: the full thread and log. */
-    const full = () => {
-      clear();
-      busy = false;
-      setLeave(0);
-      setTyping(-1);
-      setShown(ALL);
-      setLogged(LOGS);
-    };
-    const at = (ms, fn) => timers.push(setTimeout(fn, ms));
-    const replay = () => {
-      setLeave(0);
-      setShown(0);
-      setTyping(-1);
-      setLogged(0);
-      let t = 0;
-      const lineAt = [];
-      THREAD.lines.forEach((line, i) => {
-        t += GAPS[i];
-        lineAt.push(t);
-        if (line.kind !== 'system') at(t - TYPING, () => setTyping(i));
-        at(t, () => {
-          setTyping(-1);
-          setShown(i + 1);
-        });
-      });
-      /* The log: in step with its bubble, then 300ms apart. */
-      let l = 0;
-      THREAD.log.forEach((entry, i) => {
-        l = entry.with !== undefined ? lineAt[entry.with] : l + STEP;
-        at(l, () => setLogged(i + 1));
-      });
-      at(Math.max(t, l), () => {
-        /* Every timer of this play has fired. */
-        timers = [];
-        busy = false;
-        holdUntil = performance.now() + HOLD;
-        if (inView) play();
-      });
-    };
-    /* A play: the full state wipes away over 300ms, then the thread replays. */
-    const play = () => {
-      try {
-        if (busy) return;
-        const now = performance.now();
-        if (now < holdUntil) {
-          at(holdUntil - now, () => {
-            timers = [];
-            if (inView) play();
-          });
-          return;
-        }
-        busy = true;
-        const t0 = now;
-        const tick = (n) => {
-          const p = (n - t0) / LEAVE;
-          if (p >= 1) {
-            raf = 0;
-            replay();
-            return;
-          }
-          setLeave(p);
-          raf = requestAnimationFrame(tick);
-        };
-        raf = requestAnimationFrame(tick);
-      } catch {
-        full();
-      }
-    };
-    const io = new IntersectionObserver(
-      (entries) => {
-        const e = entries[entries.length - 1];
-        if (halfInView(e)) {
-          inView = true;
-          if (!busy && !timers.length) play();
-          return;
-        }
-        inView = false;
-        if (!e.isIntersecting) full();
-      },
-      { threshold: THRESHOLDS }
-    );
-    io.observe(el);
-    return () => {
-      io.disconnect();
-      clear();
-    };
-  }, []);
+  const [t, , , leave] = useLoop(ref, TOTAL);
+  const { lines, calendar, receipt } = THREAD;
+  const pBook = step(t, T_BOOK, 400);
+  const pCheck = step(t, T_CHECK, 300);
+  const stamp = stampScale(t);
 
   return (
-    <figure className="tb" ref={ref} data-artifact="TextBackBand" {...leaving(leave)}>
-      <div className="tb__cols">
-        <div className="tb__col">
-          <p className="tb__head">{THREAD.number}</p>
-          <ol className="tb__thread">
-            {THREAD.lines.map((line, i) => (
-              <li
-                key={i}
-                className={`tb__msg tb__msg--${line.kind}`}
-                data-shown={i < shown ? 'true' : 'false'}
-                data-typing={i === typing ? 'true' : 'false'}
-              >
-                <span className="tb__text">{line.text}</span>
-                {line.kind === 'system' ? null : (
-                  <span className="tb__typing" aria-hidden="true">
-                    <span />
-                    <span />
-                    <span />
-                  </span>
-                )}
+    <figure className="tb" data-artifact="TextBackBand" {...leaving(leave)}>
+      <div className="tb__stage" ref={ref}>
+        <PhoneShell width={320} screen="#ffffff" className="tb__phone">
+          <div className="tb__screen">
+            <p className="tb__status" aria-hidden="true">
+              9:41
+            </p>
+            <p className="tb__head">{THREAD.number}</p>
+            <ol className="tb__thread">
+              {lines.map((line, i) => {
+                const typingK =
+                  line.kind === 'system' ? 0 : step(t, AT[i] - TYPING, 160) * (1 - step(t, AT[i] - 160, 160));
+                return (
+                  <li key={i} className={`tb__msg tb__msg--${line.kind}`}>
+                    <span className="tb__text tb-x" style={arrive(step(t, AT[i], 400))}>
+                      {line.text}
+                    </span>
+                    {line.kind === 'system' ? null : (
+                      <span className="tb__typing" aria-hidden="true" style={{ transform: `scale(${typingK})` }}>
+                        <span />
+                        <span />
+                        <span />
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        </PhoneShell>
+
+        <div className="tb__cal" role="group" aria-label="Calendar">
+          <ol className="tb__cal-grid" aria-hidden="true">
+            {calendar.days.map((d) => (
+              <li className="tb__cal-dh" key={d}>
+                {d}
               </li>
             ))}
+            {CELLS.map((d, i) => {
+              const row = Math.floor(i / 7);
+              const booked = row === WEEK && i % 7 === THU;
+              return (
+                <li
+                  className={`tb__cal-d${row === WEEK ? ' tb__cal-d--wk' : ''}${booked ? ' tb__cal-d--bk' : ''}`}
+                  key={i}
+                >
+                  {booked ? <span className="tb__cal-dot tb-x" style={{ transform: `scale(${pBook})` }} /> : null}
+                  <span className="tb__cal-n">{d ?? ''}</span>
+                </li>
+              );
+            })}
+          </ol>
+          <div className="tb__slot">
+            <span className="tb__slot-t">{calendar.slot}</span>
+            <span className="tb__slot-box">
+              <span
+                className="tb__book tb-x"
+                style={pBook >= 1 ? undefined : { clipPath: `inset(0 ${(1 - pBook) * 100}% 0 0)` }}
+              >
+                <svg className="tb__check" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                  <path d="M3 8.5 L6.5 12 L13 4.5" pathLength="100" style={{ strokeDashoffset: 100 * (1 - pCheck) }} />
+                </svg>
+                <span>{calendar.booking}</span>
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div className="tb__rc-w">
+          <ol className="tb__rc" aria-label="Receipt">
+            {receipt.map((r, i) => {
+              const at = r.stars ? T_REVIEW : T_RCPT + i * ROW_GAP;
+              return (
+                <li className="tb__rc-row" key={r.label}>
+                  <span className="tb__rc-in tb-x" style={arrive(step(t, at, 300), 6)}>
+                    <span className="tb__rc-l">{r.label}</span>
+                    <span className="tb__rc-t">{r.time}</span>
+                  </span>
+                  {r.stamp ? (
+                    <span className="tb__stamp tb-x" style={{ transform: `rotate(-12deg) scale(${stamp})` }}>
+                      {r.stamp}
+                    </span>
+                  ) : null}
+                  {r.stars ? (
+                    <span className="tb__stars" role="img" aria-label={`${r.stars} stars`}>
+                      {Array.from({ length: r.stars }, (_, s) => {
+                        const k = step(t, T_STARS + s * STAR_GAP, 200);
+                        return (
+                          <span className="tb__star" key={s}>
+                            <span
+                              className="tb__star-f tb-x"
+                              style={k >= 1 ? undefined : { clipPath: `inset(0 ${(1 - k) * 100}% 0 0)` }}
+                            />
+                          </span>
+                        );
+                      })}
+                    </span>
+                  ) : null}
+                </li>
+              );
+            })}
           </ol>
         </div>
-        <ol className="tb__log">
-          {THREAD.log.map(({ time, event }, i) => (
-            <li className="tb__log-l" key={`${time} ${event}`} data-shown={i < logged ? 'true' : 'false'}>
-              <span className="tb__log-t">{time}</span>
-              <span className="tb__log-e">{event}</span>
-            </li>
-          ))}
-        </ol>
       </div>
       <figcaption className="tb__cap">{THREAD.caption}</figcaption>
     </figure>

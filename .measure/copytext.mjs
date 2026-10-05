@@ -189,7 +189,11 @@ for (const [name, on] of Object.entries(byName)) {
   report.artifacts[name] = Object.entries(on).map(([r, n]) => (n > 1 ? `${r} x${n}` : r)).join(', ');
   if (Object.keys(on).length > 1 || Object.values(on).some((n) => n > 1)) report.deviceFailures.push(`component ${name}: ${report.artifacts[name]}`);
 }
-const byDevice = pagesOf((name, device) => (device && device !== 'browser frame' ? device : null));
+/* Containers are exempt (BUILD-LAW rule 0): the browser frame, and the
+   phone silhouette since 2026-10-06 (the founder's quality pass), which may
+   appear wherever a screen is shown. */
+const CONTAINERS = new Set(['browser frame', 'phone silhouette']);
+const byDevice = pagesOf((name, device) => (device && !CONTAINERS.has(device) ? device : null));
 for (const [device, on] of Object.entries(byDevice)) {
   if (Object.keys(on).length > 1 || Object.values(on).some((n) => n > 1))
     report.deviceFailures.push(`device ${device}: ${Object.entries(on).map(([r, n]) => `${r} x${n}`).join(', ')}`);

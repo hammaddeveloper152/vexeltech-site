@@ -1,18 +1,20 @@
 /* Zee: replace with the exact messages the system sends before launch. */
 
-/* THE MISSED-CALL TEXT-BACK THREAD on /services, Automation (the final
-   pass, 2026-10-03). The founder's lines, and the only place they are
-   written. The thread is drawn in type (TextBackBand.jsx), a founder-ruled
-   exception to BUILD-LAW "Real over drawn" until a real capture of the
-   text-back replaces it.
+/* THE MISSED CALL on /services, Automation (the final pass, 2026-10-03;
+   rebuilt 2026-10-06, the founder's quality pass). The founder's lines,
+   and the only place they are written. The stage is drawn in type and CSS
+   (TextBackBand.jsx): a phone with the thread, a calendar and a receipt.
 
    `number` is the business line the thread is with; `kind` is who speaks:
    the system line, sent (the business, in the discipline's colour) or
    received (the caller).
 
-   THE SYSTEM LOG, 2026-10-05 (the founder's final9): what happens around
-   the thread, beside it. Each entry's `with` is the thread line it lands
-   with; entries without one follow the last, 300ms apart. */
+   THE SYSTEM LOG of final9 is gone with the two-column layout: the
+   calendar carries the booking and the receipt the events after it.
+
+   `calendar.booking` is the block that fills Thursday at 10:00 when the
+   thread reaches the booking. `receipt` is the rows, in order, with the
+   one that takes the PAID stamp and the one that takes the stars. */
 export const THREAD = {
   number: '(385) 284-3265',
   lines: [
@@ -21,15 +23,16 @@ export const THREAD = {
     { kind: 'received', text: 'Hi, need a quote for a kitchen remodel' },
     { kind: 'sent', text: 'Got it. Sending a couple of times for a quick call. Watch for a text from this number.' },
   ],
-  log: [
-    { time: '2:14 PM', event: 'Missed call', with: 0 },
-    { time: '2:14 PM', event: 'Text sent, 4 seconds', with: 1 },
-    { time: '2:16 PM', event: 'Reply received', with: 2 },
-    { time: '2:16 PM', event: 'Booking link sent', with: 3 },
-    { time: '2:19 PM', event: 'Booked, Thu 10:00' },
-    { time: 'Thu 9:00', event: 'Reminder sent' },
-    { time: 'Thu 11:30', event: 'Invoice sent' },
-    { time: 'Sat 10:00', event: 'Review request sent' },
+  calendar: {
+    days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    slot: '10:00',
+    booking: 'Kitchen quote, 10:00',
+  },
+  receipt: [
+    { label: 'Quote sent', time: 'Thu 11:30' },
+    { label: 'Invoice sent', time: 'Fri 9:00' },
+    { label: 'Paid', time: 'Fri 14:12', stamp: 'PAID' },
+    { label: 'Review request', time: 'Sat 10:00', stars: 5 },
   ],
   caption: 'One missed call, handled end to end. Replies in under sixty seconds, every time.',
 };

@@ -1,0 +1,30 @@
+/* THE PHONE SILHOUETTE (PhoneShell.jsx, 2026-10-06). The Websites phones'
+   proportions, scaled from the width: at 300px the outer radius is 44, the
+   bezel 10 and the screen radius 34; the screen keeps 390:844. */
+.phs {
+  /* --phs-k is the width over 300, set unitless by PhoneShell.jsx (CSS
+     cannot divide a length by a length everywhere yet). */
+  position: relative;
+  box-sizing: border-box;
+  width: var(--phs-w);
+  max-width: 100%;
+  padding: calc(10px * var(--phs-k));
+  border-radius: calc(44px * var(--phs-k));
+  background: var(--c-base);
+}
+
+.phs--shadow {
+  box-shadow:
+    0 2px 4px rgb(0 0 0 / 12%),
+    0 24px 48px rgb(0 0 0 / 18%);
+}
+
+.phs__screen {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 390 / 844;
+  border-radius: calc(34px * var(--phs-k));
+  background: var(--phs-screen);
+  /* The screen is a clipping context for whatever plays on it. */
+  clip-path: inset(0 round calc(34px * var(--phs-k)));
+}

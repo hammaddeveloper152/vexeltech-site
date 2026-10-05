@@ -1,0 +1,535 @@
+/* ==== SERVICES, MARKETING: FROM SEARCH TO CALL, A PHONE AND A LEDGER ====
+   (SearchToCall.jsx, 2026-10-06, the founder's quality pass). The phone
+   silhouette is phone-shell.css's. Every pair is measured in the
+   component's comment and DESIGN.md. */
+
+.stc__stage {
+  display: grid;
+  gap: var(--s-xl);
+  justify-items: center;
+}
+
+/* The phone and the column beside it, centred as one composition. */
+@media (min-width: 1024px) {
+  .stc__stage {
+    grid-template-columns: 320px 360px;
+    justify-content: center;
+    column-gap: 96px;
+    align-items: center;
+  }
+}
+
+/* The soft start: what the stage holds fades through its first frame
+   (loop.js); the phone's silhouette stays. */
+.stc[data-leaving] .stc__fade {
+  opacity: var(--fade, 1);
+}
+
+.stc__phone {
+  width: min(100%, 320px);
+}
+
+/* ---- The screens: stacked, crossfaded ---------------------------------- */
+.stc__screens {
+  position: absolute;
+  inset: 0;
+}
+
+.stc__scr {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px 18px;
+  color: var(--c-asphalt);
+}
+
+.stc__status {
+  align-self: center;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--c-steel); /* 7.20:1 on cream */
+}
+
+/* Search ------------------------------------------------------------------ */
+.stc__bar {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin: 14px 0 12px;
+  padding: 0 14px;
+  border: 1px solid rgb(23 24 26 / 18%);
+  border-radius: 20px;
+  background: var(--c-shop-white);
+  font-family: var(--font-offer);
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--c-asphalt); /* 17.77:1 on white */
+}
+
+.stc__caret {
+  margin-left: 1px;
+}
+
+.stc__res {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stc__ad,
+.stc__org {
+  position: relative;
+  display: grid;
+  gap: 3px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgb(23 24 26 / 10%);
+}
+
+.stc__ad-k {
+  font-family: var(--font-offer);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  color: var(--c-asphalt);
+}
+
+.stc__site {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* The favicon: a 16px disc in the discipline colour. */
+.stc__fav {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--disc, var(--c-accent-ground));
+}
+
+.stc__url {
+  font-family: var(--font-offer);
+  font-size: 12px;
+  line-height: 16px;
+  color: #1a7f37; /* Google's green, 4.50:1 on cream */
+}
+
+.stc__title {
+  font-family: var(--font-offer);
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--c-asphalt); /* 15.75:1; the brief's bone is 1.1:1 on cream */
+}
+
+.stc__title--org {
+  color: #1a0dab; /* Google's link blue, 11.02:1 on cream */
+}
+
+.stc__copy {
+  font-family: var(--font-offer);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--c-steel); /* 7.20:1 */
+}
+
+.stc__rate {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.stc__stars {
+  display: flex;
+  gap: 2px;
+}
+
+/* A star cut by clip-path from a yellow square: decorative, so it is not
+   held to a contrast floor; the rating's figure beside it is. */
+.stc__star {
+  width: 12px;
+  height: 12px;
+  background: var(--c-accent-ground);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.stc__rate-n {
+  font-family: var(--font-offer);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--c-steel);
+}
+
+/* A tap: a soft disc that grows and fades (transform and opacity). */
+.stc__ripple {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  height: 120px;
+  margin: -60px 0 0 -60px;
+  border-radius: 50%;
+  background: var(--c-asphalt);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The landing's chrome: the address bar and the first panel. */
+.stc__addr {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  margin-top: 12px;
+  padding: 0 12px;
+  border-radius: 16px;
+  background: rgb(23 24 26 / 6%);
+}
+
+.stc__addr-u {
+  font-family: var(--font-offer);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--c-steel); /* 6.3:1 on the bar's tint */
+}
+
+.stc__panel {
+  display: grid;
+  place-items: center;
+  flex: 1;
+  margin: 14px -16px 0;
+  background: color-mix(in srgb, var(--disc, var(--c-accent-ground)) 18%, var(--c-cream));
+}
+
+.stc__panel-wm {
+  font-family: var(--font-quiet);
+  font-size: 26px;
+  line-height: 30px;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-base);
+}
+
+/* The caller's disc. */
+.stc__avatar {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  margin-top: 72px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--disc, var(--c-accent-ground)) 22%, var(--c-cream));
+  font-family: var(--font-quiet);
+  font-size: 32px;
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
+  color: var(--disc-cream, var(--c-asphalt));
+}
+
+.stc__ripple--disc {
+  left: 50%;
+  top: 32px;
+  width: 96px;
+  height: 96px;
+  margin: -48px 0 0 -48px;
+  background: var(--c-shop-white);
+}
+
+/* Landing ------------------------------------------------------------------ */
+.stc__wm {
+  margin-top: 18px;
+  font-family: var(--font-quiet);
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-base); /* 17.43:1 on cream */
+}
+
+.stc__open {
+  margin-top: 8px;
+  font-family: var(--font-offer);
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--c-steel);
+}
+
+.stc__btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 48px;
+  margin-top: 16px;
+  border-radius: 6px;
+  background: var(--c-accent-ground);
+  font-family: var(--font-quiet);
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: var(--t-weight-btn);
+  color: var(--c-asphalt); /* 9.46:1 on yellow */
+}
+
+.stc__btn .stc__ripple {
+  overflow: hidden;
+}
+
+/* The ring: drawn 6px outside the button by stroke-dashoffset, in the
+   discipline's ink on the cream screen (coral ink, 5.07:1). */
+.stc__ring {
+  position: absolute;
+  inset: -6px;
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  overflow: visible;
+}
+
+.stc__ring rect {
+  x: 1.5px;
+  y: 1.5px;
+  width: calc(100% - 3px);
+  height: calc(100% - 3px);
+  fill: none;
+  stroke: var(--disc-cream, var(--c-accent-draw-light));
+  stroke-width: 3px;
+  stroke-dasharray: 100;
+}
+
+/* Call --------------------------------------------------------------------- */
+.stc__scr--call {
+  align-items: center;
+  text-align: center;
+}
+
+.stc__call-n {
+  margin-top: 20px;
+  font-family: var(--font-quiet);
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-base); /* 17.43:1 */
+}
+
+.stc__call-s {
+  display: grid;
+  margin-top: 8px;
+}
+
+.stc__call-k,
+.stc__call-t {
+  grid-area: 1 / 1;
+  font-family: var(--font-offer);
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--c-steel); /* 7.20:1 */
+}
+
+.stc__call-t {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.stc__keys {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: auto;
+  padding: 0 24px 12px;
+  box-sizing: border-box;
+}
+
+.stc__key {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+.stc__disc {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+
+.stc__disc--no {
+  background: #b4291f; /* 5.68:1 against the cream screen */
+}
+
+.stc__disc--yes {
+  background: #1e7a46; /* 4.74:1 against the cream screen */
+}
+
+.stc__key-l {
+  font-family: var(--font-offer);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--c-steel);
+}
+
+/* ---- The right column: the feed card above the ledger ----------------- */
+.stc__side {
+  display: grid;
+  gap: var(--s-xl);
+  justify-items: center;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .stc__side {
+    justify-items: start;
+  }
+}
+
+.stc__feed {
+  display: grid;
+  grid-template-rows: auto 160px auto auto;
+  gap: 10px;
+  box-sizing: border-box;
+  width: min(100%, 360px);
+  padding: 12px;
+  overflow: hidden;
+  border: 1px solid var(--c-steel);
+  border-radius: 8px;
+  background: var(--c-lit-raised);
+  box-shadow:
+    0 2px 4px rgb(0 0 0 / 20%),
+    0 18px 40px rgb(0 0 0 / 30%);
+}
+
+.stc__feed-h {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stc__feed-av {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--disc, var(--c-accent-ground));
+}
+
+.stc__feed-n {
+  font-family: var(--font-offer);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-bone); /* 11.44:1 on lit-raised */
+}
+
+.stc__feed-sp {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--c-steel-lift); /* 5.30:1 */
+}
+
+.stc__feed-img {
+  display: grid;
+  place-items: center;
+  margin: 0 -12px;
+  background: color-mix(in srgb, var(--disc, var(--c-accent-ground)) 20%, var(--c-lit-raised));
+}
+
+.stc__feed-wm {
+  font-family: var(--font-quiet);
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-bone); /* 8.68:1 on the coral image area */
+}
+
+.stc__feed-l {
+  font-family: var(--font-offer);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--c-steel-lift); /* 5.30:1 */
+}
+
+/* The button in Meta's brand blue with a white label, 4.82:1. */
+.stc__feed-go {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 36px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #0866ff;
+  font-family: var(--font-offer);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  color: var(--c-shop-white);
+}
+
+/* Its press: a dark tint over the button, risen and gone in 360ms. */
+.stc__feed-press {
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 22%);
+  opacity: 0;
+}
+
+/* The ledger: a white sheet on the dark band, paper-lit and shadowed. */
+.stc__ledger-w {
+  display: grid;
+  gap: var(--s-sm);
+  width: min(100%, 360px);
+}
+
+.stc__ledger {
+  display: grid;
+  margin: 0;
+  padding: 8px 18px;
+  list-style: none;
+  border-radius: 4px;
+  background: linear-gradient(160deg, #ffffff 0%, #f7f6f2 100%);
+  box-shadow:
+    0 2px 4px rgb(0 0 0 / 12%),
+    0 18px 40px rgb(0 0 0 / 18%);
+}
+
+.stc__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-md);
+  padding: 11px 0;
+  border-bottom: 1px solid rgb(23 24 26 / 10%);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.stc__row:last-child {
+  border-bottom: 0;
+}
+
+.stc__row-k {
+  color: var(--c-steel); /* 8.12:1 on white */
+}
+
+.stc__row-v {
+  text-align: right;
+  color: var(--c-asphalt); /* 17.77:1 */
+}
+
+.stc__row-v--fig {
+  font-weight: 700;
+  color: var(--disc-cream, var(--c-accent-text-light)); /* coral ink, 5.71:1 on white */
+}
+
+.stc__note {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--c-steel-lift); /* 7.30:1 on the band */
+}
+
+.stc .sc__cap {
+  margin-top: var(--s-md);
+}

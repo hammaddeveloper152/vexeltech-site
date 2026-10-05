@@ -1,226 +1,261 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React from 'react';
 import { useLoop, step, lin, leaving } from './loop.js';
+import PhoneShell from './PhoneShell.jsx';
 import './artifacts.css';
+import './search-call.css';
 
-/* SERVICES, MARKETING: FROM SEARCH TO CALL, FOR THE VISITOR (2026-10-03,
-   the founder; final7 replaced every client reference). It replaced the
-   benchmark bars.
+/* SERVICES, MARKETING: FROM SEARCH TO CALL, AROUND A PHONE AND A LEDGER
+   (2026-10-06, the founder's quality pass). It replaced the four frames of
+   final9 (search, social, landing, call in 2 x 2), which replaced the three
+   of final7. No client name or capture: the business is "Your business".
 
-   One stage at the content width, 380 tall, three frames left to right
-   with a 1px steel rule between; below 1024 they stack, 280 tall each
-   (frame B 340, to hold the screen's words at their own sizes).
+     left    one phone silhouette (PhoneShell, BUILD-LAW rule 0's container),
+             320 wide, its screen cream, playing the visit as real screens:
+               search    the bar types "plumber near me"; the results
+                         draw: a Sponsored result (a 16px favicon disc in
+                         the discipline colour, the URL in Google's green
+                         #1A7F37, 4.50:1 on cream, the title in ASPHALT,
+                         not the brief's bone, which is 1.1:1 on cream, two
+                         lines of steel copy and five yellow stars cut by
+                         clip-path), then two organic rows with their
+                         titles in Google's link blue #1A0DAB (11.02:1)
+               tap       a ripple on the Sponsored result
+               landing   as built: "Your business", "Open now. Serving
+                         your area.", the yellow "Call now" and its ring,
+                         then a ripple on the button
+               call      the full-screen call: "Your business", "Incoming
+                         call", a red Decline disc and a green Accept disc
+                         (4.74 and 5.68:1 against the cream screen); Accept
+                         is pressed, and the timer counts to 0:14
+     right   the feed card (the social frame as built: the avatar in the
+             discipline colour, the image area in it at 20%), its button in
+             Meta's brand blue #0866FF with a white label (4.82:1; the
+             brief's #1877F2 is 4.23:1 with white and fails), above a lead
+             ledger: a white sheet whose mono rows land as the phone gets to
+             each step, the last "Cost per lead $31" with the figure in the
+             coral ink (5.71:1 on white), and "Illustrative figure." under
+             it. That is the one invented figure on the page, and it says so.
 
-     A  Search    "plumber near me" types; a results list draws; the first
-                  row is sponsored (a yellow mono "Sponsored", "Your
-                  business", "yourbusiness.com", "The one line that makes
-                  them call."), the other two read "Someone else."; a 12px
-                  bone disc moves to the sponsored row, which flashes yellow
-                  at 10% for 200ms.
-     B  Landing   the sponsored title glides into frame B over a plain phone
-                  screen: a 390:520 cream rectangle, radius 24, a steel
-                  hairline, no bezel, no capture. On it a 12px steel status
-                  line, "Your business" at 22px in black, "Open now. Serving
-                  your area." at 15px, and a 48px yellow "Call now", round
-                  which a yellow ring draws. The words are set at their own
-                  sizes in the rectangle, never scaled (BUILD-LAW Type floor).
-     C  Call      a call card rises: "Incoming call", "Your business", a
-                  yellow "Accept"; 1.2s later "Answered, 0:00" counts to 0:14.
-
-   About 7.5s, hold, rest, loop (loop.js). The URL and the steel lines on
-   the dark ground are steel-lift (steel is 2.4:1 there). Under the stage,
-   one line with the figures and their source. The stage is a picture,
-   aria-hidden; the line under it is the content.
-
-   FOUR FRAMES, 2026-10-05 (the founder's final9). In 2 x 2 from 1024
-   (A, A2 / B, C), stacked below, so the feed card keeps its 320 x 300.
-
-     A   the results list has three organic rows under the sponsored one,
-         each "Someone else." in bone 14px, "4.8 stars. Open now." at 12px
-         and a URL at 11px (steel-lift: steel is 2.4:1 on the dark frame).
-     A2  Social, new: a feed card in the dark frame style. A 28px disc in
-         the discipline colour and "Your business" in bone 14px, a mono
-         "Sponsored", an image area in the colour at 20% with "Your
-         business" at 22px, "The one line that makes them message." at
-         13px and a "Send message" text button in the colour. The cursor
-         disc moves to it and it flashes.
-     C   after the count, a lead card slides in under the call card: mono
-         "Lead logged", "Source: Google Ads", "Call, 0:14", "Cost per lead:
-         $31", and under it, mono 11px, "Illustrative figure." It is the
-         one invented figure on the page, and it says so.
-
-   Each new step starts 300ms after the one before. About 10.5s, hold,
-   rest, loop (loop.js). */
+   Screens change by crossfade, never a snap. Each step starts about 300ms
+   after the one before; the play is 9.2s, then the finished state (the
+   call answered at 0:14, the ledger full) holds (loop.js). First paint and
+   reduced motion: the finished state. The stage is a picture, aria-hidden;
+   the line under it is the content. Platform colours are real-world
+   colours, allowed here by the founder (2026-10-06). */
 const QUERY = 'plumber near me';
-const TOTAL = 10500;
-const ORGANIC = 3;
+const TOTAL = 9200;
+
+/* The timeline, in ms. */
+const T = {
+  type: 200, // the query types over 1000
+  results: 1400, // the result rows draw, 150 apart
+  tap: 2300, // the ripple on the Sponsored result
+  landing: 2900, // crossfade to the landing screen
+  ring: 3700, // the ring draws round Call now
+  tapCall: 4400, // the ripple on Call now
+  call: 5000, // crossfade to the call screen
+  accept: 5900, // Accept is pressed
+  timer: 6300, // the timer counts to 0:14 over 1400
+  feedTap: 1700, // the feed card's button is pressed
+};
+/* The ledger's rows land with the phone's steps. */
+const LEDGER = [
+  { k: 'Search', v: 'plumber near me', at: 1300 },
+  { k: 'Click', v: 'Sponsored, position 1', at: 2400 },
+  { k: 'Landing', v: '0:04 on page', at: 4500 },
+  { k: 'Call', v: '0:14, answered', at: 7800 },
+  { k: 'Cost per lead', v: '$31', at: 8100, figure: true },
+];
 
 const wipe = (k) => ({ clipPath: `inset(0 ${(1 - k) * 100}% 0 0)` });
+/* A screen's opacity: it fades in at `from` and out at `to`, 300ms each. */
+const screen = (t, from, to) =>
+  Math.min(from === null ? 1 : step(t, from, 300), to === null ? 1 : 1 - step(t, to, 300));
+/* A tap: a ripple that grows and fades, 450ms. */
+const ripple = (t, at) => {
+  const k = lin(t, at, 450);
+  return {
+    transform: `scale(${0.2 + k * 0.9})`,
+    opacity: k > 0 && k < 1 ? 0.2 * (1 - k) : 0,
+  };
+};
+
+function Stars() {
+  return (
+    <span className="stc__stars" aria-hidden="true">
+      {[0, 1, 2, 3, 4].map((i) => (
+        <span className="stc__star" key={i} />
+      ))}
+    </span>
+  );
+}
 
 export default function SearchToCall() {
-  const ref = useRef(null);
-  const frameA = useRef(null);
-  const rowT = useRef(null);
-  const glide = useRef(null);
-  const frameS = useRef(null);
-  const sendBtn = useRef(null);
+  const ref = React.useRef(null);
   const [t, , , leave] = useLoop(ref, TOTAL);
-  const [geo, setGeo] = useState({ gx: 0, gy: 0, cx: 0, cy: 0, ox: 0, oy: 0, sx: 0, sy: 0, so: 0, sp: 0 });
-
-  /* Where the glider starts (over the sponsored title) and where the
-     cursor goes, measured from the layout, again on every resize. */
-  useLayoutEffect(() => {
-    const measure = () => {
-      const a = frameA.current;
-      const r = rowT.current;
-      const g = glide.current;
-      if (!a || !r || !g) return;
-      const ra = a.getBoundingClientRect();
-      const rr = r.getBoundingClientRect();
-      /* The glider's resting box, without its transform. */
-      const gx0 = g.offsetLeft;
-      const gy0 = g.offsetTop;
-      const host = g.offsetParent.getBoundingClientRect();
-      /* The social frame's cursor: from its lower right to the button. */
-      const fs = frameS.current;
-      const sb = sendBtn.current;
-      const rs = fs ? fs.getBoundingClientRect() : ra;
-      const rb = sb ? sb.getBoundingClientRect() : rr;
-      setGeo({
-        gx: rr.left - host.left - gx0,
-        gy: rr.top - host.top - gy0,
-        cx: rr.right - ra.left - 24,
-        cy: rr.top - ra.top + rr.height / 2 - 6,
-        ox: ra.width - 32,
-        oy: ra.height - 32,
-        sx: rb.left - rs.left + rb.width / 2 - 6,
-        sy: rb.top - rs.top + rb.height / 2 - 6,
-        so: rs.width - 32,
-        sp: rs.height - 32,
-      });
-    };
-    measure();
-    const ro = new ResizeObserver(measure);
-    if (ref.current) ro.observe(ref.current);
-    if (document.fonts) document.fonts.ready.then(measure);
-    return () => ro.disconnect();
-  }, []);
-
-  const typed = QUERY.slice(0, Math.round(lin(t, 200, 1000) * QUERY.length));
-  const pc = step(t, 1900, 600);
-  const flash = t >= 2550 && t < 2750;
-  /* A2, from 300ms after A's flash. */
-  const pFeed = step(t, 3050, 500);
-  const ps = step(t, 3850, 600);
-  const sFlash = t >= 4450 && t < 4650;
-  /* B and C, 300ms after A2 ends; then the lead card 300ms after the count. */
-  const pg = step(t, 4950, 600);
-  const pShot = step(t, 5350, 700);
-  const pRing = step(t, 6250, 600);
-  const pCall = step(t, 6950, 500);
-  const secs = Math.round(lin(t, 8250, 1200) * 14);
-  const pLead = step(t, 9750, 500);
+  const typed = QUERY.slice(0, Math.round(lin(t, T.type, 1000) * QUERY.length));
+  const secs = Math.round(lin(t, T.timer, 1400) * 14);
+  /* "Incoming call" gives way to the timer over 300ms once Accept is
+     pressed; the feed button's press is a tint that rises and falls. */
+  const pOut = step(t, T.accept + 150, 150);
+  const pIn = step(t, T.accept + 300, 150);
+  /* A screen or a line at opacity 0 is not rendered at all, so nothing
+     hidden sits in the page at rest (BUILD-LAW Motion). */
+  const oSearch = screen(t, null, T.landing);
+  const oLand = screen(t, T.landing, T.call);
+  const oCall = screen(t, T.call, null);
+  const pFeedTap = Math.sin(Math.PI * lin(t, T.feedTap, 360));
 
   return (
-    <figure className="sc" ref={ref} data-artifact="SearchToCall" {...leaving(leave)}>
-      <div className="sc__stage" aria-hidden="true">
-        <div className="sc__f sc__f--a" ref={frameA}>
-          <p className="sc__k">Search</p>
-          <p className="sc__field">
-            <span>{typed}</span>
-            <span className="cs-caret" />
-          </p>
-          <ol className="sc__res">
-            <li className={`sc__row sc__row--ad${flash ? ' sc__row--flash' : ''}`} style={wipe(step(t, 1300, 400))}>
-              <span className="sc__tag">Sponsored</span>
-              <span className="sc__t" ref={rowT}>
-                Your business
-              </span>
-              <span className="sc__u">yourbusiness.com</span>
-              <span className="sc__d">The one line that makes them call.</span>
-            </li>
-            {Array.from({ length: ORGANIC }, (_, i) => (
-              <li className="sc__row sc__row--org" key={i} style={wipe(step(t, 1450 + i * 150, 400))}>
-                <span className="sc__t sc__t--other">Someone else.</span>
-                <span className="sc__o">4.8 stars. Open now.</span>
-                <span className="sc__u sc__u--o">someoneelse.com</span>
-              </li>
-            ))}
-          </ol>
-          <span
-            className="sc__cursor"
-            style={{ transform: `translate(${geo.ox + (geo.cx - geo.ox) * pc}px, ${geo.oy + (geo.cy - geo.oy) * pc}px)` }}
-          />
+    <figure className="sc stc" ref={ref} data-artifact="SearchToCall" {...leaving(leave)}>
+      <div className="stc__stage" aria-hidden="true">
+        <div className="stc__phone">
+          <PhoneShell width={320} screen="var(--c-cream)">
+            <div className="stc__fade stc__screens">
+              {/* SEARCH */}
+              {oSearch > 0 ? (
+                <div className="stc__scr stc__scr--search" style={{ opacity: oSearch }}>
+                  <span className="stc__status">9:41</span>
+                  <p className="stc__bar">
+                    <span className="stc__q">{typed}</span>
+                    <span className="cs-caret stc__caret" />
+                  </p>
+                  <ol className="stc__res">
+                    <li className="stc__ad" style={wipe(step(t, T.results, 400))}>
+                      <span className="stc__ad-k">Sponsored</span>
+                      <span className="stc__site">
+                        <span className="stc__fav" />
+                        <span className="stc__url">yourbusiness.com</span>
+                      </span>
+                      <span className="stc__title">Your business</span>
+                      <span className="stc__copy">The one line that makes them call. Open now, serving your area.</span>
+                      <span className="stc__rate">
+                        <Stars />
+                        <span className="stc__rate-n">4.8</span>
+                      </span>
+                      <span className="stc__ripple" style={ripple(t, T.tap)} />
+                    </li>
+                    {[0, 1].map((i) => (
+                      <li className="stc__org" key={i} style={wipe(step(t, T.results + 150 * (i + 1), 400))}>
+                        <span className="stc__url">someoneelse.com</span>
+                        <span className="stc__title stc__title--org">Someone else.</span>
+                        <span className="stc__copy">4.8 stars. Open now.</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              ) : null}
+
+              {/* LANDING */}
+              {oLand > 0 ? (
+                <div className="stc__scr stc__scr--land" style={{ opacity: oLand }}>
+                  <span className="stc__status">9:41</span>
+                  {/* The browser's address bar, and the page's first panel in
+                    the discipline colour at 18%: the landing page's chrome,
+                    no claim in it. */}
+                  <span className="stc__addr">
+                    <span className="stc__fav" />
+                    <span className="stc__addr-u">yourbusiness.com</span>
+                  </span>
+                  <span className="stc__panel">
+                    <span className="stc__panel-wm">Your business</span>
+                  </span>
+                  <span className="stc__wm">Your business</span>
+                  <span className="stc__open">Open now. Serving your area.</span>
+                  <span className="stc__btn">
+                    Call now
+                    <svg className="stc__ring" focusable="false">
+                      <rect
+                        rx="9"
+                        pathLength="100"
+                        style={{
+                          strokeDashoffset: 100 * (1 - step(t, T.ring, 600)),
+                        }}
+                      />
+                    </svg>
+                    <span className="stc__ripple" style={ripple(t, T.tapCall)} />
+                  </span>
+                </div>
+              ) : null}
+
+              {/* CALL */}
+              {oCall > 0 ? (
+                <div className="stc__scr stc__scr--call" style={{ opacity: oCall }}>
+                  <span className="stc__status">9:41</span>
+                  {/* The caller's disc, initials in the discipline's ink. */}
+                  <span className="stc__avatar">YB</span>
+                  <span className="stc__call-n">Your business</span>
+                  <span className="stc__call-s">
+                    {pOut < 1 ? (
+                      <span className="stc__call-k" style={{ opacity: 1 - pOut }}>
+                        Incoming call
+                      </span>
+                    ) : null}
+                    {pIn > 0 ? (
+                      <span className="stc__call-t" style={{ opacity: pIn }}>
+                        0:{String(secs).padStart(2, '0')}
+                      </span>
+                    ) : null}
+                  </span>
+                  <span className="stc__keys">
+                    <span className="stc__key">
+                      <span className="stc__disc stc__disc--no" />
+                      <span className="stc__key-l">Decline</span>
+                    </span>
+                    <span className="stc__key">
+                      <span
+                        className="stc__disc stc__disc--yes"
+                        style={{
+                          transform: `scale(${1 - 0.12 * Math.sin(Math.PI * lin(t, T.accept, 240))})`,
+                        }}
+                      />
+                      <span className="stc__key-l">Accept</span>
+                      <span className="stc__ripple stc__ripple--disc" style={ripple(t, T.accept)} />
+                    </span>
+                  </span>
+                </div>
+              ) : null}
+            </div>
+          </PhoneShell>
         </div>
 
-        <div className="sc__f sc__f--s" ref={frameS}>
-          <p className="sc__k">Social</p>
-          <div className="sc__clip sc__clip--s">
-            <div className="sc__feed" style={{ transform: `translateY(${(1 - pFeed) * 110}%)` }}>
-              <span className="sc__feed-h">
-                <span className="sc__feed-av" />
-                <span className="sc__feed-n">Your business</span>
-                <span className="sc__feed-sp">Sponsored</span>
-              </span>
-              <span className="sc__feed-img">
-                <span className="sc__feed-wm">Your business</span>
-              </span>
-              <span className="sc__feed-l">The one line that makes them message.</span>
-              <span className={`sc__feed-go${sFlash ? ' sc__feed-go--flash' : ''}`} ref={sendBtn}>
-                Send message
-              </span>
-            </div>
+        <div className="stc__side">
+          <div className="stc__fade stc__feed">
+            <span className="stc__feed-h">
+              <span className="stc__feed-av" />
+              <span className="stc__feed-n">Your business</span>
+              <span className="stc__feed-sp">Sponsored</span>
+            </span>
+            <span className="stc__feed-img">
+              <span className="stc__feed-wm">Your business</span>
+            </span>
+            <span className="stc__feed-l">The one line that makes them message.</span>
+            <span className="stc__feed-go">
+              Send message
+              <span className="stc__feed-press" style={{ opacity: pFeedTap }} />
+            </span>
           </div>
-          <span
-            className="sc__cursor"
-            style={{ transform: `translate(${geo.so + (geo.sx - geo.so) * ps}px, ${geo.sp + (geo.sy - geo.sp) * ps}px)` }}
-          />
-        </div>
 
-        <div className="sc__f sc__f--b">
-          <p className="sc__k">Landing</p>
-          <p className="sc__t sc__glide" ref={glide} style={{
-              transform: `translate(${geo.gx * (1 - pg)}px, ${geo.gy * (1 - pg)}px)`,
-              /* Over the sponsored title until it leaves, drawn with it. */
-              ...(t < 3000 ? wipe(step(t, 1300, 400)) : null),
-            }}
-          >
-            Your business
-          </p>
-          <div className="sc__clip">
-            <div className="sc__screen" style={{ transform: `translateY(${(1 - pShot) * 110}%)` }}>
-              <span className="sc__status">9:41</span>
-              <span className="sc__wm">Your business</span>
-              <span className="sc__open">Open now. Serving your area.</span>
-              <span className="sc__btn">
-                Call now
-                <svg className="sc__ring" focusable="false">
-                  <rect rx="9" pathLength="100" style={{ strokeDashoffset: 100 * (1 - pRing) }} />
-                </svg>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="sc__f sc__f--c">
-          <p className="sc__k">Call</p>
-          <div className="sc__clip sc__clip--c">
-            <div className="sc__call" style={{ transform: `translateY(${(1 - pCall) * 120}%)` }}>
-              <span className="sc__call-k">Incoming call</span>
-              <span className="sc__call-n">Your business</span>
-              <span className="sc__call-a">Accept</span>
-              <span className="sc__call-s" style={wipe(step(t, 8150, 300))}>
-                Answered, 0:{String(secs).padStart(2, '0')}
-              </span>
-            </div>
-            <div className="sc__lead-w" style={{ transform: `translateY(${(1 - pLead) * 160}%)` }}>
-              <div className="sc__lead">
-                <span className="sc__call-k">Lead logged</span>
-                <span className="sc__lead-l">Source: Google Ads</span>
-                <span className="sc__lead-l">Call, 0:14</span>
-                <span className="sc__lead-l">Cost per lead: $31</span>
-              </div>
-              <span className="sc__lead-note">Illustrative figure.</span>
-            </div>
+          <div className="stc__ledger-w">
+            <ol className="stc__fade stc__ledger">
+              {LEDGER.map(({ k, v, at, figure }) => {
+                const p = step(t, at, 400);
+                return (
+                  <li
+                    className="stc__row"
+                    key={k}
+                    style={{
+                      clipPath: `inset(0 0 ${(1 - p) * 100}% 0)`,
+                      transform: `translateY(${(1 - p) * 8}px)`,
+                    }}
+                  >
+                    <span className="stc__row-k">{k}</span>
+                    <span className={`stc__row-v${figure ? ' stc__row-v--fig' : ''}`}>{v}</span>
+                  </li>
+                );
+              })}
+            </ol>
+            <span className="stc__note">Illustrative figure.</span>
           </div>
         </div>
       </div>

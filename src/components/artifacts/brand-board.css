@@ -1,0 +1,441 @@
+/* ==== SERVICES, BRANDING: THE PRESENTATION BOARD (BrandYouType.jsx) =====
+   2026-10-06, the founder's quality pass. CSS mockups with depth are
+   allowed (BUILD-LAW, as amended that day): perspective, layered shadows,
+   lighting gradients, paper made of gradients and the site's grain. Only
+   transform, opacity, clip-path and stroke-dashoffset move.
+
+   Every rule is under `.by--board`, so the older `.by__*` rules in
+   artifacts.css that it shares (the field, the guide sheet's insides, the
+   palette chips, the pills) keep their values and only what differs is
+   restated here.
+   ======================================================================== */
+
+/* ---- The panel: the field, then the board -------------------------------
+
+   Below 1024 the panel stacks (as before). From 1024 to 1279 the field sits
+   above the 760 board; from 1280 they stand side by side, the field taking
+   what the board leaves (304 at 1280). */
+@media (min-width: 1024px) {
+  .by--board .by__panel {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    height: auto;
+  }
+}
+
+@media (min-width: 1280px) {
+  .by--board .by__panel {
+    grid-template-columns: minmax(0, 1fr) 760px;
+    align-items: center;
+  }
+}
+
+/* ---- The board ------------------------------------------------------------
+
+   A studio surface: the cream lit from the top left. Below 1024 a column of
+   the same objects at their own sizes; from 1024 a 760 x 560 composition. */
+.by--board .bb {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-lg);
+  padding: var(--s-lg) var(--s-md);
+  overflow: hidden;
+  background: radial-gradient(ellipse 90% 75% at 28% 0%, #fbf9f4 0%, #ebe6dc 100%);
+}
+
+@media (min-width: 1024px) {
+  .by--board .bb {
+    display: block;
+    box-sizing: border-box;
+    width: 760px;
+    height: 560px;
+    padding: 0;
+  }
+
+  .by--board .bb > * {
+    position: absolute;
+  }
+}
+
+/* ---- The sign ------------------------------------------------------------- */
+.bb__sign-wrap {
+  max-width: 100%;
+  perspective: 900px;
+}
+
+@media (min-width: 1024px) {
+  .bb__sign-wrap {
+    left: 16px;
+    top: 30px;
+    z-index: 1;
+  }
+}
+
+.bb__sign {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-sizing: border-box;
+  height: 120px;
+  padding: 0 24px;
+  overflow: hidden;
+  border-top: 2px solid color-mix(in srgb, var(--a), #fff 28%);
+  border-radius: 6px;
+  /* Unlit: A darkened. The lit face is the layer above it. */
+  background: color-mix(in srgb, var(--a), #000 42%);
+  box-shadow:
+    0 2px 4px rgb(0 0 0 / 12%),
+    0 24px 32px -6px rgb(0 0 0 / 26%);
+  transform: rotateX(6deg);
+  transform-origin: 50% 100%;
+}
+
+/* The lit face: two stops, A to A at 86%. It only ever darkens A, so B
+   reads at every point of it on all five sets. */
+.bb__sign-lit {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, var(--a) 0%, color-mix(in srgb, var(--a), #000 14%) 100%);
+}
+
+/* The sheen that crosses once as the sign lights. Transient: gone at rest. */
+.bb__sign-sheen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 9%), transparent);
+  transition: opacity 200ms linear;
+  pointer-events: none;
+}
+
+/* The mark on the sign: a B square with A initials, drawn. */
+.bb__mark {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
+  clip-path: inset(0 round 16px);
+  color: var(--a);
+}
+
+.bb__mark-line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.bb__mark-line rect {
+  fill: none;
+  stroke: var(--b);
+  stroke-width: 2px;
+  stroke-dasharray: 100;
+}
+
+.bb__mark-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--b);
+}
+
+.bb__mark-ini {
+  position: relative;
+  display: block;
+  font-family: var(--font-quiet);
+  font-size: 30px;
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: 0.02em;
+}
+
+/* The wordmark, lettered on: B with a 1px darker shadow under each stroke. */
+.bb__sign-word {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  font-family: var(--font-quiet);
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--b);
+  text-shadow: 0 1px 0 color-mix(in srgb, var(--a), #000 55%);
+}
+
+.bb__caret {
+  height: 0.8em;
+  background: var(--b);
+}
+
+/* ---- Shadows that arrive with what lands ---------------------------------- */
+.bb__shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  box-shadow:
+    0 2px 4px rgb(0 0 0 / 12%),
+    0 18px 40px rgb(0 0 0 / 18%);
+  pointer-events: none;
+}
+
+.bb__shadow--tile {
+  border-radius: 16px;
+}
+
+/* Paper: the site's grain over a gradient, multiplied in. */
+.bb__card::after,
+.bb__sheet::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: var(--grain);
+  opacity: 0.09;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* ---- The sheet ------------------------------------------------------------ */
+.bb__sheet-slot {
+  position: relative;
+  width: 240px;
+  height: 160px;
+  flex: none;
+}
+
+@media (min-width: 1024px) {
+  .bb__sheet-slot {
+    right: 16px;
+    top: 16px;
+    z-index: 2;
+  }
+}
+
+.by--board .bb__sheet {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(165deg, #ffffff 0%, #f3f1eb 100%);
+  box-shadow: none;
+}
+
+/* ---- The cards ------------------------------------------------------------ */
+.bb__cards {
+  position: relative;
+  width: min(100%, 380px);
+  height: 272px;
+  flex: none;
+}
+
+@media (min-width: 1024px) {
+  .bb__cards {
+    left: 20px;
+    top: 196px;
+    width: 440px;
+    height: 220px;
+    z-index: 3;
+  }
+}
+
+.bb__card-slot {
+  position: absolute;
+  width: 240px;
+  height: 140px;
+}
+
+/* In the column the second card sits lower, so the first card's mark is
+   not under it; on the board they overlap closer. */
+.bb__card-slot--a {
+  left: 0;
+  top: 14px;
+  rotate: -8deg;
+}
+
+.bb__card-slot--n {
+  right: 0;
+  top: 116px;
+  rotate: 6deg;
+}
+
+@media (min-width: 1024px) {
+  .bb__card-slot--a {
+    left: 12px;
+  }
+
+  .bb__card-slot--n {
+    right: 24px;
+    top: 58px;
+  }
+}
+
+.bb__card {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.bb__card--a {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(160deg, var(--a) 0%, color-mix(in srgb, var(--a), #000 10%) 100%);
+}
+
+.bb__card-mark {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--b);
+  font-family: var(--font-quiet);
+  font-size: 22px;
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
+  color: var(--a);
+}
+
+.bb__card--n {
+  box-sizing: border-box;
+  border-left: 3px solid var(--a);
+  background: linear-gradient(160deg, #fbfaf6 0%, #eeebe3 100%);
+}
+
+.bb__card-n {
+  position: absolute;
+  left: 20px;
+  right: 18px;
+  bottom: 18px;
+  overflow: hidden;
+  font-family: var(--font-quiet);
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--a);
+}
+
+/* ---- The phone ------------------------------------------------------------ */
+.bb__phone-slot {
+  flex: none;
+}
+
+@media (min-width: 1024px) {
+  .bb__phone-slot {
+    left: 534px;
+    top: 194px;
+    z-index: 2;
+  }
+}
+
+/* The lock screen: A, a little darker at the foot; the time in B in the
+   display face, the mark under it in B with A initials. */
+.bb__lock {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(180deg, var(--a) 0%, color-mix(in srgb, var(--a), #000 18%) 100%);
+}
+
+.bb__time {
+  margin-top: 34px;
+  font-family: var(--font-quiet);
+  font-size: 44px;
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: 0.01em;
+  color: var(--b);
+}
+
+.bb__lock-mark {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-top: 74px;
+  border-radius: 13px;
+  background: var(--b);
+  font-family: var(--font-quiet);
+  font-size: 22px;
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
+  color: var(--a);
+}
+
+/* ---- The kit: tile and palette -------------------------------------------- */
+.bb__kit {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+@media (min-width: 1024px) {
+  .bb__kit {
+    left: 28px;
+    top: 432px;
+    z-index: 1;
+  }
+}
+
+.bb__tile-slot {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  flex: none;
+}
+
+.bb__tile {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: linear-gradient(160deg, var(--a) 0%, color-mix(in srgb, var(--a), #000 10%) 100%);
+  font-family: var(--font-quiet);
+  font-size: 24px;
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
+  color: var(--b);
+}
+
+.by--board .bb__chip {
+  width: 48px;
+  height: 40px;
+}
+
+/* ---- The files ------------------------------------------------------------ */
+.by--board .bb__files {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .by--board .bb__files {
+    left: 24px;
+    bottom: 22px;
+    z-index: 1;
+    justify-content: flex-start;
+  }
+}
+
+.by--board .bb__file {
+  box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
+}
