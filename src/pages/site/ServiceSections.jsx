@@ -9,6 +9,19 @@ import SearchToCall from '../../components/artifacts/SearchToCall.jsx';
 import TextBackBand from '../../components/final/TextBackBand.jsx';
 import { SpecSheet, HowItGoes, TwoQuestions } from '../../components/story/Substance.jsx';
 import { SUBSTANCE } from '../../content/substance.js';
+import StepStrip from '../../components/artifacts/StepStrip.jsx';
+
+/* THE STAGE TITLES (the founder's clarity pass, 2026-10-06): one sentence
+   above each artifact saying what it shows. The step strips of the three
+   stages that play are inside their components, which know the beat; the
+   Websites phones do not play, so their strip is here, fully lit. */
+const STAGE_TITLES = {
+  branding: 'Type a name. Watch it become a brand.',
+  websites: 'Your site, on the phone it will be read on.',
+  marketing: 'A search becomes a call, and you see what it cost.',
+  automation: 'One missed call, handled end to end.',
+};
+const WEBSITES_STEPS = ['Phone', 'Desk', 'Live'];
 
 /* The proof bands, by services.js's `proof` (the final pass, 2026-10-03;
    since the final artifacts pass, 2026-10-03; since final7 the brand you
@@ -105,10 +118,14 @@ export default function ServiceSections({ disciplines }) {
                   without one the section is list-only (services.css). */}
               {d.image || d.phones || d.proof ? (
                 <div className="svc2__band">
+                  {STAGE_TITLES[d.id] ? <p className="stage-title">{STAGE_TITLES[d.id]}</p> : null}
                   {d.proof ? (
                     React.createElement(PROOF[d.proof])
                   ) : d.phones ? (
-                    <DevicePhones phones={d.phones} />
+                    <>
+                      <DevicePhones phones={d.phones} />
+                      <StepStrip steps={WEBSITES_STEPS} />
+                    </>
                   ) : (
                     <EvidenceBand image={d.image} />
                   )}

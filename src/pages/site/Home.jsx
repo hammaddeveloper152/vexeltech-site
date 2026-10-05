@@ -132,11 +132,18 @@ export default function Home() {
             nothing until content/work.js has three real entries. */}
         <WorkAccordion />
         <WordBand />
-        <RouteBand id="how-h" sectionId="how-it-works" heading="How it works" lines={STEP_LINES} />
+        {/* The handoff leads (the founder's clarity pass, 2026-10-06). */}
+        <RouteBand
+          id="how-h"
+          sectionId="how-it-works"
+          heading="How it works"
+          lead="From the first call to live in four business days, with a written number before anything starts."
+          lines={STEP_LINES}
+        />
         <CounterRow band />
         {/* The $700 at 240px is the band's object; `promise.webp` came off
             2026-09-22 with every other unfilled slot. */}
-        <PromiseBand id="promise-h" />
+        <PromiseBand id="promise-h" lead="Two prices you can plan around. Everything else quoted in writing." />
         {/* Questions came off, 2026-10-01: V3 gives home none
             (VEXELTECH-COPY.md, COPY V3). */}
         {/* The closing call, before the form. COPY V3, 2026-10-01. */}
@@ -146,8 +153,9 @@ export default function Home() {
         />
         <FooterForm />
       </main>
-      {/* The margin labels, from 1024 (Marginalia.jsx). */}
-      <Marginalia />
+      {/* The margin labels, from 1024 (Marginalia.jsx), joined on home by
+          the story rail (the founder's clarity pass, 2026-10-06). */}
+      <Marginalia rail />
     </>
   );
 }

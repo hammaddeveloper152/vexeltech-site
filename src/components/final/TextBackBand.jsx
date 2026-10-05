@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { THREAD } from '../../content/automation.js';
 import { useLoop, step, leaving } from '../artifacts/loop.js';
 import PhoneShell from '../artifacts/PhoneShell.jsx';
+import StepStrip from '../artifacts/StepStrip.jsx';
 import './proof.css';
 
 /* SERVICES, AUTOMATION: THE MISSED CALL (rebuilt 2026-10-06, the founder's
@@ -50,6 +51,21 @@ const T_REVIEW = T_STAMP + 500;
 const T_STARS = T_REVIEW + 300;
 const STAR_GAP = 150;
 const TOTAL = T_STARS + 4 * STAR_GAP + 200 + 500;
+
+/* THE STEP STRIP (the clarity pass, 2026-10-06): each beat starts with its
+   moment on the stage: the missed-call line, the first sent bubble, the
+   reply, the booking, the PAID stamp, the review. The strip lights in full
+   once the last star has filled. */
+const BEATS = ['Missed', 'Texted', 'Replied', 'Booked', 'Paid', 'Reviewed'];
+const BEAT_AT = [AT[0], AT[1], AT[2], T_BOOK, T_STAMP, T_REVIEW];
+const BEATS_DONE = T_STARS + 4 * STAR_GAP + 200;
+
+function beatAt(t) {
+  if (t >= BEATS_DONE) return null;
+  let i = 0;
+  while (i + 1 < BEAT_AT.length && t >= BEAT_AT[i + 1]) i += 1;
+  return i;
+}
 
 /* A generic month: 30 days from a Wednesday, five weeks. The booking's
    week is the third, its Thursday the 16th. */
@@ -189,6 +205,7 @@ export default function TextBackBand() {
           </ol>
         </div>
       </div>
+      <StepStrip steps={BEATS} at={beatAt(t)} className="tb__strip" />
       <figcaption className="tb__cap">{THREAD.caption}</figcaption>
     </figure>
   );

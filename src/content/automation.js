@@ -34,5 +34,8 @@ export const THREAD = {
     { label: 'Paid', time: 'Fri 14:12', stamp: 'PAID' },
     { label: 'Review request', time: 'Sat 10:00', stars: 5 },
   ],
-  caption: 'One missed call, handled end to end. Replies in under sixty seconds, every time.',
+  /* The clarity pass (2026-10-06): "One missed call, handled end to end."
+     is the stage title above now, so the caption keeps only its second
+     sentence. */
+  caption: 'Replies in under sixty seconds, every time.',
 };

@@ -427,11 +427,15 @@
   justify-content: center;
 }
 
+/* On the board the pills stand right of the palette, in two rows, well
+   inside the board (the clarity pass, 2026-10-06): at the board's foot
+   they sat 6px under the palette strip and 23px off the edge. */
 @media (min-width: 1024px) {
   .by--board .bb__files {
-    left: 24px;
-    bottom: 22px;
+    left: 300px;
+    top: 446px;
     z-index: 1;
+    max-width: 200px;
     justify-content: flex-start;
   }
 }
@@ -439,3 +443,12 @@
 .by--board .bb__file {
   box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
 }
+
+/* ---- The step strip (the clarity pass, 2026-10-06) ------------------------
+   Under the panel on the dark Branding band, so its inks are the dark
+   ground's: done bone, to come steel-lift, the beat playing in Branding's
+   yellow. The figure's own gap is its space above. */
+.by--board > .strip {
+  margin: 0;
+}
+

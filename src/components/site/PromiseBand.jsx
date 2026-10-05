@@ -30,13 +30,14 @@ const REFUSALS = [
   "We don't sell retainers on branding or websites. Marketing is month to month.",
 ];
 
-export default function PromiseBand({ id }) {
+export default function PromiseBand({ id, lead }) {
   return (
     <section className="vt ab3-price promise panel-sec" aria-labelledby={id} data-artifact="PromiseBand">
       <div className="promise__in panel">
         <h2 className="promise__h ab3-price__h" id={id}>
           Flat prices, and three things we don&apos;t do.
         </h2>
+        {lead ? <p className="sec-lead">{lead}</p> : null}
         <div className="ab3-price__cols">
           <div className="ab3-price__fig">
             {/* The brush stroke through the figure came off (the storytelling pass, 2026-10-01: the swash is home's "Yet." and one word per page, nothing else). */}

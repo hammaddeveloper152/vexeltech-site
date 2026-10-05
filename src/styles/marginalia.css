@@ -8,3 +8,42 @@
 .has-marg {
   position: relative;
 }
+
+/* THE STORY RAIL (Marginalia.jsx, home only, 2026-10-06): 1px steel
+   segments between the labels, each with a machine yellow fill that scales
+   down it as the reader scrolls. From 1024 only, with the labels. */
+.has-marg-rail {
+  position: relative;
+}
+
+.marg-rail {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .marg-rail {
+    position: absolute;
+    inset: 0 auto auto 0;
+    display: block;
+    /* Over the cream sheets, which paint their own ground above the page. */
+    z-index: 3;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .marg-rail__seg {
+    position: absolute;
+    width: 1px;
+    background: var(--c-steel);
+    transform: translateX(-50%);
+  }
+
+  .marg-rail__fill {
+    position: absolute;
+    inset: 0;
+    background: var(--c-accent-ground);
+    transform: scaleY(0);
+    transform-origin: 50% 0;
+  }
+}

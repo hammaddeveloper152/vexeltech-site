@@ -49,6 +49,9 @@ export default function About() {
       <h2 className="about__h" id="about-h">
         Who we are
       </h2>
+      {/* THE HANDOFF, 2026-10-06 (the founder's clarity pass): each home
+          section's one-line lead picks up from the one before. */}
+      <p className="sec-lead about__lead">One team fixes all four, on one invoice.</p>
 
       {/* The observer is on what moves, not on the section (viewer audit,
           2026-09-16): from the section the reveal fired before the block was

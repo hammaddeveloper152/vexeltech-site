@@ -60,7 +60,7 @@ const STOPS = [
    with no trigger and no animation library: the reduced-motion path, for
    every reader. On About it is the light page's (light.css). Home passes
    neither, and its route is unchanged. */
-export default function RouteBand({ id, heading, lines, sectionId = null, stops = STOPS, still = false }) {
+export default function RouteBand({ id, heading, lead = null, lines, sectionId = null, stops = STOPS, still = false }) {
   const sectionRef = useRef(null);
   const listRef = useRef(null);
   const stopRefs = useRef([]);
@@ -153,6 +153,7 @@ export default function RouteBand({ id, heading, lines, sectionId = null, stops 
         <h2 className="route-band__h" id={id}>
           {heading}
         </h2>
+        {lead ? <p className="sec-lead">{lead}</p> : null}
 
         <ol className="route" ref={listRef}>
           {stops.map(([n, title], i) => (

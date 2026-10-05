@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLoop, step, lin, leaving } from './loop.js';
+import StepStrip from './StepStrip.jsx';
 import PhoneShell from './PhoneShell.jsx';
 import './artifacts.css';
 import './brand-board.css';
@@ -14,8 +15,8 @@ import './brand-board.css';
    the same objects stack in a column at their own sizes, so no type is
    scaled under the floor.
 
-     the sign      520 x 120, top left, tipped back by rotateX(6deg) in a
-                   900px perspective. Unlit it is A darkened; lit, a two-stop
+     the sign      460 x 120 (520 until the clarity pass), top left,
+                   tipped back by rotateX(6deg) in a 900px perspective. Unlit it is A darkened; lit, a two-stop
                    gradient from A to A at 86%, so its lightest stop is A
                    itself and B reads on every stop (the lighting only ever
                    darkens: coral on charcoal is 3.85:1 on A lightened 10%).
@@ -32,13 +33,15 @@ import './brand-board.css';
      the kit       under the cards: the app tile and the palette strip
      the sheet     top right: the guideline sheet as built, on paper with a
                    gradient and the cards' shadows
-     the files     the four pills along the foot
+     the files     the four pills right of the palette, in two rows (along
+                   the foot until the clarity pass)
 
-   THE PLAY (start soft, loop.js): the mark draws on the sign; the wordmark
-   types onto it while the sign lights, a lit face revealed left to right
-   by clip-path with a sheen crossing once; the cards drop in with a 12px
-   overshoot; the phone's face lights; the tile and the palette arrive; the
-   sheet slides in and its lines draw; the pills land. Whatever lands casts
+   THE PLAY (start soft, loop.js): the mark draws on the sign; the palette
+   strip wipes in; the wordmark types onto the sign while it lights, a lit
+   face revealed left to right by clip-path with a sheen crossing once; the
+   cards drop in with a 12px overshoot; the phone's face lights and the app
+   tile arrives; the sheet slides in and its lines draw; the pills land.
+   The step strip under the panel follows it beat by beat. Whatever lands casts
    its shadow as it lands: each shadow is its own layer under the object,
    fading up as the object arrives (box-shadow itself never animates).
    Transform, opacity, clip-path and stroke-dashoffset only.
@@ -63,9 +66,14 @@ const SETS = [
 const NEUTRAL = '#F7F5EF';
 const FILES = ['SVG', 'PNG', 'PDF guide', 'Fonts'];
 
-/* The timeline, in ms. */
+/* The timeline, in ms. THE CLARITY PASS (2026-10-06): the palette lands
+   straight after the mark, before the sign, so the play runs in the step
+   strip's order, the founder's: Mark, Palette, Sign, Cards, Screen, Guide,
+   Files. The sign types from 1000 (it was 800) and the palette wipes in at
+   600 (it was 3850, after the phone). */
 const T_MARK = 200;
-const T_TYPE = 800;
+const T_PAL = 600;
+const T_TYPE = 1000;
 const PER_CHAR = 90;
 const T_LIT = T_TYPE;
 const LIT_MS = DEMO.length * PER_CHAR;
@@ -73,14 +81,21 @@ const T_CARD = 2300;
 const CARD_MS = 650;
 const T_PHONE = 3300;
 const T_TILE = 3700;
-const T_PAL = 3850;
 const T_SHEET = 4400;
 const T_FILES = 5500;
 const TOTAL = 7000;
 
+/* The strip's beats and when each starts; the strip lights in full once the
+   last pill has landed. */
+const BEATS = ['Mark', 'Palette', 'Sign', 'Cards', 'Screen', 'Guide', 'Files'];
+const BEAT_AT = [T_MARK, T_PAL, T_TYPE, T_CARD, T_PHONE, T_SHEET, T_FILES];
+const BEATS_DONE = T_FILES + 3 * 80 + 300;
+
 /* The board's own width from 1024; under it the column. */
 const BOARD = 760;
-const SIGN = 520;
+/* 460 since the clarity pass (it was 520), so the guideline sheet in the
+   top right corner clears the sign's end instead of overlapping it. */
+const SIGN = 460;
 
 function setFor(name) {
   let h = 0;
@@ -126,6 +141,12 @@ function drop(p, from) {
    arrives. */
 const shade = (p) => Math.max(0, Math.min(1, (p - 0.45) / 0.55));
 
+function beatAt(t) {
+  let i = 0;
+  while (i + 1 < BEAT_AT.length && t >= BEAT_AT[i + 1]) i += 1;
+  return i;
+}
+
 export default function BrandYouType() {
   const ref = useRef(null);
   const stageRef = useRef(null);
@@ -166,11 +187,11 @@ export default function BrandYouType() {
   const ini = initialsOf(name);
 
   /* The board from a 760 stage; under it the sign takes the column. The
-     wordmark fits what the sign leaves after its padding, the mark and,
-     on the board, the sheet's corner over its right end. */
+     wordmark fits what the sign leaves after its padding and the mark;
+     the sheet no longer overlaps the sign's end (clarity pass). */
   const board = w >= BOARD;
   const signW = board ? SIGN : Math.max(200, Math.min(SIGN, w - 32));
-  const fsSign = fit(name, signW - 48 - 72 - 16 - (board ? 32 : 0), 40);
+  const fsSign = fit(name, signW - 48 - 72 - 16, 40);
 
   /* The mark on the sign: its 2px stroke draws, the fill rises in it, the
      initials rise into it. */
@@ -225,7 +246,8 @@ export default function BrandYouType() {
             autoComplete="off"
             spellCheck={false}
           />
-          <p className="by__hint">Watch it become a brand.</p>
+          {/* "Watch it become a brand." came off here in the clarity pass
+              (2026-10-06): the stage title above says it. */}
         </div>
 
         <div className="by__stage bb" ref={stageRef} aria-hidden="true" style={vars}>
@@ -327,6 +349,9 @@ export default function BrandYouType() {
           </ul>
         </div>
       </div>
+      {/* THE STEP STRIP (the clarity pass): fully lit at rest, under reduced
+          motion and once the visitor types. */}
+      <StepStrip steps={BEATS} at={live || t >= BEATS_DONE ? null : beatAt(t)} />
       <figcaption className="by__cap">Name, mark, palette, applications. Delivered as files you own.</figcaption>
     </figure>
   );

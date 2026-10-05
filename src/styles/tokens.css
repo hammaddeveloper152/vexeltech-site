@@ -1125,3 +1125,30 @@ main:focus {
   opacity: var(--disabled-opacity);
   pointer-events: none;
 }
+
+/* THE HANDOFF LEAD (the founder's clarity pass, 2026-10-06): one line under
+   each home section's H2, 18px, picking up from the section before. It sits
+   16px under its heading and carries the heading's own foot below it, so
+   the section's spacing is unchanged. Bone at 85% on dark (11.84:1),
+   asphalt on a cream panel (15.75). */
+.sec-lead {
+  max-width: 62ch;
+  margin: 0 0 var(--s-xl);
+  font-family: var(--font-offer);
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--c-body-dark);
+  text-wrap: pretty;
+}
+
+:is(.st-h, .route-band__h) + .sec-lead {
+  margin: calc(var(--s-md) - var(--s-2xl)) 0 var(--s-2xl);
+}
+
+.promise__h + .sec-lead {
+  margin: calc(var(--s-md) - var(--s-xl)) 0 var(--s-xl);
+}
+
+:is(.panel, .panel-sec) .sec-lead {
+  color: var(--c-asphalt); /* a cream sheet, 15.75:1 */
+}

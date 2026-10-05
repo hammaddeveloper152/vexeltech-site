@@ -72,7 +72,8 @@ export default function Services({
   id = 'services-h',
   heading = 'What we do',
   /* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Home, What we do). */
-  lead = 'Four disciplines. One team.',
+  /* The handoff lead, the clarity pass (2026-10-06). */
+  lead = 'The four fixes, in the order they usually pay back.',
   lines = null,
 }) {
   const [ref, revealed] = useReveal();

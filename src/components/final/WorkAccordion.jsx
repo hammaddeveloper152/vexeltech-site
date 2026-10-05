@@ -58,6 +58,9 @@ export default function WorkAccordion() {
         <h2 className="st-h" id="wa-h">
           Recent work
         </h2>
+        {/* The handoff lead (the clarity pass, 2026-10-06); it replaced the
+            foot line "Six live sites. Open any of them." */}
+        <p className="sec-lead">What the fixes look like when they&apos;re live. Open any of them.</p>
       </div>
 
       <ul className="wa__row" onKeyDown={onKeyDown}>
@@ -116,9 +119,6 @@ export default function WorkAccordion() {
         })}
       </ul>
 
-      <div className="st-in">
-        <p className="st-lead wa__foot">Six live sites. Open any of them.</p>
-      </div>
     </section>
   );
 }

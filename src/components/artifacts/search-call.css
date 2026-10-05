@@ -384,13 +384,30 @@
   }
 }
 
+/* THE FEED CARD, 240 wide (the clarity pass, 2026-10-06): "the same ad on
+   Facebook", above the ledger. Its insides scale with it; no type under
+   11px. */
+.stc__feed-w {
+  display: grid;
+  gap: var(--s-sm);
+  width: min(100%, 240px);
+}
+
+.stc__feed-k {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  color: var(--c-steel-lift); /* 7.30:1 on the band */
+}
+
 .stc__feed {
   display: grid;
-  grid-template-rows: auto 160px auto auto;
-  gap: 10px;
+  grid-template-rows: auto 108px auto auto;
+  gap: 8px;
   box-sizing: border-box;
-  width: min(100%, 360px);
-  padding: 12px;
+  width: 100%;
+  padding: 10px;
   overflow: hidden;
   border: 1px solid var(--c-steel);
   border-radius: 8px;
@@ -408,16 +425,16 @@
 
 .stc__feed-av {
   flex: none;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: var(--disc, var(--c-accent-ground));
 }
 
 .stc__feed-n {
   font-family: var(--font-offer);
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 13px;
+  line-height: 18px;
   color: var(--c-bone); /* 11.44:1 on lit-raised */
 }
 
@@ -432,22 +449,22 @@
 .stc__feed-img {
   display: grid;
   place-items: center;
-  margin: 0 -12px;
+  margin: 0 -10px;
   background: color-mix(in srgb, var(--disc, var(--c-accent-ground)) 20%, var(--c-lit-raised));
 }
 
 .stc__feed-wm {
   font-family: var(--font-quiet);
-  font-size: 22px;
-  line-height: 26px;
+  font-size: 18px;
+  line-height: 22px;
   font-weight: var(--t-weight-quiet);
   color: var(--c-bone); /* 8.68:1 on the coral image area */
 }
 
 .stc__feed-l {
   font-family: var(--font-offer);
-  font-size: 13px;
-  line-height: 18px;
+  font-size: 12px;
+  line-height: 16px;
   color: var(--c-steel-lift); /* 5.30:1 */
 }
 
@@ -456,12 +473,12 @@
   position: relative;
   display: grid;
   place-items: center;
-  height: 36px;
+  height: 32px;
   overflow: hidden;
   border-radius: 6px;
   background: #0866ff;
   font-family: var(--font-offer);
-  font-size: 14px;
+  font-size: 13px;
   line-height: 20px;
   font-weight: 700;
   color: var(--c-shop-white);
@@ -475,18 +492,18 @@
   opacity: 0;
 }
 
-/* The ledger: a white sheet on the dark band, paper-lit and shadowed. */
-.stc__ledger-w {
+/* THE LEDGER, THE NARRATOR (the clarity pass, 2026-10-06): a white sheet
+   on the dark band, paper-lit and shadowed. Its five rows are always there:
+   unlit in steel (8.12:1 on white), lit in asphalt (17.77) with the figure
+   in the coral ink (5.71). The newest lit row is tinted in the discipline
+   colour at 12% while the play runs (#FDEDEA: asphalt on it 15.63:1, steel 7.15,
+   coral ink 5.03). "Illustrative figure." sits on the sheet directly under
+   the Cost row, steel on white, 8.12. State changes swap; nothing moves. */
+.stc__sheet {
   display: grid;
-  gap: var(--s-sm);
+  box-sizing: border-box;
   width: min(100%, 360px);
-}
-
-.stc__ledger {
-  display: grid;
-  margin: 0;
-  padding: 8px 18px;
-  list-style: none;
+  padding: 8px 18px 14px;
   border-radius: 4px;
   background: linear-gradient(160deg, #ffffff 0%, #f7f6f2 100%);
   box-shadow:
@@ -494,11 +511,19 @@
     0 18px 40px rgb(0 0 0 / 18%);
 }
 
+.stc__ledger {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .stc__row {
   display: flex;
   justify-content: space-between;
   gap: var(--s-md);
-  padding: 11px 0;
+  margin: 0 -18px;
+  padding: 11px 18px;
   border-bottom: 1px solid rgb(23 24 26 / 10%);
   font-family: var(--font-mono);
   font-size: 12px;
@@ -509,25 +534,44 @@
   border-bottom: 0;
 }
 
-.stc__row-k {
-  color: var(--c-steel); /* 8.12:1 on white */
+.stc__row-k,
+.stc__row-v {
+  color: var(--c-steel); /* unlit, 8.12:1 on white */
 }
 
 .stc__row-v {
   text-align: right;
+}
+
+.stc__row[data-lit='true'] .stc__row-k {
+  color: var(--c-steel); /* the key stays the label ink, 8.12 */
+}
+
+.stc__row[data-lit='true'] .stc__row-v {
   color: var(--c-asphalt); /* 17.77:1 */
 }
 
-.stc__row-v--fig {
+.stc__row[data-lit='true'] .stc__row-v--fig {
   font-weight: 700;
   color: var(--disc-cream, var(--c-accent-text-light)); /* coral ink, 5.71:1 on white */
 }
 
+.stc__row[data-now='true'] {
+  background: color-mix(in srgb, var(--disc, var(--c-accent-ground)) 12%, #ffffff);
+}
+
 .stc__note {
+  margin-top: 2px;
   font-family: var(--font-mono);
   font-size: 11px;
   line-height: 16px;
-  color: var(--c-steel-lift); /* 7.30:1 on the band */
+  color: var(--c-steel); /* 8.12:1 on the sheet */
+}
+
+/* The strip under the stage, the caption under the strip. */
+.stc .strip {
+  justify-content: center;
+  margin-top: var(--s-xl);
 }
 
 .stc .sc__cap {

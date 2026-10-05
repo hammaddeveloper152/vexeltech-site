@@ -410,6 +410,14 @@
 }
 
 /* ---- The caption -------------------------------------------------------- */
+/* The step strip (the clarity pass): centred under the three objects, as
+   the caption is; the grid's gap is its space above. */
+.tb .tb__strip {
+  justify-content: center;
+  margin: 0;
+}
+
+
 .tb__cap {
   max-width: 60ch;
   font-family: var(--font-mono);

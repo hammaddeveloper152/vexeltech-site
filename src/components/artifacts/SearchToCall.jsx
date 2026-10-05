@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLoop, step, lin, leaving } from './loop.js';
 import PhoneShell from './PhoneShell.jsx';
+import StepStrip from './StepStrip.jsx';
 import './artifacts.css';
 import './search-call.css';
 
@@ -41,7 +42,17 @@ import './search-call.css';
    call answered at 0:14, the ledger full) holds (loop.js). First paint and
    reduced motion: the finished state. The stage is a picture, aria-hidden;
    the line under it is the content. Platform colours are real-world
-   colours, allowed here by the founder (2026-10-06). */
+   colours, allowed here by the founder (2026-10-06).
+
+   ONE READING (the founder's clarity pass, 2026-10-06). The ledger is the
+   narrator: its five rows are always on the sheet, unlit in steel, and
+   each lights (asphalt, the newest tinted in the discipline colour) at the
+   moment the phone reaches its beat, with the matching step on the strip
+   under the stage: Search when the query is typed, Click on the tap on the
+   Sponsored result, Page when the landing screen arrives, Call when Accept
+   is pressed, Cost when the timer stops at 0:14. "Illustrative figure."
+   sits on the sheet directly under the Cost row. The feed card is 240
+   wide above the ledger, labelled "The same ad on Facebook". */
 const QUERY = 'plumber near me';
 const TOTAL = 9200;
 
@@ -58,13 +69,23 @@ const T = {
   timer: 6300, // the timer counts to 0:14 over 1400
   feedTap: 1700, // the feed card's button is pressed
 };
-/* The ledger's rows land with the phone's steps. */
+/* THE BEATS: one time each, read by the phone's own steps, the ledger and
+   the strip, so the three cannot drift apart. */
+const BEATS = {
+  search: T.type + 1000, // the query is typed
+  click: T.tap, // the tap on the Sponsored result
+  page: T.landing + 150, // the landing screen arrives
+  call: T.accept, // Accept is pressed
+  cost: T.timer + 1400, // the timer stops at 0:14
+};
+const STEPS = ['Search', 'Click', 'Page', 'Call', 'Cost'];
+/* The ledger's rows, one per beat. */
 const LEDGER = [
-  { k: 'Search', v: 'plumber near me', at: 1300 },
-  { k: 'Click', v: 'Sponsored, position 1', at: 2400 },
-  { k: 'Landing', v: '0:04 on page', at: 4500 },
-  { k: 'Call', v: '0:14, answered', at: 7800 },
-  { k: 'Cost per lead', v: '$31', at: 8100, figure: true },
+  { k: 'Search', v: 'plumber near me', at: BEATS.search },
+  { k: 'Click', v: 'Sponsored, position 1', at: BEATS.click },
+  { k: 'Landing', v: '0:04 on page', at: BEATS.page },
+  { k: 'Call', v: '0:14, answered', at: BEATS.call },
+  { k: 'Cost per lead', v: '$31', at: BEATS.cost, figure: true },
 ];
 
 const wipe = (k) => ({ clipPath: `inset(0 ${(1 - k) * 100}% 0 0)` });
@@ -105,6 +126,15 @@ export default function SearchToCall() {
   const oLand = screen(t, T.landing, T.call);
   const oCall = screen(t, T.call, null);
   const pFeedTap = Math.sin(Math.PI * lin(t, T.feedTap, 360));
+  /* How many beats have happened. At rest (the finished frame, which is
+     also the first paint and reduced motion) all five have. */
+  const done = LEDGER.filter((r) => t >= r.at).length;
+  const playing = t < TOTAL;
+  /* The strip: the beat the phone is at, which is the newest lit row (the
+     ledger's tinted one), and Search while the query is still typing. So
+     Cost turns to the accent on the strip as its row lands. At rest it is
+     fully lit. */
+  const stripAt = playing ? Math.max(0, done - 1) : null;
 
   return (
     <figure className="sc stc" ref={ref} data-artifact="SearchToCall" {...leaving(leave)}>
@@ -220,35 +250,33 @@ export default function SearchToCall() {
         </div>
 
         <div className="stc__side">
-          <div className="stc__fade stc__feed">
-            <span className="stc__feed-h">
-              <span className="stc__feed-av" />
-              <span className="stc__feed-n">Your business</span>
-              <span className="stc__feed-sp">Sponsored</span>
-            </span>
-            <span className="stc__feed-img">
-              <span className="stc__feed-wm">Your business</span>
-            </span>
-            <span className="stc__feed-l">The one line that makes them message.</span>
-            <span className="stc__feed-go">
-              Send message
-              <span className="stc__feed-press" style={{ opacity: pFeedTap }} />
-            </span>
+          <div className="stc__feed-w">
+            <span className="stc__feed-k">The same ad on Facebook</span>
+            <div className="stc__fade stc__feed">
+              <span className="stc__feed-h">
+                <span className="stc__feed-av" />
+                <span className="stc__feed-n">Your business</span>
+                <span className="stc__feed-sp">Sponsored</span>
+              </span>
+              <span className="stc__feed-img">
+                <span className="stc__feed-wm">Your business</span>
+              </span>
+              <span className="stc__feed-l">The one line that makes them message.</span>
+              <span className="stc__feed-go">
+                Send message
+                <span className="stc__feed-press" style={{ opacity: pFeedTap }} />
+              </span>
+            </div>
           </div>
 
-          <div className="stc__ledger-w">
-            <ol className="stc__fade stc__ledger">
-              {LEDGER.map(({ k, v, at, figure }) => {
-                const p = step(t, at, 400);
+          <div className="stc__sheet">
+            <ol className="stc__ledger">
+              {LEDGER.map(({ k, v, at, figure }, i) => {
+                const lit = t >= at;
+                /* The newest lit row carries a tint while the play is on. */
+                const now = lit && playing && i === done - 1;
                 return (
-                  <li
-                    className="stc__row"
-                    key={k}
-                    style={{
-                      clipPath: `inset(0 0 ${(1 - p) * 100}% 0)`,
-                      transform: `translateY(${(1 - p) * 8}px)`,
-                    }}
-                  >
+                  <li className="stc__row" key={k} data-lit={lit ? 'true' : 'false'} data-now={now ? 'true' : 'false'}>
                     <span className="stc__row-k">{k}</span>
                     <span className={`stc__row-v${figure ? ' stc__row-v--fig' : ''}`}>{v}</span>
                   </li>
@@ -259,6 +287,7 @@ export default function SearchToCall() {
           </div>
         </div>
       </div>
+      <StepStrip steps={STEPS} at={stripAt} />
       <figcaption className="sc__cap">
         On our last reported account, a lead cost $30.11 against a $70.11 US search average (WordStream, Google Ads
         Benchmarks 2025).

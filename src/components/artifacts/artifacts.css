@@ -1,3 +1,4 @@
+
 /* ==========================================================================
    THE ARTIFACTS (the final artifacts pass, 2026-10-03, the founder). Four
    looping objects, one per section: CostScenes (home), BrandYouType and
@@ -12,9 +13,6 @@
    ========================================================================== */
 
 /* ---- Shared ------------------------------------------------------------ */
-.cs-y {
-  color: var(--c-accent-text-dark); /* 9.46:1 on the dark grounds */
-}
 
 .cs-caret {
   display: inline-block;
@@ -74,131 +72,12 @@
   position: relative;
   height: 100%;
 }
-
 /* The call and the sign stand at the panel's middle; the search and the
    ledger read from the top. */
-.cs-missed,
-.cs-name {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
 
 /* Scene 1: the search. */
-.cs-field,
-.sc__field {
-  display: flex;
-  align-items: center;
-  height: 40px;
-  margin: 0;
-  padding: 0 12px;
-  border: 1px solid var(--c-steel);
-  border-radius: 6px;
-  font-family: var(--font-mono);
-  font-size: 14px;
-  line-height: 20px;
-  white-space: nowrap;
-  color: var(--c-bone); /* 16.4:1 */
-}
-
-.cs-results {
-  display: grid;
-  gap: 4px;
-  margin: 10px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-@media (min-width: 1024px) {
-  .cs-results {
-    gap: var(--s-sm);
-    margin-top: var(--s-md);
-  }
-}
-
-.cs-res {
-  display: flex;
-  gap: 12px;
-  padding: 4px 0;
-}
-
-@media (min-width: 1024px) {
-  .cs-res {
-    padding: 8px 0;
-  }
-}
-
-.cs-res__n {
-  flex: none;
-  width: 12px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 20px;
-  color: var(--c-steel-lift); /* 7.6:1 */
-}
-
-.cs-res__w {
-  display: grid;
-}
-
-.cs-res__t {
-  font-family: var(--font-offer);
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--c-bone);
-}
-
-.cs-res__t.cs-y {
-  color: var(--c-accent-text-dark);
-}
-
-.cs-res__d {
-  font-family: var(--font-offer);
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--c-steel-lift);
-}
 
 /* Scene 2: the ledger. */
-.cs-ledger {
-  margin: 0;
-}
-
-.cs-led {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s-md);
-  padding: 14px 0;
-  border-bottom: 1px solid var(--c-steel);
-}
-
-@media (min-width: 1024px) {
-  .cs-led {
-    padding: 22px 0;
-  }
-}
-
-.cs-led dt {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 20px;
-  color: var(--c-steel-lift);
-}
-
-.cs-led dd {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 28px;
-  line-height: 32px;
-  font-variant-numeric: tabular-nums;
-  color: var(--c-bone);
-}
-
-.cs-q {
-  display: inline-block;
-  color: var(--c-accent-text-dark);
-}
 
 .cs-note,
 .wk__cap,
@@ -210,119 +89,11 @@
   letter-spacing: 0.02em;
 }
 
-.cs-note {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  color: var(--c-steel-lift);
-}
-
 /* Scene 3: the missed call. */
-.cs-call {
-  display: grid;
-  gap: 6px;
-  padding: var(--s-md);
-  border: 1px solid var(--c-steel);
-  border-radius: 6px;
-  background: var(--c-lit-raised);
-}
-
-.cs-call__k {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  color: var(--c-steel-lift); /* 5.3:1 on lit-raised */
-}
-
-.cs-call__n {
-  font-family: var(--font-offer);
-  font-size: 18px;
-  line-height: 24px;
-  color: var(--c-bone);
-}
-
-.cs-call__b {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 6px;
-  font-family: var(--font-offer);
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--c-steel-lift);
-}
 
 /* Greyed: the number takes the secondary ink, a state, not a fade. */
-.cs-call--missed .cs-call__n {
-  color: var(--c-steel-lift);
-}
-
-.cs-log {
-  margin: var(--s-md) 0 0;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 20px;
-  color: var(--c-steel-lift);
-}
-
-.cs-log--y {
-  margin-top: var(--s-sm);
-  font-family: var(--font-offer);
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--c-accent-text-dark);
-}
 
 /* Scene 4: no name on the work. */
-.cs-sign {
-  height: 56px;
-  border: 1px solid var(--c-steel);
-  border-radius: 6px;
-  background: var(--c-base);
-}
-
-.cs-receipt {
-  display: flex;
-  align-items: flex-end;
-  gap: var(--s-sm);
-  margin: var(--s-xl) 0 0;
-  font-family: var(--font-mono);
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--c-steel-lift);
-}
-
-.cs-blank {
-  position: relative;
-  flex: 1;
-  min-width: 0;
-  height: 32px;
-}
-
-.cs-blank__line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: var(--c-bone);
-  transform-origin: 0 50%;
-}
-
-.cs-blank__mask {
-  position: absolute;
-  right: 0;
-  bottom: 4px;
-  display: block;
-  overflow: hidden;
-  clip-path: inset(0);
-}
-
-.cs-nobody {
-  display: block;
-  font-family: var(--font-offer);
-  font-size: 20px;
-  line-height: 26px;
-}
 
 /* The headlines. */
 .cs__rows {
@@ -480,14 +251,6 @@
   outline: none;
   padding-bottom: 9px;
   border-bottom: 2px solid var(--c-accent-draw-light);
-}
-
-.by__hint {
-  margin: var(--s-xs) 0 0;
-  font-family: var(--font-offer);
-  font-size: 15px;
-  line-height: 22px;
-  color: var(--c-steel); /* 7.2:1; the brief's steel-lift is 2.3:1 here */
 }
 
 .by__stage {

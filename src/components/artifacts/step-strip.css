@@ -1,0 +1,99 @@
+/* THE STEP STRIP (StepStrip.jsx, 2026-10-06). The inks are the ground's:
+   on a dark band done is bone (16.32:1) and to come steel-lift (7.55); on a
+   cream band done is asphalt (15.75) and to come steel (7.20). The beat
+   playing is `--strip-now`: yellow by default, the discipline's text ink on
+   a /services band (`--disc-text`, services.css). Colour changes are state,
+   not motion, so they swap without a transition. */
+.strip {
+  --strip-done: var(--c-bone);
+  --strip-next: var(--c-steel-lift);
+  --strip-now: var(--c-accent-text-dark); /* machine yellow, 9.46:1 */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 6px;
+  margin: var(--s-md) 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.strip__beat {
+  display: flex;
+  align-items: center;
+  color: var(--strip-next);
+  white-space: nowrap;
+}
+
+/* The tick between two beats: 1px steel, 12px wide, 10px either side. */
+.strip__beat + .strip__beat::before {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 1px;
+  margin: 0 10px;
+  background: var(--c-steel);
+}
+
+.strip__beat[data-state='done'] {
+  color: var(--strip-done);
+}
+
+.strip__beat[data-state='now'] {
+  color: var(--strip-now);
+}
+
+/* One line at a phone's width, for every strip (moved here from the
+   Branding and Automation sheets, 2026-10-06): Branding's seven beats need
+   446px at the strip's own ticks and tracking, so below 600 the ticks are
+   8px with 5px either side and the tracking is dropped (346px at 390),
+   and below 380 6px with 4px (322px at 360). It still wraps rather than
+   overflow if a strip ever outgrows its column. */
+@media (max-width: 599px) {
+  .strip {
+    letter-spacing: 0;
+  }
+
+  .strip__beat + .strip__beat::before {
+    width: 8px;
+    margin: 0 5px;
+  }
+}
+
+@media (max-width: 379px) {
+  .strip__beat + .strip__beat::before {
+    width: 6px;
+    margin: 0 4px;
+  }
+}
+
+/* On a cream band. */
+.svc2__d--cream .strip {
+  --strip-done: var(--c-asphalt);
+  --strip-next: var(--c-steel);
+}
+
+/* On /services the beat playing takes the discipline's text ink. */
+.svc2__d .strip {
+  --strip-now: var(--disc-text);
+}
+
+/* THE STAGE TITLE (the clarity pass): one sentence above the artifact,
+   20px display, bone on dark (16.32), asphalt on cream (15.75). */
+.stage-title {
+  margin: 0 0 var(--s-md);
+  font-family: var(--font-quiet);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-bone);
+  text-wrap: balance;
+}
+
+.svc2__d--cream .stage-title {
+  color: var(--c-asphalt);
+}
