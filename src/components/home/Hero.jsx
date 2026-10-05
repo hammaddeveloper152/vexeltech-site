@@ -316,28 +316,25 @@ export default function Hero() {
       </div>
 
       <div className="hero__body">
-        {/* ONE ACCESSIBLE NAME, AND IT IS THE HEADLINE THAT STAYS. Four lines
-            announced as they cut would be a screen reader talking over a film
-            it cannot see. (The name is the visible line since 2026-09-25,
-            below.) */}
-        {/* THE EYEBROW, COPY V3.1, 2026-10-01: 12px mono uppercase in
-            steel-lift, above the headline, from 1024 only (Hero.css). */}
-        <p className="hero__eyebrow lbl">
+        {/* THE H1 IS THE EYEBROW, COPY V4, 2026-10-06 (the founder): the
+            page says what it is in its one h1, set exactly as the eyebrow
+            was. Below 1024, where the eyebrow is not shown, it is visually
+            hidden rather than removed, so the page keeps its h1. The
+            rotating line is a paragraph with the same classes and motion. */}
+        <h1 className="hero__eyebrow lbl" id="hero-h">
           Websites, branding, marketing and automation for small business
-        </p>
-        <h1 className="hero__headline" id="hero-h">
-          {/* THE NAME IS THE VISIBLE LINE, 2026-09-25 (the founder's content
-              audit): the h1 reads what it shows. It was the final line in a
-              clipped span, with the shown line aria-hidden, so the name and
-              the headline differed for three of the four shots, and a
-              crawler read the two run together. */}
+        </h1>
+        <p className="hero__headline">
+          {/* THE LINE IS READ AS SHOWN (2026-09-25, the founder's content
+              audit): no clipped second copy. It was the h1 until copy V4
+              (2026-10-06), when the eyebrow above took the h1. */}
           <Line
             key={shot}
             text={LINES[shot]}
             leaving={mode === 'spot' && state.leaving}
             enter={advanced.current}
           />
-        </h1>
+        </p>
 
         {/* The support stack, in one box so its shade zone has one to stand
             in: the copy zone runs from the headline's bottom edge to the copy

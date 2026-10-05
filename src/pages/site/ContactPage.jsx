@@ -26,7 +26,8 @@ import './contact.css';
    NO CALL BAND ON THIS PAGE, as before: every other page's call points
    here. */
 
-const HEADLINE = 'Let’s make the phone ring.';
+/* COPY V4, 2026-10-06: it was "Let’s make the phone ring." */
+const HEADLINE = 'Tell us what’s going wrong.';
 const SPEED = 60; // px a second, the founder's
 
 function Marquee() {
@@ -94,10 +95,10 @@ export default function ContactPage() {
         <Marquee />
         <p className="ct-hero__line">
           <IconArrowDownRight className="i ct-hero__arrow" />
-          {/* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Contact, Lead). */}
+          {/* COPY V4, 2026-10-06 (VEXELTECH-COPY.md, Contact, Lead). */}
           <span>
-            Tell us the business, where you sell and what&apos;s not working. A written number
-            within one business day.
+            Fifteen minutes on the phone, a written number within one business day, and nothing to
+            pay for either.
           </span>
         </p>
       </section>

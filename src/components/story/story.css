@@ -213,6 +213,15 @@
    Split by a 1px steel rule: vertical from 768, horizontal between them
    below. Labels mono 11px; items the display face 22px, 20px apart; the
    marks 10px squares, yellow for a fit, hollow steel for not. */
+.fc__note {
+  max-width: 70ch;
+  margin: var(--s-xl) 0 0;
+  font-family: var(--font-offer);
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--c-steel); /* 7.20:1 on cream (copy V4, 2026-10-06) */
+}
+
 .fc__cols {
   display: grid;
 }

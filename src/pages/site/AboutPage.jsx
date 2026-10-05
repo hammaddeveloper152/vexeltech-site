@@ -69,19 +69,29 @@ const QUESTIONS = [
     q: 'Why are your prices flat?',
     a: `Because a quote that changes halfway through isn't a quote. The website is ${money(FIGURES.website)} because we know what six good pages take, and we would rather you spend the saving on getting people to it.`,
   },
+  /* COPY V4, 2026-10-06: the seventh. */
+  {
+    id: 'shops',
+    q: 'How are you different from the big logo and website shops?',
+    a: 'They sell packages; we sell outcomes you can check. One named person instead of a queue, a written number before any work, files and accounts in your name, and a monthly cost per lead instead of a monthly report about impressions. Fewer tiers, fewer surprises.',
+  },
 ];
 
-/* The statement, word by word. */
-const WORDS = ['Found,', 'trusted,', 'called.'];
+/* THE META DESCRIPTION, COPY V4, 2026-10-06. The figures are FIGURES'. */
+const ABOUT_DESCRIPTION = `VexelTech is a web design and marketing agency for small businesses. Websites ${money(FIGURES.website)} flat, branding from ${money(FIGURES.brandingBasic)}, Google and Meta ads measured by cost per lead, and automation that answers the calls you miss. One team, one invoice.`;
+
+/* The statement, word by word. COPY V4, 2026-10-06: it was "Found,
+   trusted, called."; the same type and the same rise on each word. */
+const WORDS = 'A web design and marketing agency built for small businesses.'.split(' ');
 
 export default function AboutPage() {
   /* The questions as FAQPage data (head.js, 2026-10-05). */
   useEffect(() => setFaqLd(QUESTIONS), []);
   return (
     <Shell
-      title="About VexelTech: websites, ads and automation for small business"
+      title="About VexelTech | Web design, branding and marketing agency for small business"
       path="/about-us"
-      description="One team for the website, the campaigns and the follow-up behind small businesses. Flat prices, four-day builds, everything in your name."
+      description={ABOUT_DESCRIPTION}
       footerForm={false}
       light
     >
@@ -104,12 +114,11 @@ export default function AboutPage() {
             ))}
           </h1>
           <div className="ab3-hero__cols">
-            {/* THE LEDE, COPY V3.5, 2026-10-05. */}
+            {/* THE LEDE, COPY V4, 2026-10-06. */}
             <p className="ab3-hero__p">
-              Most small businesses don't have a marketing problem. They have a Tuesday problem: the
-              phone rang while you were on a ladder, the site hasn't changed since 2019, and the ad
-              money went somewhere. We fix the three things that turn a search into a customer, and we
-              do it as one team, so nobody has to manage four vendors to get one phone call.
+              VexelTech builds the website people land on, the campaigns that send them there, and the
+              follow-up that catches the call. One team, one invoice, and one person who knows your
+              account by name.
             </p>
           </div>
         </div>
@@ -128,7 +137,10 @@ export default function AboutPage() {
       <FitColumns />
       <TermsCard />
       <Faq items={QUESTIONS} id="ab3-faq" />
-      <CallBand heading="Tell us what's going wrong." note="Fifteen minutes on the phone. Nothing to pay for the answer." />
+      <CallBand
+        heading="Tell us what's going wrong."
+        note="Fifteen minutes on the phone with the person who would do the work. Nothing to pay for the answer."
+      />
     </Shell>
   );
 }

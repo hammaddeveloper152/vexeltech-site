@@ -27,7 +27,11 @@
        label; FLAGGED otherwise. Also ALLOWED (the founder, 2026-10-02): a
        sentence that sits in a pricing "Full list" panel (.pr-col__full),
        which repeats the Services item lines by design.
-     - every $ figure, against 299, 449, 700, 999, 150, 15 and 300
+     - every $ figure, against 299, 449, 700, 999, 150, 15 and 300. A
+       LABELLED COMPARISON FIGURE (the founder, 2026-10-06) is a price that
+       is not ours, allowed only inside its own phrase: "$29 one" in the
+       Branding question on /services. It is reported under `comparisons`,
+       not `outside`; the same figure anywhere else is still outside.
      - exclamation marks
      - THE DEVICE CHECK (the final artifacts pass, 2026-10-03, the
        founder): every artifact component carries `data-artifact` (its
@@ -71,6 +75,8 @@ const selfHits = (t, route) =>
 /* The shared text a repeat may sit in (V3's allowances). */
 const SHARED = 'footer.foot, .callband, .about__rows, .ct-facts__row, a, button, .marg';
 const FIGURES = new Set(['299', '449', '700', '999', '150', '15', '300']);
+/* Labelled comparison figures: [figure, the exact phrase it may sit in]. */
+const COMPARISONS = [['29', 'from a $29 one']];
 
 const errors = [];
 const b = await puppeteer.launch({ headless: 'new', args: ['--autoplay-policy=no-user-gesture-required'] });
@@ -131,9 +137,19 @@ for (const route of [...PUBLIC, ...LEGAL]) {
   const t = texts[route];
   const d = t.match(/[^\n]*[–—][^\n]*/g);
   if (d) report.dashes[route] = d.slice(0, 5);
-  const figs = [...t.matchAll(/\$\s?([\d,]+)/g)].map((m) => m[1].replace(/,/g, ''));
+  /* A comparison figure counts only inside its phrase; the phrase is taken
+     out of the text the figures are read from. */
+  let ft = t;
+  const comparisons = [];
+  for (const [fig, phrase] of COMPARISONS) {
+    if (ft.includes(phrase)) {
+      comparisons.push(fig);
+      ft = ft.split(phrase).join(' ');
+    }
+  }
+  const figs = [...ft.matchAll(/\$\s?([\d,]+)/g)].map((m) => m[1].replace(/,/g, ''));
   const bad = figs.filter((f) => !FIGURES.has(f));
-  report.figures[route] = { all: [...new Set(figs)], outside: [...new Set(bad)] };
+  report.figures[route] = { all: [...new Set(figs)], outside: [...new Set(bad)], comparisons };
   if (LEGAL.includes(route)) continue;
   for (const s of new Set(sentences(t))) {
     if (!seen.has(s)) seen.set(s, []);

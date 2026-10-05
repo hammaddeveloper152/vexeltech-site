@@ -7,20 +7,25 @@
    answers on the page.
 
    Figures are tokens where the site already has one: Branding's first
-   question names the Basic price. */
+   question names the Basic price.
+
+   DE-DUPLICATED, 2026-10-06 (the founder): a spec value never repeats a
+   What you get line on the same page. Websites' Speed and Forms are the
+   founder's words; the other rewordings say the same fact another way and
+   add none (DESIGN.md, COPY V4). The lists are unchanged. */
 
 import { FIGURES, money } from './pricing.js';
 
 export const SUBSTANCE = {
   branding: {
     spec: [
-      ['Concepts', 'Five on Basic, eight on Advance'],
+      ['Concepts', 'Real directions to choose between, not one take'],
       ['Revisions', 'Until you approve. No cap.'],
       ['Delivery', 'One to two business days'],
       ['Files', 'SVG, PNG, PDF and the source files'],
-      ['Guidelines', 'Colour, type, spacing, in writing'],
-      ['Stationery', 'Card, letterhead, envelope'],
-      ['Social kit', 'Profile marks and covers, every platform (Advance)'],
+      ['Guidelines', 'How to use the mark, set down for your printer and sign shop'],
+      ['Stationery', 'Set up print-ready, with your details on'],
+      ['Social kit', 'On Advance, the mark sized for every profile you run'],
       ['Ownership', 'Yours, in full, from day one'],
     ],
     steps: [
@@ -44,13 +49,13 @@ export const SUBSTANCE = {
   },
   websites: {
     spec: [
-      ['Pages', 'Six, structured around what you sell most'],
+      ['Pages', 'Six, one of them built around your best seller'],
       ['Build', 'Four business days from your content'],
       ['Mobile', 'Built for the phone first, then the desk'],
-      ['Speed', 'Core Web Vitals in the green'],
-      ['Search', 'Titles, schema, sitemap, Google Business Profile connected'],
-      ['Forms', 'Every call and form tracked to its source'],
-      ['Maintenance', 'Thirty days after launch, included'],
+      ['Speed', 'Loads fast on a phone on a weak signal'],
+      ['Search', 'Set up to show in Google search and on Google Maps'],
+      ['Forms', 'Calls and forms traced back to the ad or search that caused them'],
+      ['Maintenance', 'A month of changes and fixes, at no extra charge'],
       ['Ownership', 'Domain, hosting and code in your name'],
     ],
     steps: [
@@ -74,13 +79,13 @@ export const SUBSTANCE = {
   },
   marketing: {
     spec: [
-      ['Channels', 'Google Business Profile, Local Service Ads, Google Ads, Meta ads'],
-      ['Search', 'Local SEO and AI search, service-area pages and citations'],
-      ['Measured by', 'Cost per lead, reported monthly'],
-      ['Creative', 'Built from your real work, not stock'],
+      ['Channels', 'Search, maps, local ads and social, chosen for your area'],
+      ['Search', 'Built to show up in local results and AI answers'],
+      ['Measured by', 'What each lead costs you, in a monthly report'],
+      ['Creative', 'Your own jobs and photos, no stock images'],
       ['Pricing', 'On the call, in writing before anything runs'],
       ['Terms', 'Month to month'],
-      ['Tracking', 'Every call and form tied to its source'],
+      ['Tracking', 'Each lead traced to the campaign that brought it'],
       ['Start', 'Within two weeks of sign-off'],
     ],
     steps: [
@@ -104,8 +109,8 @@ export const SUBSTANCE = {
   },
   automation: {
     spec: [
-      ['Workflows', 'Missed-call text-back, quote follow-up, invoice reminders, booking, review requests, AI agents'],
-      ['Response', 'Text back in under sixty seconds'],
+      ['Workflows', 'Six to choose from, priced one by one'],
+      ['Response', 'A missed caller hears back inside a minute'],
       ['Tools', 'Works with the phone, calendar and invoicing you already use'],
       ['Pricing', 'Per workflow, in writing before work starts'],
       ['Setup', 'Most workflows live within two weeks'],

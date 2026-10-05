@@ -36,7 +36,7 @@ export default function TermsCard() {
     <section className="vt st-sec st--light tc" aria-labelledby="tc-h" data-artifact="TermsCard">
       <div className="st-in">
         <h2 className="st-h" id="tc-h">
-          How we work with you
+          Our terms, in plain English
         </h2>
         <article className="tc__sheet" aria-label="Terms">
           <header className="tc__head">

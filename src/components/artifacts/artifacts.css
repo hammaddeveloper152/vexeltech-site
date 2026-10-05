@@ -1444,6 +1444,18 @@
 }
 
 /* ==== ABOUT: ONE TEAM (OneTeam.jsx) ===================================== */
+/* The line under the H2 (copy V4, 2026-10-06): 18px, bone at 85% on the
+   dark band, 11.84:1. The H2 keeps its own foot; this sits under it and
+   carries it to the stage. */
+.ot__lede {
+  max-width: 62ch;
+  margin: calc(var(--s-lg) - var(--s-2xl)) 0 var(--s-2xl);
+  font-family: var(--font-offer);
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--c-body-dark);
+}
+
 .ot__stage {
   position: relative;
   height: 360px;

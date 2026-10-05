@@ -31,7 +31,12 @@
 .ab3-hero__h {
   margin: 0;
   font-family: var(--font-loud);
-  font-size: calc((100vw - 2 * var(--inset)) / 6.227);
+  /* CAPPED AT 112px, copy V4 (2026-10-06, the founder's ruling): the V4
+     H1 is nine words, and at the old width-only size it set 185px in four
+     lines at 1280 and filled the first screen. Capped, it is three lines
+     and the lede is on the first screen. Below about 830px wide the width
+     term is the smaller and nothing changes. */
+  font-size: min(calc((100vw - 2 * var(--inset)) / 6.227), 112px);
   line-height: var(--t-loud-line);
   font-weight: 400;
   letter-spacing: 0;

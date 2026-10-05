@@ -166,10 +166,9 @@ export default function PricingPage() {
             <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">Flat-rate</Brush> website
             design and branding. Marketing and automation by quote.
           </h1>
+          {/* COPY V4, 2026-10-06. The figures it named are on the grid below. */}
           <p className="pr-head__lead">
-            A six-page website is {money(FIGURES.website)}. Branding is {money(FIGURES.brandingBasic)} or{' '}
-            {money(FIGURES.brandingAdvance)}. Marketing and automation depend on your market, your ad
-            spend and your tools, so they&apos;re priced on a call and confirmed in writing.
+            Two prices you can plan around. Everything else is quoted in writing before a dollar moves.
           </p>
         </div>
       </header>

@@ -26,16 +26,16 @@ import "./story.css";
    frame (BUILD-LAW rule 0, as amended), with the founder's caption in mono
    11px steel (7.2:1 on cream). Below 1024 the frame sits under the
    paragraphs. The capture appears on this page only. */
-/* COPY V3.5, 2026-10-05: one paragraph, the founder's. */
+/* COPY V4, 2026-10-06: one paragraph, the founder's. */
 const STORY =
-  "We started in paid media, running Google and Meta campaigns for small businesses, and we watched the same thing happen every month: good ads sending people to pages that lost them, and calls ringing out while the owner was working. So we started building the pages. Then the whole site. Then the follow-up that runs after the call. By 2026 that had become VexelTech: branding, websites, marketing and automation from one team, at flat prices, for businesses that can't carry four vendors and shouldn't have to.";
+  "We started in paid media, running Google and Meta campaigns for small businesses, and watched the same thing happen every month: good ads sending people to pages that lost them, and calls ringing out while the owner was on a job. So we built the pages. Then the whole site. Then the follow-up that runs after the call. By 2026 that had become VexelTech: branding, websites, marketing and automation from one team, at flat prices, for businesses that can't carry four vendors and shouldn't have to.";
 
 export default function OriginStory() {
   return (
     <section className="vt st-sec st--light os" aria-labelledby="os-h">
       <div className="st-in">
         <h2 className="st-h" id="os-h">
-          Where we come from
+          Why we exist
         </h2>
         <p className="os__k">2023, 2025, 2026</p>
         <p className="os__p">{STORY}</p>

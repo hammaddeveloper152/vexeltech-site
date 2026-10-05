@@ -249,9 +249,29 @@
    every frame at 1280 and 1536, worst pixel 4.21:1 at 1280 on the 2s frame,
    an edge pixel like the headline's own 4.42. */
 .hero__eyebrow {
-  display: none;
   margin: 0 0 var(--s-md);
   color: var(--c-bone);
+  /* It was a <p>, which :where() in tokens.css sets pretty; an h1 is left
+     out of that rule, so the wrap is restated (copy V4, 2026-10-06). */
+  text-wrap: pretty;
+}
+
+/* Below 1024 the eyebrow is not shown, and it is the page's h1 since copy
+   V4, so it is visually hidden rather than display: none, which would take
+   the h1 out of the accessibility tree. */
+@media (max-width: 1023px) {
+  .hero__eyebrow {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
 }
 
 /* THE PROMISE LINE, COPY V3: 12px mono in steel-lift, sentence case, under
@@ -396,11 +416,7 @@
 }
 
 @media (min-width: 1024px) {
-  .hero__eyebrow {
-    display: block;
-  }
-
-  .hero {
+    .hero {
     --hero-inset: var(--s-2xl);
     padding: calc(var(--s-lg) + var(--bar-h)) var(--hero-inset) var(--s-lg);
   }

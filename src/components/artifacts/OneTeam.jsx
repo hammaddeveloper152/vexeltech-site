@@ -115,8 +115,15 @@ export default function OneTeam() {
     <section className="vt st-sec st--dark ab-dark ot" aria-labelledby="ot-h" data-artifact="OneTeam">
       <div className="st-in">
         <h2 className="st-h" id="ot-h">
-          Four disciplines. One team.
+          One team for the whole job.
         </h2>
+        {/* COPY V4, 2026-10-06: the H2 was "Four disciplines. One team.";
+            the line under it is new, 18px (artifacts.css). */}
+        <p className="ot__lede">
+          Branding, website, marketing and automation are usually four vendors who have never met.
+          Here they are one brief and one phone number, so the ad matches the page, the page matches
+          the mark, and the call gets answered.
+        </p>
         <div className={`ot__stage${L.vertical ? ' ot__stage--v' : ''}`} ref={ref} {...leaving(leave)}>
           <svg className="ot__svg" width={box.w} height={box.h} aria-hidden="true" focusable="false">
             {L.lanes.map((d, i) => (

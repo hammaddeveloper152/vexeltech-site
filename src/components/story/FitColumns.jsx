@@ -46,7 +46,7 @@ export default function FitColumns() {
     <section className="vt st-sec st--light fc" aria-labelledby="fc-h" data-artifact="FitColumns">
       <div className="st-in">
         <h2 className="st-h" id="fc-h">
-          Who we are for
+          Who this is for
         </h2>
         <div className="fc__cols">
           {COLS.map(({ id, head, rows }) => (
@@ -63,6 +63,12 @@ export default function FitColumns() {
             </div>
           ))}
         </div>
+        {/* COPY V4, 2026-10-06: under both lists, 15px, steel on this cream
+            band (the brief's steel-lift is 2.27:1 on cream). */}
+        <p className="fc__note">
+          Most of our clients are in the US. We work with the UK, Europe and Australia on the same
+          terms, with calls set to your hours.
+        </p>
       </div>
     </section>
   );
