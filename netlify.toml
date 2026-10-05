@@ -2,6 +2,26 @@
   command = "npm run build"
   publish = "dist"
 
+# CACHE, 2026-10-05. Everything under /assets/ has a content hash in its name
+# (the hero films and posters too, since they are imported), so a changed file
+# is a new URL and the old one can be cached forever. The document is the one
+# file that names them, so it is always revalidated.
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "no-cache"
+
 # ROUTES WITH NO CONTENT, REMOVED 2026-09-25 (the founder's repo cleanup):
 # each goes to / with a 301. These come BEFORE the SPA rewrite below, since
 # Netlify applies the first rule that matches.

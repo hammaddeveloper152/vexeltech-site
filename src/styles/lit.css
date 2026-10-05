@@ -445,7 +445,7 @@ body::before {
    The gold veining is the accent arriving as a fact about the stone rather
    than as a light thrown at it. */
 .band-marble {
-  background-image: url('/assets/marble-01.webp');
+  background-image: url('../assets/marble-01.webp');
   --scrim: 85%;
 }
 
@@ -531,7 +531,7 @@ body::before {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background-image: url('/assets/bands/scratches.webp');
+  background-image: url('../assets/bands/scratches.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

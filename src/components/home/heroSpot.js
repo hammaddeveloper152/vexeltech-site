@@ -31,6 +31,19 @@
    so no line is ever on screen across a cut. The last line has no next cut and
    stays: the rotating headline is retired and this is the headline now. */
 
+/* THE FILES ARE IMPORTED, NOT SERVED FROM public/, 2026-10-05. A file in
+   public/ keeps its name across encodes, so a cache holding the old one keeps
+   serving it. Imported, each gets a content hash in its filename: a new
+   encode is a new URL, and /assets/* can be cached as immutable. */
+import wideWebm from '../../assets/hero/hero-spot.webm';
+import wideMp4 from '../../assets/hero/hero-spot.mp4';
+import widePoster from '../../assets/hero/hero-spot-poster.webp';
+import wideFirst from '../../assets/hero/hero-spot-first.webp';
+import mobileWebm from '../../assets/hero/hero-spot-m.webm';
+import mobileMp4 from '../../assets/hero/hero-spot-m.mp4';
+import mobilePoster from '../../assets/hero/hero-spot-tall-poster.webp';
+import mobileFirst from '../../assets/hero/hero-spot-m-first.jpg';
+
 export const FPS = 24;
 export const CUT_FRAMES = [0, 45, 145, 234];
 export const CUTS = CUT_FRAMES.map((f) => f / FPS);
@@ -67,15 +80,15 @@ export const NARROW_QUERY = '(max-width: 1023px)';
    brief's ceiling is 60). */
 export const SPOT = {
   wide: {
-    webm: '/assets/hero/hero-spot.webm',
-    mp4: '/assets/hero/hero-spot.mp4',
-    poster: '/assets/hero/hero-spot-poster.webp',
-    first: '/assets/hero/hero-spot-first.webp',
+    webm: wideWebm,
+    mp4: wideMp4,
+    poster: widePoster,
+    first: wideFirst,
   },
   mobile: {
-    webm: '/assets/hero/hero-spot-m.webm',
-    mp4: '/assets/hero/hero-spot-m.mp4',
-    poster: '/assets/hero/hero-spot-tall-poster.webp',
-    first: '/assets/hero/hero-spot-m-first.jpg',
+    webm: mobileWebm,
+    mp4: mobileMp4,
+    poster: mobilePoster,
+    first: mobileFirst,
   },
 };

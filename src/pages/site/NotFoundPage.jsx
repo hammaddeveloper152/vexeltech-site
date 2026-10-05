@@ -4,6 +4,7 @@ import Shell from './Shell.jsx';
 import { CALL_HREF, CALL_LABEL } from './parts.jsx';
 import ArtCard from '../../components/site/ArtCard.jsx';
 import './notfound.css';
+import vmark from '../../assets/objects/vmark.webp';
 
 /* THE NOT-FOUND PAGE, 2026-09-15. The route for `/404` and for every path
    the router does not know.
@@ -23,7 +24,7 @@ export default function NotFoundPage() {
           {/* IN A CARD, 2026-09-24 (the founder): the site's one card, bare,
               so the mark does not stand on the page ground. Decorative. */}
           <div className="nf__card">
-            <ArtCard image="/assets/objects/vmark.webp" />
+            <ArtCard image={vmark} />
           </div>
           <h1 className="one__h nf__h" id="nf-h">
             That page isn&apos;t here.
