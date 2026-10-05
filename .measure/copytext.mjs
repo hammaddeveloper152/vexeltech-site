@@ -29,8 +29,9 @@
        which repeats the Services item lines by design.
      - every $ figure, against 299, 449, 700, 999, 150, 15 and 300. A
        LABELLED COMPARISON FIGURE (the founder, 2026-10-06) is a price that
-       is not ours, allowed only inside its own phrase: "$29 one" in the
-       Branding question on /services. It is reported under `comparisons`,
+       is not ours, allowed only inside its own phrases: "from a $29
+       one" in the Branding question on /services and "The $29 one is a
+       stock mark" in its answer. It is reported under `comparisons`,
        not `outside`; the same figure anywhere else is still outside.
      - exclamation marks
      - THE DEVICE CHECK (the final artifacts pass, 2026-10-03, the
@@ -76,7 +77,7 @@ const selfHits = (t, route) =>
 const SHARED = 'footer.foot, .callband, .about__rows, .ct-facts__row, a, button, .marg';
 const FIGURES = new Set(['299', '449', '700', '999', '150', '15', '300']);
 /* Labelled comparison figures: [figure, the exact phrase it may sit in]. */
-const COMPARISONS = [['29', 'from a $29 one']];
+const COMPARISONS = [['29', 'from a $29 one'], ['29', 'The $29 one is a stock mark']];
 
 const errors = [];
 const b = await puppeteer.launch({ headless: 'new', args: ['--autoplay-policy=no-user-gesture-required'] });

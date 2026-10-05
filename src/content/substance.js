@@ -9,23 +9,23 @@
    Figures are tokens where the site already has one: Branding's first
    question names the Basic price.
 
-   DE-DUPLICATED, 2026-10-06 (the founder): a spec value never repeats a
-   What you get line on the same page. Websites' Speed and Forms are the
-   founder's words; the other rewordings say the same fact another way and
-   add none (DESIGN.md, COPY V4). The lists are unchanged. */
+   SPEC SHEETS KEEP THE FACTS, 2026-10-06 (the founder): the spec values
+   are the founder's originals, with Speed and Forms in his later words.
+   Where a value repeated a What you get line, the LIST line was reworded
+   (content/services.js), never the value. */
 
 import { FIGURES, money } from './pricing.js';
 
 export const SUBSTANCE = {
   branding: {
     spec: [
-      ['Concepts', 'Real directions to choose between, not one take'],
+      ['Concepts', 'Five on Basic, eight on Advance'],
       ['Revisions', 'Until you approve. No cap.'],
       ['Delivery', 'One to two business days'],
       ['Files', 'SVG, PNG, PDF and the source files'],
-      ['Guidelines', 'How to use the mark, set down for your printer and sign shop'],
-      ['Stationery', 'Set up print-ready, with your details on'],
-      ['Social kit', 'On Advance, the mark sized for every profile you run'],
+      ['Guidelines', 'Colour, type, spacing, in writing'],
+      ['Stationery', 'Card, letterhead, envelope'],
+      ['Social kit', 'Profile marks and covers, every platform (Advance)'],
       ['Ownership', 'Yours, in full, from day one'],
     ],
     steps: [
@@ -36,9 +36,9 @@ export const SUBSTANCE = {
     ],
     questions: [
       {
-        id: 'cheap',
+        id: 'stock',
         q: `What makes a ${money(FIGURES.brandingBasic)} logo different from a $29 one?`,
-        a: 'Time and judgement. The cheap one is a template with your name typed in. Ours starts from what you do and who buys it, is tested on a sign and a card before you see it, and comes with the files and the rules to use it for ten years.',
+        a: 'Time and judgement. The $29 one is a stock mark with your name typed in. Ours starts from what you do and who buys it, is tested on a sign and a card before you see it, and comes with the files and the rules to use it for ten years.',
       },
       {
         id: 'own',
@@ -49,13 +49,13 @@ export const SUBSTANCE = {
   },
   websites: {
     spec: [
-      ['Pages', 'Six, one of them built around your best seller'],
+      ['Pages', 'Six, structured around what you sell most'],
       ['Build', 'Four business days from your content'],
       ['Mobile', 'Built for the phone first, then the desk'],
       ['Speed', 'Loads fast on a phone on a weak signal'],
-      ['Search', 'Set up to show in Google search and on Google Maps'],
+      ['Search', 'Titles, schema, sitemap, Google Business Profile connected'],
       ['Forms', 'Calls and forms traced back to the ad or search that caused them'],
-      ['Maintenance', 'A month of changes and fixes, at no extra charge'],
+      ['Maintenance', 'Thirty days after launch, included'],
       ['Ownership', 'Domain, hosting and code in your name'],
     ],
     steps: [
@@ -79,13 +79,13 @@ export const SUBSTANCE = {
   },
   marketing: {
     spec: [
-      ['Channels', 'Search, maps, local ads and social, chosen for your area'],
-      ['Search', 'Built to show up in local results and AI answers'],
-      ['Measured by', 'What each lead costs you, in a monthly report'],
-      ['Creative', 'Your own jobs and photos, no stock images'],
+      ['Channels', 'Google Business Profile, Local Service Ads, Google Ads, Meta ads'],
+      ['Search', 'Local SEO and AI search, service-area pages and citations'],
+      ['Measured by', 'Cost per lead, reported monthly'],
+      ['Creative', 'Built from your real work, not stock'],
       ['Pricing', 'On the call, in writing before anything runs'],
       ['Terms', 'Month to month'],
-      ['Tracking', 'Each lead traced to the campaign that brought it'],
+      ['Tracking', 'Every call and form tied to its source'],
       ['Start', 'Within two weeks of sign-off'],
     ],
     steps: [
@@ -109,8 +109,8 @@ export const SUBSTANCE = {
   },
   automation: {
     spec: [
-      ['Workflows', 'Six to choose from, priced one by one'],
-      ['Response', 'A missed caller hears back inside a minute'],
+      ['Workflows', 'Missed-call text-back, quote follow-up, invoice reminders, booking, review requests, AI agents'],
+      ['Response', 'Text back in under sixty seconds'],
       ['Tools', 'Works with the phone, calendar and invoicing you already use'],
       ['Pricing', 'Per workflow, in writing before work starts'],
       ['Setup', 'Most workflows live within two weeks'],
