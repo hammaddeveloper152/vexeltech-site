@@ -79,24 +79,48 @@
   outline-color: var(--c-asphalt);
 }
 
-/* THE DISCIPLINE COLOURS, 2026-09-25: the list marks take the section's
-   discipline colour (restored after the three-colour pass, Websites lilac
-   where it was arc blue); the bar left of the price stays yellow. The
-   section's ground is unchanged. */
+/* THE DISCIPLINE COLOURS, 2026-10-05 (the founder's pre-launch pass). Each
+   band takes its discipline's colour, the same value as home's What we do
+   cards, where the page had yellow: the side label, the 4px rule beside
+   the price, the price or its statement, and the artifact's live mark.
+   Body text stays bone or asphalt.
+
+     --disc        the fill: list marks, the text-back's sent bubbles
+     --disc-text   text and marks on the band's own ground: the bright value
+                   on a dark band, the INK on a cream one (tokens.css)
+     --disc-cream  marks on a cream surface inside the band (the brand
+                   stage, the phone screen): always the ink
+
+   Branding and Marketing are dark bands, Websites and Automation cream. */
 .svc2__d--branding {
-  --disc: var(--c-accent-ground);
+  --disc: var(--c-yellow-d);
+  --disc-text: var(--c-yellow-d); /* 10.30:1 on the base */
+  --disc-cream: var(--c-yellow-ink);
 }
 
 .svc2__d--websites {
   --disc: var(--c-lilac);
+  --disc-text: var(--c-lilac-ink); /* 5.03:1 on cream */
+  --disc-cream: var(--c-lilac-ink);
 }
 
 .svc2__d--marketing {
   --disc: var(--c-coral);
+  --disc-text: var(--c-coral); /* 6.55:1 on the base */
+  --disc-cream: var(--c-coral-ink);
 }
 
 .svc2__d--automation {
   --disc: var(--c-mint);
+  --disc-text: var(--c-mint-ink); /* 5.03:1 on cream */
+  --disc-cream: var(--c-mint-ink);
+}
+
+/* The side label. register.css's `.panel-sec .marg` (deep amber on cream,
+   steel-lift on dark) is imported last, so this rule outranks it on
+   specificity rather than order. */
+main .svc2__d .marg {
+  color: var(--disc-text);
 }
 
 .svc2__in {
@@ -289,17 +313,18 @@
 .svc2__fig,
 .svc2__oncall {
   margin: 0 0 var(--s-md);
-  /* The 4px bar left of the price, machine yellow (it was the discipline's
-     colour until the three-colour pass). */
+  /* The 4px bar left of the price and the price itself, in the
+     discipline's colour (2026-10-05; machine yellow and the band's ink
+     until then). */
   padding-left: 20px;
-  border-left: 4px solid var(--c-accent-ground);
+  border-left: 4px solid var(--disc-text);
+  color: var(--disc-text);
   font-family: var(--font-quiet);
   font-size: 56px;
   line-height: 1.05;
   font-weight: 400;
   letter-spacing: normal;
   text-transform: none;
-  color: inherit;
   text-wrap: balance;
 }
 

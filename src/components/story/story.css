@@ -489,7 +489,8 @@
   padding: 10px;
   border-radius: 44px;
   background: var(--c-base);
-  box-shadow: 0 24px 48px rgb(0 0 0 / 18%);
+  /* Tinted with the discipline's colour at 20% (2026-10-05). */
+  box-shadow: 0 24px 48px color-mix(in srgb, var(--disc, #000) 20%, transparent);
 }
 
 .dp__screen {

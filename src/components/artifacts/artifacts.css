@@ -497,7 +497,8 @@
 
 .by__caret {
   height: 0.8em;
-  background: currentColor;
+  /* The discipline's ink on the cream stage (2026-10-05). */
+  background: var(--disc-cream, currentColor);
 }
 
 .by__row {
@@ -532,7 +533,10 @@
   display: flex;
   gap: var(--s-sm);
   margin: 0;
-  padding: 0;
+  /* The strip's edge: 2px under the swatches in the discipline's ink
+     (2026-10-05). It is inside the clip, so it draws with the strip. */
+  padding: 0 0 var(--s-sm);
+  border-bottom: 2px solid var(--disc-cream, transparent);
   list-style: none;
 }
 
@@ -845,7 +849,9 @@
   width: calc(100% - 3px);
   height: calc(100% - 3px);
   fill: none;
-  stroke: var(--c-accent-ground);
+  /* The discipline's ink on the cream screen (2026-10-05): coral itself is
+     2.66:1 there, its ink 5.07. */
+  stroke: var(--disc-cream, var(--c-accent-ground));
   stroke-width: 3px;
   stroke-dasharray: 100;
 }
@@ -891,7 +897,7 @@
   font-family: var(--font-offer);
   font-size: 14px;
   line-height: 20px;
-  color: var(--c-accent-text-dark);
+  color: var(--disc-text, var(--c-accent-text-dark)); /* coral on lit-raised, 2026-10-05 */
 }
 
 .sc__cap {
@@ -899,97 +905,202 @@
   color: var(--c-steel-lift); /* 7.6:1 */
 }
 
-/* ==== ABOUT: FOUR BUSINESS DAYS (WeekStrip.jsx) ========================= */
+/* ==== ABOUT: FOUR BUSINESS DAYS, THE RAIL (WeekStrip.jsx) ============== */
+
+/* From 768: the rail across the content width, at 72px from the track's
+   top. Above it, 72px for the lines that sit above (and "Live.", 40px, over
+   the disc); below it the ticks' day names, then the lines that sit below.
+   The track is inset 12px either side so Friday's disc and the end day
+   names stay inside the content box. */
+.wk__track {
+  position: relative;
+  height: 148px;
+  margin: 0 12px;
+}
+
+.wk__rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 71px;
+  height: 2px;
+  background: var(--c-steel);
+}
+
+.wk__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--c-accent-ground);
+  transform-origin: 0 50%;
+  transform: scaleX(var(--p, 1));
+}
+
 .wk__days {
-  display: grid;
-  gap: var(--s-sm);
+  position: absolute;
+  inset: 0;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-@media (min-width: 768px) {
-  .wk__days {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-}
-
-.wk__cell {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  height: 180px;
-  padding: var(--s-md);
-  overflow: hidden;
-  clip-path: inset(0 round 6px);
-  border: 1px solid var(--c-steel);
-  border-radius: 6px;
-}
-
-.wk__bar,
-.wk__fill {
+.wk__day {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
+  top: 72px;
+  left: calc(var(--i) * 25%);
+  width: 0;
+  height: 0;
+}
+
+.wk__tick {
+  position: absolute;
+  left: -1px;
+  top: -7px;
+  width: 2px;
+  height: 14px;
+  background: var(--c-steel-lift);
+}
+
+.wk__disc {
+  position: absolute;
+  left: -12px;
+  top: -12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
   background: var(--c-accent-ground);
 }
 
-.wk__bar {
-  height: 4px;
-  transform-origin: 0 50%;
-}
-
-.wk__fill {
-  bottom: 0;
-  transform-origin: 50% 0;
+.wk__d,
+.wk__mask {
+  position: absolute;
+  white-space: nowrap;
+  transform: translateX(-50%);
 }
 
 .wk__d {
-  position: relative;
+  top: 16px;
   font-family: var(--font-mono);
   font-size: 11px;
   line-height: 16px;
   letter-spacing: 0.04em;
-  color: var(--c-steel-lift); /* 7.6:1 */
-}
-
-.wk__cell--lit .wk__d {
-  color: var(--c-base); /* 10.1:1 on yellow */
+  color: var(--c-steel-lift); /* 7.55:1 on the base */
 }
 
 .wk__mask {
-  position: relative;
   display: block;
   overflow: hidden;
   clip-path: inset(0);
 }
 
+.wk__day--above .wk__mask {
+  bottom: 16px;
+}
+
+.wk__day--below .wk__mask {
+  top: 44px;
+}
+
+.wk__day--live .wk__mask {
+  bottom: 20px;
+}
+
+/* The two ends: Monday's line starts at the content edge and "Live."
+   ends at the disc's edge, so neither leaves the column. */
+.wk__day:first-child .wk__mask {
+  transform: translateX(-12px);
+}
+
+.wk__day--live .wk__mask {
+  transform: translateX(calc(-100% + 12px));
+}
+
 .wk__line {
   display: block;
   font-family: var(--font-offer);
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--c-bone);
+  font-size: 18px;
+  line-height: 26px;
+  color: var(--c-bone); /* 16.32:1 on the base */
 }
 
-.wk__cell--live .wk__line {
-  font-family: var(--font-quiet);
-  font-size: 24px;
-  line-height: 32px;
+.wk__day--live .wk__line {
+  font-family: var(--font-brand);
+  font-size: 40px;
+  line-height: 44px;
   font-weight: var(--t-weight-quiet);
-  color: var(--c-bone); /* until the yellow lands: it is clipped out then,
-                           and a pair it ever paints is one that passes */
-}
-
-.wk__cell--lit .wk__line {
-  color: var(--c-base); /* 10.1:1 on yellow */
+  color: var(--c-accent-text-dark); /* machine yellow, 9.46:1 */
 }
 
 .wk__cap {
   margin-top: var(--s-lg);
   color: var(--c-steel-lift);
+}
+
+/* Below 768: the rail runs down the left, a 72px row per day, each tick
+   8px into its row, and the day name and line to the right of it. */
+@media (max-width: 767px) {
+  .wk__track {
+    height: auto;
+    margin: 0;
+  }
+
+  .wk__rail {
+    left: 11px;
+    right: auto;
+    top: 8px;
+    bottom: 64px;
+    width: 2px;
+    height: auto;
+  }
+
+  .wk__fill {
+    transform-origin: 50% 0;
+    transform: scaleY(var(--p, 1));
+  }
+
+  .wk__days {
+    position: relative;
+    display: grid;
+    grid-auto-rows: 72px;
+  }
+
+  .wk__day {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding-left: 40px;
+  }
+
+  .wk__tick {
+    left: 5px;
+    top: 7px;
+    width: 14px;
+    height: 2px;
+  }
+
+  .wk__disc {
+    left: 0;
+    top: -4px;
+  }
+
+  /* 0-4-0, over every placement rule above (the --above, --below, --live
+     and first-child masks are 0-2-0 to 0-3-0). */
+  .wk__track .wk__days .wk__day .wk__d,
+  .wk__track .wk__days .wk__day .wk__mask {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    transform: none;
+  }
+
+  .wk__d {
+    order: -1;
+  }
 }
 
 /* ==== ABOUT: ONE TEAM (OneTeam.jsx) ===================================== */
@@ -1015,12 +1126,18 @@
   stroke-dasharray: 100;
 }
 
-.ot__disc {
-  fill: var(--c-bone);
+/* The trail: 2px of the lane's colour over its 1px steel line, drawn by
+   stroke-dashoffset as the disc travels (2026-10-05). */
+.ot__trail {
+  fill: none;
+  stroke-width: 2px;
+  stroke-dasharray: 100;
 }
 
+/* Each disc is its discipline's colour (set inline from TONES), and the
+   merge is one 24px bone disc. */
 .ot__one {
-  fill: var(--c-accent-ground);
+  fill: var(--c-bone);
 }
 
 .ot__labels,
@@ -1037,7 +1154,7 @@
   line-height: 16px;
   letter-spacing: 0.04em;
   white-space: nowrap;
-  color: var(--c-accent-text-dark); /* 9.46:1 on the dark ground */
+  /* Each lane's name in its discipline's colour, set inline (2026-10-05). */
 }
 
 .ot__stage--v .ot__label {

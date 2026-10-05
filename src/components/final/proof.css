@@ -82,7 +82,8 @@
 
 .tb__msg--sent .tb__text {
   border-bottom-right-radius: 4px;
-  background: var(--c-accent-ground); /* asphalt on it, 9.0:1 */
+  /* The discipline's fill, mint since 2026-10-05: asphalt on it 5.69:1. */
+  background: var(--disc, var(--c-accent-ground));
 }
 
 .tb__msg--received .tb__text {

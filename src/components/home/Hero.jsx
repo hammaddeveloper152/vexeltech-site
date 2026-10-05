@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import HeroSurface from './HeroSurface.jsx';
 import { videoAllowed } from './Video.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
-import { CUTS, EXIT_MS, LINES, NARROW_QUERY, SPOT } from './heroSpot.js';
+import { CUTS, EXIT_MS, LINES, NARROW_QUERY } from './heroSpot.js';
+import { SPOT } from './heroFiles.js';
 import './Hero.css';
 import Brush from '../site/Brush.jsx';
 
@@ -16,24 +16,21 @@ import Brush from '../site/Brush.jsx';
    1875ms agreed with it. A stalled download, a backgrounded tab or a slow
    decoder moves every line with the picture, and a timer would move none.
 
-   ---- Three modes, decided once at mount -------------------------------------
+   ---- Two modes, decided once at mount ---------------------------------------
 
      spot     the film plays, muted, inline, looping (2026-09-30). Line 1 is
               there from the first paint (2026-10-01); each later line fades
               up on its cut and fades out 200ms before the next.
 
-     still    REDUCED MOTION. The poster, which is the film's last frame, and
-              line 1, with nothing animating. An autoplay the browser refuses
-              does not land here (2026-09-24): the film's own first-second
-              poster stays, with line 1.
+     still    REDUCED MOTION, SAVE-DATA, A SLOW CONNECTION, OR NO PLAYABLE
+              VIDEO. The film's first-second frame (`first`, the same image the
+              video element shows as its poster) and line 1, with nothing
+              animating. Never the last frame.
 
-     surface  SAVE-DATA, A SLOW CONNECTION, OR NO PLAYABLE VIDEO. The lit shader
-              and line 1. No bytes of film or poster are requested, which is
-              what Save-Data asks for.
-
-   UNTIL 2026-10-01 the still, the surface and a refused autoplay showed the
-   final line instead; the founder's perf pass put line 1 in every first
-   paint.
+   THE HERO SHOWS THE FILM OR A FRAME OF THE FILM, NOTHING ELSE, EVER
+   (2026-10-05, the founder's pre-launch pass, BUILD-LAW Real over drawn).
+   The surface mode and its lit shader are deleted; a refused autoplay keeps
+   the video element's own first-second poster, with line 1.
 
    The gates are `videoAllowed()`, shared with the work grid so they cannot
    drift. One of its four does not apply here and it is worth saying which:
@@ -43,7 +40,7 @@ import Brush from '../site/Brush.jsx';
 
    ---- What does not move -----------------------------------------------------
 
-   The sub, both calls and the note are present from the first paint and never
+   The sub and both calls are present from the first paint and never
    change position. The headline box is two lines tall at every width whatever
    line is in it, because every line is two lines or fewer by construction —
    see the size derivation in Hero.css — so a one-line shot does not pull the
@@ -57,14 +54,14 @@ import Brush from '../site/Brush.jsx';
    the masks only existed to carry the slam. DESIGN.md records the removal. */
 
 function pickMode() {
-  if (typeof window === 'undefined') return 'surface';
+  if (typeof window === 'undefined') return 'still';
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return 'still';
-  if (!videoAllowed()) return 'surface';
+  if (!videoAllowed()) return 'still';
   const probe = document.createElement('video');
   const plays =
     probe.canPlayType('video/webm; codecs="vp9"') ||
     probe.canPlayType('video/mp4; codecs="avc1.640028"');
-  return plays ? 'spot' : 'surface';
+  return plays ? 'spot' : 'still';
 }
 
 /* Which shot a time is in, and whether its line has started leaving.
@@ -200,7 +197,7 @@ export default function Hero() {
        the capture phase. The film is only abandoned once every source has
        failed, which is when the element reports it has none left. */
     const onError = () => {
-      if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) setMode('surface');
+      if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) setMode('still');
     };
 
     /* PLAY ONLY AFTER CANPLAYTHROUGH, 2026-09-24 (the founder's energy
@@ -230,7 +227,7 @@ export default function Hero() {
           /* AUTOPLAY REFUSED: THE POSTER STAYS (2026-09-24), and the
              headline keeps line 1, which it has shown since the first paint
              (2026-10-01; it switched to the final line until then). */
-          if (e && e.name === 'NotSupportedError') setMode('surface');
+          if (e && e.name === 'NotSupportedError') setMode('still');
         });
       }
     };
@@ -271,17 +268,8 @@ export default function Hero() {
   const advanced = useRef(false);
   if (state.shot !== null && state.shot !== 0) advanced.current = true;
 
-  /* THE NOTE. It stood in the frame's lower-left corner from 2026-09-25; with
-     the film behind the copy nothing else is painted over the film
-     (2026-09-30), so it is out of the frame. Only the surface mode, which
-     has no film, keeps it in the stack. */
-  const note = (
-    <p className="hero__note">
-      You'll see the work before you owe us anything. Ten seconds to decide, not ten meetings.
-    </p>
-  );
-  /* Line 1 until the film says otherwise; the still and the surface modes
-     show line 1 too (2026-10-01; they showed the final line). */
+  /* Line 1 until the film says otherwise; the still shows line 1 too
+     (2026-10-01; it showed the final line). */
   const shot = mode === 'spot' ? (state.shot ?? 0) : 0;
 
   return (
@@ -291,48 +279,41 @@ export default function Hero() {
       data-mode={mode}
     >
       {/* THE FRAME the film stands in: the hero's own box, never moved. */}
-      {mode !== 'surface' ? (
-        <div className="hero__frame">
-          {mode === 'spot' ? (
-            <video
-              ref={videoRef}
-              className="hero__spot"
-              poster={src.first}
-              muted
-              playsInline
-              autoPlay
-              loop
-              /* Metadata only on the mobile cut: autoplay fetches what it
-                 plays, and nothing more is asked for up front. */
-              preload={narrow ? 'metadata' : 'auto'}
-              /* Decoration under the copy, not content: the lines carry what the
-                 film says, and the h1 carries the lines. */
-              aria-hidden="true"
-              tabIndex={-1}
-              disablePictureInPicture
-            >
-              {/* VP9 first, so a browser that decodes it never fetches the h.264. */}
-              <source src={src.webm} type="video/webm" />
-              <source src={src.mp4} type="video/mp4" />
-            </video>
-          ) : null}
+      <div className="hero__frame">
+        {mode === 'spot' ? (
+          <video
+            ref={videoRef}
+            className="hero__spot"
+            poster={src.first}
+            muted
+            playsInline
+            autoPlay
+            loop
+            /* Metadata only on the mobile cut: autoplay fetches what it
+               plays, and nothing more is asked for up front. */
+            preload={narrow ? 'metadata' : 'auto'}
+            /* Decoration under the copy, not content: the lines carry what the
+               film says, and the h1 carries the lines. */
+            aria-hidden="true"
+            tabIndex={-1}
+            disablePictureInPicture
+          >
+            {/* VP9 first, so a browser that decodes it never fetches the h.264. */}
+            <source src={src.webm} type="video/webm" />
+            <source src={src.mp4} type="video/mp4" />
+          </video>
+        ) : null}
 
-          {/* The still follows the width, unlike the film: nothing is playing, so
-              a rotated phone can take the other crop without restarting anything. */}
-          {mode === 'still' ? (
-            <picture>
-              <source media={NARROW_QUERY} srcSet={SPOT.mobile.poster} type="image/webp" />
-              <img className="hero__spot" src={SPOT.wide.poster} alt="" decoding="async" />
-            </picture>
-          ) : null}
-        </div>
-      ) : null}
-
-      {mode === 'surface' ? <HeroSurface /> : null}
-
-      {/* Grain over the film, below the content: the site's one noise
-          (`--grain`, tokens.css) at 3%, 2026-09-24. */}
-      <span className="hero__grain" aria-hidden="true" />
+        {/* The still follows the width, unlike the film: nothing is playing, so
+            a rotated phone can take the other crop without restarting anything.
+            It is the film's FIRST-SECOND frame, never the last (2026-10-05). */}
+        {mode === 'still' ? (
+          <picture>
+            <source media={NARROW_QUERY} srcSet={SPOT.mobile.first} type="image/jpeg" />
+            <img className="hero__spot" src={SPOT.wide.first} alt="" decoding="async" />
+          </picture>
+        ) : null}
+      </div>
 
       <div className="hero__body">
         {/* ONE ACCESSIBLE NAME, AND IT IS THE HEADLINE THAT STAYS. Four lines
@@ -389,9 +370,6 @@ export default function Hero() {
               mono in steel-lift, at every width. */}
           <p className="hero__promise">A written number within one business day.</p>
 
-          {/* Only the surface mode, which has no film, keeps the note (see
-              `note` above). */}
-          {mode === 'surface' ? note : null}
         </div>
       </div>
     </section>

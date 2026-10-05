@@ -16,10 +16,20 @@ import '../final/about-bands.css';
    "One brief." "One invoice." "One number to call." Hold, rest 5s, loop
    (loop.js); the first paint and reduced motion show the finished state.
 
+   RICHER, 2026-10-05 (the founder's pre-launch pass). Each lane carries its
+   discipline's colour, the same four as home's What we do cards and
+   /services: the lane name is in it, the disc is a 14px disc of it, and the
+   disc leaves a 2px trail of it along its own lane (up to where the lanes
+   meet) as it travels. Where the lanes meet the four coloured discs
+   crossfade into one 24px bone disc, and then the three lines land. The
+   yellow merge disc is gone.
+
    The geometry is computed from the band's measured size, in pixels, so the
    discs stay round at every width. The drawing is aria-hidden; the lane
    names and the three lines are text. */
 const LANES = ['Branding', 'Website', 'Marketing', 'Automation'];
+/* tokens.css, the discipline colours (2026-10-05). */
+const TONES = ['var(--c-yellow-d)', 'var(--c-lilac)', 'var(--c-coral)', 'var(--c-mint)'];
 const LINES = ['One brief.', 'One invoice.', 'One number to call.'];
 const T_DRAW = 600;
 const T_GO = 600;
@@ -39,9 +49,11 @@ function layout(w, h) {
     const ys = [0, 1, 2, 3].map((i) => 60 + i * 80);
     const yc = h / 2;
     const x1 = x0 + (xM - x0) * 0.3;
+    const own = ys.map((y) => `M ${x0} ${y} L ${x1} ${y} C ${(x1 + xM) / 2} ${y}, ${(x1 + xM) / 2} ${yc}, ${xM} ${yc}`);
     return {
       vertical,
-      lanes: ys.map((y) => `M ${x0} ${y} L ${x1} ${y} C ${(x1 + xM) / 2} ${y}, ${(x1 + xM) / 2} ${yc}, ${xM} ${yc} L ${xD} ${yc}`),
+      own,
+      lanes: own.map((d) => `${d} L ${xD} ${yc}`),
       labels: ys.map((y) => ({ left: 0, top: y - 8 })),
       disc: { x: xD, y: yc },
       lines: { left: xD + 40, top: yc - 48 },
@@ -53,9 +65,11 @@ function layout(w, h) {
   const xs = [0, 1, 2, 3].map((i) => Math.round((w * (i + 0.5)) / 4));
   const xc = w / 2;
   const y1 = 90;
+  const own = xs.map((x) => `M ${x} ${y0} L ${x} ${y1} C ${x} ${(y1 + yM) / 2}, ${xc} ${(y1 + yM) / 2}, ${xc} ${yM}`);
   return {
     vertical,
-    lanes: xs.map((x) => `M ${x} ${y0} L ${x} ${y1} C ${x} ${(y1 + yM) / 2}, ${xc} ${(y1 + yM) / 2}, ${xc} ${yM} L ${xc} ${yD}`),
+    own,
+    lanes: own.map((d) => `${d} L ${xc} ${yD}`),
     labels: xs.map((x) => ({ left: x, top: 0 })),
     disc: { x: xc, y: yD },
     lines: { left: 0, top: yD + 32 },
@@ -65,6 +79,7 @@ function layout(w, h) {
 export default function OneTeam() {
   const ref = useRef(null);
   const paths = useRef([]);
+  const trails = useRef([]);
   const [t] = useLoop(ref, TOTAL);
   const [box, setBox] = useState({ w: 1152, h: 360 });
 
@@ -77,7 +92,17 @@ export default function OneTeam() {
   }, []);
 
   const L = layout(box.w, box.h);
+  /* The crossfade: the four coloured discs out, the bone disc in. */
   const pMerge = step(t, T_MERGE, 300);
+  /* How far along its own stretch a lane's trail has drawn, for the disc's
+     progress `k` along the whole lane. */
+  const trailAt = (i, k) => {
+    const p = paths.current[i];
+    const tr = trails.current[i];
+    if (!p || !tr) return k;
+    const f = tr.getTotalLength() / p.getTotalLength();
+    return Math.min(1, k / f);
+  };
   const discAt = (i) => {
     const p = paths.current[i];
     const k = step(t, T_GO + i * GAP, TRAVEL);
@@ -106,21 +131,39 @@ export default function OneTeam() {
                 style={{ strokeDashoffset: 100 * (1 - step(t, i * 70, T_DRAW)) }}
               />
             ))}
+            {L.own.map((d, i) => (
+              <path
+                key={`${LANES[i]}-trail`}
+                ref={(n) => {
+                  trails.current[i] = n;
+                }}
+                className="ot__trail"
+                d={d}
+                pathLength="100"
+                style={{
+                  stroke: TONES[i],
+                  strokeDashoffset: 100 * (1 - trailAt(i, step(t, T_GO + i * GAP, TRAVEL))),
+                }}
+              />
+            ))}
             {LANES.map((name, i) => {
               const at = discAt(i);
-              return at ? <circle key={name} className="ot__disc" cx={at.x} cy={at.y} r="6" /> : null;
+              return at && pMerge < 1 ? (
+                <circle
+                  key={name}
+                  className="ot__disc"
+                  cx={at.x}
+                  cy={at.y}
+                  r="7"
+                  style={{ fill: TONES[i], opacity: 1 - pMerge }}
+                />
+              ) : null;
             })}
-            <circle
-              className="ot__one"
-              cx={L.disc.x}
-              cy={L.disc.y}
-              r="10"
-              style={{ transform: `scale(${pMerge})`, transformOrigin: `${L.disc.x}px ${L.disc.y}px` }}
-            />
+            <circle className="ot__one" cx={L.disc.x} cy={L.disc.y} r="12" style={{ opacity: pMerge }} />
           </svg>
           <ul className="ot__labels">
             {LANES.map((name, i) => (
-              <li className="ot__label" key={name} style={L.labels[i]}>
+              <li className="ot__label" key={name} style={{ ...L.labels[i], color: TONES[i] }}>
                 {name}
               </li>
             ))}

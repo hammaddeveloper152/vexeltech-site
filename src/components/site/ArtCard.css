@@ -236,7 +236,7 @@
 }
 
 .art--branding {
-  --tone: var(--c-accent-ground);
+  --tone: var(--c-yellow-d); /* #F2B01E since 2026-10-05; it was machine yellow */
 }
 
 .art--websites {

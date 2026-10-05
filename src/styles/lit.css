@@ -555,33 +555,3 @@ body::before {
    model's back-layer clause stands in DESIGN.md and applies to the next
    decorative plane that earns one. */
 
-/* ---- The hero surface ---------------------------------------------------
-
-   Behind the copy, above the ground gradient. The blur is what makes it a
-   SURFACE rather than a graphic: at 1.5px the noise stops resolving into
-   shapes the eye tries to read and becomes something the light is falling on.
-
-   z-index 1 puts it over the section's own background and under `.hero__body`,
-   which is 2. `pointer-events: none` because it is not a control and it covers
-   the whole section. */
-.hero__surface {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: block;
-  width: 100%;
-  height: 100%;
-  filter: blur(0.75px);
-  pointer-events: none;
-  /* THE SURFACE RUNS THE FULL HEIGHT. It was masked off the copy — full to
-     19% of the section and gone by 39% — because steel-dark at 18px tolerates
-     a ground of only 1.72% luminance and no surface worth having is that dark.
-
-     The mask is gone because the TEXT changed instead. The sub and the note
-     are bone now, which clears 4.5:1 on the surface's own peak, so there is
-     nothing left for the mask to protect. It fades only in the last 12%, into
-     the Failures seam, so the two sections meet on one ground rather than on
-     an edge. */
-  mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
-}

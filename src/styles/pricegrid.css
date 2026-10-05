@@ -561,7 +561,7 @@
 /* The columns' list marks take their discipline colour (restored
    2026-09-25, Websites lilac). */
 .pr-col--branding {
-  --disc: var(--c-accent-ground);
+  --disc: var(--c-yellow-d); /* the discipline's own yellow, 2026-10-05 */
 }
 
 .pr-col--websites {

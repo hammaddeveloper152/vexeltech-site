@@ -31,19 +31,6 @@
    so no line is ever on screen across a cut. The last line has no next cut and
    stays: the rotating headline is retired and this is the headline now. */
 
-/* THE FILES ARE IMPORTED, NOT SERVED FROM public/, 2026-10-05. A file in
-   public/ keeps its name across encodes, so a cache holding the old one keeps
-   serving it. Imported, each gets a content hash in its filename: a new
-   encode is a new URL, and /assets/* can be cached as immutable. */
-import wideWebm from '../../assets/hero/hero-spot.webm';
-import wideMp4 from '../../assets/hero/hero-spot.mp4';
-import widePoster from '../../assets/hero/hero-spot-poster.webp';
-import wideFirst from '../../assets/hero/hero-spot-first.webp';
-import mobileWebm from '../../assets/hero/hero-spot-m.webm';
-import mobileMp4 from '../../assets/hero/hero-spot-m.mp4';
-import mobilePoster from '../../assets/hero/hero-spot-tall-poster.webp';
-import mobileFirst from '../../assets/hero/hero-spot-m-first.jpg';
-
 export const FPS = 24;
 export const CUT_FRAMES = [0, 45, 145, 234];
 export const CUTS = CUT_FRAMES.map((f) => f / FPS);
@@ -73,22 +60,5 @@ export const FINAL_LINE = LINES[LINES.length - 1];
    they started on rather than restarting the clip at a different ratio. */
 export const NARROW_QUERY = '(max-width: 1023px)';
 
-/* `poster` is the film's LAST frame, the reduced-motion still. `first` is
-   a frame from its first second (0.5s, the phone on the desk): the video
-   element's own poster, which is what shows until the clip plays and what
-   stays if autoplay is refused. The mobile one is a JPEG, 12.6 KB (the
-   brief's ceiling is 60). */
-export const SPOT = {
-  wide: {
-    webm: wideWebm,
-    mp4: wideMp4,
-    poster: widePoster,
-    first: wideFirst,
-  },
-  mobile: {
-    webm: mobileWebm,
-    mp4: mobileMp4,
-    poster: mobilePoster,
-    first: mobileFirst,
-  },
-};
+/* The files themselves are in heroFiles.js, so this module stays plain
+   data that the measurement scripts can import in Node. */

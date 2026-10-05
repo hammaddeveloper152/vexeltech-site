@@ -230,9 +230,25 @@
      5.87:1, on mint 5.62, on lilac 8.68; white on coral 3.03, on mint 3.16,
      on lilac 2.05, so text on them is asphalt and a white mark (3:1) only
      sits on coral and mint. */
-  --c-coral: #f26b3a;
-  --c-mint: #2fa37a;
-  --c-lilac: #c9a6f5;
+  /* THE DISCIPLINE COLOURS, 2026-10-05 (the founder's pre-launch pass):
+     one value per discipline, shared by home's What we do cards, /services,
+     /pricing and About's One team. Branding's yellow is its own value,
+     #F2B01E, beside machine yellow (#F0B323), which stays the call's.
+     Coral was #F26B3A, mint #2FA37A, lilac #C9A6F5. Measured as fills:
+     asphalt on yellow 9.31, lilac 8.62, coral 5.91, mint 5.69. As text on
+     the base: 10.30, 9.54, 6.55, 6.30. On cream all four fail (1.69, 1.83,
+     2.66, 2.77), so each has an INK for text and marks on cream, the same
+     hue darkened in HSL until it clears 5:1. Lilac's ink is desaturated to
+     30% as well: at full saturation it is #8635E9, a violet on cream, which
+     CLAUDE.md's anti-defaults ban. */
+  --c-yellow-d: #f2b01e;
+  --c-coral: #f26b4f;
+  --c-mint: #3fa37a;
+  --c-lilac: #c9a5f5;
+  --c-yellow-ink: #865f08; /* 5.09:1 on cream */
+  --c-lilac-ink: #7957a2; /* 5.03:1 on cream */
+  --c-coral-ink: #c22d0e; /* 5.07:1 on cream */
+  --c-mint-ink: #2d7356; /* 5.03:1 on cream */
 
   /* ---- Colour: light grounds (relief) ---------------------------------- */
   --c-shop-white: #ffffff; /* surface */
@@ -898,12 +914,25 @@ main#main footer.foot {
    40 is the VISIBLE box. BUILD-LAW Touch wants 48 and counts padding, not
    paint, so each control carries `--hdr-hit`: a transparent pseudo-element
    4px above and below the box, which takes the pointer and paints nothing. */
+/* MORE PRESENCE, 2026-10-05 (the founder's pre-launch pass): the bar is
+   56px (48 below 768), the links and the call 15px, and the call 44px tall
+   in the same box. `--bar-h` is the bar's height, read by the hero, which
+   starts under it. */
 :root {
   --hdr-h: 40px;
+  --hdr-cta-h: 44px;
   --hdr-px: 14px;
   --hdr-r: 6px;
-  --hdr-fs: 14px;
+  --hdr-fs: 15px;
   --hdr-hit: calc((48px - var(--hdr-h)) / -2);
+  --hdr-cta-hit: calc((48px - var(--hdr-cta-h)) / -2);
+  --bar-h: 56px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --bar-h: 48px;
+  }
 }
 
 /* THE LIST MARK, 2026-09-25 (the founder): every What you get item, on

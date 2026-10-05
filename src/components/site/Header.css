@@ -50,6 +50,21 @@
   background: var(--c-base);
 }
 
+/* THE SOLID BAR IS BLACK WITH A 1px STEEL RULE BENEATH, 2026-10-05 (the
+   founder's pre-launch pass). On every dark route, and on home once the
+   hero's headline reaches the bar. Steel (#4C5055) is a line here, not
+   text: 2.42:1 on the base, which a hairline does not need to clear. */
+.bar:not([data-over='true'])::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--c-steel);
+  pointer-events: none;
+}
+
 /* ---- OVER A HERO, 2026-09-15 ---------------------------------------------
 
    On a route with a film or surface hero (home, About) the bar stands OVER the
@@ -74,7 +89,7 @@
    glyph at 390 passes at 55 (16.54:1); the value is the worst width's. */
 .bar[data-over='true'] {
   background: none;
-  margin-bottom: calc(-1 * (48px + 2 * var(--s-sm)));
+  margin-bottom: calc(-1 * var(--bar-h));
   --bar-shade: 85%;
 }
 
@@ -95,7 +110,7 @@
 
 .bar[data-over='true']::after {
   background: var(--c-base);
-  border-bottom: 1px solid var(--c-rule-dark);
+  border-bottom: 1px solid var(--c-steel);
   opacity: 0;
 }
 
@@ -138,7 +153,9 @@
   gap: var(--s-lg);
   width: min(100%, 1200px);
   margin: 0 auto;
-  padding: var(--s-sm) var(--s-md);
+  /* The bar's height is the brand's 48px target plus this padding:
+     56 from 768, 48 below (`--bar-h`, tokens.css). */
+  padding: calc((var(--bar-h) - 48px) / 2) var(--s-md);
 }
 
 .bar__brand {
@@ -148,6 +165,11 @@
   min-height: 48px;
   margin-right: auto;
   text-decoration: none;
+}
+
+/* The wordmark in the bar: 22px, 18 below 768 (2026-10-05). */
+.bar__brand .wm--md {
+  font-size: 22px;
 }
 
 /* ---- Navigation --------------------------------------------------------- */
@@ -206,7 +228,7 @@
   /* 14px Satoshi, sentence case, steel-lift on the base. */
   font-family: var(--font-offer);
   font-size: var(--hdr-fs);
-  font-weight: var(--t-weight-label);
+  font-weight: var(--t-weight-label); /* 500 */
   letter-spacing: normal;
   text-transform: none;
   color: var(--c-steel-lift);
@@ -338,9 +360,11 @@
      Ground is unchanged: transparent with the 12% border. The hero's own note
      still holds — two filled calls in a frame is a composition that has not
      decided. */
+  /* 44 tall and 600, 2026-10-05: the same box as the links, taller. */
+  height: var(--hdr-cta-h);
   font-family: var(--font-brand);
   font-size: var(--hdr-fs);
-  font-weight: var(--t-weight-btn);
+  font-weight: 600;
   letter-spacing: normal;
   text-decoration: none;
   transition:
@@ -372,7 +396,7 @@
    is measured from inside it, so their target reaches 1px further to make
    the same 48. Measured 46 before this (`.measure/header.mjs`). */
 .bar__cta::before {
-  inset: calc(var(--hdr-hit) - 1px) -1px;
+  inset: calc(var(--hdr-cta-hit) - 1px) -1px;
 }
 
 .bar__menu::before {
@@ -541,7 +565,7 @@
   }
 
   .bar__brand .wm--md {
-    font-size: var(--t-body-size);
+    font-size: 18px;
   }
 }
 
@@ -557,14 +581,14 @@
 
 @media (min-width: 768px) {
   .bar__inner {
-    padding: var(--s-sm) var(--s-xl);
+    padding: calc((var(--bar-h) - 48px) / 2) var(--s-xl);
   }
 
 }
 
 @media (min-width: 1024px) {
   .bar__inner {
-    padding: var(--s-sm) var(--s-2xl);
+    padding: calc((var(--bar-h) - 48px) / 2) var(--s-2xl);
   }
 
   .bar__nav {

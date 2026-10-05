@@ -75,7 +75,6 @@
      move: the bar's height goes back on as top padding, so the content box is
      where it was, 32px + half the screen down. The bar's height is derived
      from the same tokens that build it. */
-  --bar-h: calc(48px + 2 * var(--s-sm));
   min-height: 100svh;
   /* The inset IS the measure. The headline size below is derived from exactly
      this number at each width: 16 on a phone, 40 at tablet, 64 at desktop.
@@ -86,23 +85,9 @@
   overflow: clip;
 }
 
-/* ---- Grain -------------------------------------------------------------- */
-
-/* Over the film, below every piece of content: the site's one noise at 3%
-   (2026-09-24, the founder). It was its own SVG filter at 5.5%, fixed to the
-   viewport; it is the hero's now, and still, so reduced motion keeps it. */
-.hero__grain {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background-image: var(--grain);
-  opacity: var(--grain-opacity);
-  pointer-events: none;
-}
-
 /* ---- The film ------------------------------------------------------------
 
-   The spot, or in the still mode its last frame. IT COVERS THE HERO: the
+   The spot, or in the still mode its first-second frame (2026-10-05). IT COVERS THE HERO: the
    section's full width and full height at every width, cover-fit, so a
    section taller than 16:9 allows crops the film and never letterboxes it.
    Measured on the build: the element's box is the section's box, 1280×736 at
@@ -166,13 +151,13 @@
    out when the shade was zoned.
 
    In the film modes these replace the headline's machine yellow glow from
-   lit.css, which over a photograph is an olive fringe on every glyph. The
-   surface mode keeps the glow. */
-.hero:not([data-mode='surface']) .hero__headline {
+   lit.css, which over a photograph is an olive fringe on every glyph. Both
+   modes are film modes since the surface mode was deleted (2026-10-05). */
+.hero[data-mode] .hero__headline {
   text-shadow: 0 2px 24px rgb(0 0 0 / 60%);
 }
 
-.hero:not([data-mode='surface']) :is(.hero__eyebrow, .hero__price, .hero__promise, .hero__note, .hero__cta--line) {
+.hero[data-mode] :is(.hero__eyebrow, .hero__price, .hero__promise, .hero__cta--line) {
   text-shadow: 0 1px 12px rgb(0 0 0 / 60%);
 }
 
@@ -365,14 +350,6 @@
   color: var(--c-bone); /* 100%, over the film, as the note is */
 }
 
-.hero__note {
-  margin: 0;
-  max-width: 60ch; /* detector: 96 chars/line at 1280 without this */
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  color: var(--c-bone); /* over the film, the copy zone and its shadow; DESIGN.md */
-}
-
 /* ==========================================================================
    THE ENTRANCE — a fade-up, once per shot.
 
@@ -462,8 +439,8 @@
    The headline box is two lines tall with the line at its top, so a cut
    never moves the stack; 16px between every piece of the stack.
 
-   `.hero[data-mode]` ties the `.hero:not([data-mode='surface'])` rules above
-   on specificity (0-3-0 with a class after it), and this block comes last,
+   `.hero[data-mode]` ties the `.hero[data-mode]` rules above on
+   specificity (0-3-0 with a class after it), and this block comes last,
    so it wins. Keep it at the foot of the file. */
 .hero[data-mode] {
   height: 100svh;
@@ -506,12 +483,6 @@
   pointer-events: none;
 }
 
-/* The grain is painted over the film, so it stands down in the film modes;
-   the surface mode keeps it. */
-.hero:not([data-mode='surface']) .hero__grain {
-  display: none;
-}
-
 .hero[data-mode] .hero__body {
   align-self: end;
   box-sizing: border-box;
@@ -547,10 +518,6 @@
 
 .hero[data-mode] .hero__promise {
   order: 4;
-}
-
-.hero[data-mode] .hero__note {
-  order: 5;
 }
 
 /* ---- Below 1024: the mobile pass, unchanged ---------------------------- */
