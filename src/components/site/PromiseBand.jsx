@@ -24,10 +24,14 @@ import '../../styles/promise.css';
    band"); the band lives on home, so its copy is applied here, the one
    place it renders (DESIGN.md, COPY V2). V2.1 drops the first refusal, so
    three. */
+/* THE FOUNDER'S DECISIONS AFTER THE FINAL AUDIT (final23, 2026-10-06):
+   the three refusals are written as what we do, the same facts; "It's on
+   this site." is gone, and so is the heading's "three things we don't
+   do". */
 const REFUSALS = [
-  "We don't hide the price until a call. It's on this site.",
-  "We don't keep your files. Domain, hosting, code and credentials move to your name.",
-  "We don't sell retainers on branding or websites. Marketing is month to month.",
+  'We show the price before the first call.',
+  'We hand over your files. Domain, hosting, code and credentials move to your name.',
+  'We price branding and websites once, with no retainer. Marketing is month to month.',
 ];
 
 export default function PromiseBand({ id, lead }) {
@@ -35,7 +39,7 @@ export default function PromiseBand({ id, lead }) {
     <section className="vt ab3-price promise panel-sec" aria-labelledby={id} data-artifact="PromiseBand">
       <div className="promise__in panel">
         <h2 className="promise__h ab3-price__h" id={id}>
-          Flat prices, and three things we don&apos;t do.
+          Flat prices, in writing.
         </h2>
         {lead ? <p className="sec-lead">{lead}</p> : null}
         <div className="ab3-price__cols">

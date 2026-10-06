@@ -72,7 +72,8 @@ const SELF =
    The exceptions. The About one holds on About only: the fit list's
    "Contractors" (V3.1, 2026-10-01). Home's cost cell 3, "of calls to trade
    and home businesses" (final16), is the founder's wording, on home only. */
-const SELF_OK = ["It's on this site", 'Startups raising a round'];
+/* "It's on this site" left the page in final23 (2026-10-06). */
+const SELF_OK = ['Startups raising a round'];
 const SELF_OK_ROUTE = {
   '/about-us': ['Contractors, clinics, real estate'],
   '/': ['of calls to trade and home businesses'],

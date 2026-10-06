@@ -24,6 +24,19 @@ import { SUBSTANCE } from '../../content/substance.js';
    is three places and one inbox (InboxStage.jsx). */
 const PROOF = { brand: BrandDesk, ads: InboxStage, textback: TextBackBand };
 
+/* THE HEADINGS (the founder's decisions after the final audit, final23,
+   2026-10-06): each band's h2 is a sentence carrying its search cluster
+   (copy rule 9), and the discipline's name stands above it as the band's
+   eyebrow. The eyebrows are sentence case, not uppercase, so the four of
+   them stay outside BUILD-LAW Layout's cap of three small uppercase
+   eyebrows per page. */
+const HEADINGS = {
+  branding: 'Branding for small businesses',
+  websites: 'Small business website design',
+  marketing: 'Local SEO, Google Ads and Meta ads for local businesses',
+  automation: 'Missed-call text-back and small business automation',
+};
+
 /* THE FOUR DISCIPLINES ON /services, AS ALTERNATING BANDS, 2026-09-23.
 
    THE 28 CARDS ARE OUT. Each discipline carried six sub-service cards and the
@@ -103,8 +116,9 @@ export default function ServiceSections({ disciplines }) {
           >
             <div className={`svc2__in${cream ? ' panel' : ''}`}>
               <div className="svc2__head">
+                <p className="svc2__kicker">{d.name}</p>
                 <h2 className="svc2__name" id={`svc-${d.id}`}>
-                  {d.name}
+                  {HEADINGS[d.id] || d.name}
                 </h2>
                 <p className="svc2__promise">{d.promise}</p>
               </div>

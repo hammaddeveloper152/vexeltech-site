@@ -194,6 +194,21 @@
 }
 
 /* Moldie at 64px, the name register: a discipline is a product name. */
+/* The discipline's name over its heading (final23): 13px mono, sentence
+   case, in the band's secondary ink. */
+.svc2__kicker {
+  margin: 0 0 var(--s-sm);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0.02em;
+  color: var(--c-steel-lift); /* 7.55:1 on the base */
+}
+
+.svc2__d--cream .svc2__kicker {
+  color: var(--c-steel); /* 7.20:1 on cream */
+}
+
 .svc2__name {
   margin: 0 0 var(--s-md);
   /* A service name is a heading, 2026-09-24: Clash Medium, 44 / 32. It was

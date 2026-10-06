@@ -37,5 +37,5 @@ export const THREAD = {
   /* The clarity pass (2026-10-06): "One missed call, handled end to end."
      is the stage title above now, so the caption keeps only its second
      sentence. */
-  caption: 'Replies in under sixty seconds, every time.',
+  caption: 'Replies in under sixty seconds.',
 };

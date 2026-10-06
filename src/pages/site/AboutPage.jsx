@@ -41,8 +41,8 @@ import '../../styles/light.css';
 const QUESTIONS = [
   {
     id: 'us',
-    q: 'Do you work outside the US?',
-    a: 'Yes. Most of our clients are in the US, and we work with the UK, Europe and Australia on the same terms. Calls are set to your hours, not ours.',
+    q: 'Where are your clients?',
+    a: 'Our clients are in the US, the UK, Europe and Australia, on the same terms. Calls are set to your hours, not ours.',
   },
   {
     id: 'who',
