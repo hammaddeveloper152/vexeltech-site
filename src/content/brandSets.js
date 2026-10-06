@@ -1,16 +1,17 @@
 import { useSyncExternalStore } from 'react';
 
-/* HARBOR DENTAL'S FIVE COLOUR SETS (final17, 2026-10-06, the founder).
+/* THE FIVE COLOUR SETS OF THE BRANDING DESK (final17, 2026-10-06, the
+   founder).
    The five sets of the brand you type (final7), named and widened to the
    five swatches the Branding strip shows: `primary` (the set's A, the
    fills), `deep` (A at 70% over black, the sign's foot and shadows' ink),
    `accent` (the set's B, the accent line), `paper` (bone, #F4EFE6, the
-   same in every set) and `ink` (asphalt). Harbor Dental is a demo client
-   with no real counterpart; nothing here is a client's palette.
+   same in every set) and `ink` (asphalt). The client is whatever name is
+   typed (final18); nothing here is a client's palette.
 
    The active set is one value for the page: the Branding selector sets it
-   and both /services artifacts read it, so changing one thing recolours
-   both stages. */
+   and the desk reads it. The Marketing report of final18 carries no set
+   colour, so only the desk follows it now. */
 export const PAPER = '#F4EFE6';
 export const INK = '#17181A';
 export const SETS = [

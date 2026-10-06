@@ -1,0 +1,253 @@
+/* SERVICES, MARKETING: THE MONTH, IN OUR NUMBERS (MonthReport.jsx, final18,
+   2026-10-06). On the dark band, no sheet and no frame. Inks on the base:
+   bone 16.32:1, steel-lift 7.55. The chip's 1px outline is bone at 40%. */
+.mr {
+  display: grid;
+  gap: var(--s-lg);
+  margin: 0;
+}
+
+.mr__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 620px) minmax(0, 480px);
+  justify-content: space-between;
+  align-items: start;
+  gap: var(--s-2xl);
+  width: min(100%, 1180px);
+  min-height: 560px;
+  margin: 0 auto;
+}
+
+.mr__k {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel-lift);
+}
+
+/* ---- The report ---------------------------------------------------------- */
+.mr__report {
+  padding: var(--s-lg) 0;
+  border-top: 1px solid rgb(232 234 237 / 22%);
+  border-bottom: 1px solid rgb(232 234 237 / 22%);
+}
+
+.mr__rule {
+  display: block;
+  width: 80px;
+  height: 2px;
+  margin: var(--s-md) 0 var(--s-xl);
+  background: var(--c-accent-ground);
+}
+
+.mr__figs {
+  display: grid;
+  gap: 64px;
+  margin: 0;
+}
+
+.mr__fig {
+  display: grid;
+  gap: var(--s-sm);
+}
+
+.mr__n {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: 112px;
+  line-height: 0.9;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-bone);
+}
+
+.mr__l {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-steel-lift);
+}
+
+.mr__note {
+  max-width: 52ch;
+  margin: var(--s-xl) 0 0;
+  font-family: var(--font-offer);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--c-steel-lift);
+}
+
+/* ---- The arrivals -------------------------------------------------------- */
+.mr__arrivals {
+  --mr-rows: 8;
+  display: grid;
+  gap: var(--s-md);
+}
+
+/* The column holds its rows exactly; a row shifted past the foot is cut. */
+.mr__rows {
+  position: relative;
+  overflow: hidden;
+  clip-path: inset(0);
+  height: calc(var(--mr-rows) * 64px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mr__row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-md);
+  box-sizing: border-box;
+  height: 64px;
+  border-bottom: 1px solid rgb(232 234 237 / 14%);
+}
+
+.mr__chip {
+  padding: 3px 8px;
+  border: 1px solid rgb(232 234 237 / 40%);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--c-bone);
+}
+
+.mr__what {
+  overflow: hidden;
+  font-family: var(--font-offer);
+  font-size: 15px;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--c-bone);
+}
+
+.mr__time {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-steel-lift);
+}
+
+/* The soft start: one 400ms dip and return, before the first entry. */
+.mr__rows.is-soft .mr__row {
+  animation: mr-soft 400ms linear;
+}
+
+@keyframes mr-soft {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* An entry: the new row from 64px up and opacity 0; every row under it
+   from 64px up to its place; the row pushed past the foot fades. */
+.mr__rows[data-cycle] .mr__row {
+  animation: mr-shift 350ms var(--ease-reveal);
+}
+
+.mr__rows[data-cycle] .mr__row--new {
+  animation-name: mr-in;
+}
+
+.mr__rows[data-cycle] .mr__row:nth-child(9) {
+  animation-name: mr-out;
+}
+
+@keyframes mr-shift {
+  from {
+    transform: translateY(-64px);
+  }
+}
+
+@keyframes mr-in {
+  from {
+    opacity: 0;
+    transform: translateY(-64px);
+  }
+}
+
+@keyframes mr-out {
+  from {
+    transform: translateY(-64px);
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.mr__cap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-xs) var(--s-lg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel-lift); /* 7.55:1 on the base */
+}
+
+/* ---- Below 1024: the report on top, six rows; below 600: four ----------- */
+@media (max-width: 1023px) {
+  .mr__stage {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .mr__n {
+    font-size: 72px;
+  }
+
+  .mr__figs {
+    gap: var(--s-xl);
+  }
+
+  .mr__arrivals {
+    --mr-rows: 6;
+  }
+
+  .mr__rows[data-cycle] .mr__row:nth-child(9) {
+    animation-name: mr-shift;
+  }
+
+  .mr__rows[data-cycle] .mr__row:nth-child(7) {
+    animation-name: mr-out;
+  }
+}
+
+@media (max-width: 599px) {
+  .mr__n {
+    font-size: 56px;
+  }
+
+  .mr__arrivals {
+    --mr-rows: 4;
+  }
+
+  .mr__rows[data-cycle] .mr__row:nth-child(7) {
+    animation-name: mr-shift;
+  }
+
+  .mr__rows[data-cycle] .mr__row:nth-child(5) {
+    animation-name: mr-out;
+  }
+
+  .mr__row {
+    gap: var(--s-sm);
+  }
+}

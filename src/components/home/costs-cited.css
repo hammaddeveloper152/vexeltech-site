@@ -114,3 +114,76 @@
     left: 14px;
   }
 }
+
+/* ---- THE QUANTITY FIELDS (final18, 2026-10-06) --------------------------
+   One 110px slot between the figure and the line, so the lines stay level
+   across the row; each field top and left aligned in it. Unlit units bone
+   at 12%; lit units #F2B01E, the bars at 80%. Below 600 a field scales to
+   its cell (the 1000-dot field is 159px wide, the cell's text column about
+   147 at 390). */
+.cc__slot {
+  height: 110px;
+  margin: 0 0 18px;
+}
+
+.cc__field {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.cc__base {
+  fill: rgb(232 234 237 / 12%);
+}
+
+.cc__lit {
+  fill: var(--c-yellow-d);
+}
+
+.cc__field--bars .cc__lit {
+  fill: rgb(242 176 30 / 80%);
+}
+
+/* The play's soft start touches the lit units only. */
+.cc__grid[data-leaving] .cc__lit {
+  opacity: var(--fade, 1);
+}
+
+@media (max-width: 599px) {
+  .cc__slot {
+    height: auto;
+    min-height: 96px;
+  }
+}
+
+/* Hover: the cell lifts 4px and a 1px bone edge at 20% fades in, 200ms.
+   Transform and opacity only; gated to a real pointer (BUILD-LAW Motion). */
+.cc__cell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(232 234 237 / 20%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cc__cell {
+    transition: transform 200ms var(--ease-reveal);
+  }
+
+  .cc__cell:hover {
+    transform: translateY(-4px);
+  }
+
+  .cc__cell:hover::after {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cc__cell:hover {
+    transform: none;
+  }
+}

@@ -25,9 +25,9 @@ import { FIGURES, money } from './pricing.js';
 
    `proof` (the final pass, 2026-10-03): the band the other three carry
    above their lists, one object each: 'brand' (artifacts/BrandDesk since
-   final17, Harbor Dental's identity on one desk), 'ads'
-   (artifacts/SearchSheet since final17, Harbor Dental first in the
-   results and the phone ringing) and 'textback'
+   final17, the typed name's identity on one desk), 'ads'
+   (artifacts/MonthReport since final18, a real month's ad report beside
+   the enquiries arriving) and 'textback'
    (final/TextBackBand, the missed-call thread). Since final7 (2026-10-03)
    neither stage carries a client name or capture, so Baseline's phone is
    back in the Websites band, first. The founder left the third phone to

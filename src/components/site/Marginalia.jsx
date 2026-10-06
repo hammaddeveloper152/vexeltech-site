@@ -33,7 +33,9 @@ export default function Marginalia() {
     const start = first ? all.indexOf(first) + 1 : 0;
     const sections = all
       .slice(start)
-      .filter((s) => s.getAttribute('aria-hidden') !== 'true' && s.querySelector('h2'));
+      /* A section may opt out (`data-nomarg`): About's close, final18,
+         where nothing but the statement and the call stands. */
+      .filter((s) => s.getAttribute('aria-hidden') !== 'true' && !('nomarg' in s.dataset) && s.querySelector('h2'));
 
     const made = sections.map((s, i) => {
       const h = s.querySelector('h2');

@@ -389,12 +389,13 @@
   box-sizing: border-box;
   width: 60px;
   height: 60px;
-  padding: 4px;
+  padding: 2px;
   font-size: 11px;
   line-height: 13px;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   text-align: center;
-  overflow-wrap: anywhere;
+  hyphens: manual;
 }
 
 .bd__tile--p {
@@ -430,7 +431,8 @@
   box-shadow: var(--hd-shadow);
 }
 
-.bd__appt .hd-mark {
+.bd__appt .mg {
+  justify-self: start;
   color: var(--hd-accent);
 }
 
@@ -553,13 +555,10 @@
     padding: 0 24px;
   }
 
-  .bd__sign .hd-mark {
-    width: 44px;
-    height: 44px;
-  }
-
-  .bd__sign-w {
-    font-size: 26px;
+  /* The mark's size is set inline (Monogram.jsx); the narrower sign takes
+     a smaller one. The lettering's size is fitted in BrandDesk.jsx. */
+  .bd__sign .mg {
+    font-size: 44px !important;
   }
 
   .bd__gbp {
@@ -599,17 +598,108 @@
     padding: 0 16px;
   }
 
-  .bd__sign .hd-mark {
-    width: 36px;
-    height: 36px;
-  }
-
-  .bd__sign-w {
-    font-size: 20px;
+  .bd__sign .mg {
+    font-size: 34px !important;
   }
 
   .bd__strip {
     margin: 0 -16px;
     padding: 6px 16px;
   }
+}
+
+/* ---- The mark (Monogram.jsx, final18) ------------------------------------
+   Two letters in the display face at 0.9em, the second over the first by
+   20% of its width (about 0.12em at this face), one 2px rule beneath in
+   the primary. On a surface filled with the primary the rule takes the
+   accent (--mg-rule), where a primary rule would not show. */
+.mg {
+  display: inline-flex;
+  flex: none;
+  align-items: baseline;
+  padding-bottom: 0.1em;
+  border-bottom: 2px solid var(--mg-rule, var(--hd-primary));
+  font-family: var(--font-brand);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.mg__l {
+  font-size: 0.9em;
+}
+
+.mg__l--2 {
+  margin-left: -0.12em;
+}
+
+.bd__sign,
+.bd__gbp-cover,
+.bd__gbp-av,
+.bd__appt,
+.bd__badge,
+.bd__tile--p {
+  --mg-rule: var(--hd-accent);
+}
+
+.bd__est-n {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- The field and the selector, above the stage (final18) -------------- */
+.bd__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--s-md) var(--s-xl);
+}
+
+.bd__field {
+  display: grid;
+  gap: var(--s-xs);
+  width: min(100%, 420px);
+}
+
+.bd__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel-lift); /* 7.55:1 on the base */
+}
+
+/* The line field on the dark band: the contact pass's field in the dark
+   ground's inks. Focus is a 2px machine yellow line (10.1:1). */
+.bd__input {
+  display: block;
+  width: 100%;
+  min-height: 48px; /* BUILD-LAW Touch */
+  margin: 0;
+  padding: 10px 0;
+  border: 0;
+  border-bottom: 1px solid var(--field-line-dark);
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--font-quiet);
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-bone); /* 16.32:1 */
+  appearance: none;
+}
+
+.bd__input::placeholder {
+  color: var(--c-steel-lift); /* 7.55:1 */
+  opacity: 1;
+}
+
+.bd__input:focus,
+.bd__input:focus-visible {
+  outline: none;
+  padding-bottom: 9px;
+  border-bottom: 2px solid var(--c-accent-draw-dark);
 }

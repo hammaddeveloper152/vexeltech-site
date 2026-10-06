@@ -11,7 +11,6 @@ import RouteBand from '../../components/site/RouteBand.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import { CallBand } from './parts.jsx';
-import Marginalia from '../../components/site/Marginalia.jsx';
 import { setHead } from './head.js';
 import '../../styles/tokens.css';
 /* The loud register, applied to every section below the hero. Imported LAST
@@ -155,9 +154,9 @@ export default function Home() {
         />
         <FooterForm />
       </main>
-      {/* The margin labels, from 1024 (Marginalia.jsx). The story rail that
-          joined them (the clarity pass) is deleted (final14, 2026-10-06). */}
-      <Marginalia />
+      {/* No section index on home (final18, 2026-10-06, the founder): the
+          margin labels are gone from this page. Marginalia still serves the
+          other pages through Shell. */}
     </>
   );
 }

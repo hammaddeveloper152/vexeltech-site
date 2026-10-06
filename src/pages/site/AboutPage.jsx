@@ -6,7 +6,7 @@ import WeekStrip from '../../components/artifacts/WeekStrip.jsx';
 import OneTeam from '../../components/artifacts/OneTeam.jsx';
 import FitColumns from '../../components/story/FitColumns.jsx';
 import TermsCard from '../../components/story/TermsCard.jsx';
-import { CallBand } from './parts.jsx';
+import AboutClose from '../../components/final/AboutClose.jsx';
 import { setFaqLd } from './head.js';
 import { FIGURES, money } from '../../content/pricing.js';
 import '../../styles/aboutpage.css';
@@ -22,7 +22,7 @@ import '../../styles/light.css';
      Who we are for               FitColumns: two columns, a rule between
      How we work with you         TermsCard: a white sheet, four clauses
      Questions                    the FAQ accordion
-     the closing call             CallBand
+     the close                    AboutClose (final18)
 
    It replaced home's route (twice), home's discipline cards, the fit cards
    and the facts table, all of which repeated objects found elsewhere on the
@@ -137,10 +137,9 @@ export default function AboutPage() {
       <FitColumns />
       <TermsCard />
       <Faq items={QUESTIONS} id="ab3-faq" />
-      <CallBand
-        heading="Tell us what's going wrong."
-        note="Fifteen minutes on the phone with the person who would do the work. Nothing to pay for the answer."
-      />
+      {/* The close (final18, 2026-10-06): one statement, the call and the
+          facts. It replaced the closing call. */}
+      <AboutClose />
     </Shell>
   );
 }

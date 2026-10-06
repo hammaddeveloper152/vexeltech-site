@@ -87,10 +87,10 @@ const FIGURES = new Set(['299', '449', '700', '999', '150', '15', '300']);
 const COMPARISONS = [['29', 'from a $29 one'], ['29', 'The $29 one is a stock mark']];
 /* LABELLED FIGURES, by route, reported under `labelled`: home's cited $70
    (final15; WordStream, its source on the cell); on /services (final17)
-   the demo client's treatment estimate, $95, $140, $220 and $455, on its
-   own document, and the Marketing receipt's $2,400 and $38 under
-   "Illustrative figures". */
-const LABELLED = { '/': ['70'], '/services': ['95', '140', '220', '455', '2400', '38'] };
+   the desk's quote, $95, $140, $220 and $455, on the typed client's own
+   document; since final18 the report's real $34.69 (read here as 34), the
+   founder's November 2025 account. */
+const LABELLED = { '/': ['70'], '/services': ['95', '140', '220', '455', '34'] };
 
 const errors = [];
 const b = await puppeteer.launch({ headless: 'new', args: ['--autoplay-policy=no-user-gesture-required'] });
