@@ -60,7 +60,9 @@ export const leaving = (leave) => ({
   style: leave > 0 ? { '--leave': leave, '--fade': fadeOf(leave) } : undefined,
 });
 
-export function useLoop(ref, total, { start = total, first = 0, rest = () => total } = {}) {
+/* `once` (final17, 2026-10-06): the artifact plays a single time; after
+   it the complete frame stays, as `stop()` would leave it. */
+export function useLoop(ref, total, { start = total, first = 0, rest = () => total, once = false } = {}) {
   const [t, setT] = useState(start);
   const [leave, setLeave] = useState(0);
   const clock = useRef({
@@ -116,6 +118,7 @@ export function useLoop(ref, total, { start = total, first = 0, rest = () => tot
           c.phase = 'rest';
           c.holdUntil = now + HOLD;
           c.raf = 0;
+          if (once) c.stopped = true;
           if (c.inView) c.begin();
           return;
         }

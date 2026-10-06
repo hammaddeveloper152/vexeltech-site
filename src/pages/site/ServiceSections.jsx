@@ -4,8 +4,8 @@ import { IconArrowUpRight } from '../../components/site/Icons.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
 import EvidenceBand from '../../components/story/EvidenceBand.jsx';
 import DevicePhones from '../../components/story/DevicePhones.jsx';
-import BrandYouType from '../../components/artifacts/BrandYouType.jsx';
-import SearchToCall from '../../components/artifacts/SearchToCall.jsx';
+import BrandDesk from '../../components/artifacts/BrandDesk.jsx';
+import SearchSheet from '../../components/artifacts/SearchSheet.jsx';
 import TextBackBand from '../../components/final/TextBackBand.jsx';
 import { SpecSheet, HowItGoes, TwoQuestions } from '../../components/story/Substance.jsx';
 import { SUBSTANCE } from '../../content/substance.js';
@@ -20,7 +20,9 @@ import { SUBSTANCE } from '../../content/substance.js';
 /* The proof bands, by services.js's `proof` (the final pass, 2026-10-03;
    since the final artifacts pass, 2026-10-03; since final7 the brand you
    type, and from search to call for the visitor). */
-const PROOF = { brand: BrandYouType, ads: SearchToCall, textback: TextBackBand };
+/* Since final17 (2026-10-06) Branding is the desk and Marketing the
+   results sheet; both read one colour set (content/brandSets.js). */
+const PROOF = { brand: BrandDesk, ads: SearchSheet, textback: TextBackBand };
 
 /* THE FOUR DISCIPLINES ON /services, AS ALTERNATING BANDS, 2026-09-23.
 

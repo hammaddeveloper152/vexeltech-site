@@ -1,10 +1,9 @@
 
 /* ==========================================================================
    THE ARTIFACTS (the final artifacts pass, 2026-10-03, the founder). The
-   looping objects on About (OneTeam, WeekStrip; loop.js) and the field of
-   the Branding slider on /services. Since final15 (2026-10-06) Branding
-   and Marketing are before/after sliders (BeforeAfter.jsx,
-   brand-slider.css, search-slider.css) and home's scenes are gone.
+   looping objects on About (OneTeam, WeekStrip; loop.js). Since final17
+   (2026-10-06) /services' Branding and Marketing are BrandDesk and
+   SearchSheet, with their own sheets (brand-desk.css, search-sheet.css).
 
    One language for all four: the site's faces, 1px steel hairlines, 6px
    radii, the palette, no icons, no illustrations. Every position is a
@@ -37,78 +36,6 @@
   /* The soft start (2026-10-06): a crossfade through the first frame, in
      place of the clip-path wipe. */
   opacity: var(--fade, 1);
-}
-
-/* ==== SERVICES, BRANDING: THE BRAND YOU TYPE (BrandYouType.jsx) ======== */
-.by {
-  display: grid;
-  gap: var(--s-md);
-  margin: 0;
-}
-
-/* The cream panel: the artifact's own ground inside the dark Branding
-   section. Its columns from 1024 are brand-slider.css's. */
-.by__panel {
-  display: grid;
-  gap: var(--s-lg);
-  padding: var(--s-md);
-  border-radius: 8px;
-  background: var(--c-cream);
-  color: var(--c-asphalt);
-}
-
-@media (min-width: 768px) {
-  .by__panel {
-    padding: var(--s-lg);
-  }
-}
-
-.by__field {
-  display: grid;
-  align-content: center;
-  gap: var(--s-sm);
-  min-width: 0;
-}
-
-.by__label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  letter-spacing: 0.04em;
-  color: var(--c-steel); /* 7.2:1 on cream */
-}
-
-/* The line field on cream: the contact pass's field (LeadForm.css) in the
-   light ground's inks. Focus is 2px deep amber, not yellow: yellow on cream
-   is 1.7:1, under the 3:1 a control's edge needs; deep amber is 4.9:1. */
-.by__input {
-  display: block;
-  width: 100%;
-  min-height: 48px; /* BUILD-LAW Touch */
-  margin: 0;
-  padding: 10px 0;
-  border: 0;
-  border-bottom: 1px solid var(--field-line-cream);
-  border-radius: 0;
-  background: transparent;
-  font-family: var(--font-quiet);
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: var(--t-weight-quiet);
-  color: var(--c-asphalt); /* 15.75:1 */
-  appearance: none;
-}
-
-.by__input::placeholder {
-  color: var(--c-steel); /* 7.2:1 */
-  opacity: 1;
-}
-
-.by__input:focus,
-.by__input:focus-visible {
-  outline: none;
-  padding-bottom: 9px;
-  border-bottom: 2px solid var(--c-accent-draw-light);
 }
 
 /* ==== ABOUT: FOUR BUSINESS DAYS, THE RAIL (WeekStrip.jsx) ============== */

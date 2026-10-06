@@ -85,10 +85,12 @@ const SHARED = 'footer.foot, .callband, .about__rows, .ct-facts__row, a, button,
 const FIGURES = new Set(['299', '449', '700', '999', '150', '15', '300']);
 /* Labelled comparison figures: [figure, the exact phrase it may sit in]. */
 const COMPARISONS = [['29', 'from a $29 one'], ['29', 'The $29 one is a stock mark']];
-/* LABELLED FIGURES (the founder's final15, 2026-10-06), by route, reported
-   under `labelled`: home's cited $70 (WordStream, its source on the cell),
-   and the Marketing slider's $2,400 and $31 under "Illustrative figures". */
-const LABELLED = { '/': ['70'], '/services': ['2400', '31'] };
+/* LABELLED FIGURES, by route, reported under `labelled`: home's cited $70
+   (final15; WordStream, its source on the cell); on /services (final17)
+   the demo client's treatment estimate, $95, $140, $220 and $455, on its
+   own document, and the Marketing receipt's $2,400 and $38 under
+   "Illustrative figures". */
+const LABELLED = { '/': ['70'], '/services': ['95', '140', '220', '455', '2400', '38'] };
 
 const errors = [];
 const b = await puppeteer.launch({ headless: 'new', args: ['--autoplay-policy=no-user-gesture-required'] });
