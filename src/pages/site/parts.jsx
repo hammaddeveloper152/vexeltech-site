@@ -67,9 +67,13 @@ export function PromiseLine({ className = '' }) {
   return <p className={`promise-line${className ? ` ${className}` : ''}`}>{PROMISE}</p>;
 }
 
-export function CallBand({ heading, note = null, promise = false }) {
+/* `field` (home, final26, 2026-10-07): the band is a full-bleed yellow
+   field, #F2B01E, with the heading and the line in ink #121212 and the
+   call inverted (ink fill, bone text); at 390 it fills one screen with the
+   heading at 56px. The page's last stop before the form. */
+export function CallBand({ heading, note = null, promise = false, field = false }) {
   return (
-    <section className="vt callband" aria-labelledby="callband-h">
+    <section className={`vt callband${field ? ' callband--field' : ''}`} aria-labelledby="callband-h">
       {/* The scribble under the heading came off everywhere, 2026-10-01
           (the storytelling pass). */}
       <h2 className="callband__h" id="callband-h">

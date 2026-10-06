@@ -494,3 +494,125 @@
     justify-content: flex-start;
   }
 }
+
+/* ---- THE FORM ON THE CREAM SHEET (final26, 2026-10-07) --------------------
+   The "Let's talk" card (FooterMeta's band) and the form share one cream
+   ground: the sheet is the band's inset block (32px radius, the grain), the
+   card above the fields below 1024 and the two side by side from 1024. The
+   band inside it has no ground, margin or radius of its own. Every ink on
+   the sheet is the light ground's: the heading, the fields' text, their
+   rules and their labels in ink (asphalt 15.75:1, the resting rule asphalt
+   at 55%, 3.81:1), placeholders and indices steel (7.20), focus deep amber
+   (4.82), errors and success the light-ground red (5.68) and green (4.74). */
+.foot--sheet {
+  padding-top: var(--s-section);
+}
+
+.foot__sheet {
+  position: relative;
+  display: grid;
+  gap: var(--s-xl);
+  margin: 0 calc(16px - var(--foot-px));
+  padding: 32px;
+  overflow: hidden;
+  border-radius: 32px;
+  background: var(--c-cream);
+  color: var(--c-asphalt);
+}
+
+@media (min-width: 768px) {
+  .foot__sheet {
+    padding: 64px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .foot__sheet {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--s-2xl);
+    padding: 96px;
+  }
+}
+
+.foot__sheet .foot__band {
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-xl);
+}
+
+.foot__sheet .foot__inner {
+  width: auto;
+  margin: 0;
+}
+
+.foot__sheet .foot__h {
+  color: var(--c-asphalt);
+}
+
+.foot__sheet .lf__input {
+  color: var(--c-asphalt);
+  border-bottom-color: rgb(23 24 26 / 55%);
+}
+
+.foot__sheet .lf__input::placeholder,
+.foot__sheet .lf__idx {
+  color: var(--c-steel);
+}
+
+.foot__sheet .lf__input.lf__input:focus,
+.foot__sheet .lf__input.lf__input:focus-visible {
+  border-bottom-color: var(--c-accent-draw-light);
+}
+
+.foot__sheet .lf__input[aria-invalid='true'] {
+  border-bottom-color: var(--c-error);
+}
+
+.foot__sheet .lf__err {
+  color: var(--c-error); /* 5.68:1 on cream */
+}
+
+.foot__sheet .lf__ok {
+  color: var(--c-success); /* 4.74:1 on cream */
+}
+
+.foot__sheet .lf__mail {
+  color: var(--c-steel);
+}
+
+.foot__sheet .lf__mail a {
+  color: var(--c-asphalt);
+}
+
+.foot__sheet .lf__mail a:focus-visible,
+.foot__sheet .lf__submit:focus-visible {
+  outline-color: var(--c-asphalt);
+}
+
+/* The grain belongs to the sheet, not to the band inside it: one texture
+   over the whole cream ground, so the card and the fields read as one. */
+.foot__sheet .foot__band {
+  position: static;
+}
+
+.foot__sheet .foot__band::after {
+  content: none;
+}
+
+.foot__sheet::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: var(--grain);
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+}
+
+.foot__sheet > * {
+  position: relative;
+  z-index: 1;
+}

@@ -232,3 +232,45 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* ---- THE CLOSING CALL AS A FIELD (home, final26, 2026-10-07) -------------
+   Full-bleed #F2B01E. The heading and the line in ink #121212 (9.82:1 on
+   the yellow), the call inverted: ink fill, bone text (15.54:1). At 390 the
+   band is one screen tall below the bar, the heading 56px. Hover and press
+   as every call. */
+.callband--field {
+  --cb-ink: #121212;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  min-height: calc(100svh - 52px);
+  margin-top: var(--s-section);
+  padding: var(--s-2xl) var(--inset);
+  background: var(--c-yellow-d);
+}
+
+@media (min-width: 768px) {
+  .callband--field {
+    min-height: 0;
+    padding: var(--s-section) var(--inset);
+  }
+}
+
+.callband--field .callband__h {
+  font-size: 56px;
+  color: var(--cb-ink);
+}
+
+.callband--field .callband__note {
+  color: var(--cb-ink);
+}
+
+.callband--field .callband__cta {
+  background: var(--cb-ink);
+  color: var(--c-bone);
+}
+
+.callband--field .callband__cta:focus-visible {
+  outline: var(--focus-ring) solid var(--cb-ink);
+  outline-offset: var(--focus-offset);
+}

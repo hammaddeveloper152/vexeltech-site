@@ -32,19 +32,21 @@ export default function FooterForm({ form = true }) {
     );
   }
 
+  /* ONE CREAM SHEET (final26, 2026-10-07): the "Let's talk" card and the
+     fields share one cream ground, the card above the fields on a phone
+     and beside them from 1024. The dark ground under the form is gone. */
   return (
-    <footer className="vt foot">
-      <div className="foot__inner">
-        <h2 className="foot__h" id="foot-h">
-          Get in touch
-        </h2>
+    <footer className="vt foot foot--sheet">
+      <div className="foot__sheet">
+        <FooterMeta />
+        <div className="foot__inner">
+          <h2 className="foot__h" id="foot-h">
+            Get in touch
+          </h2>
 
-        <LeadForm idPrefix="ff" labelledBy="foot-h" />
-
+          <LeadForm idPrefix="ff" labelledBy="foot-h" />
+        </div>
       </div>
-
-      {/* The footer block, inset (FooterMeta.jsx). */}
-      <FooterMeta />
       <FooterBase />
     </footer>
   );

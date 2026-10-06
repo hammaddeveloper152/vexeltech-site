@@ -87,6 +87,21 @@ const WORDS = 'A web design and marketing agency built for small businesses.'.sp
 export default function AboutPage() {
   /* The questions as FAQPage data (head.js, 2026-10-05). */
   useEffect(() => setFaqLd(QUESTIONS), []);
+  /* MONIGUE IS PRELOADED HERE ONLY (final26, 2026-10-07): About is the one
+     route that paints Monigue above the fold. The tag is in the head when
+     the page is prerendered, so about-us/index.html carries it; the other
+     pages no longer preload a face they do not show first. */
+  useEffect(() => {
+    const l = document.createElement('link');
+    l.rel = 'preload';
+    l.href = '/fonts/monigue.woff2';
+    l.as = 'font';
+    l.type = 'font/woff2';
+    l.crossOrigin = '';
+    l.dataset.monigue = 'true';
+    if (!document.head.querySelector('link[data-monigue]')) document.head.appendChild(l);
+    return () => l.remove();
+  }, []);
   return (
     <Shell
       title="About VexelTech | Small business marketing agency"

@@ -71,6 +71,16 @@ for (const route of [...ROUTES, NOT_FOUND]) {
   await p.goto(BASE + route, { waitUntil: 'networkidle0' });
   await p.evaluate(() => document.fonts.ready);
   await new Promise((r) => setTimeout(r, 300));
+  /* THE FULL STYLESHEET STAYS NON-BLOCKING (final26, 2026-10-07). The
+     template loads it as media="print" with onload="this.media='all'", so
+     the inlined critical CSS paints first. By the time the page is
+     captured, the onload has run and the attribute reads "all"; written
+     out like that, every prerendered page waited for the whole stylesheet
+     before its first paint (FCP about 2.1s against 1.5s on the template).
+     It is set back to "print" in the copy that is saved. */
+  await p.evaluate(() => {
+    document.querySelectorAll('link[data-vt-css]').forEach((l) => l.setAttribute('media', 'print'));
+  });
   let html = await p.evaluate(() => {
     /* Nothing the measuring machine added: the dev origin in any absolute
        URL is never written, since every URL in the app is relative or on

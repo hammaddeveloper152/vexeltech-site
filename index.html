@@ -55,7 +55,11 @@
          hero at 390 (viewer audit). Preloaded from the HTML it is in the cache
          before the first heading is laid out. The same first-paint test the
          Moldie note applies: every page's heading is above the fold. -->
-    <link rel="preload" href="/fonts/monigue.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- THE MONIGUE PRELOAD CAME OFF (final26, 2026-10-07): since copy V4.1
+         the hero sets in Clash, and Monigue paints above the fold on About
+         only. Preloaded on every page it was a high-priority request ahead
+         of every first paint for a face most pages never show first. It
+         loads with font-display swap where it is used. -->
     <!-- STRUCTURED DATA IS A PUBLISHED CLAIM, held to the same bar as the
          page. Both `telephone` and `address` came out on 2026-09-08 while
          neither was confirmed, because asserting to a crawler what the page

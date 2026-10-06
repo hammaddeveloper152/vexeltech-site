@@ -152,6 +152,7 @@ export default function Home() {
         {/* The answered-call phone of final14 is deleted (final16,
             2026-10-06): headline, one paragraph and the call. */}
         <CallBand
+          field
           heading="Which one is costing you most?"
           note="Fifteen minutes on the phone and a written number. Usually it's not the expensive one."
         />
