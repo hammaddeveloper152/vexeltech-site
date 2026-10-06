@@ -12,8 +12,7 @@
 
      film        the hero's video or its still
      artifact    an element marked data-artifact that is an artifact (a
-                 /services stage), not a section that wraps one, or a
-                 card's artifact still
+                 /services stage), not a section that wraps one
      colour      a filled field that is not the page's dark ground (cream,
                  yellow, a discipline colour) covering 30% of the screen
      screenshot  a real capture of a site (Recent work, the phones)
@@ -77,12 +76,11 @@ const found = await p.evaluate((H) => {
   /* A section that only wraps other things (the $700 band, Recent work,
      the facts ledger) is not an artifact here; it counts by its own
      figure, colour or screenshots. */
-  const WRAPPERS = ['PromiseBand', 'WorkTiles', 'FactLedger'];
+  const WRAPPERS = ['PromiseBand', 'WorkAccordion'];
   document.querySelectorAll('[data-artifact]').forEach((e) => {
     if (!WRAPPERS.includes(e.dataset.artifact)) add('artifact', e, e.dataset.artifact);
   });
-  document.querySelectorAll('.art__still').forEach((e) => add('artifact', e, `still: ${e.getAttribute('src').split('/').pop()}`));
-  document.querySelectorAll('.wt__img, .dp img').forEach((e) => add('screenshot', e, e.getAttribute('alt') || 'capture'));
+  document.querySelectorAll('.wa__shot img, .dp img').forEach((e) => add('screenshot', e, e.getAttribute('alt') || 'capture'));
   for (const e of document.querySelectorAll('body *')) {
     const cs = getComputedStyle(e);
     if (cs.display === 'none' || cs.visibility === 'hidden') continue;

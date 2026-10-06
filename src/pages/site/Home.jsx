@@ -2,10 +2,9 @@ import React, { useEffect } from 'react';
 import Header from '../../components/site/Header.jsx';
 import Hero from '../../components/home/Hero.jsx';
 import CostsCited from '../../components/home/CostsCited.jsx';
-import WorkTiles from '../../components/final/WorkTiles.jsx';
-import Services from '../../components/home/Services.jsx';
+import WorkAccordion from '../../components/final/WorkAccordion.jsx';
+import WhatWeDo from '../../components/home/WhatWeDo.jsx';
 import WordBand from '../../components/home/WordBand.jsx';
-import About from '../../components/home/About.jsx';
 import CounterRow from '../../components/home/CounterRow.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
@@ -131,16 +130,21 @@ export default function Home() {
           back into the bar, which is the thing the link just skipped. */}
       <main id="main" tabIndex={-1}>
         <Hero />
+        {/* THE ORDER SINCE FINAL26 (2026-10-07, the founder): What we do as
+            paper forms (frame D3), Recent work, the wordmark band, What it
+            costs you, then the $700 band. Who we are is deleted: the $700
+            and the four days are in the band, the thirty days on the
+            Websites card. Its "one invoice, one team" is on no section of
+            home now. */}
+        <WhatWeDo />
+        {/* Recent work, the accordion of wide tiles, restored as it was at
+            final22. It renders nothing until content/work.js has three
+            real entries. */}
+        <WorkAccordion />
+        <WordBand />
         {/* What it costs you: four cited numbers, no artifact (the
             founder's approved frame C, final15, 2026-10-06). */}
         <CostsCited />
-        <About />
-        <Services />
-        {/* Recent work, as tiles of the live sites (final25, 2026-10-07).
-            It renders nothing until content/work.js has three real
-            entries. */}
-        <WorkTiles />
-        <WordBand />
         <CounterRow band />
         {/* The $700 band, with How it works folded into it as its row of
             four steps (final25, 2026-10-07; the section and RouteBand are

@@ -13,6 +13,10 @@
    the card rises 4px, and two layers fade in over the resting ones - a fill
    of white at 2.08% over the 4% (1 - 0.96 x 0.9792 = 0.06) and a 1px edge of
    white at 8.89% over the 10% (1 - 0.90 x 0.9111 = 0.18).
+   THE BARE CARD ONLY SINCE FINAL26 (2026-10-07): home's What we do became
+   paper cards (WhatWeDo.jsx), the named, colour and still variants had no
+   other user and are deleted with Badge.jsx. The 404 page's mark is its one
+   use.
    ========================================================================== */
 
 .art {
@@ -55,163 +59,6 @@
   border: 1px solid rgb(255 255 255 / 8.89%);
 }
 
-/* THE TOP, 2026-09-25 (the founder's launch batch): the index on its own
-   row, top left; the 140px art box 24px below it, CENTRED in the card; the
-   name 24px below the box (the card's 8px gap plus 16 here). It was the
-   index and the illustration side by side, the art top right. */
-.art__top {
-  display: grid;
-  justify-items: center;
-  row-gap: var(--s-lg);
-  align-self: stretch;
-  justify-self: stretch;
-  margin-bottom: var(--s-md);
-}
-
-.art__top .art__num {
-  justify-self: start;
-}
-
-.art__num {
-  color: var(--c-steel-lift); /* measured on the page */
-}
-
-/* Below 768 the art box is 100px and the card's padding 24px (the launch
-   batch). The object scales with the box: 80px on its binding side. */
-@media (max-width: 767px) {
-  .art {
-    padding: var(--s-lg);
-  }
-
-  
-}
-
-/* `.art .art__name`, two classes: a card on a cream panel sits under
-   `.panel :is(h2, h3)`, which sets headings asphalt. */
-.art .art__name {
-  margin: 0;
-  font-family: var(--font-quiet);
-  font-size: var(--t-h3-size); /* 27px */
-  line-height: var(--t-h3-line);
-  font-weight: 400;
-  letter-spacing: normal;
-  text-transform: none;
-  color: var(--c-bone); /* 13.67:1 */
-}
-
-.art__line {
-  font-family: var(--font-offer);
-  font-size: var(--t-small-size); /* 14px */
-  line-height: var(--t-small-line);
-  font-weight: 400;
-  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
-  text-wrap: pretty;
-}
-
-.art__lead {
-  font-weight: 700;
-  color: var(--c-bone); /* 13.67:1 */
-}
-
-/* ---- The linked card: hover and press ------------------------------------
-
-   Only a card that goes somewhere answers the pointer. */
-.art--link {
-  transition: transform 220ms var(--ease-reveal);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .art--link:hover {
-    transform: translateY(-4px);
-  }
-
-  .art--link:hover::before,
-  .art--link:hover::after {
-    opacity: 1;
-  }
-
-  .art--link:hover:active {
-    transform: translateY(-4px) scale(0.97);
-  }
-}
-
-.art--link:active {
-  transform: scale(0.97);
-  transition-duration: var(--d-press);
-}
-
-/* ---- THE COLOUR VARIANT, 2026-09-25 (restored after the three-colour pass,
-   without the blue) ---------------------------------------------------------
-
-   The four discipline cards on home, a flat colour each, no border, 24px,
-   32px of padding: Branding machine yellow, Websites LILAC (it was arc
-   blue), Marketing coral, Automation mint. The ink is asphalt on all four,
-   because white fails on every one: 2.05:1 on lilac, 3.03 on coral, 3.16
-   on mint, 1.88 on yellow. Measured asphalt: 9.46, 8.68, 5.87, 5.62. The
-   number badge stands for the index.
-
-   TILT: -2 or +2 degrees at rest (`--tilt`, set per card), straightening to
-   0 as the linked card lifts: the hover rules above replace the transform.
-   The shadow fades in on hover as a layer (BUILD-LAW Motion). */
-.art--colour {
-  border: 0;
-  background: var(--tone);
-  color: var(--c-asphalt);
-  transform: rotate(var(--tilt, 0deg));
-}
-
-/* CARD TILT IS DESKTOP ONLY, 2026-10-01 (the founder): below 1024 the cards
-   sit square. The press still scales them (`.art--link:active` outranks
-   this at 0-2-0). */
-@media (max-width: 1023px) {
-  .art--colour {
-    transform: none;
-  }
-}
-
-.art--branding {
-  --tone: var(--c-yellow-d); /* #F2B01E since 2026-10-05; it was machine yellow */
-}
-
-.art--websites {
-  --tone: var(--c-lilac);
-}
-
-.art--marketing {
-  --tone: var(--c-coral);
-}
-
-.art--automation {
-  --tone: var(--c-mint);
-}
-
-.art--colour::before {
-  display: none;
-}
-
-.art--colour::after {
-  inset: 0;
-  z-index: -1;
-  border: 0;
-  box-shadow: var(--card-shadow);
-}
-
-.art.art--colour .art__name,
-.art--colour .art__line,
-.art--colour .art__lead {
-  color: var(--c-asphalt);
-}
-
-/* ---- THE NUMBER BADGE, 2026-09-25 (the founder's life pass 2) ------------
-   Over the card's top right corner by 20px each way (Badge.jsx and
-   Badge.css carry the object and its rotation). It replaced the
-   illustration sticker. */
-.art .art__badge {
-  top: -20px;
-  right: -20px;
-}
-
-/* ---- The bare card: a render filling a 3:4 card ------------------------- */
 .art--bare {
   display: block;
   aspect-ratio: 3 / 4;
@@ -223,31 +70,5 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .art--link:hover,
-  .art--link:active,
-  .art--link:hover:active {
-    transform: none;
-  }
-}
-
-/* ---- THE STILL (final25, 2026-10-07, the founder) ------------------------
-   The card's top area: a still of the discipline's /services artifact at
-   rest, 1:1, the card's full inner width, with the card's 6px corner
-   radius. The name and the noun stack sit under it. */
-.art__top:has(.art__still) {
-  display: block;
-  height: auto;
-}
-
-.art__still {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1;
-  border-radius: 6px;
   object-fit: cover;
 }

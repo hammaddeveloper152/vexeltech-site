@@ -249,6 +249,14 @@
   --c-lilac-ink: #7957a2; /* 5.03:1 on cream */
   --c-coral-ink: #c22d0e; /* 5.07:1 on cream */
   --c-mint-ink: #2d7356; /* 5.03:1 on cream */
+  /* WEBSITES ON HOME'S PAPER CARDS (final26, 2026-10-07, the founder's
+     frame D3): violet #8d5fd3 for the binding edge and the caret, and its
+     ink, darkened in HSL to 5:1 on the paper #f7f3ea (4.70 on a ruled row),
+     for the typed answer. Home's What we do only; lilac stays everywhere
+     else. */
+  --c-violet: #8d5fd3;
+  --c-violet-ink: #7f4bcd;
+  --c-paper: #f7f3ea;
 
   /* ---- Colour: light grounds (relief) ---------------------------------- */
   --c-shop-white: #ffffff; /* surface */
@@ -1184,12 +1192,14 @@ main:focus {
   transition: transform var(--d-press) var(--ease-reveal);
 }
 
-.foot__base-wm {
+.foot__base-wm,
+.wa__link {
   transition: opacity var(--d-press) var(--ease-reveal), transform var(--d-press) var(--ease-reveal);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .foot__base-wm:hover,
+  .wa__link:hover,
   .legal a[href^='tel:']:hover {
     opacity: var(--hover-opacity);
   }
@@ -1204,6 +1214,7 @@ main:focus {
 }
 
 .foot__base-wm:active,
+.wa__link:active,
 .lf__mail a:active,
 .legal a[href^='tel:']:active {
   transform: scale(0.97);
