@@ -608,31 +608,7 @@
   }
 }
 
-/* ---- The mark (Monogram.jsx, final18) ------------------------------------
-   Two letters in the display face at 0.9em, the second over the first by
-   20% of its width (about 0.12em at this face), one 2px rule beneath in
-   the primary. On a surface filled with the primary the rule takes the
-   accent (--mg-rule), where a primary rule would not show. */
-.mg {
-  display: inline-flex;
-  flex: none;
-  align-items: baseline;
-  padding-bottom: 0.1em;
-  border-bottom: 2px solid var(--mg-rule, var(--hd-primary));
-  font-family: var(--font-brand);
-  font-weight: 600;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.mg__l {
-  font-size: 0.9em;
-}
-
-.mg__l--2 {
-  margin-left: -0.12em;
-}
-
+/* ---- The mark: its own rules are monogram.css (final19) ---------------- */
 .bd__sign,
 .bd__gbp-cover,
 .bd__gbp-av,

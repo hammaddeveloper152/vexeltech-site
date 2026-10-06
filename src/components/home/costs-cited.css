@@ -4,7 +4,8 @@
    (7.00), the labels steel-lift too (7.00), the steel of the lead and the
    sources. FINAL16 (2026-10-06, the founder): no discipline colours; one
    continuous 2px rule in #F2B01E across the top of the row, which at 390
-   tops the first pair. */
+   tops the first pair. FINAL19: the figures are #F2B01E (9.56:1), and the
+   row lives by light (below). */
 .cc__lead {
   color: var(--c-steel-lift); /* the brief's steel; steel is 2.4:1 here */
 }
@@ -31,7 +32,11 @@
   align-content: start;
   min-width: 0;
   padding: 28px 24px 64px;
-  background: rgb(255 255 255 / 4%);
+  /* Lit from the top edge (final19): yellow at 10% at the rule, gone by
+     40% of the height, over the cell's own surface. */
+  background:
+    linear-gradient(180deg, rgb(242 176 30 / 10%), transparent 40%),
+    rgb(255 255 255 / 4%);
 }
 
 @media (min-width: 1024px) {
@@ -68,7 +73,7 @@
   font-weight: var(--t-weight-quiet);
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
-  color: var(--c-bone);
+  color: var(--c-yellow-d); /* #F2B01E, final19: 9.56:1 on the cell */
 }
 
 .cc__h {
@@ -115,54 +120,17 @@
   }
 }
 
-/* ---- THE QUANTITY FIELDS (final18, 2026-10-06) --------------------------
-   One 110px slot between the figure and the line, so the lines stay level
-   across the row; each field top and left aligned in it. Unlit units bone
-   at 12%; lit units #F2B01E, the bars at 80%. Below 600 a field scales to
-   its cell (the 1000-dot field is 159px wide, the cell's text column about
-   147 at 390). */
-.cc__slot {
-  height: 110px;
-  margin: 0 0 18px;
-}
+/* ---- LIGHT, NOT OBJECTS (final19, 2026-10-06) ----------------------------
 
-.cc__field {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-.cc__base {
-  fill: rgb(232 234 237 / 12%);
-}
-
-.cc__lit {
-  fill: var(--c-yellow-d);
-}
-
-.cc__field--bars .cc__lit {
-  fill: rgb(242 176 30 / 80%);
-}
-
-/* The play's soft start touches the lit units only. */
-.cc__grid[data-leaving] .cc__lit {
-  opacity: var(--fade, 1);
-}
-
-@media (max-width: 599px) {
-  .cc__slot {
-    height: auto;
-    min-height: 96px;
-  }
-}
-
-/* Hover: the cell lifts 4px and a 1px bone edge at 20% fades in, 200ms.
-   Transform and opacity only; gated to a real pointer (BUILD-LAW Motion). */
+   HOVER: the cell lifts 4px and its light strengthens to 16%, 200ms. The
+   stronger light is a second layer (about 7% more, which over the 10%
+   comes to 16%) whose opacity changes; no colour animates. Gated to a real
+   pointer (BUILD-LAW Motion). */
 .cc__cell::after {
   content: '';
   position: absolute;
   inset: 0;
-  border: 1px solid rgb(232 234 237 / 20%);
+  background: linear-gradient(180deg, rgb(242 176 30 / 7%), transparent 40%);
   opacity: 0;
   pointer-events: none;
   transition: opacity 200ms var(--ease-reveal);
@@ -182,8 +150,50 @@
   }
 }
 
+/* THE AMBIENT SWEEP: a soft highlight 320px wide, white at 4% at its
+   centre to transparent, crossing the row left to right every 12s. The
+   overlay is the row's own box and clips the highlight; the highlight
+   moves by transform alone. Paused under reduced motion. */
+.cc__row {
+  position: relative;
+}
+
+.cc__sweep {
+  position: absolute;
+  inset: 2px 0 0;
+  overflow: hidden;
+  clip-path: inset(0);
+  pointer-events: none;
+}
+
+.cc__sweep > span {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent calc(50% - 160px),
+    rgb(255 255 255 / 4%) 50%,
+    transparent calc(50% + 160px)
+  );
+  animation: cc-sweep 12s linear infinite;
+}
+
+@keyframes cc-sweep {
+  from {
+    transform: translateX(calc(-50% - 160px));
+  }
+
+  to {
+    transform: translateX(calc(50% + 160px));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cc__cell:hover {
     transform: none;
+  }
+
+  .cc__sweep > span {
+    animation-play-state: paused;
   }
 }

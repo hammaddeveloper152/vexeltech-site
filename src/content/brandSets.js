@@ -10,8 +10,8 @@ import { useSyncExternalStore } from 'react';
    typed (final18); nothing here is a client's palette.
 
    The active set is one value for the page: the Branding selector sets it
-   and the desk reads it. The Marketing report of final18 carries no set
-   colour, so only the desk follows it now. */
+   and the desk reads it. The Marketing stage (final19) draws its client in
+   the first set, #1F2A44, as its brief fixes it. */
 export const PAPER = '#F4EFE6';
 export const INK = '#17181A';
 export const SETS = [

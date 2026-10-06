@@ -1,4 +1,6 @@
-/* final18.mjs: five changes (the founder, 2026-10-06). Captures into
+/* final18.mjs: five changes (the founder, 2026-10-06). Since final19 its
+   marketing captures read the inbox stage (InboxStage.jsx), and home's
+   fields are gone, so its `fields` reads none. Captures into
    .measure/out/final18 at 1280 and 390, and checks, printed as JSON.
 
      node .measure/final18.mjs [base]
@@ -102,27 +104,27 @@ for (const w of [1280, 390]) {
   await wait(300);
   await shot(s, '.bd', `branding-${w}-typed.png`);
   r.typedMark = await s.$eval('.bd__sign .mg', (n) => n.textContent);
-  await shot(s, '.mr', `marketing-${w}.png`);
-  r.report = await s.evaluate(audit, '.mr');
+  await shot(s, '.ib', `marketing-${w}.png`);
+  r.report = await s.evaluate(audit, '.ib');
   r.harbor = await s.evaluate(() => /Harbor Dental/.test(document.body.innerText));
   r.margServices = await s.$$eval('.marg', (n) => n.length);
   await s.close();
 
   /* The loop, with motion. */
   const m = await open(w, '/services', false);
-  const mr = await m.$('.mr__arrivals');
+  const mr = await m.$('.ib__inbox');
   await mr.evaluate((n) => n.scrollIntoView({ block: 'center' }));
   const t0 = Date.now();
   r.loop = [];
   let got = false;
   while (Date.now() - t0 < 1400) {
     const v = await m.evaluate(() => {
-      const rows = document.querySelectorAll('.mr__row');
-      return `${rows.length} rows, top ${rows[0].querySelector('.mr__time').textContent}, cycle ${document.querySelector('.mr__rows').dataset.cycle || '-'}`;
+      const rows = document.querySelectorAll('.ib__row');
+      return `${rows.length} rows, top ${rows[0].querySelector('.ib__time').textContent}, cycle ${document.querySelector('.ib__rows').dataset.cycle || '-'}`;
     });
     r.loop.push(`${Date.now() - t0}ms ${v}`);
     if (!got && v.startsWith('9')) {
-      await (await m.$('.mr')).screenshot({ path: path.join(OUT, `marketing-${w}-loop.png`) });
+      await (await m.$('.ib')).screenshot({ path: path.join(OUT, `marketing-${w}-loop.png`) });
       got = true;
     }
     await wait(60);

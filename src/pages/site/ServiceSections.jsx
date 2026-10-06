@@ -5,7 +5,7 @@ import { FIGURES, money } from '../../content/pricing.js';
 import EvidenceBand from '../../components/story/EvidenceBand.jsx';
 import DevicePhones from '../../components/story/DevicePhones.jsx';
 import BrandDesk from '../../components/artifacts/BrandDesk.jsx';
-import MonthReport from '../../components/artifacts/MonthReport.jsx';
+import InboxStage from '../../components/artifacts/InboxStage.jsx';
 import TextBackBand from '../../components/final/TextBackBand.jsx';
 import { SpecSheet, HowItGoes, TwoQuestions } from '../../components/story/Substance.jsx';
 import { SUBSTANCE } from '../../content/substance.js';
@@ -20,9 +20,9 @@ import { SUBSTANCE } from '../../content/substance.js';
 /* The proof bands, by services.js's `proof` (the final pass, 2026-10-03;
    since the final artifacts pass, 2026-10-03; since final7 the brand you
    type, and from search to call for the visitor). */
-/* Since final17 (2026-10-06) Branding is the desk; since final18 Marketing
-   is the month's report (MonthReport.jsx). */
-const PROOF = { brand: BrandDesk, ads: MonthReport, textback: TextBackBand };
+/* Since final17 (2026-10-06) Branding is the desk; since final19 Marketing
+   is three places and one inbox (InboxStage.jsx). */
+const PROOF = { brand: BrandDesk, ads: InboxStage, textback: TextBackBand };
 
 /* THE FOUR DISCIPLINES ON /services, AS ALTERNATING BANDS, 2026-09-23.
 

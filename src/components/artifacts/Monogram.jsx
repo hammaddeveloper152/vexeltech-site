@@ -1,4 +1,5 @@
 import React from 'react';
+import './monogram.css';
 
 /* THE CLIENT'S MARK, BUILT FROM ITS NAME (final18, 2026-10-06, the
    founder). The first letters of the name's first two words, both in the
