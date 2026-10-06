@@ -11,6 +11,7 @@ import RouteBand from '../../components/site/RouteBand.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import { CallBand } from './parts.jsx';
+import AnsweredCall from '../../components/artifacts/AnsweredCall.jsx';
 import Marginalia from '../../components/site/Marginalia.jsx';
 import { setHead } from './head.js';
 import '../../styles/tokens.css';
@@ -147,15 +148,18 @@ export default function Home() {
         {/* Questions came off, 2026-10-01: V3 gives home none
             (VEXELTECH-COPY.md, COPY V3). */}
         {/* The closing call, before the form. COPY V3, 2026-10-01. */}
+        {/* THE LOOP CLOSES (the founder's final14, 2026-10-06): the phone
+            from the hero and from What it costs you, picked up. */}
         <CallBand
           heading="Which one is costing you most?"
           note="Fifteen minutes on the phone and a written number. Usually it's not the expensive one."
+          phone={<AnsweredCall />}
         />
         <FooterForm />
       </main>
-      {/* The margin labels, from 1024 (Marginalia.jsx), joined on home by
-          the story rail (the founder's clarity pass, 2026-10-06). */}
-      <Marginalia rail />
+      {/* The margin labels, from 1024 (Marginalia.jsx). The story rail that
+          joined them (the clarity pass) is deleted (final14, 2026-10-06). */}
+      <Marginalia />
     </>
   );
 }

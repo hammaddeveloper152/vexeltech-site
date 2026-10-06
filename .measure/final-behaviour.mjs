@@ -196,7 +196,7 @@ for (const r of ['/', '/services', '/pricing', '/about-us', '/contact-us']) {
   await p.close();
 }
 out.rule0 = Object.fromEntries(
-  [...FILES, ...work.map((w) => `/work/${w}.jpg`), ...['baseline-books', 'artiora', 'onesix'].map((w) => `/work/${w}-phone.jpg`)].map((f) => [f, (counts[f] || []).join(',') || 'nowhere'])
+  [...FILES, ...work.map((w) => `/work/${w}.jpg`), ...['baseline-books', 'artiora', 'onesix'].map((w) => `/work/${w}-phone.webp`)].map((f) => [f, (counts[f] || []).join(',') || 'nowhere'])
 );
 await b.close();
 console.log(JSON.stringify(out, null, 1));

@@ -56,9 +56,13 @@ export function PageHead({ title, lead, id = 'pg-h', step = 'heading' }) {
    on a phone) with the scribble under it, scaled to it; the subline; the
    yellow "Get a custom quote" button. The button is the link now, and the
    heading is words. */
-export function CallBand({ heading, note = null }) {
-  return (
-    <section className="vt callband" aria-labelledby="callband-h">
+/* `phone` (home only, the founder's final14, 2026-10-06): an artifact that
+   stands left of the copy from 1024 and above it below (AnsweredCall, whose
+   sheet carries the layout). Without it the call is the centred line every
+   other page keeps. */
+export function CallBand({ heading, note = null, phone = null }) {
+  const copy = (
+    <>
       {/* The scribble under the heading came off everywhere, 2026-10-01
           (the storytelling pass). */}
       <h2 className="callband__h" id="callband-h">
@@ -68,6 +72,21 @@ export function CallBand({ heading, note = null }) {
       <Link className="callband__cta" to={CALL_HREF}>
         {CALL_LABEL}
       </Link>
+    </>
+  );
+  if (!phone) {
+    return (
+      <section className="vt callband" aria-labelledby="callband-h">
+        {copy}
+      </section>
+    );
+  }
+  return (
+    <section className="vt callband callband--phone" aria-labelledby="callband-h">
+      <div className="callband__in">
+        {phone}
+        <div className="callband__copy">{copy}</div>
+      </div>
     </section>
   );
 }

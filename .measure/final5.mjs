@@ -33,7 +33,8 @@ fs.mkdirSync(OUT, { recursive: true });
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const ARTIFACTS = [
-  { name: 'CostScenes', route: '/', times: [1200, 3600, 7200, 9600, 13200, 15600, 19200, 21600] },
+  { name: 'CostScenes', route: '/', times: [600, 1700, 3900, 6500, 9100, 11700, 14000, 15400] },
+  { name: 'AnsweredCall', route: '/', times: [500, 1400, 2400, 3600] },
   { name: 'BrandYouType', route: '/services', times: [400, 900, 1500, 2900, 3800, 4900, 5900, 6800] },
   { name: 'SearchToCall', route: '/services', times: [700, 1800, 2900, 3700, 5200, 6500, 8400, 9800] },
   { name: 'TextBackBand', route: '/services', times: [800, 1800, 3300, 5000, 6400, 7000, 7800, 8800] },

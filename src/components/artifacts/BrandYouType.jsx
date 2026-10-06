@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLoop, step, lin, leaving } from './loop.js';
-import StepStrip from './StepStrip.jsx';
 import PhoneShell from './PhoneShell.jsx';
 import './artifacts.css';
 import './brand-board.css';
@@ -41,7 +40,7 @@ import './brand-board.css';
    face revealed left to right by clip-path with a sheen crossing once; the
    cards drop in with a 12px overshoot; the phone's face lights and the app
    tile arrives; the sheet slides in and its lines draw; the pills land.
-   The step strip under the panel follows it beat by beat. Whatever lands casts
+   (The step strip of the clarity pass came off in final14, 2026-10-06.) Whatever lands casts
    its shadow as it lands: each shadow is its own layer under the object,
    fading up as the object arrives (box-shadow itself never animates).
    Transform, opacity, clip-path and stroke-dashoffset only.
@@ -84,12 +83,6 @@ const T_TILE = 3700;
 const T_SHEET = 4400;
 const T_FILES = 5500;
 const TOTAL = 7000;
-
-/* The strip's beats and when each starts; the strip lights in full once the
-   last pill has landed. */
-const BEATS = ['Mark', 'Palette', 'Sign', 'Cards', 'Screen', 'Guide', 'Files'];
-const BEAT_AT = [T_MARK, T_PAL, T_TYPE, T_CARD, T_PHONE, T_SHEET, T_FILES];
-const BEATS_DONE = T_FILES + 3 * 80 + 300;
 
 /* The board's own width from 1024; under it the column. */
 const BOARD = 760;
@@ -140,12 +133,6 @@ function drop(p, from) {
 /* The shadow under a landing object: nothing while it is high, full as it
    arrives. */
 const shade = (p) => Math.max(0, Math.min(1, (p - 0.45) / 0.55));
-
-function beatAt(t) {
-  let i = 0;
-  while (i + 1 < BEAT_AT.length && t >= BEAT_AT[i + 1]) i += 1;
-  return i;
-}
 
 export default function BrandYouType() {
   const ref = useRef(null);
@@ -349,9 +336,6 @@ export default function BrandYouType() {
           </ul>
         </div>
       </div>
-      {/* THE STEP STRIP (the clarity pass): fully lit at rest, under reduced
-          motion and once the visitor types. */}
-      <StepStrip steps={BEATS} at={live || t >= BEATS_DONE ? null : beatAt(t)} />
       <figcaption className="by__cap">Name, mark, palette, applications. Delivered as files you own.</figcaption>
     </figure>
   );

@@ -68,9 +68,9 @@ export const DISCIPLINES = [
     terms: `${money(FIGURES.website)}, one price. Four business days from the day we have your content. Domain, hosting and code in your name.`,
     image: null,
     phones: [
-      { src: '/work/baseline-books-phone.jpg', alt: 'The Baseline Bookkeeping website on a phone.' },
-      { src: '/work/onesix-phone.jpg', alt: 'The OneSix website on a phone.' },
-      { src: '/work/artiora-phone.jpg', alt: 'The ARTIORA Luxury Villa website on a phone.' },
+      { src: '/work/baseline-books-phone.webp', alt: 'The Baseline Bookkeeping website on a phone.' },
+      { src: '/work/onesix-phone.webp', alt: 'The OneSix website on a phone.' },
+      { src: '/work/artiora-phone.webp', alt: 'The ARTIORA Luxury Villa website on a phone.' },
     ],
     fit: 'You have no site, a site nobody finds, or a site that gets traffic and no enquiries.',
     call: { label: 'Get a custom quote', primary: true },

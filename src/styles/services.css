@@ -132,7 +132,7 @@
    side by side 60/40 from 1024 and stacked below. Nothing alternates sides
    (the frame that changed sides with the ground is gone). */
 .svc2__in {
-  grid-template-areas: 'head' 'band' 'list' 'right' 'spec' 'how' 'qs' 'call';
+  grid-template-areas: 'head' 'band' 'list' 'right' 'qs' 'call';
   row-gap: 0;
 }
 
@@ -174,8 +174,6 @@
       'head head'
       'band band'
       'list right'
-      'spec spec'
-      'how how'
       'qs qs'
       'call call';
     column-gap: var(--s-3xl);
@@ -350,25 +348,14 @@
   max-width: 54ch;
 }
 
-/* ---- THE SUBSTANCE, 2026-10-05 (the founder's services substance pass) --
+/* ---- THE SUBSTANCE, 2026-10-05; behind three rows since final14 -------
 
-   Under the list and the price: the spec sheet, how it goes, two
-   questions, then the call. Full content width, 64px apart. Inks: on a dark
-   band mono labels steel-lift (7.30 on the drift), values bone (15.77); on
-   a cream band labels steel (7.20), values asphalt (15.75). Rules are 1px
-   steel on both. */
-.svc2__spec {
-  grid-area: spec;
-  min-width: 0;
-  margin-top: var(--s-2xl);
-}
-
-.svc2__how {
-  grid-area: how;
-  min-width: 0;
-  margin-top: var(--s-2xl);
-}
-
+   Under the list and the price: three closed rows in the FAQ style, What's
+   included (the spec sheet), How it goes (the steps) and Questions (the
+   two Q and As), then the call. Inks: on a dark band mono labels
+   steel-lift (7.30 on the drift; 6.61 on an open row's card), values bone
+   (15.77); on a cream band labels steel (7.20), values asphalt (15.75).
+   Rules are 1px steel on both. */
 .svc2__qs {
   grid-area: qs;
   min-width: 0;
@@ -470,11 +457,96 @@
   color: var(--c-steel-lift);
 }
 
-/* Two questions: the site's accordion rows without their section's padding
-   or heading. */
+/* The three rows: the site's accordion rows without their section's
+   padding or heading. The list takes the content width, since a row opens
+   to a two-column spec sheet or four steps, not a paragraph. */
 .sub-qs.faq {
   padding: 0;
   color: inherit;
+}
+
+.sub-qs .faq__list {
+  max-width: none;
+}
+
+.sub-qs .faq__a--node {
+  max-width: none;
+}
+
+/* The two questions inside the Questions row: plain Q and A. */
+.sub-qa {
+  display: grid;
+  gap: var(--s-lg);
+  max-width: 70ch;
+}
+
+.sub-q {
+  margin: 0 0 var(--s-xs);
+  font-family: var(--font-quiet);
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-bone); /* 16.32 on the base; 13.67 on an open row's card */
+}
+
+.sub-a {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: var(--c-body-dark); /* bone at 85%, 11.84; 10.0 on the card */
+}
+
+.svc2__d--cream .sub-q {
+  color: var(--c-asphalt);
+}
+
+.svc2__d--cream .sub-a {
+  color: var(--c-steel); /* 7.20:1 on cream */
+}
+
+/* ---- THE ACCENT FIELD (final14, 2026-10-06, the founder) ---------------
+
+   Each artifact stands in its discipline's colour as a FIELD, never as
+   tinted text: the panel is the band's ground mixed with the accent, 14%
+   on a dark band (over the base) and 18% on a cream one (over cream), a 6px
+   solid accent bar down its left edge, and a 1px hairline in the accent at
+   40%. Branding yellow, Websites lilac, Marketing coral, Automation mint:
+   the band's `--disc`, as on home's cards. The side label and the price
+   column stay yellow and steel. The ink of every line on a field is
+   measured in DESIGN.md "FINAL14". */
+.svc2__stage {
+  --field-ground: var(--c-base);
+  --field-mix: 14%;
+  position: relative;
+  padding: var(--s-lg) var(--s-lg) var(--s-lg) calc(var(--s-lg) + 6px);
+  border: 1px solid color-mix(in srgb, var(--disc) 40%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--disc) var(--field-mix), var(--field-ground));
+  overflow: hidden;
+}
+
+.svc2__d--cream .svc2__stage {
+  --field-ground: var(--c-cream);
+  --field-mix: 18%;
+}
+
+/* The 6px bar, inside the hairline, the full height of the field. */
+.svc2__stage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 6px;
+  background: var(--disc);
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .svc2__stage {
+    padding: var(--s-md) var(--s-md) var(--s-md) calc(var(--s-md) + 6px);
+  }
 }
 
 /* The cream bands' inks, restating light.css's About set for a cream panel

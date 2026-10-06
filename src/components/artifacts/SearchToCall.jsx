@@ -1,7 +1,6 @@
 import React from 'react';
 import { useLoop, step, lin, leaving } from './loop.js';
 import PhoneShell from './PhoneShell.jsx';
-import StepStrip from './StepStrip.jsx';
 import './artifacts.css';
 import './search-call.css';
 
@@ -47,8 +46,8 @@ import './search-call.css';
    ONE READING (the founder's clarity pass, 2026-10-06). The ledger is the
    narrator: its five rows are always on the sheet, unlit in steel, and
    each lights (asphalt, the newest tinted in the discipline colour) at the
-   moment the phone reaches its beat, with the matching step on the strip
-   under the stage: Search when the query is typed, Click on the tap on the
+   moment the phone reaches its beat (the step strip that ran beside it
+   came off in final14, 2026-10-06): Search when the query is typed, Click on the tap on the
    Sponsored result, Page when the landing screen arrives, Call when Accept
    is pressed, Cost when the timer stops at 0:14. "Illustrative figure."
    sits on the sheet directly under the Cost row. The feed card is 240
@@ -69,8 +68,8 @@ const T = {
   timer: 6300, // the timer counts to 0:14 over 1400
   feedTap: 1700, // the feed card's button is pressed
 };
-/* THE BEATS: one time each, read by the phone's own steps, the ledger and
-   the strip, so the three cannot drift apart. */
+/* THE BEATS: one time each, read by the phone's own steps and the ledger,
+   so the two cannot drift apart. */
 const BEATS = {
   search: T.type + 1000, // the query is typed
   click: T.tap, // the tap on the Sponsored result
@@ -78,7 +77,6 @@ const BEATS = {
   call: T.accept, // Accept is pressed
   cost: T.timer + 1400, // the timer stops at 0:14
 };
-const STEPS = ['Search', 'Click', 'Page', 'Call', 'Cost'];
 /* The ledger's rows, one per beat. */
 const LEDGER = [
   { k: 'Search', v: 'plumber near me', at: BEATS.search },
@@ -130,11 +128,6 @@ export default function SearchToCall() {
      also the first paint and reduced motion) all five have. */
   const done = LEDGER.filter((r) => t >= r.at).length;
   const playing = t < TOTAL;
-  /* The strip: the beat the phone is at, which is the newest lit row (the
-     ledger's tinted one), and Search while the query is still typing. So
-     Cost turns to the accent on the strip as its row lands. At rest it is
-     fully lit. */
-  const stripAt = playing ? Math.max(0, done - 1) : null;
 
   return (
     <figure className="sc stc" ref={ref} data-artifact="SearchToCall" {...leaving(leave)}>
@@ -287,7 +280,6 @@ export default function SearchToCall() {
           </div>
         </div>
       </div>
-      <StepStrip steps={STEPS} at={stripAt} />
       <figcaption className="sc__cap">
         On our last reported account, a lead cost $30.11 against a $70.11 US search average (WordStream, Google Ads
         Benchmarks 2025).

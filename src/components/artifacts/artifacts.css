@@ -56,30 +56,6 @@
   }
 }
 
-.cs-slot {
-  position: absolute;
-  inset: 0;
-  padding: var(--s-md);
-}
-
-@media (min-width: 768px) {
-  .cs-slot {
-    padding: var(--s-lg);
-  }
-}
-
-.cs-s {
-  position: relative;
-  height: 100%;
-}
-/* The call and the sign stand at the panel's middle; the search and the
-   ledger read from the top. */
-
-/* Scene 1: the search. */
-
-/* Scene 2: the ledger. */
-
-.cs-note,
 .wk__cap,
 .sc__cap {
   margin: 0;
@@ -163,7 +139,6 @@
    each stage stays. `data-leaving` is only set while it runs. The
    text-back's rule is in proof.css, with the band. */
 .by[data-leaving] .by__stage > *,
-.cs__body[data-leaving] .cs-panel > *,
 .ot__stage[data-leaving] > *,
 .wk__track[data-leaving] > * {
   /* The soft start (2026-10-06): a crossfade through the first frame, in

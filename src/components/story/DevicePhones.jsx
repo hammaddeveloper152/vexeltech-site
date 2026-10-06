@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './story.css';
 
 /* THE WEBSITES BAND'S PHONES (the founder's six fixes, 2026-10-02). Each
@@ -20,15 +20,43 @@ import './story.css';
 
    `phones`: [{ src, alt }]. The images are the material, so each has an
    alt. They are the three phone captures and appear nowhere else (BUILD-LAW
-   rule 0). */
+   rule 0). WebP at 600 wide since 2026-10-06 (final14): the 780-wide
+   JPEGs came to 583 KB and, once the collapsed /services text brought the
+   band inside Chrome's lazy-load distance on a phone, they were fetched at
+   load and cost /services 0.3s of LCP. The same captures, 189 KB. */
+/* THE CAPTURES LOAD NEAR THE BAND (2026-10-06, final14). `loading="lazy"`
+   leaves the distance to Chrome, which on a phone fetched all three at
+   load once the band moved up the page, ahead of /services' LCP. The src
+   is set when the band is within 800px of the viewport, well before a
+   reader reaches it; with no IntersectionObserver it is set at once. */
 export default function DevicePhones({ phones }) {
+  const ref = useRef(null);
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setNear(true);
+      return undefined;
+    }
+    const io = new IntersectionObserver(
+      (es) => {
+        if (es.some((e) => e.isIntersecting)) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: '800px 0px' }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   if (!phones || !phones.length) return null;
   return (
-    <ul className="dp" data-artifact="DevicePhones" data-device="phone silhouette">
+    <ul className="dp" ref={ref} data-artifact="DevicePhones" data-device="phone silhouette">
       {phones.map((p) => (
         <li className="dp__phone" key={p.src}>
           <span className="dp__screen">
-            <img src={p.src} alt={p.alt} width="780" height="2360" loading="lazy" decoding="async" />
+            <img src={near ? p.src : undefined} alt={p.alt} width="600" height="1816" decoding="async" />
           </span>
         </li>
       ))}

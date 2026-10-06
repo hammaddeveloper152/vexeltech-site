@@ -568,12 +568,8 @@
   color: var(--c-steel); /* 8.12:1 on the sheet */
 }
 
-/* The strip under the stage, the caption under the strip. */
-.stc .strip {
-  justify-content: center;
-  margin-top: var(--s-xl);
-}
-
+/* The caption under the stage (the step strip that sat between came off
+   in final14, 2026-10-06). */
 .stc .sc__cap {
-  margin-top: var(--s-md);
+  margin-top: var(--s-xl);
 }

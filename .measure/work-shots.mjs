@@ -11,7 +11,9 @@
    And the Websites evidence band on /services (2026-10-02): three phone
    captures, each the first viewport at 390 x 844 at 2x:
 
-     public/work/<slug>-phone.jpg   (baseline-books, artiora, onesix)
+     public/work/<slug>-phone.jpg   (baseline-books, artiora, onesix); the site
+                                    serves them as 600-wide WebP since
+                                    2026-10-06 (ffmpeg libwebp, quality 72)
 
    Nothing on a site is clicked: a cookie or consent banner, if a site shows
    one, is in the capture as the site shows it, and is reported.

@@ -128,14 +128,21 @@ export function FaqList({ items, id: base = 'faq' }) {
                 {/* Split into words so they can be grouped into their
                     rendered lines. Inline spans inside a paragraph, so
                     the text an assistive technology reads is unchanged. */}
-                <p className="faq__a">
-                  {a.split(' ').map((word, w) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <span className="faq__w" key={`${word}-${w}`}>
-                      {word}{' '}
-                    </span>
-                  ))}
-                </p>
+                {typeof a !== 'string' ? (
+                  /* A NODE ANSWER (final14, 2026-10-06): /services' three
+                     rows open to a spec sheet, the steps and two Q and As.
+                     No word split; the node carries its own markup. */
+                  <div className="faq__a faq__a--node">{a}</div>
+                ) : (
+                  <p className="faq__a">
+                    {a.split(' ').map((word, w) => (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <span className="faq__w" key={`${word}-${w}`}>
+                        {word}{' '}
+                      </span>
+                    ))}
+                  </p>
+                )}
               </div>
             </div>
           </div>

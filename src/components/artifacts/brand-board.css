@@ -444,11 +444,14 @@
   box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
 }
 
-/* ---- The step strip (the clarity pass, 2026-10-06) ------------------------
-   Under the panel on the dark Branding band, so its inks are the dark
-   ground's: done bone, to come steel-lift, the beat playing in Branding's
-   yellow. The figure's own gap is its space above. */
-.by--board > .strip {
-  margin: 0;
-}
 
+
+/* Below 480 the field sits inside the accent field's padding (final14,
+   2026-10-06), and at 24px the placeholder "Type your business name" was
+   clipped at 390; 20px holds it on one line at 375. */
+@media (max-width: 479px) {
+  .by--board .by__input {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
