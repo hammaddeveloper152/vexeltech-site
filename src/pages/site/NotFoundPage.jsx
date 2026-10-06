@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Shell from './Shell.jsx';
-import { CALL_HREF, CALL_LABEL } from './parts.jsx';
+import { CALL_HREF, CALL_LABEL, PromiseLine } from './parts.jsx';
 import ArtCard from '../../components/site/ArtCard.jsx';
 import './notfound.css';
 import vmark from '../../assets/objects/vmark.webp';
@@ -33,6 +33,7 @@ export default function NotFoundPage() {
           <Link className="one__cta nf__cta" to={CALL_HREF}>
             {CALL_LABEL}
           </Link>
+          <PromiseLine className="nf__promise" />
         </div>
       </section>
     </Shell>

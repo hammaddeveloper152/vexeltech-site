@@ -1,7 +1,7 @@
 import React from 'react';
 import { company } from '../../content/company.js';
 import { Link } from 'react-router-dom';
-import { SOURCES } from '../../content/costs.js';
+import Wordmark from '../site/Wordmark.jsx';
 import { IconFacebook, IconInstagram, IconLinkedIn } from '../site/Icons.jsx';
 import { SOCIAL_URLS } from '../../content/socials.js';
 import './FooterForm.css';
@@ -82,29 +82,8 @@ export default function FooterMeta() {
 
       <div className="foot__big-col">
         <p className="foot__big">Let&apos;s talk.</p>
-        {/* THE LEGAL LINE, 2026-10-01 (the structure pass, VEXELTECH-COPY.md
-            Footer): the year and VexelTech, then Privacy and Terms in the
-            page links' 40px box. */}
-        <div className="foot__legal">
-          <span>© {YEAR} VexelTech</span>
-          <Link className="foot__page" to="/privacy-policy">
-            Privacy
-          </Link>
-          <Link className="foot__page" to="/terms-of-service">
-            Terms
-          </Link>
-          {/* SOURCES (the founder's final15, 2026-10-06): the pages home's
-              What it costs you cites, mono 11px, in new tabs, in the
-              page links' 48px box. content/costs.js. */}
-          <span className="foot__sources">
-            <span className="foot__src-k">Sources</span>
-            {SOURCES.map(({ label, href }) => (
-              <a className="foot__page foot__src" key={href} href={href} target="_blank" rel="noopener noreferrer">
-                {label}
-              </a>
-            ))}
-          </span>
-        </div>
+        {/* The legal line and the Sources row left the band for the
+            footer's bottom row (FooterBase, final22, 2026-10-06). */}
       </div>
 
       <div className="foot__meta">
@@ -148,6 +127,51 @@ export default function FooterMeta() {
           {BOOKING}
         </p>
       </div>
+    </div>
+  );
+}
+
+/* THE FOOTER'S BOTTOM ROW (the founder's final audit, final22, 2026-10-06).
+   One line: the wordmark left; the pages in the centre (Services, Pricing,
+   About us, Get a custom quote); "© 2026 VexelTech Solutions · Privacy ·
+   Terms" right. A 1px bone rule at 14% above it, 24px padding, 12px mono.
+   Nothing else in the row. It replaced the legal line inside the band and
+   the Sources row with its outbound links; the source names stay only as
+   the plain lines inside home's cost cells. Below 1024 the three parts
+   stack. Each link keeps a 48px target (BUILD-LAW Touch). */
+const BASE_NAV = [
+  { id: 'services', label: 'Services', href: '/services' },
+  { id: 'pricing', label: 'Pricing', href: '/pricing' },
+  { id: 'about', label: 'About us', href: '/about-us' },
+  { id: 'quote', label: 'Get a custom quote', href: '/contact-us' },
+];
+
+export function FooterBase() {
+  return (
+    <div className="foot__base">
+      <Link className="foot__base-wm" to="/" aria-label="VexelTech, home">
+        <Wordmark size="sm" />
+      </Link>
+      <nav className="foot__base-nav" aria-label="Footer">
+        <ul>
+          {BASE_NAV.map(({ id, label, href }) => (
+            <li key={id}>
+              <Link className="foot__base-a" to={href}>
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <p className="foot__base-legal">
+        <span>© {YEAR} VexelTech Solutions</span>
+        <Link className="foot__base-a" to="/privacy-policy">
+          Privacy
+        </Link>
+        <Link className="foot__base-a" to="/terms-of-service">
+          Terms
+        </Link>
+      </p>
     </div>
   );
 }

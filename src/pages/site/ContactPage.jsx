@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import Shell from './Shell.jsx';
+import { PromiseLine } from './parts.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import LeadForm from '../../components/site/LeadForm.jsx';
 import ContactTimeline from '../../components/story/ContactTimeline.jsx';
@@ -27,7 +28,7 @@ import './contact.css';
    here. */
 
 /* COPY V4, 2026-10-06: it was "Let’s make the phone ring." */
-const HEADLINE = 'Tell us what’s going wrong.';
+const HEADLINE = "Tell us what's going wrong.";
 const SPEED = 60; // px a second, the founder's
 
 function Marquee() {
@@ -83,7 +84,7 @@ function Marquee() {
 export default function ContactPage() {
   return (
     <Shell
-      title="Get a custom quote | VexelTech"
+      title="Get a custom quote for your website | VexelTech"
       path="/contact-us"
       description="Tell us about your business. A written number within one business day."
       meta={false}
@@ -106,6 +107,7 @@ export default function ContactPage() {
       <section className="vt ct-form" aria-label="Contact form">
         <div className="ct-form__in">
           <LeadForm idPrefix="ct" needs labelledBy="ct-h" />
+          <PromiseLine className="ct__promise" />
         </div>
       </section>
 

@@ -11,7 +11,7 @@ import { PageHead, CallBand } from './parts.jsx';
 import ServiceSections from './ServiceSections.jsx';
 import { DISCIPLINES } from '../../content/services.js';
 import { SUBSTANCE } from '../../content/substance.js';
-import { setFaqLd } from './head.js';
+import { setFaqLd, setLd, AREA_SERVED, ORIGIN } from './head.js';
 import '../../styles/services.css';
 import Brush from '../../components/site/Brush.jsx';
 
@@ -56,9 +56,25 @@ const QUESTIONS = DISCIPLINES.flatMap((d) => (SUBSTANCE[d.id] ? SUBSTANCE[d.id].
 
 export default function ServicesPage() {
   useEffect(() => setFaqLd(QUESTIONS), []);
+  /* THE SERVICES, one Service entry per discipline (final22), from the
+     same list the page renders. */
+  useEffect(
+    () =>
+      setLd('services', {
+        '@graph': DISCIPLINES.map((d) => ({
+          '@type': 'Service',
+          name: d.name,
+          description: d.promise,
+          url: `${ORIGIN}/services#${d.id}`,
+          areaServed: AREA_SERVED,
+          provider: { '@id': `${ORIGIN}/#organization` },
+        })),
+      }),
+    []
+  );
   return (
     <Shell
-      title="Small business website design, local SEO, ads and automation | VexelTech"
+      title="Small business website design and local SEO | VexelTech"
       path="/services"
       /* No in-page form, 2026-10-01 (the storytelling pass). */
       footerForm={false}
@@ -91,6 +107,7 @@ export default function ServicesPage() {
 
       {/* TALK TO US: the closing call. */}
       <CallBand
+        promise
         heading="Which one is costing you most?"
         note="Fifteen minutes on the phone and a written number. Usually it's not the expensive one."
       />

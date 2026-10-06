@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#FFC400" />
+    <meta name="theme-color" content="#0b0b0d" />
     <meta name="description" content="Website design, branding, local SEO, ads and automation for small businesses. Websites $700 flat, live in four business days." />
     <title>Website design for small business, $700 flat | VexelTech</title>
     <!-- OPEN GRAPH DEFAULTS, 2026-09-25 (the release audit): the home page's
@@ -11,23 +11,25 @@
          do not run the app. Each page replaces them when it mounts, and sets
          its own canonical URL and og:url (src/pages/site/head.js). No og:url
          or canonical here: a static one would point every route at /.
-         The share image is /og.jpg, drawn in code (.measure/brand-assets.mjs,
+         The share image is /og/vexeltech.jpg since final22 (it was /og.jpg), drawn in code (.measure/brand-assets.mjs,
          2026-09-25), with the large card. -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="VexelTech" />
     <meta property="og:title" content="Website design for small business, $700 flat | VexelTech" />
     <meta property="og:description" content="Website design, branding, local SEO, ads and automation for small businesses. Websites $700 flat, live in four business days." />
-    <meta property="og:image" content="https://vexeltechsolutions.com/og.jpg" />
+    <meta property="og:image" content="https://vexeltechsolutions.com/og/vexeltech.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="VexelTech. Websites $700 flat. Live in four business days." />
+    <meta property="og:image:alt" content="The VexelTech wordmark on a dark ground." />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://vexeltechsolutions.com/og/vexeltech.jpg" />
     <!-- THE ICONS, 2026-09-25 (the founder's addendum): the V mark in machine
          yellow on the base colour, drawn in code from Wordmark.jsx's path by
          .measure/brand-assets.mjs. -->
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <!-- THE NAME FACE, preloaded. Moldie sets the discipline names, the tier
          names, the plate titles and the work numerals, and every one of them
          is above the fold on the page it is on, so it is discovered from the
@@ -99,8 +101,7 @@
       {
         "@context":"https://schema.org",
         "@graph":[
-          {"@type":"Organization","@id":"https://vexeltechsolutions.com/#organization","name":"VexelTech Solutions","url":"https://vexeltechsolutions.com/","description":"VexelTech is a web design and marketing agency for small businesses. Websites $700 flat, branding from $299, Google and Meta ads measured by cost per lead, and automation that answers the calls you miss. One team, one invoice.","foundingDate":"2026","areaServed":["US","GB","IE","EU","AU"],"email":"info@vexeltechsolutions.com","address":{"@type":"PostalAddress","streetAddress":"6619 Elks Trce","addressLocality":"Richmond","addressRegion":"TX","postalCode":"77406","addressCountry":"US"}},
-          {"@type":"ProfessionalService","@id":"https://vexeltechsolutions.com/#service","name":"VexelTech Solutions","parentOrganization":{"@id":"https://vexeltechsolutions.com/#organization"},"areaServed":["US","GB","IE","EU","AU"],"priceRange":"$$","hasOfferCatalog":{"@type":"OfferCatalog","name":"Services","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Brand Identity Design","url":"https://vexeltechsolutions.com/services#branding"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Website Design and Development","url":"https://vexeltechsolutions.com/services#websites"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Digital Marketing","url":"https://vexeltechsolutions.com/services#marketing"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Marketing Automation","url":"https://vexeltechsolutions.com/services#automation"}}]}},
+          {"@type":"Organization","@id":"https://vexeltechsolutions.com/#organization","name":"VexelTech Solutions","url":"https://vexeltechsolutions.com/","logo":"https://vexeltechsolutions.com/og/logo.png","description":"VexelTech is a web design and marketing agency for small businesses. Websites $700 flat, branding from $299, Google and Meta ads measured by cost per lead, and automation that answers the calls you miss. One team, one invoice.","foundingDate":"2026","email":"info@vexeltechsolutions.com","address":{"@type":"PostalAddress","streetAddress":"6619 Elks Trce","addressLocality":"Richmond","addressRegion":"TX","postalCode":"77406","addressCountry":"US"}},
           {"@type":"WebSite","@id":"https://vexeltechsolutions.com/#website","url":"https://vexeltechsolutions.com/","name":"VexelTech Solutions","publisher":{"@id":"https://vexeltechsolutions.com/#organization"}}
         ]
       }

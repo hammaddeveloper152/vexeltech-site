@@ -1,0 +1,87 @@
+# ==== VexelTech additions, final22 (2026-10-06). APPEND to the live .htaccess;
+# ==== keep everything already in it. Every block is guarded, so a module the
+# ==== host lacks is skipped rather than breaking the site.
+
+# ---- Routing -----------------------------------------------------------------
+# Each page is prerendered to its own folder (dist/services/index.html, ...).
+# DirectorySlash Off stops Apache answering /services with a 301 to
+# /services/, so the canonical URLs (no trailing slash) are the served ones.
+Options -MultiViews
+DirectorySlash Off
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Routes removed on 2026-09-25 (as netlify.toml): 301 to the home page.
+RewriteRule ^(blog|resources|portfolio|case-studies)(/.*)?$ / [R=301,L]
+RewriteRule ^portfolio\.html$ / [R=301,L]
+RewriteRule ^legacy/contact/?$ / [R=301,L]
+# /work/ holds real images, so only a path that is not a file goes home.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^work(/.*)?$ / [R=301,L]
+
+# Aliases the app answered under a second URL: 301 to the one canonical URL.
+RewriteRule ^about/?$ /about-us [R=301,L]
+RewriteRule ^contact/?$ /contact-us [R=301,L]
+RewriteRule ^packages/?$ /pricing [R=301,L]
+RewriteRule ^thanks\.html$ /thanks [R=301,L]
+RewriteRule ^privacy\.html$ /privacy-policy [R=301,L]
+RewriteRule ^terms\.html$ /terms-of-service [R=301,L]
+RewriteRule ^(services/)?(branding)/?$ /services#branding [NE,R=301,L]
+RewriteRule ^(services/)?(websites|web-development)/?$ /services#websites [NE,R=301,L]
+RewriteRule ^websites\.html$ /services#websites [NE,R=301,L]
+RewriteRule ^(services/)?(marketing)/?$ /services#marketing [NE,R=301,L]
+RewriteRule ^(services/)?(automation)/?$ /services#automation [NE,R=301,L]
+
+# No trailing slash: /services/ -> /services (not for real files).
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+# A prerendered route: /services is served from /services/index.html.
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(.+)$ /$1/index.html [L]
+
+# SPA fallback: any other path that is not a file or a folder goes to the
+# app shell (app.html, the untouched build template), which renders the
+# route, or the not-found page with noindex. app.html rather than index.html,
+# because index.html is now the prerendered home page and would flash home's
+# content before the app replaced it.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ /app.html [L]
+</IfModule>
+
+ErrorDocument 404 /404.html
+
+# ---- MIME types ----------------------------------------------------------------
+<IfModule mod_mime.c>
+AddType video/webm .webm
+AddType video/mp4 .mp4
+AddType font/woff2 .woff2
+AddType application/manifest+json .webmanifest
+AddType image/svg+xml .svg
+</IfModule>
+
+# ---- Caching -------------------------------------------------------------------
+# /assets/ names carry a content hash, so they are cached for a year and
+# never revalidated. HTML is always revalidated, so a deploy shows at once.
+<IfModule mod_headers.c>
+<FilesMatch "\.html$">
+Header set Cache-Control "no-cache"
+</FilesMatch>
+<If "%{REQUEST_URI} =~ m#^/assets/#">
+Header set Cache-Control "public, max-age=31536000, immutable"
+</If>
+</IfModule>
+
+# ---- Compression ---------------------------------------------------------------
+# Brotli where the host has it, gzip otherwise. Video, images and woff2 are
+# already compressed and are left alone.
+<IfModule mod_brotli.c>
+AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/plain text/xml text/javascript application/javascript application/json application/xml application/manifest+json image/svg+xml
+</IfModule>
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml text/javascript application/javascript application/json application/xml application/manifest+json image/svg+xml
+</IfModule>

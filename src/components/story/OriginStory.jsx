@@ -37,7 +37,8 @@ export default function OriginStory() {
         <h2 className="st-h" id="os-h">
           Why we exist
         </h2>
-        <p className="os__k">2023, 2025, 2026</p>
+        {/* The year label came off (final22, 2026-10-06): copy rule 8, no
+            years. */}
         <p className="os__p">{STORY}</p>
       </div>
     </section>

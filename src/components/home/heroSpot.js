@@ -33,20 +33,9 @@
 
 export const FPS = 24;
 export const CUT_FRAMES = [0, 45, 145, 234];
-export const CUTS = CUT_FRAMES.map((f) => f / FPS);
-export const EXIT_MS = 200;
-
-/* Sentence case in the source and uppercase in the stylesheet, as every loud
-   string on the site is. Case is copy; the transform is the register. */
-export const LINES = [
-  "Nobody's calling.",
-  "They can't find you. Yet.",
-  /* COPY V3, 2026-10-01: line 3. */
-  'Found, trusted, called.',
-  'Not a proposal. The finished thing.',
-];
-
-export const FINAL_LINE = LINES[LINES.length - 1];
+/* THE LINES ARE GONE (copy V4.1, 2026-10-06, the founder's final audit):
+   the hero's headline is static, and the cuts are kept only as the film's
+   own data, which the shade scripts in .measure read. */
 
 /* BELOW 1024 THE MOBILE CUT, 2026-09-30 (the founder: the film behind the
    words). 406 by 720, a 9:16 crop, encoded from the tall cut of 2026-09-14

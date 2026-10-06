@@ -3,6 +3,7 @@ import { IconArrowRight, IconCheck, IconCross } from './Icons.jsx';
 import { UTM_KEYS, getUtm } from './utm.js';
 import { trackPixel } from './pixel.js';
 import { budgetBands } from '../../content/pricing.js';
+import { FORM_ENDPOINT, FORM_TARGET, FORM_EMAIL } from '../../content/form.js';
 import './LeadForm.css';
 
 /* THE LEAD FORM, 2026-09-25 (the founder's contact pass). One form, two
@@ -17,12 +18,17 @@ import './LeadForm.css';
    placeholder has gone. Focus: the line goes 2px machine yellow. Error: 2px
    red and the message in words under it, never colour alone.
 
-   It posts the Netlify form "contact", url-encoded to "/", declared as a
-   hidden static twin in index.html so Netlify's parser can find the fields
-   (the "need" field was added to the twin with the pills). Forms must be
-   enabled for the site in Netlify, and the deploy must be a Netlify build,
-   or the POST lands on the SPA shell and returns 200 with nothing recorded.
-   That cannot be verified from here. */
+   WHERE IT POSTS (the founder's final audit, final22, 2026-10-06): to
+   Formspree (content/form.js), as JSON with `Accept: application/json`, since
+   the site is on Hostinger and Netlify Forms does not run there. With
+   VITE_FORM_TARGET=netlify it posts the Netlify form "contact", url-encoded
+   to "/", as before, and the build keeps the hidden twin in index.html.
+
+   THE HONEYPOT: one visually hidden text field out of the tab order,
+   `_gotcha` for Formspree and `bot-field` for Netlify. A person never fills
+   it; a submission that has it filled is dropped here and shown the success
+   state, so a bot learns nothing. Under the form, always, a mailto link to
+   the address, for anyone whose post fails or who would rather write. */
 
 const FIELDS = [
   /* COPY V2, 2026-10-01: Name, Phone, Email. */
@@ -93,6 +99,7 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
   const [utm] = useState(getUtm);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | sent | failed
+  const [trap, setTrap] = useState('');
   /* THE SENDING GUARD IS A REF, 2026-09-24: state would let a double click
      run both handlers before React re-renders and POST twice. */
   const inFlight = useRef(false);
@@ -159,23 +166,35 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
       return;
     }
 
+    /* The honeypot was filled: a bot. Drop it and show the success. */
+    if (trap) {
+      setStatus('sent');
+      return;
+    }
+
     inFlight.current = true;
     setStatus('sending');
-    const body = new URLSearchParams({
-      'form-name': 'contact',
+    const fields = {
       name: values.name,
       phone: values.phone,
       email: values.email,
       ...(needs ? { need: picked.join(', '), budget } : {}),
       message: values.message,
       ...utm,
-    });
+    };
     try {
-      const r = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString(),
-      });
+      const r =
+        FORM_TARGET === 'netlify'
+          ? await fetch('/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: new URLSearchParams({ 'form-name': 'contact', ...fields }).toString(),
+            })
+          : await fetch(FORM_ENDPOINT, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify({ ...fields, _subject: 'New quote request, vexeltechsolutions.com' }),
+            });
       setStatus(r.ok ? 'sent' : 'failed');
       /* THE LEAD, once per submission, on the in-page success. A no-op
          without a pixel ID. */
@@ -228,6 +247,21 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
       {UTM_KEYS.map((k) => (
         <input key={k} type="hidden" name={k} value={utm[k]} />
       ))}
+
+      {/* The honeypot (final22): hidden from people and out of the tab
+          order; only a bot fills it. */}
+      <p className="lf__trap" aria-hidden="true">
+        <label htmlFor={fid('trap')}>Leave this empty</label>
+        <input
+          id={fid('trap')}
+          type="text"
+          name={FORM_TARGET === 'netlify' ? 'bot-field' : '_gotcha'}
+          tabIndex={-1}
+          autoComplete="off"
+          value={trap}
+          onChange={(e) => setTrap(e.target.value)}
+        />
+      </p>
 
       <div className="lf__row">{FIELDS.map((f, i) => field(f, i + 1))}</div>
 
@@ -340,6 +374,11 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
           ) : null}
         </p>
       </div>
+
+      {/* THE MAILTO FALLBACK (final22), under the form, always. */}
+      <p className="lf__mail">
+        Or email <a href={`mailto:${FORM_EMAIL}`}>{FORM_EMAIL}</a>
+      </p>
     </form>
   );
 }

@@ -56,7 +56,18 @@ export function PageHead({ title, lead, id = 'pg-h', step = 'heading' }) {
    on a phone) with the scribble under it, scaled to it; the subline; the
    yellow "Get a custom quote" button. The button is the link now, and the
    heading is words. */
-export function CallBand({ heading, note = null }) {
+/* THE PROMISE LINE (copy rule 7; the founder's final audit, final22,
+   2026-10-06): "A written number within one business day." exactly once per
+   page, beside the primary call. Home carries it in the hero; Services in
+   its closing call, Pricing under the bundle's call, About in its close,
+   Contact under the form, the 404 under its call. 12px mono, steel-lift on
+   the dark (7.55:1), steel on a cream panel (7.20). */
+export const PROMISE = 'A written number within one business day.';
+export function PromiseLine({ className = '' }) {
+  return <p className={`promise-line${className ? ` ${className}` : ''}`}>{PROMISE}</p>;
+}
+
+export function CallBand({ heading, note = null, promise = false }) {
   return (
     <section className="vt callband" aria-labelledby="callband-h">
       {/* The scribble under the heading came off everywhere, 2026-10-01
@@ -68,6 +79,7 @@ export function CallBand({ heading, note = null }) {
       <Link className="callband__cta" to={CALL_HREF}>
         {CALL_LABEL}
       </Link>
+      {promise ? <PromiseLine className="callband__promise" /> : null}
     </section>
   );
 }

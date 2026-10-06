@@ -145,12 +145,14 @@ export function FaqList({ items, id: base = 'faq' }) {
   );
 }
 
-export default function Faq({ items, id: base = 'faq' }) {
+/* `heading` (final22, 2026-10-06): the h2 names what the questions are
+   about, so a search engine can quote it; "Questions" by default. */
+export default function Faq({ items, id: base = 'faq', heading = 'Questions' }) {
   return (
     <section className="vt faq" aria-labelledby={`${base}-h`}>
       <div className="faq__inner">
         <h2 className="faq__h" id={`${base}-h`}>
-          Questions
+          {heading}
         </h2>
         <FaqList items={items} id={base} />
       </div>

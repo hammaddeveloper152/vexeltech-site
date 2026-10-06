@@ -668,3 +668,48 @@
     }
   }
 }
+
+/* ---- COPY V4.1: THE STATIC HEADLINE (the founder's final audit, 2026-10-06)
+
+   The rotating Monigue headline is gone. The h1 keeps `.hero__headline` for
+   its place and its shade zone, and sets in Clash 500, sentence case, at a
+   size that holds the line to two lines at every width (BUILD-LAW Layout:
+   the headline is two lines at most): 25px at 390, 60px from 1280. The line
+   under it is 20px (18 below 600) in bone at 85%. */
+/* Three classes, to outrank the old headline's `.hero[data-mode]
+   .hero__headline` rules (its fixed two-line box and the 56 and 115.6px
+   sizes), which otherwise clipped this h1 into the copy under it. */
+.hero[data-mode] .hero__headline.hero__h1 {
+  height: auto;
+  max-width: 17em;
+  margin: 0 0 var(--s-md);
+  font-family: var(--font-brand);
+  font-size: clamp(24px, 4.7vw, 60px);
+  line-height: 1.08;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  text-wrap: balance;
+  color: var(--c-bone);
+}
+
+.hero__sub {
+  max-width: 40em;
+  margin: 0 0 var(--s-lg);
+  font-family: var(--font-offer);
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--c-body-dark); /* bone at 85%, over the scrim */
+  text-wrap: pretty;
+}
+
+.hero[data-mode] .hero__sub {
+  text-shadow: 0 1px 12px rgb(0 0 0 / 60%);
+}
+
+@media (max-width: 599px) {
+  .hero__sub {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}

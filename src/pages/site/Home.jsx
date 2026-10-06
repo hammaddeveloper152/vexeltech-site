@@ -11,7 +11,8 @@ import RouteBand from '../../components/site/RouteBand.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import { CallBand } from './parts.jsx';
-import { setHead } from './head.js';
+import { setHead, setLd, AREA_SERVED, ORIGIN } from './head.js';
+import { SOCIAL_URLS } from '../../content/socials.js';
 import '../../styles/tokens.css';
 /* The loud register, applied to every section below the hero. Imported LAST
    so it wins on source order. See src/styles/register.css. */
@@ -73,7 +74,9 @@ const DESCRIPTION =
    step's first sentence is the stop's title (RouteBand.jsx), the rest its
    line. */
 const STEP_LINES = [
-  "Fifteen minutes. Your business, your market, what's not working. You get a written number the same day.",
+  /* Final22 (2026-10-06): "You get a written number the same day." came
+     off; it contradicted the one-business-day promise. */
+  "Fifteen minutes. Your business, your market, what's not working.",
   'Logo concepts or the site design, shown before anything is billed.',
   'Four business days for a website. One to two for branding.',
   'Domain, hosting, files and code in your name. Thirty days of maintenance included.',
@@ -82,6 +85,28 @@ const STEP_LINES = [
 export default function Home() {
   /* The title, description, canonical and Open Graph tags (head.js). */
   useEffect(() => setHead({ title: TITLE, description: DESCRIPTION, path: '/' }), []);
+
+  /* THE BUSINESS, home only (the founder's final audit, final22): a
+     ProfessionalService with its name, url, logo, the countries served and
+     the price range; `sameAs` only once a social URL is set. */
+  useEffect(() => {
+    const sameAs = Object.values(SOCIAL_URLS).filter(Boolean);
+    return setLd('business', {
+      '@type': 'ProfessionalService',
+      '@id': `${ORIGIN}/#service`,
+      name: 'VexelTech Solutions',
+      url: `${ORIGIN}/`,
+      logo: `${ORIGIN}/og/logo.png`,
+      image: `${ORIGIN}/og/vexeltech.jpg`,
+      email: 'info@vexeltechsolutions.com',
+      telephone: '+13852843265',
+      description: DESCRIPTION,
+      areaServed: AREA_SERVED,
+      priceRange: '$299 to $700',
+      parentOrganization: { '@id': `${ORIGIN}/#organization` },
+      ...(sameAs.length ? { sameAs } : {}),
+    });
+  }, []);
 
   useEffect(() => {
     /* A FRAGMENT IS HONOURED, 2026-09-25: About links to `/#how-it-works`.

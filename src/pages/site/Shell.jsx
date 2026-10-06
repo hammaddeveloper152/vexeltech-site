@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Header from '../../components/site/Header.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import Marginalia from '../../components/site/Marginalia.jsx';
-import { setHead } from './head.js';
+import { setHead, setBreadcrumb } from './head.js';
 import '../../styles/tokens.css';
 import '../../styles/register.css';
 
@@ -55,6 +55,12 @@ export default function Shell({
 
   /* The title, description, canonical and Open Graph tags (head.js). */
   useEffect(() => setHead({ title, description, path, noindex }), [title, description, path, noindex]);
+  /* The breadcrumb of an inner page (final22): Home, then the page, named
+     by its title's first part. */
+  useEffect(() => {
+    if (noindex || !path || path === '/') return undefined;
+    return setBreadcrumb(title.split(' | ')[0], path);
+  }, [title, path, noindex]);
 
   useEffect(() => {
     /* A route change is not a scroll, so nothing restores the position.

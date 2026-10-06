@@ -9,7 +9,8 @@
 
    THE ORIGIN is the one the JSON-LD in index.html already asserts.
 
-   THE SHARE IMAGE, 2026-09-25 (the founder's addendum): /og.jpg, 1200 x
+   THE SHARE IMAGE, 2026-09-25 (the founder's addendum): /og/vexeltech.jpg
+   since final22 (it was /og.jpg), 1200 x
    630, drawn in code by .measure/brand-assets.mjs, on every page, with the
    large card.
 
@@ -18,7 +19,8 @@
    thanks pages) does not carry a stale canonical with it. */
 
 export const ORIGIN = 'https://vexeltechsolutions.com';
-const OG_ALT = 'VexelTech. Websites $700 flat. Live in four business days.';
+const OG_ALT = 'The VexelTech wordmark on a dark ground.';
+export const OG_IMAGE = '/og/vexeltech.jpg';
 
 function metaTag(attr, key) {
   let el = document.head.querySelector(`meta[${attr}="${key}"]`);
@@ -41,11 +43,17 @@ export function setHead({ title, description, path, noindex = false }) {
   }
   metaTag('property', 'og:type').content = 'website';
   metaTag('property', 'og:site_name').content = 'VexelTech';
-  metaTag('property', 'og:image').content = `${ORIGIN}/og.jpg`;
+  /* The share image since final22 (2026-10-06): the wordmark on the dark
+     ground, 1200 x 630, /og/vexeltech.jpg (.measure/brand-assets.mjs). */
+  metaTag('property', 'og:image').content = `${ORIGIN}${OG_IMAGE}`;
   metaTag('property', 'og:image:width').content = '1200';
   metaTag('property', 'og:image:height').content = '630';
   metaTag('property', 'og:image:alt').content = OG_ALT;
   metaTag('name', 'twitter:card').content = 'summary_large_image';
+  metaTag('name', 'twitter:image').content = `${ORIGIN}${OG_IMAGE}`;
+  metaTag('name', 'twitter:image:alt').content = OG_ALT;
+  if (title) metaTag('name', 'twitter:title').content = title;
+  if (description) metaTag('name', 'twitter:description').content = description;
 
   if (path) {
     const url = ORIGIN + path;
@@ -89,4 +97,35 @@ export function setFaqLd(items) {
   document.head.querySelectorAll('script[data-faq]').forEach((n) => n.remove());
   document.head.appendChild(el);
   return () => el.remove();
+}
+
+/* JSON-LD PER PAGE (the founder's final audit, final22, 2026-10-06). One
+   block per `key`, replaced when set again and removed on unmount, so a
+   client-side hop never carries one page's data to another. The prerender
+   step bakes each page's blocks into its own HTML. */
+export function setLd(key, data) {
+  if (typeof document === 'undefined' || !data) return () => {};
+  document.head.querySelectorAll(`script[data-ld="${key}"]`).forEach((n) => n.remove());
+  const el = document.createElement('script');
+  el.type = 'application/ld+json';
+  el.dataset.ld = key;
+  el.textContent = JSON.stringify({ '@context': 'https://schema.org', ...data });
+  document.head.appendChild(el);
+  return () => el.remove();
+}
+
+/* The countries served: the US, the UK, Australia and the EU's member
+   states (the founder's audit brief; About's FAQ says yes to the UK,
+   Europe and Australia). */
+export const AREA_SERVED = ['US', 'GB', 'AU', 'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'];
+
+/* The breadcrumb of an inner page: Home, then the page. */
+export function setBreadcrumb(name, path) {
+  return setLd('breadcrumb', {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${ORIGIN}/` },
+      { '@type': 'ListItem', position: 2, name, item: `${ORIGIN}${path}` },
+    ],
+  });
 }

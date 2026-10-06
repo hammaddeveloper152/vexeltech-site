@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Brush from '../../components/site/Brush.jsx';
 import Shell from './Shell.jsx';
+import { PromiseLine } from './parts.jsx';
 import Faq from '../../components/home/Faq.jsx';
 import { DISCIPLINES } from '../../content/services.js';
 import { BRANDING, BUNDLE, FIGURES, WEBSITES, money } from '../../content/pricing.js';
@@ -150,11 +151,11 @@ export default function PricingPage() {
   useEffect(() => setFaqLd(QUESTIONS), []);
   return (
     <Shell
-      title={`Website design pricing: ${money(FIGURES.website)} flat, branding from ${money(FIGURES.brandingBasic)} | VexelTech`}
+      title={`Website design pricing: ${money(FIGURES.website)} flat rate | VexelTech`}
       path="/pricing"
       /* No in-page form, 2026-10-01 (the storytelling pass). */
       footerForm={false}
-      description={`How much does a small business website cost? ${money(FIGURES.website)} flat for six pages in four business days. Branding ${money(FIGURES.brandingBasic)} or ${money(FIGURES.brandingAdvance)}. Marketing and automation by written quote.`}
+      description={`How much does a small business website cost? ${money(FIGURES.website)} flat for six pages in four business days. Branding ${money(FIGURES.brandingBasic)} or ${money(FIGURES.brandingAdvance)}. Marketing and automation by quote.`}
     >
       {/* 1. THE HEAD. */}
       <header className="vt pr-head">
@@ -275,6 +276,7 @@ export default function PricingPage() {
               Get a custom quote
               <span className="skip-h">, {BUNDLE.name}</span>
             </Link>
+            <PromiseLine className="pr-bundle__promise" />
           </div>
           {/* THE FOOTNOTE, COPY V3, 2026-10-01: under the grid, in the panel. */}
           <p className="pr-grid__note">
@@ -348,7 +350,7 @@ export default function PricingPage() {
 
       {/* 4. QUESTIONS. The accordion, V3.5's seven. Then the form from the
              Shell. */}
-      <Faq items={QUESTIONS} id="pr-faq" />
+      <Faq items={QUESTIONS} id="pr-faq" heading="Questions about website pricing" />
     </Shell>
   );
 }

@@ -20,7 +20,7 @@ export default function ThanksPage() {
   return (
     <Shell
       title="Submission received | VexelTech"
-      description="Thank you for reaching out to VexelTech Solutions. We will review your request and get back to you shortly."
+      description="Received. A written reply within one business day."
       footerForm={false}
       noindex
     >

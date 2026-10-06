@@ -82,7 +82,10 @@
   z-index: 1;
   display: grid;
   gap: var(--s-2xl);
-  margin: var(--s-section) calc(16px - var(--foot-px)) calc(16px - var(--s-section));
+  /* No negative foot since final22: the bottom row (.foot__base) follows
+     the band and takes the footer's foot instead, so the band no longer
+     covers it. */
+  margin: var(--s-section) calc(16px - var(--foot-px)) 0;
   padding: 32px;
   overflow: hidden;
   border-radius: 32px;
@@ -166,11 +169,7 @@
     order: 2;
   }
 
-  .foot__legal {
-    position: relative;
-    z-index: 1;
-    order: 3;
-  }
+  
 }
 
 /* Right: the email, the city, the pages, the socials, the booking line. */
@@ -219,8 +218,7 @@
   outline-color: var(--c-asphalt);
 }
 
-.foot__booking,
-.foot__legal {
+.foot__booking {
   margin: 0;
   font-family: var(--font-mono);
   font-size: 12px;
@@ -229,61 +227,6 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--c-steel); /* 7.20:1 */
-}
-
-/* THE LEGAL LINE'S LINKS, 2026-10-01 (the structure pass): Privacy and
-   Terms in the page links' box (`.foot__page`: 40px, the 48px target, the
-   radius, the hover block), in the legal line's own type and colour, 12px
-   each side inside the box, the first word on the line after the year. */
-.foot__legal {
-  --foot-page-px: 12px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  column-gap: var(--s-xs);
-}
-
-.foot__legal > span {
-  margin-right: calc(var(--s-md) - var(--s-xs));
-}
-
-.foot__legal .foot__page {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  color: inherit;
-}
-
-/* SOURCES (final15, 2026-10-06): the cited pages, mono 11px in the legal
-   row's ink, each link in the page links' box. The span of the label and
-   the links wraps as one group. */
-.foot__legal .foot__sources {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  column-gap: var(--s-xs);
-  margin-right: 0;
-}
-
-.foot__src-k {
-  margin-right: var(--s-xs);
-  font-size: 11px;
-}
-
-.foot__legal .foot__src {
-  font-size: 11px;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* Hover: the page links' block. Four classes, so it outranks the light
-   page's colour for these links (light.css). */
-@media (hover: hover) and (pointer: fine) {
-  .foot__band .foot__legal .foot__page:hover {
-    background: var(--c-accent-ground);
-    color: var(--c-asphalt);
-  }
 }
 
 /* The email: 16px asphalt, underlined, a 48px target (BUILD-LAW Touch). */
@@ -437,5 +380,117 @@
 @media (min-width: 1024px) {
   .foot {
     --foot-px: var(--s-2xl);
+  }
+}
+
+/* ---- THE BOTTOM ROW (FooterBase, final22, 2026-10-06) ---------------------
+   One line from 1024: the wordmark left, the pages in the centre, the
+   legal line right. A 1px bone rule at 14% above it, 24px padding, 12px
+   mono. Inks on the base: bone 16.32:1 for the links, steel-lift 7.55 for
+   the year and the separators. Each link's box is 48px tall. Below 1024 the
+   parts stack, left aligned. */
+.foot__base {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--s-sm) var(--s-lg);
+  width: min(100%, 1200px);
+  /* The footer's own bottom padding is taken back, as the band's foot did
+     before the row existed, so no empty ground sits under the row. */
+  margin: var(--s-xl) auto calc(16px - var(--s-section));
+  padding: 24px 0;
+  border-top: 1px solid rgb(232 234 237 / 14%);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: var(--c-steel-lift);
+}
+
+.foot__base-wm {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  color: var(--c-bone);
+  text-decoration: none;
+}
+
+.foot__base-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The middle dots between the links: separators, not words. */
+.foot__base-nav li + li::before,
+.foot__base-legal > * + *::before {
+  content: '·';
+  padding: 0 10px;
+  color: var(--c-steel-lift);
+}
+
+.foot__base-nav li {
+  display: inline-flex;
+  align-items: center;
+}
+
+.foot__base-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0;
+}
+
+.foot__base-a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  color: var(--c-bone);
+  text-decoration: none;
+  transition: opacity var(--d-press) var(--ease-reveal), transform var(--d-press) var(--ease-reveal);
+}
+
+.foot__base-a:focus-visible,
+.foot__base-wm:focus-visible {
+  outline: var(--focus-ring) solid var(--c-focus);
+  outline-offset: var(--focus-offset);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .foot__base-a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.foot__base-a:active {
+  transform: scale(0.97);
+}
+
+@media (max-width: 1023px) {
+  .foot__base {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+  }
+
+  /* Below 1024 the links can wrap, so no dot separators (a wrapped line
+     would start with one); a 24px gap between links instead. */
+  .foot__base-nav li + li::before,
+  .foot__base-legal > * + *::before {
+    content: none;
+  }
+
+  .foot__base-nav ul,
+  .foot__base-legal {
+    column-gap: var(--s-lg);
+  }
+
+  .foot__base-nav ul,
+  .foot__base-legal {
+    justify-content: flex-start;
   }
 }

@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "vite build && node scripts/prerender.mjs",
+    "preview": "vite preview",
+    "build:spa": "vite build"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
@@ -16,5 +17,8 @@
     "react-dom": "latest",
     "react-router-dom": "latest",
     "vite": "latest"
+  },
+  "devDependencies": {
+    "puppeteer": "25.9.0"
   }
 }

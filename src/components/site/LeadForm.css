@@ -287,3 +287,43 @@
     transform: none;
   }
 }
+
+/* THE HONEYPOT (final22): off the screen, out of the tab order and the
+   accessibility tree. Not display: none, which some bots skip. */
+.lf__trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* THE MAILTO FALLBACK (final22): 14px under the form, steel-lift on the
+   dark (7.55:1), the address bone and underlined, a 48px target. */
+.lf__mail {
+  margin: var(--s-md) 0 0;
+  font-family: var(--font-offer);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-steel-lift);
+}
+
+.lf__mail a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  color: var(--c-bone);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.lf__mail a:focus-visible {
+  outline: var(--focus-ring) solid var(--c-focus);
+  outline-offset: var(--focus-offset);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lf__mail a:hover {
+    opacity: var(--hover-opacity);
+  }
+}

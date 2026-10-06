@@ -95,13 +95,8 @@ html[data-ground='light'] :is(.foot__big, .foot__email, .foot__page) {
   color: var(--c-bone); /* 16.32:1 on black */
 }
 
-html[data-ground='light'] :is(.foot__booking, .foot__legal) {
+html[data-ground='light'] .foot__booking {
   color: var(--c-steel-lift); /* 7.4:1 on black; steel would be 2.4 */
-}
-
-/* The legal line's links take its colour, not the page links' bone. */
-html[data-ground='light'] .foot__legal .foot__page {
-  color: var(--c-steel-lift);
 }
 
 /* ---- About's shared sections, the structure pass (2026-10-01) -------------
@@ -171,3 +166,20 @@ html[data-ground='light'] .callband__note {
   color: var(--c-steel);
 }
 
+
+/* THE FOOTER'S BOTTOM ROW ON THE LIGHT GROUND (final22, 2026-10-06): on
+   About the row stands on cream, so its inks turn: links and the wordmark
+   asphalt (15.75:1), the year and the dots steel (7.20), the rule asphalt
+   at 14%. Found by Lighthouse (bone on cream was 1.06:1). */
+html[data-ground='light'] .foot__base {
+  border-top-color: rgb(23 24 26 / 14%);
+  color: var(--c-steel);
+}
+
+html[data-ground='light'] :is(.foot__base-a, .foot__base-wm, .foot__base-wm .wm__word) {
+  color: var(--c-asphalt);
+}
+
+html[data-ground='light'] :is(.foot__base-nav li + li::before, .foot__base-legal > * + *::before) {
+  color: var(--c-steel);
+}

@@ -78,7 +78,7 @@ const QUESTIONS = [
 ];
 
 /* THE META DESCRIPTION, COPY V4, 2026-10-06. The figures are FIGURES'. */
-const ABOUT_DESCRIPTION = `VexelTech is a web design and marketing agency for small businesses. Websites ${money(FIGURES.website)} flat, branding from ${money(FIGURES.brandingBasic)}, Google and Meta ads measured by cost per lead, and automation that answers the calls you miss. One team, one invoice.`;
+const ABOUT_DESCRIPTION = `A web design and small business marketing agency. Websites ${money(FIGURES.website)} flat, branding from ${money(FIGURES.brandingBasic)}, ads measured by cost per lead. One team, one invoice.`;
 
 /* The statement, word by word. COPY V4, 2026-10-06: it was "Found,
    trusted, called."; the same type and the same rise on each word. */
@@ -89,7 +89,7 @@ export default function AboutPage() {
   useEffect(() => setFaqLd(QUESTIONS), []);
   return (
     <Shell
-      title="About VexelTech | Web design, branding and marketing agency for small business"
+      title="About VexelTech | Small business marketing agency"
       path="/about-us"
       description={ABOUT_DESCRIPTION}
       footerForm={false}
@@ -136,7 +136,7 @@ export default function AboutPage() {
           by side, which the 40% column of the audit's pair could not hold). */}
       <FitColumns />
       <TermsCard />
-      <Faq items={QUESTIONS} id="ab3-faq" />
+      <Faq items={QUESTIONS} id="ab3-faq" heading="Questions about working with us" />
       {/* The close (final18, 2026-10-06): one statement, the call and the
           facts. It replaced the closing call. */}
       <AboutClose />

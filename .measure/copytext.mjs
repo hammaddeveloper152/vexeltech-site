@@ -51,7 +51,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import puppeteer from 'puppeteer';
-import { LINES as HERO_LINES } from '../src/components/home/heroSpot.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const TAG = process.argv[2] || 'after';
@@ -120,11 +119,9 @@ for (const route of [...PUBLIC, ...LEGAL]) {
   });
   await wait(800);
   const t = await p.evaluate(() => document.querySelector('main')?.innerText || document.body.innerText);
-  /* The hero's headline rotates and only the line on screen is in the page
-     text, so the dump of / carries all four from the source (heroSpot.js),
-     and the checks read them. (This comment claimed it before 2026-10-01;
-     the code did not do it.) */
-  texts[route] = route === '/' ? `${t}\n${HERO_LINES.join('\n')}` : t;
+  /* The hero's headline is static since copy V4.1 (2026-10-06), so the
+     page text is the whole of it. */
+  texts[route] = t;
   shared[route] = await p.evaluate((sel) => [...document.querySelectorAll(sel)].map((e) => e.innerText).join('\n'), SHARED);
   /* Every pricing Full list panel, open or not (textContent reads a hidden
      panel too). */

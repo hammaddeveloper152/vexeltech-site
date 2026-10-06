@@ -7,7 +7,12 @@
    - icon.svg             the V mark in machine yellow on the base colour
    - favicon.ico          16 and 32, each rendered from icon.svg at its size
    - apple-touch-icon.png 180, the same drawing
-   - og.jpg               1200 x 630, JPEG quality 85
+   - og/vexeltech.jpg     1200 x 630, JPEG quality 85 (final22, 2026-10-06:
+                          the wordmark, mark and name, on the dark ground,
+                          in place of og.jpg and its line)
+   - og/logo.png          512, the icon, for the JSON-LD logo
+   - icon-192.png,
+     icon-512.png         the icon for site.webmanifest
 
    THE MARK is the path Wordmark.jsx ships, on its 0 0 100 100 box, scaled to
    80% and centred on a full-bleed base square. Nothing is traced.
@@ -30,7 +35,6 @@ const MID = '#101012';
 const YELLOW = '#f0b323';
 const BONE = '#e8eaed';
 const MARK = 'M7 33 29 25 50 60 78 6 94 2 54 93Z';
-const LINE = 'Websites $700 flat. Live in four business days.';
 
 const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="${BASE}"/><path transform="translate(10 10) scale(0.8)" d="${MARK}" fill="${YELLOW}"/></svg>\n`;
 fs.writeFileSync(path.join(PUB, 'icon.svg'), iconSvg);
@@ -51,6 +55,10 @@ async function png(size) {
 const p16 = await png(16);
 const p32 = await png(32);
 fs.writeFileSync(path.join(PUB, 'apple-touch-icon.png'), await png(180));
+fs.mkdirSync(path.join(PUB, 'og'), { recursive: true });
+fs.writeFileSync(path.join(PUB, 'og', 'logo.png'), await png(512));
+fs.writeFileSync(path.join(PUB, 'icon-192.png'), await png(192));
+fs.writeFileSync(path.join(PUB, 'icon-512.png'), await png(512));
 
 /* ICO with PNG-encoded entries: a 6-byte header, a 16-byte entry per image,
    then the PNG data. */
@@ -96,17 +104,21 @@ await p.setContent(`<!doctype html><html><head><style>
   body::after { content: ''; position: absolute; inset: 0; background-image: ${GRAIN}; opacity: 0.03; pointer-events: none; }
   .wm { margin: 0; font-size: 96px; line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; color: ${BONE}; }
   .wm span { color: ${YELLOW}; }
-  .line { margin: 32px 0 0; font-size: 32px; line-height: 40px; letter-spacing: normal; color: ${YELLOW}; }
+  .lock { display: flex; align-items: center; gap: 40px; justify-content: center; }
+  .lock svg { width: 128px; height: 128px; flex: none; }
+  body { justify-content: center; }
 </style></head><body>
-  <p class="wm">Vexeltech<span>.</span></p>
-  <p class="line">${LINE}</p>
+  <div class="lock">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><path d="${MARK}" fill="${YELLOW}"/></svg>
+    <p class="wm">Vexeltech<span>.</span></p>
+  </div>
 </body></html>`, { waitUntil: 'load' });
 await p.evaluate(() => document.fonts.ready);
 const face = await p.evaluate(() => document.fonts.check("500 96px 'Clash Display'"));
 if (!face) throw new Error('Clash Display did not load; the share image would render in a fallback face.');
-fs.writeFileSync(path.join(PUB, 'og.jpg'), await p.screenshot({ type: 'jpeg', quality: 85, clip: { x: 0, y: 0, width: 1200, height: 630 } }));
+fs.writeFileSync(path.join(PUB, 'og', 'vexeltech.jpg'), await p.screenshot({ type: 'jpeg', quality: 85, clip: { x: 0, y: 0, width: 1200, height: 630 } }));
 await b.close();
 
-for (const f of ['icon.svg', 'favicon.ico', 'apple-touch-icon.png', 'og.jpg']) {
+for (const f of ['icon.svg', 'favicon.ico', 'apple-touch-icon.png', 'og/vexeltech.jpg', 'og/logo.png', 'icon-192.png', 'icon-512.png']) {
   console.log(f, fs.statSync(path.join(PUB, f)).size, 'bytes');
 }

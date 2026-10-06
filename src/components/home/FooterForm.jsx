@@ -1,6 +1,6 @@
 import React from 'react';
 import LeadForm from '../site/LeadForm.jsx';
-import FooterMeta from './FooterMeta.jsx';
+import FooterMeta, { FooterBase } from './FooterMeta.jsx';
 import './FooterForm.css';
 
 /* Section 9. The form, and the end of the page.
@@ -27,6 +27,7 @@ export default function FooterForm({ form = true }) {
     return (
       <footer className="vt foot foot--bare">
         <FooterMeta />
+        <FooterBase />
       </footer>
     );
   }
@@ -44,6 +45,7 @@ export default function FooterForm({ form = true }) {
 
       {/* The footer block, inset (FooterMeta.jsx). */}
       <FooterMeta />
+      <FooterBase />
     </footer>
   );
 }

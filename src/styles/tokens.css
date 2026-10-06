@@ -1152,3 +1152,62 @@ main:focus {
 :is(.panel, .panel-sec) .sec-lead {
   color: var(--c-asphalt); /* a cream sheet, 15.75:1 */
 }
+
+/* THE PROMISE LINE (PromiseLine in parts.jsx; final22, 2026-10-06): once
+   per page beside the primary call. 12px mono, steel-lift on the dark
+   (7.55:1); steel on a cream panel or the light ground (7.20). */
+.promise-line {
+  margin: var(--s-md) 0 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  color: var(--c-steel-lift);
+}
+
+.callband .promise-line {
+  text-align: center;
+}
+
+:is(.panel, .panel-sec, .pr-bundle) .promise-line {
+  color: var(--c-steel);
+}
+
+/* HOVER AND PRESS WHERE THEY WERE MISSING (the founder's final audit,
+   final22, 2026-10-06; BUILD-LAW Motion: every pressable element presses,
+   hover gated to a real pointer). Found by .measure/final22-checks.mjs: the
+   footer's wordmark, the Branding desk's colour sets, Recent work's links,
+   the form's mailto line and the inline phone link on /thanks. */
+.legal__lede a,
+.legal a[href^='tel:'] {
+  display: inline-block;
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.foot__base-wm,
+.wa__link {
+  transition: opacity var(--d-press) var(--ease-reveal), transform var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .foot__base-wm:hover,
+  .wa__link:hover,
+  .legal a[href^='tel:']:hover {
+    opacity: var(--hover-opacity);
+  }
+
+  .bd__set:hover {
+    box-shadow: inset 0 0 0 2px rgb(232 234 237 / 40%);
+  }
+
+  .bd__set[aria-checked='true']:hover {
+    box-shadow: inset 0 0 0 2px var(--c-bone);
+  }
+}
+
+.foot__base-wm:active,
+.wa__link:active,
+.lf__mail a:active,
+.legal a[href^='tel:']:active {
+  transform: scale(0.97);
+}

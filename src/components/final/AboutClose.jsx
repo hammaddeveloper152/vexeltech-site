@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CALL_HREF, CALL_LABEL } from '../../pages/site/parts.jsx';
+import { CALL_HREF, CALL_LABEL, PromiseLine } from '../../pages/site/parts.jsx';
 import './about-close.css';
 
 /* ABOUT, THE CLOSE (final18, 2026-10-06, the founder). It replaced the
@@ -30,6 +30,7 @@ export default function AboutClose() {
             See pricing
           </Link>
         </div>
+        <PromiseLine className="ac__promise" />
         <ul className="ac__facts">
           {FACTS.map((f) => (
             <li key={f}>{f}</li>

@@ -2,56 +2,31 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { videoAllowed } from './Video.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
-import { CUTS, EXIT_MS, LINES, NARROW_QUERY } from './heroSpot.js';
+import { NARROW_QUERY } from './heroSpot.js';
 import { SPOT } from './heroFiles.js';
 import './Hero.css';
-import Brush from '../site/Brush.jsx';
 
-/* THE HERO IS A SPOT NOW, AND THE CLIP IS THE CLOCK.
+/* THE HERO: THE FILM BEHIND ONE STATIC HEADLINE.
 
-   A 12-second film under the copy, four shots, one line per shot. The hero ran
-   on one clock before — a phase handed from the entrance to the ambient wall —
-   and it still does. The clock is the video's own `currentTime`: a line starts
-   on its cut because the frame on screen is the cut, not because a timer set to
-   1875ms agreed with it. A stalled download, a backgrounded tab or a slow
-   decoder moves every line with the picture, and a timer would move none.
+   COPY V4.1, 2026-10-06 (the founder's final audit). The rotating headline
+   and its clock are deleted, with the eyebrow and the swash on "Yet.". The
+   h1 is one static line, "Website design and marketing for small
+   businesses.", with a 20px line under it; the offer line, the calls and
+   the promise line are unchanged. The film still plays behind the copy.
 
    ---- Two modes, decided once at mount ---------------------------------------
 
-     spot     the film plays, muted, inline, looping (2026-09-30). Line 1 is
-              there from the first paint (2026-10-01); each later line fades
-              up on its cut and fades out 200ms before the next.
-
+     spot     the film plays, muted, inline, looping (2026-09-30)
      still    REDUCED MOTION, SAVE-DATA, A SLOW CONNECTION, OR NO PLAYABLE
               VIDEO. The film's first-second frame (`first`, the same image the
-              video element shows as its poster) and line 1, with nothing
-              animating. Never the last frame.
+              video element shows as its poster), with nothing animating.
+              Never the last frame.
 
    THE HERO SHOWS THE FILM OR A FRAME OF THE FILM, NOTHING ELSE, EVER
    (2026-10-05, the founder's pre-launch pass, BUILD-LAW Real over drawn).
-   The surface mode and its lit shader are deleted; a refused autoplay keeps
-   the video element's own first-second poster, with line 1.
 
    The gates are `videoAllowed()`, shared with the work grid so they cannot
-   drift. One of its four does not apply here and it is worth saying which:
-   `preload="none"` exists so that nothing is fetched until a plate is on
-   screen, and the hero is on screen at load. The film is the hero; holding it
-   back would be holding back the section.
-
-   ---- What does not move -----------------------------------------------------
-
-   The sub and both calls are present from the first paint and never
-   change position. The headline box is two lines tall at every width whatever
-   line is in it, because every line is two lines or fewer by construction —
-   see the size derivation in Hero.css — so a one-line shot does not pull the
-   stack up and a two-line shot does not push it down.
-
-   ---- No strike ----------------------------------------------------------------
-
-   The spot's lines once arrived along a drawn line at 51.93 degrees, words
-   slamming in on it, at every cut. The user removed it on 2026-09-14: no drawn
-   line at any cut. A line is one run of text now, not a mask per word, because
-   the masks only existed to carry the slam. DESIGN.md records the removal. */
+   drift. The copy is present from the first paint and never moves. */
 
 function pickMode() {
   if (typeof window === 'undefined') return 'still';
@@ -64,83 +39,16 @@ function pickMode() {
   return plays ? 'spot' : 'still';
 }
 
-/* Which shot a time is in, and whether its line has started leaving.
-
-   LINE 1 HOLDS ACROSS CUT 1 ON THE FIRST PASS, 2026-10-01 (the founder's
-   bundle split). The rotation's first cut must not fire before 2.5s, so line
-   1 is the largest paint in the LCP window. Cut 1 is at 1.875s of the film,
-   which on a warm load is well inside 2.5s of the page, and a line moved off
-   its cut would no longer change with the picture. So on the film's first
-   pass the first shot's line stays through the second shot and the rotation
-   starts at cut 2 (6.042s), with line 3. Line 2 first shows on the second
-   pass, on its own cut, and every pass after the first runs as cut. */
-function shotAt(t, firstPass) {
-  let i = 0;
-  while (i + 1 < CUTS.length && t >= CUTS[i + 1]) i += 1;
-  const next = CUTS[i + 1];
-  const leaving = next !== undefined && t >= next - EXIT_MS / 1000;
-  if (firstPass && i === 0) return { shot: 0, leaving: false };
-  if (firstPass && i === 1) return { shot: 0, leaving };
-  return { shot: i, leaving };
-}
-
-/* One line of copy. Keyed by shot at the call site, so every cut mounts a
-   fresh line and its fade-up in Hero.css runs again. */
-/* THE HIGHLIGHTER, 2026-09-24 (the founder): home's one highlighted word is
-   "Yet." in the second shot's line, asphalt on the swash since 2026-09-25
-   (Brush.jsx; it was a machine yellow box, `.hl`). Split on the word rather than hard-coding the line, so
-   the copy in heroSpot.js stays the only place the line is written. */
-const HIGHLIGHT = 'Yet.';
-
-/* `enter`: the line fades up as it mounts. The FIRST line of a visit does
-   not: it is in the first paint, unanimated (2026-10-01). */
-function Line({ text, leaving, enter }) {
-  const at = text.lastIndexOf(HIGHLIGHT);
-  return (
-    <span
-      className="hero__line"
-      data-leaving={leaving ? 'true' : 'false'}
-      data-enter={enter ? 'true' : 'false'}
-    >
-      {at < 0 ? (
-        text
-      ) : (
-        <>
-          {text.slice(0, at)}
-          {/* THE SWASH, 2026-09-25 (the Genesis pass): the highlight is the
-              brush stroke now, not the box (Brush.jsx). */}
-          <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">{HIGHLIGHT}</Brush>
-          {text.slice(at + HIGHLIGHT.length)}
-        </>
-      )}
-    </span>
-  );
-}
-
-/* THE REVEAL IS DELETED, 2026-09-30 (the founder). From the Genesis pass
-   (2026-09-25) the film stood in a frame 60% of the measure wide under the
-   copy, and a ScrollTrigger pinned the hero for 100vh while the frame grew to
-   the viewport; from earlier the same day, 1024 and up only. The film is the
-   hero at every width now: full bleed behind the copy, fixed in place, no
-   pin, no scale, nothing tied to scroll (Hero.css, THE FILM BEHIND THE COPY).
-   ScrollTrigger is still registered by smoothScroll.js for the sections that
-   use it; the hero makes no trigger. Its record is in DESIGN.md. */
-const NARROW = NARROW_QUERY;
-
 export default function Hero() {
   const [mode, setMode] = useState(pickMode);
   /* Below 1024 the mobile cut, from 1024 the desktop encode. Decided at
      mount (see NARROW_QUERY). Both autoplay and loop. */
   const [narrow] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia(NARROW).matches
+    () => typeof window !== 'undefined' && window.matchMedia(NARROW_QUERY).matches
   );
-  /* null until the first frame is actually playing, so no line enters over a
-     frame that has not decoded yet. */
-  const [state, setState] = useState({ shot: null, leaving: false });
   const videoRef = useRef(null);
 
-  /* A reader who turns reduced motion on mid-spot gets the still, not the rest
-     of the film. */
+  /* A reader who turns reduced motion on mid-film gets the still. */
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
     const onChange = () => {
@@ -159,64 +67,17 @@ export default function Hero() {
        unmuted element is the one autoplay is refused for. */
     v.muted = true;
     v.defaultMuted = true;
-
-    /* It loops at every width (2026-09-30). The desktop spot played once and
-       held its last frame until the film became the hero everywhere. */
     v.loop = true;
 
-    let raf = 0;
-    /* The first pass ends when the loop wraps the clock back. */
-    let firstPass = true;
-    let last = 0;
-    const read = () => {
-      const t = v.currentTime;
-      if (t + 1 < last) firstPass = false;
-      last = t;
-      const next = shotAt(t, firstPass);
-      setState((s) => (s.shot === next.shot && s.leaving === next.leaving ? s : next));
-    };
-    const tick = () => {
-      read();
-      raf = !v.paused && !v.ended ? requestAnimationFrame(tick) : 0;
-    };
-    const onPlaying = () => {
-      if (!raf) raf = requestAnimationFrame(tick);
-    };
-    const onEnded = () => {
-      cancelAnimationFrame(raf);
-      raf = 0;
-      setState({ shot: CUTS.length - 1, leaving: false });
-    };
-    /* A seek while paused moves the picture without a frame loop running, so
-       the line is read once for it. This is what lets a capture hold any
-       instant of the spot exactly. */
-    const onSeeked = () => {
-      if (v.paused) read();
-    };
     /* Error events from <source> children do not bubble, so this listens in
        the capture phase. The film is only abandoned once every source has
-       failed, which is when the element reports it has none left. */
+       failed. */
     const onError = () => {
       if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) setMode('still');
     };
 
-    /* PLAY ONLY AFTER CANPLAYTHROUGH, 2026-09-24 (the founder's energy
-       pass): the poster (a frame from the first second) holds until the
-       browser says the clip can run to the end without stalling, so the
-       lines never wait on a buffering film. */
-    /* It does not wait for canplaythrough any more, at any width: the element
-       autoplays (2026-09-30), and a phone may never report canplaythrough
-       before playback starts. The energy pass's wait is superseded. */
-    let ready = true;
-    const onReady = () => {
-      ready = true;
-      sync();
-    };
-
-    /* Play only while the page is being looked at. The spot runs once, and a
-       spot that plays out in a background tab has been spent on nobody. */
+    /* Play only while the page is being looked at. */
     const sync = () => {
-      if (v.ended || !ready) return;
       if (document.visibilityState !== 'visible') {
         v.pause();
         return;
@@ -224,32 +85,18 @@ export default function Hero() {
       const p = v.play();
       if (p && typeof p.catch === 'function') {
         p.catch((e) => {
-          /* AUTOPLAY REFUSED: THE POSTER STAYS (2026-09-24), and the
-             headline keeps line 1, which it has shown since the first paint
-             (2026-10-01; it switched to the final line until then). */
+          /* AUTOPLAY REFUSED: the poster, the film's first-second frame,
+             stays. */
           if (e && e.name === 'NotSupportedError') setMode('still');
         });
       }
     };
 
-    v.addEventListener('canplaythrough', onReady);
-    v.addEventListener('playing', onPlaying);
-    v.addEventListener('ended', onEnded);
-    v.addEventListener('seeked', onSeeked);
     v.addEventListener('error', onError, true);
     document.addEventListener('visibilitychange', sync);
-    /* The element autoplays (2026-09-30), so it can be playing before these
-       listeners exist, and its one `playing` event is then gone: no frame
-       loop, and no headline line would ever mount. Start it by hand. */
-    if (!v.paused) onPlaying();
     sync();
 
     return () => {
-      cancelAnimationFrame(raf);
-      v.removeEventListener('canplaythrough', onReady);
-      v.removeEventListener('playing', onPlaying);
-      v.removeEventListener('ended', onEnded);
-      v.removeEventListener('seeked', onSeeked);
       v.removeEventListener('error', onError, true);
       document.removeEventListener('visibilitychange', sync);
       v.pause();
@@ -258,26 +105,8 @@ export default function Hero() {
 
   const src = narrow ? SPOT.mobile : SPOT.wide;
 
-  /* THE HEADLINE PAINTS FIRST, 2026-10-01 (the founder). Line 1 is on
-     screen from the first render, before the film has loaded or played, in
-     every mode: the film's frames may advance the rotation and never gate
-     the first line. It was measured as the home LCP element with 2.45s of
-     render delay, because it mounted only once the film was playing and the
-     copy then waited for the fonts before fading in. The copy's entrance is
-     now a 12px rise that starts at once, with no opacity (Hero.css). */
-  const advanced = useRef(false);
-  if (state.shot !== null && state.shot !== 0) advanced.current = true;
-
-  /* Line 1 until the film says otherwise; the still shows line 1 too
-     (2026-10-01; it showed the final line). */
-  const shot = mode === 'spot' ? (state.shot ?? 0) : 0;
-
   return (
-    <section
-      className="vt hero"
-      aria-labelledby="hero-h"
-      data-mode={mode}
-    >
+    <section className="vt hero" aria-labelledby="hero-h" data-mode={mode}>
       {/* THE FRAME the film stands in: the hero's own box, never moved. */}
       <div className="hero__frame">
         {mode === 'spot' ? (
@@ -289,11 +118,9 @@ export default function Hero() {
             playsInline
             autoPlay
             loop
-            /* Metadata only on the mobile cut: autoplay fetches what it
-               plays, and nothing more is asked for up front. */
             preload={narrow ? 'metadata' : 'auto'}
-            /* Decoration under the copy, not content: the lines carry what the
-               film says, and the h1 carries the lines. */
+            /* Decoration under the copy, not content: the h1 carries what
+               the page is. */
             aria-hidden="true"
             tabIndex={-1}
             disablePictureInPicture
@@ -304,9 +131,8 @@ export default function Hero() {
           </video>
         ) : null}
 
-        {/* The still follows the width, unlike the film: nothing is playing, so
-            a rotated phone can take the other crop without restarting anything.
-            It is the film's FIRST-SECOND frame, never the last (2026-10-05). */}
+        {/* The still follows the width. It is the film's FIRST-SECOND frame,
+            never the last (2026-10-05). */}
         {mode === 'still' ? (
           <picture>
             <source media={NARROW_QUERY} srcSet={SPOT.mobile.first} type="image/jpeg" />
@@ -316,35 +142,12 @@ export default function Hero() {
       </div>
 
       <div className="hero__body">
-        {/* THE H1 IS THE EYEBROW, COPY V4, 2026-10-06 (the founder): the
-            page says what it is in its one h1, set exactly as the eyebrow
-            was. Below 1024, where the eyebrow is not shown, it is visually
-            hidden rather than removed, so the page keeps its h1. The
-            rotating line is a paragraph with the same classes and motion. */}
-        <h1 className="hero__eyebrow lbl" id="hero-h">
-          Websites, branding, marketing and automation for small business
+        <h1 className="hero__headline hero__h1" id="hero-h">
+          Website design and marketing for small businesses.
         </h1>
-        <p className="hero__headline">
-          {/* THE LINE IS READ AS SHOWN (2026-09-25, the founder's content
-              audit): no clipped second copy. It was the h1 until copy V4
-              (2026-10-06), when the eyebrow above took the h1. */}
-          <Line
-            key={shot}
-            text={LINES[shot]}
-            leaving={mode === 'spot' && state.leaving}
-            enter={advanced.current}
-          />
-        </p>
+        <p className="hero__sub">One team builds the site, runs the ads and answers the enquiry.</p>
 
-        {/* The support stack, in one box so its shade zone has one to stand
-            in: the copy zone runs from the headline's bottom edge to the copy
-            block's bottom, and falls to nothing at 62% of the width. See
-            `.hero__support::before`. Nothing about the stack's layout changes. */}
         <div className="hero__support">
-          {/* The sub is gone, 2026-10-01: V3 gives the hero none; the
-              eyebrow above the headline replaces it. */}
-
-          {/* Sentence case in the SOURCE, not a text-transform. Case is copy. */}
           <div className="hero__actions">
             <Link className="hero__cta" to="/contact-us">
               Get a custom quote
@@ -354,19 +157,15 @@ export default function Hero() {
             </Link>
           </div>
 
-          {/* THE PRICE LINE, 2026-09-24 (the founder's energy pass, CRO for
-              paid traffic), verbatim, under the buttons. The figures come
-              from content/pricing.js so a price change cannot leave the
-              hero behind. */}
+          {/* THE PRICE LINE, 2026-09-24, verbatim, under the buttons. The
+              figures come from content/pricing.js. */}
           <p className="hero__price">
             Websites {money(FIGURES.website)} flat. Branding from {money(FIGURES.brandingBasic)}.
             Live in four business days.
           </p>
 
-          {/* THE PROMISE LINE, COPY V3, 2026-10-01: under the calls, 12px
-              mono in steel-lift, at every width. */}
+          {/* THE PROMISE LINE, COPY V3, 2026-10-01. */}
           <p className="hero__promise">A written number within one business day.</p>
-
         </div>
       </div>
     </section>

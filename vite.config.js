@@ -279,7 +279,27 @@ function cssOrder() {
   };
 }
 
+/* THE NETLIFY FORM TWIN BEHIND A FLAG (the founder's final audit, final22,
+   2026-10-06). The hidden <form name="contact" data-netlify> in index.html
+   exists only for Netlify's parser. The site posts to Formspree on
+   Hostinger (content/form.js), so the build strips the twin, and the
+   comment above it, unless VITE_FORM_TARGET=netlify. */
+function netlifyFormTwin() {
+  let target = '';
+  return {
+    name: 'vt-netlify-form-twin',
+    /* The resolved env carries the .env file's VITE_ values. */
+    configResolved(c) {
+      target = c.env.VITE_FORM_TARGET || process.env.VITE_FORM_TARGET || '';
+    },
+    transformIndexHtml(html) {
+      if (target === 'netlify') return html;
+      return html.replace(/<form name="contact" data-netlify[\s\S]*?<\/form>\s*/, '');
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [cssOrder(), react(), criticalCss(), routePreload()],
+  plugins: [cssOrder(), react(), criticalCss(), routePreload(), netlifyFormTwin()],
   build: { cssCodeSplit: false },
 });

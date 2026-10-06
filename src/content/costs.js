@@ -2,8 +2,9 @@
    C, final15, 2026-10-06). Four cells, each a figure from a named industry
    source, not ours. The words are the founder's, verbatim from the brief.
    `source` is the line pinned
-   to the cell's foot; `href` is the page it cites, also listed in the
-   footer's legal row (FooterMeta.jsx, SOURCES below).
+   to the cell's foot; `href` is the page it cites, kept as the record and
+   not rendered (the footer's Sources row and its links are gone since
+   final22).
 
    Checked 2026-10-06: Backlinko's CTR study gives 0.63% of searchers
    clicking a page-two result; WordStream's 2025 benchmarks give $70.11 as
@@ -52,12 +53,4 @@ export const COSTS = [
     source: 'Invoca, 2024',
     href: INVOCA,
   },
-];
-
-/* The footer's Sources line: one link per page cited. Cells 3 and 4 cite
-   the same Invoca post, so it is one link. */
-export const SOURCES = [
-  { label: 'Backlinko', href: COSTS[0].href },
-  { label: 'WordStream', href: COSTS[1].href },
-  { label: 'Invoca', href: INVOCA },
 ];
