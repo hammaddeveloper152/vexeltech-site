@@ -1,8 +1,10 @@
 /* HOME, WHAT IT COSTS YOU: THE CITED NUMBERS (CostsCited.jsx, final15).
    Inks on the cell (white at 4% over the drift, about #151517): figure and
    line bone (15.13:1), note bone at 85% (about 11), source steel-lift
-   (7.00), the labels in their colours (yellow 9.56, lilac 8.84, coral
-   6.07, mint 5.85). */
+   (7.00), the labels steel-lift too (7.00), the steel of the lead and the
+   sources. FINAL16 (2026-10-06, the founder): no discipline colours; one
+   continuous 2px rule in #F2B01E across the top of the row, which at 390
+   tops the first pair. */
 .cc__lead {
   color: var(--c-steel-lift); /* the brief's steel; steel is 2.4:1 here */
 }
@@ -13,6 +15,7 @@
   gap: 2px;
   margin: 0;
   padding: 0;
+  border-top: 2px solid var(--c-yellow-d);
   list-style: none;
 }
 
@@ -28,7 +31,6 @@
   align-content: start;
   min-width: 0;
   padding: 28px 24px 64px;
-  border-top: 3px solid var(--cc);
   background: rgb(255 255 255 / 4%);
 }
 
@@ -55,7 +57,7 @@
 
 .cc__k {
   text-transform: uppercase;
-  color: var(--cc);
+  color: var(--c-steel-lift);
 }
 
 .cc__n {

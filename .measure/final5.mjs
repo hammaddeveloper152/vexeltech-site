@@ -35,7 +35,6 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 /* Since final15 (2026-10-06) home's scenes are gone and Branding and
    Marketing are before/after sliders with no timeline (final15.mjs). */
 const ARTIFACTS = [
-  { name: 'AnsweredCall', route: '/', times: [500, 1400, 2400, 3600] },
   { name: 'TextBackBand', route: '/services', times: [800, 1800, 3300, 5000, 6400, 7000, 7800, 8800] },
   { name: 'OneTeam', route: '/about-us', times: [150, 700, 1500, 2500, 3250, 3500, 4000] },
   { name: 'WeekStrip', route: '/about-us', times: [150, 900, 1300, 1900, 2600, 3200, 3500] },

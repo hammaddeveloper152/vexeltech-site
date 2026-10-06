@@ -17,7 +17,8 @@
        outsourced, generated, template(s), affordable, cheap (and cheaper,
        cheapest), agency-level, dominate, skyrocket, startups, entrepreneurs,
        founders, and "this site"; V3.1 adds contractor(s), trade(s), Map
-       Pack and home service(s). The exceptions: the refusals band's "It's
+       Pack and home service(s); final16 adds the hyphenated forms
+       (home-service, trade-, contractor-). The exceptions: the refusals band's "It's
        on this site", About's "Startups raising a round", and on About only
        the fit list's "Contractors". Checked in the rendered text and in each
        page's title and meta description.
@@ -66,11 +67,17 @@ const BANNED = ['SaaS', 'mobile applications', 'web apps', 'Most picked', 'Fifty
 /* 300 joined the list on 2026-10-01: V2's budget bands (Up to $300, $300 to
    $700) are derived from the prices, the founder's decision. */
 const SELF =
-  /\b(coded|design systems?|page builders?|themes?|outsourced|generated|templates?|affordab\w*|cheap\w*|agency-level|dominat\w*|skyrocket\w*|startups?|entrepreneurs?|founders?|this site|contractors?|trades?|map pack|home services?)\b/gi;
-/* The exceptions. The About one holds on About only: the fit list's
-   "Contractors" (V3.1, 2026-10-01). */
+  /\b(coded|design systems?|page builders?|themes?|outsourced|generated|templates?|affordab\w*|cheap\w*|agency-level|dominat\w*|skyrocket\w*|startups?|entrepreneurs?|founders?|this site|contractors?|trades?|map pack|home[ -]services?|trades?-\w+|contractors?-\w+)\b/gi;
+/* The hyphenated forms (final16, 2026-10-06, the founder): "home-service",
+   "trade-" and "contractor-" compounds count like the open forms.
+   The exceptions. The About one holds on About only: the fit list's
+   "Contractors" (V3.1, 2026-10-01). Home's cost cell 3, "of calls to trade
+   and home businesses" (final16), is the founder's wording, on home only. */
 const SELF_OK = ["It's on this site", 'Startups raising a round'];
-const SELF_OK_ROUTE = { '/about-us': ['Contractors, clinics, real estate'] };
+const SELF_OK_ROUTE = {
+  '/about-us': ['Contractors, clinics, real estate'],
+  '/': ['of calls to trade and home businesses'],
+};
 const selfHits = (t, route) =>
   [...[...SELF_OK, ...(SELF_OK_ROUTE[route] || [])].reduce((x, ok) => x.replaceAll(ok, ''), t).matchAll(SELF)].map((m) => m[0]);
 /* The shared text a repeat may sit in (V3's allowances). */

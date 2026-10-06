@@ -1,8 +1,7 @@
 /* HOME, WHAT IT COSTS YOU: THE CITED NUMBERS (the founder's approved frame
    C, final15, 2026-10-06). Four cells, each a figure from a named industry
    source, not ours. The words are the founder's, verbatim from the brief.
-   `disc` is the cell's colour (its 3px top rule and its label), in the
-   brief's order: yellow, lilac, coral, mint. `source` is the line pinned
+   `source` is the line pinned
    to the cell's foot; `href` is the page it cites, also listed in the
    footer's legal row (FooterMeta.jsx, SOURCES below).
 
@@ -10,14 +9,15 @@
    clicking a page-two result; WordStream's 2025 benchmarks give $70.11 as
    the average cost per lead on Google search; Invoca's post of 2024-05-23
    gives 27% of calls to home services unanswered and "less than 3%" of
-   callers sent to voicemail leaving a message. The "60M calls analysed" in
-   cell 3's source line is the founder's and is not stated on that page. */
+   callers sent to voicemail leaving a message. Cell 3's line and source
+   are the founder's final16 wording (2026-10-06); its source matches
+   cell 4's. The cells carry no discipline colour since final16: one 2px
+   yellow rule runs across the row (costs-cited.css). */
 export const INVOCA = 'https://www.invoca.com/blog/how-much-missed-sales-calls-cost-home-services-businesses';
 
 export const COSTS = [
   {
     id: 'found',
-    disc: 'var(--c-yellow-d)',
     label: 'Not found',
     figure: '0.6%',
     line: 'of searchers ever click a page-two result.',
@@ -27,7 +27,6 @@ export const COSTS = [
   },
   {
     id: 'spend',
-    disc: 'var(--c-lilac)',
     label: 'Ad spend',
     figure: '$70',
     line: 'average cost per lead on Google search, US.',
@@ -37,17 +36,15 @@ export const COSTS = [
   },
   {
     id: 'missed',
-    disc: 'var(--c-coral)',
     label: 'The missed call',
     figure: '27%',
-    line: 'of calls to home-service businesses go unanswered.',
+    line: 'of calls to trade and home businesses go unanswered.',
     note: 'The caller dials the next number on the list.',
-    source: 'Invoca, 60M calls analysed, 2024',
+    source: 'Invoca, 2024',
     href: INVOCA,
   },
   {
     id: 'voicemail',
-    disc: 'var(--c-mint)',
     label: 'The voicemail',
     figure: '<3%',
     line: 'of callers sent to voicemail leave a message.',

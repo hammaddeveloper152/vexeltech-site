@@ -11,7 +11,6 @@ import RouteBand from '../../components/site/RouteBand.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import { CallBand } from './parts.jsx';
-import AnsweredCall from '../../components/artifacts/AnsweredCall.jsx';
 import Marginalia from '../../components/site/Marginalia.jsx';
 import { setHead } from './head.js';
 import '../../styles/tokens.css';
@@ -148,12 +147,11 @@ export default function Home() {
         {/* Questions came off, 2026-10-01: V3 gives home none
             (VEXELTECH-COPY.md, COPY V3). */}
         {/* The closing call, before the form. COPY V3, 2026-10-01. */}
-        {/* THE LOOP CLOSES (the founder's final14, 2026-10-06): the phone
-            from the hero, picked up. */}
+        {/* The answered-call phone of final14 is deleted (final16,
+            2026-10-06): headline, one paragraph and the call. */}
         <CallBand
           heading="Which one is costing you most?"
           note="Fifteen minutes on the phone and a written number. Usually it's not the expensive one."
-          phone={<AnsweredCall />}
         />
         <FooterForm />
       </main>
