@@ -10,8 +10,10 @@ import './inbox-stage.css';
    deleted with its figures block and styles); the report's real figures
    are one line under the stage now.
 
-     left 700   three white cards, 210 x 300, 24 apart, each 20px lower than
-                the one before, an 11px mono label over each:
+     left       three white cards, 220 x 400 on one baseline since final20
+                (they stepped down 20px each before), 24 apart, the first
+                24px in from the stage's edge, an 11px mono label over
+                each:
                   1  a search: a Sponsored result for "Your Business"
                   2  a feed post, its panel in the client primary #1F2A44
                      and the one platform colour on the stage, #1877F2,
@@ -21,15 +23,15 @@ import './inbox-stage.css';
      right 420  the inbox: "Where it lands · Your inbox", eight 64px rows
                 (a SEARCH, SOCIAL or MAP chip, what came in, the time), and
                 "Illustration of a typical day."
-     wires      from each card's right edge at 60% of its height a 1px line
-                in yellow at 35% runs right, bends on a 24px radius into a
-                shared 1px trunk, which bends again into the inbox's top.
-                SVG, measured from the layout, finished at rest; hidden
-                below 1024
+     wires      final20: from each card's bottom centre down 28px to a 1px
+                bus in yellow at 45% under all three cards, then the trunk
+                into the inbox (the measure effect below). SVG, measured
+                from the layout, finished at rest; hidden below 600
 
    THE LOOP. Finished at rest. At half in view the rows take a 400ms soft
    start, the stage holds 6s, then every 9s: one card lifts 6px and a 6px
-   yellow pulse runs its wire to the trunk and into the inbox (900ms); a
+   yellow pulse runs its wire, down, along, up and in (1100ms since
+   final20); a
    row with that card's chip enters at the top (350ms) and the bottom row
    fades. The cards take turns 1, 3, 2, 1, 3, 1, 2, 3. Off screen it stops.
    Reduced motion: no loop. The stage is a picture, aria-hidden; the
@@ -57,7 +59,7 @@ const ROWS = FIRST.map(([c, kind], i) => ({ id: i, card: c, kind, minute: TIMES[
 const SOFT = 400;
 const HOLD = 6000;
 const PERIOD = 9000;
-const PULSE = 900;
+const PULSE = 1100;
 const ENTER = 350;
 const R = 24;
 
@@ -163,30 +165,56 @@ export default function InboxStage() {
   useLayoutEffect(() => {
     const stage = stageRef.current;
     if (!stage) return undefined;
+    /* THE BUS (final20, 2026-10-06): each wire leaves its card at the
+       bottom centre and drops 28px to one horizontal bus under all three
+       cards. From 1200 the bus turns up on a 24px radius at the trunk,
+       30px right of card 3, rises to the inbox's vertical middle and turns
+       right into it. From 600 to 1199 the inbox is under the cards (at 1024
+       the stage is 896 wide, too narrow for the cards, the trunk and an
+       inbox side by side), so the
+       trunk drops from the bus at card 2's centre into the inbox's top.
+       Nothing lies over any wire. Below 600 there are none. */
     const measure = () => {
-      if (window.innerWidth < 1024) {
+      const w = window.innerWidth;
+      if (w < 600) {
         setWires(null);
         return;
       }
       const o = stage.getBoundingClientRect();
       const cards = cardRefs.current.map((c) => c.getBoundingClientRect());
       const list = rowsRef.current.getBoundingClientRect();
-      const yR = list.top - o.top;
-      const xL = list.left - o.left;
-      /* The trunk 40px right of the third card, unless the gap to the
-         inbox is too narrow for that and the 24px bend into it (at 1280
-         the stage is 1152 wide and the gap 54): then as far right as the
-         bend allows. */
-      const T = Math.min(cards[2].right - o.left + 40, xL - R);
-      const ys = cards.map((c) => c.top - o.top + c.height * 0.6);
-      const branch = (k) => `M ${cards[k].right - o.left} ${ys[k]} H ${T - R} A ${R} ${R} 0 0 0 ${T} ${ys[k] - R}`;
-      const trunkFrom = (y) => `V ${yR + R} A ${R} ${R} 0 0 1 ${T + R} ${yR} H ${xL}`;
+      const cx = cards.map((c) => c.left - o.left + c.width / 2);
+      const bottom = Math.max(...cards.map((c) => c.bottom)) - o.top;
+      const busY = bottom + 28;
+      const drop = (k) => `M ${cx[k]} ${cards[k].bottom - o.top} V ${busY}`;
+      let bus;
+      let trunk;
+      let rest;
+      if (w >= 1200) {
+        const T = cards[2].right - o.left + 30;
+        const yMid = list.top - o.top + list.height / 2;
+        const xL = list.left - o.left;
+        rest = () => `H ${T - R} A ${R} ${R} 0 0 0 ${T} ${busY - R} V ${yMid + R} A ${R} ${R} 0 0 1 ${T + R} ${yMid} H ${xL}`;
+        bus = `M ${cx[0]} ${busY} H ${T - R}`;
+        trunk = `M ${T - R} ${busY} ${rest().slice(rest().indexOf('A'))}`;
+      } else {
+        const mid = cx[1];
+        const top = rowsRef.current.parentElement.getBoundingClientRect().top - o.top;
+        rest = (k) => {
+          if (k === 1) return `V ${top}`;
+          const dir = k === 0 ? 1 : -1;
+          const sweep = k === 0 ? 1 : 0;
+          return `H ${mid - dir * R} A ${R} ${R} 0 0 ${sweep} ${mid} ${busY + R} V ${top}`;
+        };
+        bus = `M ${cx[0]} ${busY} H ${cx[2]}`;
+        trunk = `M ${mid} ${busY} V ${top}`;
+      }
       setWires({
         w: o.width,
         h: o.height,
-        branches: [0, 1, 2].map(branch),
-        trunk: `M ${T} ${ys[2] - R} ${trunkFrom()}`,
-        full: [0, 1, 2].map((k) => `${branch(k)} ${trunkFrom()}`),
+        branches: [0, 1, 2].map(drop).concat(bus),
+        trunk,
+        full: [0, 1, 2].map((k) => `${drop(k)} ${rest(k)}`),
       });
     };
     measure();
@@ -212,7 +240,7 @@ export default function InboxStage() {
     const pulse = (k, done) => {
       const path = pathRefs.current[k];
       const dot = pulseRef.current;
-      if (!path || !dot || window.innerWidth < 1024) {
+      if (!path || !dot || window.innerWidth < 600) {
         later(done, PULSE);
         return;
       }

@@ -1,6 +1,7 @@
 /* SERVICES, MARKETING: THREE PLACES, ONE INBOX (InboxStage.jsx, final19,
-   2026-10-06). On the dark band: 1180 x 620 at 1280, the cards in the left
-   700, the inbox in the right 420.
+   2026-10-06). On the dark band. Since final20: 520 tall at 1280, the
+   cards on one baseline at 220 x 400, the bus under them, the inbox in
+   what remains.
 
    Inks on the white cards: #202124 16.1:1, #5F6368 6.0, #4D5156 7.9, link
    blue #1A0DAB 11.0, #65676B 5.7, the open green #188038 5.0, #1C1E21 on
@@ -12,14 +13,18 @@
   margin: 0;
 }
 
+/* FINAL20 (2026-10-06): the cards on one baseline, 220 x 400, from 24px
+   in; the trunk 30px right of card 3 and its 24px bend, then the inbox in
+   what remains (348 at 1280, where the stage is 1152 wide). 520 tall. */
 .ib__stage {
+  --ib-row: 56px;
   position: relative;
   display: grid;
-  grid-template-columns: 700px 420px;
-  justify-content: space-between;
+  grid-template-columns: 732px minmax(0, 1fr);
+  column-gap: 72px;
   align-items: start;
   width: min(100%, 1180px);
-  min-height: 620px;
+  min-height: 520px;
   margin: 0 auto;
 }
 
@@ -34,7 +39,7 @@
 
 .ib__wires path {
   fill: none;
-  stroke: rgb(242 176 30 / 35%);
+  stroke: rgb(242 176 30 / 45%);
   stroke-width: 1;
 }
 
@@ -54,19 +59,11 @@
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(3, 210px);
+  grid-template-columns: repeat(3, 220px);
   gap: 24px;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 24px;
   list-style: none;
-}
-
-.ib__slot--2 {
-  margin-top: 20px;
-}
-
-.ib__slot--3 {
-  margin-top: 40px;
 }
 
 .ib__lab {
@@ -91,7 +88,7 @@
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  height: 300px;
+  height: 400px;
   padding: 14px;
   border-radius: 12px;
   background: #fff;
@@ -110,7 +107,7 @@
   align-items: center;
   box-sizing: border-box;
   height: 36px;
-  margin-bottom: 14px;
+  margin-bottom: 22px;
   padding: 0 14px;
   border-radius: 18px;
   background: #f1f3f4;
@@ -133,14 +130,14 @@
 }
 
 .ib__head {
-  margin-top: 6px !important;
+  margin-top: 14px !important;
   font-size: 15px;
   line-height: 20px;
   color: #1a0dab;
 }
 
 .ib__desc {
-  margin-top: 6px !important;
+  margin-top: 14px !important;
   font-size: 12px;
   line-height: 17px;
   color: #4d5156;
@@ -149,7 +146,7 @@
 .ib__links {
   display: flex;
   gap: 16px;
-  margin-top: 10px !important;
+  margin-top: 18px !important;
   font-size: 12px;
   line-height: 16px;
   color: #1a0dab;
@@ -205,8 +202,8 @@
 .ib__panel {
   display: grid;
   align-content: center;
-  height: 120px;
-  margin: 10px -14px 0;
+  height: 150px;
+  margin: 14px -14px 0;
   padding: 0 14px;
   background: var(--hd-primary); /* #1F2A44 */
   color: var(--hd-paper);
@@ -217,11 +214,14 @@
 }
 
 .ib__post-f {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin: 0 -14px;
   padding: 8px 14px;
   background: #f0f2f5;
 }
@@ -232,12 +232,15 @@
   color: #4d5156;
 }
 
+/* One line, 11px, never wraps (final20). */
 .ib__more {
-  padding: 4px 10px;
+  flex: none;
+  padding: 6px 10px;
   border: 1px solid #1877f2;
   border-radius: 6px;
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 11px;
+  line-height: 14px;
+  white-space: nowrap;
   font-weight: 700;
   color: #1c1e21;
 }
@@ -250,7 +253,7 @@
 .ib__map {
   position: relative;
   overflow: hidden;
-  height: 110px;
+  height: 150px;
   background:
     repeating-linear-gradient(0deg, rgb(0 0 0 / 10%) 0 1px, transparent 1px 22px),
     repeating-linear-gradient(90deg, rgb(0 0 0 / 10%) 0 1px, transparent 1px 30px),
@@ -337,12 +340,14 @@
 }
 
 /* ---- The inbox ----------------------------------------------------------- */
+/* The rows' top is level with the cards' top: the header and its 24px
+   gap take the height of a card's two-line label and its 8px foot. */
 .ib__inbox {
   --ib-rows: 8;
   position: relative;
   z-index: 1;
   display: grid;
-  gap: var(--s-md);
+  gap: var(--s-lg);
 }
 
 .ib__k,
@@ -367,7 +372,7 @@
   position: relative;
   overflow: hidden;
   clip-path: inset(0);
-  height: calc(var(--ib-rows) * 64px);
+  height: calc(var(--ib-rows) * var(--ib-row));
   margin: 0;
   padding: 0;
   border-top: 1px solid rgb(232 234 237 / 14%);
@@ -380,7 +385,7 @@
   align-items: center;
   gap: var(--s-md);
   box-sizing: border-box;
-  height: 64px;
+  height: var(--ib-row);
   border-bottom: 1px solid rgb(232 234 237 / 14%);
 }
 
@@ -439,20 +444,20 @@
 
 @keyframes ib-shift {
   from {
-    transform: translateY(-64px);
+    transform: translateY(calc(-1 * var(--ib-row)));
   }
 }
 
 @keyframes ib-in {
   from {
     opacity: 0;
-    transform: translateY(-64px);
+    transform: translateY(calc(-1 * var(--ib-row)));
   }
 }
 
 @keyframes ib-out {
   from {
-    transform: translateY(-64px);
+    transform: translateY(calc(-1 * var(--ib-row)));
   }
 
   to {
@@ -487,21 +492,24 @@
 }
 
 /* ---- Below 1024: three across with no step, the inbox under, six rows ---- */
-@media (max-width: 1023px) {
+/* The row layout runs to 1199, not 1023: at 1024 the stage is 896 wide
+   and the cards, the trunk and its bend (804) would leave the inbox 92. */
+@media (max-width: 1199px) {
   .ib__stage {
+    --ib-row: 64px;
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--s-2xl);
+    gap: 96px;
     min-height: 0;
   }
 
   .ib__places {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
+    padding: 0;
   }
 
-  .ib__slot--2,
-  .ib__slot--3 {
-    margin-top: 0;
+  .ib__card {
+    height: 360px;
   }
 
   .ib__inbox {
@@ -519,12 +527,21 @@
 
 /* ---- Below 600: the cards stacked, 220 tall, four rows ------------------- */
 @media (max-width: 599px) {
+  .ib__stage {
+    gap: var(--s-2xl);
+  }
+
   .ib__places {
     grid-template-columns: minmax(0, 1fr);
   }
 
   .ib__card {
-    height: 220px;
+    height: 260px;
+  }
+
+  .ib__panel,
+  .ib__map {
+    height: 110px;
   }
 
   .ib__inbox {
