@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaqList } from '../home/Faq.jsx';
 
 /* THE THREE SUBSTANCE OBJECTS ON /services (the founder's services
    substance pass, 2026-10-05). Built once, fed per discipline from
@@ -12,8 +11,8 @@ import { FaqList } from '../home/Faq.jsx';
      HowItGoes    four steps in a row (stacked below 768): a mono "01" to
                   "04", a 16px title, a 14px line, and one 1px rule
                   linking the four
-     TwoQuestions two rows of the site's FAQ accordion (Faq.jsx), opening
-                  in place */
+     The two questions and their TwoQuestions component are deleted
+     (final24, 2026-10-07). */
 
 export function SpecSheet({ rows, label }) {
   return (
@@ -41,13 +40,5 @@ export function HowItGoes({ steps, label }) {
         </li>
       ))}
     </ol>
-  );
-}
-
-export function TwoQuestions({ items, id }) {
-  return (
-    <div className="sub-qs faq">
-      <FaqList items={items} id={id} />
-    </div>
   );
 }

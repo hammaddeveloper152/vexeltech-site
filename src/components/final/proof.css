@@ -421,3 +421,17 @@
   text-align: center;
   color: var(--c-steel); /* 7.2:1 on cream */
 }
+
+/* Below 600 (final24, the one-screen pass on /services): the three stacked
+   objects 12px apart, the stage's own top and foot 8, and the caption 12
+   under the stage. Nothing is removed. */
+@media (max-width: 599px) {
+  .tb {
+    gap: 12px;
+  }
+
+  .tb__stage {
+    gap: 12px;
+    padding: var(--s-sm) 0;
+  }
+}

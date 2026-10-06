@@ -679,3 +679,44 @@
   padding-bottom: 9px;
   border-bottom: 2px solid var(--c-accent-draw-dark);
 }
+
+/* Below 600 (final24, the one-screen pass on /services): the objects 20px
+   apart, and the listing card as tall as its content, so the desk keeps
+   every object in less height. Nothing is removed. */
+@media (max-width: 599px) {
+  .bd__desk {
+    gap: 20px;
+  }
+
+  .bd__gbp {
+    height: auto;
+  }
+}
+
+/* Below 600 (final24): the quote as tall as its content, its footer line
+   under the total rather than pinned to a 380px sheet's foot. */
+@media (max-width: 599px) {
+  .bd__est {
+    height: auto;
+  }
+
+  .bd__est-f {
+    position: static;
+    margin-top: var(--s-lg) !important;
+  }
+}
+
+@media (max-width: 599px) {
+  .bd__desk {
+    gap: 16px;
+    padding-top: 12px;
+  }
+
+  .bd__sign {
+    height: 64px;
+  }
+
+  .bd__gbp-cover {
+    height: 80px;
+  }
+}

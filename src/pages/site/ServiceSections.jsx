@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { IconArrowUpRight } from '../../components/site/Icons.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
 import EvidenceBand from '../../components/story/EvidenceBand.jsx';
 import DevicePhones from '../../components/story/DevicePhones.jsx';
 import BrandDesk from '../../components/artifacts/BrandDesk.jsx';
 import InboxStage from '../../components/artifacts/InboxStage.jsx';
 import TextBackBand from '../../components/final/TextBackBand.jsx';
-import { SpecSheet, HowItGoes, TwoQuestions } from '../../components/story/Substance.jsx';
+import { SpecSheet, HowItGoes } from '../../components/story/Substance.jsx';
+import Details from '../../components/story/Details.jsx';
+import { CALL_HREF, CALL_LABEL, PromiseLine } from './parts.jsx';
 import { SUBSTANCE } from '../../content/substance.js';
 
 /* FINAL14 (the founder, 2026-10-06): the stage titles and step strips of the
@@ -96,16 +97,69 @@ function priceOf(id) {
   return null;
 }
 
-/* THE SUBSTANCE, 2026-10-05 (the founder's services substance pass). The
-   order inside each section: the head, the artifact, the list with the
-   price column (its figure, terms and fit), then the spec sheet, how it
-   goes, two questions, and the call last. The call left the price column
-   for the foot. The dark and cream alternation is unchanged. */
+/* ONE SCREEN PER DISCIPLINE (the founder, final24, 2026-10-07). Each band
+   holds, in this order and nothing else:
+
+     1  the artifact, as built
+     2  the eyebrow (the discipline's name) and the sentence h2
+     3  the promise line, 18px, ten words or fewer (PROMISES below)
+     4  the facts strip: price, timing, what you get, what you own, every
+        value from the spec sheet (FACTS below)
+     5  the call, "Get a custom quote"; the promise line "A written number
+        within one business day." under the first band only
+     6  "Details", closed: the spec sheet and how it goes, as they are
+
+   The What you get list, the price column, the fit line, "Bigger builds"
+   and the two questions came off the page. The list's lines still feed
+   /pricing (content/services.js); the questions are deleted from
+   content/substance.js and marked off in the copy file. */
+
+/* The promise, ten words or fewer. Two were trimmed, same meaning:
+   Branding (14 words) and Websites (11). */
+const PROMISES = {
+  branding: 'A mark that holds up on sign, invoice and search.',
+  websites: 'A conversion-focused site, live in four business days.',
+};
+
+/* The facts strip: [label, value], every value the spec sheet's own words,
+   except the two prices, which are the site's tokens (the Branding and
+   Websites spec sheets carry no price row). Marketing's spec sheet has no
+   ownership row, so its fourth item is its Terms row. */
+function factsOf(id) {
+  const spec = Object.fromEntries((SUBSTANCE[id] && SUBSTANCE[id].spec) || []);
+  if (id === 'branding')
+    return [
+      ['Price', `${money(FIGURES.brandingBasic)} or ${money(FIGURES.brandingAdvance)}`],
+      ['Delivery', spec.Delivery],
+      ['Files', spec.Files],
+      ['Ownership', spec.Ownership],
+    ];
+  if (id === 'websites')
+    return [
+      ['Price', money(FIGURES.website)],
+      ['Build', spec.Build],
+      ['Pages', spec.Pages],
+      ['Ownership', spec.Ownership],
+    ];
+  if (id === 'marketing')
+    return [
+      ['Pricing', spec.Pricing],
+      ['Start', spec.Start],
+      ['Measured by', spec['Measured by']],
+      ['Terms', spec.Terms],
+    ];
+  return [
+    ['Pricing', spec.Pricing],
+    ['Setup', spec.Setup],
+    ['Response', spec.Response],
+    ['Ownership', spec.Ownership],
+  ];
+}
+
 export default function ServiceSections({ disciplines }) {
   return (
-    <div className="svc2">
+    <div className="svc2 svc2--one">
       {disciplines.map((d, i) => {
-        const figure = priceOf(d.id);
         const cream = i % 2 === 1;
         return (
           <section
@@ -115,17 +169,6 @@ export default function ServiceSections({ disciplines }) {
             aria-labelledby={`svc-${d.id}`}
           >
             <div className={`svc2__in${cream ? ' panel' : ''}`}>
-              <div className="svc2__head">
-                <p className="svc2__kicker">{d.name}</p>
-                <h2 className="svc2__name" id={`svc-${d.id}`}>
-                  {HEADINGS[d.id] || d.name}
-                </h2>
-                <p className="svc2__promise">{d.promise}</p>
-              </div>
-
-              {/* THE EVIDENCE BAND (the five fixes, 2026-10-02): a real
-                  image under the promise when the discipline has one;
-                  without one the section is list-only (services.css). */}
               {d.image || d.phones || d.proof ? (
                 <div className="svc2__band">
                   {d.proof ? (
@@ -138,65 +181,36 @@ export default function ServiceSections({ disciplines }) {
                 </div>
               ) : null}
 
-              <div className="svc2__left">
-                <ul className="svc2__list">
-                  {d.cards.map(({ title, line }) => (
-                    <li className="svc2__item" key={title}>
-                      {/* Decorative: the item says the thing, and a list of
-                          six ticks read aloud is six words nobody needs. */}
-                      <span className="lmark" aria-hidden="true" />
-                      {/* THE ITEM'S LINE under its name, 2026-10-01 (the
-                          structure pass): services.js's `line`, 14px. */}
-                      <span className="svc2__item-w">
-                        <span className="svc2__item-t">{title}</span>
-                        {line ? <span className="svc2__item-d">{line}</span> : null}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                {/* BIGGER BUILDS, COPY V3, 2026-10-01: Websites' line under its
-                    items, in the fact register. */}
-                {d.bigger ? <p className="svc2__fact svc2__bigger">Bigger builds: {d.bigger}</p> : null}
+              <div className="svc2__head">
+                <p className="svc2__kicker">{d.name}</p>
+                <h2 className="svc2__name" id={`svc-${d.id}`}>
+                  {HEADINGS[d.id] || d.name}
+                </h2>
+                <p className="svc2__promise">{PROMISES[d.id] || d.promise}</p>
               </div>
 
-              <div className="svc2__right">
-                {figure ? (
-                  <p className="svc2__fig">
-                    {figure}
-                  </p>
-                ) : (
-                  /* "Per workflow" for Automation: V3's grid price
-                     (VEXELTECH-COPY.md, Pricing, The grid). */
-                  <p className="svc2__oncall">{d.id === 'automation' ? 'Per workflow' : 'On the call'}</p>
-                )}
-                <p className="svc2__fact">Terms: {d.terms}</p>
-                <p className="svc2__fact">
-                  Good fit if {d.fit.charAt(0).toLowerCase() + d.fit.slice(1)}
-                </p>
+              <ul className="svc2__facts" aria-label={`${d.name}, the facts`}>
+                {factsOf(d.id).map(([k, v]) => (
+                  <li className="svc2__fact-i" key={k}>
+                    <span className="svc2__fact-k">{k}</span>
+                    <span className="svc2__fact-v">{v}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="svc2__call">
+                <Link className="svc2__cta" to={CALL_HREF}>
+                  {CALL_LABEL}
+                </Link>
+                {i === 0 ? <PromiseLine className="svc2__promise-line" /> : null}
               </div>
 
               {SUBSTANCE[d.id] ? (
-                <>
-                  <div className="svc2__spec">
-                    <SpecSheet rows={SUBSTANCE[d.id].spec} label={`${d.name}, the spec`} />
-                  </div>
-                  <div className="svc2__how">
-                    <HowItGoes steps={SUBSTANCE[d.id].steps} label={`${d.name}, how it goes`} />
-                  </div>
-                  <div className="svc2__qs">
-                    <TwoQuestions items={SUBSTANCE[d.id].questions} id={`svc-${d.id}-faq`} />
-                  </div>
-                </>
+                <Details id={`svc-${d.id}-details`}>
+                  <SpecSheet rows={SUBSTANCE[d.id].spec} label={`${d.name}, the spec`} />
+                  <HowItGoes steps={SUBSTANCE[d.id].steps} label={`${d.name}, how it goes`} />
+                </Details>
               ) : null}
-
-              <div className="svc2__call">
-                <Link className={d.call.primary ? 'svc2__cta' : 'svc2__link'} to="/contact-us">
-                  {d.call.label}
-                  {/* The outline link's arrow, 2026-09-24: every outline link
-                      carries it. Decorative; the label is the name. */}
-                  {d.call.primary ? null : <IconArrowUpRight className="i i--sm" />}
-                </Link>
-              </div>
             </div>
           </section>
         );

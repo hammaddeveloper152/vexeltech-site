@@ -119,81 +119,25 @@
 
 .svc2__in {
   position: relative;
-  display: grid;
-  gap: var(--s-2xl);
   width: min(100%, 1200px);
   margin: 0 auto;
 }
 
-/* ONE LAYOUT FOR ALL FOUR, 2026-10-02 (the founder's five fixes). The
-   head (name and promise); the EVIDENCE BAND under it when the discipline
-   has one, full content width, 24px below the promise; then the list and
-   the price, 32px below the band (40px below the promise without one),
-   side by side 60/40 from 1024 and stacked below. Nothing alternates sides
-   (the frame that changed sides with the ground is gone). */
-.svc2__in {
-  grid-template-areas: 'head' 'band' 'list' 'right' 'spec' 'how' 'qs' 'call';
-  row-gap: 0;
-}
-
+/* The band's order and spacing are final24's, at the foot of this file
+   (one column: the artifact, the head, the facts, the call, Details). The
+   2026-10-02 grid areas went with the list and the price column. */
 .svc2__head {
-  grid-area: head;
   min-width: 0;
 }
 
-/* The row gaps are margins here, so the head's last line gives up its own
-   foot. */
 .svc2__head > :last-child {
   margin-bottom: 0;
 }
 
 .svc2__band {
-  grid-area: band;
-  min-width: 0;
-  margin-top: 24px;
-}
-
-.svc2__left {
-  grid-area: list;
-  margin-top: var(--s-xl);
-}
-
-.svc2__right {
-  grid-area: right;
-  margin-top: var(--s-xl);
-}
-
-.svc2__band ~ .svc2__left {
-  margin-top: 32px;
-}
-
-@media (min-width: 1024px) {
-  .svc2__in {
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    grid-template-areas:
-      'head head'
-      'band band'
-      'list right'
-      'spec spec'
-      'how how'
-      'qs qs'
-      'call call';
-    column-gap: var(--s-3xl);
-    align-items: start;
-  }
-
-  .svc2__band ~ .svc2__right {
-    margin-top: 32px;
-  }
-}
-
-.svc2__left {
-  display: grid;
-  align-content: start;
   min-width: 0;
 }
 
-/* Moldie at 64px, the name register: a discipline is a product name. */
 /* The discipline's name over its heading (final23): 13px mono, sentence
    case, in the band's secondary ink. */
 .svc2__kicker {
@@ -232,166 +176,7 @@
   text-wrap: pretty;
 }
 
-/* THE CHECKLIST, two columns from 768. `grid-auto-flow: column` with three
-   rows, so the six items read DOWN each column and match the source order; a
-   wrapping row would have read across the pair. */
-/* ONE COLUMN THAT CAN SHRINK. A grid with no template gets a single `auto`
-   track, and an auto track is max-content: the longest item - "Lead
-   generation and CRO" - set the list's width and pushed 15px past a 390
-   viewport. Nothing scrolled enough to notice, which is the failure mode
-   BUILD-LAW's container-budget note describes. `minmax(0, 1fr)` lets it
-   shrink to the band. */
-.svc2__list {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0 var(--s-xl);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-@media (min-width: 768px) {
-  .svc2__list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-flow: column;
-    grid-template-rows: repeat(3, auto);
-    justify-content: start;
-  }
-}
-
-.svc2__item {
-  /* A row: the discipline's 6px dot, 12px, the words; 12px above and below
-     and a hairline under it (2026-09-25). */
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 12px;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--c-rule-dark); /* white at 14% on dark */
-  font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
-}
-
-.svc2__d--cream .svc2__item {
-  color: var(--c-steel); /* body on cream, 7.20:1 */
-  border-bottom-color: rgb(11 11 13 / 12%);
-}
-
-/* THE ITEM'S LINE, 2026-10-01 (the structure pass): the name, then its one
-   line from services.js at 14px in steel-lift (7.4:1 on the base; steel on
-   a cream band, 7.20:1). The dot stands level with the name, not the
-   pair: 9px down is half the name's 24px line less half the 6px dot. */
-.svc2__item:has(.svc2__item-d) {
-  align-items: start;
-}
-
-.svc2__item:has(.svc2__item-d) .lmark {
-  margin-top: 9px;
-}
-
-.svc2__item-w {
-  display: grid;
-  gap: var(--s-xs);
-  min-width: 0;
-}
-
-.svc2__item-d {
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--c-steel-lift);
-  text-wrap: pretty;
-}
-
-.svc2__d--cream .svc2__item-d {
-  color: var(--c-steel);
-}
-
-/* The mark is the list mark since 2026-09-25 (`.lmark`, tokens.css). */
-
-/* ---- The right column: the price IS the visual ------------------------- */
-
-.svc2__right {
-  display: grid;
-  align-content: start;
-  justify-items: start;
-  min-width: 0;
-}
-
-/* THE PRICE, 2026-09-24 (the founder): Clash Display 400 at 56px, set like
-   the /pricing grid, with the turnaround and fit lines under it. It was
-   Moldie at up to 160px. "On the call" is a sentence rather than a figure,
-   and it takes the same setting so the four right columns read as one. */
-.svc2__fig,
-.svc2__oncall {
-  margin: 0 0 var(--s-md);
-  /* The 4px bar left of the price, machine yellow (it was the discipline's
-     colour until the three-colour pass, and again for final8 only). */
-  padding-left: 20px;
-  border-left: 4px solid var(--c-accent-ground);
-  font-family: var(--font-quiet);
-  font-size: 56px;
-  line-height: 1.05;
-  font-weight: 400;
-  letter-spacing: normal;
-  text-transform: none;
-  color: inherit;
-  text-wrap: balance;
-}
-
-/* The label register: 13px sentence case since 2026-09-24 (was 11px caps). */
-.svc2__fact {
-  max-width: 44ch;
-  margin: 0 0 var(--s-sm);
-  font-family: var(--font-offer);
-  font-size: var(--t-label-q);
-  line-height: var(--t-label-q-line);
-  font-weight: var(--t-weight-label);
-  letter-spacing: normal;
-  text-transform: none;
-  color: var(--c-steel-lift); /* 7.4:1 on the base */
-}
-
-.svc2__d--cream .svc2__fact {
-  color: var(--c-steel); /* 7.20:1 on cream */
-}
-
-/* COPY V3, 2026-10-01. BIGGER BUILDS sits under the items in the fact
-   register. (The SEO line that stood under the Websites promise came off in
-   the audit, 2026-10-02.) */
-.svc2__bigger {
-  margin: var(--s-lg) 0 0;
-  max-width: 54ch;
-}
-
-/* ---- THE SUBSTANCE, 2026-10-05 (the founder's services substance pass) --
-
-   Under the list and the price: the spec sheet, how it goes, two
-   questions, then the call. Full content width, 64px apart. Inks: on a dark
-   band mono labels steel-lift (7.30 on the drift), values bone (15.77); on
-   a cream band labels steel (7.20), values asphalt (15.75). Rules are 1px
-   steel on both. */
-.svc2__spec {
-  grid-area: spec;
-  min-width: 0;
-  margin-top: var(--s-2xl);
-}
-
-.svc2__how {
-  grid-area: how;
-  min-width: 0;
-  margin-top: var(--s-2xl);
-}
-
-.svc2__qs {
-  grid-area: qs;
-  min-width: 0;
-  margin-top: var(--s-2xl);
-}
-
 .svc2__call {
-  grid-area: call;
   margin-top: var(--s-2xl);
 }
 
@@ -485,13 +270,6 @@
   color: var(--c-steel-lift);
 }
 
-/* Two questions: the site's accordion rows without their section's padding
-   or heading. */
-.sub-qs.faq {
-  padding: 0;
-  color: inherit;
-}
-
 /* The cream bands' inks, restating light.css's About set for a cream panel
    on a dark page. */
 .svc2__d--cream .sub-spec__k,
@@ -505,36 +283,6 @@
   color: var(--c-asphalt); /* 15.75:1 */
 }
 
-.svc2__d--cream .sub-qs :is(.faq__q, .faq__q-t),
-.svc2__d--cream .sub-qs .faq__item[data-open='true'] .faq__q-t {
-  color: var(--c-asphalt);
-}
-
-.svc2__d--cream .sub-qs :is(.faq__list, .faq__item),
-.svc2__d--cream .sub-qs .faq__item[data-open='true'] {
-  border-color: rgb(23 24 26 / 15%);
-}
-
-.svc2__d--cream .sub-qs .faq__item[data-open='true'] {
-  background-color: transparent;
-  box-shadow: none;
-  border-radius: 0; /* no card on cream, so no card corners on its hairline */
-}
-
-.svc2__d--cream .sub-qs .faq__rule,
-.svc2__d--cream .sub-qs .faq__item[data-open='true'] .faq__rule {
-  background: var(--c-steel);
-}
-
-.svc2__d--cream .sub-qs :is(.faq__a, .faq__mark),
-.svc2__d--cream .sub-qs .faq__item[data-open='true'] :is(.faq__a, .faq__mark) {
-  color: var(--c-steel); /* 7.20:1 */
-}
-
-.svc2__d--cream .sub-qs :focus-visible {
-  outline-color: var(--c-asphalt);
-}
-
 /* ---- The call ------------------------------------------------------------
 
    Branding and Websites take the yellow primary; Marketing and Automation the
@@ -542,8 +290,7 @@
    edge and an asphalt label, because a steel-lift edge on cream is 1.9:1 and
    a white label on cream is 1.1:1. The yellow primary needs no restatement -
    asphalt on machine yellow is 9.46:1 on either ground. */
-.svc2__cta,
-.svc2__link {
+.svc2__cta {
   display: inline-flex;
   align-items: center;
   justify-self: start;
@@ -566,41 +313,177 @@
   text-decoration: none;
 }
 
-.svc2__link {
-  /* The arrow's gap, the same one every outline link keeps. */
-  gap: var(--s-sm);
-  padding: var(--s-md) var(--s-lg);
-  background: transparent;
-  border: 1px solid var(--c-steel-lift);
-  border-radius: var(--r-btn);
-  color: var(--c-bone); /* 16.32:1 on the base */
-  text-decoration: none;
-}
-
-/* Restated for cream: a steel-lift edge is 1.9:1 there and a white label
-   1.1:1. Both go asphalt, 15.75:1. */
-.svc2__d--cream .svc2__link {
-  border-color: var(--c-asphalt);
-  color: var(--c-asphalt);
-}
-
 @media (hover: hover) and (pointer: fine) {
-  .svc2__cta:hover,
-  .svc2__link:hover {
+  .svc2__cta:hover {
     opacity: var(--hover-opacity);
   }
 }
 
-.svc2__cta:active,
-.svc2__link:active {
+.svc2__cta:active {
   transform: scale(0.97);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .svc2__cta:hover,
-  .svc2__link:hover,
-  .svc2__cta:active,
-  .svc2__link:active {
+.svc2__cta:active {
     transform: none;
+  }
+}
+
+/* The sections are grid items of `.svc2`; its one column is held to the
+   page's width, or the widest artifact (the desk at 1180, the Websites
+   phones) set the column and every band overflowed the screen (1803px at
+   768, 938 at 390; found in final24's capture once the old grid areas,
+   whose minmax(0, ...) columns had held it, were gone). */
+.svc2 {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* ---- ONE SCREEN PER DISCIPLINE (final24, 2026-10-07, the founder) --------
+
+   The band is one column in this order: the artifact, the eyebrow and the
+   h2, the 18px promise, the facts strip, the call, "Details". The grid
+   areas of the older layout are cleared. */
+.svc2--one .svc2__band {
+  margin: 0;
+}
+
+.svc2--one .svc2__head {
+  margin-top: var(--s-xl);
+}
+
+.svc2--one .svc2__promise {
+  margin: var(--s-sm) 0 0;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+/* The facts strip: one row, 13px mono, the items divided by 1px bone rules
+   at 20% (asphalt at 20% on cream); two by two below 600. Each item is its
+   label in the secondary ink over its value. */
+.svc2__facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: var(--s-lg) 0 0;
+  padding: 0;
+  border-top: 1px solid rgb(232 234 237 / 20%);
+  border-bottom: 1px solid rgb(232 234 237 / 20%);
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.svc2__fact-i {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-width: 0;
+  padding: 12px 16px;
+  border-left: 1px solid rgb(232 234 237 / 20%);
+}
+
+.svc2__fact-i:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.svc2__fact-k {
+  color: var(--c-steel-lift); /* 7.55:1 on the base */
+}
+
+.svc2__fact-v {
+  color: var(--c-bone); /* 16.32:1 */
+}
+
+.svc2__d--cream :is(.svc2__facts, .svc2__fact-i) {
+  border-color: rgb(23 24 26 / 20%);
+}
+
+.svc2__d--cream .svc2__fact-k {
+  color: var(--c-steel); /* 7.20:1 on cream */
+}
+
+.svc2__d--cream .svc2__fact-v {
+  color: var(--c-asphalt); /* 15.75:1 */
+}
+
+@media (max-width: 599px) {
+  .svc2__facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .svc2__fact-i:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .svc2__fact-i:nth-child(n + 3) {
+    border-top: 1px solid rgb(232 234 237 / 20%);
+  }
+
+  .svc2__d--cream .svc2__fact-i:nth-child(n + 3) {
+    border-top-color: rgb(23 24 26 / 20%);
+  }
+}
+
+.svc2--one .svc2__call {
+  display: grid;
+  justify-items: start;
+  margin-top: var(--s-lg);
+}
+
+.svc2__promise-line {
+  margin-top: var(--s-sm);
+}
+
+/* Below 600 the band's own spacing tightens, so each discipline, from its
+   artifact's top to its call, fits two phone screens (final24): the head
+   24px under the artifact, the facts and the call 16px apart, the facts'
+   cells 10 by 12. */
+@media (max-width: 599px) {
+  .svc2--one .svc2__head {
+    margin-top: var(--s-lg);
+  }
+
+  .svc2__facts,
+  .svc2--one .svc2__call {
+    margin-top: var(--s-md);
+  }
+
+  .svc2__fact-i {
+    padding: 10px 12px;
+  }
+}
+
+/* The h2 below 600 (final24): 26 / 32, so the four sentence headings take
+   two lines at 390 rather than three. */
+@media (max-width: 599px) {
+  .svc2--one .svc2__name {
+    font-size: 26px;
+    line-height: 32px;
+  }
+}
+
+/* Below 600, the last of the band's spacing (final24): the head 16 under
+   the artifact, the promise 4 under the h2, the facts' cells 8 by 12, the
+   call 12 under the facts. */
+@media (max-width: 599px) {
+  .svc2--one .svc2__head {
+    margin-top: var(--s-md);
+  }
+
+  .svc2--one .svc2__promise {
+    margin-top: var(--s-xs);
+    font-size: 17px;
+    line-height: 25px;
+  }
+
+  .svc2__fact-i {
+    padding: 8px 12px;
+  }
+
+  .svc2--one .svc2__call {
+    margin-top: 12px;
   }
 }

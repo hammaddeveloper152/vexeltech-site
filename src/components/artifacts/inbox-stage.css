@@ -619,3 +619,69 @@
     display: none;
   }
 }
+
+/* Below 600 (final24, the one-screen pass on /services): each card's label
+   on one line, the inbox's rows at 56 as on the desktop, and the stage's
+   parts 40px apart. Nothing is removed. */
+@media (max-width: 599px) {
+  .ib__lab br {
+    display: none;
+  }
+
+  .ib__lab {
+    white-space: nowrap;
+  }
+
+  .ib__stage {
+    --ib-row: 56px;
+    gap: var(--s-xl);
+  }
+
+  .ib {
+    gap: var(--s-md);
+  }
+}
+
+/* Below 600 (final24): the cards 240 tall, and the stage's parts 24
+   apart. */
+@media (max-width: 599px) {
+  .ib__card {
+    height: 240px;
+  }
+
+  .ib__stage {
+    gap: var(--s-lg);
+  }
+
+  .ib__places {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 599px) {
+  .ib__card {
+    height: 220px;
+  }
+
+  .ib__map {
+    height: 90px;
+  }
+
+  .ib__place {
+    padding: 10px 14px;
+  }
+}
+
+@media (max-width: 599px) {
+  .ib__inbox {
+    gap: var(--s-md);
+  }
+
+  .ib__proof {
+    padding-top: 12px;
+  }
+
+  .ib {
+    gap: 12px;
+  }
+}

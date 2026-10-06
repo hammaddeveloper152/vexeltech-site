@@ -335,7 +335,7 @@ export default function InboxStage() {
           {CARDS.map((Card, k) => (
             <li className={`ib__slot ib__slot--${k + 1}${lift === k ? ' is-lift' : ''}`} key={CHIP[k]}>
               <p className="ib__lab">
-                {LABELS[k][0]}
+                {LABELS[k][0]}{' '}
                 <br />
                 {LABELS[k][1]}
               </p>

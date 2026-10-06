@@ -1,10 +1,11 @@
 /* THE SUBSTANCE OF EACH DISCIPLINE ON /services (the founder's services
    substance pass, 2026-10-05, VEXELTECH-COPY.md V3.6). Verbatim, and
    written nowhere else. Each discipline section renders, under its list and
-   price, a spec sheet, how it goes in four steps, and two questions
-   (components/story/Substance.jsx). The two questions also feed the page's
-   FAQPage structured data (head.js), so the answers here are exactly the
-   answers on the page.
+   price, a spec sheet and how it goes in four steps
+   (components/story/Substance.jsx), behind "Details" since final24
+   (2026-10-07). The two questions per discipline, and the page's FAQPage
+   data built from them, are deleted (final24); they are marked off in
+   VEXELTECH-COPY.md.
 
    Figures are tokens where the site already has one: Branding's first
    question names the Basic price.
@@ -34,18 +35,6 @@ export const SUBSTANCE = {
       ['Refine', "You pick one. We tighten it until you'd put it on the truck."],
       ['Files', 'Every format, the guide, and a call to walk you through using them.'],
     ],
-    questions: [
-      {
-        id: 'stock',
-        q: `What makes a ${money(FIGURES.brandingBasic)} logo different from a $29 one?`,
-        a: 'Time and judgement. The $29 one is a stock mark with your name typed in. Ours starts from what you do and who buys it, is tested on a sign and a card before you see it, and comes with the files and the rules to use it for ten years.',
-      },
-      {
-        id: 'own',
-        q: 'Will I own it outright?',
-        a: 'Yes. Source files, every export and the guide are yours when the invoice is paid. No licence, no renewal, no fine print.',
-      },
-    ],
   },
   websites: {
     spec: [
@@ -63,18 +52,6 @@ export const SUBSTANCE = {
       ['Concepts', 'Day one. The home page and one inner page, on a phone and a desk.'],
       ['Build', 'Days two and three. Every page, every form, every call tracked.'],
       ['Live', 'Day four. On your domain, in your name, with thirty days of changes included.'],
-    ],
-    questions: [
-      {
-        id: 'six',
-        q: 'Why six pages?',
-        a: 'Because that is what a small business needs to be found and trusted: home, services, about, reviews, contact, and one page for the thing you sell most. Need more? Each extra page is scoped and priced before we build it.',
-      },
-      {
-        id: 'update',
-        q: 'Can I update it myself?',
-        a: 'Yes. Text, photos and prices are editable without us. For bigger changes, call; small jobs are priced small.',
-      },
     ],
   },
   marketing: {
@@ -94,18 +71,6 @@ export const SUBSTANCE = {
       ['Live', 'Campaigns and tracking running within two weeks, with the landing page fixed first if it needs it.'],
       ['The report', 'Monthly. Spend, leads, cost per lead, and what we change next.'],
     ],
-    questions: [
-      {
-        id: 'soon',
-        q: 'How soon will the phone ring?',
-        a: 'Ads can bring calls in the first week. Local search takes longer, usually a few months to move. We tell you which is which before you spend a dollar.',
-      },
-      {
-        id: 'cpl',
-        q: 'What if the cost per lead is too high?',
-        a: 'Then we change something: the page, the offer, the area or the channel. If nothing moves it in two months, we say so and stop. You are not paying for a retainer.',
-      },
-    ],
   },
   automation: {
     spec: [
@@ -123,18 +88,6 @@ export const SUBSTANCE = {
       ['Write it', 'The exact messages, in your voice, with the timing. You approve every word.'],
       ['Connect it', 'Phone, calendar and invoicing linked. Tested with real calls before it goes live.'],
       ['Run it', 'It works while you do. You see every message in one thread.'],
-    ],
-    questions: [
-      {
-        id: 'robot',
-        q: 'Will it sound like a robot?',
-        a: "No. Every message is written with you, in the words you already use, and you approve each one before it sends. Customers reply to a person's voice, not a system's.",
-      },
-      {
-        id: 'human',
-        q: 'What if a customer wants a human?',
-        a: 'They get one. Every workflow hands off to you or your team the moment someone asks, and you see the whole thread when you pick up.',
-      },
     ],
   },
 };

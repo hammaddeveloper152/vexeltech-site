@@ -1,0 +1,85 @@
+/* "DETAILS" (Details.jsx, final24, 2026-10-07). The button is 13px with a
+   48px target (BUILD-LAW Touch); the chevron is a 7px box of two borders,
+   turned by transform. The panel's height is the one height on the site
+   that animates, 250ms on the reveal curve (BUILD-LAW Motion, the
+   founder's exception); under reduced motion it changes at once.
+   Inks: bone 16.32:1 and steel-lift on the dark, asphalt and steel on
+   cream. */
+.dt {
+  margin-top: var(--s-lg);
+  border-top: 1px solid rgb(232 234 237 / 20%);
+}
+
+.svc2__d--cream .dt {
+  border-top-color: rgb(23 24 26 / 20%);
+}
+
+.dt__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-sm);
+  min-height: 48px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0.02em;
+  color: inherit;
+  cursor: pointer;
+  transition: transform var(--d-press) var(--ease-reveal), opacity var(--d-press) var(--ease-reveal);
+}
+
+.dt__btn:focus-visible {
+  outline: var(--focus-ring) solid var(--c-focus);
+  outline-offset: var(--focus-offset);
+}
+
+.svc2__d--cream .dt__btn:focus-visible {
+  outline-color: var(--c-asphalt);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dt__btn:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+.dt__btn:active {
+  transform: scale(0.97);
+}
+
+.dt__chev {
+  width: 7px;
+  height: 7px;
+  margin-top: -3px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 250ms var(--ease-reveal);
+}
+
+.dt[data-open='true'] .dt__chev {
+  margin-top: 3px;
+  transform: rotate(-135deg);
+}
+
+.dt__panel {
+  overflow: hidden;
+  transition: height 250ms var(--ease-reveal);
+}
+
+.dt__in {
+  display: grid;
+  gap: var(--s-xl);
+  padding: var(--s-md) 0 var(--s-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dt__panel,
+  .dt__chev {
+    transition: none;
+  }
+}
