@@ -12,8 +12,8 @@ import { FaqList } from '../home/Faq.jsx';
      HowItGoes    four steps in a row (stacked below 768): a mono "01" to
                   "04", a 16px title, a 14px line, and one 1px rule
                   linking the four
-     SubstanceRows the two above and the two questions, behind three
-                  closed rows of the site's FAQ accordion (final14) */
+     TwoQuestions two rows of the site's FAQ accordion (Faq.jsx), opening
+                  in place */
 
 export function SpecSheet({ rows, label }) {
   return (
@@ -44,31 +44,7 @@ export function HowItGoes({ steps, label }) {
   );
 }
 
-/* THE THREE ROWS (the founder's final14, 2026-10-06): the spec sheet, how
-   it goes and the two questions, each behind a closed row in the site's FAQ
-   style, in this order, one open at a time, opening with the FAQ's own
-   motion. The two questions are plain Q and A text inside the third row
-   (h4 under its h3), not a nested accordion, and stay in the page so the
-   FAQPage data matches it (head.js). */
-export function SubstanceRows({ data, id, name }) {
-  const items = [
-    { id: 'included', q: "What's included", a: <SpecSheet rows={data.spec} label={`${name}, what's included`} /> },
-    { id: 'how', q: 'How it goes', a: <HowItGoes steps={data.steps} label={`${name}, how it goes`} /> },
-    {
-      id: 'questions',
-      q: 'Questions',
-      a: (
-        <div className="sub-qa">
-          {data.questions.map(({ id: qid, q, a: answer }) => (
-            <div className="sub-qa__item" key={qid}>
-              <h4 className="sub-q">{q}</h4>
-              <p className="sub-a">{answer}</p>
-            </div>
-          ))}
-        </div>
-      ),
-    },
-  ];
+export function TwoQuestions({ items, id }) {
   return (
     <div className="sub-qs faq">
       <FaqList items={items} id={id} />

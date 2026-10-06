@@ -34,11 +34,8 @@ for (const route of ['/services', '/about-us', '/pricing']) {
     const blocks = [...document.querySelectorAll('script[type="application/ld+json"][data-faq]')];
     const data = blocks.map((s) => JSON.parse(s.textContent));
     const qs = data.flatMap((d) => d.mainEntity || []);
-    /* Since final14 (2026-10-06) /services' two questions per discipline sit
-       inside a "Questions" row as plain Q and A (.sub-q, .sub-a); About and
-       Pricing keep them as accordion rows (.faq__q-t, .faq__a). */
-    const shownQ = [...document.querySelectorAll('.faq__q-t, .sub-q')].map((n) => n.textContent.trim());
-    const panels = [...document.querySelectorAll('.faq__a, .sub-a')].map((n) => n.textContent.replace(/\s+/g, ' ').trim());
+    const shownQ = [...document.querySelectorAll('.faq__q-t')].map((n) => n.textContent.trim());
+    const panels = [...document.querySelectorAll('.faq__a')].map((n) => n.textContent.replace(/\s+/g, ' ').trim());
     return {
       blocks: blocks.length,
       questions: qs.length,
@@ -56,12 +53,11 @@ for (const width of [1280, 390]) {
   await p.goto(BASE + '/services', { waitUntil: 'networkidle0' });
   await wait(500);
   for (const id of ['branding', 'websites', 'marketing', 'automation']) {
-    /* Open the band's first row (What's included since final14). */
+    /* Open the first question of the band. */
     await p.evaluate((id) => document.querySelector(`#${id} .sub-qs .faq__btn`).click(), id);
     await wait(700);
     const box = await p.evaluate((id) => {
-      /* The rows since final14 (the spec sheet sits behind the first). */
-      const a = document.querySelector(`#${id} .svc2__qs`).getBoundingClientRect();
+      const a = document.querySelector(`#${id} .svc2__spec`).getBoundingClientRect();
       const z = document.querySelector(`#${id} .svc2__call`).getBoundingClientRect();
       return { y: a.top + window.scrollY - 24, h: z.bottom - a.top + 48 };
     }, id);

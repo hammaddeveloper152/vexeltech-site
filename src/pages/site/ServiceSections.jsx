@@ -7,14 +7,15 @@ import DevicePhones from '../../components/story/DevicePhones.jsx';
 import BrandYouType from '../../components/artifacts/BrandYouType.jsx';
 import SearchToCall from '../../components/artifacts/SearchToCall.jsx';
 import TextBackBand from '../../components/final/TextBackBand.jsx';
-import { SubstanceRows } from '../../components/story/Substance.jsx';
+import { SpecSheet, HowItGoes, TwoQuestions } from '../../components/story/Substance.jsx';
 import { SUBSTANCE } from '../../content/substance.js';
 
 /* FINAL14 (the founder, 2026-10-06): the stage titles and step strips of the
    clarity pass are deleted; each artifact's caption is the one line of
-   explanation. The artifact stands in an ACCENT FIELD (`.svc2__stage`,
-   services.css), and the spec sheet, how it goes and the two questions sit
-   behind three closed rows under the list and the price. */
+   explanation. THE REVERT (the founder, 2026-10-06): the accent field and
+   the three closed rows of final14 are undone. The artifact stands on the
+   band's own ground, and the spec sheet, how it goes and the two questions
+   are open under the list and the price, as in the substance pass. */
 
 /* The proof bands, by services.js's `proof` (the final pass, 2026-10-03;
    since the final artifacts pass, 2026-10-03; since final7 the brand you
@@ -111,15 +112,13 @@ export default function ServiceSections({ disciplines }) {
                   without one the section is list-only (services.css). */}
               {d.image || d.phones || d.proof ? (
                 <div className="svc2__band">
-                  <div className="svc2__stage">
-                    {d.proof ? (
-                      React.createElement(PROOF[d.proof])
-                    ) : d.phones ? (
-                      <DevicePhones phones={d.phones} />
-                    ) : (
-                      <EvidenceBand image={d.image} />
-                    )}
-                  </div>
+                  {d.proof ? (
+                    React.createElement(PROOF[d.proof])
+                  ) : d.phones ? (
+                    <DevicePhones phones={d.phones} />
+                  ) : (
+                    <EvidenceBand image={d.image} />
+                  )}
                 </div>
               ) : null}
 
@@ -161,9 +160,17 @@ export default function ServiceSections({ disciplines }) {
               </div>
 
               {SUBSTANCE[d.id] ? (
-                <div className="svc2__qs">
-                  <SubstanceRows data={SUBSTANCE[d.id]} id={`svc-${d.id}-faq`} name={d.name} />
-                </div>
+                <>
+                  <div className="svc2__spec">
+                    <SpecSheet rows={SUBSTANCE[d.id].spec} label={`${d.name}, the spec`} />
+                  </div>
+                  <div className="svc2__how">
+                    <HowItGoes steps={SUBSTANCE[d.id].steps} label={`${d.name}, how it goes`} />
+                  </div>
+                  <div className="svc2__qs">
+                    <TwoQuestions items={SUBSTANCE[d.id].questions} id={`svc-${d.id}-faq`} />
+                  </div>
+                </>
               ) : null}
 
               <div className="svc2__call">
