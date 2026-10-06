@@ -37,10 +37,11 @@
   pointer-events: none;
 }
 
+/* 1.5px at 60% since final21, so the wires read at a glance. */
 .ib__wires path {
   fill: none;
-  stroke: rgb(242 176 30 / 45%);
-  stroke-width: 1;
+  stroke: rgb(242 176 30 / 60%);
+  stroke-width: 1.5;
 }
 
 /* The routes are the pulse's tracks only: drawn already by the branches
@@ -199,10 +200,20 @@
 }
 
 /* The panel fills the card's width, edge to edge. */
+/* FINAL21: the feed card is a column; the panel takes 210 and grows into
+   whatever the card leaves, and the footer sits directly under it, so no
+   white gap stands between them. */
+.ib__card--feed {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+}
+
 .ib__panel {
   display: grid;
+  flex: 1 1 210px;
   align-content: center;
-  height: 150px;
+  min-height: 0;
   margin: 14px -14px 0;
   padding: 0 14px;
   background: var(--hd-primary); /* #1F2A44 */
@@ -214,11 +225,8 @@
 }
 
 .ib__post-f {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
   display: flex;
+  margin: 0 -14px;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
@@ -304,8 +312,43 @@
 .ib__place {
   display: grid;
   justify-items: start;
-  gap: 4px;
-  padding: 14px;
+  gap: 3px;
+  padding: 12px 14px;
+}
+
+/* The reviews under the Call pill (final21): "Reviews" 11px bold, then
+   two lines of 12px, each under five 10px yellow stars (decorative, the
+   words carry it), 14px apart. */
+.ib__reviews {
+  display: grid;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.ib__rev-k {
+  margin-bottom: -8px !important;
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 700;
+  color: #202124; /* 16.1:1 */
+}
+
+.ib__rev {
+  display: grid;
+  gap: 2px;
+}
+
+.ib__rev-s {
+  font-size: 10px;
+  line-height: 12px;
+  letter-spacing: 0.02em;
+  color: var(--c-yellow-d);
+}
+
+.ib__rev-t {
+  font-size: 12px;
+  line-height: 16px;
+  color: #4d5156; /* 7.9:1 */
 }
 
 .ib__place-n {
@@ -559,5 +602,20 @@
   .ib__row {
     grid-template-columns: 64px minmax(0, 1fr) auto;
     gap: var(--s-sm);
+  }
+}
+
+/* The reviews where the map card is shorter (final21): from 600 to 1199
+   the card is 360 tall and holds the first review only; below 600 it is
+   260 and holds none. */
+@media (max-width: 1199px) {
+  .ib__rev + .ib__rev {
+    display: none;
+  }
+}
+
+@media (max-width: 599px) {
+  .ib__reviews {
+    display: none;
   }
 }

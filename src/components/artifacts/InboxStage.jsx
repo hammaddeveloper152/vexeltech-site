@@ -141,10 +141,24 @@ function MapCard() {
         <p className="ib__place-r">4.9 ★★★★★ (212)</p>
         <p className="ib__place-o">Open · Closes 5 PM</p>
         <span className="ib__call">Call</span>
+        {/* THE REVIEWS (final21, 2026-10-06): two lines on the demo
+            listing, the brief's words, for the made-up "Your Business";
+            not reviews of VexelTech. */}
+        <div className="ib__reviews">
+          <p className="ib__rev-k">Reviews</p>
+          {REVIEWS.map((r) => (
+            <div className="ib__rev" key={r}>
+              <span className="ib__rev-s">★★★★★</span>
+              <p className="ib__rev-t">{r}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
+
+const REVIEWS = ['Came the same day and fixed it in an hour.', 'Clear price before they started. Would use again.'];
 
 const CARDS = [Search, Feed, MapCard];
 
