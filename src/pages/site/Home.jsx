@@ -2,12 +2,11 @@ import React, { useEffect } from 'react';
 import Header from '../../components/site/Header.jsx';
 import Hero from '../../components/home/Hero.jsx';
 import CostsCited from '../../components/home/CostsCited.jsx';
-import WorkAccordion from '../../components/final/WorkAccordion.jsx';
+import WorkTiles from '../../components/final/WorkTiles.jsx';
 import Services from '../../components/home/Services.jsx';
 import WordBand from '../../components/home/WordBand.jsx';
 import About from '../../components/home/About.jsx';
 import CounterRow from '../../components/home/CounterRow.jsx';
-import RouteBand from '../../components/site/RouteBand.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import { CallBand } from './parts.jsx';
@@ -67,20 +66,6 @@ const TITLE = 'Website design for small business, $700 flat | VexelTech';
 const DESCRIPTION =
   'Website design, branding, local SEO, ads and automation for small businesses. Websites $700 flat, live in four business days.';
 
-/* The retired Process component's four step descriptions, carried as one
-   line under stops 01 to 04 of the route, and the user's line for stop 05
-   (2026-09-21). */
-/* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Home, How it works): each
-   step's first sentence is the stop's title (RouteBand.jsx), the rest its
-   line. */
-const STEP_LINES = [
-  /* Final22 (2026-10-06): "You get a written number the same day." came
-     off; it contradicted the one-business-day promise. */
-  "Fifteen minutes. Your business, your market, what's not working.",
-  'Logo concepts or the site design, shown before anything is billed.',
-  'Four business days for a website. One to two for branding.',
-  'Domain, hosting, files and code in your name. Thirty days of maintenance included.',
-];
 
 export default function Home() {
   /* The title, description, canonical and Open Graph tags (head.js). */
@@ -151,23 +136,16 @@ export default function Home() {
         <CostsCited />
         <About />
         <Services />
-        {/* Recent work, between What we do and the flat-prices band: the
-            full-width accordion (the final pass, 2026-10-03). It renders
-            nothing until content/work.js has three real entries. */}
-        <WorkAccordion />
+        {/* Recent work, as tiles of the live sites (final25, 2026-10-07).
+            It renders nothing until content/work.js has three real
+            entries. */}
+        <WorkTiles />
         <WordBand />
-        {/* The handoff leads (the founder's clarity pass, 2026-10-06). */}
-        <RouteBand
-          id="how-h"
-          sectionId="how-it-works"
-          heading="How it works"
-          lead="From the first call to live in four business days, with a written number before anything starts."
-          lines={STEP_LINES}
-        />
         <CounterRow band />
-        {/* The $700 at 240px is the band's object; `promise.webp` came off
-            2026-09-22 with every other unfilled slot. */}
-        <PromiseBand id="promise-h" lead="Two prices you can plan around. Everything else quoted in writing." />
+        {/* The $700 band, with How it works folded into it as its row of
+            four steps (final25, 2026-10-07; the section and RouteBand are
+            deleted, and the steps keep the #how-it-works anchor). */}
+        <PromiseBand id="promise-h" lead="Two prices you can plan around. Everything else quoted in writing." steps />
         {/* Questions came off, 2026-10-01: V3 gives home none
             (VEXELTECH-COPY.md, COPY V3). */}
         {/* The closing call, before the form. COPY V3, 2026-10-01. */}

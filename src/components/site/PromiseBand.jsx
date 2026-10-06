@@ -34,7 +34,20 @@ const REFUSALS = [
   'We price branding and websites once, with no retainer. Marketing is month to month.',
 ];
 
-export default function PromiseBand({ id, lead }) {
+/* THE FOUR STEPS (the founder's home brief, final25, 2026-10-07): How it
+   works, folded into this band as one row under the price. A 32px mono
+   numeral, a 15px bold title (the brief's: Call, Approve, Launch, Own) and
+   one 13px line under twelve words, from the old steps; the fourth was cut
+   from 13 words to its first sentence. Four across from 1024, two by two
+   below, four deep below 600. The row keeps the #how-it-works anchor. */
+const STEPS = [
+  ['Call', "Fifteen minutes. Your business, your market, what's not working."],
+  ['Approve', 'Logo concepts or the site design, shown before anything is billed.'],
+  ['Launch', 'Four business days for a website. One to two for branding.'],
+  ['Own', 'Domain, hosting, files and code in your name.'],
+];
+
+export default function PromiseBand({ id, lead, steps = false }) {
   return (
     <section className="vt ab3-price promise panel-sec" aria-labelledby={id} data-artifact="PromiseBand">
       <div className="promise__in panel">
@@ -57,6 +70,19 @@ export default function PromiseBand({ id, lead }) {
             ))}
           </ul>
         </div>
+        {steps ? (
+          <ol className="pb-steps" id="how-it-works" aria-label="How it works">
+            {STEPS.map(([title, line], i) => (
+              <li className="pb-steps__i" key={title}>
+                <span className="pb-steps__n" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 className="pb-steps__t">{title}</h3>
+                <p className="pb-steps__l">{line}</p>
+              </li>
+            ))}
+          </ol>
+        ) : null}
       </div>
     </section>
   );

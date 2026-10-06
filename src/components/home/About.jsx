@@ -33,8 +33,8 @@ import './About.css';
    work" link has no V3 line and is removed. */
 const COPY = {
   statement: 'Websites, ads and automation for small business.',
-  support:
-    'VexelTech builds the website people land on, the campaigns that send them there, and the follow-up that catches the enquiry. One team, one brief, one invoice, and a named person on the phone.',
+  /* The body paragraph came off (the founder's home brief, final25,
+     2026-10-07): the lead, the statement and the facts are the sheet. */
 };
 
 export default function About() {
@@ -62,9 +62,6 @@ export default function About() {
             {COPY.statement}
           </p>
 
-          <p className="about__support" style={{ '--i': 2 }}>
-            {COPY.support}
-          </p>
         </div>
 
         {/* THE FACTS, a cream ledger (the final pass, 2026-10-03). It

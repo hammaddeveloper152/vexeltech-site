@@ -8,7 +8,8 @@ import './ArtCard.css';
    Lit-near, 24px, a 1px border at 10% white, no shadow, no light, content
    height, 32px of padding. THE ANATOMY SINCE THE ILLUSTRATION PASS,
    2026-09-24: the number (01) to (04) in the mono label top left, a 140px
-   isometric illustration top right (Illustrations.jsx), then the name in
+   isometric illustration top right (deleted in final25, 2026-10-07: the
+   card shows its artifact still, `still`), then the name in
    Clash at 27px and one line at 14px whose first sentence is bold. The
    top row is the illustration's height, so the name always starts under
    it. The chip and its glyph are gone. The hover keeps the 4px lift, which
@@ -39,7 +40,7 @@ function splitLine(text) {
 export default function ArtCard({
   image = null,
   num = null,
-  Art = null,
+  still = null,
   name = null,
   line = '',
   href = null,
@@ -65,7 +66,7 @@ export default function ArtCard({
   const [lead, rest] = splitLine(line);
   const body = (
     <>
-      {num || Art ? (
+      {num || still ? (
         <span className="art__top">
           {/* The number is the card's place in its set; decorative, as the
               list is ordered. A colour card shows it as its badge instead. */}
@@ -74,7 +75,13 @@ export default function ArtCard({
               {num}
             </span>
           ) : null}
-          {Art ? <Art className="art__ill" /> : null}
+          {/* THE STILL (final25, 2026-10-07): the discipline's /services
+              artifact at rest, in a 1:1 frame the card's width. Decorative:
+              the card's name says what it is. Lazy and sized, so it costs
+              home's first paint nothing. */}
+          {still ? (
+            <img className="art__still" src={still} alt="" width="720" height="720" loading="lazy" decoding="async" fetchpriority="low" />
+          ) : null}
         </span>
       ) : null}
       {colour && num ? <Badge n={num} className="art__badge" /> : null}

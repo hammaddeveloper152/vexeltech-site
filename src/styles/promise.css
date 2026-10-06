@@ -113,3 +113,62 @@
    were reservations nothing would fill. The rules go with the markup rather
    than being left behind — a selector nothing matches is a second opinion the
    next reader has to resolve. */
+
+/* ---- THE FOUR STEPS (final25, 2026-10-07): How it works, in the band ----
+   One row under the price, on the band's cream: the 32px mono numeral in
+   steel, the 15px bold title and the 13px line in asphalt (15.75:1) and
+   steel (7.20). Four across from 1024, two by two below, four deep below
+   600. The anchor lands under the bar. */
+.pb-steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-lg) var(--s-lg);
+  margin: var(--s-2xl) 0 0;
+  padding: var(--s-lg) 0 0;
+  border-top: 1px solid rgb(23 24 26 / 15%);
+  list-style: none;
+  scroll-margin-top: 96px;
+}
+
+@media (min-width: 1024px) {
+  .pb-steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 599px) {
+  .pb-steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-md);
+  }
+}
+
+.pb-steps__i {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+}
+
+.pb-steps__n {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  line-height: 36px;
+  color: var(--c-steel);
+}
+
+.pb-steps__t {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 700;
+  color: var(--c-asphalt);
+}
+
+.pb-steps__l {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--c-steel);
+}

@@ -44,7 +44,9 @@
 .fl2__fig {
   margin: 0;
   font-family: var(--font-quiet);
-  font-size: 64px;
+  /* 72px since final25 (2026-10-07): each fact reads "number, meaning" at a
+     glance, the figure first and its label under it. */
+  font-size: 72px;
   line-height: 1;
   font-weight: var(--t-weight-quiet);
   letter-spacing: -0.02em;
@@ -55,7 +57,12 @@
 .fl2__label {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 18px;
+  font-size: 14px;
+  line-height: 20px;
   color: var(--c-steel); /* 7.2:1 on cream */
+  /* Two lines at most (final25). */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

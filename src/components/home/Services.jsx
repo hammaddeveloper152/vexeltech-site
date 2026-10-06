@@ -90,11 +90,11 @@ export default function Services({
         <div className="services__grid" ref={ref} data-revealed={revealed ? 'true' : 'false'}>
           {/* The reveal moves the cell and the hover moves the card, so the
               two transitions never compete for one element. */}
-          {CARDS.map(({ id, Art, discipline, line }, i) => (
+          {CARDS.map(({ id, still, discipline, line }, i) => (
             <div className="services__cell" key={id} style={{ '--i': i }}>
               <ArtCard
                 num={String(i + 1).padStart(2, '0')}
-                Art={Art}
+                still={still}
                 name={discipline}
                 line={lines ? lines[id] : line}
                 href={`/services#${id}`}

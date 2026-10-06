@@ -197,3 +197,106 @@
     animation-play-state: paused;
   }
 }
+
+/* ---- BELOW 1024: THE SWIPE ROW (final25, 2026-10-07) ----------------------
+   300px cards, snap scrolling, 16px apart, the row bleeding to the screen's
+   edges with 24px of inset either side, the yellow rule across its top.
+   The figure 96px. Dots under it: 6px, bone at 30%, the current one yellow,
+   each in a 48px target. From 1024 nothing here applies. */
+@media (max-width: 1023px) {
+  .cc__row {
+    margin-inline: calc(-1 * var(--inset));
+  }
+
+  .cc__grid {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding: 0 24px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 24px;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+
+  .cc__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cc__grid:focus-visible {
+    outline: var(--focus-ring) solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  /* The last card's room: a 24px spacer after it, which padding on a
+     flex scroller does not give on every engine. */
+  .cc__grid::after {
+    content: '';
+    flex: 0 0 8px;
+  }
+
+  .cc__cell {
+    flex: 0 0 300px;
+    scroll-snap-align: start;
+    min-height: 0;
+  }
+
+  .cc__n {
+    font-size: 96px;
+    margin: 6px 0 14px;
+  }
+
+  .cc__sweep {
+    display: none;
+  }
+
+  .cc__dots {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--s-xs);
+  }
+
+  .cc__dot {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 48px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+
+  .cc__dot > span {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgb(232 234 237 / 30%);
+  }
+
+  .cc__dot[aria-current='true'] > span {
+    background: var(--c-yellow-d);
+  }
+
+  .cc__dot:focus-visible {
+    outline: var(--focus-ring) solid var(--c-focus);
+    outline-offset: -8px;
+  }
+
+  .cc__dot:active {
+    transform: scale(0.97);
+  }
+}
+
+@media (max-width: 767px) {
+  .cc__n {
+    font-size: 96px;
+  }
+
+  .cc__h {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { COSTS } from '../../content/costs.js';
 import './costs-cited.css';
 
@@ -17,8 +17,63 @@ import './costs-cited.css';
    #F2B01E; each cell is lit from its top edge, so the rule reads as the
    light; a soft 320px highlight crosses the row every 12s (paused under
    reduced motion); a hovered cell lifts 4px and its light strengthens.
-   All of it is costs-cited.css. The figures never count. */
+   All of it is costs-cited.css. The figures never count.
+
+   BELOW 1024, A SWIPE ROW (the founder's home brief, final25, 2026-10-07):
+   the four cells become 300px cards in a horizontal scroll that snaps,
+   16px apart, the first inset 24px and 24px of room after the last, so the
+   next card always shows at the edge and the row reads as scrollable. The
+   figure is 96px. Dots under the row show where the reader is (6px, bone
+   at 30%, the current one yellow); each is a button that brings its card
+   in. The row is a focusable region there, so a keyboard can scroll it.
+   From 1024 it is the row of four as before. */
+const NARROW = '(max-width: 1023px)';
+
 export default function CostsCited() {
+  const rowRef = useRef(null);
+  const [active, setActive] = useState(0);
+  const [narrow, setNarrow] = useState(() => typeof window !== 'undefined' && window.matchMedia(NARROW).matches);
+
+  useEffect(() => {
+    const mq = window.matchMedia(NARROW);
+    const on = () => setNarrow(mq.matches);
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, []);
+
+  /* The current card: the one whose start is nearest the row's start. */
+  useEffect(() => {
+    const el = rowRef.current;
+    if (!el || !narrow) return undefined;
+    let raf = 0;
+    const read = () => {
+      raf = 0;
+      const cells = [...el.children];
+      const x = el.scrollLeft;
+      let best = 0;
+      cells.forEach((c, i) => {
+        if (Math.abs(c.offsetLeft - el.offsetLeft - 24 - x) < Math.abs(cells[best].offsetLeft - el.offsetLeft - 24 - x)) best = i;
+      });
+      setActive(best);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(read);
+    };
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      el.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, [narrow]);
+
+  const go = (i) => {
+    const el = rowRef.current;
+    const c = el && el.children[i];
+    if (!c) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollTo({ left: c.offsetLeft - el.offsetLeft - 24, behavior: reduce ? 'auto' : 'smooth' });
+  };
+
   return (
     <section className="vt st-sec st--dark cc" aria-labelledby="cc-h">
       <div className="st-in">
@@ -29,7 +84,11 @@ export default function CostsCited() {
           Four leaks most owner-run businesses never see. The numbers are the industry&apos;s, not ours.
         </p>
         <div className="cc__row">
-          <ul className="cc__grid">
+          <ul
+            className="cc__grid"
+            ref={rowRef}
+            {...(narrow ? { tabIndex: 0, 'aria-label': 'What it costs you, four figures. Scroll sideways for the next.' } : {})}
+          >
             {COSTS.map(({ id, label, figure, line, note, source }) => (
               <li className="cc__cell" key={id}>
                 <p className="cc__k">{label}</p>
@@ -44,6 +103,22 @@ export default function CostsCited() {
             <span />
           </span>
         </div>
+        {narrow ? (
+          <div className="cc__dots">
+            {COSTS.map(({ id, label }, i) => (
+              <button
+                type="button"
+                className="cc__dot"
+                key={id}
+                aria-label={`Show ${i + 1} of ${COSTS.length}: ${label}`}
+                aria-current={i === active ? 'true' : undefined}
+                onClick={() => go(i)}
+              >
+                <span />
+              </button>
+            ))}
+          </div>
+        ) : null}
       </div>
     </section>
   );
