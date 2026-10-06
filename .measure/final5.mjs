@@ -32,11 +32,10 @@ const OUT = path.join(HERE, 'out', process.argv[3] || 'final5');
 fs.mkdirSync(OUT, { recursive: true });
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
+/* Since final15 (2026-10-06) home's scenes are gone and Branding and
+   Marketing are before/after sliders with no timeline (final15.mjs). */
 const ARTIFACTS = [
-  { name: 'CostScenes', route: '/', times: [600, 1700, 3900, 6500, 9100, 11700, 14000, 15400] },
   { name: 'AnsweredCall', route: '/', times: [500, 1400, 2400, 3600] },
-  { name: 'BrandYouType', route: '/services', times: [400, 900, 1500, 2900, 3800, 4900, 5900, 6800] },
-  { name: 'SearchToCall', route: '/services', times: [700, 1800, 2900, 3700, 5200, 6500, 8400, 9800] },
   { name: 'TextBackBand', route: '/services', times: [800, 1800, 3300, 5000, 6400, 7000, 7800, 8800] },
   { name: 'OneTeam', route: '/about-us', times: [150, 700, 1500, 2500, 3250, 3500, 4000] },
   { name: 'WeekStrip', route: '/about-us', times: [150, 900, 1300, 1900, 2600, 3200, 3500] },
@@ -127,13 +126,6 @@ for (const width of [1280, 390]) {
       await wait(1500);
       const s2 = await snap();
       r.pausedOffScreen = s1 === s2;
-      if (a.name === 'CostScenes') {
-        await p.evaluate((s) => document.querySelector(s).scrollIntoView({ block: 'center' }), sel);
-        await wait(300);
-        await p.evaluate(() => document.querySelectorAll('.cs__btn')[2].click());
-        await wait(150);
-        r.clickThird = await p.evaluate(() => [...document.querySelectorAll('.cs__btn')].map((x) => x.getAttribute('aria-pressed')).join(' '));
-      }
       await p.close();
 
       /* Scrolled off mid-play (1.3s into the build): the complete state. */

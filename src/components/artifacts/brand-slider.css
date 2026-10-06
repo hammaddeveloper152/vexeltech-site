@@ -1,0 +1,337 @@
+/* SERVICES, BRANDING: THE BEFORE/AFTER SLIDER (BrandYouType.jsx, final15,
+   2026-10-06, the founder's approved frame A). The panel is cream; the
+   field stands left of the stage from 1280 and above it below. The stage
+   is 16:9 from 1024, where each layer sets the scene once per half; below
+   1024 a layer is one scene, 480 tall (440 under 768).
+
+   The mockup's own faces are content, not the site's type: the "before"
+   sign is a plain sans and its card a serif, because that is the picture
+   of a business with no mark. Everything else is the site's faces. The
+   listing's inks are Google's own (#202124, #3C4043, #5F6368), platform
+   colours inside a mockup of that platform (BUILD-LAW Real over drawn). */
+
+@media (min-width: 1280px) {
+  .by--slider .by__panel {
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: var(--s-xl);
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+
+  .by--slider .by__field {
+    max-width: 480px;
+  }
+}
+
+.by__slider {
+  min-width: 0;
+}
+
+/* ---- The scenes ---------------------------------------------------------- */
+
+.bs-row {
+  display: grid;
+  height: 480px;
+}
+
+.bs-row > .bs + .bs {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .bs-row {
+    height: 440px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .by--slider .ba__stage {
+    aspect-ratio: 16 / 9;
+  }
+
+  .bs-row {
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+  }
+
+  .bs-row > .bs + .bs {
+    display: block;
+  }
+
+  .by--slider .ba__layer {
+    height: 100%;
+  }
+}
+
+.bs {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+}
+
+/* The whole "before" side, desaturated (static: the filter never
+   animates). */
+.bs--before {
+  filter: saturate(0.1);
+}
+
+/* The sign band, tipped back in a 900px perspective. */
+.bs-sign {
+  position: absolute;
+  top: 56px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-sizing: border-box;
+  height: 72px;
+  padding: 0 20px;
+  border-radius: 6px;
+  transform: perspective(900px) rotateX(6deg);
+  transform-origin: 50% 100%;
+  box-shadow: 0 24px 40px rgb(0 0 0 / 25%);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.bs--before .bs-sign {
+  background: linear-gradient(90deg, #6e6e6a, #555552);
+  color: #f4f4f2; /* 4.65:1 on the lighter stop, 6.79 on the darker */
+}
+
+.bs--before .bs-sign__w {
+  font-family: Arial, 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.bs--after .bs-sign {
+  background: linear-gradient(90deg, var(--a), color-mix(in srgb, var(--a) 86%, #000));
+  color: var(--b);
+}
+
+.bs--after .bs-sign__w {
+  font-family: var(--font-quiet);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.bs-sign__w {
+  line-height: 1;
+}
+
+/* The mark: initials in a rounded square, B on A's opposite. */
+.bs-mark {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  background: var(--b);
+  color: var(--a);
+  font-family: var(--font-quiet);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.bs-mark--sign {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  font-size: 16px;
+}
+
+/* The card, turned -4deg, bottom left. */
+.bs-card {
+  position: absolute;
+  bottom: 40px;
+  left: 24px;
+  box-sizing: border-box;
+  width: 176px;
+  height: 104px;
+  padding: 16px;
+  border-radius: 8px;
+  transform: rotate(-4deg);
+  box-shadow:
+    0 2px 4px rgb(0 0 0 / 12%),
+    0 18px 40px rgb(0 0 0 / 18%);
+}
+
+.bs--before .bs-card {
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333; /* 12.6:1 */
+}
+
+.bs-card__serif {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.bs--after .bs-card {
+  background: var(--a);
+  color: var(--b);
+}
+
+.bs-mark--card {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.bs-card__nm {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  left: 16px;
+  overflow: hidden;
+  font-family: var(--font-quiet);
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* The phone, right, over the card where they meet. */
+.bs-phone {
+  position: absolute;
+  z-index: 1;
+  top: 128px;
+  right: 24px;
+}
+
+/* ---- The listing (inside the phone) -------------------------------------- */
+.bs-gbp {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  height: 100%;
+  padding: 14px 11px;
+  box-sizing: border-box;
+  background: #fff;
+  color: #202124; /* 16.1:1 */
+}
+
+.bs-gbp__src {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5f6368; /* 6.0:1 */
+}
+
+.bs-gbp__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.bs-gbp__av {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e6e6e6;
+  font-family: var(--font-quiet);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.bs-gbp__av--mark {
+  background: var(--a);
+  color: var(--b);
+}
+
+.bs-gbp__id {
+  display: grid;
+  min-width: 0;
+}
+
+.bs-gbp__n {
+  overflow-wrap: anywhere;
+  font-family: var(--font-offer);
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 700;
+}
+
+.bs-gbp__r,
+.bs-gbp__l {
+  font-family: var(--font-offer);
+  font-size: 11px;
+  line-height: 15px;
+  color: #3c4043; /* 10.4:1 */
+}
+
+.bs-gbp__stars {
+  color: #e8a10f;
+  letter-spacing: -0.04em;
+}
+
+.bs-gbp__cover {
+  display: grid;
+  place-items: center;
+  height: 64px;
+  border-radius: 6px;
+  background: #ececec;
+  font-family: var(--font-quiet);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.bs-gbp__cover--mark {
+  background: var(--a);
+  color: var(--b);
+}
+
+/* ---- Phones -------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .bs-sign {
+    top: 52px;
+    left: 16px;
+    height: 60px;
+    padding: 0 16px;
+    gap: 10px;
+  }
+
+  .bs-mark--sign {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  .bs-card {
+    bottom: 32px;
+    left: 16px;
+    width: 150px;
+    height: 90px;
+    padding: 12px;
+  }
+
+  .bs-mark--card {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .bs-card__nm {
+    right: 12px;
+    bottom: 10px;
+    left: 12px;
+  }
+
+  .bs-phone {
+    top: 132px;
+    right: 16px;
+  }
+}

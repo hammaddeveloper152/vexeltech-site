@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Header from '../../components/site/Header.jsx';
 import Hero from '../../components/home/Hero.jsx';
-import CostScenes from '../../components/artifacts/CostScenes.jsx';
+import CostsCited from '../../components/home/CostsCited.jsx';
 import WorkAccordion from '../../components/final/WorkAccordion.jsx';
 import Services from '../../components/home/Services.jsx';
 import WordBand from '../../components/home/WordBand.jsx';
@@ -123,9 +123,9 @@ export default function Home() {
           back into the bar, which is the thing the link just skipped. */}
       <main id="main" tabIndex={-1}>
         <Hero />
-        {/* What it costs you, the four scenes (the final artifacts pass,
-            2026-10-03). */}
-        <CostScenes />
+        {/* What it costs you: four cited numbers, no artifact (the
+            founder's approved frame C, final15, 2026-10-06). */}
+        <CostsCited />
         <About />
         <Services />
         {/* Recent work, between What we do and the flat-prices band: the
@@ -149,7 +149,7 @@ export default function Home() {
             (VEXELTECH-COPY.md, COPY V3). */}
         {/* The closing call, before the form. COPY V3, 2026-10-01. */}
         {/* THE LOOP CLOSES (the founder's final14, 2026-10-06): the phone
-            from the hero and from What it costs you, picked up. */}
+            from the hero, picked up. */}
         <CallBand
           heading="Which one is costing you most?"
           note="Fifteen minutes on the phone and a written number. Usually it's not the expensive one."

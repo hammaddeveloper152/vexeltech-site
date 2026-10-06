@@ -1,8 +1,10 @@
 
 /* ==========================================================================
-   THE ARTIFACTS (the final artifacts pass, 2026-10-03, the founder). Four
-   looping objects, one per section: CostScenes (home), BrandYouType and
-   SearchToCall (/services), OneTeam and WeekStrip (About). The loop is loop.js.
+   THE ARTIFACTS (the final artifacts pass, 2026-10-03, the founder). The
+   looping objects on About (OneTeam, WeekStrip; loop.js) and the field of
+   the Branding slider on /services. Since final15 (2026-10-06) Branding
+   and Marketing are before/after sliders (BeforeAfter.jsx,
+   brand-slider.css, search-slider.css) and home's scenes are gone.
 
    One language for all four: the site's faces, 1px steel hairlines, 6px
    radii, the palette, no icons, no illustrations. Every position is a
@@ -12,122 +14,14 @@
    steel is 2.4:1 there and fails 4.5:1.
    ========================================================================== */
 
-/* ---- Shared ------------------------------------------------------------ */
+/* ==== Shared ============================================================ */
 
-.cs-caret {
-  display: inline-block;
-  width: 1px;
-  height: 16px;
-  margin-left: 2px;
-  vertical-align: middle;
-  background: var(--c-bone);
-}
-
-/* ==== HOME: THE FOUR SCENES (CostScenes.jsx) ============================ */
-.cs__body {
-  display: grid;
-  gap: var(--s-xl);
-}
-
-@media (min-width: 1024px) {
-  .cs__body {
-    grid-template-columns: 560px minmax(0, 1fr);
-    gap: var(--s-2xl);
-    align-items: center;
-  }
-}
-
-.cs-panel {
-  position: relative;
-  width: 100%;
-  height: 300px;
-  overflow: hidden;
-  clip-path: inset(0 round 6px);
-  border: 1px solid var(--c-steel);
-  border-radius: 6px;
-  background: var(--c-ground-mid);
-  color: var(--c-bone);
-}
-
-@media (min-width: 1024px) {
-  .cs-panel {
-    width: 560px;
-    height: 400px;
-  }
-}
-
-.wk__cap,
-.sc__cap {
+.wk__cap {
   margin: 0;
   font-family: var(--font-mono);
   font-size: 11px;
   line-height: 16px;
   letter-spacing: 0.02em;
-}
-
-/* Scene 3: the missed call. */
-
-/* Greyed: the number takes the secondary ink, a state, not a fade. */
-
-/* Scene 4: no name on the work. */
-
-/* The headlines. */
-.cs__rows {
-  display: grid;
-  gap: var(--s-lg);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.cs__t {
-  margin: 0;
-}
-
-.cs__btn {
-  display: block;
-  min-height: 48px;
-  margin: 0;
-  padding: 6px 0;
-  border: 0;
-  background: none;
-  font-family: var(--font-quiet);
-  font-size: 32px;
-  line-height: 1.15;
-  font-weight: var(--t-weight-quiet);
-  text-align: left;
-  color: var(--c-steel-lift); /* 7.6:1 on the dark ground */
-  cursor: pointer;
-  transition: transform var(--d-press) var(--ease-reveal);
-}
-
-.cs__row[data-on='true'] .cs__btn {
-  color: var(--c-bone); /* 16.4:1 */
-}
-
-.cs__btn:active {
-  transform: scale(0.97);
-}
-
-.cs__btn:focus-visible {
-  outline: var(--focus-ring) solid var(--c-focus);
-  outline-offset: var(--focus-offset);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .cs__btn:hover {
-    color: var(--c-bone);
-  }
-}
-
-.cs__b {
-  max-width: 46ch;
-  margin: var(--s-xs) 0 0;
-  font-family: var(--font-offer);
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--c-steel-lift);
-  text-wrap: pretty;
 }
 
 /* ==== THE LEAVE: ARTIFACTS REST FULL (loop.js, 2026-10-06) ============= */
@@ -138,7 +32,6 @@
    the middle, and it fades in, before the build runs as made. The frame of
    each stage stays. `data-leaving` is only set while it runs. The
    text-back's rule is in proof.css, with the band. */
-.by[data-leaving] .by__stage > *,
 .ot__stage[data-leaving] > *,
 .wk__track[data-leaving] > * {
   /* The soft start (2026-10-06): a crossfade through the first frame, in
@@ -154,7 +47,7 @@
 }
 
 /* The cream panel: the artifact's own ground inside the dark Branding
-   section, as the stage before it had. */
+   section. Its columns from 1024 are brand-slider.css's. */
 .by__panel {
   display: grid;
   gap: var(--s-lg);
@@ -167,16 +60,6 @@
 @media (min-width: 768px) {
   .by__panel {
     padding: var(--s-lg);
-  }
-}
-
-@media (min-width: 1024px) {
-  .by__panel {
-    grid-template-columns: 36fr 64fr;
-    gap: var(--s-xl);
-    /* 680 since final9 (2026-10-05): the guideline sheet and the post, and
-       the delivery row, under the three surfaces. It was 520. */
-    height: 680px;
   }
 }
 
@@ -226,210 +109,6 @@
   outline: none;
   padding-bottom: 9px;
   border-bottom: 2px solid var(--c-accent-draw-light);
-}
-
-.by__stage {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-lg);
-  min-width: 0;
-  padding: var(--s-lg);
-  overflow: hidden;
-  clip-path: inset(0 round 6px);
-  border: 1px solid var(--c-steel);
-  border-radius: 6px;
-}
-
-.by__mark {
-  display: inline-grid;
-  place-items: center;
-  flex: none;
-  width: 96px;
-  height: 96px;
-  border-radius: 20px;
-  font-family: var(--font-quiet);
-  font-size: 40px;
-  line-height: 1;
-  font-weight: var(--t-weight-quiet);
-  letter-spacing: 0.02em;
-}
-/* The drawn mark (final9): a 2px stroke in A, a fill layer under the
-   initials, and the initials clipped by the square so they rise into it. */
-
-.by__pal {
-  display: flex;
-  gap: var(--s-sm);
-  margin: 0;
-  /* The strip's edge: 2px under the swatches in the discipline's ink
-     (2026-10-05). It is inside the clip, so it draws with the strip. */
-  padding: 0 0 var(--s-sm);
-  border-bottom: 2px solid var(--disc-cream, transparent);
-  list-style: none;
-}
-
-.by__sw {
-  display: grid;
-  gap: 6px;
-}
-
-.by__chip {
-  display: block;
-  width: 72px;
-  height: 48px;
-  border: 1px solid rgb(0 0 0 / 8%);
-  border-radius: 6px;
-}
-
-.by__hex {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  color: var(--c-steel); /* 7.2:1 */
-}
-
-/* Paper on cream, as the stage before it set it. */
-
-/* ---- The second applications row and the delivery row (final9) ---- */
-
-/* The guideline sheet: 240 x 160, white paper on the cream stage. */
-.by__guide {
-  position: relative;
-  display: block;
-  flex: none;
-  box-sizing: border-box;
-  width: 240px;
-  height: 160px;
-  border: 1px solid rgb(0 0 0 / 8%);
-  border-radius: 6px;
-  background: var(--c-shop-white);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
-}
-
-.by__guide-k {
-  position: absolute;
-  left: 14px;
-  top: 10px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  letter-spacing: 0.04em;
-  color: var(--c-steel); /* 8.03:1 on white */
-}
-
-/* The clear-space box: 96 square at (14, 44), the mark 56 square inside it
-   with 20px clear on every side, ticks on the top and left gaps. */
-.by__guide-lines {
-  position: absolute;
-  left: 14px;
-  top: 44px;
-  width: 96px;
-  height: 96px;
-  overflow: visible;
-}
-
-.by__guide-lines rect,
-.by__guide-lines path {
-  fill: none;
-  stroke: var(--c-steel);
-  stroke-width: 1px;
-  stroke-dasharray: 100;
-  vector-effect: non-scaling-stroke;
-}
-
-.by__mark--guide {
-  position: absolute;
-  left: 34px;
-  top: 64px;
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
-  font-size: 22px;
-}
-
-/* The type scale: "Aa" at 28 and 14 in the display face. */
-.by__aa {
-  position: absolute;
-  left: 132px;
-  top: 52px;
-  display: grid;
-  gap: 8px;
-  font-family: var(--font-quiet);
-  font-weight: var(--t-weight-quiet);
-  line-height: 1;
-}
-
-.by__aa-l {
-  font-size: 28px;
-}
-
-.by__aa-s {
-  font-size: 14px;
-}
-/* The social post: 160 square in A, the wordmark small in B top-left, a
-   3px B rule across its middle. */
-
-/* The delivery row: on the stage's bottom edge, four pills in the neutral
-   with a 1px steel stroke. */
-.by__files {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-sm);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.by__file {
-  padding: 4px 10px;
-  border: 1px solid var(--c-steel);
-  border-radius: 999px;
-  background: #f7f5ef;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  letter-spacing: 0.04em;
-  color: var(--c-steel); /* 7.6:1 on the neutral */
-}
-
-/* Under the panel, on the dark section: steel-lift, not the brief's steel
-   (2.4:1 on the dark ground). */
-.by__cap {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  letter-spacing: 0.02em;
-  color: var(--c-steel-lift); /* 7.6:1 */
-}
-
-/* ==== SERVICES, MARKETING: FROM SEARCH TO CALL (SearchToCall.jsx) ====== */
-.sc {
-  display: grid;
-  gap: var(--s-md);
-  margin: 0;
-}
-
-/* Four frames in 2 x 2 from 1024 (final9): A and A2 above, B and C below,
-   so the feed card keeps its 320 x 300. It was three across, 380 tall. */
-
-/* The organic rows' line and URL (final9): steel-lift on the dark frame,
-   where the brief's steel is 2.4:1. */
-
-/* The ring: 5px outside the button, drawn by stroke-dashoffset. */
-
-/* C: the call card, and the lead card under it (final9). */
-
-/* ---- A2, the feed card (final9) ---- */
-
-/* The image area: the discipline colour at 20% over the card. */
-
-/* "Send message": a text button in the colour. Its flash is a tint behind
-   the words, so the words themselves never dim. */
-
-.sc__cap {
-  max-width: 90ch;
-  color: var(--c-steel-lift); /* 7.6:1 */
 }
 
 /* ==== ABOUT: FOUR BUSINESS DAYS, THE RAIL (WeekStrip.jsx) ============== */

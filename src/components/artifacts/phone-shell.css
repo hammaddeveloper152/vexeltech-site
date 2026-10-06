@@ -22,7 +22,7 @@
 .phs__screen {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 390 / 844;
+  aspect-ratio: var(--phs-ratio, 390 / 844);
   border-radius: calc(34px * var(--phs-k));
   background: var(--phs-screen);
   /* The screen is a clipping context for whatever plays on it. */

@@ -1,0 +1,114 @@
+/* HOME, WHAT IT COSTS YOU: THE CITED NUMBERS (CostsCited.jsx, final15).
+   Inks on the cell (white at 4% over the drift, about #151517): figure and
+   line bone (15.13:1), note bone at 85% (about 11), source steel-lift
+   (7.00), the labels in their colours (yellow 9.56, lilac 8.84, coral
+   6.07, mint 5.85). */
+.cc__lead {
+  color: var(--c-steel-lift); /* the brief's steel; steel is 2.4:1 here */
+}
+
+.cc__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 1024px) {
+  .cc__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.cc__cell {
+  position: relative;
+  display: grid;
+  align-content: start;
+  min-width: 0;
+  padding: 28px 24px 64px;
+  border-top: 3px solid var(--cc);
+  background: rgb(255 255 255 / 4%);
+}
+
+@media (min-width: 1024px) {
+  .cc__cell {
+    min-height: 330px;
+  }
+}
+
+@media (max-width: 767px) {
+  .cc__cell {
+    padding: 20px 14px 72px;
+  }
+}
+
+.cc__k,
+.cc__src {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+}
+
+.cc__k {
+  text-transform: uppercase;
+  color: var(--cc);
+}
+
+.cc__n {
+  margin: 6px 0 18px;
+  font-family: var(--font-quiet);
+  font-size: 72px;
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-bone);
+}
+
+.cc__h {
+  margin: 0 0 10px;
+  font-family: var(--font-quiet);
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-bone);
+  text-wrap: pretty;
+}
+
+.cc__p {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--c-body-dark);
+  text-wrap: pretty;
+}
+
+.cc__src {
+  position: absolute;
+  right: 24px;
+  bottom: 20px;
+  left: 24px;
+  letter-spacing: 0.02em;
+  color: var(--c-steel-lift);
+}
+
+@media (max-width: 767px) {
+  .cc__n {
+    font-size: 48px;
+  }
+
+  .cc__h {
+    font-size: 17px;
+    line-height: 23px;
+  }
+
+  .cc__src {
+    right: 14px;
+    left: 14px;
+  }
+}

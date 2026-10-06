@@ -1,0 +1,216 @@
+/* THE BEFORE/AFTER SLIDER (BeforeAfter.jsx, final15, 2026-10-06).
+
+   `--x` is the divider's position in percent, written by the component.
+   The after layer is cut by clip-path and the seam moves by translateX:
+   nothing else changes while it moves. Tones: `cream` (Branding, the stage
+   is cream inside the dark section) and `dark` (Marketing, on the band). */
+.ba {
+  display: grid;
+  gap: var(--s-md);
+  min-width: 0;
+  margin: 0;
+}
+
+.ba__stage {
+  position: relative;
+  overflow: hidden;
+  clip-path: inset(0 round 6px);
+  border-radius: 6px;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: ew-resize;
+}
+
+.ba--cream .ba__stage {
+  background: var(--c-cream);
+  color: var(--c-asphalt);
+}
+
+/* The cream stage's 1px hairline on its cream panel, over both layers. */
+.ba--cream .ba__stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border: 1px solid rgb(11 11 13 / 14%);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.ba--dark .ba__stage {
+  background: var(--c-ground-mid);
+  color: var(--c-bone);
+}
+
+.ba__layer {
+  position: relative;
+  min-width: 0;
+  isolation: isolate;
+}
+
+/* Over the before layer, its "Before" label included. */
+.ba__layer--after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  clip-path: inset(0 0 0 calc(var(--x) * 1%));
+}
+
+.ba--cream .ba__layer--after {
+  background: var(--c-cream);
+}
+
+.ba--dark .ba__layer--after {
+  background: var(--c-ground-mid);
+}
+
+/* The labels: mono 11px. "Before" stands at the stage's top left; "After"
+   rides the seam, 24px right of the divider. */
+.ba__tag {
+  position: absolute;
+  top: 20px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.ba__tag--before {
+  left: 24px;
+}
+
+.ba__tag--after {
+  left: 24px;
+}
+
+.ba--cream .ba__tag--before {
+  color: var(--c-steel); /* 7.20:1 on cream */
+}
+
+.ba--dark .ba__tag--before {
+  color: var(--c-steel-lift); /* 7.30:1 on ground-mid */
+}
+
+.ba--cream .ba__tag--after {
+  color: var(--a, var(--c-asphalt)); /* the brand set's A, 9.68 to 13.18 on cream */
+}
+
+.ba--dark .ba__tag--after {
+  color: var(--c-accent-text-dark); /* 10.12:1 on ground-mid */
+}
+
+/* The seam: a full-stage box moved by its own width's percent. */
+.ba__seam {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  transform: translateX(calc(var(--x) * 1%));
+  pointer-events: none;
+}
+
+.ba__line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -2px;
+  width: 4px;
+  background: var(--c-accent-ground);
+}
+
+/* The handle: 44px painted, 48px to the touch (BUILD-LAW Touch), at
+   mid-height. Two asphalt arrowheads drawn by borders, 9.46:1 on the
+   yellow. */
+.ba__handle {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 48px;
+  height: 48px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: auto;
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+.ba__handle::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  background: var(--c-accent-ground);
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.ba__stage[data-drag='true'] .ba__handle::before {
+  transform: scale(0.97);
+}
+
+.ba__grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+}
+
+.ba__grip::before,
+.ba__grip::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+.ba__grip::before {
+  left: 0;
+  border-right: 7px solid var(--c-asphalt);
+}
+
+.ba__grip::after {
+  right: 0;
+  border-left: 7px solid var(--c-asphalt);
+}
+
+/* Focus: a ring outside the handle in the ground's own focus ink; asphalt
+   on cream (15.75:1), bone on the dark (16.3:1). Not the hover treatment,
+   which is the cursor alone. */
+.ba__handle:focus {
+  outline: none;
+}
+
+.ba__handle:focus-visible {
+  outline: var(--focus-ring) solid var(--c-bone);
+  outline-offset: 2px;
+}
+
+.ba--cream .ba__handle:focus-visible {
+  outline-color: var(--c-asphalt);
+}
+
+/* The caption under the stage: mono 11px. Branding's sits on its cream
+   panel and takes steel (7.20:1); Marketing's sits on the dark band and
+   takes steel-lift (7.30:1 on ground-mid), since steel is 2.4:1 there. */
+.ba__cap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-xs) var(--s-lg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-steel-lift);
+}
+
+.ba--cream .ba__cap {
+  color: var(--c-steel);
+}

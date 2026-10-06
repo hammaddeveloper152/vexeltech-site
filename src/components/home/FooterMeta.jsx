@@ -1,6 +1,7 @@
 import React from 'react';
 import { company } from '../../content/company.js';
 import { Link } from 'react-router-dom';
+import { SOURCES } from '../../content/costs.js';
 import { IconFacebook, IconInstagram, IconLinkedIn } from '../site/Icons.jsx';
 import { SOCIAL_URLS } from '../../content/socials.js';
 import './FooterForm.css';
@@ -92,6 +93,17 @@ export default function FooterMeta() {
           <Link className="foot__page" to="/terms-of-service">
             Terms
           </Link>
+          {/* SOURCES (the founder's final15, 2026-10-06): the pages home's
+              What it costs you cites, mono 11px, in new tabs, in the
+              page links' 48px box. content/costs.js. */}
+          <span className="foot__sources">
+            <span className="foot__src-k">Sources</span>
+            {SOURCES.map(({ label, href }) => (
+              <a className="foot__page foot__src" key={href} href={href} target="_blank" rel="noopener noreferrer">
+                {label}
+              </a>
+            ))}
+          </span>
         </div>
       </div>
 

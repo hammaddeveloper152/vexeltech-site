@@ -29,19 +29,23 @@ for (const name of NAMES) {
       const [x, y] = [L(a), L(c)].sort((m, n) => n - m);
       return +((x + 0.05) / (y + 0.05)).toFixed(2);
     };
-    const cs = (sel) => getComputedStyle(document.querySelector(sel));
+    /* The after layer of the slider (final15, 2026-10-06). */
+    const cs = (sel) => getComputedStyle(document.querySelector(`#branding .ba__layer--after ${sel}`));
     const cream = rgb(getComputedStyle(document.querySelector('.by__panel')).backgroundColor);
-    const sign = cs('.by__sign');
-    const mark = cs('.by__mark');
-    const tile = cs('.by__tile');
-    const card = cs('.by__card');
+    const panel = getComputedStyle(document.querySelector('.by__panel'));
+    const A = rgb(panel.getPropertyValue('--a').trim().replace(/^#(..)(..)(..)$/, (m, r, g, bl) => `rgb(${parseInt(r, 16)},${parseInt(g, 16)},${parseInt(bl, 16)})`));
+    const dark = A.map((v) => v * 0.86);
+    const word = rgb(cs('.bs-sign').color);
+    const mark = cs('.bs-mark--sign');
+    const av = cs('.bs-gbp__av--mark');
     return {
-      a: sign.backgroundColor,
-      wordOnStage: cr(rgb(cs('.by__word').color), cream),
-      signWord: cr(rgb(sign.color), rgb(sign.backgroundColor)),
+      a: panel.getPropertyValue('--a').trim(),
+      signWord: cr(word, A),
+      signWordDark: cr(word, dark),
       markInitials: cr(rgb(mark.color), rgb(mark.backgroundColor)),
-      tileInitials: cr(rgb(tile.color), rgb(tile.backgroundColor)),
-      cardName: cr(rgb(cs('.by__card-n').color), rgb(card.backgroundColor)),
+      cardName: cr(rgb(cs('.bs-card').color), A),
+      avatar: cr(rgb(av.color), rgb(av.backgroundColor)),
+      afterTag: cr(A, cream),
     };
   });
   if (!seen[r.a]) seen[r.a] = { name, ...r };
@@ -49,5 +53,5 @@ for (const name of NAMES) {
 await b.close();
 const sets = Object.values(seen);
 console.log(JSON.stringify(sets, null, 1));
-const low = Math.min(...sets.flatMap((s) => [s.wordOnStage, s.signWord, s.markInitials, s.tileInitials, s.cardName]));
+const low = Math.min(...sets.flatMap((s) => [s.signWord, s.signWordDark, s.markInitials, s.cardName, s.avatar, s.afterTag]));
 console.log(`${sets.length} of 5 sets seen; lowest pair ${low}:1 ${low >= 4.5 ? 'PASS' : 'FAIL'}`);

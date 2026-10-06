@@ -255,6 +255,28 @@
   color: inherit;
 }
 
+/* SOURCES (final15, 2026-10-06): the cited pages, mono 11px in the legal
+   row's ink, each link in the page links' box. The span of the label and
+   the links wraps as one group. */
+.foot__legal .foot__sources {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--s-xs);
+  margin-right: 0;
+}
+
+.foot__src-k {
+  margin-right: var(--s-xs);
+  font-size: 11px;
+}
+
+.foot__legal .foot__src {
+  font-size: 11px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* Hover: the page links' block. Four classes, so it outranks the light
    page's colour for these links (light.css). */
 @media (hover: hover) and (pointer: fine) {
