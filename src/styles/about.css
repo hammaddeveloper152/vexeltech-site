@@ -277,8 +277,16 @@ main#main section.vt.ab.ab:is(.ab--d1, .ab--cream, .ns) {
     min-height: 620px;
   }
 
-  /* 44px to 1279, 56 from 1280 (final38, the founder): at 1024 the
-     columns are narrow enough that 56px titles outgrew the minimums. */
+  /* 38px to 1099 (final40: 40 still stood step 01 over step 02 at
+     exactly 1024, the founder chose 38), 44 to 1279 (final38), 56 from
+     1280: in the narrow columns from 1024 the 56px titles outgrew the
+     minimums. */
+  .ns__t {
+    font-size: 38px;
+  }
+}
+
+@media (min-width: 1100px) {
   .ns__t {
     font-size: 44px;
   }

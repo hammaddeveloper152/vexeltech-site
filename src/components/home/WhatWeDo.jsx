@@ -25,45 +25,45 @@ import './what-we-do.css';
    screen reader reads the whole answer from the first paint. Reduced
    motion: filled, no caret, nothing moves. */
 
-/* COPY V5 (final37, 2026-10-08, the founder): the lead, every answer and
-   every fact are V5's, full sentences in the owner's words; the questions
-   are V4.2's. The "We do" label before the answer is gone (the founder's
+/* COPY V5.2 (final40, 2026-10-08, the founder): the lead and every
+   question, answer and fact; before it, V5's answers under V4.2's
+   questions. The "We do" label before the answer is gone (the founder's
    answer, final37): a full sentence reads alone. Cards, layout and motion
    unchanged; the cards grow to fit, over their min-height. */
 const CARDS = [
   {
     id: 'branding',
     name: 'Branding',
-    question: 'Need a look that makes people trust you before they call?',
+    question: 'Does your business look as established as it is?',
     answer:
-      "You need a look that makes people trust you before they've spoken to you. We design the logo, the colours and everything that carries them, so the van, the invoice and the Instagram page all look like the same business.",
-    fact: 'Ready in one to two business days, and every file is yours to keep.',
+      'We design the identity your customers judge you by before they ever speak to you: the mark, the colours, the type, and the way they carry across your signage, your invoices and your social profiles, so every touchpoint looks like one business.',
+    fact: 'Delivered in one to two business days. Every file is yours.',
     link: 'See branding',
   },
   {
     id: 'websites',
     name: 'Websites',
-    question: 'Need a website that brings in calls and bookings, not just visits?',
+    question: 'Is your website bringing in enquiries, or only visitors?',
     answer:
-      'You need a website that gets you calls and bookings, not compliments. We build six pages around the way your customers actually decide, on their phones, usually at night.',
-    fact: 'Live in four business days, on your own domain.',
+      'We build a six-page site around the way your customers decide, which is usually on a phone and often outside business hours. Every page is there to earn a call, a booking or a quote request.',
+    fact: 'Live in four business days, on your domain, in your name.',
     link: 'See websites',
   },
   {
     id: 'marketing',
     name: 'Marketing',
-    question: 'Need your name in front of more people, above your competitors?',
+    question: 'Are you present everywhere your customers look?',
     answer:
-      'You need to show up wherever your customers are looking: Google, the map, Instagram, Facebook, and now the answer an AI gives when someone asks who to call. We run all of it as one plan and tell you every month what each enquiry cost.',
-    fact: "Month to month, because we'd rather earn next month than sign you up for it.",
+      'Search, maps, Instagram, Facebook, review sites, and now the answer an AI gives when someone asks who to call. We run all of it as one plan and report every month what each enquiry cost you.',
+    fact: 'Month to month. We grow when you grow.',
     link: 'See marketing',
   },
   {
     id: 'automation',
     name: 'Automation',
-    question: 'Want the phone answered and the jobs booked while you are on the job?',
+    question: "What happens to the calls you miss while you're working?",
     answer:
-      "You're missing calls because you're working. We set up an assistant that answers in your name, books the job into your calendar and keeps the quote, the invoice and the review request moving without you.",
+      'We set up an assistant that answers in your name, books the job into your calendar and keeps the quote, the invoice and the review request moving. You read the summary in the morning.',
     fact: 'Trained on your services and prices. Running in about two weeks.',
     link: 'See automation',
   },
@@ -154,8 +154,8 @@ export default function WhatWeDo() {
             What we do
           </h2>
           <p className="services__lead">
-            Most of our clients come to us for one of these four. We&apos;ll tell you on the first call which one is
-            actually costing you customers, even if it&apos;s not the one you asked about.
+            Most clients come to us for one of these four. On the first call we&apos;ll tell you which one is
+            actually costing you customers, even if it isn&apos;t the one you asked about.
           </p>
         </div>
         <ul className="wwd__grid">

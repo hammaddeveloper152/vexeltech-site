@@ -31,7 +31,7 @@ export const COSTS = [
     label: 'Ad spend',
     figure: '$70',
     line: 'average cost per lead on Google search, US.',
-    note: 'Most owners paying it could not tell you their own number.',
+    note: 'Most businesses paying it could not tell you their own number.', // final40
     source: 'WordStream, Google Ads Benchmarks 2025 ($70.11)',
     href: 'https://www.wordstream.com/blog/2025-google-ads-benchmarks',
   },

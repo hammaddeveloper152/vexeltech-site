@@ -44,7 +44,7 @@ import "./story.css";
    never hides content", allows no opacity start below 1. */
 const BEATS = [
   ['We started in paid media.', 'Google and Meta campaigns for businesses, month after month.'], // final38
-  ['Good ads, lost on bad pages.', 'People clicked and left. Calls rang out while the owner was on a job.'],
+  ['Good ads, lost on bad pages.', 'People clicked and left. Calls rang out while the business was on a job.'], // final40
   ['So we built the pages.', 'Then the whole site. Then the follow-up that runs after the call.'],
   [
     /* COPY V5 (final37, 2026-10-08, the founder). */

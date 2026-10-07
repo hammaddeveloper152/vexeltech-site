@@ -46,8 +46,9 @@
        AroundLines, and the map was never built.
 
      - THE AUDIENCE (final38, 2026-10-08, the founder; BUILD-LAW Truth):
-       small business(es), owner-run, one to fifty, SMB(s) and local
-       business(es), any case, hyphenated or open, as the audience. Checked
+       small business(es), owner-run, one to fifty, SMB(s), local
+       business(es), and since final40 owner and owners (not ownership),
+       any case, hyphenated or open, as the audience. Checked
        on every route, legal pages too, in the whole body's text (the
        footer included), every title, description, Open Graph and Twitter
        tag, every alt text, and every JSON-LD block. One exception: the
@@ -93,7 +94,7 @@ const SELF_OK_ROUTE = {
   '/': ['of calls to trade and home businesses'],
   '/services': ['First in the map pack'],
 };
-const AUDIENCE = /\b(small[- ]business(es)?|owner[- ]run|one to fifty|SMBs?|local business(es)?)\b/gi;
+const AUDIENCE = /\b(small[- ]business(es)?|owner[- ]run|one to fifty|SMBs?|local business(es)?|owners?)\b/gi;
 const AUDIENCE_OK_ROUTE = { '/services': ['Local business · Open'] };
 const audienceHits = (t, route) =>
   [...(AUDIENCE_OK_ROUTE[route] || []).reduce((x, ok) => x.replaceAll(ok, ''), t).matchAll(AUDIENCE)].map((m) => m[0]);

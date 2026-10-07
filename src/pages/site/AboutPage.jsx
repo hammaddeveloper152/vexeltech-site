@@ -81,8 +81,8 @@ export default function AboutPage() {
           <p className="ab__lead ab__body">
             A logo from one studio. A website from another. Advertising from a third. Software for the phone
             from a fourth. Four invoices, four teams who have never met, and no one whose job is the whole
-            business. The owner holds it together after hours. We started Vexel because that was the part no
-            one was offering.
+            business. You hold it together after hours. We started Vexel because that was the part no one
+            was offering.
           </p>
         </div>
       </section>
