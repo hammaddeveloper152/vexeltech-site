@@ -1,162 +1,172 @@
+import { ENTITY } from '../../content/entity.js';
+
 /* THE LEGAL PAGES' COPY, moved verbatim from the legacy SimplePage.jsx on
    2026-09-25 (the founder's legacy rebuild). Not one clause is edited. What
    came out: the emoji each highlight carried (the site has one icon set, and
    an emoji is not in it).
 
-   THE VEXEL SCALES LLC REFERENCES STAY, as they did in the legacy file: here
-   the name is the data controller and the counterparty to a binding
-   agreement, not attribution. Removing it is a legal question, not a design
-   one, and it is flagged rather than resolved (CLAUDE.md).
+   THE ENTITY IS content/entity.js SINCE THE LAUNCH GATE (2026-10-07, the
+   founder): the legal entity name, state of formation, file number and
+   geographic address are bracketed placeholders there until the founder
+   supplies them. The "Vexel Scales LLC", "Texas limited liability company"
+   and "Richmond, TX 77406" strings that stood here are gone.
 
    WHAT IS UNVERIFIED AND LEFT AS WRITTEN, as before: the $150 hourly
    cancellation rate, the 50/50 milestone split, the 1.5% monthly late fee and
    the phone number (385) 284-3265, which appears nowhere else on the site. */
 
+/* THE PRIVACY POLICY, REWRITTEN FOR THE LAUNCH GATE (2026-10-07, the
+   founder's item 17). It now states what the site actually does: the form
+   posts to Formspree, Hostinger hosts the site and keeps its logs, and the
+   site sets no cookies. The 2026-08-22 text described a newsletter,
+   analytics cookies, Netlify, Google Analytics and CRMs the site does not
+   use. Kept from the founder's text: the four highlights, the retention
+   periods (24 months, project plus 36 months, 7 years), the 30-day
+   response, the CCPA and GDPR rights and the children's clause. Every fact
+   only the founder can give is a bracketed placeholder, and each is listed
+   in .measure/audit/launch-gate.md. */
+const E = ENTITY;
 export const PRIVACY = {
   badge: 'LEGAL & DATA PROTECTION',
   title: 'Privacy Policy',
-  effective: 'Effective Date: August 22, 2026',
-  updated: 'Last Updated: August 22, 2026',
-  subtitle: 'How VexelTech Solutions (a brand of Vexel Scales LLC) collects, uses, and protects your personal information.',
-  intro: 'VexelTech Solutions ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website vexeltechsolutions.com, contact us through our forms, or engage us for services. Please read this policy carefully. If you disagree with its terms, please discontinue use of our site.',
+  effective: 'Effective Date: [EFFECTIVE DATE]',
+  updated: 'Last Updated: [EFFECTIVE DATE]',
+  subtitle: `How ${E.trading} (a brand of ${E.name}) collects, uses, and protects your personal information.`,
+  intro: `${E.trading} ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains what we collect when you visit vexeltechsolutions.com or send us the contact form, why, who receives it, how long we keep it, and the rights you have over it.`,
   highlights: [
     { title: 'Never Sold', desc: 'We do not sell, rent, trade, or monetize your personal data to any third party under any circumstances.' },
     { title: 'Purpose-Limited', desc: 'Data is collected only to respond to your inquiry, scope your project, and deliver contracted services.' },
-    { title: 'TLS Encrypted', desc: 'All data transmitted to and from our website and staging environments is protected via HTTPS/TLS encryption.' },
-    { title: 'Your Rights', desc: 'You may request access, correction, or deletion of your personal data at any time by contacting us directly.' }
+    { title: 'TLS Encrypted', desc: 'All data transmitted to and from our website is protected via HTTPS/TLS encryption.' },
+    { title: 'Your Rights', desc: 'You may request access, correction, or deletion of your personal data at any time by contacting us directly.' },
   ],
   sections: [
     {
       id: '1',
-      title: '1. Information We Collect',
+      title: '1. Who We Are (the Controller)',
       content: [
         {
-          sub: 'a. Information You Provide Directly',
-          body: 'When you submit a contact form, request a consultation, book a discovery call, subscribe to our newsletter, or engage us for services, we may collect: your full name, email address, phone number, company name, job title, website URL, project description, budget range, and any files or documents you choose to share. We also collect information you provide during the course of an active project engagement, including credentials, API keys, brand assets, and business documentation necessary to fulfill services.'
+          sub: 'Data Controller',
+          body: `The controller of your personal information is ${E.name}, trading as ${E.trading}, formed in ${E.state} (file number ${E.fileNumber}), of ${E.address}. Contact us about anything in this policy at ${E.email} or ${E.phone}.`,
         },
-        {
-          sub: 'b. Information Collected Automatically',
-          body: 'When you visit our website, our servers and analytics tools may automatically collect: IP address, browser type and version, operating system, referring URLs, pages visited, time spent on pages, geographic location (country/region level only), and device type. This information is collected through standard web server logs and may include cookies or similar tracking technologies.'
-        },
-        {
-          sub: 'c. Cookies and Tracking Technologies',
-          body: 'We use essential cookies to ensure our website functions properly and analytics cookies to understand how visitors interact with our site. We do not use advertising cookies or behavioral tracking cookies. You may instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, some portions of our website may not function properly. We do not respond to "Do Not Track" browser signals at this time.'
-        }
-      ]
+      ],
     },
     {
       id: '2',
-      title: '2. How We Use Your Information',
+      title: '2. Information We Collect',
       content: [
         {
-          sub: 'Purposes of Processing',
-          body: 'We use the information we collect to: (1) respond to your inquiries and fulfill service agreements; (2) schedule and conduct consultation calls; (3) prepare project scopes, proposals, and technical specifications; (4) communicate project milestones, deliverables, and updates; (5) send transactional emails related to your project or account; (6) send our newsletter or educational content if you have opted in; (7) improve our website, services, and customer experience; (8) comply with legal obligations; and (9) enforce our Terms of Service and protect our legal rights.'
-        }
-      ]
+          sub: 'a. What You Send Us Through the Form',
+          body: 'Your name, phone number, email address and message. On the contact page, also the services you tick and the budget band you choose, if you choose one. If you arrived from a link that carried campaign tags (utm_source, utm_medium, utm_campaign, utm_content), those tags are sent with the form so we know which link brought you. Nothing is sent until you press Send.',
+        },
+        {
+          sub: 'b. Server Logs',
+          body: 'When you load a page, the server that hosts the site records a standard log line: your IP address, the date and time, the page requested, your browser and device type as your browser reports them, and the page that linked to us.',
+        },
+        {
+          sub: 'c. Cookies',
+          body: 'The site sets no cookies. The campaign tags in (a) are held in your browser\'s session storage for the length of the visit, so they reach the form from any page, and are cleared when you close the tab. [ANALYTICS: if Plausible Analytics or the Meta Pixel is turned on, describe it here before launch, or delete this sentence.]',
+        },
+      ],
     },
     {
       id: '3',
-      title: '3. Legal Basis for Processing (GDPR)',
+      title: '3. Why We Use It, and the Lawful Basis',
       content: [
         {
-          sub: 'For Users in the European Economic Area',
-          body: 'If you are located in the EEA, our legal bases for processing your personal data are: (1) Contract Performance: processing necessary to deliver services you have engaged us for; (2) Legitimate Interests: processing necessary for our legitimate business interests such as improving our website and services, provided those interests are not overridden by your data protection rights; (3) Consent: where you have provided explicit consent, such as subscribing to our marketing communications; and (4) Legal Obligation: processing required to comply with applicable law.'
-        }
-      ]
+          sub: 'Purposes and Lawful Basis',
+          body: 'We use form submissions to answer you, to prepare a quote or proposal, and to deliver the work if you engage us. The lawful basis is taking steps at your request before entering into a contract, and performing the contract once you have. We use server logs to keep the site running and secure, which is our legitimate interest in operating a safe website; we do not use them to identify you. We keep billing records because the law requires it (legal obligation).',
+        },
+      ],
     },
     {
       id: '4',
-      title: '4. Email Communications & CAN-SPAM Compliance',
+      title: '4. Who Receives It',
       content: [
         {
-          sub: 'Marketing Emails',
-          body: 'If you subscribe to our email newsletter or marketing communications, we will send you periodic emails containing educational content, company updates, and service information. In accordance with the CAN-SPAM Act: (1) we identify all commercial messages clearly as advertisements; (2) we include our physical mailing address (Vexel Scales LLC, Richmond, TX 77406, USA) in every email; (3) every email includes a clear and functioning unsubscribe mechanism; and (4) we honor all unsubscribe requests within 10 business days. You can unsubscribe at any time by clicking the unsubscribe link in any email or by emailing info@vexeltechsolutions.com with "Unsubscribe" in the subject line.'
-        }
-      ]
+          sub: 'Recipients',
+          body: 'Formspree receives the form submission and delivers it to our inbox at info@vexeltechsolutions.com; it processes the submission on our behalf and under its own security and privacy terms. Hostinger hosts the site and keeps the server logs on our behalf. We do not sell, rent, or trade personal information, and we share it with no one else unless the law requires it, for example in response to a court order.',
+        },
+      ],
     },
     {
       id: '5',
-      title: '5. Sharing and Disclosure of Information',
+      title: '5. International Transfers',
       content: [
         {
-          sub: 'We Do Not Sell Your Data',
-          body: 'We do not sell, trade, rent, or otherwise transfer your personally identifiable information to outside parties for commercial purposes.'
+          sub: 'Where Your Data Goes',
+          body: 'We are based in the United States, and Formspree processes submissions in the United States. Hostinger keeps the server logs in [HOSTING REGION]. If you write to us from the UK, the European Economic Area or Australia, your information leaves your country. Where the law requires a safeguard for that transfer, we rely on [TRANSFER SAFEGUARD].',
         },
-        {
-          sub: 'Service Providers',
-          body: 'We may share your information with trusted third-party vendors who assist us in operating our website and conducting our business, including: cloud hosting providers (e.g., Netlify, Vercel, Cloudflare), email service providers (e.g., Resend, Mailchimp), CRM platforms (e.g., GoHighLevel, HubSpot), calendar and scheduling tools (e.g., Calendly), and analytics platforms (e.g., Google Analytics, Plausible). These parties are contractually obligated to keep your information confidential and to use it only for the purposes of providing services to us.'
-        },
-        {
-          sub: 'Legal Requirements',
-          body: 'We may disclose your information if required to do so by law or in response to valid legal process, including a court order, subpoena, or government investigation, or when we believe in good faith that disclosure is necessary to protect our rights, protect your safety or the safety of others, or investigate fraud.'
-        }
-      ]
+      ],
     },
     {
       id: '6',
-      title: '6. Data Retention',
+      title: '6. How Long We Keep It',
       content: [
         {
           sub: 'Retention Periods',
-          body: 'We retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy and to comply with our legal obligations. Specifically: inquiry and contact form submissions are retained for 24 months from the date of last communication; active client project data is retained for the duration of the project plus 36 months for support and reference purposes; financial and billing records are retained for 7 years as required by US tax law; and newsletter subscriber data is retained until you unsubscribe or request deletion. Upon expiration of the applicable retention period, we will securely delete or anonymize your personal data.'
-        }
-      ]
+          body: 'Inquiry and contact form submissions are retained for 24 months from the date of last communication; active client project data is retained for the duration of the project plus 36 months for support and reference purposes; financial and billing records are retained for 7 years as required by US tax law. Server logs are kept for [LOG RETENTION PERIOD]. When a period ends, we delete or anonymize the information.',
+        },
+      ],
     },
     {
       id: '7',
-      title: '7. Your Privacy Rights (CCPA / GDPR)',
+      title: '7. Your Rights',
       content: [
         {
-          sub: 'California Residents: CCPA Rights',
-          body: 'Under the California Consumer Privacy Act (CCPA), California residents have the right to: (1) know what personal information we collect and how it is used; (2) request deletion of personal information we have collected about you; (3) opt out of the sale of personal information (note: we do not sell your data); and (4) non-discrimination for exercising your CCPA rights. To submit a CCPA request, contact us at info@vexeltechsolutions.com or (385) 284-3265.'
+          sub: 'UK and EEA Residents',
+          body: 'You have the right to access your personal information, to have it corrected, to have it erased, to restrict or object to our processing of it, and to receive it in a portable form. Where we rely on your consent, you may withdraw it at any time.',
         },
         {
-          sub: 'EEA / UK Residents: GDPR Rights',
-          body: 'If you are located in the European Economic Area or United Kingdom, you have the right to: access, rectification, erasure ("right to be forgotten"), restriction of processing, data portability, and to object to processing. You also have the right to lodge a complaint with your local data protection supervisory authority. To exercise these rights, contact us at info@vexeltechsolutions.com. We will respond to verified requests within 30 days.'
-        }
-      ]
+          sub: 'California Residents',
+          body: 'Under the California Consumer Privacy Act (CCPA), you have the right to know what personal information we collect and how it is used, to request its deletion, to opt out of its sale (we do not sell it), and not to be discriminated against for exercising these rights.',
+        },
+        {
+          sub: 'How to Ask',
+          body: `Write to ${E.email} or call ${E.phone}. We respond to verified requests within 30 days.`,
+        },
+      ],
     },
     {
       id: '8',
-      title: '8. Security',
+      title: '8. Your Right to Complain',
       content: [
         {
-          sub: 'Security Measures',
-          body: 'We implement commercially reasonable technical and organizational security measures designed to protect your personal information from unauthorized access, use, alteration, or destruction. These include TLS/HTTPS encryption for all data in transit, access control policies limiting data access to authorized personnel, and secure credential management practices. However, no internet transmission or electronic storage method is 100% secure. While we strive to use commercially acceptable means to protect your personal information, we cannot guarantee its absolute security.'
-        }
-      ]
+          sub: 'Supervisory Authorities',
+          body: 'If you are unhappy with how we handle your information, please tell us first so we can put it right. You also have the right to complain to a data protection authority: in the UK, the Information Commissioner\'s Office (ico.org.uk); in the European Economic Area, the supervisory authority where you live or work; in Australia, the Office of the Australian Information Commissioner (oaic.gov.au); in California, the California Privacy Protection Agency.',
+        },
+      ],
     },
     {
       id: '9',
-      title: '9. Children\'s Privacy',
+      title: '9. Security',
       content: [
         {
-          sub: 'Age Restriction',
-          body: 'Our services are not directed to individuals under the age of 16. We do not knowingly collect personal information from children under 16. If we become aware that we have collected personal information from a child under 16 without verifiable parental consent, we will take steps to delete that information promptly. If you believe we may have collected information from a child under 16, please contact us at info@vexeltechsolutions.com.'
-        }
-      ]
+          sub: 'Security Measures',
+          body: 'The site is served over HTTPS, so what you send through the form is encrypted in transit. Access to submissions is limited to the people who answer them. No method of transmission or storage is completely secure, but we take reasonable care to protect what you send us.',
+        },
+      ],
     },
     {
       id: '10',
-      title: '10. Changes to This Policy',
+      title: '10. Children\'s Privacy',
       content: [
         {
-          sub: 'Policy Updates',
-          body: 'We may update this Privacy Policy from time to time. We will notify you of any material changes by updating the "Last Updated" date at the top of this policy. We encourage you to review this Privacy Policy periodically to stay informed about how we are protecting your information. Your continued use of our website and services following the posting of changes constitutes your acceptance of such changes.'
-        }
-      ]
+          sub: 'Age Restriction',
+          body: `Our services are not directed to individuals under the age of 16. We do not knowingly collect personal information from children under 16. If you believe we may have collected information from a child under 16, please contact us at ${E.email} and we will delete it.`,
+        },
+      ],
     },
     {
       id: '11',
-      title: '11. Contact & Data Controller',
+      title: '11. Changes to This Policy',
       content: [
         {
-          sub: 'Data Controller Information',
-          body: 'The data controller responsible for your personal information is: Vexel Scales LLC (operating as VexelTech Solutions), Richmond, TX 77406, United States. For privacy inquiries, data subject requests, or to exercise any of the rights described in this policy, contact our privacy desk: Email: info@vexeltechsolutions.com | Phone: (385) 284-3265. We aim to respond to all privacy inquiries within 30 days of receipt.'
-        }
-      ]
-    }
-  ]
+          sub: 'Policy Updates',
+          body: 'When we change this policy, we update the date at the top of the page. A material change is also stated here before it takes effect.',
+        },
+      ],
+    },
+  ],
 };
 
 export const TERMS = {
@@ -165,7 +175,7 @@ export const TERMS = {
   effective: 'Effective Date: August 22, 2026',
   updated: 'Last Updated: August 22, 2026',
   subtitle: 'The agreement governing all projects, payments, intellectual property, revisions, and service delivery at VexelTech Solutions.',
-  intro: 'These Terms of Service ("Terms") constitute a legally binding agreement between you ("Client," "you," or "your") and Vexel Scales LLC, a Texas limited liability company operating as VexelTech Solutions ("VexelTech," "we," "our," or "us"). By engaging our services, submitting a project deposit, or signing a project scope document, you agree to be bound by these Terms. If you do not agree, do not engage our services.',
+  intro: `These Terms of Service ("Terms") constitute a legally binding agreement between you ("Client," "you," or "your") and ${ENTITY.name}, formed in ${ENTITY.state} (file number ${ENTITY.fileNumber}), operating as VexelTech Solutions ("VexelTech," "we," "our," or "us"). By engaging our services, submitting a project deposit, or signing a project scope document, you agree to be bound by these Terms. If you do not agree, do not engage our services.`,
   highlights: [
     { title: '100% IP Ownership', desc: 'Upon final payment, all deliverables, source code, and creative assets transfer entirely to you with no strings attached.' },
     { title: 'Scope-First', desc: 'Every project begins with a written scope document. Work outside that scope is quoted and approved before it begins.' },
@@ -347,7 +357,7 @@ export const TERMS = {
         },
         {
           sub: 'Contact for Legal Inquiries',
-          body: 'Vexel Scales LLC (VexelTech Solutions) | Richmond, TX 77406, USA | info@vexeltechsolutions.com | (385) 284-3265'
+          body: `${ENTITY.name} (VexelTech Solutions) | ${ENTITY.address} | ${ENTITY.email} | ${ENTITY.phone}`
         }
       ]
     }

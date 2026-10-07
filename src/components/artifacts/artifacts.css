@@ -190,10 +190,13 @@
     transform: scaleY(var(--p, 1));
   }
 
+  /* A row is AT LEAST 72px since the launch gate (2026-10-07): a fixed 72
+     squeezed "Live." 6px under WCAG 1.4.12's text spacing. At the site's
+     own spacing every row is still 72. */
   .wk__days {
     position: relative;
     display: grid;
-    grid-auto-rows: 72px;
+    grid-auto-rows: minmax(72px, auto);
   }
 
   .wk__day {
@@ -228,6 +231,7 @@
     position: relative;
     top: auto;
     bottom: auto;
+    flex-shrink: 0;
     transform: none;
   }
 

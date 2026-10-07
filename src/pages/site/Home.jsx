@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Header from '../../components/site/Header.jsx';
+import { skipToMain } from '../../components/site/skip.js';
 import Hero from '../../components/home/Hero.jsx';
 import CostsCited from '../../components/home/CostsCited.jsx';
 import WorkAccordion from '../../components/final/WorkAccordion.jsx';
@@ -11,6 +12,7 @@ import FooterForm from '../../components/home/FooterForm.jsx';
 import { CallBand } from './parts.jsx';
 import { setHead, setLd, AREA_SERVED, ORIGIN } from './head.js';
 import { SOCIAL_URLS } from '../../content/socials.js';
+import { FIGURES, money } from '../../content/pricing.js';
 import '../../styles/tokens.css';
 /* The loud register, applied to every section below the hero. Imported LAST
    so it wins on source order. See src/styles/register.css. */
@@ -86,7 +88,9 @@ export default function Home() {
       telephone: '+13852843265',
       description: DESCRIPTION,
       areaServed: AREA_SERVED,
-      priceRange: '$299 to $700',
+      /* From the price tokens since the launch gate (2026-10-07): the range
+         stopped at $700 while /pricing sells the $999 bundle. */
+      priceRange: `${money(FIGURES.brandingBasic)} to ${money(FIGURES.bundle)}`,
       parentOrganization: { '@id': `${ORIGIN}/#organization` },
       ...(sameAs.length ? { sameAs } : {}),
     });
@@ -117,7 +121,7 @@ export default function Home() {
           hero. The link is in the tab order at all times and off the screen
           until it takes focus. Styled in tokens.css, not here, because it
           belongs to the page rather than to any section. */}
-      <a className="skip" href="#main">
+      <a className="skip" href="#main" onClick={skipToMain}>
         Skip to content
       </a>
 

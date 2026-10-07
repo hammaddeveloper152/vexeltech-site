@@ -81,6 +81,30 @@ for (const route of [...ROUTES, NOT_FOUND]) {
   await p.evaluate(() => {
     document.querySelectorAll('link[data-vt-css]').forEach((l) => l.setAttribute('media', 'print'));
   });
+  /* THE HERO POSTER, PRELOADED (the launch gate, 2026-10-07). Home's
+     largest paint is the film's first-second frame (the still here, the
+     video's poster in a visitor's browser: the same file). It is in the
+     HTML as the still's <img fetchpriority="high">, and preloaded at high
+     priority from the head, one file per width, so the browser asks for it
+     before the stylesheet and the script have run. */
+  if (route === '/') {
+    await p.evaluate(() => {
+      const img = document.querySelector('.hero picture img');
+      const narrow = document.querySelector('.hero picture source');
+      if (!img || !narrow) return;
+      const add = (href, media) => {
+        const l = document.createElement('link');
+        l.rel = 'preload';
+        l.as = 'image';
+        l.href = href;
+        l.media = media;
+        l.setAttribute('fetchpriority', 'high');
+        document.head.insertBefore(l, document.head.querySelector('style, link[rel="stylesheet"]'));
+      };
+      add(new URL(narrow.srcset, location.href).pathname, narrow.media);
+      add(new URL(img.src).pathname, `not all and ${narrow.media}`);
+    });
+  }
   let html = await p.evaluate(() => {
     /* Nothing the measuring machine added: the dev origin in any absolute
        URL is never written, since every URL in the app is relative or on
@@ -107,7 +131,10 @@ for (const [route, html] of Object.entries(out)) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, html);
 }
-/* The untouched template stays as the fallback for any other route
-   (.htaccess sends unknown paths to it, and the app renders them). */
-fs.writeFileSync(path.join(DIST, 'app.html'), TEMPLATE);
-console.log(`wrote ${Object.keys(out).length} files, and app.html as the fallback`);
+/* NO app.html (the launch gate, 2026-10-07). An unknown path is a real 404:
+   the server answers it with 404.html and status 404 (ErrorDocument in
+   htaccess-append.txt), and the app, starting on that page, renders the
+   not-found view with noindex. The shell used to be kept here as the
+   fallback for every unknown path, which answered them all 200. */
+fs.rmSync(path.join(DIST, 'app.html'), { force: true });
+console.log(`wrote ${Object.keys(out).length} files; no app.html`);

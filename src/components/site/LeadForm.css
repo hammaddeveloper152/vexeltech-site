@@ -300,7 +300,7 @@
 
 /* THE MAILTO FALLBACK (final22): 14px under the form, steel-lift on the
    dark (7.55:1), the address bone and underlined, a 48px target. */
-.lf__mail {
+:is(.lf__mail, .lf__privacy) {
   margin: var(--s-md) 0 0;
   font-family: var(--font-offer);
   font-size: 14px;
@@ -308,7 +308,7 @@
   color: var(--c-steel-lift);
 }
 
-.lf__mail a {
+:is(.lf__mail, .lf__privacy) a {
   display: inline-flex;
   align-items: center;
   min-height: 48px;
@@ -317,13 +317,13 @@
   text-underline-offset: 3px;
 }
 
-.lf__mail a:focus-visible {
+:is(.lf__mail, .lf__privacy) a:focus-visible {
   outline: var(--focus-ring) solid var(--c-focus);
   outline-offset: var(--focus-offset);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .lf__mail a:hover {
+  :is(.lf__mail, .lf__privacy) a:hover {
     opacity: var(--hover-opacity);
   }
 }

@@ -713,3 +713,53 @@
     line-height: 26px;
   }
 }
+
+/* ---- THE PAUSE CONTROL (the launch gate, 2026-10-07, the founder) ----------
+   WCAG 2.2.2: the film loops past five seconds. Bottom right of the hero, a
+   44px dark pill with a bone glyph (bone on base at 80% is about 14:1), over
+   the scrim and the copy's layer. Only while the film plays (the still mode
+   has nothing to pause). Focus is the site's ring, press as every control. */
+.hero__pause {
+  position: absolute;
+  right: var(--inset);
+  bottom: 24px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgb(232 234 237 / 22%);
+  border-radius: 999px;
+  background: rgb(11 11 13 / 80%);
+  color: var(--c-bone);
+  cursor: pointer;
+  transition: transform var(--d-press) var(--ease-reveal);
+}
+
+.hero__pause .i {
+  width: 18px;
+  height: 18px;
+}
+
+.hero__pause:focus-visible {
+  outline: var(--focus-ring) solid var(--c-focus);
+  outline-offset: var(--focus-offset);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero__pause:hover {
+    background: rgb(11 11 13 / 95%);
+  }
+}
+
+.hero__pause:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__pause:active {
+    transform: none;
+  }
+}

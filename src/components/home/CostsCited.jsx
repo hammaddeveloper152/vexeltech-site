@@ -13,7 +13,8 @@ import './costs-cited.css';
 
    NO SOURCE ON THE CELLS (final28, 2026-10-07, the founder): the four
    source lines are deleted. One line under the row, 11px mono, right
-   aligned, reads "Industry figures, 2024 to 2025."; the sources are
+   aligned, reads "Industry figures." (the launch gate; it named the years
+   2024 to 2025 in final28); the sources are
    recorded in VEXELTECH-COPY.md and in content/costs.js, not on the page.
    The cell light is 5% (it was 10) and the sweep 2% (it was 4).
 
@@ -123,7 +124,7 @@ export default function CostsCited() {
             ))}
           </div>
         ) : null}
-        <p className="cc__src">Industry figures, 2024 to 2025.</p>
+        <p className="cc__src">Industry figures.</p>
       </div>
     </section>
   );

@@ -5,7 +5,7 @@ import WeekStrip from '../../components/artifacts/WeekStrip.jsx';
 import OneTeam from '../../components/artifacts/OneTeam.jsx';
 import FitColumns from '../../components/story/FitColumns.jsx';
 import TermsCard from '../../components/story/TermsCard.jsx';
-import AboutClose from '../../components/final/AboutClose.jsx';
+import { CallBand } from './parts.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
 import '../../styles/aboutpage.css';
 import '../../styles/light.css';
@@ -19,7 +19,7 @@ import '../../styles/light.css';
      Four business days (dark)    WeekStrip: the week, Monday to live
      Who we are for               FitColumns: two columns, a rule between
      How we work with you         TermsCard: the contract (final28)
-     the close                    AboutClose (final18)
+     the close                    CallBand field (the launch gate)
 
    It replaced home's route (twice), home's discipline cards, the fit cards
    and the facts table, all of which repeated objects found elsewhere on the
@@ -111,7 +111,15 @@ export default function AboutPage() {
       <TermsCard />
       {/* The close (final18, 2026-10-06): one statement, the call and the
           facts. It replaced the closing call. */}
-      <AboutClose />
+      {/* THE CLOSE IS HOME'S YELLOW FIELD (the launch gate, 2026-10-07, the
+          founder): heading, line and button, so the anchor check passes.
+          final18's AboutClose, its pricing link, promise line and three
+          facts are deleted. */}
+      <CallBand
+        field
+        heading="Four services. One team. One number to call."
+        note="Branding, websites, marketing and automation, delivered by the people you spoke to on the first call."
+      />
     </Shell>
   );
 }

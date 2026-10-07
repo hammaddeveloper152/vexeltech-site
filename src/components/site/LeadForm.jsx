@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { IconArrowRight, IconCheck, IconCross } from './Icons.jsx';
 import { UTM_KEYS, getUtm } from './utm.js';
 import { trackPixel } from './pixel.js';
@@ -213,8 +214,11 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
         <span className="lf__idx" aria-hidden="true">
           {pad(i)}
         </span>
+        {/* REQUIRED IN TEXT (the launch gate, 2026-10-07): the label reads
+            "Name (required)"; the asterisk in the placeholder is the visible
+            mark. */}
         <label className="lf__sr" htmlFor={fid(id)}>
-          {ph.replace(' *', '')}
+          {ph.replace(' *', '')} (required)
         </label>
         <input
           className="lf__input"
@@ -258,6 +262,7 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
           name={FORM_TARGET === 'netlify' ? 'bot-field' : '_gotcha'}
           tabIndex={-1}
           autoComplete="off"
+          aria-hidden="true"
           value={trap}
           onChange={(e) => setTrap(e.target.value)}
         />
@@ -326,7 +331,7 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
           {pad(msgIndex)}
         </span>
         <label className="lf__sr" htmlFor={fid('message')}>
-          {needs ? MESSAGE_LABEL.contact : MESSAGE_LABEL.footer}
+          {needs ? MESSAGE_LABEL.contact : MESSAGE_LABEL.footer} (required)
         </label>
         <textarea
           className="lf__input lf__textarea"
@@ -374,6 +379,13 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
           ) : null}
         </p>
       </div>
+
+      {/* THE PRIVACY LINE (the launch gate, 2026-10-07, the founder's
+          words): under the submit, with the privacy policy one link away. */}
+      <p className="lf__privacy">
+        We reply within one business day. Your details are used only to answer you.{' '}
+        <Link to="/privacy-policy">Privacy policy</Link>
+      </p>
 
       {/* THE MAILTO FALLBACK (final22), under the form, always. */}
       <p className="lf__mail">

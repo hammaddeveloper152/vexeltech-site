@@ -1054,6 +1054,14 @@ main#main footer.foot {
    rather than inheriting a section's. White on asphalt at 17.77:1. The ring
    is machine yellow and exists only in the keyboard state, so it never lands
    in a measured frame and does not count as the frame's carrier. */
+/* FOCUS CLEARS THE BAR (the launch gate, 2026-10-07, WCAG 2.4.11): the
+   sticky bar is 64px (52 below 768), so anything scrolled into view, by a
+   Tab, a fragment or the skip link, stops 80px below the top and is never
+   under it. */
+html {
+  scroll-padding-top: 80px;
+}
+
 .skip {
   position: fixed;
   top: var(--s-sm);
@@ -1215,7 +1223,7 @@ main:focus {
 
 .foot__base-wm:active,
 .wa__link:active,
-.lf__mail a:active,
+:is(.lf__mail, .lf__privacy) a:active,
 .legal a[href^='tel:']:active {
   transform: scale(0.97);
 }

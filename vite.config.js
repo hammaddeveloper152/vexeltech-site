@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
@@ -153,7 +154,11 @@ function criticalCss() {
         return html.replace(
           link[0],
           `${preload}<style data-vt-critical>${crit}</style>\n    ` +
-            `<link rel="stylesheet" crossorigin href="${href}" media="print" onload="this.media='all'" data-vt-css>\n    ` +
+            /* No onload attribute since the launch gate (2026-10-07): an
+               inline handler is inline script under the CSP. The boot file
+               (routePreload below) switches the media once the sheet has
+               loaded. */
+            `<link rel="stylesheet" crossorigin href="${href}" media="print" data-vt-css>\n    ` +
             `<noscript><link rel="stylesheet" crossorigin href="${href}"></noscript>`
         );
       },
@@ -180,10 +185,16 @@ const ROUTE_PAGES = {
   'ContactPage.jsx': ['/contact-us', '/contact'],
 };
 
+let bootSource = '';
+let bootName = '';
+
 function routePreload() {
   return {
     name: 'vt-route-preload',
     apply: 'build',
+    writeBundle(opts) {
+      if (bootSource) fs.writeFileSync(path.join(opts.dir || 'dist', bootName), bootSource);
+    },
     transformIndexHtml: {
       order: 'post',
       handler(html, ctx) {
@@ -200,11 +211,23 @@ function routePreload() {
         /* (Final pass 2 preloaded /services' signage plate here, then its
            largest paint; the identity sheet put the signage under the sheet
            on a phone, 2026-10-03, and the preload came out.) */
-        const script =
-          `<script>(function(){var m=${JSON.stringify(map)};` +
+        /* THE BOOT FILE (the launch gate, 2026-10-07). This was an inline
+           <script>, which a CSP of script-src 'self' does not allow. It is
+           now a small external file, content-hashed and loaded async ahead
+           of the main script. It adds the modulepreloads for the landing
+           route, and it switches the full stylesheet from print to all once
+           the sheet has loaded (the inline onload attribute's old job).
+           Written to dist in writeBundle. */
+        bootSource =
+          `(function(){var m=${JSON.stringify(map)};` +
           `var p=location.pathname.replace(/\\/+$/,'')||'/';` +
           `(m[p]||[]).forEach(function(h){var l=document.createElement('link');` +
-          `l.rel='modulepreload';l.crossOrigin='';l.href=h;document.head.appendChild(l);});})();</script>\n    `;
+          `l.rel='modulepreload';l.crossOrigin='';l.href=h;document.head.appendChild(l);});` +
+          `function c(){document.querySelectorAll('link[data-vt-css]').forEach(function(l){` +
+          `if(l.media==='all')return;if(l.sheet){l.media='all';}else{l.addEventListener('load',function(){l.media='all';},{once:true});}});}` +
+          `c();document.addEventListener('DOMContentLoaded',c);})();`;
+        bootName = `assets/boot-${createHash('sha256').update(bootSource).digest('hex').slice(0, 8)}.js`;
+        const script = `<script src="/${bootName}" async></script>\n    `;
         return html.replace(/<script type="module" crossorigin/, (m) => script + m);
       },
     },
@@ -279,6 +302,30 @@ function cssOrder() {
   };
 }
 
+/* PLAUSIBLE BEHIND A FLAG (the launch gate, 2026-10-07). Off by default:
+   with VITE_PLAUSIBLE_DOMAIN unset the build carries no analytics at all.
+   Set it (VITE_PLAUSIBLE_DOMAIN=vexeltechsolutions.com in .env) and every
+   page's head gets Plausible's tagged-events script from plausible.io. The
+   events are src/components/site/analytics.js. The CSP in
+   htaccess-append.txt then needs https://plausible.io in script-src and
+   connect-src. */
+function plausible() {
+  let domain = '';
+  return {
+    name: 'vt-plausible',
+    configResolved(c) {
+      domain = String(c.env.VITE_PLAUSIBLE_DOMAIN || process.env.VITE_PLAUSIBLE_DOMAIN || '').trim();
+    },
+    transformIndexHtml(html) {
+      if (!/^[a-z0-9.-]+$/i.test(domain)) return html;
+      return html.replace(
+        '</head>',
+        `  <script defer data-domain="${domain}" src="https://plausible.io/js/script.tagged-events.js"></script>\n  </head>`
+      );
+    },
+  };
+}
+
 /* THE NETLIFY FORM TWIN BEHIND A FLAG (the founder's final audit, final22,
    2026-10-06). The hidden <form name="contact" data-netlify> in index.html
    exists only for Netlify's parser. The site posts to Formspree on
@@ -300,6 +347,6 @@ function netlifyFormTwin() {
 }
 
 export default defineConfig({
-  plugins: [cssOrder(), react(), criticalCss(), routePreload(), netlifyFormTwin()],
+  plugins: [cssOrder(), react(), criticalCss(), routePreload(), netlifyFormTwin(), plausible()],
   build: { cssCodeSplit: false },
 });

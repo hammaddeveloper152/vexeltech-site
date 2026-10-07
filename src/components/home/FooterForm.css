@@ -87,7 +87,10 @@
      covers it. */
   margin: var(--s-section) calc(16px - var(--foot-px)) 0;
   padding: 32px;
-  overflow: hidden;
+  /* Not clipped since the launch gate (2026-10-07): the corner swash it cut
+     is long gone, and the clip took 12px off the pages' hover blocks and,
+     under text spacing, the links themselves. */
+  overflow: visible;
   border-radius: 32px;
   background: var(--c-cream);
   color: var(--c-asphalt);
@@ -584,15 +587,15 @@ main#main footer.foot.foot--sheet {
   color: var(--c-success); /* 4.74:1 on cream */
 }
 
-.foot__sheet .lf__mail {
+.foot__sheet :is(.lf__mail, .lf__privacy) {
   color: var(--c-steel);
 }
 
-.foot__sheet .lf__mail a {
+.foot__sheet :is(.lf__mail, .lf__privacy) a {
   color: var(--c-asphalt);
 }
 
-.foot__sheet .lf__mail a:focus-visible,
+.foot__sheet :is(.lf__mail, .lf__privacy) a:focus-visible,
 .foot__sheet .lf__submit:focus-visible {
   outline-color: var(--c-asphalt);
 }
@@ -628,4 +631,29 @@ main#main footer.foot.foot--sheet {
   width: min(calc(100% - 2 * var(--inset)), 1180px);
   margin: 0 auto;
   padding: 28px 0;
+}
+
+/* THE ENTITY LINE (the launch gate, 2026-10-07): the full width of the row,
+   under its three parts, in the row's 12px mono and steel-lift (7.00:1 on
+   the base); the email a link like the row's. Middle dots between the
+   parts from 1024, a wrap below. */
+.foot__base-entity {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--s-lg);
+  margin: 0;
+}
+
+@media (min-width: 1024px) {
+  .foot__base-entity {
+    column-gap: 0;
+  }
+
+  .foot__base-entity > * + *::before {
+    content: '·';
+    padding: 0 10px;
+    color: var(--c-steel-lift);
+  }
 }

@@ -1,6 +1,9 @@
-# ==== VexelTech additions, final22 (2026-10-06). APPEND to the live .htaccess;
-# ==== keep everything already in it. Every block is guarded, so a module the
-# ==== host lacks is skipped rather than breaking the site.
+# ==== VexelTech additions, final22 (2026-10-06), rewritten for the launch
+# ==== gate (2026-10-07). APPEND to the live .htaccess; keep everything
+# ==== already in it, EXCEPT any rule that already forces HTTPS or strips
+# ==== www: those would add a second hop in front of these (see the
+# ==== launch-gate report). Every block is guarded, so a module the host
+# ==== lacks is skipped rather than breaking the site.
 
 # ---- Routing -----------------------------------------------------------------
 # Each page is prerendered to its own folder (dist/services/index.html, ...).
@@ -13,44 +16,54 @@ DirectoryIndex index.html
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
-# Routes removed on 2026-09-25 (as netlify.toml): 301 to the home page.
-RewriteRule ^(blog|resources|portfolio|case-studies)(/.*)?$ / [R=301,L]
-RewriteRule ^portfolio\.html$ / [R=301,L]
-RewriteRule ^legacy/contact/?$ / [R=301,L]
+# ONE HOP. Every redirect goes straight to https://vexeltechsolutions.com and
+# the final path, so http, www, a trailing slash, /index.html and an old
+# alias all resolve in a single 301, in any combination.
+
+# Routes removed on 2026-09-25: 301 to the home page.
+RewriteRule ^(blog|resources|portfolio|case-studies)(/.*)?$ https://vexeltechsolutions.com/ [R=301,L]
+RewriteRule ^portfolio\.html$ https://vexeltechsolutions.com/ [R=301,L]
+RewriteRule ^legacy/contact/?$ https://vexeltechsolutions.com/ [R=301,L]
 # /work/ holds real images, so only a path that is not a file goes home.
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^work(/.*)?$ / [R=301,L]
+RewriteRule ^work(/.*)?$ https://vexeltechsolutions.com/ [R=301,L]
 
-# Aliases the app answered under a second URL: 301 to the one canonical URL.
-RewriteRule ^about/?$ /about-us [R=301,L]
-RewriteRule ^contact/?$ /contact-us [R=301,L]
-RewriteRule ^packages/?$ /pricing [R=301,L]
-RewriteRule ^thanks\.html$ /thanks [R=301,L]
-RewriteRule ^privacy\.html$ /privacy-policy [R=301,L]
-RewriteRule ^terms\.html$ /terms-of-service [R=301,L]
-RewriteRule ^(services/)?(branding)/?$ /services#branding [NE,R=301,L]
-RewriteRule ^(services/)?(websites|web-development)/?$ /services#websites [NE,R=301,L]
-RewriteRule ^websites\.html$ /services#websites [NE,R=301,L]
-RewriteRule ^(services/)?(marketing)/?$ /services#marketing [NE,R=301,L]
-RewriteRule ^(services/)?(automation)/?$ /services#automation [NE,R=301,L]
+# Aliases the old site answered under a second URL.
+RewriteRule ^about(/|/index\.html)?$ https://vexeltechsolutions.com/about-us [R=301,L]
+RewriteRule ^contact(/|/index\.html)?$ https://vexeltechsolutions.com/contact-us [R=301,L]
+RewriteRule ^packages(/|/index\.html)?$ https://vexeltechsolutions.com/pricing [R=301,L]
+RewriteRule ^thanks\.html$ https://vexeltechsolutions.com/thanks [R=301,L]
+RewriteRule ^privacy\.html$ https://vexeltechsolutions.com/privacy-policy [R=301,L]
+RewriteRule ^terms\.html$ https://vexeltechsolutions.com/terms-of-service [R=301,L]
+RewriteRule ^(services/)?(branding)/?$ https://vexeltechsolutions.com/services#branding [NE,R=301,L]
+RewriteRule ^(services/)?(websites|web-development)/?$ https://vexeltechsolutions.com/services#websites [NE,R=301,L]
+RewriteRule ^websites\.html$ https://vexeltechsolutions.com/services#websites [NE,R=301,L]
+RewriteRule ^(services/)?(marketing)/?$ https://vexeltechsolutions.com/services#marketing [NE,R=301,L]
+RewriteRule ^(services/)?(automation)/?$ https://vexeltechsolutions.com/services#automation [NE,R=301,L]
+
+# /index.html and /<route>/index.html: to the canonical URL. Read from the
+# request line, so the internal rewrite below (to /<route>/index.html) never
+# matches it.
+RewriteCond %{THE_REQUEST} ^[A-Z]+\s/+([^\s?]*?)/?index\.html[\s?]
+RewriteRule ^ https://vexeltechsolutions.com/%1 [R=301,L]
 
 # No trailing slash: /services/ -> /services (not for real files).
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.+)/$ /$1 [R=301,L]
+RewriteRule ^(.+?)/+$ https://vexeltechsolutions.com/$1 [R=301,L]
+
+# http and www: to https and the bare domain.
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://vexeltechsolutions.com%{REQUEST_URI} [R=301,L]
 
 # A prerendered route: /services is served from /services/index.html.
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteCond %{REQUEST_FILENAME}/index.html -f
 RewriteRule ^(.+)$ /$1/index.html [L]
 
-# SPA fallback: any other path that is not a file or a folder goes to the
-# app shell (app.html, the untouched build template), which renders the
-# route, or the not-found page with noindex. app.html rather than index.html,
-# because index.html is now the prerendered home page and would flash home's
-# content before the app replaced it.
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ /app.html [L]
+# NO APP FALLBACK (the launch gate). Any other path that is not a file is a
+# real 404, served by the ErrorDocument below with the prerendered not-found
+# page. app.html is no longer built.
 </IfModule>
 
 ErrorDocument 404 /404.html
@@ -62,6 +75,22 @@ AddType video/mp4 .mp4
 AddType font/woff2 .woff2
 AddType application/manifest+json .webmanifest
 AddType image/svg+xml .svg
+AddType image/avif .avif
+</IfModule>
+
+# ---- Security headers (the launch gate) ---------------------------------------
+# HSTS only on HTTPS responses, without includeSubDomains or preload. The CSP
+# is REPORT-ONLY: it blocks nothing and logs what it would block in the
+# browser console. WHEN PLAUSIBLE IS TURNED ON (VITE_PLAUSIBLE_DOMAIN), add
+# https://plausible.io to script-src and connect-src; WHEN THE META PIXEL IS
+# (VITE_META_PIXEL_ID), add https://connect.facebook.net to script-src and
+# https://www.facebook.com to img-src and connect-src.
+<IfModule mod_headers.c>
+Header always set Strict-Transport-Security "max-age=31536000" env=HTTPS
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self' https://formspree.io; form-action 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
 </IfModule>
 
 # ---- Caching -------------------------------------------------------------------

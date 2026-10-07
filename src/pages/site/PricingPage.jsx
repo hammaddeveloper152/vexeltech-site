@@ -290,6 +290,8 @@ export default function PricingPage() {
             Marketing scales with ad spend and service area. Automation scales with the number of
             workflows and the tools they connect.
           </p>
+          {/* CURRENCY AND TAX (the launch gate, 2026-10-07, the founder). */}
+          <p className="pr-grid__note">All prices are in US dollars and exclude tax where applicable.</p>
         </div>
       </section>
 

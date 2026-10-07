@@ -4,6 +4,7 @@ import { videoAllowed } from './Video.jsx';
 import { FIGURES, money } from '../../content/pricing.js';
 import { NARROW_QUERY } from './heroSpot.js';
 import { SPOT } from './heroFiles.js';
+import { IconPause, IconPlay } from '../site/Icons.jsx';
 import './Hero.css';
 
 /* THE HERO: THE FILM BEHIND ONE STATIC HEADLINE.
@@ -47,6 +48,13 @@ export default function Hero() {
     () => typeof window !== 'undefined' && window.matchMedia(NARROW_QUERY).matches
   );
   const videoRef = useRef(null);
+  /* THE PAUSE CONTROL (the launch gate, 2026-10-07, WCAG 2.2.2): the film
+     loops past five seconds, so a reader can stop it. `held` is the
+     reader's choice and outlives a tab switch; `paused` is what the button
+     shows. A refused autoplay (Low Power Mode on an iPhone) leaves the
+     poster and the button offering Play, with nothing thrown. */
+  const held = useRef(false);
+  const [paused, setPaused] = useState(false);
 
   /* A reader who turns reduced motion on mid-film gets the still. */
   useEffect(() => {
@@ -78,17 +86,21 @@ export default function Hero() {
 
     /* Play only while the page is being looked at. */
     const sync = () => {
-      if (document.visibilityState !== 'visible') {
+      if (document.visibilityState !== 'visible' || held.current) {
         v.pause();
         return;
       }
       const p = v.play();
-      if (p && typeof p.catch === 'function') {
-        p.catch((e) => {
-          /* AUTOPLAY REFUSED: the poster, the film's first-second frame,
-             stays. */
-          if (e && e.name === 'NotSupportedError') setMode('still');
-        });
+      if (p && typeof p.then === 'function') {
+        p.then(
+          () => setPaused(false),
+          (e) => {
+            /* AUTOPLAY REFUSED: the poster, the film's first-second frame,
+               stays, and the button offers Play. */
+            setPaused(true);
+            if (e && e.name === 'NotSupportedError') setMode('still');
+          }
+        );
       }
     };
 
@@ -104,6 +116,21 @@ export default function Hero() {
   }, [mode]);
 
   const src = narrow ? SPOT.mobile : SPOT.wide;
+
+  const toggle = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) {
+      held.current = false;
+      const p = v.play();
+      if (p && typeof p.then === 'function') p.then(() => setPaused(false), () => setPaused(true));
+      else setPaused(false);
+    } else {
+      held.current = true;
+      v.pause();
+      setPaused(true);
+    }
+  };
 
   return (
     <section className="vt hero" aria-labelledby="hero-h" data-mode={mode}>
@@ -136,10 +163,21 @@ export default function Hero() {
         {mode === 'still' ? (
           <picture>
             <source media={NARROW_QUERY} srcSet={SPOT.mobile.first} type="image/jpeg" />
-            <img className="hero__spot" src={SPOT.wide.first} alt="" decoding="async" />
+            <img className="hero__spot" src={SPOT.wide.first} alt="" fetchPriority="high" />
           </picture>
         ) : null}
       </div>
+
+      {mode === 'spot' ? (
+        <button
+          type="button"
+          className="hero__pause"
+          onClick={toggle}
+          aria-label={paused ? 'Play the background film' : 'Pause the background film'}
+        >
+          {paused ? <IconPlay className="i" /> : <IconPause className="i" />}
+        </button>
+      ) : null}
 
       <div className="hero__body">
         <h1 className="hero__headline hero__h1" id="hero-h">

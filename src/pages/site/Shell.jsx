@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Header from '../../components/site/Header.jsx';
+import { skipToMain } from '../../components/site/skip.js';
 import FooterForm from '../../components/home/FooterForm.jsx';
 import { setHead, setBreadcrumb } from './head.js';
 import '../../styles/tokens.css';
@@ -74,7 +75,7 @@ export default function Shell({
 
   return (
     <>
-      <a className="skip" href="#main">
+      <a className="skip" href="#main" onClick={skipToMain}>
         Skip to content
       </a>
       <Header over={barOver} />

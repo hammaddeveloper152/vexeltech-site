@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Shell from './Shell.jsx';
 import { IconArrowRight } from '../../components/site/Icons.jsx';
 import { PRIVACY, TERMS } from './legalContent.js';
+import { ENTITY as LEGAL } from '../../content/entity.js';
 import './legal.css';
 
 /* THE PRIVACY POLICY AND THE TERMS OF SERVICE, on the site's shell,
@@ -21,13 +22,16 @@ import './legal.css';
 
    noindex, as the legacy shell set it: kept out of search and the sitemap. */
 
-const EMAIL = 'info@vexeltechsolutions.com';
+const EMAIL = LEGAL.email;
 
+/* The entity's facts are content/entity.js's (the launch gate, 2026-10-07):
+   four of them are bracketed placeholders until the founder supplies them. */
 const ENTITY = [
-  { label: 'Registered State', value: 'Texas, United States' },
-  { label: 'Physical Address', value: 'Richmond, TX 77406, USA' },
+  { label: 'State of Formation', value: LEGAL.state },
+  { label: 'File Number', value: LEGAL.fileNumber },
+  { label: 'Geographic Address', value: LEGAL.address },
   { label: 'Legal & Privacy Desk', value: EMAIL, href: `mailto:${EMAIL}` },
-  { label: 'Direct Line', value: '(385) 284-3265', href: 'tel:+13852843265' },
+  { label: 'Direct Line', value: LEGAL.phone, href: LEGAL.phoneHref },
 ];
 
 export default function LegalPage({ kind }) {
@@ -99,11 +103,11 @@ export default function LegalPage({ kind }) {
           <section className="legal__entity" aria-labelledby="legal-entity-h">
             <p className="lbl legal__entity-l">Official Legal Entity</p>
             <h2 className="legal__h2" id="legal-entity-h">
-              Vexel Scales LLC
+              {LEGAL.name}
             </h2>
             <p className="legal__p">
-              Operating as <strong>VexelTech Solutions</strong>. A Texas limited liability company. All contracts,
-              invoices, and legal notices are issued under Vexel Scales LLC.
+              Operating as <strong>{LEGAL.trading}</strong>. All contracts, invoices, and legal notices are issued
+              under {LEGAL.name}.
             </p>
             <dl className="legal__facts">
               {ENTITY.map((item) => (
@@ -133,7 +137,7 @@ export default function LegalPage({ kind }) {
               <IconArrowRight className="i i--sm" />
             </Link>
           </nav>
-          <p className="legal__copy lbl">© 2026 Vexel Scales LLC · All rights reserved</p>
+          <p className="legal__copy lbl">© 2026 {LEGAL.name} · All rights reserved</p>
         </div>
       </section>
     </Shell>

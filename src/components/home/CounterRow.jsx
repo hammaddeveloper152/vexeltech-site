@@ -11,12 +11,13 @@ import './CounterRow.css';
 
    Values are deliberately synthetic and the labels say so. BUILD-LAW.md
    Truth: no invented client counts, credentials, or capabilities. */
-const COUNTERS = [
-  { id: 'one', value: 1240, label: 'Placeholder label one' },
-  { id: 'two', value: 48, label: 'Placeholder label two' },
-  { id: 'three', value: 12, label: 'Placeholder label three' },
-  { id: 'four', value: 6, label: 'Placeholder label four' },
-];
+/* EMPTY SINCE THE LAUNCH GATE (2026-10-07): the four synthetic values and
+   their "Placeholder label" strings shipped in home's script while the row
+   rendered nothing, and the gate allows no placeholder text in src or dist.
+   The four figures, as { id, value, label }, and the heading below go in
+   when the founder supplies them. */
+const COUNTERS = [];
+const HEADING = '';
 
 /* DESIGN.md's duration table stops at drawers and panels and then says
    marketing reveals may run longer. A count is a marketing reveal. */
@@ -153,7 +154,7 @@ export default function CounterRow({ band = false }) {
      `FIGURES_REAL` to true, and the section, its marble and its count-up
      return unchanged. Checked after every hook, so the hook order never
      changes. */
-  if (!FIGURES_REAL) return null;
+  if (!FIGURES_REAL || !COUNTERS.length || !HEADING) return null;
 
   return (
     <section
@@ -164,7 +165,7 @@ export default function CounterRow({ band = false }) {
     >
       <div className="counters__inner">
         <h2 className="counters__h" id="counters-h">
-          Placeholder section heading
+          {HEADING}
         </h2>
 
         <ul className="counters__list">

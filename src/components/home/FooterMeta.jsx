@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Wordmark from '../site/Wordmark.jsx';
 import { IconFacebook, IconInstagram, IconLinkedIn } from '../site/Icons.jsx';
 import { SOCIAL_URLS } from '../../content/socials.js';
+import { ENTITY } from '../../content/entity.js';
 import './FooterForm.css';
 
 /* THE FOOTER BAND, 2026-09-24 (the founder's Flesh and Bones pass), on every
@@ -171,6 +172,19 @@ export function FooterBase() {
         <Link className="foot__base-a" to="/terms-of-service">
           Terms
         </Link>
+      </p>
+      {/* THE ENTITY LINE (the launch gate, 2026-10-07, the founder): the
+          legal entity's name, its geographic address and the email, under
+          the row. The name and the address are content/entity.js's
+          placeholders until the founder supplies them. */}
+      <p className="foot__base-entity">
+        <span>
+          {ENTITY.name}, trading as {ENTITY.trading}
+        </span>
+        <span>{ENTITY.address}</span>
+        <a className="foot__base-a" href={`mailto:${ENTITY.email}`}>
+          {ENTITY.email}
+        </a>
       </p>
     </div>
   );

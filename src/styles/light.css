@@ -161,6 +161,25 @@ html[data-ground='light'] .callband__note {
   color: var(--c-steel);
 }
 
+/* THE YELLOW FIELD ON THE LIGHT PAGE (the launch gate, 2026-10-07): About's
+   close is home's field, so it keeps the field's ink (9.82:1 on yellow) and
+   its 112 / 72 padding over the light page's 80 for every band. */
+html[data-ground='light'] .callband--field :is(.callband__h, .callband__note) {
+  color: var(--cb-ink);
+}
+
+html[data-ground='light'] main#main section.vt.callband--field:not(.ab-dark):not(.ab3-hero) {
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+@media (min-width: 768px) {
+  html[data-ground='light'] main#main section.vt.callband--field:not(.ab-dark):not(.ab3-hero) {
+    padding-top: 112px;
+    padding-bottom: 112px;
+  }
+}
+
 
 /* THE FOOTER'S BOTTOM ROW ON THE LIGHT GROUND (final22, 2026-10-06): on
    About the row stands on cream, so its inks turn: links and the wordmark
@@ -175,6 +194,6 @@ html[data-ground='light'] :is(.foot__base-a, .foot__base-wm, .foot__base-wm .wm_
   color: var(--c-asphalt);
 }
 
-html[data-ground='light'] :is(.foot__base-nav li + li::before, .foot__base-legal > * + *::before) {
+html[data-ground='light'] :is(.foot__base-nav li + li::before, .foot__base-legal > * + *::before, .foot__base-entity > * + *::before) {
   color: var(--c-steel);
 }

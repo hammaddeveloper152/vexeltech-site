@@ -32,6 +32,17 @@ import './story.css';
 export default function DevicePhones({ phones }) {
   const ref = useRef(null);
   const [near, setNear] = useState(false);
+  /* Below 1024 the row is a sideways scroller, and only there does it take
+     focus (the launch gate, 2026-10-07). */
+  const [scroller, setScroller] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 1023px)').matches
+  );
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 1023px)');
+    const on = () => setScroller(mq.matches);
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, []);
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof IntersectionObserver === 'undefined') {
@@ -52,7 +63,16 @@ export default function DevicePhones({ phones }) {
   }, []);
   if (!phones || !phones.length) return null;
   return (
-    <ul className="dp" ref={ref} data-artifact="DevicePhones" data-device="phone silhouette">
+    /* A sideways scroller below 1024, so it takes focus and a name (the
+       launch gate, axe scrollable-region-focusable): a keyboard can scroll
+       it with the arrow keys. */
+    <ul
+      className="dp"
+      ref={ref}
+      data-artifact="DevicePhones"
+      data-device="phone silhouette"
+      {...(scroller ? { tabIndex: 0, 'aria-label': 'Three websites on phones. Scroll sideways for the next.' } : {})}
+    >
       {phones.map((p) => (
         <li className="dp__phone" key={p.src}>
           <span className="dp__screen">

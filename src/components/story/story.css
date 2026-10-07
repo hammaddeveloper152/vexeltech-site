@@ -491,8 +491,9 @@
   color: var(--tc-ink);
 }
 
-/* The stamp over the bottom right corner, 88px, rotated 8deg, #F2B01E at
-   70%. Below 600 it sits a little further in, so it never runs past the
+/* The stamp over the bottom right corner, 88px, rotated 8deg. In the
+   Branding ink #865f08 at 85% since the launch gate (2026-10-07, the
+   founder); it was #F2B01E at 70%. Below 600 it sits a little further in, so it never runs past the
    screen's edge. */
 .tc__stamp {
   position: absolute;
@@ -500,7 +501,7 @@
   bottom: -30px;
   width: 88px;
   height: 88px;
-  opacity: 0.7;
+  opacity: 0.85;
   transform: rotate(8deg);
   pointer-events: none;
 }
@@ -514,7 +515,7 @@
 
 .tc__stamp-ring {
   fill: none;
-  stroke: var(--c-yellow-d);
+  stroke: var(--c-yellow-ink);
   stroke-width: 2;
 }
 
@@ -525,11 +526,11 @@
 .tc__stamp-t {
   font-family: var(--font-mono);
   font-size: 11px;
-  fill: var(--c-yellow-d);
+  fill: var(--c-yellow-ink);
 }
 
 .tc__stamp-mark {
-  fill: var(--c-yellow-d);
+  fill: var(--c-yellow-ink);
 }
 
 /* ---- 8. Services: the evidence band (EvidenceBand), 2026-10-02 ---------
@@ -573,6 +574,11 @@
 
 .dp::-webkit-scrollbar {
   display: none;
+}
+
+.dp:focus-visible {
+  outline: var(--focus-ring) solid var(--c-focus);
+  outline-offset: 4px;
 }
 
 @media (min-width: 1024px) {

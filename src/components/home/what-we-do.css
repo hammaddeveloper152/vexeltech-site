@@ -88,9 +88,12 @@
   text-decoration: none;
 }
 
+/* 460px from 1024 is a MINIMUM since the launch gate (2026-10-07): a fixed
+   height clipped the answers under WCAG 1.4.12's text spacing. At the
+   site's own spacing every card is still 460. */
 @media (min-width: 1024px) {
   .wwd__card {
-    height: 460px;
+    min-height: 460px;
   }
 }
 

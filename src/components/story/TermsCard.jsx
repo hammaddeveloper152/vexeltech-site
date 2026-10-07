@@ -37,7 +37,8 @@ const CLAUSES = [
    right. The four clauses as before, each over a 2px ink rule. At the foot
    the wordmark in the display face as the signature, rotated -3deg, over a
    1px ink line, "Signed for VexelTech" in mono 11px under it. A round dated
-   stamp sits over the bottom right corner, rotated 8deg, in #F2B01E at 70%:
+   stamp sits over the bottom right corner, rotated 8deg, in the Branding
+   ink #865f08 at 85% (the launch gate; it was #F2B01E at 70%):
    2px ring, "VEXELTECH · 2026" round it in mono 11px and the mark in the
    middle. 88px, not the brief's 72, so the ring's words keep the 11px type
    floor (the founder's ruling, the same day). 480px wide at 1280, the

@@ -16,6 +16,10 @@
 
 .tb {
   display: grid;
+  /* One track no wider than the column (the launch gate, 2026-10-07): an
+     implicit track took the phone's 320px at a 320 screen and scrolled the
+     page sideways by 16px. */
+  grid-template-columns: minmax(0, 1fr);
   justify-items: center;
   gap: var(--s-lg);
   margin: 0;

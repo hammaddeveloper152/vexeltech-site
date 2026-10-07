@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 /* ==========================================================================
    THE ROUTES, 2026-09-25.
@@ -80,27 +80,35 @@ if (typeof window !== 'undefined') {
 const LegalPage = lazy(() => import('./pages/site/LegalPage.jsx'));
 const ThanksPage = lazy(() => import('./pages/site/ThanksPage.jsx'));
 
+/* A trailing slash, or a trailing /index.html, is taken off in place, so the
+   router never renders a page under a second URL (the server does the same
+   with a 301). */
+function Canonical() {
+  const { pathname, search, hash } = useLocation();
+  const clean = pathname.replace(/\/index\.html$/, '/').replace(/\/+$/, '') || '/';
+  if (clean === pathname) return null;
+  return <Navigate to={`${clean}${search}${hash}`} replace />;
+}
+
 export default function App() {
   return (
     <Suspense fallback={null}>
+      <Canonical />
       <Routes>
         {/* ---- The rebuild: five destinations since 2026-09-25 -------------- */}
         <Route path="/" element={<Home />} />
 
+        {/* ONE URL PER PAGE (the launch gate, 2026-10-07): an alias is a
+            redirect to the canonical URL, as it is on the server
+            (htaccess-append.txt), never a second copy of the page. A
+            trailing slash is taken off by <Canonical /> above. */}
         <Route path="/services" element={<ServicesPage />} />
-        <Route path="/services/" element={<ServicesPage />} />
-
         <Route path="/pricing" element={<PricingPage />} />
-        <Route path="/pricing/" element={<PricingPage />} />
-        <Route path="/packages" element={<PricingPage />} />
-
+        <Route path="/packages" element={<Navigate to="/pricing" replace />} />
         <Route path="/about-us" element={<AboutPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/about/" element={<AboutPage />} />
-
+        <Route path="/about" element={<Navigate to="/about-us" replace />} />
         <Route path="/contact-us" element={<ContactPage />} />
-        <Route path="/contact-us/" element={<ContactPage />} />
-        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/contact" element={<Navigate to="/contact-us" replace />} />
 
         {/* /portfolio, /case-studies, /resources (and /work, /portfolio.html),
             /blog and /legacy/contact are GONE, 2026-09-25 (the founder's repo
@@ -132,31 +140,25 @@ export default function App() {
             would be answering a different question. */}
         <Route path="/services/branding" element={<Navigate to="/services#branding" replace />} />
         <Route path="/branding" element={<Navigate to="/services#branding" replace />} />
-        <Route path="/branding/" element={<Navigate to="/services#branding" replace />} />
 
         <Route path="/services/websites" element={<Navigate to="/services#websites" replace />} />
         <Route path="/services/web-development" element={<Navigate to="/services#websites" replace />} />
         <Route path="/web-development" element={<Navigate to="/services#websites" replace />} />
-        <Route path="/web-development/" element={<Navigate to="/services#websites" replace />} />
         <Route path="/websites.html" element={<Navigate to="/services#websites" replace />} />
 
         <Route path="/services/marketing" element={<Navigate to="/services#marketing" replace />} />
         <Route path="/marketing" element={<Navigate to="/services#marketing" replace />} />
-        <Route path="/marketing/" element={<Navigate to="/services#marketing" replace />} />
 
         <Route path="/services/automation" element={<Navigate to="/services#automation" replace />} />
         <Route path="/automation" element={<Navigate to="/services#automation" replace />} />
-        <Route path="/automation/" element={<Navigate to="/services#automation" replace />} />
 
         {/* ---- The legal pages and /thanks, on the site's shell ------------ */}
         <Route path="/thanks" element={<ThanksPage />} />
-        <Route path="/thanks.html" element={<ThanksPage />} />
+        <Route path="/thanks.html" element={<Navigate to="/thanks" replace />} />
         <Route path="/privacy-policy" element={<LegalPage kind="privacy" />} />
-        <Route path="/privacy-policy/" element={<LegalPage kind="privacy" />} />
-        <Route path="/privacy.html" element={<LegalPage kind="privacy" />} />
+        <Route path="/privacy.html" element={<Navigate to="/privacy-policy" replace />} />
         <Route path="/terms-of-service" element={<LegalPage kind="terms" />} />
-        <Route path="/terms-of-service/" element={<LegalPage kind="terms" />} />
-        <Route path="/terms.html" element={<LegalPage kind="terms" />} />
+        <Route path="/terms.html" element={<Navigate to="/terms-of-service" replace />} />
 
 
         {/* THE NOT-FOUND ROUTE IS THE REBUILD'S, 2026-09-15. It was the legacy
