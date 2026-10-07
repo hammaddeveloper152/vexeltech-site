@@ -89,6 +89,23 @@ const found = await p.evaluate((H) => {
     const l = lum(cs.backgroundColor);
     if (l !== null && l > 0.2 && e.getBoundingClientRect().width > 300) add('colour', e, `${e.className.toString().split(' ')[0] || e.tagName.toLowerCase()} field`);
   }
+  /* A RUN OF FIELDS IS ONE FIELD (2026-10-07, the founder: home's tail is
+     one cream surface). Colour fields that touch top to bottom (within
+     2px), each at least 300 wide, are merged into one, so a screen that
+     straddles two cream sections counts the cream it shows, not the share
+     of each section. */
+  const fields = items.filter((it) => it.kind === 'colour').sort((a, b) => a.top - b.top);
+  const runs = [];
+  for (const f of fields) {
+    const last = runs[runs.length - 1];
+    if (last && f.top <= last.bottom + 2) {
+      if (f.bottom > last.bottom) last.bottom = f.bottom;
+      last.w = Math.max(last.w, f.w);
+      if (!last.label.includes('run')) last.label = `${last.label.split(' ')[0]} run`;
+    } else runs.push({ ...f });
+  }
+  for (let i = items.length - 1; i >= 0; i -= 1) if (items[i].kind === 'colour') items.splice(i, 1);
+  items.push(...runs);
   const screens = [];
   for (let y = 0, n = 1; y < docH; y += H, n += 1) {
     const y2 = Math.min(y + H, docH);

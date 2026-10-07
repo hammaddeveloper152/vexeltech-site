@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useLoop, step, leaving } from './loop.js';
+import { useLoop, step, leaving, halfInView, THRESHOLDS } from './loop.js';
+import { prefersReduced } from '../site/useOnce.js';
 import Monogram from './Monogram.jsx';
 import Crossfade from './Crossfade.jsx';
 import { SETS, useBrandSet, setBrandSet, setVars } from '../../content/brandSets.js';
@@ -48,6 +49,26 @@ const GAP = 70;
 const TOTAL = LIFT + 5 * GAP;
 const DEMO = 'Harbor & Vale';
 const MAX = 24;
+
+/* THE AUTOPLAY (2026-10-07, the founder's three changes before upload). At
+   rest the desk shows the current name. At half in view, after a 2s hold,
+   the field clears and types the next name at 60ms a character, the desk
+   re-lettering with every keystroke (it keeps the previous name while the
+   field is empty), and the colour set crossfades to the name's set as the
+   last character lands. 7s a name, looping, paused off screen. Any focus,
+   tap or keystroke in the field, or a press on a colour set, stops it for
+   good and the visitor takes over. Reduced motion: Harbor & Vale, static.
+   The names and their sets are the founder's. They name a trade and a
+   profession: BUILD-LAW's "no trade on the desk" is amended for them. */
+const AUTO = [
+  { name: 'Harbor & Vale', set: 0 },
+  { name: 'Marlow Plumbing', set: 1 },
+  { name: 'Nook Café', set: 2 },
+  { name: 'Aster Dental', set: 4 },
+];
+const AUTO_HOLD = 2000;
+const AUTO_CHAR = 60;
+const AUTO_EACH = 7000;
 
 /* The tiles; `name` is the typed name. */
 const TILES = [
@@ -181,6 +202,68 @@ export default function BrandDesk() {
   const [t, , , leave] = useLoop(ref, TOTAL, { once: true });
   const [i] = useBrandSet();
   const [value, setValue] = useState('');
+  /* The autoplay's last finished name, shown while the field is empty. */
+  const [autoName, setAutoName] = useState(DEMO);
+  const figRef = useRef(null);
+  const auto = useRef({ on: true, k: 0, timers: [], inView: false });
+  const stopAuto = () => {
+    const a = auto.current;
+    if (!a.on) return;
+    a.on = false;
+    a.timers.forEach(clearTimeout);
+    a.timers = [];
+    setValue('');
+    setAutoName(DEMO);
+  };
+  useEffect(() => {
+    const el = figRef.current;
+    const a = auto.current;
+    if (!el || prefersReduced() || typeof IntersectionObserver === 'undefined') return undefined;
+    const later = (fn, ms) => a.timers.push(setTimeout(fn, ms));
+    const clear = () => {
+      a.timers.forEach(clearTimeout);
+      a.timers = [];
+    };
+    /* One name: hold, clear, type, land the set, then the next at 7s. */
+    const cycle = () => {
+      if (!a.on || !a.inView) return;
+      const next = AUTO[(a.k + 1) % AUTO.length];
+      later(() => {
+        if (!a.on) return;
+        setValue('');
+        [...next.name].forEach((_, c) =>
+          later(() => {
+            if (!a.on) return;
+            setValue(next.name.slice(0, c + 1));
+            if (c === next.name.length - 1) {
+              setBrandSet(next.set);
+              setAutoName(next.name);
+              a.k = (a.k + 1) % AUTO.length;
+            }
+          }, AUTO_CHAR * (c + 1))
+        );
+      }, AUTO_HOLD);
+      later(cycle, AUTO_EACH);
+    };
+    const io = new IntersectionObserver(
+      (es) => {
+        const now = halfInView(es[es.length - 1]);
+        if (now && !a.inView) {
+          a.inView = true;
+          cycle();
+        } else if (!now && a.inView) {
+          a.inView = false;
+          clear();
+        }
+      },
+      { threshold: THRESHOLDS }
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      clear();
+    };
+  }, []);
   /* THE SIGN IS FITTED AFTER MOUNT (FINAL29, 2026-10-07): the first render
      is the prerendered HTML, which cannot measure text or know the width.
      The demo name is sized by CSS; a typed name is fitted here. */
@@ -196,7 +279,7 @@ export default function BrandDesk() {
     return () => window.removeEventListener('resize', on);
   }, []);
 
-  const name = value.trim() || DEMO;
+  const name = value.trim() || autoName;
   /* The sign's free width: from 1024, 520 less its padding (72 and 32),
      the mark and the 20 gap, and the 60 the quote's corner covers; below,
      the sign is the column's width. */
@@ -211,7 +294,7 @@ export default function BrandDesk() {
         : fit(name, Math.max(140, window.innerWidth - 170), 26);
 
   return (
-    <figure className="bd" data-artifact="BrandDesk" data-device="desk">
+    <figure className="bd" data-artifact="BrandDesk" data-device="desk" ref={figRef}>
       <div className="bd__controls">
         <div className="bd__field">
           <label className="bd__label" htmlFor="bd-name">
@@ -222,7 +305,13 @@ export default function BrandDesk() {
             className="bd__input"
             type="text"
             value={value}
-            onChange={(e) => setValue(e.target.value.slice(0, MAX))}
+            onChange={(e) => {
+              stopAuto();
+              setValue(e.target.value.slice(0, MAX));
+            }}
+            onFocus={stopAuto}
+            onPointerDown={stopAuto}
+            onKeyDown={stopAuto}
             maxLength={MAX}
             placeholder="Type your business name"
             autoComplete="off"
@@ -241,7 +330,10 @@ export default function BrandDesk() {
               aria-label={s.name}
               className="bd__set"
               key={s.id}
-              onClick={() => setBrandSet(n)}
+              onClick={() => {
+                stopAuto();
+                setBrandSet(n);
+              }}
               onKeyDown={(e) => {
                 const d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
                 if (!d) return;

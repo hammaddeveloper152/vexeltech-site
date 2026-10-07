@@ -45,6 +45,23 @@ const RECEIPT = [
   ['Review request', 'Sat 10:00'],
 ];
 
+/* THE CHIPS UNDER THE THREAD (2026-10-07, the founder): every workflow
+   that could run, the five this night used at full ink, lit as their
+   event prints (the call, the booking, the quote, the invoice and the
+   review request rows); the other three off. "Off" is a 40% outline with
+   the paper's steel text, not 40% ink: ink at 40% on the paper is 2.5:1,
+   under 4.5 for 12px text; steel is 4.68. At rest the five are lit. */
+const CHIPS = [
+  ['AI receptionist', 0],
+  ['Online booking', SLOT_AT],
+  ['Missed-call text-back', null],
+  ['Quote follow-up', ROWS_AT],
+  ['Invoice reminder', ROWS_AT + ROW],
+  ['Review request', ROWS_AT + 3 * ROW],
+  ['Lead routing', null],
+  ['Appointment reminders', null],
+];
+
 /* The planner: five days, two rows of slots; Thursday's two are the booking. */
 const SLOTS = ['busy', '', 'busy', 'new', '', '', 'busy', '', 'busy'];
 
@@ -181,6 +198,7 @@ export default function AssistantThread() {
           </p>
         </div>
 
+        <div className="at__right">
         <ol className="at__thread">
           {events.map((e, k) => (
             // eslint-disable-next-line react/no-array-index-key
@@ -191,6 +209,17 @@ export default function AssistantThread() {
             </li>
           ))}
         </ol>
+        <div className="at__chips">
+          <p className="at__chips-k">Running that night:</p>
+          <ul>
+            {CHIPS.map(([label, at]) => (
+              <li className={`at__chip${at !== null && t >= at ? ' is-on' : ''}`} key={label}>
+                {label}
+              </li>
+            ))}
+          </ul>
+        </div>
+        </div>
       </div>
       <p className="at__note">Illustration. The conversation is an example of what your assistant is set up to do.</p>
       <figcaption className="at__cap">

@@ -72,9 +72,12 @@ export function PromiseLine({ className = '' }) {
    field, #F2B01E, with the heading and the line in ink #121212 and the
    call inverted (ink fill, bone text); at 390 it fills one screen with the
    heading at 56px. The page's last stop before the form. */
-export function CallBand({ heading, note = null, promise = false, field = false, join = false }) {
+export function CallBand({ heading, note = null, promise = false, field = false, cream = false, join = false }) {
   return (
-    <section className={`vt callband${field ? ' callband--field' : ''}`} aria-labelledby="callband-h">
+    <section
+      className={`vt callband${field ? ' callband--field' : ''}${cream ? ' callband--cream' : ''}`}
+      aria-labelledby="callband-h"
+    >
       {/* Home's section join (final30); on the yellow field, in its ink. */}
       {join ? <SectionJoin tone={field ? 'ink' : undefined} /> : null}
       {/* The scribble under the heading came off everywhere, 2026-10-01

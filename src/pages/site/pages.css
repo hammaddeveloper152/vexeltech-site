@@ -278,3 +278,57 @@ main#main section.vt.callband--field.callband--field {
   outline: var(--focus-ring) solid var(--cb-ink);
   outline-offset: var(--focus-offset);
 }
+
+/* ---- THE CLOSING CALL ON CREAM (home, 2026-10-07, the founder) -------------
+   Home's tail is one cream surface: How it works, this call and the form,
+   no colour block between them (BUILD-LAW Layout). The call keeps the
+   field's 112 / 72 and its 1180 container, on the cream with the grain,
+   under its yellow join. The heading asphalt (15.75:1), the line steel
+   (7.20), the call yellow with ink text (9.46:1, as everywhere); the focus
+   ring asphalt (yellow on cream is 1.66:1). */
+main#main section.vt.callband--cream.callband--cream {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  margin-top: 0;
+  padding: 72px max(var(--inset), calc((100% - 1180px) / 2));
+  background: var(--c-cream);
+}
+
+main#main section.vt.callband--cream.callband--cream::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--grain);
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  main#main section.vt.callband--cream.callband--cream {
+    padding-top: 112px;
+    padding-bottom: 112px;
+  }
+}
+
+.callband--cream .callband__h {
+  color: var(--c-asphalt);
+}
+
+@media (min-width: 768px) {
+  .callband--cream .callband__h {
+    font-size: 56px;
+  }
+}
+
+.callband--cream .callband__note {
+  color: var(--c-steel);
+}
+
+.callband--cream .callband__cta:focus-visible {
+  outline: var(--focus-ring) solid var(--c-asphalt);
+  outline-offset: var(--focus-offset);
+}

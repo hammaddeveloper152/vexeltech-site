@@ -160,8 +160,11 @@ export default function Home() {
         {/* The closing call, before the form. COPY V3, 2026-10-01. */}
         {/* The answered-call phone of final14 is deleted (final16,
             2026-10-06): headline, one paragraph and the call. */}
+        {/* ONE CREAM SURFACE (2026-10-07, the founder): the closing call
+            sits on the cream of How it works and the form, under its
+            yellow join, with no colour block. */}
         <CallBand
-          field
+          cream
           join
           heading="Which one is costing you most?"
           note="Fifteen minutes on the phone and a written number. Usually it's not the expensive one."

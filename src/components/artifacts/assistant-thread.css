@@ -316,6 +316,61 @@
   color: var(--c-mint-ink);
 }
 
+/* ---- The chips under the thread (2026-10-07) ------------------------------------
+   12px mono, a 1px ink outline, 999px radius. On: ink text and outline
+   (16.0:1 on the paper). Off: the outline at 40%, the text the paper's
+   steel #6b6b66 (4.68:1). The label 11px mono steel. Wraps as it needs to
+   (two rows at 390). The change is a class, so a play lights each chip at
+   once, as its event prints. */
+.at__chips {
+  margin-top: 32px;
+  padding-left: 48px;
+}
+
+.at__chips-k {
+  margin-bottom: 10px !important;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 15px;
+  letter-spacing: 0.1em;
+  color: var(--at-steel);
+}
+
+.at__chips ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.at__chip {
+  padding: 5px 12px;
+  border: 1px solid rgb(18 18 18 / 40%);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--at-steel);
+}
+
+.at__chip.is-on {
+  border-color: var(--at-ink);
+  color: var(--at-ink);
+}
+
+@media (max-width: 599px) {
+  .at__chips {
+    padding-left: 0;
+  }
+
+  .at__chip {
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+}
+
 /* ---- Under the stage --------------------------------------------------------- */
 .at__note {
   width: min(100%, 1180px);
