@@ -180,21 +180,80 @@
   }
 }
 
-/* ---- 4. About, Where we come from, as type (six fixes, 2026-10-02) -----
-   One column, 760px at most; a 1px rule above the first and below the
-   last; 40px between the stories; the label mono 11px deep amber, the
-   paragraph the display face 26px / 1.35 in asphalt. */
-/* Final7 (2026-10-03): one paragraph, 26px, at most 640px, no image; the
-   years over it in mono 11px deep amber. */
-.os__p {
-  max-width: 640px;
+/* ---- 4. About, Why we exist (was Where we come from, six fixes) -------- */
+/* FOUR BEATS (final28, 2026-10-07). See OriginStory.jsx. Each beat 32px
+   above and below its rule-separated box; the numeral sits behind the pull
+   line, left aligned, cut by the beat's box. Inks on cream: asphalt
+   15.75:1, steel 7.20; the numeral asphalt at 6% is a picture. */
+.os__beats {
+  max-width: 720px;
   margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.os__beat {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 32px 0;
+}
+
+.os__beat + .os__beat {
+  border-top: 1px solid rgb(23 24 26 / 14%);
+}
+
+.os__beat:first-child {
+  padding-top: 0;
+}
+
+.os__beat::before {
+  content: attr(data-n);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
   font-family: var(--font-quiet);
-  font-size: 26px;
-  line-height: 1.35;
+  font-size: 160px;
+  line-height: 0.8;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: -0.02em;
+  color: rgb(23 24 26 / 6%);
+  pointer-events: none;
+}
+
+.os__beat:not(:first-child)::before {
+  top: 16px;
+}
+
+.os__pull {
+  margin: 0 0 var(--s-sm);
+  font-family: var(--font-quiet);
+  font-size: 32px;
+  line-height: 1.2;
   font-weight: var(--t-weight-quiet);
   color: var(--c-asphalt); /* 15.75:1 on cream */
+  text-wrap: balance;
+}
+
+.os__body {
+  max-width: 60ch;
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: 17px;
+  line-height: 26px;
+  color: var(--c-steel); /* 7.20:1 on cream */
   text-wrap: pretty;
+}
+
+@media (max-width: 599px) {
+  .os__beat::before {
+    font-size: 96px;
+  }
+
+  .os__pull {
+    font-size: 26px;
+  }
 }
 
 /* ---- 5. What we build it around is deleted (the final artifacts pass,
@@ -302,67 +361,67 @@
   border: 1px solid var(--c-steel);
 }
 
-/* ---- 7. About, How we work with you: the sheet (six fixes, 2026-10-02) --
-   Pure white, 680px at most, centred; 48px inside (28 below 768); 4px
-   radius; the two-layer shadow. Text on it asphalt, steel and deep amber,
-   never a grey on cream. */
+/* ---- 7. About, the terms: THE CONTRACT (final28, 2026-10-07) ------------
+   See TermsCard.jsx. Paper #F7F3EA ruled every 24px in ink at 6%, a 1px ink
+   border, no radius, the home paper cards' cast shadow. 480px at 1280 and
+   centred; the full width less 32px on a phone (the column's 16px inset
+   each side). Inks on the paper: #121212 (17.0:1), steel (7.1), deep amber
+   for the clause numbers (5.0). */
+.tc {
+  --tc-ink: #121212;
+  --tc-paper: #f7f3ea;
+}
+
 .tc__sheet {
+  position: relative;
   box-sizing: border-box;
-  width: min(100%, 680px);
+  width: min(100%, 480px);
   margin: 0 auto;
-  padding: 28px;
-  border-radius: 4px;
-  background: #fff;
-  box-shadow:
-    0 1px 2px rgb(0 0 0 / 6%),
-    0 24px 48px rgb(0 0 0 / 10%);
+  padding: 28px 24px 40px;
+  border: 1px solid var(--tc-ink);
+  background-color: var(--tc-paper);
+  background-image: repeating-linear-gradient(180deg, transparent 0 23px, rgb(18 18 18 / 6%) 23px 24px);
+  box-shadow: 0 30px 60px rgb(0 0 0 / 50%);
+  color: var(--tc-ink);
 }
 
 @media (min-width: 768px) {
   .tc__sheet {
-    padding: 48px;
+    padding: 40px 40px 48px;
   }
 }
 
 .tc__head {
   display: flex;
   align-items: center;
-  gap: var(--s-md);
-  padding-bottom: var(--s-md);
+  gap: 12px;
   margin-bottom: var(--s-xl);
-  border-bottom: 1px solid rgb(23 24 26 / 15%);
 }
 
-.tc__wm {
-  font-size: 14px;
-  color: var(--c-asphalt);
+.tc__mark {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  fill: var(--tc-ink);
 }
 
-/* On white the wordmark's full stop takes the light-ground yellow. */
-.tc__wm .wm__dot {
-  color: var(--c-accent-text-light);
-}
-
-.tc__title {
+.tc__title,
+.tc__year {
   margin: 0;
-  font-family: var(--font-offer);
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--c-asphalt);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: 0.04em;
+  color: var(--tc-ink);
 }
 
 .tc__year {
-  margin: 0 0 0 auto;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  letter-spacing: 0.08em;
-  color: var(--c-steel); /* 7.6:1 on white */
+  margin-left: auto;
 }
 
 .tc__clauses {
   display: grid;
-  gap: 28px;
+  gap: 20px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -371,6 +430,8 @@
 .tc__clause {
   display: grid;
   gap: var(--s-xs);
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--tc-ink);
 }
 
 .tc__n {
@@ -378,7 +439,7 @@
   font-size: 11px;
   line-height: 16px;
   letter-spacing: 0.08em;
-  color: var(--c-accent-text-light); /* 5.43:1 on white */
+  color: var(--c-accent-text-light); /* about 5.0:1 on the paper */
 }
 
 .tc__t {
@@ -386,45 +447,89 @@
   font-size: 20px;
   line-height: 28px;
   font-weight: var(--t-weight-quiet);
-  color: var(--c-asphalt);
+  color: var(--tc-ink);
 }
 
 .tc__d {
   font-family: var(--font-offer);
   font-size: 15px;
   line-height: 24px;
-  color: var(--c-steel); /* 7.6:1 on white */
+  color: var(--c-steel); /* about 7.1:1 on the paper */
 }
 
+/* The signature: the wordmark in the display face, rotated -3deg, sitting
+   on the 1px line; "Signed for VexelTech" under the line. */
 .tc__foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-md);
-  margin-top: var(--s-xl);
-  padding-top: var(--s-md);
-  border-top: 1px solid rgb(23 24 26 / 15%);
+  display: grid;
+  justify-items: start;
+  margin-top: 40px;
+  max-width: 260px;
+}
+
+.tc__sig {
+  display: block;
+  padding: 0 8px 6px;
+  font-family: var(--font-quiet);
+  font-size: 30px;
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
+  letter-spacing: -0.01em;
+  color: var(--tc-ink);
+  transform: rotate(-3deg);
+  transform-origin: left bottom;
 }
 
 .tc__signed {
+  justify-self: stretch;
   margin: 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--tc-ink);
   font-family: var(--font-mono);
   font-size: 11px;
   line-height: 16px;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--c-steel); /* 7.6:1 on white */
+  color: var(--tc-ink);
 }
 
-/* The foot's wordmark: 14px and all black, the mark and the full stop
-   included (the seven corrections, 2026-10-02). It replaced the swash. */
-.tc__foot .wm,
-.tc__foot .wm__dot {
-  color: var(--c-asphalt);
+/* The stamp over the bottom right corner, 88px, rotated 8deg, #F2B01E at
+   70%. Below 600 it sits a little further in, so it never runs past the
+   screen's edge. */
+.tc__stamp {
+  position: absolute;
+  right: -30px;
+  bottom: -30px;
+  width: 88px;
+  height: 88px;
+  opacity: 0.7;
+  transform: rotate(8deg);
+  pointer-events: none;
 }
 
-.tc__foot .wm__mark {
-  fill: var(--c-asphalt);
+@media (max-width: 599px) {
+  .tc__stamp {
+    right: -10px;
+    bottom: -26px;
+  }
+}
+
+.tc__stamp-ring {
+  fill: none;
+  stroke: var(--c-yellow-d);
+  stroke-width: 2;
+}
+
+.tc__stamp-ring--in {
+  stroke-width: 1;
+}
+
+.tc__stamp-t {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--c-yellow-d);
+}
+
+.tc__stamp-mark {
+  fill: var(--c-yellow-d);
 }
 
 /* ---- 8. Services: the evidence band (EvidenceBand), 2026-10-02 ---------

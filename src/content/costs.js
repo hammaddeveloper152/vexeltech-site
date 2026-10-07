@@ -1,10 +1,10 @@
 /* HOME, WHAT IT COSTS YOU: THE CITED NUMBERS (the founder's approved frame
    C, final15, 2026-10-06). Four cells, each a figure from a named industry
    source, not ours. The words are the founder's, verbatim from the brief.
-   `source` is the line pinned
-   to the cell's foot; `href` is the page it cites, kept as the record and
-   not rendered (the footer's Sources row and its links are gone since
-   final22).
+   `source` and `href` are the record of what each figure cites and are
+   not rendered: the cells' source lines came off in final28 (2026-10-07,
+   the founder), for one line under the row, and the footer's Sources row
+   went in final22. VEXELTECH-COPY.md carries the same record.
 
    Checked 2026-10-06: Backlinko's CTR study gives 0.63% of searchers
    clicking a page-two result; WordStream's 2025 benchmarks give $70.11 as

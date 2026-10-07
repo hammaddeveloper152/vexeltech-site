@@ -1,5 +1,4 @@
 import React from 'react';
-import Wordmark from '../site/Wordmark.jsx';
 import './story.css';
 
 /* HOW WE WORK WITH YOU, A REAL SHEET (the founder's six fixes,
@@ -31,17 +30,61 @@ const CLAUSES = [
   ['04', 'Thirty days.', 'Maintenance included after launch. After that, you call us when you need us.'],
 ];
 
+/* THE CONTRACT, final28 (2026-10-07, the founder). The heading "Our terms,
+   in plain English" is deleted; the section is named by the document. The
+   sheet is redrawn as a contract: paper #F7F3EA ruled every 24px, a 1px ink
+   border, the mark top left, "Terms of work" in mono 13px and "2026" at the
+   right. The four clauses as before, each over a 2px ink rule. At the foot
+   the wordmark in the display face as the signature, rotated -3deg, over a
+   1px ink line, "Signed for VexelTech" in mono 11px under it. A round dated
+   stamp sits over the bottom right corner, rotated 8deg, in #F2B01E at 70%:
+   2px ring, "VEXELTECH · 2026" round it in mono 11px and the mark in the
+   middle. 88px, not the brief's 72, so the ring's words keep the 11px type
+   floor (the founder's ruling, the same day). 480px wide at 1280, the
+   home paper cards' cast shadow, and the full width less 32px on a phone.
+   The signature and the stamp are pictures, hidden from assistive
+   technology; the clauses are the content. */
+const MARK = 'M7 33 29 25 50 60 78 6 94 2 54 93Z';
+
+function Mark({ className }) {
+  return (
+    <svg className={className} viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+      <path d={MARK} />
+    </svg>
+  );
+}
+
+/* The ring's words on a circle of radius 32 about the stamp's centre,
+   stretched to its whole length so they close up like a rubber stamp's. */
+const RING_R = 32;
+const RING_LEN = Math.round(2 * Math.PI * RING_R);
+
+function Stamp() {
+  return (
+    <svg className="tc__stamp" viewBox="0 0 88 88" aria-hidden="true" focusable="false">
+      <defs>
+        <path id="tc-ring" d={`M 44 ${44 - RING_R} a ${RING_R} ${RING_R} 0 1 1 -0.01 0`} />
+      </defs>
+      <circle cx="44" cy="44" r="42" className="tc__stamp-ring" />
+      <circle cx="44" cy="44" r="24" className="tc__stamp-ring tc__stamp-ring--in" />
+      <text className="tc__stamp-t">
+        <textPath href="#tc-ring" textLength={RING_LEN - 4} lengthAdjust="spacing">
+          VEXELTECH · 2026 ·
+        </textPath>
+      </text>
+      <path d={MARK} transform="translate(32 32) scale(0.24)" className="tc__stamp-mark" />
+    </svg>
+  );
+}
+
 export default function TermsCard() {
   return (
-    <section className="vt st-sec st--light tc" aria-labelledby="tc-h" data-artifact="TermsCard">
+    <section className="vt st-sec st--light tc" aria-label="Terms of work" data-artifact="TermsCard">
       <div className="st-in">
-        <h2 className="st-h" id="tc-h">
-          Our terms, in plain English
-        </h2>
-        <article className="tc__sheet" aria-label="Terms">
+        <article className="tc__sheet" aria-label="Terms of work">
           <header className="tc__head">
-            <Wordmark size="sm" className="tc__wm" />
-            <p className="tc__title">Terms</p>
+            <Mark className="tc__mark" />
+            <p className="tc__title">Terms of work</p>
             <p className="tc__year">2026</p>
           </header>
           <ol className="tc__clauses">
@@ -54,9 +97,12 @@ export default function TermsCard() {
             ))}
           </ol>
           <footer className="tc__foot">
+            <span className="tc__sig" aria-hidden="true">
+              VEXELTECH.
+            </span>
             <p className="tc__signed">Signed for VexelTech</p>
-            <Wordmark size="sm" className="tc__wm" />
           </footer>
+          <Stamp />
         </article>
       </div>
     </section>

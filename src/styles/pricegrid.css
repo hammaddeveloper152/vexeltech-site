@@ -517,6 +517,40 @@
   margin-top: 0;
 }
 
+/* THE TERMS ON THE CARD (final28, 2026-10-07, the founder): the facts of
+   the deleted What's in every project table, folded into each column under
+   What you get. A term already on the card (the website's four business
+   days, automation's per workflow) is not said twice. The term in the mono
+   label, its value in the column's small type: steel and asphalt on cream,
+   7.20 and 15.75:1. */
+.pr-col__facts {
+  display: grid;
+  gap: var(--s-xs);
+  margin: var(--s-lg) 0 0;
+  padding-top: var(--s-md);
+  border-top: 1px solid rgb(23 24 26 / 15%);
+}
+
+.pr-col__fact {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-md);
+  margin: 0;
+}
+
+.pr-col__fact dt {
+  color: var(--c-steel);
+}
+
+.pr-col__fact dd {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: var(--t-small-size);
+  line-height: var(--t-small-line);
+  text-align: right;
+  color: var(--c-asphalt);
+}
+
 /* THE TIER LISTS (2026-10-01, the structure pass): each under its own mono
    label, 32px below the list above; Websites' bigger-builds line under its
    list in the column's sub-line type. Inside the full list since
@@ -645,191 +679,8 @@
   }
 }
 
-/* ---- 3. What's in every project, on the base -----------------------------
-
-   A real table. Below 1024 it keeps a readable width and scrolls sideways in
-   its own labelled region rather than crushing five columns into 358px;
-   from 1024 the region stops clipping, which is what lets the header row
-   stick under the bar at 1280 (an overflow container would be the sticky
-   header's scroll parent instead of the page). */
-.pr-cmp {
-  padding: var(--s-section) var(--inset);
-}
-
-.pr-sec__h {
-  margin: 0 0 var(--s-xl);
-  font-family: var(--font-quiet);
-  font-size: var(--t-head);
-  line-height: var(--t-head-line);
-  font-weight: var(--t-weight-quiet);
-  letter-spacing: normal;
-  color: var(--c-bone); /* 16.32:1 */
-  text-wrap: balance;
-}
-
-.pr-cmp__wrap {
-  overflow-x: auto;
-}
-
-/* ---- BELOW 768: FOUR STACKED CARDS, 2026-09-25 (the launch batch) ------
-   The table scrolled sideways in its own region on a phone; it is four
-   cards now, one per discipline, each the site's dark card (white at 4%, a
-   10% edge, 24px), the term in the mono label above its value, a hairline
-   between rows. From 768 the table, and the cards go. */
-.pr-cmp__cards {
-  display: grid;
-  gap: var(--s-md);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.pr-cmp__card {
-  padding: var(--s-lg);
-  border: 1px solid var(--card-dark-edge);
-  /* A 4px top edge in the discipline's colour (2026-09-25, life pass 2). */
-  border-top: 4px solid var(--chip);
-  border-radius: var(--r-card);
-  background: var(--card-dark-fill);
-}
-
-.pr-cmp__card-h {
-  margin: 0 0 var(--s-md);
-}
-
-/* ---- THE COMPARISON CHIPS, 2026-09-25 -----------------------------------
-   The column headers, and the phone cards' titles and 4px top edges, in the
-   discipline colours (restored after the three-colour pass; Websites lilac
-   where it was arc blue). Asphalt text on all four: 9.46:1 on yellow, 8.68
-   on lilac, 5.87 on coral, 5.62 on mint. */
-.pr-cmp__card--branding,
-.pr-chip--branding {
-  --chip: var(--c-accent-ground);
-  --chip-ink: var(--c-asphalt);
-}
-
-.pr-cmp__card--websites,
-.pr-chip--websites {
-  --chip: var(--c-lilac);
-  --chip-ink: var(--c-asphalt);
-}
-
-.pr-cmp__card--marketing,
-.pr-chip--marketing {
-  --chip: var(--c-coral);
-  --chip-ink: var(--c-asphalt);
-}
-
-.pr-cmp__card--automation,
-.pr-chip--automation {
-  --chip: var(--c-mint);
-  --chip-ink: var(--c-asphalt);
-}
-
-.pr-chip {
-  display: inline-block;
-  padding: 4px var(--s-sm);
-  border-radius: 8px;
-  background: var(--chip);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--chip-ink);
-}
-
-.pr-cmp__rows {
-  margin: 0;
-}
-
-.pr-cmp__row {
-  display: grid;
-  gap: var(--s-xs);
-  padding: var(--s-md) 0;
-}
-
-.pr-cmp__row + .pr-cmp__row {
-  border-top: 1px solid var(--c-rule-dark);
-}
-
-.pr-cmp__row:last-child {
-  padding-bottom: 0;
-}
-
-.pr-cmp__row-k {
-  margin: 0;
-  color: var(--c-steel-lift); /* a 12px caption: 7.0:1 on the card */
-}
-
-.pr-cmp__row-v {
-  margin: 0;
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  color: var(--c-body-dark);
-}
-
-@media (max-width: 767px) {
-  .pr-cmp__wrap {
-    display: none;
-  }
-}
-
-@media (min-width: 768px) {
-  .pr-cmp__cards {
-    display: none;
-  }
-}
-
-@media (min-width: 1024px) {
-  .pr-cmp__wrap {
-    overflow: visible;
-  }
-}
-
-.pr-cmp__t {
-  width: 100%;
-  min-width: 720px;
-  border-collapse: collapse;
-  /* Five equal columns: auto layout gave each service the width of its
-     longest value, so the four read as four different tables. */
-  table-layout: fixed;
-}
-
-.pr-cmp__t th,
-.pr-cmp__t td {
-  padding: var(--s-md) var(--s-md) var(--s-md) 0;
-  font-family: var(--font-offer);
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: var(--t-weight-body);
-  color: var(--c-bone); /* 16.32:1 */
-  text-align: left;
-  vertical-align: top;
-}
-
-/* THE HEADERS ARE THE MONO LABEL, 2026-09-24: `.lbl`'s values restated at
-   this specificity, because the shared cell rule above outranks the class.
-   The line height stays the cells' 24px so a header sits on its row's
-   first line. Bone, as before. */
-.pr-cmp__t th.lbl {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 24px;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-/* Hairlines BETWEEN rows: under the header row and under every body row but
-   the last. */
-.pr-cmp__t thead tr,
-.pr-cmp__t tbody tr:not(:last-child) {
-  border-bottom: 1px solid var(--c-rule-dark);
-}
-
-/* THE STICKY HEADER ROW IS GONE, 2026-09-24 (the launch batch's one
-   ground): stuck, it needed an opaque fill to cover the rows under it, and a
-   flat base strip on the document-long drift is a seam. Five rows do not
-   need it. */
+/* ---- 3. WHAT'S IN EVERY PROJECT IS GONE (final28, 2026-10-07) ------------
+   The founder folded the table into the price cards: each card's terms are
+   a small list under What you get (.pr-col__facts, above). The table, its
+   stacked cards below 768 and the discipline chips in its header are
+   deleted with their rules. */

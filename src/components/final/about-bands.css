@@ -21,10 +21,6 @@ main#main section.vt:has(+ section.ab-dark) {
   padding-bottom: 64px;
 }
 
-html[data-ground='light'] .ab-dark .marg {
-  color: var(--c-steel-lift); /* 7.6:1 on the base */
-}
-
 /* ---- FINAL7 (2026-10-03, the founder): the page alternates evenly. Dark
    bands 96 above and below (above); every cream band after the statement 80
    above and below, the statement 80 below. These out-rank THE VERTICAL

@@ -14,7 +14,7 @@ import { setFaqLd } from './head.js';
 
      1. The head on the base: eyebrow, headline, one line
      2. The grid: a cream panel of four columns, the Websites column picked
-     3. What's in every project: a comparison table on the base
+     3. What's in every project: deleted in final28, its facts on the cards
      4. Not sure? The Plan Builder as built, with a visible heading
      5. Questions: the FAQ accordion with four pricing questions
      6. The burst call, then the form from the Shell, as built
@@ -90,7 +90,8 @@ const COLUMNS = DISCIPLINES.map((d) => ({
   ...GRID[d.id],
 }));
 
-/* The founder's table, verbatim, in the grid's column order. */
+/* The founder's table, verbatim, in the grid's column order. Since final28
+   (2026-10-07) it renders as each card's terms (FACTS), not as a table. */
 /* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, What's in every project). */
 /* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Pricing, What's in every
    project). */
@@ -102,11 +103,24 @@ const ROWS = [
   ['Payment', ['on approval', 'on approval', 'monthly', 'on approval']],
 ];
 
+/* Each column's terms, less any the card already states: the website's
+   turnaround is in its sub line, and automation's is its price. */
+const ON_CARD = { websites: ['Turnaround'], automation: ['Turnaround'] };
+const FACTS = Object.fromEntries(
+  DISCIPLINES.map((d, i) => [
+    d.id,
+    ROWS.filter(([term]) => !(ON_CARD[d.id] || []).includes(term)).map(([term, values]) => [term, values[i]]),
+  ])
+);
+
 /* COPY V2, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Questions). The $700
    and the $299 are the tokens; the $15 is a domain's cost, not a price of
    ours. */
 /* COPY V3.5, 2026-10-05 (VEXELTECH-COPY.md, Pricing, Questions): seven,
    in the founder's order. The $700 and the $299 are the tokens. */
+/* FINAL28 (2026-10-07, the founder): four. The deposit, the logo-only and
+   the marketing questions are deleted from the page and so from the
+   FAQPage data, which is built from this list. */
 const QUESTIONS = [
   {
     id: 'cost',
@@ -122,21 +136,6 @@ const QUESTIONS = [
     id: 'call',
     q: 'What does "on the call" mean?',
     a: 'Marketing and automation depend on your ad budget, your area and the tools you already use, so a price on a page would be a guess. We take fifteen minutes to understand it, then put a number in writing before anything starts.',
-  },
-  {
-    id: 'deposit',
-    q: 'Do you take a deposit?',
-    a: "No. You approve concepts or the site design first, and the invoice follows your approval. If you don't like what you see, you haven't paid for it.",
-  },
-  {
-    id: 'logo',
-    q: 'What if I only want the logo?',
-    a: `Basic branding is ${money(FIGURES.brandingBasic)} on its own: concepts, final files and the guidance to use them. Nothing else is bundled in.`,
-  },
-  {
-    id: 'marketing',
-    q: 'How long does marketing take to work?',
-    a: 'Ads can bring calls in the first week. Local search takes longer, usually a few months to move. We tell you which is which before you spend, and we report cost per lead monthly, not impressions.',
   },
   {
     id: 'after',
@@ -210,6 +209,14 @@ export default function PricingPage() {
                       </li>
                     ))}
                   </ul>
+                  <dl className="pr-col__facts">
+                    {FACTS[c.id].map(([term, value]) => (
+                      <div className="pr-col__fact" key={term}>
+                        <dt className="lbl">{term}</dt>
+                        <dd>{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
                   {/* THE TOGGLE: closed by default, one open at a time. The
                       panel is laid out or `hidden`, and its contents rise in
                       over 200ms on opacity and transform (BUILD-LAW Motion
@@ -286,64 +293,8 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* 3. WHAT'S IN EVERY PROJECT. A real table: the services across, the
-             terms down. Below 1024 it scrolls sideways in its own region. */}
-      <section className="vt pr-cmp" aria-labelledby="pr-cmp-h">
-        <div className="pr__in">
-          <h2 className="pr-sec__h" id="pr-cmp-h">
-            What&apos;s in every project
-          </h2>
-          <div className="pr-cmp__wrap" role="region" aria-labelledby="pr-cmp-h" tabIndex={0}>
-            <table className="pr-cmp__t">
-              <thead>
-                <tr>
-                  <td className="pr-cmp__corner" />
-                  {/* The column headers are chips in the discipline colours
-                      (2026-09-25, life pass 2). */}
-                  {COLUMNS.map((c) => (
-                    <th scope="col" key={c.id}>
-                      <span className={`pr-chip pr-chip--${c.id}`}>{c.name}</span>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {ROWS.map(([term, values]) => (
-                  <tr key={term}>
-                    <th scope="row" className="lbl">
-                      {term}
-                    </th>
-                    {values.map((v, i) => (
-                      <td key={COLUMNS[i].id}>{v}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          {/* BELOW 768, FOUR STACKED CARDS, 2026-09-25 (the founder's launch
-              batch): one per discipline, the term in the mono label above its
-              value, hairlines between rows. The same figures as the table;
-              only one of the two is ever displayed. */}
-          <ul className="pr-cmp__cards">
-            {COLUMNS.map((c, i) => (
-              <li className={`pr-cmp__card pr-cmp__card--${c.id}`} key={c.id}>
-                <h3 className="pr-cmp__card-h">
-                  <span className={`pr-chip pr-chip--${c.id}`}>{c.name}</span>
-                </h3>
-                <dl className="pr-cmp__rows">
-                  {ROWS.map(([term, values]) => (
-                    <div className="pr-cmp__row" key={term}>
-                      <dt className="pr-cmp__row-k lbl">{term}</dt>
-                      <dd className="pr-cmp__row-v">{values[i]}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      {/* 3. WHAT'S IN EVERY PROJECT came off (final28, 2026-10-07, the
+             founder): its facts are on the price cards above. */}
 
       {/* THE PLAN BUILDER AND THE CLOSING CALL CAME OFF, 2026-10-01: COPY
           V3 gives them no lines (DESIGN.md, COPY V3). */}

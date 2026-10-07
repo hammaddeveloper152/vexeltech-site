@@ -504,25 +504,31 @@
    rules and their labels in ink (asphalt 15.75:1, the resting rule asphalt
    at 55%, 3.81:1), placeholders and indices steel (7.20), focus deep amber
    (4.82), errors and success the light-ground red (5.68) and green (4.74). */
-.foot--sheet {
-  padding-top: var(--s-section);
+/* FINAL28 (2026-10-07, the founder): the sheet is a full-width cream
+   section, no inset, no corners, 112px above and below at 1280 (72 below
+   768), its two columns in the 1180 container. The footer carries no
+   padding of its own, so the cream meets the section above it (on home,
+   the yellow field) with no dark between. Every route renders this
+   footer, so every route closes the same way. */
+main#main footer.foot.foot--sheet {
+  padding: 0;
 }
 
 .foot__sheet {
   position: relative;
   display: grid;
   gap: var(--s-xl);
-  margin: 0 calc(16px - var(--foot-px));
-  padding: 32px;
+  margin: 0;
+  padding: 72px max(var(--inset), calc((100% - 1180px) / 2));
   overflow: hidden;
-  border-radius: 32px;
   background: var(--c-cream);
   color: var(--c-asphalt);
 }
 
 @media (min-width: 768px) {
   .foot__sheet {
-    padding: 64px;
+    padding-top: 112px;
+    padding-bottom: 112px;
   }
 }
 
@@ -530,7 +536,6 @@
   .foot__sheet {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     gap: var(--s-2xl);
-    padding: 96px;
   }
 }
 
@@ -606,7 +611,6 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: inherit;
   background-image: var(--grain);
   opacity: var(--grain-opacity);
   pointer-events: none;
@@ -615,4 +619,13 @@
 .foot__sheet > * {
   position: relative;
   z-index: 1;
+}
+
+/* THE BOTTOM ROW UNDER THE SHEET (final28): dark, inside the 1180
+   container, the 1px bone rule at 14% above it and 28px of padding. The
+   footer has no padding here, so the row takes no margin. */
+.foot--sheet .foot__base {
+  width: min(calc(100% - 2 * var(--inset)), 1180px);
+  margin: 0 auto;
+  padding: 28px 0;
 }

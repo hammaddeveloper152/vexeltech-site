@@ -1,6 +1,6 @@
 /* SERVICES, MARKETING: THREE PLACES, ONE INBOX (InboxStage.jsx, final19,
    2026-10-06). On the dark band. Since final20: 520 tall at 1280, the
-   cards on one baseline at 220 x 400, the bus under them, the inbox in
+   cards on one baseline at 220 x 400, the inbox in
    what remains.
 
    Inks on the white cards: #202124 16.1:1, #5F6368 6.0, #4D5156 7.9, link
@@ -14,45 +14,19 @@
 }
 
 /* FINAL20 (2026-10-06): the cards on one baseline, 220 x 400, from 24px
-   in; the trunk 30px right of card 3 and its 24px bend, then the inbox in
-   what remains (348 at 1280, where the stage is 1152 wide). 520 tall. */
+   in, then the inbox in what remains. 520 tall. FINAL28 (2026-10-07): the
+   wires are deleted and the inbox stands 48px from the cards (400 wide at
+   1280). */
 .ib__stage {
   --ib-row: 56px;
   position: relative;
   display: grid;
   grid-template-columns: 732px minmax(0, 1fr);
-  column-gap: 72px;
+  column-gap: 48px;
   align-items: start;
   width: min(100%, 1180px);
   min-height: 520px;
   margin: 0 auto;
-}
-
-/* ---- The wires ----------------------------------------------------------- */
-.ib__wires {
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow: visible;
-  pointer-events: none;
-}
-
-/* 1.5px at 60% since final21, so the wires read at a glance. */
-.ib__wires path {
-  fill: none;
-  stroke: rgb(242 176 30 / 60%);
-  stroke-width: 1.5;
-}
-
-/* The routes are the pulse's tracks only: drawn already by the branches
-   and the trunk, so they paint nothing. */
-.ib__wires .ib__route {
-  stroke: none;
-}
-
-.ib__pulse {
-  fill: var(--c-yellow-d);
-  opacity: 0;
 }
 
 /* ---- The three places ---------------------------------------------------- */
@@ -433,6 +407,7 @@
 }
 
 .ib__chip {
+  position: relative;
   justify-self: start;
   padding: 3px 8px;
   border: 1px solid rgb(232 234 237 / 40%);
@@ -508,6 +483,52 @@
   }
 }
 
+/* THE CHIP'S COLOUR (final28): the new row's chip carries its card's colour
+   on a ring over the bone outline for 600ms, then the ring fades over 200ms
+   and the bone outline is what is left. Opacity only. */
+.ib__chip::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--ib-chip-c, transparent);
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ib__chip--1 {
+  --ib-chip-c: var(--c-yellow-d);
+}
+
+.ib__chip--2 {
+  --ib-chip-c: var(--c-lilac);
+}
+
+.ib__chip--3 {
+  --ib-chip-c: var(--c-mint);
+}
+
+.ib__rows[data-cycle] .ib__row--new .ib__chip::after {
+  animation: ib-chip 800ms linear;
+}
+
+@keyframes ib-chip {
+  0%,
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ib__chip::after {
+    animation: none;
+  }
+}
+
 /* ---- Under the stage ------------------------------------------------------ */
 .ib__proof {
   margin: 0;
@@ -541,7 +562,7 @@
   .ib__stage {
     --ib-row: 64px;
     grid-template-columns: minmax(0, 1fr);
-    gap: 96px;
+    gap: 48px;
     min-height: 0;
   }
 

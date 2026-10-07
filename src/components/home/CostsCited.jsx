@@ -9,8 +9,13 @@ import './costs-cited.css';
    The H2, an 18px lead, then four cells in one row from 1024 (two by two
    below), 2px apart, under one continuous 2px yellow rule (#F2B01E) across
    the top of the row (final16). Each cell: a mono label in steel-lift, the
-   figure, a 20px line, a 14px note, and the source in mono 11px pinned to
-   the cell's foot. The words are content/costs.js.
+   figure, a 20px line and a 14px note. The words are content/costs.js.
+
+   NO SOURCE ON THE CELLS (final28, 2026-10-07, the founder): the four
+   source lines are deleted. One line under the row, 11px mono, right
+   aligned, reads "Industry figures, 2024 to 2025."; the sources are
+   recorded in VEXELTECH-COPY.md and in content/costs.js, not on the page.
+   The cell light is 5% (it was 10) and the sweep 2% (it was 4).
 
    LIGHT AND COLOUR, NOT OBJECTS (final19, 2026-10-06, the founder). The
    quantity fields of final18 and their sweep are deleted. The figures are
@@ -89,13 +94,12 @@ export default function CostsCited() {
             ref={rowRef}
             {...(narrow ? { tabIndex: 0, 'aria-label': 'What it costs you, four figures. Scroll sideways for the next.' } : {})}
           >
-            {COSTS.map(({ id, label, figure, line, note, source }) => (
+            {COSTS.map(({ id, label, figure, line, note }) => (
               <li className="cc__cell" key={id}>
                 <p className="cc__k">{label}</p>
                 <p className="cc__n">{figure}</p>
                 <h3 className="cc__h">{line}</h3>
                 <p className="cc__p">{note}</p>
-                <p className="cc__src">{source}</p>
               </li>
             ))}
           </ul>
@@ -119,6 +123,7 @@ export default function CostsCited() {
             ))}
           </div>
         ) : null}
+        <p className="cc__src">Industry figures, 2024 to 2025.</p>
       </div>
     </section>
   );

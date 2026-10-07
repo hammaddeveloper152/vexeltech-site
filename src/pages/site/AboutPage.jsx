@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import Shell from './Shell.jsx';
-import Faq from '../../components/home/Faq.jsx';
 import OriginStory from '../../components/story/OriginStory.jsx';
 import WeekStrip from '../../components/artifacts/WeekStrip.jsx';
 import OneTeam from '../../components/artifacts/OneTeam.jsx';
 import FitColumns from '../../components/story/FitColumns.jsx';
 import TermsCard from '../../components/story/TermsCard.jsx';
 import AboutClose from '../../components/final/AboutClose.jsx';
-import { setFaqLd } from './head.js';
 import { FIGURES, money } from '../../content/pricing.js';
 import '../../styles/aboutpage.css';
 import '../../styles/light.css';
@@ -17,11 +15,10 @@ import '../../styles/light.css';
 
      the statement                the Monigue line, its words rising on load
      One team (dark)              OneTeam: four lanes into one
-     Where we come from           OriginStory: one paragraph, the years over it
+     Why we exist                 OriginStory: four beats (final28)
      Four business days (dark)    WeekStrip: the week, Monday to live
      Who we are for               FitColumns: two columns, a rule between
-     How we work with you         TermsCard: a white sheet, four clauses
-     Questions                    the FAQ accordion
+     How we work with you         TermsCard: the contract (final28)
      the close                    AboutClose (final18)
 
    It replaced home's route (twice), home's discipline cards, the fit cards
@@ -36,46 +33,10 @@ import '../../styles/light.css';
 
    EVERY LINE IS VEXELTECH-COPY.md V3.1's, About us. The page's earlier
    shapes are in git and DESIGN.md. */
-/* COPY V3.5, 2026-10-05 (VEXELTECH-COPY.md, About, Questions): six, in
-   the founder's order. The $700 is the token. */
-const QUESTIONS = [
-  {
-    id: 'us',
-    q: 'Where are your clients?',
-    a: 'Our clients are in the US, the UK, Europe and Australia, on the same terms. Calls are set to your hours, not ours.',
-  },
-  {
-    id: 'who',
-    q: 'Who will I actually be dealing with?',
-    a: 'One person, by name, from the first call through launch and after. They answer the phone and they know your account. There is no ticket queue.',
-  },
-  {
-    id: 'industry',
-    q: 'Do you work with my industry?',
-    a: 'If people search for what you do, yes. Recent work covers real estate, bookkeeping, care services, hospitality, consulting and technology, and the job is the same in every one: be found, look real, pick up.',
-  },
-  {
-    id: 'concepts',
-    q: "What if I don't like the first concepts?",
-    a: 'Tell us. We would rather hear it on day two than on launch day. We go again at no charge, and nothing is billed until you have approved.',
-  },
-  {
-    id: 'takeover',
-    q: 'Can you take over a site someone else built?',
-    a: "Yes, if you own the domain and the files. If you don't, that is the first thing we fix, because a site you can't log into isn't really yours.",
-  },
-  {
-    id: 'flat',
-    q: 'Why are your prices flat?',
-    a: `Because a quote that changes halfway through isn't a quote. The website is ${money(FIGURES.website)} because we know what six good pages take, and we would rather you spend the saving on getting people to it.`,
-  },
-  /* COPY V4, 2026-10-06: the seventh. */
-  {
-    id: 'shops',
-    q: 'How are you different from the big logo and website shops?',
-    a: 'They sell packages; we sell outcomes you can check. One named person instead of a queue, a written number before any work, files and accounts in your name, and a monthly cost per lead instead of a monthly report about impressions. Fewer tiers, fewer surprises.',
-  },
-];
+/* THE QUESTIONS ARE GONE (final28, 2026-10-07, the founder): "Questions
+   about working with us" is deleted, and with it the page's FAQPage data.
+   The seven are in VEXELTECH-COPY.md, marked off. The regions they named
+   are still on the page, in Who this is for's note. */
 
 /* THE META DESCRIPTION, COPY V4, 2026-10-06. The figures are FIGURES'. */
 const ABOUT_DESCRIPTION = `A web design and small business marketing agency. Websites ${money(FIGURES.website)} flat, branding from ${money(FIGURES.brandingBasic)}, ads measured by cost per lead. One team, one invoice.`;
@@ -85,8 +46,6 @@ const ABOUT_DESCRIPTION = `A web design and small business marketing agency. Web
 const WORDS = 'A web design and marketing agency built for small businesses.'.split(' ');
 
 export default function AboutPage() {
-  /* The questions as FAQPage data (head.js, 2026-10-05). */
-  useEffect(() => setFaqLd(QUESTIONS), []);
   /* MONIGUE IS PRELOADED HERE ONLY (final26, 2026-10-07): About is the one
      route that paints Monigue above the fold. The tag is in the head when
      the page is prerendered, so about-us/index.html carries it; the other
@@ -141,8 +100,7 @@ export default function AboutPage() {
 
       {/* THE BANDS, final7 (2026-10-03, the founder): cream, dark, cream,
           dark, then cream to the close. Dark bands 96 above and below, cream
-          bands 80 (about-bands.css). The side labels number 01 to 07 in this
-          order (Marginalia). */}
+          bands 80 (about-bands.css). */}
       <OneTeam />
       <OriginStory />
       <WeekStrip />
@@ -151,7 +109,6 @@ export default function AboutPage() {
           by side, which the 40% column of the audit's pair could not hold). */}
       <FitColumns />
       <TermsCard />
-      <Faq items={QUESTIONS} id="ab3-faq" heading="Questions about working with us" />
       {/* The close (final18, 2026-10-06): one statement, the call and the
           facts. It replaced the closing call. */}
       <AboutClose />

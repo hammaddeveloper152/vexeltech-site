@@ -1,0 +1,41 @@
+/* ld-check.mjs: the JSON-LD on one route, validated (final28, 2026-10-07).
+   Reads the prerendered HTML and the live page, parses every
+   application/ld+json block, and checks each FAQPage: every Question has a
+   name and an acceptedAnswer with text, and the questions match the ones
+   rendered on the page, in order. Exits 1 on any failure.
+     node .measure/ld-check.mjs [base] [route]   (default 4190, /pricing) */
+import fs from 'node:fs';
+import puppeteer from 'puppeteer';
+const BASE = process.argv[2] || 'http://localhost:4190';
+const ROUTE = process.argv[3] || '/pricing';
+let fail = 0;
+const parse = (label, blocks) => {
+  const out = [];
+  blocks.forEach((t, i) => {
+    try { out.push(JSON.parse(t)); } catch (e) { fail += 1; console.log(`${label} block ${i}: INVALID JSON ${e.message}`); }
+  });
+  return out;
+};
+const html = fs.readFileSync(`dist${ROUTE === '/' ? '' : ROUTE}/index.html`, 'utf8');
+const pre = parse('prerender', [...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]));
+const b = await puppeteer.launch({ headless: 'new' });
+const p = await b.newPage();
+await p.goto(BASE + ROUTE, { waitUntil: 'networkidle0' });
+const live = parse('live', await p.$$eval('script[type="application/ld+json"]', (s) => s.map((x) => x.textContent)));
+const shown = await p.$$eval('main h3, main button[aria-expanded]', (n) => n.map((x) => x.textContent.trim()));
+await b.close();
+for (const [label, set] of [['prerender', pre], ['live', live]]) {
+  console.log(`${label}: ${set.length} blocks: ${set.map((x) => x['@type'] || (x['@graph'] ? 'graph' : '?')).join(', ')}`);
+  const faqs = set.filter((x) => x['@type'] === 'FAQPage');
+  if (faqs.length !== 1) { fail += 1; console.log(`  FAQPage blocks: ${faqs.length}, expected 1`); continue; }
+  const qs = faqs[0].mainEntity || [];
+  qs.forEach((q, i) => {
+    const ok = q['@type'] === 'Question' && q.name && q.acceptedAnswer?.['@type'] === 'Answer' && q.acceptedAnswer.text;
+    if (!ok) fail += 1;
+    const onPage = shown.some((s) => s.replace(/\s*\+\s*$/, '').startsWith(q.name));
+    if (!onPage) fail += 1;
+    console.log(`  ${i + 1}. ${ok ? 'valid' : 'INVALID'} ${onPage ? 'on page' : 'NOT ON PAGE'}  ${q.name}`);
+  });
+}
+console.log(fail ? `FAIL: ${fail}` : 'PASS');
+process.exit(fail ? 1 : 0);

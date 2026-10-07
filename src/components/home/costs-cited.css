@@ -31,11 +31,11 @@
   display: grid;
   align-content: start;
   min-width: 0;
-  padding: 28px 24px 64px;
-  /* Lit from the top edge (final19): yellow at 10% at the rule, gone by
-     40% of the height, over the cell's own surface. */
+  padding: 28px 24px;
+  /* Lit from the top edge (final19): yellow at 5% at the rule (final28; it
+     was 10%), gone by 40% of the height, over the cell's own surface. */
   background:
-    linear-gradient(180deg, rgb(242 176 30 / 10%), transparent 40%),
+    linear-gradient(180deg, rgb(242 176 30 / 5%), transparent 40%),
     rgb(255 255 255 / 4%);
 }
 
@@ -47,7 +47,7 @@
 
 @media (max-width: 767px) {
   .cc__cell {
-    padding: 20px 14px 72px;
+    padding: 20px 14px 24px;
   }
 }
 
@@ -95,12 +95,13 @@
   text-wrap: pretty;
 }
 
+/* THE ONE SOURCE LINE (final28, 2026-10-07): under the row, right aligned.
+   The brief's steel is 2.4:1 on this ground, so steel-lift (7.00), as the
+   lead above. */
 .cc__src {
-  position: absolute;
-  right: 24px;
-  bottom: 20px;
-  left: 24px;
+  margin-top: var(--s-md);
   letter-spacing: 0.02em;
+  text-align: right;
   color: var(--c-steel-lift);
 }
 
@@ -112,11 +113,6 @@
   .cc__h {
     font-size: 17px;
     line-height: 23px;
-  }
-
-  .cc__src {
-    right: 14px;
-    left: 14px;
   }
 }
 
@@ -150,7 +146,8 @@
   }
 }
 
-/* THE AMBIENT SWEEP: a soft highlight 320px wide, white at 4% at its
+/* THE AMBIENT SWEEP: a soft highlight 320px wide, white at 2% (final28; it
+   was 4%) at its
    centre to transparent, crossing the row left to right every 12s. The
    overlay is the row's own box and clips the highlight; the highlight
    moves by transform alone. Paused under reduced motion. */
@@ -172,7 +169,7 @@
   background: linear-gradient(
     90deg,
     transparent calc(50% - 160px),
-    rgb(255 255 255 / 4%) 50%,
+    rgb(255 255 255 / 2%) 50%,
     transparent calc(50% + 160px)
   );
   animation: cc-sweep 12s linear infinite;

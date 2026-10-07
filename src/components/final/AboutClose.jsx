@@ -13,7 +13,7 @@ const FACTS = ['Reply within one business day', 'Every quote in writing', 'No lo
 
 export default function AboutClose() {
   return (
-    <section className="vt st-sec st--dark ab-dark ac" aria-labelledby="ac-h" data-nomarg="">
+    <section className="vt st-sec st--dark ab-dark ac" aria-labelledby="ac-h">
       <div className="ac__in">
         <span className="ac__rule" aria-hidden="true" />
         <h2 className="ac__h" id="ac-h">

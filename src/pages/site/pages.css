@@ -235,24 +235,28 @@
 
 /* ---- THE CLOSING CALL AS A FIELD (home, final26, 2026-10-07) -------------
    Full-bleed #F2B01E. The heading and the line in ink #121212 (9.82:1 on
-   the yellow), the call inverted: ink fill, bone text (15.54:1). At 390 the
-   band is one screen tall below the bar, the heading 56px. Hover and press
-   as every call. */
-.callband--field {
+   the yellow), the call inverted: ink fill, bone text (15.54:1). The
+   heading 56px. Hover and press as every call.
+
+   FINAL28 (2026-10-07, the founder): the field meets How it works above
+   it and the form's cream below with no dark between. 112px above and
+   below at 1280, 72 below 768, the content in the 1180 container. The
+   one-screen height at 390 of final26 is gone: the padding sets the
+   field's height at every width. */
+main#main section.vt.callband--field.callband--field {
   --cb-ink: #121212;
   display: grid;
   align-content: center;
   justify-items: center;
-  min-height: calc(100svh - 52px);
-  margin-top: var(--s-section);
-  padding: var(--s-2xl) var(--inset);
+  margin-top: 0;
+  padding: 72px max(var(--inset), calc((100% - 1180px) / 2));
   background: var(--c-yellow-d);
 }
 
 @media (min-width: 768px) {
-  .callband--field {
-    min-height: 0;
-    padding: var(--s-section) var(--inset);
+  main#main section.vt.callband--field.callband--field {
+    padding-top: 112px;
+    padding-bottom: 112px;
   }
 }
 

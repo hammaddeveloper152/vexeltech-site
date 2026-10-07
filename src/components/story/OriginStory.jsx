@@ -26,9 +26,31 @@ import "./story.css";
    frame (BUILD-LAW rule 0, as amended), with the founder's caption in mono
    11px steel (7.2:1 on cream). Below 1024 the frame sits under the
    paragraphs. The capture appears on this page only. */
-/* COPY V4, 2026-10-06: one paragraph, the founder's. */
-const STORY =
-  "We started in paid media, running Google and Meta campaigns for small businesses, and watched the same thing happen every month: good ads sending people to pages that lost them, and calls ringing out while the owner was on a job. So we built the pages. Then the whole site. Then the follow-up that runs after the call. By 2026 that had become VexelTech: branding, websites, marketing and automation from one team, at flat prices, for businesses that can't carry four vendors and shouldn't have to.";
+/* FOUR BEATS, final28 (2026-10-07, the founder). The paragraph of COPY V4
+   is replaced by four beats in the founder's words: a pull line in the
+   display face at 32px (26 below 600), then one or two sentences at 17px,
+   32px apart, a 1px rule at 14% between them. Behind each pull line its
+   numeral, 01 to 04, in the display face at 160px (96 below 600) at 6%,
+   on the left and clipped to the beat's box. A real sequence, so the
+   numerals carry order.
+
+   ON CREAM, NOT ON DARK. The section is About's cream band; the brief's
+   bone (about 1.1:1 here) is the dark ground's ink, so the pull lines, the
+   rule and the numerals take asphalt, its cream counterpart (15.75:1), and
+   the bodies the brief's steel (7.20:1).
+
+   AT REST. The brief's entrance, the pull lines rising 8px and fading in
+   at half in view, is raised and not built: BUILD-LAW Motion, "an entrance
+   never hides content", allows no opacity start below 1. */
+const BEATS = [
+  ['We started in paid media.', 'Google and Meta campaigns for small businesses, month after month.'],
+  ['Good ads, lost on bad pages.', 'People clicked and left. Calls rang out while the owner was on a job.'],
+  ['So we built the pages.', 'Then the whole site. Then the follow-up that runs after the call.'],
+  [
+    'By 2026 that had become VexelTech.',
+    "Branding, websites, marketing and automation from one team, at flat prices, for businesses that can't carry four vendors and shouldn't have to.",
+  ],
+];
 
 export default function OriginStory() {
   return (
@@ -37,9 +59,16 @@ export default function OriginStory() {
         <h2 className="st-h" id="os-h">
           Why we exist
         </h2>
-        {/* The year label came off (final22, 2026-10-06): copy rule 8, no
-            years. */}
-        <p className="os__p">{STORY}</p>
+        <ol className="os__beats">
+          {BEATS.map(([pull, body], i) => (
+            /* The numeral is the beat's ::before (story.css): a picture,
+               not text, so nothing reads or measures it as copy. */
+            <li className="os__beat" key={pull} data-n={String(i + 1).padStart(2, '0')}>
+              <p className="os__pull">{pull}</p>
+              <p className="os__body">{body}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

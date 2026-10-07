@@ -81,7 +81,7 @@ const SELF_OK_ROUTE = {
 const selfHits = (t, route) =>
   [...[...SELF_OK, ...(SELF_OK_ROUTE[route] || [])].reduce((x, ok) => x.replaceAll(ok, ''), t).matchAll(SELF)].map((m) => m[0]);
 /* The shared text a repeat may sit in (V3's allowances). */
-const SHARED = 'footer.foot, .callband, .about__rows, .ct-facts__row, a, button, .marg';
+const SHARED = 'footer.foot, .callband, .about__rows, .ct-facts__row, a, button';
 const FIGURES = new Set(['299', '449', '700', '999', '150', '15', '300']);
 /* Labelled comparison figures: [figure, the exact phrase it may sit in]. */
 const COMPARISONS = [['29', 'from a $29 one'], ['29', 'The $29 one is a stock mark']];

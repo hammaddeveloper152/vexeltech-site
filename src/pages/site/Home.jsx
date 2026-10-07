@@ -146,10 +146,11 @@ export default function Home() {
             founder's approved frame C, final15, 2026-10-06). */}
         <CostsCited />
         <CounterRow band />
-        {/* The $700 band, with How it works folded into it as its row of
-            four steps (final25, 2026-10-07; the section and RouteBand are
-            deleted, and the steps keep the #how-it-works anchor). */}
-        <PromiseBand id="promise-h" lead="Two prices you can plan around. Everything else quoted in writing." steps />
+        {/* How it works (final28, 2026-10-07, the founder): the band that
+            was the $700 band, now its heading, one line and the four steps,
+            which keep the #how-it-works anchor. From here down the page
+            stacks cream, yellow, cream, dark with no gaps. */}
+        <PromiseBand />
         {/* Questions came off, 2026-10-01: V3 gives home none
             (VEXELTECH-COPY.md, COPY V3). */}
         {/* The closing call, before the form. COPY V3, 2026-10-01. */}
@@ -162,9 +163,6 @@ export default function Home() {
         />
         <FooterForm />
       </main>
-      {/* No section index on home (final18, 2026-10-06, the founder): the
-          margin labels are gone from this page. Marginalia still serves the
-          other pages through Shell. */}
     </>
   );
 }

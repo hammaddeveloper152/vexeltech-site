@@ -72,11 +72,6 @@ html[data-ground='light'] .bar__panel {
   background: var(--c-cream);
 }
 
-/* The margin labels on cream: deep amber, as on every cream sheet. */
-html[data-ground='light'] .marg {
-  color: var(--c-accent-text-light);
-}
-
 /* ---- The black block: the footer ----------------------------------------
    (About's What we do block was the other, until COPY V3, 2026-10-01.) */
 html[data-ground='light'] .foot__band :focus-visible {
