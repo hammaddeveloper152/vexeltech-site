@@ -8,6 +8,10 @@
    only, the site's one FAQ (copy rule), and on no other route. On every
    route every block must parse, carry the schema.org context, and the
    prerendered blocks must equal the live ones after hydration.
+
+   PRICES (FINAL40, addendum 3, the founder): structured-data prices (an
+   Offer, a priceRange) stand on /pricing only. /pricing must carry at
+   least one; every other route none.
      node .measure/ld-check.mjs [base] [route]   (default 4190, /pricing) */
 import fs from 'node:fs';
 import puppeteer from 'puppeteer';
@@ -32,6 +36,9 @@ await b.close();
 for (const [label, set] of [['prerender', pre], ['live', live]]) {
   console.log(`${label}: ${set.length} blocks: ${set.map((x) => x['@type'] || (x['@graph'] ? 'graph' : '?')).join(', ')}`);
   for (const x of set) if (x['@context'] !== 'https://schema.org') { fail += 1; console.log(`  a block without the schema.org context`); }
+  const priced = (JSON.stringify(set).match(/"@type":"Offer"|"priceRange"/g) || []).length;
+  console.log(`  prices: ${priced} (offers and price ranges)`);
+  if (ROUTE === '/pricing' ? priced === 0 : priced > 0) { fail += 1; console.log(`  prices on the wrong route, or none on /pricing`); }
   const faqs = set.filter((x) => x['@type'] === 'FAQPage');
   const want = ROUTE === '/pricing' ? 1 : 0;
   if (faqs.length !== want) { fail += 1; console.log(`  FAQPage blocks: ${faqs.length}, expected ${want}`); continue; }

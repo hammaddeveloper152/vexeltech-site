@@ -16,6 +16,14 @@
                thickness, and no anchor carries a glyph in ::before/::after
                that its underline would run under
 
+     buttons   THE BUTTON LAW (FINAL40, addendum 3, the founder): with
+               motion allowed at 1280, every button the law names rises
+               2px and changes its fill on hover, and presses to 0.97;
+               the submit before its form is valid does neither and shows
+               the default cursor. These moves are expected, not
+               departures (the move check above runs under reduced motion,
+               where the law moves nothing).
+
      node .measure/interact-audit.mjs [base] [tag]   (default 4190, now)
    Writes .measure/out/final35/interact-<tag>.json and prints every
    departure; exits 1 when there is one. */
@@ -288,6 +296,69 @@ for (const w of [1280, 390]) {
     await p.close();
   }
 }
+/* THE BUTTON LAW, with motion allowed. */
+const LAW = '.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .sf__cta, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl';
+const lawSeen = {};
+for (const route of ROUTES) {
+  const p = await b.newPage();
+  await p.setViewport({ width: 1280, height: 800 });
+  await p.goto(BASE + route, { waitUntil: 'networkidle0' });
+  await p.evaluate(HELPERS);
+  await wait(2600); /* the hero's pause control appears with the film */
+  const n = await p.evaluate((LAW) => {
+    const els = [...document.querySelectorAll(LAW)].filter(__visible);
+    els.forEach((e, i) => e.setAttribute('data-law', String(i)));
+    return els.length;
+  }, LAW);
+  for (let i = 0; i < n; i += 1) {
+    const sel = `[data-law="${i}"]`;
+    const read = () =>
+      p.evaluate((sel) => {
+        const e = document.querySelector(sel);
+        const cs = getComputedStyle(e);
+        const face = e.querySelector('.ct-mq__face');
+        return { tf: cs.transform, bg: (face ? getComputedStyle(face) : cs).backgroundColor, cursor: cs.cursor, disabled: e.getAttribute('aria-disabled') === 'true', name: __name(e) };
+      }, sel);
+    const there = await p.evaluate((sel) => {
+      const e = document.querySelector(sel);
+      if (e) e.scrollIntoView({ block: 'center' });
+      return !!e;
+    }, sel);
+    if (!there) continue;
+    await p.mouse.move(1, 1);
+    await wait(250);
+    const rest = await read();
+    try {
+      await p.hover(sel);
+    } catch {
+      continue;
+    }
+    await wait(300);
+    const hov = await read();
+    await p.mouse.down();
+    await wait(200);
+    const down = await read();
+    /* Released away from the button, so the press is not a click: a link
+       would navigate, a toggle would toggle. */
+    await p.mouse.move(1, 1);
+    await p.mouse.up();
+    await wait(200);
+    const ty = (tf) => (tf === 'none' ? 0 : Number(tf.match(/matrix\(([^)]+)\)/)[1].split(',')[5]));
+    const sc = (tf) => (tf === 'none' ? 1 : Number(tf.match(/matrix\(([^)]+)\)/)[1].split(',')[0]));
+    lawSeen[rest.name] = true;
+    if (rest.disabled) {
+      if (hov.tf !== rest.tf || hov.bg !== rest.bg || down.tf !== rest.tf) dep(route, 1280, 'button law: a disabled button moves or changes', rest.name);
+      if (rest.cursor !== 'default') dep(route, 1280, 'button law: disabled cursor', `${rest.name} ${rest.cursor}`);
+      continue;
+    }
+    if (Math.abs(ty(hov.tf) - ty(rest.tf) + 2) > 0.5) dep(route, 1280, 'button law: no 2px rise on hover', `${rest.name} ${hov.tf}`);
+    if (hov.bg === rest.bg) dep(route, 1280, 'button law: fill unchanged on hover', `${rest.name} ${hov.bg}`);
+    if (Math.abs(sc(down.tf) - 0.97) > 0.005) dep(route, 1280, 'button law: no 0.97 press', `${rest.name} ${down.tf}`);
+  }
+  await p.close();
+}
+console.log(`button law: ${Object.keys(lawSeen).length} distinct buttons checked`);
+
 await b.close();
 const uniq = [...new Map(departures.map((d) => [`${d.route}|${d.w}|${d.kind}|${d.what}`, d])).values()];
 fs.writeFileSync(path.join(OUT, `interact-${TAG}.json`), JSON.stringify({ report, departures: uniq }, null, 1));

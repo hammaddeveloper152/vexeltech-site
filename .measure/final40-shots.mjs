@@ -1,6 +1,8 @@
 /* final40-shots.mjs: the captures for final40 (2026-10-08, the founder).
    Full pages at rest (reduced motion), The Next Size alone at 1024, and
-   (addendum 2) a /pricing FAQ row under the pointer, question 2, motion on. Writes into .measure/out/final40/.
+   (addendum 2) a /pricing FAQ row under the pointer, question 2, motion on;
+   (addendum 3) the hero's call under the pointer at 1280 and held down at
+   390, motion on, with its transform and fill printed. Writes into .measure/out/final40/.
      node .measure/final40-shots.mjs [base]   (default http://localhost:4190) */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -65,6 +67,33 @@ for (const w of [1024]) {
     return { x: 0, y: Math.max(0, r.top - 120 + scrollY), width: 1280, height: r.height + 240 };
   });
   await p.screenshot({ path: path.join(OUT, 'pricing-faq-hover-1280.png'), clip: box, captureBeyondViewport: false });
+  await p.close();
+}
+for (const [w, name, press] of [
+  [1280, 'button-hover-1280', false],
+  [390, 'button-press-390', true],
+]) {
+  const p = await b.newPage();
+  await p.setViewport({ width: w, height: w === 390 ? 844 : 800 });
+  await p.goto(BASE + '/', { waitUntil: 'networkidle0' });
+  await p.evaluate(() => document.fonts.ready);
+  const r = await p.evaluate(() => {
+    const e = document.querySelector('.hero__cta').getBoundingClientRect();
+    return { x: e.left + e.width / 2, y: e.top + e.height / 2, left: e.left, top: e.top, w: e.width, h: e.height };
+  });
+  await p.mouse.move(r.x, r.y);
+  if (press) await p.mouse.down();
+  await new Promise((res) => setTimeout(res, press ? 60 : 400));
+  const st = await p.evaluate(() => {
+    const cs = getComputedStyle(document.querySelector('.hero__cta'));
+    return { transform: cs.transform, fill: cs.backgroundColor };
+  });
+  console.log(name, JSON.stringify(st));
+  await p.screenshot({ path: path.join(OUT, `${name}.png`), clip: { x: Math.max(0, r.left - 40), y: Math.max(0, r.top - 40), width: Math.min(w - Math.max(0, r.left - 40), r.w + 80), height: r.h + 80 }, captureBeyondViewport: false });
+  if (press) {
+    await p.mouse.move(1, 1);
+    await p.mouse.up();
+  }
   await p.close();
 }
 await b.close();

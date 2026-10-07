@@ -7,7 +7,7 @@ import Faq from '../../components/home/Faq.jsx';
 import { DISCIPLINES } from '../../content/services.js';
 import { BRANDING, BUNDLE, FIGURES, WEBSITES, money } from '../../content/pricing.js';
 import '../../styles/pricegrid.css';
-import { setFaqLd } from './head.js';
+import { setFaqLd, setLd, ORIGIN } from './head.js';
 
 /* THE PRICING PAGE, REBUILT 2026-09-24 ON THE MELIUS PATTERN (the founder),
    after the quiet pass, so it inherits its type and panel rules.
@@ -148,6 +148,38 @@ export default function PricingPage() {
   const [open, setOpen] = useState(null);
   /* The questions as FAQPage data (head.js, 2026-10-05). */
   useEffect(() => setFaqLd(QUESTIONS), []);
+  /* THE PRICES IN STRUCTURED DATA, ON /pricing ONLY (FINAL40, addendum 3,
+     the founder): the price range left home's ProfessionalService, and
+     the published prices stand here as an offer catalog on the same
+     entity (`#service`). Every figure and name is the price sheet's
+     (content/pricing.js). */
+  useEffect(
+    () =>
+      setLd('prices', {
+        '@type': 'ProfessionalService',
+        '@id': `${ORIGIN}/#service`,
+        name: 'VexelTech Solutions',
+        url: `${ORIGIN}/pricing`,
+        priceRange: `${money(FIGURES.brandingBasic)} to ${money(FIGURES.bundle)}`,
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: 'Website design and branding prices',
+          itemListElement: [
+            [`Branding, ${BRANDING[0].name}`, FIGURES.brandingBasic],
+            [`Branding, ${BRANDING[1].name}`, FIGURES.brandingAdvance],
+            [WEBSITES[0].name, FIGURES.website],
+            [BUNDLE.name, FIGURES.bundle],
+          ].map(([name, price]) => ({
+            '@type': 'Offer',
+            name,
+            price: String(price),
+            priceCurrency: 'USD',
+            url: `${ORIGIN}/pricing`,
+          })),
+        },
+      }),
+    []
+  );
   return (
     <Shell
       title={`Website design pricing: ${money(FIGURES.website)} flat rate | VexelTech`}

@@ -1247,3 +1247,113 @@ main:focus {
 :is(#main, .sf) .hl + :is(.services__lead, .sec-lead, .tail__line, .callband__note, .ab__lead) {
   margin-top: calc(var(--hl-gap) - 0.17 * var(--t-head-loud) - var(--lead-lh, 28px) / 2 + 0.355em);
 }
+
+/* ==========================================================================
+   THE BUTTON LAW (FINAL40, addendum 3, 2026-10-08, the founder; BUILD-LAW
+   Touch, Interaction). One behaviour for every button on the site:
+
+     the primaries   the hero's call, the bar's, What we do's form and every
+                     form submit, /services', the price cards' primary, the
+                     closing calls, the footer's, the legal pages' and the
+                     404's
+     the outlines    the price cards' other buttons, the Details and Full
+                     list toggles, the two pause controls
+
+   Hover (a real pointer): the button rises 2px and its fill deepens one
+   step, a primary to --c-yellow-d, the inverted call on About's yellow
+   field from ink to black, an outline to bone at 10% over its ground;
+   160ms on the reveal curve. Press (mouse or touch): scale 0.97 and the
+   rise back to 0, over 90ms. Release returns to the hover state under a
+   pointer and to rest on touch, where there is no hover. Focus is the
+   ring, unchanged. The submit before the form is valid takes no hover and
+   no press, and the default cursor. Reduced motion: the colour only.
+   Nothing else moves: no shadow, no glow, no icon (the submit's arrow and
+   the price buttons' darkening layer stand still). Links keep their
+   underline. Not in the law, each with a recorded behaviour of its own:
+   the skip link, the menu button, What we do's cards, the FAQ rows, the
+   cost row's dots, the desk's swatches and the form's pills.
+   ========================================================================== */
+:root {
+  --btn-dur: 160ms;
+  --btn-press: 90ms;
+}
+
+html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .sf__cta, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl) {
+  transition:
+    transform var(--btn-dur) var(--ease-reveal),
+    background-color var(--btn-dur) var(--ease-reveal),
+    color var(--btn-dur) var(--ease-reveal);
+}
+
+html body .ct-mq__ctl .ct-mq__face {
+  transition: background-color var(--btn-dur) var(--ease-reveal);
+}
+
+html body :is(.lf__submit)[aria-disabled='true'] {
+  cursor: default;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* The fill, one step deeper. */
+  html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .sf__cta, .svc2__cta, .callband__cta, .pr-col__btn--primary, .legal__cta, .one__cta):not([aria-disabled='true']):hover {
+    opacity: 1;
+    background-color: var(--c-yellow-d);
+  }
+
+  html body .callband--field .callband__cta:hover {
+    background-color: #000;
+  }
+
+  html body :is(.pr-col__btn:not(.pr-col__btn--primary), .dt__btn, .pr-col__more):hover {
+    opacity: 1;
+    background-color: rgb(232 234 237 / 10%);
+  }
+
+  /* The pause controls: bone at 10% over their own dark fill. */
+  html body .hero__pause:hover {
+    background-color: rgb(33 33 35 / 82%);
+  }
+
+  html body .ct-mq__ctl:hover .ct-mq__face {
+    background-color: #2c2d2f;
+  }
+
+  /* Nothing else moves. */
+  html body .pr-col__btn:hover::after {
+    opacity: 0;
+  }
+
+  html body .lf__submit:hover .send__go {
+    transform: none;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .sf__cta, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):not([aria-disabled='true']):hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .sf__cta, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):not([aria-disabled='true']):active {
+    transform: scale(0.97);
+    transition-duration: var(--btn-press);
+  }
+
+  /* The contact marquee's control pressed its face before; the button
+     itself presses now, so the face stays still inside it. */
+  html body .ct-mq__ctl:active .ct-mq__face {
+    transform: none;
+  }
+}
+
+/* The submit before the form is valid: no press either. */
+html body .lf__submit[aria-disabled='true']:active {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body :is(.hero__cta, .bar__cta, .lf__submit, .sf__cta, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):is(:hover, :active) {
+    transform: none;
+  }
+}

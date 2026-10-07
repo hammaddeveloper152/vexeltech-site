@@ -11,7 +11,6 @@ import CounterRow from '../../components/home/CounterRow.jsx';
 import ClosingForm from '../../components/site/ClosingForm.jsx';
 import { setHead, setLd, AREA_SERVED, ORIGIN } from './head.js';
 import { SOCIAL_URLS } from '../../content/socials.js';
-import { FIGURES, money } from '../../content/pricing.js';
 import '../../styles/tokens.css';
 /* The loud register, applied to every section below the hero. Imported LAST
    so it wins on source order. See src/styles/register.css. */
@@ -61,10 +60,11 @@ import '../../styles/lit.css';
    section numbers in the build brief were a build sequence, not a page
    order, so do not reorder to match them. */
 
-/* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Metadata). */
-const TITLE = 'Website design for growing businesses, $700 flat | Vexel';
+/* FINAL40, addendum 3 (2026-10-08, the founder): no price in home's
+   metadata or structured data. */
+const TITLE = 'Website design and marketing for growing businesses | Vexel';
 const DESCRIPTION =
-  'Website design, branding, local SEO, ads and automation for businesses that want to grow. Websites $700 flat, live in four business days.';
+  'Vexel is a growth partner for businesses that want to grow. Brand, website, marketing and follow-up from one team, with a written number within one business day.';
 
 
 export default function Home() {
@@ -76,7 +76,8 @@ export default function Home() {
 
   /* THE BUSINESS, home only (the founder's final audit, final22): a
      ProfessionalService with its name, url, logo, the countries served and
-     the price range; `sameAs` only once a social URL is set. */
+     no price since FINAL40 addendum 3, when the price range moved to
+     /pricing; `sameAs` only once a social URL is set. */
   useEffect(() => {
     const sameAs = Object.values(SOCIAL_URLS).filter(Boolean);
     return setLd('business', {
@@ -90,9 +91,6 @@ export default function Home() {
       telephone: '+13852843265',
       description: DESCRIPTION,
       areaServed: AREA_SERVED,
-      /* From the price tokens since the launch gate (2026-10-07): the range
-         stopped at $700 while /pricing sells the $999 bundle. */
-      priceRange: `${money(FIGURES.brandingBasic)} to ${money(FIGURES.bundle)}`,
       parentOrganization: { '@id': `${ORIGIN}/#organization` },
       ...(sameAs.length ? { sameAs } : {}),
     });
