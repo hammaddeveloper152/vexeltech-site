@@ -34,12 +34,11 @@ export default function DevicePhones({ phones }) {
   const [near, setNear] = useState(false);
   /* Below 1024 the row is a sideways scroller, and only there does it take
      focus (the launch gate, 2026-10-07). */
-  const [scroller, setScroller] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 1023px)').matches
-  );
+  const [scroller, setScroller] = useState(false); // after mount (FINAL29)
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 1023px)');
     const on = () => setScroller(mq.matches);
+    on();
     mq.addEventListener('change', on);
     return () => mq.removeEventListener('change', on);
   }, []);

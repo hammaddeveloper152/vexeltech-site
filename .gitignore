@@ -26,3 +26,6 @@ dist-measure/
 # Local environment (the Meta Pixel ID is set in the Netlify build env).
 .env.local
 .env.*.local
+
+# The server render the prerender uses (FINAL29); built, not committed.
+dist-ssr

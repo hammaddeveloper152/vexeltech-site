@@ -763,3 +763,20 @@
     transform: none;
   }
 }
+
+/* ---- THE STILL HANDS OVER TO THE FILM (FINAL29, 2026-10-07) ----------------
+   The first render is the still everywhere (hydration). When the film is
+   allowed, the still stays on top of it, the same frame in the same box,
+   and fades out over 150ms; then it is removed. Opacity only. */
+.hero__still {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  opacity: 1;
+  transition: opacity 150ms linear;
+}
+
+.hero__still.is-leaving {
+  opacity: 0;
+}

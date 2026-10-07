@@ -25,12 +25,14 @@ import './what-we-do.css';
    screen reader reads the whole answer from the first paint. Reduced
    motion: filled, no caret, nothing moves. */
 
+/* COPY V4.2 (2026-10-07, the founder): the lead and every question, answer
+   and fact are V4.2's. Cards, layout and motion unchanged. */
 const CARDS = [
   {
     id: 'branding',
     name: 'Branding',
-    question: 'Need a logo and a look that makes your business look established?',
-    answer: 'your logo, colours, business cards and social kit.',
+    question: 'Need a look that makes people trust you before they call?',
+    answer: 'your logo, colours, cards and social kit, built to carry your business for years, not a season.',
     fact: 'Ready in one to two business days. Every file is yours.',
     link: 'See branding',
   },
@@ -38,24 +40,24 @@ const CARDS = [
     id: 'websites',
     name: 'Websites',
     question: 'Need a website that brings in calls and bookings, not just visits?',
-    answer: 'a six-page site built for phones, live in four business days.',
-    fact: 'On your own domain, in your name. Thirty days of maintenance included.',
+    answer: 'a six-page site built for phones and planned around how your customers actually buy.',
+    fact: 'Live in four business days. On your domain, in your name.',
     link: 'See websites',
   },
   {
     id: 'marketing',
     name: 'Marketing',
-    question: 'Need more customers to find you on Google and Facebook?',
-    answer: 'your ads and your Google listing, reported as cost per enquiry.',
-    fact: 'Month to month. You see every call and form, and what each one cost.',
+    question: 'Need your name in front of more people, above your competitors?',
+    answer: 'search, maps, social, AI answers and reviews, run as one plan and reported as cost per enquiry.',
+    fact: 'Month to month. We grow when you grow.',
     link: 'See marketing',
   },
   {
     id: 'automation',
     name: 'Automation',
-    question: 'Missing calls and forgetting follow-ups while you are on the job?',
-    answer: 'text-backs, bookings and reminders that run without you.',
-    fact: 'Set up in about two weeks, in your own accounts.',
+    question: 'Want the phone answered and the jobs booked while you are on the job?',
+    answer: 'an AI assistant that answers in your name, books into your calendar and keeps the paperwork moving.',
+    fact: 'Trained on your services and prices. Set up in about two weeks.',
     link: 'See automation',
   },
 ];
@@ -144,7 +146,7 @@ export default function WhatWeDo() {
           <h2 className="services__h" id="services-h">
             What we do
           </h2>
-          <p className="services__lead">Four things we do for owner-run businesses. Start with the one that hurts.</p>
+          <p className="services__lead">Four ways we build your business with you. Start with the one holding you back.</p>
         </div>
         <ul className="wwd__grid">
           {CARDS.map((c, i) => (

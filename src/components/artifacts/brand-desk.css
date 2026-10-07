@@ -179,12 +179,25 @@
 
 .bd__sign-w {
   font-family: var(--font-brand);
-  font-size: 34px;
+  /* THE DEMO NAME'S FIT, IN CSS (FINAL29, 2026-10-07). "Harbor & Vale" in
+     Clash 500 uppercase with its tracking is 8.216 times its size wide.
+     BrandDesk.jsx's fit, worked out for it: 34px from 1024 (the sign's 280
+     free pixels hold it at the ceiling); below, the free width (the screen
+     less 170, at least 140) over 8.216, rounded down, between 11 and 26px.
+     So the prerendered HTML sets the same size the app would, and nothing
+     moves when it starts. A typed name is fitted by the app, inline. */
+  font-size: max(11px, min(26px, round(down, calc(max(140px, 100vw - 170px) / 8.216), 1px)));
   line-height: 1;
   font-weight: 500;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+@media (min-width: 1024px) {
+  .bd__sign-w {
+    font-size: 34px;
+  }
 }
 
 /* 2. The treatment estimate: a sheet with a 2px darker foot for its

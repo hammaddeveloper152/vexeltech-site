@@ -41,12 +41,46 @@ function pickMode() {
 }
 
 export default function Hero() {
-  const [mode, setMode] = useState(pickMode);
-  /* Below 1024 the mobile cut, from 1024 the desktop encode. Decided at
-     mount (see NARROW_QUERY). Both autoplay and loop. */
-  const [narrow] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia(NARROW_QUERY).matches
-  );
+  /* THE FIRST RENDER IS THE STILL, EVERYWHERE (FINAL29, 2026-10-07): the
+     prerendered HTML is the app's first render, and hydration needs the
+     browser's first render to match it exactly. The mode (film or still)
+     and the cut (mobile below 1024, desktop from 1024, NARROW_QUERY) are
+     decided after mount. The still is the film's first-second frame and
+     the film's poster is the same frame, so the switch is the same box and
+     the same picture; the still crossfades out over 150ms on top of the
+     film (`fading`, Hero.css). */
+  const [mode, setMode] = useState('still');
+  const [narrow, setNarrow] = useState(false);
+  const [fading, setFading] = useState(false);
+  useEffect(() => {
+    setNarrow(window.matchMedia(NARROW_QUERY).matches);
+    /* The film starts two seconds after the page has loaded (FINAL29):
+       started at hydration, its first 334 KB shared the connection with
+       everything the first paint needed. Until then the poster, the same
+       frame, is the hero. */
+    const go = () => {
+      const next = pickMode();
+      if (next !== 'still') {
+        setFading(true);
+        setMode(next);
+      }
+    };
+    let t = 0;
+    const later = () => {
+      t = setTimeout(go, 2000);
+    };
+    if (document.readyState === 'complete') later();
+    else window.addEventListener('load', later, { once: true });
+    return () => {
+      window.removeEventListener('load', later);
+      clearTimeout(t);
+    };
+  }, []);
+  useEffect(() => {
+    if (!fading) return undefined;
+    const t = setTimeout(() => setFading(false), 200);
+    return () => clearTimeout(t);
+  }, [fading]);
   const videoRef = useRef(null);
   /* THE PAUSE CONTROL (the launch gate, 2026-10-07, WCAG 2.2.2): the film
      loops past five seconds, so a reader can stop it. `held` is the
@@ -160,8 +194,8 @@ export default function Hero() {
 
         {/* The still follows the width. It is the film's FIRST-SECOND frame,
             never the last (2026-10-05). */}
-        {mode === 'still' ? (
-          <picture>
+        {mode === 'still' || fading ? (
+          <picture className={fading ? 'hero__still is-leaving' : 'hero__still'}>
             <source media={NARROW_QUERY} srcSet={SPOT.mobile.first} type="image/jpeg" />
             <img className="hero__spot" src={SPOT.wide.first} alt="" fetchPriority="high" />
           </picture>
@@ -183,7 +217,8 @@ export default function Hero() {
         <h1 className="hero__headline hero__h1" id="hero-h">
           Website design and marketing for small businesses.
         </h1>
-        <p className="hero__sub">One team builds the site, runs the ads and answers the enquiry.</p>
+        {/* COPY V4.2 (2026-10-07, the founder). */}
+        <p className="hero__sub">One team that builds with you: the brand, the site, the marketing and the follow-up.</p>
 
         <div className="hero__support">
           <div className="hero__actions">

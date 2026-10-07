@@ -30,7 +30,11 @@ import react from '@vitejs/plugin-react';
    their file names are hashed at build time and index.html cannot name
    them. */
 
-const EXTRA = ['skip'];
+/* FINAL29 (2026-10-07): What we do's grid and card sizes ride in the
+   critical CSS too. Below the fold, but until the full sheet landed the
+   cards had no height, Recent work sat inside Chrome's lazy-load distance,
+   and its screenshots (635 KB) downloaded before the first paint. */
+const EXTRA = ['skip', 'wwd', 'wwd__grid', 'wwd__card'];
 
 function blocks(css) {
   const out = [];

@@ -84,8 +84,12 @@ export default function Header({ over = false }) {
      in once the hero's call has scrolled above the bar. A page with no hero
      call never holds it; from 768 up it is always shown. A layout effect, so
      the held state is set before the first paint and the call never flashes
-     in and out on load. */
-  const [held, setHeld] = useState(false);
+     in and out on load.
+     FINAL29 (2026-10-07): the first render is the prerendered HTML, so it
+     starts held over a hero (home), which is what the effect decides at the
+     top of the page; the hold only applies below 768 (Header.css), so a
+     wider screen is unaffected. */
+  const [held, setHeld] = useState(!!over);
   /* THE BAR OVER THE FILM, 2026-09-30 (the founder): at every width on home the
      film is the hero, and the bar has no ground while the hero is in view.
      ITS GROUND COMES BACK WHEN THE HERO'S COPY REACHES IT, 24px early so the

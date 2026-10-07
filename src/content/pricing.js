@@ -184,10 +184,12 @@ export const WEBSITES = [
 
 /* COPY V3, 2026-10-01 (VEXELTECH-COPY.md, Pricing, Marketing and
    automation columns). */
+/* COPY V4.2 (2026-10-07, the founder): the noun stacks, as on /services'
+   spec sheets (content/substance.js). Not rendered from here. */
 export const MARKETING_LINE =
-  'Google Business Profile, Local Service Ads, Google Ads, Meta ads, local SEO and AI search, monthly reporting. Month to month.';
+  'Google search, maps and listings, Instagram and Facebook, AI answers, reviews. One plan, reported monthly.';
 export const AUTOMATIONS = {
-  note: 'Missed-call text-back, quote follow-up, invoice reminders, online booking, review requests, AI agents. Per workflow.',
+  note: 'AI receptionist, online booking, quote and invoice follow-up, reminders, review requests.',
 };
 
 export const BUNDLE = {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { REAL_WORK, MIN_WORK } from '../../content/work.js';
 import './accordion.css';
 
@@ -40,6 +40,32 @@ const fine = () => typeof window !== 'undefined' && window.matchMedia('(hover: h
 export default function WorkAccordion() {
   const [active, setActive] = useState(0);
   const links = useRef([]);
+  /* THE SCREENSHOTS LOAD WHEN THE ROW IS NEAR (FINAL29, 2026-10-07): 800px
+     before it reaches the screen. `loading="lazy"` alone let them start
+     before the first paint on a phone (635 KB, while the full stylesheet
+     was still on its way and the page had not its height yet). False on
+     the first render, so the prerendered HTML and hydration agree; the
+     frames keep their size, so nothing moves when the pictures arrive. */
+  const rowRef = useRef(null);
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const el = rowRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setNear(true);
+      return undefined;
+    }
+    const io = new IntersectionObserver(
+      (es) => {
+        if (es.some((e) => e.isIntersecting)) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: '800px 0px' }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   if (REAL_WORK.length < MIN_WORK) return null;
 
@@ -63,7 +89,7 @@ export default function WorkAccordion() {
         <p className="sec-lead">What the fixes look like when they&apos;re live. Open any of them.</p>
       </div>
 
-      <ul className="wa__row" onKeyDown={onKeyDown}>
+      <ul className="wa__row" onKeyDown={onKeyDown} ref={rowRef}>
         {REAL_WORK.map((w, i) => {
           const on = i === active;
           return (
@@ -93,8 +119,8 @@ export default function WorkAccordion() {
               >
                 <span className="wa__shot">
                   <img
-                    src={`/work/${w.slug}-720.jpg`}
-                    srcSet={`/work/${w.slug}-720.jpg 720w, /work/${w.slug}.jpg 1440w`}
+                    src={near ? `/work/${w.slug}-720.jpg` : undefined}
+                    srcSet={near ? `/work/${w.slug}-720.jpg 720w, /work/${w.slug}.jpg 1440w` : undefined}
                     sizes="(min-width: 1024px) 40vw, 100vw"
                     alt={`${w.name}, the live site`}
                     width="1440"

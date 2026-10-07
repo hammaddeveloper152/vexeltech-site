@@ -22,6 +22,7 @@ import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { pathToFileURL } from 'node:url';
 import puppeteer from 'puppeteer';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -30,6 +31,17 @@ const ROUTES = ['/', '/services', '/pricing', '/about-us', '/contact-us', '/priv
 const NOT_FOUND = '/404';
 
 const TEMPLATE = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
+
+/* THE BODY IS THE SERVER RENDER (FINAL29, 2026-10-07, the founder's
+   hydration fix). Chrome still renders each route, for the head the app
+   writes (title, description, canonical, Open Graph, JSON-LD) and for the
+   hero poster's preload. But what goes inside #root is React's own render
+   of the route (dist-ssr/entry-server.js, built by `vite build --ssr`):
+   the app's FIRST render, before any effect, with the Suspense markers.
+   Captured from Chrome, #root held the page after its effects had run,
+   which the browser's first render can never match, so hydration would
+   have thrown it away; this is what lets main.jsx hydrate instead. */
+const { render: renderRoute } = await import(pathToFileURL(path.join(ROOT, 'dist-ssr', 'entry-server.js')).href);
 const TYPES = {
   '.js': 'text/javascript',
   '.css': 'text/css',
@@ -105,6 +117,10 @@ for (const route of [...ROUTES, NOT_FOUND]) {
       add(new URL(img.src).pathname, `not all and ${narrow.media}`);
     });
   }
+  const body = await renderRoute(route);
+  await p.evaluate((b) => {
+    document.getElementById('root').innerHTML = b;
+  }, body);
   let html = await p.evaluate(() => {
     /* Nothing the measuring machine added: the dev origin in any absolute
        URL is never written, since every URL in the app is relative or on

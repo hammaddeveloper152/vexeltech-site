@@ -77,8 +77,28 @@ if (typeof window !== 'undefined') {
    of the bundle a reader gets on `/`. Not prefetched: they are reached from
    the footer and the form, rarely. Nothing shows while a chunk arrives: it
    is local and the gap is a frame or two. */
-const LegalPage = lazy(() => import('./pages/site/LegalPage.jsx'));
-const ThanksPage = lazy(() => import('./pages/site/ThanksPage.jsx'));
+const LegalPage = page(() => import('./pages/site/LegalPage.jsx'));
+const ThanksPage = page(() => import('./pages/site/ThanksPage.jsx'));
+
+/* THE LANDING PAGE'S CHUNK, BEFORE HYDRATION (FINAL29, 2026-10-07). main.jsx
+   awaits this so the page a reader landed on is in memory when React
+   adopts its prerendered markup: `page()` then answers synchronously and
+   nothing suspends. The legal pages and /thanks are `page()` too since this
+   pass, for the same reason (they were plain lazy). */
+const LANDING = {
+  '/': Home,
+  '/services': ServicesPage,
+  '/pricing': PricingPage,
+  '/about-us': AboutPage,
+  '/contact-us': ContactPage,
+  '/privacy-policy': LegalPage,
+  '/terms-of-service': LegalPage,
+  '/thanks': ThanksPage,
+};
+export function preloadRoute(pathname) {
+  const clean = pathname.replace(/\/index\.html$/, '/').replace(/\/+$/, '') || '/';
+  return (LANDING[clean] || NotFoundPage).prefetch().catch(() => {});
+}
 
 /* A trailing slash, or a trailing /index.html, is taken off in place, so the
    router never renders a page under a second URL (the server does the same

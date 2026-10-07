@@ -195,6 +195,14 @@
   }
 }
 
+/* The dots are in the markup at every width since FINAL29 (the first render
+   cannot know the width); from 1024 they are not shown. */
+@media (min-width: 1024px) {
+  .cc__dots {
+    display: none;
+  }
+}
+
 /* ---- BELOW 1024: THE SWIPE ROW (final25, 2026-10-07) ----------------------
    300px cards, snap scrolling, 16px apart, the row bleeding to the screen's
    edges with 24px of inset either side, the yellow rule across its top.

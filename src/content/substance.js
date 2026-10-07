@@ -56,7 +56,8 @@ export const SUBSTANCE = {
   },
   marketing: {
     spec: [
-      ['Channels', 'Google Business Profile, Local Service Ads, Google Ads, Meta ads'],
+      /* COPY V4.2 (2026-10-07, the founder): the noun stack. */
+      ['Channels', 'Google search, maps and listings, Instagram and Facebook, AI answers, reviews. One plan, reported monthly.'],
       ['Search', 'Local SEO and AI search, service-area pages and citations'],
       ['Measured by', 'Cost per lead, reported monthly'],
       ['Creative', 'Built from your real work, not stock'],
@@ -74,7 +75,8 @@ export const SUBSTANCE = {
   },
   automation: {
     spec: [
-      ['Workflows', 'Missed-call text-back, quote follow-up, invoice reminders, booking, review requests, AI agents'],
+      /* COPY V4.2 (2026-10-07, the founder): the noun stack. */
+      ['Workflows', 'AI receptionist, online booking, quote and invoice follow-up, reminders, review requests.'],
       ['Response', 'Text back in under sixty seconds'],
       ['Tools', 'Works with the phone, calendar and invoicing you already use'],
       ['Pricing', 'Per workflow, in writing before work starts'],

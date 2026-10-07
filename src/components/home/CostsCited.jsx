@@ -38,11 +38,17 @@ const NARROW = '(max-width: 1023px)';
 export default function CostsCited() {
   const rowRef = useRef(null);
   const [active, setActive] = useState(0);
-  const [narrow, setNarrow] = useState(() => typeof window !== 'undefined' && window.matchMedia(NARROW).matches);
+  /* FALSE ON THE FIRST RENDER (FINAL29, 2026-10-07): the prerendered HTML
+     is the first render, so nothing in it may depend on the width. The
+     swipe row and its dots are CSS (below 1024 the dots show, from 1024
+     they are hidden); `narrow` only adds the row's focus and name, after
+     mount, which changes nothing on screen. */
+  const [narrow, setNarrow] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia(NARROW);
     const on = () => setNarrow(mq.matches);
+    on();
     mq.addEventListener('change', on);
     return () => mq.removeEventListener('change', on);
   }, []);
@@ -108,7 +114,8 @@ export default function CostsCited() {
             <span />
           </span>
         </div>
-        {narrow ? (
+        {/* Always rendered; hidden from 1024 (costs-cited.css). */}
+        {(
           <div className="cc__dots">
             {COSTS.map(({ id, label }, i) => (
               <button
@@ -123,7 +130,7 @@ export default function CostsCited() {
               </button>
             ))}
           </div>
-        ) : null}
+        )}
         <p className="cc__src">Industry figures.</p>
       </div>
     </section>

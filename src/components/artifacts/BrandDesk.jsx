@@ -181,10 +181,16 @@ export default function BrandDesk() {
   const [t, , , leave] = useLoop(ref, TOTAL, { once: true });
   const [i] = useBrandSet();
   const [value, setValue] = useState('');
-  const [wide, setWide] = useState(() => typeof window === 'undefined' || window.innerWidth >= 1024);
+  /* THE SIGN IS FITTED AFTER MOUNT (FINAL29, 2026-10-07): the first render
+     is the prerendered HTML, which cannot measure text or know the width.
+     The demo name is sized by CSS; a typed name is fitted here. */
+  const [wide, setWide] = useState(true);
+  const [measured, setMeasured] = useState(false);
   const [, setFonts] = useState(0);
   useEffect(() => {
     const on = () => setWide(window.innerWidth >= 1024);
+    on();
+    setMeasured(true);
     window.addEventListener('resize', on);
     if (document.fonts) document.fonts.ready.then(() => setFonts((n) => n + 1));
     return () => window.removeEventListener('resize', on);
@@ -194,7 +200,15 @@ export default function BrandDesk() {
   /* The sign's free width: from 1024, 520 less its padding (72 and 32),
      the mark and the 20 gap, and the 60 the quote's corner covers; below,
      the sign is the column's width. */
-  const signFs = wide ? fit(name, 520 - 72 - 32 - 76 - 60, 34) : fit(name, Math.max(140, window.innerWidth - 170), 26);
+  /* The demo name's size is CSS (brand-desk.css, `.bd__sign-w`): the same
+     fit, worked out from its measured width, so the prerendered HTML is
+     already right at every width. A typed name is measured. */
+  const signFs =
+    name === DEMO || !measured
+      ? undefined
+      : wide
+        ? fit(name, 520 - 72 - 32 - 76 - 60, 34)
+        : fit(name, Math.max(140, window.innerWidth - 170), 26);
 
   return (
     <figure className="bd" data-artifact="BrandDesk" data-device="desk">

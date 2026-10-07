@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { IconArrowRight, IconCheck, IconCross } from './Icons.jsx';
 import { UTM_KEYS, getUtm } from './utm.js';
 import { trackPixel } from './pixel.js';
+import { track } from './analytics.js';
 import { budgetBands } from '../../content/pricing.js';
 import { FORM_ENDPOINT, FORM_TARGET, FORM_EMAIL } from '../../content/form.js';
 import './LeadForm.css';
@@ -97,7 +98,10 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
   const [picked, setPicked] = useState([]);
   const [budget, setBudget] = useState('');
   /* The UTM tags, read when the form mounts (utm.js). */
-  const [utm] = useState(getUtm);
+  /* Read after mount (FINAL29): the prerendered form has empty tags, and
+     the first render must match it. */
+  const [utm, setUtm] = useState(() => Object.fromEntries(UTM_KEYS.map((k) => [k, ''])));
+  useEffect(() => setUtm(getUtm()), []);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | sent | failed
   const [trap, setTrap] = useState('');
@@ -199,7 +203,13 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
       setStatus(r.ok ? 'sent' : 'failed');
       /* THE LEAD, once per submission, on the in-page success. A no-op
          without a pixel ID. */
-      if (r.ok) trackPixel('Lead');
+      if (r.ok) {
+        trackPixel('Lead');
+        /* Plausible's "Lead" too (FINAL29, the founder): once per
+           submission, on the in-page success, as on /thanks. The sending
+           guard above already makes a submission one request. */
+        track('Lead');
+      }
     } catch {
       setStatus('failed');
     } finally {

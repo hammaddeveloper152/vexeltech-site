@@ -1234,3 +1234,18 @@ main:focus {
     background: rgb(232 234 237 / 60%);
   }
 }
+
+/* THE SWASH ARRIVES OVER 150ms (FINAL29, 2026-10-07). The stroke is measured
+   from the loaded face, so it cannot be in the prerendered HTML; it mounts
+   once the app has hydrated and the fonts are in. With motion it then draws
+   as before (the fade is under the undrawn stroke and unseen); under reduced
+   motion, where it used to appear at once, it fades in. Opacity only. */
+.brush__stroke {
+  animation: brush-arrive 150ms linear;
+}
+
+@keyframes brush-arrive {
+  from {
+    opacity: 0;
+  }
+}

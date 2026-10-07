@@ -1,17 +1,16 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { hydrateRoot, createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 /* Every stylesheet, in the order the cascade depends on, ahead of anything
    else (vite.config.js, `vt-css-order`, 2026-10-01). */
 import 'virtual:vt-css';
 import './styles/tokens.css';
-import App from './App.jsx';
+import Root from './Root.jsx';
+import { preloadRoute } from './App.jsx';
 /* A band's photograph is fetched when the band is nearly on screen, not when
    the page loads. There is no lazy loading for a CSS background, so this is the
    thing that does it. See styles/bands.js. */
 import { startBands } from './styles/bands.js';
-import PageTransition from './components/site/PageTransition.jsx';
-import Tracking from './components/site/Tracking.jsx';
 import { captureUtm } from './components/site/utm.js';
 import { refreshScroll } from './components/site/motionLibs.js';
 
@@ -28,15 +27,36 @@ captureUtm();
    An earlier draft passed a held location down through a function child, for a
    variant that drew its mark before the page changed. That variant was not
    taken and the machinery came out with it.  */
-const render = () => {
-  createRoot(document.getElementById('root')).render(
-    <BrowserRouter>
-      <Tracking />
-      <PageTransition>
-        <App />
-      </PageTransition>
-    </BrowserRouter>
-  );
+/* HYDRATED, NOT REPLACED (FINAL29, 2026-10-07, the founder's hydration fix).
+   Every page's HTML is the app's own first render, written at build time
+   (entry-server.jsx, scripts/prerender.mjs), so React adopts the markup the
+   browser has already painted instead of throwing it away and painting new
+   nodes. That second paint was the LCP the launch gate measured.
+
+   The landing page's chunk is awaited first, so hydration never meets a
+   pending lazy page. A mismatch is reported loudly, tagged [hydration]:
+   the build's hydration check (scripts/hydration-check.mjs) fails the build
+   on one. The dev server serves the bare template, which has nothing to
+   hydrate, so it renders. */
+const tree = (
+  <BrowserRouter>
+    <Root />
+  </BrowserRouter>
+);
+
+const render = async () => {
+  const el = document.getElementById('root');
+  if (el.firstElementChild) {
+    await preloadRoute(window.location.pathname);
+    hydrateRoot(el, tree, {
+      onRecoverableError(error, info) {
+        // eslint-disable-next-line no-console
+        console.error('[hydration]', error && error.message, info && info.componentStack ? info.componentStack.slice(0, 600) : '');
+      },
+    });
+  } else {
+    createRoot(el).render(tree);
+  }
   startBands();
 };
 
