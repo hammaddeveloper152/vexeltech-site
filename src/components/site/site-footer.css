@@ -20,9 +20,9 @@
   margin: 0 auto;
 }
 
-/* The join, still and full (the founder: the footer does not move). */
-.sf .join {
-  margin-bottom: 96px;
+/* No join at the top since the lines audit (final34): 96px of space. */
+.sf__in {
+  padding-top: 96px;
 }
 
 .sf__cols {

@@ -75,8 +75,9 @@ export default function ServicesPage() {
     <Shell
       title="Small business website design and local SEO | VexelTech"
       path="/services"
-      /* No in-page form, 2026-10-01 (the storytelling pass). */
-      footerForm={false}
+      /* The closing section, "Ready when you are." and the form, since
+         final34 (2026-10-08, the founder; no in-page form from the
+         storytelling pass until then). */
       description="Website design, Google Business Profile and Google Ads management, Meta ads, missed-call text-back and booking automation for small businesses."
     >
       {/* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Services, and Metadata).

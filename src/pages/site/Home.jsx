@@ -8,9 +8,7 @@ import WhatWeDo from '../../components/home/WhatWeDo.jsx';
 import SiteFooter from '../../components/site/SiteFooter.jsx';
 import { useSmoothScroll } from '../../components/home/smoothScroll.js';
 import CounterRow from '../../components/home/CounterRow.jsx';
-import PromiseBand from '../../components/site/PromiseBand.jsx';
-import FooterForm from '../../components/home/FooterForm.jsx';
-import { CallBand } from './parts.jsx';
+import ClosingForm from '../../components/site/ClosingForm.jsx';
 import { setHead, setLd, AREA_SERVED, ORIGIN } from './head.js';
 import { SOCIAL_URLS } from '../../content/socials.js';
 import { FIGURES, money } from '../../content/pricing.js';
@@ -153,26 +151,15 @@ export default function Home() {
             founder's approved frame C, final15, 2026-10-06). */}
         <CostsCited />
         <CounterRow band />
-        {/* How it works (final28, 2026-10-07, the founder): the band that
-            was the $700 band, now its heading, one line and the four steps,
-            which keep the #how-it-works anchor. From here down the page
-            stacks cream, yellow, cream, dark with no gaps. */}
-        <PromiseBand />
-        {/* Questions came off, 2026-10-01: V3 gives home none
-            (VEXELTECH-COPY.md, COPY V3). */}
-        {/* The closing call, before the form. COPY V3, 2026-10-01. */}
-        {/* The answered-call phone of final14 is deleted (final16,
-            2026-10-06): headline, one paragraph and the call. */}
-        {/* ONE CREAM SURFACE (2026-10-07, the founder): the closing call
-            sits on the cream of How it works and the form, under its
-            yellow join, with no colour block. */}
-        <CallBand
-          cream
+        {/* THE CLOSING SECTION (final34, 2026-10-08, the founder): How it
+            works, the closing call and the form are one cream section,
+            under one yellow join (ClosingForm.jsx). */}
+        <ClosingForm
+          steps
           join
           heading="Which one is costing you most?"
-          note="Fifteen minutes on the phone and a written number. Usually it's not the expensive one."
+          line="Fifteen minutes on the phone and a written number. Usually it's not the expensive one."
         />
-        <FooterForm join />
       </main>
       {/* THE FOOTER, after <main> (SiteFooter.jsx, final32). */}
       <SiteFooter />

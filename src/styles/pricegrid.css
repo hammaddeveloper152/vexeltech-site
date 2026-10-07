@@ -113,9 +113,8 @@
 /* The recommended column's 2px yellow edge is drawn on its white plane,
    2026-09-24, so it follows the plane's rounded top rather than standing as
    a straight line above it. The column's own 2px top stays transparent. */
-.pr-col[data-picked='true'] .pr-col__bg {
-  border-top: 2px solid var(--c-accent-draw-dark);
-}
+/* (The picked column's 2px yellow top edge is deleted, the lines audit,
+   final34.) */
 
 /* HAIRLINES BETWEEN COLUMNS, per layout, on `::before`, so a column can
    fade its lines out with opacity alone (BUILD-LAW Motion). `--edge-l` and
@@ -474,8 +473,6 @@
   display: grid;
   gap: var(--s-sm);
   margin-top: var(--s-2xl);
-  padding-top: var(--s-xl);
-  border-top: 1px solid rgb(23 24 26 / 15%);
 }
 
 @media (min-width: 768px) {
@@ -527,8 +524,6 @@
   display: grid;
   gap: var(--s-xs);
   margin: var(--s-lg) 0 0;
-  padding-top: var(--s-md);
-  border-top: 1px solid rgb(23 24 26 / 15%);
 }
 
 .pr-col__fact {

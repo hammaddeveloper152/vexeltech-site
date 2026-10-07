@@ -105,7 +105,6 @@
 
 .legal__hl {
   padding-top: var(--s-md);
-  border-top: 1px solid var(--c-rule-dark);
 }
 
 .legal__hl-t {
@@ -177,8 +176,6 @@
 
 .legal__notice {
   margin-top: var(--s-2xl);
-  padding-top: var(--s-lg);
-  border-top: 1px solid var(--c-rule-dark);
 }
 
 .legal__entity {

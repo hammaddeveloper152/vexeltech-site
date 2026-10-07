@@ -93,7 +93,7 @@ function Err({ id, msg }) {
   );
 }
 
-export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy }) {
+export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy, submitLabel = null }) {
   const [values, setValues] = useState({ name: '', phone: '', email: '', message: '' });
   const [picked, setPicked] = useState([]);
   const [budget, setBudget] = useState('');
@@ -367,8 +367,10 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy })
           data-ready={ready ? 'true' : 'false'}
           aria-disabled={ready ? undefined : 'true'}
         >
-          {status === 'sending' ? 'Sending' : 'Send'}
-          <IconArrowRight className="i send__go" />
+          {/* The closing section names its submit "Get a custom quote"
+              (final34); elsewhere it is "Send" with its arrow. */}
+          {status === 'sending' ? 'Sending' : submitLabel || 'Send'}
+          {submitLabel ? null : <IconArrowRight className="i send__go" />}
         </button>
 
         {/* Polite, and always present so the region is not created on the

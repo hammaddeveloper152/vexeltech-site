@@ -152,8 +152,9 @@ export default function PricingPage() {
     <Shell
       title={`Website design pricing: ${money(FIGURES.website)} flat rate | VexelTech`}
       path="/pricing"
-      /* No in-page form, 2026-10-01 (the storytelling pass). */
-      footerForm={false}
+      /* The closing section, "Ready when you are." and the form, since
+         final34 (2026-10-08, the founder; no in-page form from the
+         storytelling pass until then). */
       description={`How much does a small business website cost? ${money(FIGURES.website)} flat for six pages in four business days. Branding ${money(FIGURES.brandingBasic)} or ${money(FIGURES.brandingAdvance)}. Marketing and automation by quote.`}
     >
       {/* 1. THE HEAD. */}

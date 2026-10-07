@@ -6,12 +6,8 @@
    Inks: bone 16.32:1 and steel-lift on the dark, asphalt and steel on
    cream. */
 .dt {
-  margin-top: var(--s-lg);
-  border-top: 1px solid rgb(232 234 237 / 20%);
-}
-
-.svc2__d--cream .dt {
-  border-top-color: rgb(23 24 26 / 20%);
+  /* No rule over Details since the lines audit (final34): 32px. */
+  margin-top: 32px;
 }
 
 .dt__btn {

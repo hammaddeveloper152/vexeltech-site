@@ -16,7 +16,8 @@
   gap: 2px;
   margin: 0;
   padding: 0;
-  border-top: 2px solid var(--c-yellow-d);
+  /* The 2px yellow rule across the row is deleted (the lines audit,
+     final34): home's only yellow line is each section's join. */
   list-style: none;
 }
 

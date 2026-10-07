@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SectionJoin from './SectionJoin.jsx';
 import { ENTITY } from '../../content/entity.js';
 import './site-footer.css';
 
@@ -9,8 +8,8 @@ import './site-footer.css';
    FooterBase, deleted); the contact form stays above it as its own cream
    section (FooterForm.jsx), on every page but Contact, which has its own.
 
-   The dark ground #0B0B0C, full width, under the yellow join drawn full and
-   still (the footer does not move). In the 1180 container, 96px down:
+   The dark ground #0B0B0C, full width; no join or rule at its top since
+   the lines audit (final34), 96px of space instead (56 on a phone). In the 1180 container, 96px down:
      1  "Let's talk." in the display face, the email and the phone
      2  "Pages": Services, Pricing, About us, Contact us
      3  "Start": the promise and the primary call
@@ -39,7 +38,6 @@ export default function SiteFooter() {
   return (
     <footer className="vt sf">
       <div className="sf__in">
-        <SectionJoin still />
         <div className="sf__cols">
           <div className="sf__col">
             <p className="sf__talk">Let&apos;s talk.</p>

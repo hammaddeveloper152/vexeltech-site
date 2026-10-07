@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Header from '../../components/site/Header.jsx';
 import { skipToMain } from '../../components/site/skip.js';
-import FooterForm from '../../components/home/FooterForm.jsx';
+import ClosingForm from '../../components/site/ClosingForm.jsx';
 import SiteFooter from '../../components/site/SiteFooter.jsx';
 import { setHead, setBreadcrumb } from './head.js';
 import '../../styles/tokens.css';
@@ -84,8 +84,11 @@ export default function Shell({
         {children}
         {/* THE FORM, its own cream section since final32 (2026-10-07):
             not on Contact (`meta={false}`, it has its own form), nor where
-            `footerForm={false}` (About, the legal pages, /thanks). */}
-        {meta && footerForm ? <FooterForm /> : null}
+            `footerForm={false}` (the legal pages, /thanks). Since final34
+            this is the closing section, "Ready when you are." */}
+        {meta && footerForm ? (
+          <ClosingForm heading="Ready when you are." line="A written number within one business day." />
+        ) : null}
       </main>
       {/* THE FOOTER, after <main> on every page, so it is the page's
           contentinfo landmark (SiteFooter.jsx, final32). */}

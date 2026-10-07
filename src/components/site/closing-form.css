@@ -1,0 +1,144 @@
+/* THE CLOSING SECTION (ClosingForm.jsx, final34, 2026-10-08, the founder).
+   The cream sheet (FooterForm.css's `.foot__sheet`, whose ink rules for
+   the fields still apply), 80px above and below at 1280 and 48 on a
+   phone, the content in the 1180 container.
+
+   Inks on cream: the heading asphalt 15.75:1, the line, the label and the
+   step lines steel 7.20, the step numerals steel, the titles asphalt. */
+main#main .foot__sheet.tail__in {
+  display: block;
+  padding-top: 80px !important;
+  padding-bottom: 80px !important;
+}
+
+.tail__in .join {
+  margin-bottom: 40px;
+}
+
+.tail__h {
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: 48px;
+  line-height: 1.1;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-asphalt);
+  text-wrap: balance;
+}
+
+.tail__line {
+  max-width: 60ch;
+  margin: 16px 0 0;
+  font-family: var(--font-offer);
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--c-steel);
+}
+
+.tail__cols {
+  display: grid;
+  gap: 40px;
+  margin-top: 32px;
+}
+
+@media (min-width: 1024px) {
+  .tail--steps .tail__cols {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    column-gap: 64px;
+  }
+}
+
+.tail__form {
+  min-width: 0;
+}
+
+/* The steps: "How it works" over four, each a 24px mono numeral, a 16px
+   bold title and a 14px line, 18px apart. */
+.tail__k {
+  margin: 0 0 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-steel);
+}
+
+.tail__steps {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  scroll-margin-top: 96px;
+}
+
+.tail__step {
+  display: grid;
+  gap: 2px;
+}
+
+.tail__n {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  line-height: 28px;
+  color: var(--c-steel);
+}
+
+.tail__t {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  color: var(--c-asphalt);
+}
+
+.tail__l {
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-steel);
+}
+
+/* Below 1024: the heading, the line, the form, then the steps two by two;
+   the first numeral 56px, the steps screen's anchor (the founder). */
+@media (max-width: 1023px) {
+  .tail__steps-col {
+    order: 2;
+  }
+
+  .tail__steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
+  }
+
+  /* Every numeral sits on a 56px line, so the titles align across a row
+     while only the first is large. */
+  .tail__n {
+    display: flex;
+    align-items: flex-end;
+    height: 56px;
+  }
+
+  .tail__step:first-child .tail__n {
+    font-size: 56px;
+    line-height: 56px;
+  }
+}
+
+@media (max-width: 599px) {
+  main#main .foot__sheet.tail__in {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+
+  .tail__h {
+    font-size: 32px;
+  }
+
+  .tail__line {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}

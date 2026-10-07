@@ -29,7 +29,8 @@ import '../../styles/light.css';
 
    THE LIGHT PAGE since the three-colour pass (2026-09-25): a cream ground
    for the whole route (Shell's `light`, light.css). The footer block closes
-   the page without the form (Shell's `footerForm={false}`).
+   the page; since final34 (2026-10-08) the closing section with the form
+   comes first ("Ready when you are.").
 
    EVERY LINE IS VEXELTECH-COPY.md V3.1's, About us. The page's earlier
    shapes are in git and DESIGN.md. */
@@ -66,7 +67,6 @@ export default function AboutPage() {
       title="About VexelTech | Small business marketing agency"
       path="/about-us"
       description={ABOUT_DESCRIPTION}
-      footerForm={false}
       light
     >
       {/* THE STATEMENT. */}

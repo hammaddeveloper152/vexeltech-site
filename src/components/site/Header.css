@@ -50,20 +50,9 @@
   background: var(--c-base);
 }
 
-/* THE SOLID BAR IS BLACK WITH A 1px STEEL RULE BENEATH, 2026-10-05 (the
-   founder's pre-launch pass). On every dark route, and on home once the
-   hero's headline reaches the bar. Steel (#4C5055) is a line here, not
-   text: 2.42:1 on the base, which a hairline does not need to clear. */
-.bar:not([data-over='true'])::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: var(--c-steel);
-  pointer-events: none;
-}
+/* THE SOLID BAR'S 1px STEEL RULE (2026-10-05) IS DELETED, the lines audit
+   (final34, 2026-10-08, the founder): the bar's black ground separates it
+   from the page. */
 
 /* ---- OVER A HERO, 2026-09-15 ---------------------------------------------
 
@@ -109,8 +98,8 @@
 }
 
 .bar[data-over='true']::after {
+  /* No 1px rule under the solid bar since the lines audit (final34). */
   background: var(--c-base);
-  border-bottom: 1px solid var(--c-steel);
   opacity: 0;
 }
 
