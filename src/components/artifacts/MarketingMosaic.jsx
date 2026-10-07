@@ -26,8 +26,8 @@ import './marketing-mosaic.css';
    screen and under reduced motion. At half in view: the 400ms crossfade,
    then all six at 35%, relit Monday to Saturday 500ms apart (each over
    300ms), each bar's day and time typing in as its tile lights, the tally
-   counting with them; then lit for the rest of the sequence and the 6s
-   hold, so a play begins every 12s. Opacity and text only. */
+   counting with them; then lit for good. It plays once (final39, the
+   founder: rest full, start soft, play once). Opacity and text only. */
 
 const DAYS = ['Mon 08:12', 'Tue 12:40', 'Wed 19:05', 'Thu 21:30', 'Fri 07:50', 'Sat 10:15'];
 const CHANNELS = [

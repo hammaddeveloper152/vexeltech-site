@@ -94,8 +94,8 @@ export default function CostsCited() {
         </h2>
         <p className="sec-lead cc__lead">
           {/* COPY V5 (final37). */}
-          Here&apos;s why we push our clients to fix this. These four numbers are the industry&apos;s, not ours, and
-          most businesses are losing to all four without knowing it.
+          These are the four places a business loses customers without knowing it. The figures are the
+          industry&apos;s, not ours.
         </p>
         <div className="cc__row">
           <ul

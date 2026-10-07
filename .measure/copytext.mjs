@@ -169,6 +169,13 @@ ${document.querySelector('meta[name="description"]')?.content || ''}`);
 await b.close();
 
 const report = { dashes: {}, repeats: [], notCap: {}, banned: {}, selfExplaining: {}, figures: {}, bangs: {}, audience: {} };
+/* THE REGISTER (copy V5.2, final39, the founder: "no slang, no jokes, no
+   'just'"): every "just" in a public route's text is reported here. */
+report.register = {};
+for (const route of PUBLIC) {
+  const j = (texts[route] || '').match(/[^.?\n]*\bjust\b[^.?\n]*[.?]?/gi);
+  if (j) report.register[route] = j.map((x) => x.trim());
+}
 for (const route of Object.keys(everything)) {
   const a = audienceHits(everything[route], route);
   if (a.length) report.audience[route] = a;

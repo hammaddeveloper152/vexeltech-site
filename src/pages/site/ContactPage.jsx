@@ -97,8 +97,8 @@ export default function ContactPage() {
           <IconArrowDownRight className="i ct-hero__arrow" />
           {/* COPY V4, 2026-10-06 (VEXELTECH-COPY.md, Contact, Lead). */}
           <span>
-            Fifteen minutes on the phone, a written number within one business day, and nothing to
-            pay for either.
+            Fifteen minutes on the phone, a written number within one business day, and no charge for
+            either.
           </span>
         </p>
       </section>

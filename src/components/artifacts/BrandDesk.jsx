@@ -199,7 +199,7 @@ function Desk({ set, t, name, signFs }) {
 
 export default function BrandDesk() {
   const ref = useRef(null);
-  const [t, , , leave] = useLoop(ref, TOTAL, { once: true });
+  const [t, , , leave] = useLoop(ref, TOTAL);
   const [i] = useBrandSet();
   const [value, setValue] = useState('');
   /* The autoplay's last finished name, shown while the field is empty. */

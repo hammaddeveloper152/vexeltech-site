@@ -66,7 +66,7 @@ export default function AboutPage() {
           </h1>
           <p className="ab__lead">
             We build businesses into bigger ones. The brand, the website, the marketing and the follow-up,
-            run by one team that stays with you and grows when you grow.
+            run by one team that stays with you and grows as you grow.
           </p>
         </div>
       </section>
@@ -79,10 +79,10 @@ export default function AboutPage() {
             Businesses get sold to in pieces.
           </h2>
           <p className="ab__lead ab__body">
-            A logo from one place. A website from another. Ads from a third. Software for the phone from a
-            fourth. Four invoices, four people who have never met, and nobody whose job is the whole
-            business. You hold it together, after hours. We started Vexel because that is the part
-            nobody was selling.
+            A logo from one studio. A website from another. Advertising from a third. Software for the phone
+            from a fourth. Four invoices, four teams who have never met, and no one whose job is the whole
+            business. The owner holds it together after hours. We started Vexel because that was the part no
+            one was offering.
           </p>
         </div>
       </section>

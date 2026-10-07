@@ -26,9 +26,10 @@ const COLS = [
     rows: [
       /* final38 (2026-10-08, the founder): the audience is any business
          that wants to grow. */
-      'Businesses that want to grow, whatever the size, wherever you are.',
-      "Contractors, clinics, real estate, bookkeeping, hospitality, consultancies, retail, and plenty we haven't listed.",
-      'You want more coming in than you have now.',
+      /* COPY V5.2 (final39). */
+      'Businesses that intend to grow, at any size and in any market.',
+      'Contractors, clinics, real estate, bookkeeping, hospitality, consultancies, retail, and many we have not listed.',
+      'You want more coming in than you have today.',
     ],
   },
   {

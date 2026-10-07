@@ -14,21 +14,21 @@ const STEPS = [
     n: '01',
     k: 'Now',
     title: 'The phone rings when it rings.',
-    body: 'Work comes from referrals and luck, and you answer everything yourself.',
+    body: 'Work arrives through referrals and chance, and you answer everything yourself.',
     mono: 'We build: the name, the site, the follow-up.',
   },
   {
     n: '02',
     k: 'Next',
     title: 'The calendar fills.',
-    body: 'You show up wherever people look, every call gets answered and every lead gets followed up.',
+    body: 'You are present wherever people look, every call is answered and every lead is followed.',
     mono: 'We run: search, maps, social, reviews, the receptionist.',
   },
   {
     n: '03',
     k: 'Then',
     title: 'You hire. You choose the work.',
-    body: "There's enough coming in to raise your prices and pick the jobs you want.",
+    body: 'There is enough coming in to raise your prices and choose the work you take.',
     mono: 'We stay: the plan, the number, the next size.',
   },
 ];
@@ -45,8 +45,8 @@ export default function NextSize() {
             The Next Size.
           </h2>
           <p className="ab__lead">
-            Every client gets one. It&apos;s a written plan from where your business is to where you want it
-            to be, run by one team and reviewed with you every month against one number.
+            Every client receives one. A written plan from where the business is to where you intend to take
+            it, run by one team and reviewed with you each month against one number.
           </p>
         </div>
         <ol className="ns__steps" ref={ref} data-play={play ? 'true' : 'false'}>

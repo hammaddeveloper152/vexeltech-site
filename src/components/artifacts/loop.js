@@ -19,10 +19,13 @@ import { prefersReduced } from '../site/useOnce.js';
                        (`leave`, 0 to 1, which the artifact turns into a
                        clip-path wipe with `leaving()`), then the timeline
                        runs from `first` to the end, as built
-     after a play      the complete frame holds for 6s before any replay,
-                       in view or not
-     off screen        the play stops and the complete frame is painted
-     reduced motion    the complete frame, no loop
+     after a play      the complete frame, for good: PLAY ONCE (final39,
+                       2026-10-08, the founder). No loop, no hold and
+                       replay, no restart when the stage scrolls out and
+                       back in
+     off screen        a play that has started stops, the complete frame
+                       is painted, and it does not play again
+     reduced motion    the complete frame, no play
 
    `seek(ms)` (home's four scenes, a headline click) plays on from `ms`
    when motion is allowed and the stage is in view; otherwise it paints
@@ -38,7 +41,6 @@ import { prefersReduced } from '../site/useOnce.js';
    and it fades in over the second half, so nothing leaves or arrives with
    a snap. `leaving(leave)` turns the 0 to 1 progress into that opacity. */
 export const LEAVE = 400;
-export const HOLD = 6000;
 
 /* In view enough to play: half the stage, or half the viewport when the
    stage is taller than two viewports and half of it can never show. */
@@ -60,9 +62,10 @@ export const leaving = (leave) => ({
   style: leave > 0 ? { '--leave': leave, '--fade': fadeOf(leave) } : undefined,
 });
 
-/* `once` (final17, 2026-10-06): the artifact plays a single time; after
-   it the complete frame stays, as `stop()` would leave it. */
-export function useLoop(ref, total, { start = total, first = 0, rest = () => total, once = false } = {}) {
+/* Every artifact plays once since final39 (2026-10-08, the founder): the
+   `once` option final17 gave the branding desk is now the rule, and the
+   6s hold before a replay is gone. */
+export function useLoop(ref, total, { start = total, first = 0, rest = () => total } = {}) {
   const [t, setT] = useState(start);
   const [leave, setLeave] = useState(0);
   const clock = useRef({
@@ -70,7 +73,7 @@ export function useLoop(ref, total, { start = total, first = 0, rest = () => tot
     base: 0,
     t: start,
     inView: false,
-    holdUntil: 0,
+    played: false,
     raf: 0,
     timer: 0,
     stopped: false,
@@ -116,27 +119,19 @@ export function useLoop(ref, total, { start = total, first = 0, rest = () => tot
         if (e >= total) {
           paint(total);
           c.phase = 'rest';
-          c.holdUntil = now + HOLD;
           c.raf = 0;
-          if (once) c.stopped = true;
-          if (c.inView) c.begin();
+          c.stopped = true;
           return;
         }
         paint(e);
         c.raf = requestAnimationFrame(tick);
       }
     };
-    /* Start a play, or wait out the hold and then start one. */
+    /* Start the one play. */
     const begin = () => {
-      if (c.stopped || c.phase !== 'rest') return;
+      if (c.stopped || c.played || c.phase !== 'rest') return;
       const now = performance.now();
-      clearTimeout(c.timer);
-      if (now < c.holdUntil) {
-        c.timer = setTimeout(() => {
-          if (c.inView) begin();
-        }, c.holdUntil - now);
-        return;
-      }
+      c.played = true;
       c.phase = 'leave';
       c.base = now;
       c.raf = requestAnimationFrame(tick);
@@ -154,13 +149,17 @@ export function useLoop(ref, total, { start = total, first = 0, rest = () => tot
           return;
         }
         c.inView = false;
-        /* Off screen: the complete frame. Between half and none in view a
-           play that has started runs on, and none starts. */
+        /* Off screen: the complete frame, and the play is spent. Between
+           half and none in view a play that has started runs on. */
         if (!e.isIntersecting) {
           cancel();
           c.phase = 'rest';
           setLeave(0);
-          paint(rest(c.t));
+          paint(c.played ? total : rest(c.t));
+          if (c.played) {
+            c.stopped = true;
+            io.disconnect();
+          }
         }
       },
       { threshold: THRESHOLDS }

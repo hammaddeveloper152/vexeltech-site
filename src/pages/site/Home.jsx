@@ -157,7 +157,7 @@ export default function Home() {
         <ClosingForm
           steps
           heading="Which one is costing you most?"
-          line="Give us fifteen minutes on the phone and you'll have a written number within a business day. In our experience it's usually not the expensive one that's hurting you."
+          line="Fifteen minutes on the phone, and you have a written number within one business day. In our experience the problem is rarely the expensive one."
         />
       </main>
       {/* THE FOOTER, after <main> (SiteFooter.jsx, final32). */}

@@ -88,8 +88,7 @@ export default function WorkAccordion() {
             foot line "Six live sites. Open any of them." */}
         {/* COPY V5 (final37). */}
         <p className="sec-lead">
-          This is what the work looks like once it&apos;s live. Open any of them; they&apos;re real sites for
-          real clients.
+          This is the work once it is live. Open any of them; each is a real site for a real client.
         </p>
       </div>
 

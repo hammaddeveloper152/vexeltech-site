@@ -92,7 +92,7 @@ export default function ServicesPage() {
             <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">growing businesses</Brush>
           </>
         }
-        lead="These are the four things we do. Start with the one that's costing you customers, and if we think it's a different one, we'll say so on the first call."
+        lead="These are the four disciplines. Start with the one costing you customers; if we believe it is a different one, we will say so on the first call."
       />
 
       {/* NOT INSIDE `Section`, 2026-09-23. (Since 2026-09-24 the cream

@@ -220,9 +220,10 @@ export default function Hero() {
         {/* COPY V4.2 (2026-10-07, the founder). */}
         {/* COPY V5 (final37, 2026-10-08, the founder). */}
         <p className="hero__sub">
+          {/* COPY V5.2 (final39, 2026-10-08, the founder). */}
           We build the brand, the website, the marketing and the follow-up for businesses that want to grow,
-          as one team that stays with you. Most of our clients came to us with one problem and found out it was a
-          different one.
+          and we stay to run them as one team. Most clients come to us with one problem and leave the first
+          call with a clearer one.
         </p>
 
         <div className="hero__support">

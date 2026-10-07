@@ -49,7 +49,7 @@ const BEATS = [
   [
     /* COPY V5 (final37, 2026-10-08, the founder). */
     'By 2026 that had become Vexel.',
-    "One growth partner for the whole business, for anyone who can't carry four vendors and shouldn't have to.", // final38
+    'One growth partner for the whole business, for anyone who should not have to manage four vendors to grow.', // V5.2
   ],
 ];
 

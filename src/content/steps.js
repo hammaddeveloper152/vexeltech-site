@@ -2,10 +2,10 @@
    own file since final34, 2026-10-08, when the How it works band was merged
    into home's closing section, ClosingForm.jsx). Each a title and one line
    under twelve words. */
-/* COPY V5 (final37, 2026-10-08, the founder): full sentences. */
+/* COPY V5.2 (final39, 2026-10-08, the founder). */
 export const STEPS = [
-  ['Call', "Fifteen minutes about your business, your market and what isn't working."],
-  ['Approve', "You see the logo concepts or the site design before you're billed for anything."],
-  ['Launch', 'Four business days for a website, one to two for branding.'],
-  ['Own', 'The domain, the hosting, the files and the code are in your name, not ours.'],
+  ['Call', 'Fifteen minutes on your business, your market and what is not working.'],
+  ['Approve', 'You see the concepts or the design before anything is billed.'],
+  ['Launch', 'Four business days for a website. One to two for branding.'],
+  ['Own', 'The domain, the hosting, the files and the code are in your name.'],
 ];

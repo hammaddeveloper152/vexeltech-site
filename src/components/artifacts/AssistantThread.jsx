@@ -24,9 +24,9 @@ import './assistant-thread.css';
    motion. At half in view: the 400ms crossfade, then the thread writes
    itself, one event every 650ms, each rising 8px into place as its dot
    fills; the booked slot drops into the planner; the receipt's rows print
-   250ms apart; the PAID stamp lands last, 1.15 to 1 over 150ms. Then the
-   6s hold. The sequence as briefed takes 5.9s, so a play begins every
-   12.3s, not the brief's 11 (reported). Transform and opacity only. */
+   250ms apart; the PAID stamp lands last, 1.15 to 1 over 150ms. The
+   sequence takes 5.9s and plays once (final39, the founder: rest full,
+   start soft, play once). Transform and opacity only. */
 
 const EVENT = 650;
 const RISE = 300;
