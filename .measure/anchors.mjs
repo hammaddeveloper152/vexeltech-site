@@ -31,7 +31,8 @@ const BASE = process.argv[2] || 'http://localhost:4173';
 const ROUTE = process.argv[3] || '/';
 const OUT = process.argv[4] || path.join('.measure', 'out', 'final24');
 fs.mkdirSync(OUT, { recursive: true });
-const W = 390;
+/* The width, 390 unless a fifth argument says otherwise (final33: 430 too). */
+const W = Number(process.argv[5] || 390);
 const H = 844;
 const name = ROUTE === '/' ? 'home' : ROUTE.replace(/\//g, '');
 
@@ -49,7 +50,7 @@ await p.evaluate(async () => {
   window.scrollTo(0, 0);
 });
 await new Promise((r) => setTimeout(r, 800));
-const full = path.join(OUT, `${name}-390.png`);
+const full = path.join(OUT, `${name}-${W}.png`);
 await p.screenshot({ path: full, fullPage: true });
 
 const found = await p.evaluate((H) => {
@@ -118,7 +119,7 @@ const found = await p.evaluate((H) => {
       const vis = Math.min(it.bottom, y2) - Math.max(it.top, y);
       if (vis <= 0) continue;
       const ok =
-        it.kind === 'colour' ? vis * Math.min(it.w, 390) >= 0.3 * (y2 - y) * 390 : vis >= 160 || vis >= 0.4 * it.h;
+        it.kind === 'colour' ? vis * Math.min(it.w, window.innerWidth) >= 0.3 * (y2 - y) * window.innerWidth : vis >= 160 || vis >= 0.4 * it.h;
       if (ok) here.push(`${it.kind}: ${it.label}`);
     }
     screens.push({ n, from: y, to: y2, anchors: [...new Set(here)] });
@@ -134,7 +135,7 @@ const lines = found.screens.map((s, i) => {
 });
 console.log(lines.join('\n'));
 console.log(fail ? 'FAIL: two consecutive screens hold no anchor' : 'PASS: no two consecutive screens without an anchor');
-fs.writeFileSync(path.join(OUT, `anchors-${name}-390.json`), JSON.stringify(found, null, 2));
+fs.writeFileSync(path.join(OUT, `anchors-${name}-${W}.json`), JSON.stringify(found, null, 2));
 
 /* The contact sheet: every screen at half size, side by side, labelled. */
 const img = fs.readFileSync(full).toString('base64');
@@ -155,6 +156,6 @@ await sheet.setContent(
   </body></html>`,
   { waitUntil: 'load' }
 );
-await sheet.screenshot({ path: path.join(OUT, `contact-${name}-390.png`), fullPage: true });
+await sheet.screenshot({ path: path.join(OUT, `contact-${name}-${W}.png`), fullPage: true });
 await b.close();
 process.exit(fail ? 1 : 0);

@@ -190,3 +190,8 @@ export default function App() {
     </Suspense>
   );
 }
+
+/* THE PHONE SIZING PASS (final33): imported last in the source so the
+   stylesheet order (vite.config.js, vt-css-order) puts it after every page's
+   sheet. */
+import './styles/phone.css';

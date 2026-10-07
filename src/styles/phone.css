@@ -1,0 +1,424 @@
+/* ==========================================================================
+   THE PHONE SIZING PASS (final33, 2026-10-07, the founder).
+
+   Hard limits at 390 and 430 wide, 844 tall: nothing on a phone is taller
+   than 70% of the screen unless it is the hero film or a Recent work
+   capture (the Marketing mosaic is the one other exception, held to three
+   screens in all). Display headings 28 to 36px, figures at most 64px
+   (the hero h1 and the footer wordmark excepted), section padding 56px.
+
+   ONE SHEET, LOADED LAST (App.jsx imports it after every page), so the
+   phone's sizes are in one place and win on order. Everything here is
+   inside `max-width: 599px`, which holds both 390 and 430; nothing from
+   600 up changes. The section paddings use !important on purpose: the
+   site sets them through several high-specificity rhythm rules (tokens.css,
+   about-bands.css, light.css, pages.css), and this layer exists to
+   override all of them at once on a phone. The measurements before and
+   after are .measure/final33-heights.mjs's.
+   ========================================================================== */
+@media (max-width: 599px) {
+  /* ---- Global ------------------------------------------------------------- */
+  :root {
+    --s-section: 56px;
+    --t-head: 32px;
+  }
+
+  main#main :is(.panel-sec, .svc2__d--cream, .ab-dark),
+  html[data-ground] main#main section.vt:not(.ab3-hero):not(.hero):not(.foot) {
+    padding-top: 56px !important;
+  }
+
+  main#main :is(.panel-sec, .svc2__d--cream, .ab-dark, .callband--field, .callband--cream),
+  html[data-ground='light'] main#main section.vt:not(.ab3-hero):not(.hero):not(.foot) {
+    padding-bottom: 56px !important;
+  }
+
+  main#main section.vt:is(.callband--field, .callband--cream) {
+    padding-top: 56px !important;
+  }
+
+  .foot__sheet {
+    padding-top: 56px !important;
+    padding-bottom: 56px !important;
+  }
+
+  /* ---- Home 1: What we do, cards at their content's height ---------------- */
+  /* Auto height, held to at least 55% of the screen, the bottom of the
+     founder's 0.55 to 0.65 (at their content's height alone they measured
+     0.46 to 0.52). */
+  .wwd__card,
+  .wwd__card.wwd__card {
+    min-height: 55svh;
+    padding: 24px;
+  }
+
+  .wwd__q {
+    font-size: 30px;
+    line-height: 1.05;
+  }
+
+  .wwd__fill {
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .wwd__fact {
+    font-size: 13px;
+    line-height: 19px;
+  }
+
+  /* ---- Home 2: What it costs you ------------------------------------------- */
+  .cc__cell {
+    flex-basis: 260px;
+  }
+
+  .cc__k {
+    font-size: 11px;
+  }
+
+  .cc__n,
+  .cc__n.cc__n {
+    margin: 4px 0 10px;
+    font-size: 56px;
+  }
+
+  .cc__h {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .cc__p {
+    font-size: 13px;
+    line-height: 19px;
+  }
+
+  /* ---- Home 3: Recent work, every tile 16:10 of the column ------------------ */
+  .wa__row {
+    height: auto;
+  }
+
+  .wa__panel,
+  .wa__panel[data-on='true'] {
+    flex: none;
+    aspect-ratio: 16 / 10;
+  }
+
+  .wa__name,
+  .wa__side {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  /* ---- Home 4: How it works ---------------------------------------------------- */
+  .promise--hiw .promise__h {
+    font-size: 32px;
+  }
+
+  .promise__line {
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .pb-steps {
+    gap: 20px;
+    margin-top: 28px;
+    padding-top: 20px;
+  }
+
+  /* ---- Home 5: the closing call (and every closing call) ---------------------------- */
+  .callband__h,
+  .callband--cream .callband__h,
+  .callband--field .callband__h {
+    font-size: 36px;
+  }
+
+  /* ---- Global: the display headings and figures ------------------------------------
+     /services' band headings were 26px; Contact's marquee headline was 72px,
+     over the 64px figure cap, and takes About's 44. */
+  .svc2__d h2.svc2__name,
+  .svc2__d .svc2__name.svc2__name {
+    font-size: 28px;
+    line-height: 1.15;
+  }
+
+  .ct-mq__copy {
+    font-size: 44px;
+  }
+
+  .callband__note {
+    margin-top: 16px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .callband__cta {
+    margin-top: 24px;
+  }
+
+  /* ---- Home 6: the footer ---------------------------------------------------------
+     The wordmark shows 60px of its capitals: at 0.469em shown that is a
+     128px wordmark, wider than the phone, so the screen's right edge crops
+     it too. Columns 20px apart. */
+  .sf .join {
+    margin-bottom: 56px;
+  }
+
+  .sf__cols {
+    gap: 20px;
+  }
+
+  .sf__legal {
+    margin-top: 40px !important;
+  }
+
+  .sf__mark {
+    margin-top: 28px !important;
+    font-size: 128px;
+  }
+
+  /* ---- Services 7 and 8 ----------------------------------------------------------- */
+  /* Branding: the desk scaled as a whole. `zoom` scales the stage and its
+     layout together, so its box is the scaled height and nothing overlaps:
+     at 0.55 the stacked desk is 1034 x 0.55, inside 70svh at 390 and 430.
+     It is a picture (aria-hidden); the field and the colour sets above it
+     keep their size. */
+  .bd__stage {
+    zoom: 0.55;
+  }
+
+  /* Websites: the phone row 60svh tall: the phone's width is its height over
+     2.165 (the 390:844 screen plus the 10px bezel). */
+  .dp {
+    grid-auto-columns: min(72vw, calc(60svh / 2.165));
+    gap: 16px;
+  }
+
+  /* Marketing: one column of 180px tiles. */
+  .mm__mosaic {
+    grid-auto-rows: 180px;
+    gap: 12px;
+  }
+
+  .mm__tile {
+    padding: 12px 14px;
+  }
+
+  .mm__body {
+    margin-top: 18px;
+  }
+
+  .mm__map {
+    height: 56px;
+  }
+
+  .mm__post {
+    height: 64px;
+    font-size: 15px;
+  }
+
+  .mm__panel {
+    height: 44px;
+    font-size: 13px;
+  }
+
+  .mm__q {
+    padding: 5px 12px;
+  }
+
+  .mm__org {
+    margin-top: 6px;
+    padding-top: 6px;
+  }
+
+  .mm__copy {
+    margin: 6px 0 !important;
+  }
+
+  .mm__n {
+    font-size: 56px;
+  }
+
+  .mm__head {
+    font-size: 32px;
+  }
+
+  .mm__list {
+    margin-top: 20px;
+  }
+
+  .mm__tally {
+    margin-top: 20px;
+  }
+
+  /* Automation: 15px bubbles, the cards at 90% of the thread. */
+  .at__head {
+    font-size: 32px;
+  }
+
+  .at__b {
+    padding: 12px 16px;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  .at__item {
+    margin-bottom: 18px;
+  }
+
+  .at__call {
+    min-width: 0;
+    width: 90%;
+  }
+
+  .at__call b {
+    font-size: 17px;
+  }
+
+  .at__plan,
+  .at__tape,
+  .at__sys {
+    width: 90%;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .at__days,
+  .at__slots {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .at__chip {
+    padding: 3px 9px;
+    font-size: 11px;
+  }
+
+  /* The facts, 2 by 2: 12px labels, 14px values. */
+  .svc2__facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .svc2__fact-i,
+  .svc2__fact-i:first-child {
+    padding: 10px 12px 10px 0;
+    border-left: 0;
+  }
+
+  .svc2__fact-k {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .svc2__fact-v {
+    font-family: var(--font-offer);
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  /* ---- Pricing 9 and 10 ------------------------------------------------------------- */
+  /* A subgrid of eight rows, two of them empty on a phone (the tag row
+     and the line), each still paying the row gap: 4px, not 8. */
+  .pr-col {
+    row-gap: 4px;
+    padding: 16px 18px;
+  }
+
+  .pr-col__price,
+  .pr-col__price.pr-col__price {
+    line-height: 1;
+  }
+
+  .pr-col__name {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .pr-col__label {
+    margin-bottom: 8px;
+  }
+
+  .pr-col__facts {
+    gap: 2px;
+    margin-top: 14px;
+    padding-top: 10px;
+  }
+
+  .pr-col__fact dd {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .pr-col__price,
+  .pr-col__price.pr-col__price {
+    font-size: 44px;
+  }
+
+  .pr-col__list {
+    gap: 8px;
+  }
+
+  .pr-col__item {
+    padding: 0;
+    border-bottom: 0;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .faq__btn {
+    min-height: 56px;
+    padding: 8px 0;
+  }
+
+  /* ---- About 11 ----------------------------------------------------------------------- */
+  .ab3-hero__h {
+    font-size: 44px;
+  }
+
+  .os__pull {
+    font-size: 24px;
+  }
+
+  .os__body {
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .os__beat::before {
+    font-size: 72px;
+  }
+
+  .tc__sheet {
+    width: 92%;
+    padding: 22px 18px 32px;
+  }
+
+  .tc__t {
+    font-size: 17px;
+    line-height: 24px;
+  }
+
+  .tc__d {
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .tc__head {
+    margin-bottom: 16px;
+  }
+
+  .tc__clauses {
+    gap: 10px;
+  }
+
+  .tc__clause {
+    gap: 2px;
+    padding-bottom: 10px;
+  }
+
+  .tc__foot {
+    margin-top: 20px;
+  }
+
+  .tc__sig {
+    font-size: 24px;
+  }
+}

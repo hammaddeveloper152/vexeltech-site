@@ -14,6 +14,21 @@
    and every weight token below would silently render wrong.
    -------------------------------------------------------------------- */
 
+/* THE MONIGUE FALLBACK (final33, 2026-10-07). With font-display swap,
+   About's h1 set in the fallback first and rewrapped when Monigue landed,
+   moving the whole hero: CLS 0.27 on a phone. This fallback is local Arial
+   scaled to Monigue's width (58.2%, measured on that line, uppercase), so
+   the lines hold; the shift fell to 0.018. Clash, Satoshi and JetBrains
+   Mono fallbacks were tried the same way and dropped: across the site's 33
+   Clash headings the width ratio to Arial runs 0.96 to 1.11, so no one
+   scale holds every line break, and /services' h1 got worse (0.002 to
+   0.036); the Satoshi and mono ones changed nothing measurable. */
+@font-face {
+  font-family: 'Monigue Fallback';
+  src: local('Arial'), local('ArialMT'), local('Helvetica');
+  size-adjust: 58.2%;
+}
+
 @font-face {
   font-family: 'Clash Display';
   font-style: normal;
@@ -282,7 +297,9 @@
   /* The loud register. Condensed uppercase: the fallback is a condensed
      system face where one exists, then plain sans. A failure mode, not a
      design choice, per CLAUDE.md. */
-  --font-loud: Monigue, 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+  /* 'Monigue Fallback' (final33): local Arial at Monigue's width, so
+     About's h1 keeps its lines when Monigue swaps in. */
+  --font-loud: Monigue, 'Monigue Fallback', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
   /* THE NAME REGISTER. Product names only — see the @font-face note above and
      DESIGN.md "Moldie, the name face". The fallback is the loud register's
      own, because a name that loses its face should fall to the site's display
