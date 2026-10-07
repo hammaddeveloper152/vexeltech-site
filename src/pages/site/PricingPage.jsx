@@ -140,7 +140,7 @@ const QUESTIONS = [
   {
     id: 'after',
     q: 'What happens after the thirty days?',
-    a: 'Your site keeps running. It is yours. When you need a change, call; small changes are priced small, and there is no retainer unless you ask for one.',
+    a: "Your site keeps running, because it's yours. When you need a change, call us; small changes are priced small, and there's no retainer unless you ask for one.",
   },
 ];
 
@@ -169,7 +169,7 @@ export default function PricingPage() {
           </h1>
           {/* COPY V4, 2026-10-06. The figures it named are on the grid below. */}
           <p className="pr-head__lead">
-            Two prices you can plan around. Everything else is quoted in writing before a dollar moves.
+            Two prices you can plan around. Everything else gets a written number before a dollar moves.
           </p>
         </div>
       </header>

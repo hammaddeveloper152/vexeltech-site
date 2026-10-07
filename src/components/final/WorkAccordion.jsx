@@ -81,12 +81,16 @@ export default function WorkAccordion() {
   return (
     <section className="vt st-sec st--dark wa" aria-labelledby="wa-h" data-artifact="WorkAccordion">
       <div className="st-in wa__head">
-        <h2 className="st-h" id="wa-h">
+        <h2 className="st-h hl" id="wa-h">
           Recent work
         </h2>
         {/* The handoff lead (the clarity pass, 2026-10-06); it replaced the
             foot line "Six live sites. Open any of them." */}
-        <p className="sec-lead">What the fixes look like when they&apos;re live. Open any of them.</p>
+        {/* COPY V5 (final37). */}
+        <p className="sec-lead">
+          This is what the work looks like once it&apos;s live. Open any of them; they&apos;re real sites for
+          real clients.
+        </p>
       </div>
 
       <ul className="wa__row" onKeyDown={onKeyDown} ref={rowRef}>

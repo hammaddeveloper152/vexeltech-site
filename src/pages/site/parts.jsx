@@ -79,7 +79,7 @@ export function CallBand({ heading, note = null, promise = false, field = false,
     >
       {/* The scribble under the heading came off everywhere, 2026-10-01
           (the storytelling pass). */}
-      <h2 className="callband__h" id="callband-h">
+      <h2 className="callband__h hl" id="callband-h">
         {heading}
       </h2>
       {note ? <p className="callband__note">{note}</p> : null}

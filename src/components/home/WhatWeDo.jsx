@@ -25,39 +25,46 @@ import './what-we-do.css';
    screen reader reads the whole answer from the first paint. Reduced
    motion: filled, no caret, nothing moves. */
 
-/* COPY V4.2 (2026-10-07, the founder): the lead and every question, answer
-   and fact are V4.2's. Cards, layout and motion unchanged. */
+/* COPY V5 (final37, 2026-10-08, the founder): the lead, every answer and
+   every fact are V5's, full sentences in the owner's words; the questions
+   are V4.2's. The "We do" label before the answer is gone (the founder's
+   answer, final37): a full sentence reads alone. Cards, layout and motion
+   unchanged; the cards grow to fit, over their min-height. */
 const CARDS = [
   {
     id: 'branding',
     name: 'Branding',
     question: 'Need a look that makes people trust you before they call?',
-    answer: 'your logo, colours, cards and social kit, built to carry your business for years, not a season.',
-    fact: 'Ready in one to two business days. Every file is yours.',
+    answer:
+      "You need a look that makes people trust you before they've spoken to you. We design the logo, the colours and everything that carries them, so the van, the invoice and the Instagram page all look like the same business.",
+    fact: 'Ready in one to two business days, and every file is yours to keep.',
     link: 'See branding',
   },
   {
     id: 'websites',
     name: 'Websites',
     question: 'Need a website that brings in calls and bookings, not just visits?',
-    answer: 'a six-page site built for phones and planned around how your customers actually buy.',
-    fact: 'Live in four business days. On your domain, in your name.',
+    answer:
+      'You need a website that gets you calls and bookings, not compliments. We build six pages around the way your customers actually decide, on their phones, usually at night.',
+    fact: 'Live in four business days, on your own domain.',
     link: 'See websites',
   },
   {
     id: 'marketing',
     name: 'Marketing',
     question: 'Need your name in front of more people, above your competitors?',
-    answer: 'search, maps, social, AI answers and reviews, run as one plan and reported as cost per enquiry.',
-    fact: 'Month to month. We grow when you grow.',
+    answer:
+      'You need to show up wherever your customers are looking: Google, the map, Instagram, Facebook, and now the answer an AI gives when someone asks who to call. We run all of it as one plan and tell you every month what each enquiry cost.',
+    fact: "Month to month, because we'd rather earn next month than sign you up for it.",
     link: 'See marketing',
   },
   {
     id: 'automation',
     name: 'Automation',
     question: 'Want the phone answered and the jobs booked while you are on the job?',
-    answer: 'an AI assistant that answers in your name, books into your calendar and keeps the paperwork moving.',
-    fact: 'Trained on your services and prices. Set up in about two weeks.',
+    answer:
+      "You're missing calls because you're working. We set up an assistant that answers in your name, books the job into your calendar and keeps the quote, the invoice and the review request moving without you.",
+    fact: 'Trained on your services and prices. Running in about two weeks.',
     link: 'See automation',
   },
 ];
@@ -143,10 +150,13 @@ export default function WhatWeDo() {
     <section className="vt services wwd" aria-labelledby="services-h">
       <div className="services__in">
         <div className="services__head">
-          <h2 className="services__h" id="services-h">
+          <h2 className="services__h hl" id="services-h">
             What we do
           </h2>
-          <p className="services__lead">Four ways we build your business with you. Start with the one holding you back.</p>
+          <p className="services__lead">
+            Most owners come to us for one of these four. We&apos;ll tell you on the first call which one is
+            actually costing you customers, even if it&apos;s not the one you asked about.
+          </p>
         </div>
         <ul className="wwd__grid">
           {CARDS.map((c, i) => (
@@ -160,7 +170,6 @@ export default function WhatWeDo() {
                   <Whole text={c.question} />
                 </h3>
                 <span className="wwd__ans">
-                  <span className="wwd__k">We do</span>
                   <Answer text={c.answer} />
                 </span>
                 <span className="wwd__meta">

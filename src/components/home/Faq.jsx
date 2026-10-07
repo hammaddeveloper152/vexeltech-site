@@ -151,7 +151,7 @@ export default function Faq({ items, id: base = 'faq', heading = 'Questions' }) 
   return (
     <section className="vt faq" aria-labelledby={`${base}-h`}>
       <div className="faq__inner">
-        <h2 className="faq__h" id={`${base}-h`}>
+        <h2 className="faq__h hl" id={`${base}-h`}>
           {heading}
         </h2>
         <FaqList items={items} id={base} />

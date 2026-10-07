@@ -218,7 +218,12 @@ export default function Hero() {
           Website design and marketing for small businesses.
         </h1>
         {/* COPY V4.2 (2026-10-07, the founder). */}
-        <p className="hero__sub">One team that builds with you: the brand, the site, the marketing and the follow-up.</p>
+        {/* COPY V5 (final37, 2026-10-08, the founder). */}
+        <p className="hero__sub">
+          We build the brand, the website, the marketing and the follow-up for owner-run businesses, as one
+          team that stays with you. Most of our clients came to us with one problem and found out it was a
+          different one.
+        </p>
 
         <div className="hero__support">
           <div className="hero__actions">

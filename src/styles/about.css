@@ -1,0 +1,330 @@
+/* ==========================================================================
+   THE ABOUT PAGE, REBUILT (AboutPage.jsx, NextSize.jsx; final37,
+   2026-10-08, the founder). The ground is ink (--c-base) but for D2, which
+   is cream, and the three kept blocks, which carry their own cream
+   (story.css `.st--light`). One container, the section token above every
+   section, and below one only where the ground changes, so two sections on
+   one ground never stack their space (THE VERTICAL RHYTHM).
+
+   Pairs, measured: bone on ink 16.32:1, steel-lift on ink 7.55, yellow on
+   ink 10.3; asphalt on cream 15.75, steel on cream 7.20; asphalt on paper
+   16.04, #6b6b66 on paper 4.84; asphalt on the yellow step 9.31.
+   ========================================================================== */
+
+/* ---- The sections ------------------------------------------------------ */
+.ab {
+  position: relative;
+  isolation: isolate;
+}
+
+main#main section.vt.ab.ab {
+  padding: var(--s-section) var(--inset) 0;
+}
+
+/* Where the ground changes below, the section keeps its foot. */
+main#main section.vt.ab.ab:is(.ab--d1, .ab--cream, .ns) {
+  padding-bottom: var(--s-section);
+}
+
+.ab--ink {
+  background: var(--c-base);
+  color: var(--c-bone);
+}
+
+.ab--cream {
+  background: var(--c-cream);
+  color: var(--c-asphalt);
+}
+
+/* The cream's grain, 3%, as on every cream band. */
+.ab--cream::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--grain);
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+}
+
+.ab--cream :focus-visible {
+  outline-color: var(--c-asphalt); /* yellow on cream is 1.66:1 */
+}
+
+.ab__in {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+}
+
+.ab p,
+.ab h1,
+.ab h2,
+.ab h3,
+.ab ul,
+.ab ol {
+  margin: 0;
+}
+
+/* The eyebrow: mono 11px, steel-lift on ink, steel on cream. */
+.ab__eyebrow {
+  margin-bottom: 16px !important;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-steel-lift); /* 7.55:1 */
+}
+
+.ab--cream .ab__eyebrow {
+  color: var(--c-steel); /* 7.20:1 */
+}
+
+/* ---- D1, the statement -------------------------------------------------
+   The page's display size, kept from the page before: the width divisor
+   and the 112px cap. */
+.ab__h1 {
+  font-family: var(--font-loud);
+  font-size: min(calc((100vw - 2 * var(--inset)) / 6.227), 112px);
+  line-height: var(--t-loud-line);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--c-bone);
+  text-wrap: balance;
+}
+
+.ab__lead {
+  --lead-lh: 27px;
+  max-width: 34ch;
+  font-family: var(--font-offer);
+  font-size: 18px;
+  line-height: 27px;
+  color: var(--c-steel-lift);
+}
+
+.ab__h1 + .ab__lead {
+  margin-top: 24px !important;
+}
+
+/* ---- D2, the problem: the body 16/25, ink, 62ch ------------------------- */
+.ab__lead.ab__body {
+  --lead-lh: 25px;
+  max-width: 62ch;
+  font-size: 16px;
+  line-height: 25px;
+  color: var(--c-asphalt);
+}
+
+/* ---- D3, what we hold to ------------------------------------------------ */
+.hold {
+  display: grid;
+  gap: 28px;
+  padding: 0;
+  list-style: none;
+}
+
+.hold__l {
+  font-family: var(--font-loud);
+  font-size: 40px;
+  line-height: 0.92;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--c-bone);
+  text-wrap: balance;
+}
+
+.hold__l--y {
+  color: var(--c-yellow-d); /* 10.3:1 on ink */
+}
+
+@media (min-width: 1024px) {
+  .hold__l {
+    font-size: 56px;
+  }
+}
+
+/* ---- D4, the next size --------------------------------------------------- */
+.ns__grid {
+  display: grid;
+}
+
+.ns__steps {
+  display: grid;
+  gap: 12px;
+  margin-top: 32px !important;
+  padding: 0;
+  list-style: none;
+}
+
+.ns__step {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 18px 18px 20px;
+  border-radius: 4px;
+  background: var(--c-paper);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 70%);
+  color: var(--c-asphalt);
+}
+
+/* Below 1024 each step stands further out to the right. */
+.ns__step--01 {
+  margin-right: 96px;
+}
+
+.ns__step--02 {
+  margin-right: 48px;
+}
+
+.ns__step--03 {
+  background: var(--c-yellow-d);
+}
+
+.ns__k {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.14em;
+  color: #6b6b66; /* 4.84:1 on paper */
+}
+
+.ns__t {
+  margin-top: 12px !important;
+  font-family: var(--font-loud);
+  font-size: 44px;
+  line-height: 0.92;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--c-asphalt);
+  text-wrap: balance;
+}
+
+.ns__b {
+  margin-top: 12px !important;
+  font-family: var(--font-offer);
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--c-asphalt);
+}
+
+.ns__m {
+  margin-top: 10px !important;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 18px;
+  color: #6b6b66;
+}
+
+/* On the yellow step every type is ink (the founder's answer, final37). */
+.ns__step--03 :is(.ns__k, .ns__m) {
+  color: var(--c-asphalt); /* 9.31:1 */
+}
+
+.ns__cap {
+  margin-top: 16px !important;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--c-steel-lift);
+}
+
+@media (min-width: 1024px) {
+  .ns__grid {
+    grid-template-columns: 420px minmax(0, 1fr);
+    grid-template-rows: 1fr auto;
+    grid-template-areas:
+      'text steps'
+      'cap steps';
+    column-gap: 64px;
+  }
+
+  .ns__text {
+    grid-area: text;
+  }
+
+  .ns__steps {
+    grid-area: steps;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: end;
+    gap: 16px;
+    margin-top: 0 !important;
+  }
+
+  .ns__cap {
+    grid-area: cap;
+    align-self: end;
+    margin-top: 24px !important;
+  }
+
+  .ns__step--01,
+  .ns__step--02 {
+    margin-right: 0;
+  }
+
+  .ns__step--01 {
+    min-height: 260px;
+  }
+
+  .ns__step--02 {
+    min-height: 340px;
+  }
+
+  .ns__step--03 {
+    min-height: 420px;
+  }
+
+  .ns__t {
+    font-size: 56px;
+  }
+}
+
+/* ---- Rest full, start soft (useSoftStart.js) ---------------------------
+   At rest every line and step is in place. Once, at half in view, they
+   replay their entrance: D3's lines from 12px below, D4's steps from 24px,
+   opacity from 0, 400ms each, 150ms apart. Reduced motion: no entrance. */
+@media (prefers-reduced-motion: no-preference) {
+  .hold[data-play='true'] .hold__l {
+    animation: ab-rise-12 400ms var(--ease-reveal) both;
+    animation-delay: calc(var(--i) * 150ms);
+  }
+
+  .ns__steps[data-play='true'] .ns__step {
+    animation: ab-rise-24 400ms var(--ease-reveal) both;
+    animation-delay: calc(var(--i) * 150ms);
+  }
+}
+
+@keyframes ab-rise-12 {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes ab-rise-24 {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+/* ---- The kept cream blocks and the close ---------------------------------
+   The last kept block meets the yellow field, a ground change: it keeps
+   its foot. The field keeps the 72 / 112 it had on the light page. */
+main#main section.vt.st--light:has(+ .callband--field) {
+  padding-bottom: var(--s-section);
+}
+
+main#main section.vt.callband--field.callband--field {
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+@media (min-width: 768px) {
+  main#main section.vt.callband--field.callband--field {
+    padding-top: 112px;
+    padding-bottom: 112px;
+  }
+}

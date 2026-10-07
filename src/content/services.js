@@ -79,7 +79,7 @@ export const DISCIPLINES = [
   {
     id: 'marketing',
     name: 'Marketing',
-    promise: 'Campaigns measured in cost per lead, not impressions.',
+    promise: 'Your name wherever your customers look, measured by what each enquiry cost.', // V5, final37
     cards: [
       /* "The Map Pack." came off this line when it met the banned list
          (the founder, 2026-10-01; the copy file was changed to match). */
@@ -99,7 +99,7 @@ export const DISCIPLINES = [
   {
     id: 'automation',
     name: 'Automation',
-    promise: "The follow-up that runs while you're on the job.",
+    promise: "The phone answered and the paperwork done while you're on the job.", // V5, final37
     cards: [
       { title: 'Missed-call text-back', line: 'The caller you missed gets a reply and a way to book before they ring someone else.' },
       /* "from your template" came off this line when it met the banned

@@ -59,10 +59,29 @@
 }
 
 .st--light {
+  /* Their own cream since final37: the cream was the light page's ground
+     until About went to ink. The grain as on every cream band. */
+  position: relative;
+  isolation: isolate;
+  background: var(--c-cream);
   color: var(--c-asphalt);
   --st-head: var(--c-asphalt);
   --st-soft: var(--c-steel);
   --st-hair: rgb(23 24 26 / 15%);
+}
+
+.st--light::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--grain);
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+}
+
+.st--light :focus-visible {
+  outline-color: var(--c-asphalt); /* 15.75:1; yellow on cream is 1.66 */
 }
 
 .st--dark .st-h,

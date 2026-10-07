@@ -40,7 +40,7 @@ export default function SiteFooter() {
       <div className="sf__in">
         <div className="sf__cols">
           <div className="sf__col">
-            <p className="sf__talk">Let&apos;s talk.</p>
+            <p className="sf__talk hl">Let&apos;s talk.</p>
             <p className="sf__contact">
               <a className="sf__u" href={`mailto:${EMAIL}`}>
                 {EMAIL}
@@ -68,7 +68,11 @@ export default function SiteFooter() {
 
           <div className="sf__col">
             <p className="sf__k">Start</p>
-            <p className="sf__promise">A written number within one business day.</p>
+            {/* COPY V5 (final37). */}
+            <p className="sf__promise">
+              One team for the brand, the site, the marketing and the follow-up. A written number within one
+              business day.
+            </p>
             <Link className="sf__cta" to="/contact-us">
               Get a custom quote
             </Link>

@@ -47,8 +47,9 @@ const BEATS = [
   ['Good ads, lost on bad pages.', 'People clicked and left. Calls rang out while the owner was on a job.'],
   ['So we built the pages.', 'Then the whole site. Then the follow-up that runs after the call.'],
   [
-    'By 2026 that had become VexelTech.',
-    "Branding, websites, marketing and automation from one team, at flat prices, for businesses that can't carry four vendors and shouldn't have to.",
+    /* COPY V5 (final37, 2026-10-08, the founder). */
+    'By 2026 that had become Vexel.',
+    "One team for the whole of a small business's growth, for owners who can't carry four vendors and shouldn't have to.",
   ],
 ];
 
@@ -56,7 +57,7 @@ export default function OriginStory() {
   return (
     <section className="vt st-sec st--light os" aria-labelledby="os-h">
       <div className="st-in">
-        <h2 className="st-h" id="os-h">
+        <h2 className="st-h hl" id="os-h">
           Why we exist
         </h2>
         <ol className="os__beats">

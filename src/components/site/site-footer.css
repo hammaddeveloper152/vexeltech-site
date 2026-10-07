@@ -201,8 +201,7 @@
 /* The focus ring is the footer's own, yellow (10.6:1 on #0B0B0C), on every
    page: About's light ground turns the site's ring asphalt, which on this
    dark ground was 1.11:1 (found by the launch-gate keyboard check). */
-.sf :focus-visible,
-html[data-ground] .sf :focus-visible {
+.sf :focus-visible {
   outline: var(--focus-ring) solid var(--c-yellow-d);
   outline-offset: var(--focus-offset);
 }

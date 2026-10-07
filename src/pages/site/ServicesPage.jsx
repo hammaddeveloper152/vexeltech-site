@@ -75,6 +75,7 @@ export default function ServicesPage() {
     <Shell
       title="Small business website design and local SEO | VexelTech"
       path="/services"
+      closingLine="Fifteen minutes on the phone and a written number within one business day."
       /* The closing section, "Ready when you are." and the form, since
          final34 (2026-10-08, the founder; no in-page form from the
          storytelling pass until then). */
@@ -90,7 +91,7 @@ export default function ServicesPage() {
             <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">small business</Brush>
           </>
         }
-        lead="Four disciplines, built to work as one system. Start with the one that's costing you customers, and we will tell you if it's a different one."
+        lead="These are the four things we do. Start with the one that's costing you customers, and if we think it's a different one, we'll say so on the first call."
       />
 
       {/* NOT INSIDE `Section`, 2026-09-23. (Since 2026-09-24 the cream

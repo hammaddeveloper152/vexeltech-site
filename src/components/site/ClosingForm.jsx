@@ -24,7 +24,7 @@ export default function ClosingForm({ steps = false, heading, line }) {
   return (
     <section className={`vt foot foot--sheet tail${steps ? ' tail--steps' : ''}`} aria-labelledby="tail-h">
       <div className="foot__sheet tail__in">
-        <h2 className="tail__h" id="tail-h">
+        <h2 className="tail__h hl" id="tail-h">
           {heading}
         </h2>
         <p className="tail__line">{line}</p>

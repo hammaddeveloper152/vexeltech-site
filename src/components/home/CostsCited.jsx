@@ -89,11 +89,13 @@ export default function CostsCited() {
   return (
     <section className="vt st-sec st--dark cc" aria-labelledby="cc-h">
       <div className="st-in">
-        <h2 className="st-h" id="cc-h">
+        <h2 className="st-h hl" id="cc-h">
           What it costs you
         </h2>
         <p className="sec-lead cc__lead">
-          Four leaks most owner-run businesses never see. The numbers are the industry&apos;s, not ours.
+          {/* COPY V5 (final37). */}
+          Here&apos;s why we push owners to fix this. These four numbers are the industry&apos;s, not ours, and
+          most businesses are losing to all four without knowing it.
         </p>
         <div className="cc__row">
           <ul

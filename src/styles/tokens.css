@@ -1194,3 +1194,56 @@ main:focus {
     opacity: 0;
   }
 }
+
+/* ==========================================================================
+   THE SECTION TITLE (final37, 2026-10-08, the founder; BUILD-LAW Type).
+   Every section title on every route is Monigue caps: 56px below 600, 64
+   from 600, 80 from 1024, line-height 0.92, tracking 0.01em, its colour the
+   ground's as before. The role is the `hl` class on the element. Clash keeps
+   the spoken lines: the h1s, the questions, the card titles, the four
+   /services discipline h2s, and `--t-head` stays for those.
+
+   The lead under a title stands so the gap from the title's baseline to
+   the lead's cap height is 20px (24 from 1024). Monigue lays out on its
+   typo metrics (0.76 / 0.18), so its baseline sits 0.17em above the foot
+   of its 0.92 line box; Satoshi's cap top sits
+   (line-height / 2 - 0.355em) below the top of its own. `--lead-lh` is the
+   lead's line height where it is not 28px. Measured by
+   .measure/final37-gaps.mjs.
+   ========================================================================== */
+:root {
+  --t-head-loud: 56px;
+  --t-head-loud-line: 0.92;
+  --hl-gap: 20px;
+}
+
+@media (min-width: 600px) {
+  :root {
+    --t-head-loud: 64px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --t-head-loud: 80px;
+    --hl-gap: 24px;
+  }
+}
+
+:is(#main, .sf) .hl {
+  font-family: var(--font-loud);
+  font-size: var(--t-head-loud);
+  line-height: var(--t-head-loud-line);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+:is(#main, .sf) .hl:has(+ :is(.services__lead, .sec-lead, .tail__line, .callband__note, .ab__lead)) {
+  margin-bottom: 0;
+}
+
+:is(#main, .sf) .hl + :is(.services__lead, .sec-lead, .tail__line, .callband__note, .ab__lead) {
+  margin-top: calc(var(--hl-gap) - 0.17 * var(--t-head-loud) - var(--lead-lh, 28px) / 2 + 0.355em);
+}

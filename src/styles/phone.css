@@ -23,13 +23,11 @@
     --t-head: 32px;
   }
 
-  main#main :is(.panel-sec, .svc2__d--cream, .ab-dark),
-  html[data-ground] main#main section.vt:not(.ab3-hero):not(.hero):not(.foot) {
+  main#main :is(.panel-sec, .svc2__d--cream) {
     padding-top: 56px !important;
   }
 
-  main#main :is(.panel-sec, .svc2__d--cream, .ab-dark, .callband--field, .callband--cream),
-  html[data-ground='light'] main#main section.vt:not(.ab3-hero):not(.hero):not(.foot) {
+  main#main :is(.panel-sec, .svc2__d--cream, .callband--field, .callband--cream) {
     padding-bottom: 56px !important;
   }
 
@@ -133,6 +131,7 @@
   }
 
   .callband__note {
+    --lead-lh: 24px;
     margin-top: 16px;
     font-size: 16px;
     line-height: 24px;
@@ -357,10 +356,6 @@
   }
 
   /* ---- About 11 ----------------------------------------------------------------------- */
-  .ab3-hero__h {
-    font-size: 44px;
-  }
-
   .os__pull {
     font-size: 24px;
   }

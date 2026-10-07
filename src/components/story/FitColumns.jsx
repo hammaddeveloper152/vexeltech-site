@@ -45,7 +45,7 @@ export default function FitColumns() {
   return (
     <section className="vt st-sec st--light fc" aria-labelledby="fc-h" data-artifact="FitColumns">
       <div className="st-in">
-        <h2 className="st-h" id="fc-h">
+        <h2 className="st-h hl" id="fc-h">
           Who this is for
         </h2>
         <div className="fc__cols">
@@ -66,8 +66,8 @@ export default function FitColumns() {
         {/* COPY V4, 2026-10-06: under both lists, 15px, steel on this cream
             band (the brief's steel-lift is 2.27:1 on cream). */}
         <p className="fc__note">
-          Our clients are in the US, the UK, Europe and Australia. We work with the UK, Europe and
-          Australia on the same terms, with calls set to your hours.
+          Our clients are in the US, the UK, Europe and Australia, on the same terms, with calls set to
+          your hours.
         </p>
       </div>
     </section>

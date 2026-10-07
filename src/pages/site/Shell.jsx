@@ -34,10 +34,9 @@ export default function Shell({
   /* `footerForm={false}`: the page ends on the footer block alone, with no
      contact form (About, since 2026-09-25). */
   footerForm = true,
-  /* `light`: the route is the light page (About, since 2026-09-25): a
-     cream ground for the whole route, set on the document root while the
-     route is mounted (light.css). */
-  light = false,
+  /* `closingLine`: the line under "Ready when you are." (V5, final37:
+     /services and About carry their own). */
+  closingLine = 'A written number within one business day.',
   /* `path`: the page's canonical path, and `noindex` for the 404
      (head.js, the release audit, 2026-09-25). */
   path,
@@ -45,15 +44,6 @@ export default function Shell({
   barOver = false,
   children,
 }) {
-  useEffect(() => {
-    if (!light) return undefined;
-    const root = document.documentElement;
-    root.dataset.ground = 'light';
-    return () => {
-      delete root.dataset.ground;
-    };
-  }, [light]);
-
   /* The title, description, canonical and Open Graph tags (head.js). */
   useEffect(() => setHead({ title, description, path, noindex }), [title, description, path, noindex]);
   /* The breadcrumb of an inner page (final22): Home, then the page, named
@@ -87,7 +77,7 @@ export default function Shell({
             `footerForm={false}` (the legal pages, /thanks). Since final34
             this is the closing section, "Ready when you are." */}
         {meta && footerForm ? (
-          <ClosingForm heading="Ready when you are." line="A written number within one business day." />
+          <ClosingForm heading="Ready when you are." line={closingLine} />
         ) : null}
       </main>
       {/* THE FOOTER, after <main> on every page, so it is the page's
