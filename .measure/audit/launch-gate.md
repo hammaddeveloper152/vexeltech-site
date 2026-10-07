@@ -27,6 +27,7 @@ The founder's pre-launch gate, run on this machine against the production build.
 | 19 | The line under the submit | PASS |
 | 20 | Content grep, years, prices | PASS |
 | 21 | Plausible behind a flag | PASS (one gap, below) |
+| 22 | Every font file has a licence covering commercial web use, recorded in the design repo's `licenses/README.md` (added final36, 2026-10-08) | Clash, Satoshi, JetBrains Mono PASS; **Monigue NEEDS-FOUNDER** (the certificate) |
 
 ## How it was tested
 
@@ -248,6 +249,13 @@ Under every form's submit: "We reply within one business day. Your details are u
   4. Update the privacy policy's analytics sentence.
   5. `npm run build`, then upload `dist`.
 - **The gap:** the forms confirm in place and do not go to /thanks, so a visitor only reaches it directly, and "Lead" on /thanks will almost never fire. Firing "Lead" on the form's in-page success, as the Meta Pixel already does, is a one-line change. It is the founder's call.
+
+### 22. Font licences: Monigue NEEDS-FOUNDER
+- **The rule:** every font file the build ships has a licence covering commercial web use, recorded in the design repo's `licenses/README.md`. A file missing from that list fails the gate.
+- **The files** (final36): `clash-display-variable.woff2`, `satoshi-variable.woff2`, `jetbrains-mono-400.woff2`, `monigue.woff2`. Moldie's two files are deleted.
+- **Clash Display and Satoshi:** Fontshare, ITF Free Font Licence. PASS.
+- **JetBrains Mono:** SIL Open Font License 1.1, the text beside the file. PASS.
+- **Monigue:** Envato Elements. The licence certificate goes in the design repo's `licenses/monigue/`, which does not exist yet. NEEDS-FOUNDER.
 
 ## The smoke script
 

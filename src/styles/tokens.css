@@ -61,10 +61,19 @@
    eight section headings. Nothing else. It is the third face and DESIGN.md
    records it as one.
 
-   Licence: Envato Elements, active subscription, confirmed. The file carries
-   no licence text in its name table; its OS/2 fsType is 4 (Preview & Print),
-   which is advisory for a webfont and is recorded here so nobody has to
-   parse the file to learn it. Copyright Zarma Type Foundry.
+   Licence: Envato Elements, active subscription, confirmed (the design
+   repo's licenses/README.md). The name table's licence URL field points at
+   zarmatype.com/license; its OS/2 fsType is 4 (Preview & Print), which is
+   advisory for a webfont and is recorded here so nobody has to parse the
+   file to learn it. Copyright Zarma Type Foundry.
+
+   The file (final36, 2026-10-08): built from Monigue.otf, subset to Latin
+   (Basic Latin, Latin-1 with its 64 accented letters, the standard
+   punctuation, the euro and the trade mark), every layout feature and
+   name record kept. 16.8 KB, from the vendor's 23.6 KB woff2. Latin
+   Extended-A (Polish, Czech and the like) is not in it. Every advance width
+   and vertical metric is the full font's, so the 'Monigue Fallback'
+   size-adjust stands as derived.
 
    Metrics that matter: hhea gives a 1.000em line box, OS/2 typo gives 0.940,
    so `line-height: normal` is unusable and every use sets it explicitly.
@@ -80,54 +89,8 @@
   src: url('/fonts/monigue.woff2') format('woff2');
 }
 
-/* Moldie: THE NAME FACE, and the fourth face on the site. It sets product
-   names and nothing else — discipline names, pricing tier names, About plate
-   titles, work grid numerals. Never a heading, never body, never a call.
-   Monigue stays the system face on every section heading. DESIGN.md records
-   the role and the boundary.
-
-   SERVED FROM /public, NOT BUNDLED, and that is the one thing about it that
-   differs from the other three. The other faces are imported through Vite and
-   come out fingerprinted, which is correct for a file that changes; a preload
-   needs a path that is known before the bundle exists, so this pair is static
-   at `/fonts/`. Only the regular is preloaded — the slanted cut sets two
-   short lines and is not on the critical path.
-
-   Source: `Moldie.otf` and `Moldie Slanted.otf`, subset to Latin
-   (U+0000-00FF plus the standard extras) with `kern` and `liga` kept and the
-   eleven stylistic sets dropped, since nothing here calls one. 13.5 KB and
-   14.2 KB, from 53.7 KB and 54.6 KB of OTF.
-
-   Licence: Envato Elements, the same subscription the Monigue file came from.
-   OS/2 fsType is 4 (Preview & Print), advisory for a webfont, recorded here so
-   nobody has to parse the file to learn it.
-
-   Metrics that matter: cap height is 0.700em, EXACTLY Monigue's, so a Moldie
-   name and a Monigue heading at the same size have the same cap and sit on the
-   same optical line. The hhea line box is 1.294em (1.386 slanted), so
-   `line-height: normal` is unusable and every use sets it, the same rule
-   Monigue carries.
-
-   SLANTED IS A SEPARATE FAMILY, NOT AN ITALIC. Its `italicAngle` is 0.0 and
-   the slant is drawn into the outlines, so registering it as
-   `font-style: italic` on Moldie would let a browser synthesise an oblique
-   over an already-slanted face the moment the file was missing. Its own
-   family, selected by its own token. */
-@font-face {
-  font-family: 'Moldie';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/fonts/moldie.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Moldie Slanted';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/fonts/moldie-slanted.woff2') format('woff2');
-}
+/* Moldie, the name face, is deleted (final36, 2026-10-08, the founder):
+   nothing rendered in it on any route, measured before it went. */
 
 
 :root {
@@ -300,12 +263,6 @@
   /* 'Monigue Fallback' (final33): local Arial at Monigue's width, so
      About's h1 keeps its lines when Monigue swaps in. */
   --font-loud: Monigue, 'Monigue Fallback', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
-  /* THE NAME REGISTER. Product names only — see the @font-face note above and
-     DESIGN.md "Moldie, the name face". The fallback is the loud register's
-     own, because a name that loses its face should fall to the site's display
-     stack rather than to a body sans: a failure mode, not a design choice. */
-  --font-name: Moldie, 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
-  --font-name-slanted: 'Moldie Slanted', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
 
   /* Weights by register. Deviation from Plate 03, which specifies Archivo
      700 and Barlow 400/600; the register split and the never-mix rule are
@@ -427,35 +384,7 @@
   --t-loud-s: clamp(40px, calc((100vw - 2 * var(--inset)) / 20), 58px);
   --t-loud-small: clamp(27px, calc((100vw - 2 * var(--inset)) / 32), 36px);
 
-  /* ---- The name register: Moldie, and it does NOT fluid-scale ------------
-
-     The loud scale is a clamp because a HEADING has to fit a line whose length
-     changes with the viewport. A name does not: it is a short fixed string
-     inside an object whose width is already decided — a card, a tier, a plate,
-     a numeral in a grid cell — so the same size works at both widths and a
-     clamp would only make it smaller for no reason.
-
-     FLAT PER BREAKPOINT, not flat everywhere. Two of the three hold one value
-     at every width because their objects do: a services card and a pricing
-     card carry the same short name in a box whose width is set by the layout,
-     not by the viewport. The NUMERAL is the exception and it is not a taste
-     call — see the note on `--t-name-fig`.
-
-     Line height is the loud register's own 0.9. Moldie's cap is 0.700em,
-     exactly Monigue's, so a name and a heading at the same size share a cap
-     height and sit on the same optical line. Its ink box is 1.386em because
-     of accents and an overhang above the caps; uppercase A-Z sits near 0.75,
-     which is what makes 0.9 safe for the two-line plate titles. */
-  --t-name-l: 40px; /* discipline names on the home cards */
-  --t-name-m: 32px; /* tier names, plate titles           */
-  /* THE NUMERAL STEPS, AND THE CARRIER RULE IS WHY. The work plate is 760 by
-     475 at 1280 and 358 by 269 at 390 — it loses 68% of its area while a flat
-     numeral keeps all of its own. Measured at a flat 96: machine yellow
-     reaches 5.72% of the plate's own surface at 390, over DESIGN.md's 5%
-     ceiling, against 2.65% at 1280. 64px is the loud scale's own step below 96
-     and brings it to well under the ceiling. It is still the second largest
-     object in the section at that width. */
-  --t-name-fig: 64px; /* the work grid numerals            */
+  /* The name register's sizes (--t-name-*) went with Moldie (final36). */
 
   /* ---- THE QUIET PASS, 2026-09-24, the founder --------------------------
 
@@ -653,14 +582,6 @@
   :root {
     --t-figure-size-solo: 96px;
     --t-figure-line-solo: 100px;
-  }
-}
-
-/* The work plate goes wide here and the numeral takes its full size. The other
-   two name steps do not move: their objects do not grow. */
-@media (min-width: 1024px) {
-  :root {
-    --t-name-fig: 96px;
   }
 }
 

@@ -23,7 +23,9 @@ impeccable/
 # own rules in .measure/.gitignore; nothing about it belongs here as well.
 dist-measure/
 
-# Local environment (the Meta Pixel ID is set in the Netlify build env).
+# Local environment (final36): .env too, so a Formspree ID or an analytics
+# domain set at build time never reaches the repo.
+.env
 .env.local
 .env.*.local
 
