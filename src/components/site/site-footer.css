@@ -1,0 +1,287 @@
+/* THE FOOTER (SiteFooter.jsx, final32, 2026-10-07, the founder).
+
+   Inks on #0B0B0C: bone 16.4:1; the brief's "steel" lines and headings take
+   steel-lift #9ba1a9 (7.7:1), since steel #4c5055 is 2.4:1 on this ground,
+   as everywhere on the dark; the dot and the full stop #F2B01E (10.6);
+   the call yellow with ink text (9.46). Links are bone (16.4), each in a
+   48px target (BUILD-LAW Touch), with the site's focus ring. Nothing here
+   animates; a hover changes a link's underline, at once. */
+.sf {
+  --sf-ground: #0b0b0c;
+  overflow: hidden;
+  padding: 0 var(--inset);
+  background: var(--sf-ground);
+  color: var(--c-bone);
+}
+
+.sf__in {
+  container-type: inline-size;
+  width: min(100%, 1180px);
+  margin: 0 auto;
+}
+
+/* The join, still and full (the founder: the footer does not move). */
+.sf .join {
+  margin-bottom: 96px;
+}
+
+.sf__cols {
+  display: grid;
+  gap: 56px;
+}
+
+@media (min-width: 1024px) {
+  .sf__cols {
+    grid-template-columns: 1.3fr 1fr 1fr;
+    column-gap: 56px;
+  }
+}
+
+.sf__col {
+  min-width: 0;
+}
+
+.sf__col p,
+.sf__pages,
+.sf__subs {
+  margin: 0;
+}
+
+/* Column 1 */
+.sf__talk {
+  font-family: var(--font-brand);
+  font-size: 56px;
+  line-height: 1;
+  font-weight: var(--t-weight-quiet);
+  color: var(--c-bone);
+}
+
+@media (max-width: 599px) {
+  .sf__talk {
+    font-size: 40px;
+  }
+}
+
+.sf__contact {
+  display: grid;
+  justify-items: start;
+  margin-top: var(--s-lg) !important;
+}
+
+.sf__u {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-bone);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgb(232 234 237 / 40%);
+  text-underline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sf__u:hover {
+    text-decoration-color: var(--c-bone);
+  }
+}
+
+.sf__note {
+  margin-top: var(--s-sm) !important;
+  font-family: var(--font-offer);
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--c-steel-lift);
+}
+
+/* Column headings */
+.sf__k {
+  margin-bottom: var(--s-sm) !important;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-steel-lift);
+}
+
+/* Column 2 */
+.sf__pages,
+.sf__subs {
+  padding: 0;
+  list-style: none;
+}
+
+.sf__subs {
+  padding-left: 16px;
+}
+
+.sf__a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-bone);
+  text-decoration: none;
+}
+
+.sf__a--sub {
+  font-size: 14px;
+  color: var(--c-steel-lift);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sf__a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
+}
+
+/* Column 3 */
+.sf__book {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--c-bone);
+}
+
+.sf__dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-yellow-d);
+}
+
+.sf__promise {
+  margin-top: var(--s-xs) !important;
+  font-family: var(--font-offer);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-steel-lift);
+}
+
+.sf__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-top: var(--s-lg);
+  padding: var(--s-md) var(--s-lg);
+  border-radius: var(--r-btn);
+  background: var(--c-accent-ground);
+  font-family: var(--font-brand);
+  font-size: var(--t-btn);
+  line-height: var(--t-btn-line);
+  font-weight: var(--t-weight-btn);
+  color: var(--c-asphalt); /* 9.46:1 */
+  text-decoration: none;
+  transition:
+    opacity var(--d-press) var(--ease-reveal),
+    transform var(--d-press) var(--ease-reveal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sf__cta:hover {
+    opacity: var(--hover-opacity);
+  }
+}
+
+.sf__cta:active,
+.sf__a:active,
+.sf__u:active {
+  transform: scale(0.97);
+}
+
+/* The focus ring is the footer's own, yellow (10.6:1 on #0B0B0C), on every
+   page: About's light ground turns the site's ring asphalt, which on this
+   dark ground was 1.11:1 (found by the launch-gate keyboard check). */
+.sf :focus-visible,
+html[data-ground] .sf :focus-visible {
+  outline: var(--focus-ring) solid var(--c-yellow-d);
+  outline-offset: var(--focus-offset);
+}
+
+/* The legal row, above the wordmark: a 1px bone rule at 14%, 12px mono
+   steel-lift, its links bone. Wraps to two lines below 600. */
+.sf__legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 72px !important;
+  padding-top: 16px;
+  border-top: 1px solid rgb(232 234 237 / 14%);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: var(--c-steel-lift);
+}
+
+.sf__lg {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.sf__lg > * + *::before,
+.sf__lg + .sf__lg::before {
+  content: '·';
+  padding: 0 10px;
+  color: var(--c-steel-lift);
+}
+
+/* Below 600: two lines, the entity and address, then Privacy and Terms. */
+@media (max-width: 599px) {
+  .sf__legal {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sf__lg + .sf__lg::before {
+    content: none;
+  }
+}
+
+.sf__a--legal {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+/* THE WORDMARK. VEXELTECH. in the display face, 600, -0.03em, bone at 92%,
+   the full stop yellow, as wide as the container: its set width is 6.14
+   times its size, so 100cqi / 6.14 (187px at 1280, 58px at 390). The box
+   shows the top 70% of the capitals (caps are 0.67em; at line-height 1 the
+   cap top sits 0.15em down), so the page's bottom edge crops the lower
+   30% of the letters. */
+.sf__mark {
+  height: calc(0.67em * 0.7);
+  margin: 40px 0 0 !important;
+  overflow: hidden;
+  font-family: var(--font-brand);
+  font-size: calc(100cqi / 6.14);
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  color: rgb(232 234 237 / 92%);
+}
+
+.sf__mark-w {
+  display: block;
+  margin-top: -0.15em;
+}
+
+.sf__stop {
+  color: var(--c-yellow-d);
+}

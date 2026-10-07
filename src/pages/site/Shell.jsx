@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Header from '../../components/site/Header.jsx';
 import { skipToMain } from '../../components/site/skip.js';
 import FooterForm from '../../components/home/FooterForm.jsx';
+import SiteFooter from '../../components/site/SiteFooter.jsx';
 import { setHead, setBreadcrumb } from './head.js';
 import '../../styles/tokens.css';
 import '../../styles/register.css';
@@ -81,14 +82,14 @@ export default function Shell({
       <Header over={barOver} />
       <main id="main" tabIndex={-1}>
         {children}
-        {/* The Contact page passes meta={false}: it renders FooterForm
-            itself, and two would be the form twice.
-
-            The footer is `vt foot` inside FooterForm, which is load-bearing:
-            tokens.css applies the ground per SECTION, and a footer rendered
-            bare once sat on the UA's white body on six pages. */}
-        {meta ? <FooterForm form={footerForm} /> : null}
+        {/* THE FORM, its own cream section since final32 (2026-10-07):
+            not on Contact (`meta={false}`, it has its own form), nor where
+            `footerForm={false}` (About, the legal pages, /thanks). */}
+        {meta && footerForm ? <FooterForm /> : null}
       </main>
+      {/* THE FOOTER, after <main> on every page, so it is the page's
+          contentinfo landmark (SiteFooter.jsx, final32). */}
+      <SiteFooter />
     </>
   );
 }

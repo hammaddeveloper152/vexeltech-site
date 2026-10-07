@@ -81,6 +81,10 @@ const found = await p.evaluate((H) => {
     if (!WRAPPERS.includes(e.dataset.artifact)) add('artifact', e, e.dataset.artifact);
   });
   document.querySelectorAll('.wa__shot img, .dp img').forEach((e) => add('screenshot', e, e.getAttribute('alt') || 'capture'));
+  /* The footer's wordmark is its screen's type anchor at every width (final32,
+     2026-10-07, the founder): it spans the container, so at 390 it is 58px,
+     under the 72px figure rule, and still the thing the eye lands on. */
+  document.querySelectorAll('.sf__mark').forEach((e) => add('figure', e, 'VEXELTECH. (footer wordmark)'));
   for (const e of document.querySelectorAll('body *')) {
     const cs = getComputedStyle(e);
     if (cs.display === 'none' || cs.visibility === 'hidden') continue;

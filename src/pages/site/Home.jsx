@@ -5,7 +5,8 @@ import Hero from '../../components/home/Hero.jsx';
 import CostsCited from '../../components/home/CostsCited.jsx';
 import WorkAccordion from '../../components/final/WorkAccordion.jsx';
 import WhatWeDo from '../../components/home/WhatWeDo.jsx';
-import WordBand from '../../components/home/WordBand.jsx';
+import SiteFooter from '../../components/site/SiteFooter.jsx';
+import { useSmoothScroll } from '../../components/home/smoothScroll.js';
 import CounterRow from '../../components/home/CounterRow.jsx';
 import PromiseBand from '../../components/site/PromiseBand.jsx';
 import FooterForm from '../../components/home/FooterForm.jsx';
@@ -69,6 +70,9 @@ const DESCRIPTION =
 
 
 export default function Home() {
+  /* Lenis, home's alone. The wordmark band started it until final32
+     deleted the band (2026-10-07, the founder). */
+  useSmoothScroll();
   /* The title, description, canonical and Open Graph tags (head.js). */
   useEffect(() => setHead({ title: TITLE, description: DESCRIPTION, path: '/' }), []);
 
@@ -145,7 +149,6 @@ export default function Home() {
             final22. It renders nothing until content/work.js has three
             real entries. */}
         <WorkAccordion />
-        <WordBand />
         {/* What it costs you: four cited numbers, no artifact (the
             founder's approved frame C, final15, 2026-10-06). */}
         <CostsCited />
@@ -169,8 +172,10 @@ export default function Home() {
           heading="Which one is costing you most?"
           note="Fifteen minutes on the phone and a written number. Usually it's not the expensive one."
         />
-        <FooterForm />
+        <FooterForm join />
       </main>
+      {/* THE FOOTER, after <main> (SiteFooter.jsx, final32). */}
+      <SiteFooter />
     </>
   );
 }

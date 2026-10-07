@@ -49,327 +49,11 @@
   text-wrap: balance;
 }
 
-/* ---- The form ----------------------------------------------------------
-   THE BOXED FIELDS ARE GONE, 2026-09-25 (the founder's contact pass): the
-   form is LeadForm.jsx's, line fields, and its styles are LeadForm.css.
-   The label rows, the filled boxes, the select and the square submit that
-   lived here are deleted. */
 
-/* ---- Meta --------------------------------------------------------------- */
-
-/* The line that answers the form, under it. */
-.foot__lead-p {
-  margin: var(--s-xl) 0 0;
-  max-width: 60ch;
-  font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  color: var(--c-body-dark); /* bone at 85%, 2026-09-24 */
-}
-
-/* ---- THE FOOTER BLOCK, 2026-09-25 (the founder's Genesis pass) ----------
-
-   See FooterMeta.jsx. A cream block inset 16px from the viewport on every
-   side: it steps out through the footer's inline padding (`--foot-px`) and
-   its bottom padding to 16px from each edge. 32px radius on every corner,
-   96px of padding from 1024 (64 at 768, 32 on a phone: 96 each side of a
-   390 screen would leave 166px for the words), the grain kept, and
-   `overflow: hidden` so the corner swash is cut by the radius. It replaced
-   the full-bleed band and its sheet corners and shadow. Values on cream:
-   asphalt 15.75:1, steel 7.20:1. */
-.foot__band {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  gap: var(--s-2xl);
-  /* No negative foot since final22: the bottom row (.foot__base) follows
-     the band and takes the footer's foot instead, so the band no longer
-     covers it. */
-  margin: var(--s-section) calc(16px - var(--foot-px)) 0;
-  padding: 32px;
-  /* Not clipped since the launch gate (2026-10-07): the corner swash it cut
-     is long gone, and the clip took 12px off the pages' hover blocks and,
-     under text spacing, the links themselves. */
-  overflow: visible;
-  border-radius: 32px;
-  background: var(--c-cream);
-  color: var(--c-asphalt);
-}
-
-@media (min-width: 768px) {
-  .foot__band {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: var(--s-2xl);
-    padding: 64px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .foot__band {
-    padding: 96px;
-  }
-}
-
-/* The grain, 3%, as on every cream panel. */
-.foot__band::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background-image: var(--grain);
-  opacity: var(--grain-opacity);
-  pointer-events: none;
-}
-
-/* Left: the line, and the copyright at the column's foot. */
-.foot__big-col {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  align-content: space-between;
-  gap: var(--s-2xl);
-}
-
-.foot__big {
-  margin: 0;
-  font-family: var(--font-brand);
-  font-size: 56px;
-  line-height: 1;
-  font-weight: var(--t-weight-quiet); /* Medium */
-  letter-spacing: normal;
-  color: var(--c-asphalt); /* 15.75:1 on cream */
-}
-
-@media (min-width: 768px) {
-  .foot__big {
-    font-size: 96px;
-  }
-}
-
-/* THE BARE FOOTER, 2026-09-25: the block alone, no form above it (About).
-   The section before it gives the space above, so the block's own top
-   margin goes. */
-.foot--bare {
-  padding-top: 0;
-}
-
-.foot--bare .foot__band {
-  margin-top: 0;
-}
-
-/* On a phone the block is one column and the copyright goes to its foot,
-   bottom left: the left column's two pieces become the block's own. */
-@media (max-width: 767px) {
-  .foot__big-col {
-    display: contents;
-  }
-
-  .foot__big {
-    order: 1;
-  }
-
-  .foot__meta {
-    order: 2;
-  }
-
-  
-}
-
-/* Right: the email, the city, the pages, the socials, the booking line. */
-.foot__meta {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  justify-items: start;
-  align-content: start;
-  gap: var(--s-md);
-}
-
-/* The booking line's dot: 8px, machine yellow, pulsing (scale 1 to 1.4,
-   opacity 1 to 0.4, 1.6s, transform and opacity only). Still under reduced
-   motion. A mark on cream, not text. */
-.foot__booking {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s-sm);
-}
-
-.foot__pulse {
-  flex: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--c-accent-ground);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .foot__pulse {
-    animation: foot-pulse 1.6s var(--ease-move) infinite;
-  }
-}
-
-@keyframes foot-pulse {
-  50% {
-    opacity: 0.4;
-    transform: scale(1.4);
-  }
-}
-
-/* The corner swash came off, 2026-10-01 (the storytelling pass). */
-
-.foot__band :focus-visible {
-  outline-color: var(--c-asphalt);
-}
-
-.foot__booking {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--c-steel); /* 7.20:1 */
-}
-
-/* The email: 16px asphalt, underlined, a 48px target (BUILD-LAW Touch). */
-.foot__email {
-  display: inline-flex;
-  align-items: center;
-  min-height: 48px;
-  max-width: 100%;
-  font-family: var(--font-offer);
-  font-size: 16px;
-  line-height: 24px;
-  overflow-wrap: anywhere;
-  color: var(--c-asphalt); /* 15.75:1 */
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  transition:
-    opacity var(--d-press) var(--ease-reveal),
-    transform var(--d-press) var(--ease-reveal);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .foot__email:hover {
-    opacity: var(--hover-opacity);
-  }
-}
-
-.foot__email:active {
-  transform: scale(0.97);
-}
-
-/* THE HEADER'S GEOMETRY, 2026-09-30 (the founder): the pages take the bar's
-   control box (`--hdr-*`, tokens.css) so header and footer match. 4px between
-   blocks so two never touch; 8px between wrapped rows keeps the 48px pitch,
-   so the hit areas never overlap; the negative margin keeps the first word on
-   the column's edge. The last word's block may hang the same 12px past the
-   right edge (2026-10-01): at 16px the five pages need 510px and the column
-   is 508 with the left hang alone, so they still wrapped at 1280. */
-.foot__pages {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  column-gap: var(--s-xs);
-  row-gap: var(--s-sm);
-  margin: 0 calc(-1 * var(--foot-page-px));
-  /* 12px each side inside the shared 40px box, where the header's is 14
-     (2026-10-01, the founder): with "About us" and "Contact us" the five
-     pages wrapped to two rows at 1280. */
-  --foot-page-px: 12px;
-  padding: 0;
-  list-style: none;
-}
-
-/* The block is the link's own box, 40px, with the 48px target on its
-   `::before` (BUILD-LAW Touch). The footer's own type: Clash Medium
-   uppercase, 16px since 2026-10-01 (the founder: one step down from 20 so
-   the five pages sit on one row at 1280; the 40px box stays). */
-.foot__page {
-  position: relative;
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  height: var(--hdr-h);
-  padding: 0 var(--foot-page-px);
-  border-radius: var(--hdr-r);
-  font-family: var(--font-quiet);
-  font-size: 16px;
-  line-height: 1;
-  white-space: nowrap;
-  font-weight: var(--t-weight-quiet);
-  letter-spacing: normal;
-  text-transform: uppercase;
-  color: var(--c-asphalt); /* 15.75:1 */
-  text-decoration: none;
-  transition: transform var(--d-press) var(--ease-reveal);
-}
-
-.foot__page::before {
-  content: '';
-  position: absolute;
-  inset: var(--hdr-hit) 0;
-}
-
-/* Hover: the header's block, instant. Two classes, so it outranks About's
-   bone footer links (light.css, html[data-ground='light'] :is(.foot__page),
-   0-2-1): bone on yellow would be the dead-override defect BUILD-LAW names. */
-@media (hover: hover) and (pointer: fine) {
-  .foot__pages .foot__page:hover {
-    background: var(--c-accent-ground);
-    color: var(--c-asphalt);
-  }
-}
-
-.foot__page:active {
-  transform: scale(0.97);
-}
-
-.foot__socials {
-  display: flex;
-  justify-content: flex-start;
-  gap: var(--s-sm);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-/* The link is 48px (BUILD-LAW Touch); the yellow circle inside it is 32. */
-.foot__social {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  transition: transform var(--d-press) var(--ease-reveal);
-}
-
-.foot__social:active {
-  transform: scale(0.97);
-}
-
-.foot__dot {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--c-accent-ground);
-}
-
-.foot__glyph {
-  width: 16px;
-  height: 16px;
-  color: var(--c-asphalt); /* 9.46:1 on machine yellow */
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .foot__page:active,
-  .foot__social:active,
-  .foot__email:active {
-    transform: none;
-  }
-}
+/* The "Let's talk." card, the pages, the socials, the booking line and the
+   bottom row that stood here are deleted with FooterMeta.jsx (final32,
+   2026-10-07): the footer is SiteFooter.jsx and site-footer.css. This
+   sheet is the form's cream section now. */
 
 /* ---- Breakpoints: 390 / 768 / 1024 / 1280 ------------------------------ */
 
@@ -386,117 +70,6 @@
   }
 }
 
-/* ---- THE BOTTOM ROW (FooterBase, final22, 2026-10-06) ---------------------
-   One line from 1024: the wordmark left, the pages in the centre, the
-   legal line right. A 1px bone rule at 14% above it, 24px padding, 12px
-   mono. Inks on the base: bone 16.32:1 for the links, steel-lift 7.55 for
-   the year and the separators. Each link's box is 48px tall. Below 1024 the
-   parts stack, left aligned. */
-.foot__base {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: var(--s-sm) var(--s-lg);
-  width: min(100%, 1200px);
-  /* The footer's own bottom padding is taken back, as the band's foot did
-     before the row existed, so no empty ground sits under the row. */
-  margin: var(--s-xl) auto calc(16px - var(--s-section));
-  padding: 24px 0;
-  border-top: 1px solid rgb(232 234 237 / 14%);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 16px;
-  letter-spacing: 0.04em;
-  color: var(--c-steel-lift);
-}
-
-.foot__base-wm {
-  display: inline-flex;
-  align-items: center;
-  min-height: 48px;
-  color: var(--c-bone);
-  text-decoration: none;
-}
-
-.foot__base-nav ul {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-/* The middle dots between the links: separators, not words. */
-.foot__base-nav li + li::before,
-.foot__base-legal > * + *::before {
-  content: '·';
-  padding: 0 10px;
-  color: var(--c-steel-lift);
-}
-
-.foot__base-nav li {
-  display: inline-flex;
-  align-items: center;
-}
-
-.foot__base-legal {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-end;
-  margin: 0;
-}
-
-.foot__base-a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 48px;
-  color: var(--c-bone);
-  text-decoration: none;
-  transition: opacity var(--d-press) var(--ease-reveal), transform var(--d-press) var(--ease-reveal);
-}
-
-.foot__base-a:focus-visible,
-.foot__base-wm:focus-visible {
-  outline: var(--focus-ring) solid var(--c-focus);
-  outline-offset: var(--focus-offset);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .foot__base-a:hover {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-}
-
-.foot__base-a:active {
-  transform: scale(0.97);
-}
-
-@media (max-width: 1023px) {
-  .foot__base {
-    grid-template-columns: minmax(0, 1fr);
-    justify-items: start;
-  }
-
-  /* Below 1024 the links can wrap, so no dot separators (a wrapped line
-     would start with one); a 24px gap between links instead. */
-  .foot__base-nav li + li::before,
-  .foot__base-legal > * + *::before {
-    content: none;
-  }
-
-  .foot__base-nav ul,
-  .foot__base-legal {
-    column-gap: var(--s-lg);
-  }
-
-  .foot__base-nav ul,
-  .foot__base-legal {
-    justify-content: flex-start;
-  }
-}
 
 /* ---- THE FORM ON THE CREAM SHEET (final26, 2026-10-07) --------------------
    The "Let's talk" card (FooterMeta's band) and the form share one cream
@@ -513,7 +86,7 @@
    padding of its own, so the cream meets the section above it (on home,
    the yellow field) with no dark between. Every route renders this
    footer, so every route closes the same way. */
-main#main footer.foot.foot--sheet {
+main#main .foot.foot--sheet {
   padding: 0;
 }
 
@@ -542,14 +115,6 @@ main#main footer.foot.foot--sheet {
   }
 }
 
-.foot__sheet .foot__band {
-  margin: 0;
-  padding: 0;
-  border-radius: 0;
-  background: none;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--s-xl);
-}
 
 .foot__sheet .foot__inner {
   width: auto;
@@ -602,13 +167,7 @@ main#main footer.foot.foot--sheet {
 
 /* The grain belongs to the sheet, not to the band inside it: one texture
    over the whole cream ground, so the card and the fields read as one. */
-.foot__sheet .foot__band {
-  position: static;
-}
 
-.foot__sheet .foot__band::after {
-  content: none;
-}
 
 .foot__sheet::after {
   content: '';
@@ -627,33 +186,21 @@ main#main footer.foot.foot--sheet {
 /* THE BOTTOM ROW UNDER THE SHEET (final28): dark, inside the 1180
    container, the 1px bone rule at 14% above it and 28px of padding. The
    footer has no padding here, so the row takes no margin. */
-.foot--sheet .foot__base {
-  width: min(calc(100% - 2 * var(--inset)), 1180px);
-  margin: 0 auto;
-  padding: 28px 0;
-}
 
 /* THE ENTITY LINE (the launch gate, 2026-10-07): the full width of the row,
    under its three parts, in the row's 12px mono and steel-lift (7.00:1 on
    the base); the email a link like the row's. Middle dots between the
    parts from 1024, a wrap below. */
-.foot__base-entity {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  column-gap: var(--s-lg);
-  margin: 0;
+
+
+/* THE FORM ALONE ON THE SHEET (final32): one column, the form at most 760
+   wide, left in the 1180 container. */
+@media (min-width: 1024px) {
+  .foot__sheet.foot__sheet--form {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
-@media (min-width: 1024px) {
-  .foot__base-entity {
-    column-gap: 0;
-  }
-
-  .foot__base-entity > * + *::before {
-    content: '·';
-    padding: 0 10px;
-    color: var(--c-steel-lift);
-  }
+.foot__sheet--form .foot__inner {
+  max-width: 760px;
 }

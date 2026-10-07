@@ -1,53 +1,29 @@
 import React from 'react';
 import LeadForm from '../site/LeadForm.jsx';
-import FooterMeta, { FooterBase } from './FooterMeta.jsx';
+import SectionJoin from '../site/SectionJoin.jsx';
 import './FooterForm.css';
 
-/* Section 9. The form, and the end of the page.
-
-   Every value below is a placeholder. BUILD-LAW.md Truth: a phone number, an
-   address, a legal entity name and a set of budget bands are all facts about
-   this business, and none of them may be written here until they are given.
-   The v11 tree carries a phone number and a Calendly link; they were NOT
-   carried over, because a stale contact detail is worse than a visibly empty
-   one.
-
-   There is no parent-company line anywhere in this file, by decision. */
-
-/* THE FORM MOVED INTO LeadForm.jsx, 2026-09-25 (the founder's contact
-   pass): the line fields, 01 name, 02 phone, 03 email, 04 message, and the
-   submit at 40% until they are filled. Its validation, its posting to the
-   Netlify form "contact", the UTM fields and the Lead event went with it,
-   unchanged. The contact page renders the same form with the pills.
-
-   `form={false}` renders the footer block alone, with no form above it
-   (About since 2026-09-25, and Contact, whose form is its own section). */
-export default function FooterForm({ form = true }) {
-  if (!form) {
-    return (
-      <footer className="vt foot foot--bare">
-        <FooterMeta />
-        <FooterBase />
-      </footer>
-    );
-  }
-
-  /* ONE CREAM SHEET (final26, 2026-10-07): the "Let's talk" card and the
-     fields share one cream ground, the card above the fields on a phone
-     and beside them from 1024. The dark ground under the form is gone. */
+/* THE FORM ABOVE THE FOOTER (final32, 2026-10-07, the founder). Until now
+   this was the footer: a cream sheet with the "Let's talk." card beside the
+   form, then the bottom row. The footer is SiteFooter.jsx now, after
+   <main> on every page; the card's words moved into it, and FooterMeta.jsx
+   is deleted. What stays here is the form, as its own cream section in the
+   1180 container: "Get in touch" and LeadForm, on every page but Contact,
+   which has its own, and About, the legal pages and /thanks, which never
+   had one. On home it opens with the yellow join, like home's other
+   sections. */
+export default function FooterForm({ join = false }) {
   return (
-    <footer className="vt foot foot--sheet">
-      <div className="foot__sheet">
-        <FooterMeta />
+    <section className="vt foot foot--sheet" aria-labelledby="foot-h">
+      <div className="foot__sheet foot__sheet--form">
+        {join ? <SectionJoin /> : null}
         <div className="foot__inner">
           <h2 className="foot__h" id="foot-h">
             Get in touch
           </h2>
-
           <LeadForm idPrefix="ff" labelledBy="foot-h" />
         </div>
       </div>
-      <FooterBase />
-    </footer>
+    </section>
   );
 }

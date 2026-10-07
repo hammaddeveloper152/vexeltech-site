@@ -17,6 +17,8 @@ export const ENTITY = {
   state: 'Texas',
   fileNumber: null,
   address: '6619 Elks Trce, Richmond, Texas 77406, United States',
+  /* The footer's legal row (final32, the founder's words). */
+  addressShort: '6619 Elks Trce, Richmond, Texas',
   trading: 'VexelTech Solutions',
   email: 'info@vexeltechsolutions.com',
   phone: '(385) 284-3265',

@@ -28,3 +28,9 @@
     transition: none;
   }
 }
+
+/* The footer's join (final32): full and still, no transition. */
+.join--still {
+  clip-path: none;
+  transition: none;
+}

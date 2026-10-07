@@ -12,10 +12,13 @@ import './section-join.css';
    masked reveal; the founder's ruling also allows this rule a width
    animation, and no other element. Decoration: hidden from assistive
    technology. On the yellow field the rule is the field's ink. */
-export default function SectionJoin({ tone }) {
+/* `still` (final32): drawn full from the first render and never animated,
+   for the footer, which does not move. */
+export default function SectionJoin({ tone, still = false }) {
   const ref = useRef(null);
-  const [drawn, setDrawn] = useState(false);
+  const [drawn, setDrawn] = useState(still);
   useEffect(() => {
+    if (still) return undefined;
     const el = ref.current;
     const section = el && el.closest('section');
     if (!section || typeof IntersectionObserver === 'undefined') {
@@ -39,7 +42,7 @@ export default function SectionJoin({ tone }) {
   }, []);
   return (
     <span
-      className={`join${tone ? ` join--${tone}` : ''}`}
+      className={`join${tone ? ` join--${tone}` : ''}${still ? ' join--still' : ''}`}
       ref={ref}
       data-drawn={drawn ? 'true' : 'false'}
       aria-hidden="true"

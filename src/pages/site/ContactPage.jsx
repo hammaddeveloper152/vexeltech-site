@@ -1,7 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import Shell from './Shell.jsx';
 import { PromiseLine } from './parts.jsx';
-import FooterForm from '../../components/home/FooterForm.jsx';
 import LeadForm from '../../components/site/LeadForm.jsx';
 import ContactTimeline from '../../components/story/ContactTimeline.jsx';
 import { IconArrowDownRight, IconPause, IconPlay } from '../../components/site/Icons.jsx';
@@ -115,7 +114,6 @@ export default function ContactPage() {
           replaced the tiles (the storytelling pass, 2026-10-01). */}
       <ContactTimeline />
 
-      <FooterForm form={false} />
     </Shell>
   );
 }
