@@ -76,16 +76,26 @@ export default function SiteFooter() {
         </div>
 
         {/* Two groups, so below 600 the row breaks between them and never
-            starts a line with a dot. */}
+            starts a line with a dot. Every dot is a span of its own, outside
+            the links, so a link's underline never runs under one (final35). */}
         <p className="sf__legal">
           <span className="sf__lg">
             <span>© 2026 {ENTITY.name}</span>
+            <span className="sf__sep" aria-hidden="true">
+              ·
+            </span>
             <span>{ENTITY.addressShort}</span>
+          </span>
+          <span className="sf__sep sf__sep--g" aria-hidden="true">
+            ·
           </span>
           <span className="sf__lg">
             <Link className="sf__a sf__a--legal" to="/privacy-policy">
               Privacy
             </Link>
+            <span className="sf__sep" aria-hidden="true">
+              ·
+            </span>
             <Link className="sf__a sf__a--legal" to="/terms-of-service">
               Terms
             </Link>

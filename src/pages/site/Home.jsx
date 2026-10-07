@@ -153,10 +153,9 @@ export default function Home() {
         <CounterRow band />
         {/* THE CLOSING SECTION (final34, 2026-10-08, the founder): How it
             works, the closing call and the form are one cream section,
-            under one yellow join (ClosingForm.jsx). */}
+            no join since final35 (ClosingForm.jsx). */}
         <ClosingForm
           steps
-          join
           heading="Which one is costing you most?"
           line="Fifteen minutes on the phone and a written number. Usually it's not the expensive one."
         />

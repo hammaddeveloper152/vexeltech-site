@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import SectionJoin from '../site/SectionJoin.jsx';
 import { REAL_WORK, MIN_WORK } from '../../content/work.js';
 import './accordion.css';
 
@@ -82,7 +81,6 @@ export default function WorkAccordion() {
   return (
     <section className="vt st-sec st--dark wa" aria-labelledby="wa-h" data-artifact="WorkAccordion">
       <div className="st-in wa__head">
-        <SectionJoin />
         <h2 className="st-h" id="wa-h">
           Recent work
         </h2>
@@ -101,6 +99,16 @@ export default function WorkAccordion() {
                 href={w.url}
                 target="_blank"
                 rel="noopener"
+                /* The accordion's state (final35): the open panel says it
+                   is expanded. Focus opens a panel and Space opens it too;
+                   Enter follows the link, as every link does. */
+                aria-expanded={on}
+                onKeyDown={(e) => {
+                  if (e.key === ' ') {
+                    e.preventDefault();
+                    setActive(i);
+                  }
+                }}
                 ref={(n) => {
                   links.current[i] = n;
                 }}

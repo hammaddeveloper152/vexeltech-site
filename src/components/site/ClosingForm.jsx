@@ -1,6 +1,5 @@
 import React from 'react';
 import LeadForm from './LeadForm.jsx';
-import SectionJoin from './SectionJoin.jsx';
 import { STEPS } from '../../content/steps.js';
 import '../home/FooterForm.css';
 import './closing-form.css';
@@ -13,19 +12,18 @@ import './closing-form.css';
    Home: "Which one is costing you most?" and its line, then two columns
    from 1024 (5/12 and 7/12, 64 apart): How it works's four steps on the
    left, the form on the right, its submit "Get a custom quote". Below 1024:
-   the heading, the line, the form, then the steps two by two. One yellow
-   join at the top, home's alone. The steps keep #how-it-works.
+   the heading, the line, the form, then the steps two by two. No join since
+   final35: the heading and the padding mark it. The steps keep #how-it-works.
 
    Services, Pricing and About: the same section without the steps,
    "Ready when you are." and "A written number within one business day."
    Contact keeps its own page; the legal pages and /thanks have no form.
    There is no "Get in touch" heading and no "Let's talk." block here: the
    footer below says that. */
-export default function ClosingForm({ steps = false, join = false, heading, line }) {
+export default function ClosingForm({ steps = false, heading, line }) {
   return (
     <section className={`vt foot foot--sheet tail${steps ? ' tail--steps' : ''}`} aria-labelledby="tail-h">
       <div className="foot__sheet tail__in">
-        {join ? <SectionJoin /> : null}
         <h2 className="tail__h" id="tail-h">
           {heading}
         </h2>

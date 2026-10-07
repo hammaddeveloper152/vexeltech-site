@@ -98,15 +98,19 @@
   line-height: 24px;
   color: var(--c-bone);
   text-decoration: underline;
-  text-decoration-thickness: 1px;
+  text-decoration-thickness: var(--u-thick);
   text-decoration-color: rgb(232 234 237 / 40%);
-  text-underline-offset: 4px;
+  text-underline-offset: var(--u-offset);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .sf__u:hover {
     text-decoration-color: var(--c-bone);
   }
+}
+
+.sf__u:focus-visible {
+  text-decoration-color: var(--c-bone);
 }
 
 /* Column headings */
@@ -137,12 +141,21 @@
   text-decoration: none;
 }
 
+/* The underline is drawn on the anchor, on hover and on keyboard focus,
+   and on nothing else: the legal row's dots are their own spans, outside
+   every anchor (final35). */
 @media (hover: hover) and (pointer: fine) {
   .sf__a:hover {
     text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 4px;
+    text-decoration-thickness: var(--u-thick);
+    text-underline-offset: var(--u-offset);
   }
+}
+
+.sf__a:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: var(--u-thick);
+  text-underline-offset: var(--u-offset);
 }
 
 /* Column 3 */
@@ -194,15 +207,14 @@ html[data-ground] .sf :focus-visible {
   outline-offset: var(--focus-offset);
 }
 
-/* The legal row, above the wordmark: a 1px bone rule at 14%, 12px mono
-   steel-lift, its links bone. Wraps to two lines below 600. */
+/* The legal row, above the wordmark: 12px mono steel-lift, its links
+   bone. No rule above it since final35: the space is the boundary. Wraps
+   to two lines below 600. */
 .sf__legal {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   margin-top: 72px !important;
-  padding-top: 16px;
-  border-top: 1px solid rgb(232 234 237 / 14%);
   font-family: var(--font-mono);
   font-size: 12px;
   line-height: 16px;
@@ -216,9 +228,8 @@ html[data-ground] .sf :focus-visible {
   align-items: center;
 }
 
-.sf__lg > * + *::before,
-.sf__lg + .sf__lg::before {
-  content: '·';
+/* The dots are plain text in their own spans, never inside a link. */
+.sf__sep {
   padding: 0 10px;
   color: var(--c-steel-lift);
 }
@@ -230,12 +241,16 @@ html[data-ground] .sf :focus-visible {
     align-items: flex-start;
   }
 
-  .sf__lg + .sf__lg::before {
-    content: none;
+  .sf__sep--g {
+    display: none;
   }
 }
 
 .sf__a--legal {
+  /* 48 wide at least (final35, BUILD-LAW Touch): "Terms" sets 38. The words centre in the
+     box and the underline stays under the words. */
+  justify-content: center;
+  min-width: 48px;
   font-family: var(--font-mono);
   font-size: 12px;
 }

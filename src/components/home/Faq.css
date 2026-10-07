@@ -304,26 +304,10 @@
     opacity: var(--hover-opacity);
   }
 
-  .faq__btn:hover .faq__q-t {
-    transform: translateX(var(--s-xs));
-  }
-
-  /* Part of the way toward open, so the control shows where it is going
-     before it is pressed. Half the 45 degrees it ends on. */
-  .faq__item:hover .faq__mark:not([data-open='true']) {
-    transform: rotate(22.5deg);
-  }
-
-  .faq__item:hover .faq__rule {
-    transform: scaleX(1);
-  }
-}
-
-/* Focus draws it too, and NOT behind the pointer gate. A keyboard user has no
-   pointer, so gating this with hover would mean the one input that most needs
-   to see where it is never gets told. */
-.faq__item:focus-within .faq__rule {
-  transform: scaleX(1);
+  /* The question's 8px slide, the mark's quarter turn and the rule drawn
+     under the row on hover or focus-within are deleted (final35): hover
+     lives on the button, and nothing moves on hover. Focus is the
+     button's own ring. */
 }
 
 /* Open holds it, hovered or not, focused or not. */
@@ -336,9 +320,6 @@
     transition: transform var(--d-drop) var(--ease-move);
   }
 
-  .faq__q-t {
-    transition: transform var(--d-drop) var(--ease-move);
-  }
 }
 
 .faq__btn:active {

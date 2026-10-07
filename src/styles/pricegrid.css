@@ -191,11 +191,6 @@
   transition: opacity 220ms ease;
 }
 
-.pr-col__price {
-  transform-origin: 0 100%;
-  transition: transform 220ms ease;
-}
-
 /* THE GLOW, 2026-09-24 (the founder, from melius.com/pricing): a yellow
    layer behind each column's white card, 8px larger all round, blurred by
    16px, the card's radius. At rest it is 0; on hover 0.45 and 1.02 scale,
@@ -221,20 +216,13 @@
   opacity: 0.3;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .pr-col:hover .pr-col__glow {
-    opacity: 0.45;
-    transform: scale(1.02);
-  }
-}
-
+/* No hover on the card since final35 (the founder's interaction audit):
+   hover lives on the controls, never on a wrapper, and nothing moves on
+   hover. The glow, the white card, the 4px lift and the price's scale on
+   a hovered column are deleted; the picked column keeps its rest state. */
 @media (prefers-reduced-motion: reduce) {
   .pr-col__glow {
     transition: none;
-  }
-
-  .pr-col:hover .pr-col__glow {
-    transform: none;
   }
 }
 
@@ -266,36 +254,14 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .pr-col:hover {
-    transform: translateY(-4px);
-  }
-
-  .pr-col:hover .pr-col__bg {
-    opacity: 1;
-  }
-
-  .pr-col:hover::before,
-  .pr-col:hover + .pr-col::before {
-    opacity: 0;
-  }
-
-  .pr-col:hover .pr-col__price {
-    transform: scale(1.0714); /* 56px to 60px */
-  }
-
-  .pr-col:hover .pr-col__btn::after {
+  .pr-col__btn:hover::after {
     opacity: 1;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pr-col,
-  .pr-col__price {
+  .pr-col {
     transition: none;
-  }
-
-  .pr-col:hover {
-    transform: none;
   }
 }
 

@@ -11,7 +11,7 @@
    Lines inside a [data-artifact] stage are listed as such: they are part
    of a depicted object (a receipt, a contract, a mockup).
 
-     node .measure/lines-audit.mjs [base] [tag]   (default 4190, now)
+     node .measure/lines-audit.mjs [base] [tag] [outdir]   (4190, now, final34)
    Writes .measure/out/final34/lines-<tag>.json and prints counts per
    route and the distinct lines grouped by selector. */
 import fs from 'node:fs';
@@ -20,7 +20,7 @@ import puppeteer from 'puppeteer';
 
 const BASE = process.argv[2] || 'http://localhost:4190';
 const TAG = process.argv[3] || 'now';
-const OUT = path.join('.measure', 'out', 'final34');
+const OUT = process.argv[4] || path.join('.measure', 'out', 'final34');
 fs.mkdirSync(OUT, { recursive: true });
 const ROUTES = ['/', '/services', '/pricing', '/about-us', '/contact-us', '/privacy-policy', '/terms-of-service', '/thanks', '/nope'];
 const b = await puppeteer.launch({ headless: 'new' });

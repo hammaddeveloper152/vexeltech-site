@@ -11,10 +11,6 @@ main#main .foot__sheet.tail__in {
   padding-bottom: 80px !important;
 }
 
-.tail__in .join {
-  margin-bottom: 40px;
-}
-
 .tail__h {
   margin: 0;
   font-family: var(--font-brand);
@@ -129,8 +125,8 @@ main#main .foot__sheet.tail__in {
 
 @media (max-width: 599px) {
   main#main .foot__sheet.tail__in {
-    padding-top: 48px !important;
-    padding-bottom: 48px !important;
+    padding-top: var(--s-section) !important;
+    padding-bottom: var(--s-section) !important;
   }
 
   .tail__h {

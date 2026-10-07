@@ -55,9 +55,13 @@
 /* /thanks' phone, 2026-10-01: a link in the sentence, the sentence's colour,
    underlined. */
 .legal__lead a {
+  /* 10px of inline padding above and below: the hit area is 48px tall
+     and the sentence's lines do not move (final35). */
+  padding-block: 10px;
   color: inherit;
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration-thickness: var(--u-thick);
+  text-underline-offset: var(--u-offset);
 }
 
 .legal__meta {
@@ -79,7 +83,8 @@
   min-height: 48px;
   color: var(--c-bone); /* 16.32:1 */
   text-decoration: underline;
-  text-underline-offset: 4px;
+  text-decoration-thickness: var(--u-thick);
+  text-underline-offset: var(--u-offset);
   overflow-wrap: anywhere;
   transition: opacity var(--d-press) var(--ease-reveal);
 }

@@ -17,7 +17,7 @@
   margin: 0;
   padding: 0;
   /* The 2px yellow rule across the row is deleted (the lines audit,
-     final34): home's only yellow line is each section's join. */
+     final34). */
   list-style: none;
 }
 
@@ -265,7 +265,7 @@
   .cc__dot {
     display: grid;
     place-items: center;
-    width: 32px;
+    width: 48px; /* 32 until final35: under the target (BUILD-LAW Touch, 48) */
     height: 48px;
     margin: 0;
     padding: 0;

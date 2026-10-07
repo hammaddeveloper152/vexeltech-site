@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import SectionJoin from '../site/SectionJoin.jsx';
 import { COSTS } from '../../content/costs.js';
 import './costs-cited.css';
 
@@ -90,7 +89,6 @@ export default function CostsCited() {
   return (
     <section className="vt st-sec st--dark cc" aria-labelledby="cc-h">
       <div className="st-in">
-        <SectionJoin />
         <h2 className="st-h" id="cc-h">
           What it costs you
         </h2>

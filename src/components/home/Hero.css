@@ -341,8 +341,8 @@
   letter-spacing: normal;
   color: var(--c-bone); /* 2026-09-24: nothing white but the headline */
   text-decoration: underline;
-  text-decoration-thickness: from-font;
-  text-underline-offset: 0.25em;
+text-decoration-thickness: var(--u-thick);
+  text-underline-offset: var(--u-offset);
 }
 
 /* Hover is gated. Ungated it sticks on touch. */

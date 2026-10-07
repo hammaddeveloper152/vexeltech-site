@@ -618,6 +618,10 @@
   --disabled-opacity: 0.4;
   --focus-ring: 2px;
   --focus-offset: 2px;
+  /* THE UNDERLINE (final35, 2026-10-08, the founder): one offset and one
+     thickness for every underlined link, at rest and on hover. */
+  --u-offset: 4px;
+  --u-thick: 1px;
 }
 
 /* The section inset, shared by the hero and the loud scale. */
