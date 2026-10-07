@@ -156,9 +156,10 @@
   }
 
   /* ---- Home 6: the footer ---------------------------------------------------------
-     The wordmark shows 60px of its capitals: at 0.469em shown that is a
-     128px wordmark, wider than the phone, so the screen's right edge crops
-     it too. Columns 20px apart. */
+     The wordmark at 128px, wider than the phone, so the screen's right
+     edge crops it. It showed 60px of its capitals while the page's edge
+     cropped 30%; since 2026-10-08 the edge is at the baseline and it shows
+     its whole capitals, 86px. Columns 20px apart. */
   .sf .join {
     margin-bottom: 56px;
   }

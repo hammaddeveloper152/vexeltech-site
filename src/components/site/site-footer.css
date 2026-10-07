@@ -41,9 +41,28 @@
   min-width: 0;
 }
 
+/* EQUAL COLUMNS (the trim, 2026-10-08, the founder). From 1024 the three
+   share the row's height (the Pages column's, 216px) and each one's last
+   block sits on its foot: the email and phone in 1, the call in 3. Their
+   tops and their feet line up. */
+@media (min-width: 1024px) {
+  .sf__col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sf__col > :last-child {
+    margin-top: auto !important;
+  }
+
+  /* The column is a flex column now; the call keeps its own width. */
+  .sf__cta {
+    align-self: flex-start;
+  }
+}
+
 .sf__col p,
-.sf__pages,
-.sf__subs {
+.sf__pages {
   margin: 0;
 }
 
@@ -90,14 +109,6 @@
   }
 }
 
-.sf__note {
-  margin-top: var(--s-sm) !important;
-  font-family: var(--font-offer);
-  font-size: 13px;
-  line-height: 20px;
-  color: var(--c-steel-lift);
-}
-
 /* Column headings */
 .sf__k {
   margin-bottom: var(--s-sm) !important;
@@ -110,14 +121,9 @@
 }
 
 /* Column 2 */
-.sf__pages,
-.sf__subs {
+.sf__pages {
   padding: 0;
   list-style: none;
-}
-
-.sf__subs {
-  padding-left: 16px;
 }
 
 .sf__a {
@@ -131,11 +137,6 @@
   text-decoration: none;
 }
 
-.sf__a--sub {
-  font-size: 14px;
-  color: var(--c-steel-lift);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .sf__a:hover {
     text-decoration: underline;
@@ -145,26 +146,7 @@
 }
 
 /* Column 3 */
-.sf__book {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-offer);
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--c-bone);
-}
-
-.sf__dot {
-  flex: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--c-yellow-d);
-}
-
 .sf__promise {
-  margin-top: var(--s-xs) !important;
   font-family: var(--font-offer);
   font-size: 14px;
   line-height: 20px;
@@ -260,12 +242,13 @@ html[data-ground] .sf :focus-visible {
 
 /* THE WORDMARK. VEXELTECH. in the display face, 600, -0.03em, bone at 92%,
    the full stop yellow, as wide as the container: its set width is 6.14
-   times its size, so 100cqi / 6.14 (187px at 1280, 58px at 390). The box
-   shows the top 70% of the capitals (caps are 0.67em; at line-height 1 the
-   cap top sits 0.15em down), so the page's bottom edge crops the lower
-   30% of the letters. */
+   times its size, so 100cqi / 6.14 (188px at 1280). The box is the
+   capitals' height (0.67em; at line-height 1 the cap top sits 0.15em
+   down), so the page's bottom edge is the baseline (2026-10-08, the
+   founder): every letter and the stop, which is 0.18em tall and stands on
+   the baseline, are whole. It showed the top 70% until then. */
 .sf__mark {
-  height: calc(0.67em * 0.7);
+  height: 0.67em;
   margin: 40px 0 0 !important;
   overflow: hidden;
   font-family: var(--font-brand);
