@@ -3,6 +3,11 @@
    application/ld+json block, and checks each FAQPage: every Question has a
    name and an acceptedAnswer with text, and the questions match the ones
    rendered on the page, in order. Exits 1 on any failure.
+
+   EVERY ROUTE (final38, 2026-10-08): the FAQPage is expected on /pricing
+   only, the site's one FAQ (copy rule), and on no other route. On every
+   route every block must parse, carry the schema.org context, and the
+   prerendered blocks must equal the live ones after hydration.
      node .measure/ld-check.mjs [base] [route]   (default 4190, /pricing) */
 import fs from 'node:fs';
 import puppeteer from 'puppeteer';
@@ -26,8 +31,11 @@ const shown = await p.$$eval('main h3, main button[aria-expanded]', (n) => n.map
 await b.close();
 for (const [label, set] of [['prerender', pre], ['live', live]]) {
   console.log(`${label}: ${set.length} blocks: ${set.map((x) => x['@type'] || (x['@graph'] ? 'graph' : '?')).join(', ')}`);
+  for (const x of set) if (x['@context'] !== 'https://schema.org') { fail += 1; console.log(`  a block without the schema.org context`); }
   const faqs = set.filter((x) => x['@type'] === 'FAQPage');
-  if (faqs.length !== 1) { fail += 1; console.log(`  FAQPage blocks: ${faqs.length}, expected 1`); continue; }
+  const want = ROUTE === '/pricing' ? 1 : 0;
+  if (faqs.length !== want) { fail += 1; console.log(`  FAQPage blocks: ${faqs.length}, expected ${want}`); continue; }
+  if (!faqs.length) continue;
   const qs = faqs[0].mainEntity || [];
   qs.forEach((q, i) => {
     const ok = q['@type'] === 'Question' && q.name && q.acceptedAnswer?.['@type'] === 'Answer' && q.acceptedAnswer.text;
@@ -37,5 +45,6 @@ for (const [label, set] of [['prerender', pre], ['live', live]]) {
     console.log(`  ${i + 1}. ${ok ? 'valid' : 'INVALID'} ${onPage ? 'on page' : 'NOT ON PAGE'}  ${q.name}`);
   });
 }
+if (JSON.stringify(pre) !== JSON.stringify(live)) { fail += 1; console.log('  the prerendered blocks differ from the live ones'); }
 console.log(fail ? `FAIL: ${fail}` : 'PASS');
 process.exit(fail ? 1 : 0);

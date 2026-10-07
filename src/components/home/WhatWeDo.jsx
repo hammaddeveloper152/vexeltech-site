@@ -154,7 +154,7 @@ export default function WhatWeDo() {
             What we do
           </h2>
           <p className="services__lead">
-            Most owners come to us for one of these four. We&apos;ll tell you on the first call which one is
+            Most of our clients come to us for one of these four. We&apos;ll tell you on the first call which one is
             actually costing you customers, even if it&apos;s not the one you asked about.
           </p>
         </div>

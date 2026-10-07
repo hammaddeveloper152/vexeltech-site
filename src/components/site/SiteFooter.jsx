@@ -70,8 +70,8 @@ export default function SiteFooter() {
             <p className="sf__k">Start</p>
             {/* COPY V5 (final37). */}
             <p className="sf__promise">
-              One team for the brand, the site, the marketing and the follow-up. A written number within one
-              business day.
+              A growth partner for the brand, the site, the marketing and the follow-up. A written number within
+              one business day.
             </p>
             <Link className="sf__cta" to="/contact-us">
               Get a custom quote

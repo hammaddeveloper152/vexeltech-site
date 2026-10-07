@@ -45,6 +45,16 @@
        "map" have no component: the big lines went with KineticCosts and
        AroundLines, and the map was never built.
 
+     - THE AUDIENCE (final38, 2026-10-08, the founder; BUILD-LAW Truth):
+       small business(es), owner-run, one to fifty, SMB(s) and local
+       business(es), any case, hyphenated or open, as the audience. Checked
+       on every route, legal pages too, in the whole body's text (the
+       footer included), every title, description, Open Graph and Twitter
+       tag, every alt text, and every JSON-LD block. One exception: the
+       branding desk's Google listing card on /services, whose category
+       line "Local business" is the platform's label, not our audience.
+       Any hit fails the run (exit 1).
+
    Usage: node .measure/copytext.mjs [tag] [base]
    (tag names the dump folder: before, after.) */
 import fs from 'node:fs';
@@ -83,6 +93,10 @@ const SELF_OK_ROUTE = {
   '/': ['of calls to trade and home businesses'],
   '/services': ['First in the map pack'],
 };
+const AUDIENCE = /\b(small[- ]business(es)?|owner[- ]run|one to fifty|SMBs?|local business(es)?)\b/gi;
+const AUDIENCE_OK_ROUTE = { '/services': ['Local business · Open'] };
+const audienceHits = (t, route) =>
+  [...(AUDIENCE_OK_ROUTE[route] || []).reduce((x, ok) => x.replaceAll(ok, ''), t).matchAll(AUDIENCE)].map((m) => m[0]);
 const selfHits = (t, route) =>
   [...[...SELF_OK, ...(SELF_OK_ROUTE[route] || [])].reduce((x, ok) => x.replaceAll(ok, ''), t).matchAll(SELF)].map((m) => m[0]);
 /* The shared text a repeat may sit in (V3's allowances). */
@@ -101,6 +115,7 @@ const errors = [];
 const b = await puppeteer.launch({ headless: 'new', args: ['--autoplay-policy=no-user-gesture-required'] });
 const texts = {};
 const meta = {};
+const everything = {};
 const shared = {};
 const fullList = {};
 const artifacts = {};
@@ -137,12 +152,27 @@ for (const route of [...PUBLIC, ...LEGAL]) {
   );
   meta[route] = await p.evaluate(() => `${document.title}
 ${document.querySelector('meta[name="description"]')?.content || ''}`);
+  /* For the audience check: the body's text with the footer, every head
+     tag a crawler or a share card reads, every alt text, every JSON-LD. */
+  everything[route] = await p.evaluate(() =>
+    [
+      document.body.innerText,
+      document.title,
+      ...[...document.querySelectorAll('meta[name="description"], meta[property^="og:"], meta[name^="twitter:"]')].map((m) => m.content),
+      ...[...document.querySelectorAll('img[alt]')].map((i) => i.alt),
+      ...[...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => s.textContent),
+    ].join(String.fromCharCode(10))
+  );
   fs.writeFileSync(path.join(OUT, `${route.replace(/\//g, '_') || '_home'}.txt`), t);
   await p.close();
 }
 await b.close();
 
-const report = { dashes: {}, repeats: [], notCap: {}, banned: {}, selfExplaining: {}, figures: {}, bangs: {} };
+const report = { dashes: {}, repeats: [], notCap: {}, banned: {}, selfExplaining: {}, figures: {}, bangs: {}, audience: {} };
+for (const route of Object.keys(everything)) {
+  const a = audienceHits(everything[route], route);
+  if (a.length) report.audience[route] = a;
+}
 const sentences = (t) =>
   t
     .split(/\n+/)
@@ -218,3 +248,7 @@ for (const [device, on] of Object.entries(byDevice)) {
 report.consoleErrors = errors;
 fs.writeFileSync(path.join(OUT, 'checks.json'), JSON.stringify(report, null, 2));
 console.log(JSON.stringify(report, null, 1));
+if (Object.keys(report.audience).length) {
+  console.log('AUDIENCE: FAIL', JSON.stringify(report.audience));
+  process.exit(1);
+}

@@ -215,13 +215,13 @@ export default function Hero() {
 
       <div className="hero__body">
         <h1 className="hero__headline hero__h1" id="hero-h">
-          Website design and marketing for small businesses.
+          Website design and marketing for growing businesses.
         </h1>
         {/* COPY V4.2 (2026-10-07, the founder). */}
         {/* COPY V5 (final37, 2026-10-08, the founder). */}
         <p className="hero__sub">
-          We build the brand, the website, the marketing and the follow-up for owner-run businesses, as one
-          team that stays with you. Most of our clients came to us with one problem and found out it was a
+          We build the brand, the website, the marketing and the follow-up for businesses that want to grow,
+          as one team that stays with you. Most of our clients came to us with one problem and found out it was a
           different one.
         </p>
 

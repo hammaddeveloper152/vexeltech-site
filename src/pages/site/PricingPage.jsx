@@ -124,7 +124,7 @@ const FACTS = Object.fromEntries(
 const QUESTIONS = [
   {
     id: 'cost',
-    q: 'How much does a small business website cost?',
+    q: 'How much does a website cost?',
     a: `${money(FIGURES.website)}, flat. That covers six pages, a build in four business days from your content, and thirty days of maintenance after launch. The only extra is a domain if you don't own one, about $15 a year, registered in your name.`,
   },
   {
@@ -155,7 +155,7 @@ export default function PricingPage() {
       /* The closing section, "Ready when you are." and the form, since
          final34 (2026-10-08, the founder; no in-page form from the
          storytelling pass until then). */
-      description={`How much does a small business website cost? ${money(FIGURES.website)} flat for six pages in four business days. Branding ${money(FIGURES.brandingBasic)} or ${money(FIGURES.brandingAdvance)}. Marketing and automation by quote.`}
+      description={`How much does a website cost? ${money(FIGURES.website)} flat for six pages in four business days. Branding ${money(FIGURES.brandingBasic)} or ${money(FIGURES.brandingAdvance)}. Marketing and automation by quote.`}
     >
       {/* 1. THE HEAD. */}
       <header className="vt pr-head">

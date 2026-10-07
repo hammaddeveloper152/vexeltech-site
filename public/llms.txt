@@ -1,10 +1,10 @@
 # VexelTech Solutions
 
-> Website design, branding, marketing and automation for small businesses. Websites $700 flat, branding from $299, live in four business days.
+> Website design, branding, marketing and automation for businesses that want to grow. Websites $700 flat, branding from $299, live in four business days.
 
 ## Pages
 
-- [Home](https://vexeltechsolutions.com/): What the team does, what a weak website costs a small business, and how a project runs from the first call to live.
+- [Home](https://vexeltechsolutions.com/): What the team does, what a weak website costs a business, and how a project runs from the first call to live.
 - [Services](https://vexeltechsolutions.com/services): Branding, website design, local SEO and ads, and automation, with what each includes and how it goes.
 - [Pricing](https://vexeltechsolutions.com/pricing): Websites $700 flat, branding $299 or $449, and marketing and automation by written quote.
 - [About us](https://vexeltechsolutions.com/about-us): Who the team is, who the work is for, and the terms in plain English.

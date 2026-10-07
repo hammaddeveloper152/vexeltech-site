@@ -6,8 +6,8 @@ import useSoftStart from './useSoftStart.js';
    label, a Monigue title in sentence case, a line and a mono line. Step 03
    is yellow, every type on it in ink (9.31:1; the brief's yellow-ink labels
    were 3.01:1, the founder's answer). Below 1024 the steps stack and step
-   out to the right; from 1024 they stand in three columns on one foot, 260,
-   340 and 420 tall. At rest everything is in place; at half in view each
+   out to the right; from 1024 they stand in three columns on one foot, 460,
+   540 and 620 tall (final38). At rest everything is in place; at half in view each
    step rises from 24px below, 150ms apart (useSoftStart). Nothing loops. */
 const STEPS = [
   {

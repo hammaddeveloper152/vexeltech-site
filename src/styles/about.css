@@ -263,18 +263,28 @@ main#main section.vt.ab.ab:is(.ab--d1, .ab--cream, .ns) {
     margin-right: 0;
   }
 
+  /* 460 / 540 / 620 since final38 (the founder): at 260 / 340 / 420 the
+     56px titles outgrew the steps and step 01 stood tallest. */
   .ns__step--01 {
-    min-height: 260px;
+    min-height: 460px;
   }
 
   .ns__step--02 {
-    min-height: 340px;
+    min-height: 540px;
   }
 
   .ns__step--03 {
-    min-height: 420px;
+    min-height: 620px;
   }
 
+  /* 44px to 1279, 56 from 1280 (final38, the founder): at 1024 the
+     columns are narrow enough that 56px titles outgrew the minimums. */
+  .ns__t {
+    font-size: 44px;
+  }
+}
+
+@media (min-width: 1280px) {
   .ns__t {
     font-size: 56px;
   }

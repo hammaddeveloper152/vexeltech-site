@@ -62,9 +62,9 @@ import '../../styles/lit.css';
    order, so do not reorder to match them. */
 
 /* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Metadata). */
-const TITLE = 'Website design for small business, $700 flat | VexelTech';
+const TITLE = 'Website design for growing businesses, $700 flat | Vexel';
 const DESCRIPTION =
-  'Website design, branding, local SEO, ads and automation for small businesses. Websites $700 flat, live in four business days.';
+  'Website design, branding, local SEO, ads and automation for businesses that want to grow. Websites $700 flat, live in four business days.';
 
 
 export default function Home() {

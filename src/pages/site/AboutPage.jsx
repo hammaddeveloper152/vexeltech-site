@@ -24,7 +24,7 @@ import '../../styles/about.css';
    shapes are in git and DESIGN.md. The page's ground is ink; the three
    kept cream blocks carry their own cream (story.css). */
 const DESCRIPTION =
-  'Vexel builds small businesses into bigger ones. One team for the brand, the website, the marketing and the follow-up. Month to month, everything in your name, measured in enquiries.';
+  'Vexel builds businesses into bigger ones. One team for the brand, the website, the marketing and the follow-up. Month to month, everything in your name, measured in enquiries.';
 
 const HOLD = [
   "One team, or it isn't a plan.",
@@ -56,17 +56,17 @@ function HoldTo() {
 
 export default function AboutPage() {
   return (
-    <Shell title="About Vexel: the growth department for small businesses" path="/about-us" description={DESCRIPTION}>
+    <Shell title="About Vexel: a growth partner for businesses that want to grow" path="/about-us" description={DESCRIPTION}>
       {/* D1. THE STATEMENT. */}
       <section className="vt ab ab--ink ab--d1" aria-labelledby="ab-h1">
         <div className="ab__in">
           <p className="ab__eyebrow">About</p>
           <h1 className="ab__h1" id="ab-h1">
-            Vexel is the growth department small businesses never had.
+            Vexel is the growth partner for businesses that want to grow.
           </h1>
           <p className="ab__lead">
-            We build small businesses into bigger ones. The brand, the website, the marketing and the
-            follow-up, run by one team that stays with you and grows when you grow.
+            We build businesses into bigger ones. The brand, the website, the marketing and the follow-up,
+            run by one team that stays with you and grows when you grow.
           </p>
         </div>
       </section>
@@ -76,12 +76,12 @@ export default function AboutPage() {
         <div className="ab__in">
           <p className="ab__eyebrow">The problem</p>
           <h2 className="hl ab__h" id="ab-problem">
-            Small businesses get sold to in pieces.
+            Businesses get sold to in pieces.
           </h2>
           <p className="ab__lead ab__body">
             A logo from one place. A website from another. Ads from a third. Software for the phone from a
             fourth. Four invoices, four people who have never met, and nobody whose job is the whole
-            business. The owner holds it together, after hours. We started Vexel because that is the part
+            business. You hold it together, after hours. We started Vexel because that is the part
             nobody was selling.
           </p>
         </div>

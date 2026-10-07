@@ -130,6 +130,13 @@
     font-size: 44px;
   }
 
+  /* /services' h1 (PageHead's, used on /services only) at 31px, final38
+     (the founder): "...for growing businesses" set five lines at 32px; 31
+     is the largest size that sets it in four at 390, no word breaking. */
+  main#main .pg__h {
+    font-size: 31px;
+  }
+
   .callband__note {
     --lead-lh: 24px;
     margin-top: 16px;

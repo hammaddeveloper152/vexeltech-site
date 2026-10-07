@@ -73,22 +73,23 @@ export default function ServicesPage() {
   );
   return (
     <Shell
-      title="Small business website design and local SEO | VexelTech"
+      title="Website design, local SEO, ads and automation for growing businesses | Vexel"
       path="/services"
       closingLine="Fifteen minutes on the phone and a written number within one business day."
       /* The closing section, "Ready when you are." and the form, since
          final34 (2026-10-08, the founder; no in-page form from the
          storytelling pass until then). */
-      description="Website design, Google Business Profile and Google Ads management, Meta ads, missed-call text-back and booking automation for small businesses."
+      description="Website design, Google Business Profile and Google Ads management, Meta ads, an AI receptionist and booking automation for businesses that want to grow."
     >
       {/* COPY V3.1, 2026-10-01 (VEXELTECH-COPY.md, Services, and Metadata).
-          The page's one highlight is "small business", the founder's pick
-          (it was "contractors" in V3, "do" before that). */}
+          The page's one highlight is "growing businesses" since final38
+          (2026-10-08, the founder): it was "small business", "contractors"
+          in V3 and "do" before that. */}
       <PageHead
         title={
           <>
             Website design, local SEO, ads and automation for{' '}
-            <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">small business</Brush>
+            <Brush className="brush--hl" thickness="fit" angle={-2} at="52%">growing businesses</Brush>
           </>
         }
         lead="These are the four things we do. Start with the one that's costing you customers, and if we think it's a different one, we'll say so on the first call."

@@ -43,13 +43,13 @@ import "./story.css";
    at half in view, is raised and not built: BUILD-LAW Motion, "an entrance
    never hides content", allows no opacity start below 1. */
 const BEATS = [
-  ['We started in paid media.', 'Google and Meta campaigns for small businesses, month after month.'],
+  ['We started in paid media.', 'Google and Meta campaigns for businesses, month after month.'], // final38
   ['Good ads, lost on bad pages.', 'People clicked and left. Calls rang out while the owner was on a job.'],
   ['So we built the pages.', 'Then the whole site. Then the follow-up that runs after the call.'],
   [
     /* COPY V5 (final37, 2026-10-08, the founder). */
     'By 2026 that had become Vexel.',
-    "One team for the whole of a small business's growth, for owners who can't carry four vendors and shouldn't have to.",
+    "One growth partner for the whole business, for anyone who can't carry four vendors and shouldn't have to.", // final38
   ],
 ];
 

@@ -35,10 +35,11 @@ const PROOF = { brand: BrandDesk, ads: MarketingMosaic, textback: AssistantThrea
    them stay outside BUILD-LAW Layout's cap of three small uppercase
    eyebrows per page. */
 const HEADINGS = {
-  branding: 'Branding for small businesses',
-  websites: 'Small business website design',
-  marketing: 'Local SEO, Google Ads and Meta ads for local businesses',
-  automation: 'Missed-call text-back and small business automation',
+  /* final38 (2026-10-08, the founder): the audience is growing businesses. */
+  branding: 'Branding for growing businesses',
+  websites: 'Website design for growing businesses',
+  marketing: 'Local SEO, Google Ads and Meta ads for growing businesses',
+  automation: 'An AI receptionist and business automation',
 };
 
 /* THE FOUR DISCIPLINES ON /services, AS ALTERNATING BANDS, 2026-09-23.
