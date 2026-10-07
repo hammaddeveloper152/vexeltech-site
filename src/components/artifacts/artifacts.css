@@ -30,7 +30,7 @@
    crossfade: what the stage holds fades out, the first frame is painted at
    the middle, and it fades in, before the build runs as made. The frame of
    each stage stays. `data-leaving` is only set while it runs. The
-   text-back's rule is in proof.css, with the band. */
+   (The text-back stage and proof.css are deleted, final30.) */
 .ot__stage[data-leaving] > *,
 .wk__track[data-leaving] > * {
   /* The soft start (2026-10-06): a crossfade through the first frame, in

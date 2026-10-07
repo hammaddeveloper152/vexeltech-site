@@ -12,7 +12,7 @@ import './FooterForm.css';
    carried over, because a stale contact detail is worse than a visibly empty
    one.
 
-   There is no Vexel Scales line anywhere in this file, by decision. */
+   There is no parent-company line anywhere in this file, by decision. */
 
 /* THE FORM MOVED INTO LeadForm.jsx, 2026-09-25 (the founder's contact
    pass): the line fields, 01 name, 02 phone, 03 email, 04 message, and the

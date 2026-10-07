@@ -1,4 +1,5 @@
 import { ENTITY } from '../../content/entity.js';
+import { PLAUSIBLE_ON } from '../../components/site/analytics.js';
 
 /* THE LEGAL PAGES' COPY, moved verbatim from the legacy SimplePage.jsx on
    2026-09-25 (the founder's legacy rebuild). Not one clause is edited. What
@@ -6,10 +7,9 @@ import { ENTITY } from '../../content/entity.js';
    an emoji is not in it).
 
    THE ENTITY IS content/entity.js SINCE THE LAUNCH GATE (2026-10-07, the
-   founder): the legal entity name, state of formation, file number and
-   geographic address are bracketed placeholders there until the founder
-   supplies them. The "Vexel Scales LLC", "Texas limited liability company"
-   and "Richmond, TX 77406" strings that stood here are gone.
+   founder), filled in final30 the same day: Vexel, Texas, no file number,
+   6619 Elks Trce, Richmond, effective October 7, 2026. The parent-company
+   strings that stood here are gone.
 
    WHAT IS UNVERIFIED AND LEFT AS WRITTEN, as before: the $150 hourly
    cancellation rate, the 50/50 milestone split, the 1.5% monthly late fee and
@@ -29,8 +29,8 @@ const E = ENTITY;
 export const PRIVACY = {
   badge: 'LEGAL & DATA PROTECTION',
   title: 'Privacy Policy',
-  effective: 'Effective Date: [EFFECTIVE DATE]',
-  updated: 'Last Updated: [EFFECTIVE DATE]',
+  effective: `Effective Date: ${E.effective}`,
+  updated: `Last Updated: ${E.effective}`,
   subtitle: `How ${E.trading} (a brand of ${E.name}) collects, uses, and protects your personal information.`,
   intro: `${E.trading} ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains what we collect when you visit vexeltechsolutions.com or send us the contact form, why, who receives it, how long we keep it, and the rights you have over it.`,
   highlights: [
@@ -46,7 +46,7 @@ export const PRIVACY = {
       content: [
         {
           sub: 'Data Controller',
-          body: `The controller of your personal information is ${E.name}, trading as ${E.trading}, formed in ${E.state} (file number ${E.fileNumber}), of ${E.address}. Contact us about anything in this policy at ${E.email} or ${E.phone}.`,
+          body: `The controller of your personal information is ${E.name}, trading as ${E.trading}, formed in ${E.state}${E.fileNumber ? ` (file number ${E.fileNumber})` : ''}, of ${E.address}. Contact us about anything in this policy at ${E.email} or ${E.phone}.`,
         },
       ],
     },
@@ -64,7 +64,9 @@ export const PRIVACY = {
         },
         {
           sub: 'c. Cookies',
-          body: 'The site sets no cookies. The campaign tags in (a) are held in your browser\'s session storage for the length of the visit, so they reach the form from any page, and are cleared when you close the tab. [ANALYTICS: if Plausible Analytics or the Meta Pixel is turned on, describe it here before launch, or delete this sentence.]',
+          /* The analytics sentence shows only while Plausible is on
+             (VITE_PLAUSIBLE_DOMAIN, analytics.js), final30. */
+          body: `The site sets no cookies. The campaign tags in (a) are held in your browser's session storage for the length of the visit, so they reach the form from any page, and are cleared when you close the tab.${PLAUSIBLE_ON ? ' We count visits with Plausible Analytics, which sets no cookies and collects no personal data.' : ''}`,
         },
       ],
     },
@@ -94,7 +96,7 @@ export const PRIVACY = {
       content: [
         {
           sub: 'Where Your Data Goes',
-          body: 'We are based in the United States, and Formspree processes submissions in the United States. Hostinger keeps the server logs in [HOSTING REGION]. If you write to us from the UK, the European Economic Area or Australia, your information leaves your country. Where the law requires a safeguard for that transfer, we rely on [TRANSFER SAFEGUARD].',
+          body: 'We are based in the United States, and Formspree processes submissions in the United States. Hostinger keeps the server logs in [HOSTING REGION]. If you write to us from the UK, the European Economic Area or Australia, your information leaves your country. Where the law requires a safeguard for that transfer, we rely on standard contractual clauses.',
         },
       ],
     },
@@ -104,7 +106,7 @@ export const PRIVACY = {
       content: [
         {
           sub: 'Retention Periods',
-          body: 'Inquiry and contact form submissions are retained for 24 months from the date of last communication; active client project data is retained for the duration of the project plus 36 months for support and reference purposes; financial and billing records are retained for 7 years as required by US tax law. Server logs are kept for [LOG RETENTION PERIOD]. When a period ends, we delete or anonymize the information.',
+          body: 'Inquiry and contact form submissions are retained for 24 months from the date of last communication; active client project data is retained for the duration of the project plus 36 months for support and reference purposes; financial and billing records are retained for 7 years as required by US tax law. Server logs are kept for up to 30 days. When a period ends, we delete or anonymize the information.',
         },
       ],
     },
@@ -175,7 +177,7 @@ export const TERMS = {
   effective: 'Effective Date: August 22, 2026',
   updated: 'Last Updated: August 22, 2026',
   subtitle: 'The agreement governing all projects, payments, intellectual property, revisions, and service delivery at VexelTech Solutions.',
-  intro: `These Terms of Service ("Terms") constitute a legally binding agreement between you ("Client," "you," or "your") and ${ENTITY.name}, formed in ${ENTITY.state} (file number ${ENTITY.fileNumber}), operating as VexelTech Solutions ("VexelTech," "we," "our," or "us"). By engaging our services, submitting a project deposit, or signing a project scope document, you agree to be bound by these Terms. If you do not agree, do not engage our services.`,
+  intro: `These Terms of Service ("Terms") constitute a legally binding agreement between you ("Client," "you," or "your") and ${ENTITY.name}, formed in ${ENTITY.state}${ENTITY.fileNumber ? ` (file number ${ENTITY.fileNumber})` : ''}, operating as VexelTech Solutions ("VexelTech," "we," "our," or "us"). By engaging our services, submitting a project deposit, or signing a project scope document, you agree to be bound by these Terms. If you do not agree, do not engage our services.`,
   highlights: [
     { title: '100% IP Ownership', desc: 'Upon final payment, all deliverables, source code, and creative assets transfer entirely to you with no strings attached.' },
     { title: 'Scope-First', desc: 'Every project begins with a written scope document. Work outside that scope is quoted and approved before it begins.' },

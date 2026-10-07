@@ -1,22 +1,25 @@
-/* THE LEGAL ENTITY (the launch gate, 2026-10-07, the founder). One place for
-   the facts the footer, the privacy policy and the terms state about who
-   VexelTech is in law. FOUR ARE PLACEHOLDERS, in square brackets, by the
-   founder's instruction, until he supplies them: the legal entity name, the
-   state of formation, the file number and the geographic address. Replace
-   the bracketed strings here and every page follows; nothing else holds
-   them. The email and the phone are confirmed (footer and contact pages).
+/* THE LEGAL ENTITY (the launch gate, 2026-10-07; FILLED in final30 the same
+   day, by the founder). One place for the facts the footer, the privacy
+   policy and the terms state about who VexelTech is in law. Change them
+   here and every page follows.
 
-   Before this pass the legal pages named "Vexel Scales LLC", "a Texas
-   limited liability company" and "Richmond, TX 77406", and index.html's
-   JSON-LD still carries 6619 Elks Trce, Richmond, TX 77406: listed in the
-   launch-gate report for the founder to confirm or replace. */
+     name        Vexel
+     state       Texas (Texas law governs the terms)
+     fileNumber  none is stated
+     address     6619 Elks Trce, Richmond, Texas 77406, the address the
+                 JSON-LD has carried since 2026-09-08
+     effective   October 7, 2026, the privacy policy's effective date
+
+   The earlier parent-company name appears nowhere in the site, by the
+   founder's decision. */
 export const ENTITY = {
-  name: '[LEGAL ENTITY NAME]',
-  state: '[STATE OF FORMATION]',
-  fileNumber: '[FILE NUMBER]',
-  address: '[GEOGRAPHIC ADDRESS]',
+  name: 'Vexel',
+  state: 'Texas',
+  fileNumber: null,
+  address: '6619 Elks Trce, Richmond, Texas 77406, United States',
   trading: 'VexelTech Solutions',
   email: 'info@vexeltechsolutions.com',
   phone: '(385) 284-3265',
   phoneHref: 'tel:+13852843265',
+  effective: 'October 7, 2026',
 };

@@ -28,7 +28,7 @@ const EMAIL = LEGAL.email;
    four of them are bracketed placeholders until the founder supplies them. */
 const ENTITY = [
   { label: 'State of Formation', value: LEGAL.state },
-  { label: 'File Number', value: LEGAL.fileNumber },
+  ...(LEGAL.fileNumber ? [{ label: 'File Number', value: LEGAL.fileNumber }] : []),
   { label: 'Geographic Address', value: LEGAL.address },
   { label: 'Legal & Privacy Desk', value: EMAIL, href: `mailto:${EMAIL}` },
   { label: 'Direct Line', value: LEGAL.phone, href: LEGAL.phoneHref },

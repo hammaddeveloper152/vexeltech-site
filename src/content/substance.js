@@ -77,7 +77,9 @@ export const SUBSTANCE = {
     spec: [
       /* COPY V4.2 (2026-10-07, the founder): the noun stack. */
       ['Workflows', 'AI receptionist, online booking, quote and invoice follow-up, reminders, review requests.'],
-      ['Response', 'Text back in under sixty seconds'],
+      /* FINAL30 (2026-10-07): it described the deleted text-back stage;
+         now the founder's own words from the assistant's stage. */
+      ['Response', 'Answered in your name, then booked into your calendar'],
       ['Tools', 'Works with the phone, calendar and invoicing you already use'],
       ['Pricing', 'Per workflow, in writing before work starts'],
       ['Setup', 'Most workflows live within two weeks'],

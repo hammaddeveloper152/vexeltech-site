@@ -4,8 +4,8 @@ import { FIGURES, money } from '../../content/pricing.js';
 import EvidenceBand from '../../components/story/EvidenceBand.jsx';
 import DevicePhones from '../../components/story/DevicePhones.jsx';
 import BrandDesk from '../../components/artifacts/BrandDesk.jsx';
-import InboxStage from '../../components/artifacts/InboxStage.jsx';
-import TextBackBand from '../../components/final/TextBackBand.jsx';
+import MarketingMosaic from '../../components/artifacts/MarketingMosaic.jsx';
+import AssistantThread from '../../components/artifacts/AssistantThread.jsx';
 import { SpecSheet, HowItGoes } from '../../components/story/Substance.jsx';
 import Details from '../../components/story/Details.jsx';
 import { CALL_HREF, CALL_LABEL, PromiseLine } from './parts.jsx';
@@ -21,9 +21,12 @@ import { SUBSTANCE } from '../../content/substance.js';
 /* The proof bands, by services.js's `proof` (the final pass, 2026-10-03;
    since the final artifacts pass, 2026-10-03; since final7 the brand you
    type, and from search to call for the visitor). */
-/* Since final17 (2026-10-06) Branding is the desk; since final19 Marketing
-   is three places and one inbox (InboxStage.jsx). */
-const PROOF = { brand: BrandDesk, ads: InboxStage, textback: TextBackBand };
+/* Since final17 (2026-10-06) Branding is the desk. */
+/* FINAL30 (2026-10-07, the founder's frames M2 and A4): Marketing is the
+   mosaic of six places (MarketingMosaic.jsx), Automation the assistant's
+   thread (AssistantThread.jsx). The inbox and the text-back stage are
+   deleted. */
+const PROOF = { brand: BrandDesk, ads: MarketingMosaic, textback: AssistantThread };
 
 /* THE HEADINGS (the founder's decisions after the final audit, final23,
    2026-10-06): each band's h2 is a sentence carrying its search cluster

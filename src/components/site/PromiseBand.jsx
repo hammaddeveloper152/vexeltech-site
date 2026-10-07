@@ -1,4 +1,5 @@
 import React from 'react';
+import SectionJoin from './SectionJoin.jsx';
 import '../../styles/promise.css';
 
 /* WHAT WE PROMISE: the yellow band with the $700 figure and the four
@@ -47,6 +48,7 @@ export default function PromiseBand({ id = 'hiw-h' }) {
   return (
     <section className="vt ab3-price promise promise--hiw panel-sec" aria-labelledby={id} data-artifact="PromiseBand">
       <div className="promise__in panel">
+        <SectionJoin />
         <h2 className="promise__h ab3-price__h" id={id}>
           How it works
         </h2>

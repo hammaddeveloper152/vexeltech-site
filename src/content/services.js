@@ -26,9 +26,9 @@ import { FIGURES, money } from './pricing.js';
    `proof` (the final pass, 2026-10-03): the band the other three carry
    above their lists, one object each: 'brand' (artifacts/BrandDesk since
    final17, the typed name's identity on one desk), 'ads'
-   (artifacts/InboxStage since final19, three places a customer finds the
-   business and the one inbox the enquiries land in) and 'textback'
-   (final/TextBackBand, the missed-call thread). Since final7 (2026-10-03)
+   (artifacts/MarketingMosaic since final30, six places in one week) and
+   'textback' (artifacts/AssistantThread since final30, the assistant's
+   call, booking and paperwork). Since final7 (2026-10-03)
    neither stage carries a client name or capture, so Baseline's phone is
    back in the Websites band, first. The founder left the third phone to
    us: OneSix stays and Zions Caregivers came out, because OneSix's first

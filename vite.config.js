@@ -33,8 +33,10 @@ import react from '@vitejs/plugin-react';
 /* FINAL29 (2026-10-07): What we do's grid and card sizes ride in the
    critical CSS too. Below the fold, but until the full sheet landed the
    cards had no height, Recent work sat inside Chrome's lazy-load distance,
-   and its screenshots (635 KB) downloaded before the first paint. */
-const EXTRA = ['skip', 'wwd', 'wwd__grid', 'wwd__card'];
+   and its screenshots (635 KB) downloaded before the first paint. FINAL30:
+   the branding desk's strip, which an unstyled phone layout put first, so
+   the full sheet moved the whole of /services (CLS 0.744). */
+const EXTRA = ['skip', 'wwd', 'wwd__grid', 'wwd__card', 'bd__strip'];
 
 function blocks(css) {
   const out = [];

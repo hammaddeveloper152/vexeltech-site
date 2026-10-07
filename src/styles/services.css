@@ -79,6 +79,15 @@
   outline-color: var(--c-asphalt);
 }
 
+/* AUTOMATION ON THE PAPER (final30, 2026-10-07, the founder's frame A4):
+   the band is #F4EFE6 with a 1px rule every 3px at 2.2% black, in place of
+   the cream panel's ground. Its inks are the cream band's (asphalt on
+   #F4EFE6 is 15.3:1, steel 6.9). */
+.svc2__d.svc2__d--automation.panel-sec {
+  background-color: #f4efe6;
+  background-image: repeating-linear-gradient(0deg, rgb(0 0 0 / 2.2%) 0 1px, transparent 1px 3px);
+}
+
 /* THE DISCIPLINE COLOURS. The list marks take the section's discipline
    colour (2026-09-25), and the artifacts read the band's values for their
    live marks (2026-10-05). The side label, the 4px rule and the price

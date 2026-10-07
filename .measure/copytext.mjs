@@ -74,9 +74,14 @@ const SELF =
    and home businesses" (final16), is the founder's wording, on home only. */
 /* "It's on this site" left the page in final23 (2026-10-06). */
 const SELF_OK = ['Startups raising a round'];
+/* /services' Maps tile (final30, 2026-10-07): "First in the map pack" is
+   the founder's line in the frame M2 brief, on /services only. Platform
+   names in the mosaic (Google search, Instagram, Facebook) are the buyer's
+   words and were never banned. */
 const SELF_OK_ROUTE = {
   '/about-us': ['Contractors, clinics, real estate'],
   '/': ['of calls to trade and home businesses'],
+  '/services': ['First in the map pack'],
 };
 const selfHits = (t, route) =>
   [...[...SELF_OK, ...(SELF_OK_ROUTE[route] || [])].reduce((x, ok) => x.replaceAll(ok, ''), t).matchAll(SELF)].map((m) => m[0]);

@@ -1,0 +1,469 @@
+/* SERVICES, MARKETING: THE MOSAIC (MarketingMosaic.jsx, final30, 2026-10-07,
+   the founder's frame M2). On the dark band.
+
+   THE FRAME'S VALUES, with four changes for the type floor and contrast
+   (BUILD-LAW Type floor and Contrast; measured, white tile unless noted):
+     - the bars and the mono lines are 11px (the frame set them at 10)
+     - greys under 4.5:1 on white take #6b6b6b (5.33:1): the frame's #777
+       (4.48), #888 (3.54) and #aaa (2.32)
+     - a rating's figure is ink, its star the yellow beside it: #F2B01E is
+       1.88:1 on white, so it carries the glyph only, and the stars are
+       hidden from assistive technology (the figure says the rating)
+     - the Facebook panel's words are ink on coral (6.31:1); white on coral
+       is 3.03:1, under 4.5 for 15px text
+   Inks that pass as drawn: bone on the bar #121212 (16.9:1), the day and
+   time #F2B01E on the bar (9.82), link blue #1A0DAB (11.0), #4D5156 (7.9),
+   #65676B (5.7), the green #2d7356 (5.62), ink on the AI highlight (yellow
+   at 35% over white, 13.4), the side's bone 16.32, its paragraph bone at
+   85% (11.8) and steel-lift 7.55 on the base. */
+.mm {
+  display: grid;
+  gap: var(--s-md);
+  margin: 0;
+}
+
+.mm__stage {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  /* 40, not the frame's 56: the frame's content box is 1180 and the site's
+     is 1152 at 1280 (the 64px inset), and at 56 the tiles were 9px
+     narrower than the frame's and the search tile's last line was cut. */
+  column-gap: 40px;
+  align-items: start;
+  width: min(100%, 1180px);
+  margin: 0 auto;
+}
+
+.mm__stage[data-leaving] > * {
+  opacity: var(--fade, 1);
+}
+
+/* ---- The side ------------------------------------------------------------- */
+.mm__eyebrow,
+.mm__l,
+.mm__note,
+.mm__cap2 {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-steel-lift); /* 7.55:1 */
+}
+
+.mm__head {
+  margin: 14px 0 18px;
+  font-family: var(--font-brand);
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--c-bone);
+}
+
+.mm__head em {
+  font-style: normal;
+  color: var(--c-yellow-d); /* 9.56:1 */
+}
+
+.mm__p {
+  max-width: 320px;
+  margin: 0;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--c-body-dark);
+}
+
+.mm__list {
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgb(232 234 237 / 14%);
+}
+
+.mm__list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgb(232 234 237 / 10%);
+  font-family: var(--font-offer);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--c-bone);
+}
+
+.mm__list li span:last-child {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-align: right;
+  color: var(--c-steel-lift);
+}
+
+.mm__tally {
+  display: grid;
+  gap: 10px;
+  margin: 28px 0 0;
+}
+
+.mm__n {
+  font-family: var(--font-brand);
+  font-size: 72px;
+  line-height: 0.9;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-bone);
+}
+
+/* ---- The mosaic ------------------------------------------------------------ */
+.mm__mosaic {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 232px;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mm__tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 16px;
+  border-radius: 14px;
+  background: #fff;
+  color: #202124;
+  font-family: var(--font-offer);
+  box-shadow: 0 24px 50px rgb(0 0 0 / 50%);
+}
+
+.mm__tile p {
+  margin: 0;
+}
+
+.mm__tag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 26px;
+  padding: 0 12px;
+  background: #121212;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-bone);
+}
+
+.mm__tag b {
+  font-weight: 400;
+  color: var(--c-yellow-d);
+}
+
+/* The untyped part keeps its place, so nothing in the bar moves. */
+.mm__rest {
+  visibility: hidden;
+}
+
+.mm__body {
+  flex: 1;
+  margin-top: 22px;
+}
+
+.mm__yb {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: #1f2a44;
+  font-family: var(--font-brand);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  vertical-align: middle;
+  color: var(--c-bone); /* 12.4:1 on the navy */
+}
+
+.mm__stars,
+.mm__star {
+  color: var(--c-yellow-d);
+}
+
+.mm__meta {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 15px;
+  color: #6b6b6b;
+}
+
+.mm__ok {
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 15px;
+  letter-spacing: 0.1em;
+  color: #2d7356;
+}
+
+/* 1. Search */
+.mm__q {
+  margin-bottom: 8px !important;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: #f1f3f4;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.mm__sp {
+  font-size: 11px;
+  line-height: 15px;
+  font-weight: 700;
+}
+
+.mm__h {
+  margin-top: 2px !important;
+  font-size: 15px;
+  line-height: 1.2;
+  font-weight: 600;
+  color: #1a0dab;
+}
+
+.mm__h--sm {
+  font-size: 13px;
+}
+
+.mm__d {
+  margin-top: 2px !important;
+  font-size: 12px;
+  line-height: 16px;
+  color: #4d5156;
+}
+
+.mm__org {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #eee;
+}
+
+/* 2. Maps */
+.mm__map {
+  position: relative;
+  height: 86px;
+  border-radius: 8px;
+  background-color: #e9eef2;
+  background-image:
+    linear-gradient(90deg, rgb(0 0 0 / 7%) 1px, transparent 1px),
+    linear-gradient(0deg, rgb(0 0 0 / 7%) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.mm__pin {
+  position: absolute;
+  top: 30%;
+  left: 48%;
+  width: 22px;
+  height: 22px;
+  border-radius: 50% 50% 50% 0;
+  background: #1f2a44;
+  transform: rotate(-45deg);
+}
+
+.mm__r {
+  margin-top: 8px !important;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+/* 3. Instagram */
+.mm__post {
+  display: flex;
+  align-items: flex-end;
+  height: 108px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #1f2a44;
+  font-family: var(--font-brand);
+  font-size: 17px;
+  line-height: 1.15;
+  font-weight: 600;
+  color: var(--c-bone);
+}
+
+.mm__cap {
+  margin-top: 8px !important;
+  font-size: 12px;
+  line-height: 16px;
+  color: #333;
+}
+
+/* 4. Facebook */
+.mm__fbh {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.mm__fbh small {
+  display: block;
+  font-size: 11px;
+  color: #65676b;
+}
+
+.mm__av {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #1f2a44;
+  font-family: var(--font-brand);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--c-bone);
+}
+
+.mm__copy {
+  margin: 8px 0 !important;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.mm__panel {
+  display: flex;
+  align-items: flex-end;
+  height: 62px;
+  padding: 10px;
+  border-radius: 6px;
+  background: var(--c-coral);
+  font-family: var(--font-brand);
+  font-size: 15px;
+  line-height: 1.1;
+  font-weight: 600;
+  color: #121212; /* 6.31:1 on coral */
+}
+
+.mm__cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px !important;
+  font-size: 11px;
+  color: #65676b;
+}
+
+.mm__more {
+  padding: 3px 8px;
+  border: 1px solid #1877f2; /* Meta's blue, the one platform colour */
+  border-radius: 4px;
+  font-weight: 600;
+  color: #1c1e21; /* 16.8:1; #1877F2 as 11px text is 4.23 */
+}
+
+/* 5. AI answer */
+.mm__qq {
+  padding-left: 8px;
+  border-left: 3px solid #ddd;
+  font-size: 12px;
+  line-height: 16px;
+  color: #555;
+}
+
+.mm__aa {
+  margin-top: 10px !important;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.mm__aa b {
+  padding: 0 3px;
+  background: rgb(242 176 30 / 35%);
+}
+
+/* 6. Directory */
+.mm__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 12px;
+  line-height: 18px;
+  color: #6b6b6b;
+}
+
+.mm__row--us {
+  font-weight: 700;
+  color: #202124;
+}
+
+.mm__row--us + .mm__row,
+.mm__row + .mm__row {
+  font-weight: 400;
+}
+
+/* ---- Under the stage --------------------------------------------------------- */
+.mm__note {
+  width: min(100%, 1180px);
+  margin: 4px auto 0;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  text-align: right;
+}
+
+.mm__cap2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-xs) var(--s-lg);
+  width: min(100%, 1180px);
+  margin: var(--s-md) auto 0;
+  letter-spacing: 0.12em;
+}
+
+/* ---- Below 1024: the side on top, the mosaic 2 by 3 --------------------------- */
+@media (max-width: 1023px) {
+  .mm__stage {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 40px;
+  }
+
+  .mm__p {
+    max-width: 52ch;
+  }
+
+  .mm__mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---- Below 600: one column, tiles 220 tall ------------------------------------ */
+@media (max-width: 599px) {
+  .mm__mosaic {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: 220px;
+  }
+
+  .mm__head {
+    font-size: 40px;
+  }
+
+  .mm__note {
+    text-align: left;
+  }
+}

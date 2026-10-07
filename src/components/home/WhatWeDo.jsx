@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import SectionJoin from '../site/SectionJoin.jsx';
 import { Link } from 'react-router-dom';
 import './what-we-do.css';
 
@@ -142,6 +143,7 @@ export default function WhatWeDo() {
   return (
     <section className="vt services wwd" aria-labelledby="services-h">
       <div className="services__in">
+        <SectionJoin />
         <div className="services__head">
           <h2 className="services__h" id="services-h">
             What we do
