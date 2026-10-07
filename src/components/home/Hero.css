@@ -157,7 +157,7 @@
   text-shadow: 0 2px 24px rgb(0 0 0 / 60%);
 }
 
-.hero[data-mode] :is(.hero__eyebrow, .hero__price, .hero__promise, .hero__cta--line) {
+.hero[data-mode] :is(.hero__eyebrow, .hero__promise, .hero__cta--line) {
   text-shadow: 0 1px 12px rgb(0 0 0 / 60%);
 }
 
@@ -357,18 +357,8 @@ text-decoration-thickness: var(--u-thick);
   opacity: 1;
 }
 
-/* The offer line: Clash Display Medium, 16px, bone at 100% (2026-09-24,
-   the founder's final details; it was Satoshi). */
-.hero__price {
-  margin: 0 0 var(--s-md);
-  max-width: 60ch;
-  font-family: var(--font-brand);
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: var(--t-weight-quiet); /* 500, Medium */
-  letter-spacing: normal;
-  color: var(--c-bone); /* 100%, over the film, as the note is */
-}
+/* The offer line (.hero__price) is deleted with its rules (final40,
+   addendum 2, the founder): no price on home. */
 
 /* ==========================================================================
    THE ENTRANCE — a fade-up, once per shot.
@@ -521,11 +511,6 @@ text-decoration-thickness: var(--u-thick);
   width: auto;
 }
 
-.hero[data-mode] .hero__price {
-  order: 2;
-  margin: 0 0 var(--s-md);
-}
-
 .hero[data-mode] .hero__actions {
   order: 3;
   gap: var(--s-md);
@@ -563,13 +548,6 @@ text-decoration-thickness: var(--u-thick);
      its 640px floor here. 18% clears any home indicator's safe area. */
   .hero[data-mode] .hero__body {
     padding-bottom: calc(max(100svh, 640px) * 0.18);
-  }
-
-  .hero[data-mode] .hero__price {
-    font-family: var(--font-offer);
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: var(--t-weight-body);
   }
 }
 

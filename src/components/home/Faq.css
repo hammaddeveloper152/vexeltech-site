@@ -304,10 +304,28 @@
     opacity: var(--hover-opacity);
   }
 
-  /* The question's 8px slide, the mark's quarter turn and the rule drawn
-     under the row on hover or focus-within are deleted (final35): hover
-     lives on the button, and nothing moves on hover. Focus is the
-     button's own ring. */
+  /* final35 deleted the question's slide, the mark's turn and the rule
+     drawn under a hovered row. The rule stays deleted (the lines law). */
+}
+
+/* THE ROW'S HOVER, RESTORED (final40, addendum 2, the founder; BUILD-LAW
+   Touch, Interaction): on the button itself, the question shifts 8px and
+   a closed row's plus turns 22.5 degrees, half the 45 it ends on when
+   open, over 200ms. Reduced motion: the button's colour change only. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .faq__q-t {
+    display: inline-block;
+    transition: transform 200ms var(--ease-reveal);
+  }
+
+  .faq__btn:hover .faq__q-t {
+    transform: translateX(8px);
+  }
+
+  .faq__btn:hover .faq__mark:not([data-open='true']) {
+    transform: rotate(22.5deg);
+    transition-duration: 200ms;
+  }
 }
 
 /* Open holds it, hovered or not, focused or not. */

@@ -1,5 +1,6 @@
 /* final40-shots.mjs: the captures for final40 (2026-10-08, the founder).
-   Full pages at rest (reduced motion), and The Next Size alone at 1024. Writes into .measure/out/final40/.
+   Full pages at rest (reduced motion), The Next Size alone at 1024, and
+   (addendum 2) a /pricing FAQ row under the pointer, question 2, motion on. Writes into .measure/out/final40/.
      node .measure/final40-shots.mjs [base]   (default http://localhost:4190) */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -41,6 +42,29 @@ for (const w of [1024]) {
   await p.addStyleTag({ content: '.bar, .skip { visibility: hidden !important; }' });
   const el = await p.$('section.ns');
   await el.screenshot({ path: path.join(OUT, `about-nextsize-${w}.png`) });
+  await p.close();
+}
+{
+  const p = await b.newPage();
+  await p.setViewport({ width: 1280, height: 800 });
+  await p.goto(BASE + '/pricing', { waitUntil: 'networkidle0' });
+  await p.evaluate(() => document.fonts.ready);
+  await p.addStyleTag({ content: '.bar, .skip { visibility: hidden !important; }' });
+  const q = (await p.$$('.faq__btn'))[1];
+  await q.evaluate((e) => e.scrollIntoView({ block: 'center' }));
+  await new Promise((r) => setTimeout(r, 300));
+  await q.hover();
+  await new Promise((r) => setTimeout(r, 400));
+  const st = await q.evaluate((e) => ({
+    shift: getComputedStyle(e.querySelector('.faq__q-t')).transform,
+    turn: getComputedStyle(e.querySelector('.faq__mark')).transform,
+  }));
+  console.log('faq hover', JSON.stringify(st));
+  const box = await p.evaluate(() => {
+    const r = document.querySelectorAll('.faq__item')[1].getBoundingClientRect();
+    return { x: 0, y: Math.max(0, r.top - 120 + scrollY), width: 1280, height: r.height + 240 };
+  });
+  await p.screenshot({ path: path.join(OUT, 'pricing-faq-hover-1280.png'), clip: box, captureBeyondViewport: false });
   await p.close();
 }
 await b.close();

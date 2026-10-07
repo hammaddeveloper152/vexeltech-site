@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { videoAllowed } from './Video.jsx';
-import { FIGURES, money } from '../../content/pricing.js';
 import { NARROW_QUERY } from './heroSpot.js';
 import { SPOT } from './heroFiles.js';
 import { IconPause, IconPlay } from '../site/Icons.jsx';
@@ -236,13 +235,9 @@ export default function Hero() {
             </Link>
           </div>
 
-          {/* THE PRICE LINE, 2026-09-24, verbatim, under the buttons. The
-              figures come from content/pricing.js. */}
-          <p className="hero__price">
-            Websites {money(FIGURES.website)} flat. Branding from {money(FIGURES.brandingBasic)}.
-            Live in four business days.
-          </p>
-
+          {/* THE PRICE LINE IS DELETED (final40, addendum 2, the founder):
+              no price on home; prices are on /pricing and in the /services
+              facts strips (copy rule 3). */}
           {/* THE PROMISE LINE, COPY V3, 2026-10-01. */}
           <p className="hero__promise">A written number within one business day.</p>
         </div>
