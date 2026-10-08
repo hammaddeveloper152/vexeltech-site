@@ -159,12 +159,7 @@
 }
 
 /* Column 3 */
-.sf__promise {
-  font-family: var(--font-offer);
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--c-steel-lift);
-}
+/* Column 3's sentence (.sf__promise) is deleted, FINAL41. */
 
 .sf__cta {
   display: inline-flex;

@@ -34,9 +34,9 @@ const CARDS = [
   {
     id: 'branding',
     name: 'Branding',
-    question: 'Does your business look as established as it is?',
+    question: 'Does your business look as established as the work you do?', // V5.3
     answer:
-      'We design the identity your customers judge you by before they ever speak to you: the mark, the colours, the type, and the way they carry across your signage, your invoices and your social profiles, so every touchpoint looks like one business.',
+      'We design the identity your customers judge you by before they ever speak to you: the mark, the colours, the type, and how they carry across your signage, your invoices and your social profiles.',
     fact: 'Delivered in one to two business days. Every file is yours.',
     link: 'See branding',
   },

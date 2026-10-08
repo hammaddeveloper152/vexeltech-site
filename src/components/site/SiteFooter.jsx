@@ -68,11 +68,8 @@ export default function SiteFooter() {
 
           <div className="sf__col">
             <p className="sf__k">Start</p>
-            {/* COPY V5 (final37). */}
-            <p className="sf__promise">
-              A growth partner for the brand, the site, the marketing and the follow-up. A written number within
-              one business day.
-            </p>
+            {/* The sentence under "Start" is deleted (FINAL41, the founder):
+                the label and the call. */}
             <Link className="sf__cta" to="/contact-us">
               Get a custom quote
             </Link>
