@@ -225,6 +225,12 @@
   padding-top: 0;
 }
 
+/* The last beat ends on its line, so the section's boundary is its
+   padding alone (FINAL44). */
+.os__beat:last-child {
+  padding-bottom: 0;
+}
+
 .os__beat::before {
   content: attr(data-n);
   position: absolute;

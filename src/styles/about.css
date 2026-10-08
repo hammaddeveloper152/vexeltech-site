@@ -21,9 +21,11 @@ main#main section.vt.ab.ab {
   padding: var(--s-section) var(--inset) 0;
 }
 
-/* Where the ground changes below, the section keeps its foot. */
+/* Where the ground changes below, the section keeps its foot: the cream
+   foot, 96 at most (FINAL44, the founder: a ground change is two feet,
+   224 at 1280 and 112 at 390, never more). */
 main#main section.vt.ab.ab:is(.ab--d1, .ab--cream, .ns) {
-  padding-bottom: var(--s-section);
+  padding-bottom: min(var(--s-section), var(--s-3xl));
 }
 
 .ab--ink {

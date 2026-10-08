@@ -149,8 +149,10 @@
 
 /* ---- 2. The form --------------------------------------------------------- */
 
+/* One ground with the hero above: the boundary is one section token
+   (FINAL44, the founder; it was 64). */
 .ct-form {
-  padding: var(--s-2xl) var(--inset) 0;
+  padding: var(--s-section) var(--inset) 0;
 }
 
 .ct-form__in {
