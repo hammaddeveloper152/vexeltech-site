@@ -35,7 +35,7 @@ const STEPS = [
 
 export default function NextSize() {
   const ref = useRef(null);
-  const play = useSoftStart(ref);
+  const state = useSoftStart(ref);
   return (
     <section className="vt ab ab--ink ns" aria-labelledby="ns-h" data-artifact="NextSize">
       <div className="ab__in ns__grid">
@@ -49,7 +49,7 @@ export default function NextSize() {
             it, run by one team and reviewed with you each month against one number.
           </p>
         </div>
-        <ol className="ns__steps" ref={ref} data-play={play ? 'true' : 'false'}>
+        <ol className="ns__steps" ref={ref} data-play={state}>
           {STEPS.map((s, i) => (
             <li className={`ns__step ns__step--${s.n}`} key={s.n} style={{ '--i': i }}>
               <p className="ns__k">

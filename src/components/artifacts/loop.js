@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { prefersReduced } from '../site/useOnce.js';
+import { useBeforePaint, motionAllowed, belowFold } from '../site/entrance.js';
 
 /* THE ARTIFACT LOOP (the final artifacts pass, 2026-10-03, the founder).
    Every artifact on the site is a timeline of `total` ms that each artifact
@@ -7,24 +7,21 @@ import { prefersReduced } from '../site/useOnce.js';
    stroke-dashoffset, counts and typing as text. So any `t` is one exact
    frame, and a jump (`seek`) is exact.
 
-   ARTIFACTS REST FULL, 2026-10-06 (the founder's services substance pass,
-   BUILD-LAW Motion). An artifact is never seen empty or half built:
+   THE ENTRANCE RULE (FINAL41 part 4, 2026-10-08, the founder; BUILD-LAW
+   Motion; it replaces "rest full, start soft, play once" and the rebuild
+   from the finished state that came before it):
 
-     at rest           the complete frame (`rest(t)`, the last frame by
-                       default): on the first paint, off screen and under
-                       reduced motion
+     prerendered HTML  the complete frame (and so with no JavaScript)
+     on load           below the fold: the start state, set before the
+                       region paints (`useBeforePaint`); in view: complete,
+                       and it never plays
      plays when        at least half of the stage is in view (half of the
                        viewport, for a stage taller than two viewports)
-     a play            a REBUILD: the complete frame leaves over 300ms
-                       (`leave`, 0 to 1, which the artifact turns into a
-                       clip-path wipe with `leaving()`), then the timeline
-                       runs from `first` to the end, as built
-     after a play      the complete frame, for good: PLAY ONCE (final39,
-                       2026-10-08, the founder). No loop, no hold and
-                       replay, no restart when the stage scrolls out and
-                       back in
-     off screen        a play that has started stops, the complete frame
-                       is painted, and it does not play again
+     a play            once: 400ms crossfading the moving part from 0.35 to
+                       full on the first frame, then the timeline from
+                       `first` to the end, then the complete frame for good
+     off screen        a play that has started stops on the complete frame
+                       and is spent; before its play the start state stays
      reduced motion    the complete frame, no play
 
    `seek(ms)` (home's four scenes, a headline click) plays on from `ms`
@@ -34,12 +31,9 @@ import { prefersReduced } from '../site/useOnce.js';
    `rest(t)` maps the playhead to the complete frame it belongs to: the
    last frame by default; the current scene's held frame for home's
    scenes. */
-/* ARTIFACTS REST FULL, START SOFT (2026-10-06, the founder's quality pass;
-   it replaces the 300ms clip-path wipe): a play opens with a 400ms
-   crossfade from the finished state to the first frame. The finished state
-   fades out over the first half, the first frame is painted at the middle,
-   and it fades in over the second half, so nothing leaves or arrives with
-   a snap. `leaving(leave)` turns the 0 to 1 progress into that opacity. */
+/* The soft start's opacity (`--fade`) comes from `leave` through
+   `fadeOf`: the start state holds `ARMED` (a fade of 0.35), and the play's
+   first 400ms take it to 0 (a fade of 1). */
 export const LEAVE = 400;
 
 /* In view enough to play: half the stage, or half the viewport when the
@@ -62,10 +56,18 @@ export const leaving = (leave) => ({
   style: leave > 0 ? { '--leave': leave, '--fade': fadeOf(leave) } : undefined,
 });
 
-/* Every artifact plays once since final39 (2026-10-08, the founder): the
-   `once` option final17 gave the branding desk is now the rule, and the
-   6s hold before a replay is gone. */
-export function useLoop(ref, total, { start = total, first = 0, rest = () => total } = {}) {
+/* THE ENTRANCE RULE (FINAL41 part 4, the founder; it replaces "rest full,
+   start soft, play once"; entrance.js). On load, an artifact entirely below
+   the fold is set to its start state before that region paints: its first
+   frame (`first`), the moving part faint at the soft start (`ARMED`, a
+   `--fade` of 0.35). At half in view it plays once: 400ms crossfading the
+   moving part up to full on the first frame, then the timeline, then the
+   complete frame for good. An artifact in view at first paint stays
+   complete and never plays. Off screen during its play it paints the
+   complete frame and is spent. Reduced motion: complete, no play. */
+export const ARMED = 0.325; /* fadeOf(0.325) = 0.35 */
+
+export function useLoop(ref, total, { start = total, first = 0 } = {}) {
   const [t, setT] = useState(start);
   const [leave, setLeave] = useState(0);
   const clock = useRef({
@@ -73,6 +75,7 @@ export function useLoop(ref, total, { start = total, first = 0, rest = () => tot
     base: 0,
     t: start,
     inView: false,
+    armed: false,
     played: false,
     raf: 0,
     timer: 0,
@@ -85,10 +88,28 @@ export function useLoop(ref, total, { start = total, first = 0, rest = () => tot
     setT(ms);
   };
 
+  /* The start state, before the region paints (hydration). */
+  useBeforePaint(() => {
+    const c = clock.current;
+    if (!motionAllowed() || typeof IntersectionObserver === 'undefined') {
+      c.stopped = true;
+      return;
+    }
+    if (belowFold(ref.current)) {
+      c.armed = true;
+      paint(first);
+      setLeave(ARMED);
+    } else {
+      c.stopped = true; /* in view at first paint: complete, no play */
+    }
+    // first is fixed for an artifact's life.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     const el = ref.current;
     const c = clock.current;
-    if (!el || prefersReduced() || typeof IntersectionObserver === 'undefined') return undefined;
+    if (!el || c.stopped || !c.armed) return undefined;
     c.motion = true;
 
     const cancel = () => {
@@ -98,18 +119,16 @@ export function useLoop(ref, total, { start = total, first = 0, rest = () => tot
       c.timer = 0;
     };
     const tick = (now) => {
-      if (c.phase === 'leave') {
+      if (c.phase === 'enter') {
+        /* The 400ms crossfade into the first step: the moving part from the
+           soft start up to full, the first frame held. */
         const p = (now - c.base) / LEAVE;
         if (p >= 1) {
           c.phase = 'build';
           c.base = now - first;
           setLeave(0);
-          paint(first);
         } else {
-          /* The middle of the crossfade: the first frame replaces the
-             finished one while the stage is at its faintest. */
-          if (p >= 0.5 && c.t !== first) paint(first);
-          setLeave(p);
+          setLeave(ARMED * (1 - p));
         }
         c.raf = requestAnimationFrame(tick);
         return;
@@ -127,13 +146,12 @@ export function useLoop(ref, total, { start = total, first = 0, rest = () => tot
         c.raf = requestAnimationFrame(tick);
       }
     };
-    /* Start the one play. */
+    /* The one play. */
     const begin = () => {
       if (c.stopped || c.played || c.phase !== 'rest') return;
-      const now = performance.now();
       c.played = true;
-      c.phase = 'leave';
-      c.base = now;
+      c.phase = 'enter';
+      c.base = performance.now();
       c.raf = requestAnimationFrame(tick);
     };
     c.tick = tick;
@@ -149,17 +167,15 @@ export function useLoop(ref, total, { start = total, first = 0, rest = () => tot
           return;
         }
         c.inView = false;
-        /* Off screen: the complete frame, and the play is spent. Between
-           half and none in view a play that has started runs on. */
-        if (!e.isIntersecting) {
+        /* Off screen during the play: the complete frame, and the play is
+           spent. Before the play the start state stays. */
+        if (!e.isIntersecting && c.played) {
           cancel();
           c.phase = 'rest';
           setLeave(0);
-          paint(c.played ? total : rest(c.t));
-          if (c.played) {
-            c.stopped = true;
-            io.disconnect();
-          }
+          paint(total);
+          c.stopped = true;
+          io.disconnect();
         }
       },
       { threshold: THRESHOLDS }

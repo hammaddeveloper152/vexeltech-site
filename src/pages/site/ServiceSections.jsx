@@ -184,9 +184,11 @@ const HEADS = {
     after: '.',
     paragraph:
       'Your website is where people land after the search, the ad or the referral, and it is the first judgement they make about you. We build six pages around how your customers decide, with the call, the form and the booking within reach on a phone.',
+    /* V5.3 (FINAL41, the founder): the two lines that repeated the facts
+       strip are replaced. */
     lines: [
-      'Six pages, structured around what you sell most.',
-      'Domain, hosting and code in your name.',
+      'Click to call, the form and the booking within reach on a phone.',
+      'Every call and form traced to the search or ad that caused it.',
       'Live in four business days from your content.',
     ],
   },

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useBeforePaint, motionAllowed, belowFold } from '../site/entrance.js';
 import { Link } from 'react-router-dom';
 import './what-we-do.css';
 
@@ -83,11 +84,24 @@ function Answer({ text }) {
   /* null: at rest, filled. A number: that many characters typed. */
   const [typed, setTyped] = useState(null);
   const [caret, setCaret] = useState(false);
+  const [armed, setArmed] = useState(false);
   const ref = useRef(null);
+
+  /* THE ENTRANCE RULE (FINAL41 part 4, entrance.js): a card entirely below
+     the fold starts with its answer line empty, set before it paints; a
+     card in view at first paint keeps its answer and never types. The
+     prerendered HTML is filled. */
+  useBeforePaint(() => {
+    if (!motionAllowed() || typeof IntersectionObserver === 'undefined') return;
+    if (belowFold(ref.current && (ref.current.closest('.wwd__card') || ref.current))) {
+      setTyped(0);
+      setArmed(true);
+    }
+  }, []);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    if (!el || !armed) return undefined;
     const timers = [];
     const io = new IntersectionObserver(
       ([e]) => {
@@ -98,7 +112,6 @@ function Answer({ text }) {
         nextStart = start + APART;
         timers.push(
           setTimeout(() => {
-            setTyped(0);
             setCaret(true);
             for (let i = 1; i <= text.length; i += 1) {
               timers.push(setTimeout(() => setTyped(i), BLANK + i * PER_CHAR));
@@ -117,7 +130,7 @@ function Answer({ text }) {
       io.disconnect();
       timers.forEach(clearTimeout);
     };
-  }, [text]);
+  }, [text, armed]);
 
   const n = typed === null ? text.length : typed;
   return (

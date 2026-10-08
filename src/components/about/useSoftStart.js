@@ -1,22 +1,31 @@
 import { useEffect, useState } from 'react';
+import { useBeforePaint, motionAllowed, belowFold } from '../site/entrance.js';
 
-/* REST FULL, START SOFT (final37, 2026-10-08, the founder's ruling for
-   About's What we hold to and The Next Size). Everything is in place and
-   visible on first paint, in the prerendered HTML, off screen and under
-   reduced motion. Once, when the block is half in view, it returns true and
-   the block's items replay their entrance (about.css): each from below
-   with its opacity from 0, one after another. False on the first render,
-   so the server render and hydration agree. */
+/* THE ENTRANCE RULE for About's What we hold to and The Next Size (FINAL41
+   part 4, 2026-10-08, the founder; entrance.js). Returns the block's state:
+
+     'rest'    complete: the prerendered HTML, a block in view at first
+               paint, reduced motion, and every block once it has played
+     'armed'   the start state, set before the region paints when the block
+               is entirely below the fold: each line or step at its
+               recorded start (opacity 0, below its place; about.css)
+     'play'    once, at half in view: the recorded entrance, 400ms each,
+               150ms apart, ending complete
+
+   'rest' on the first render, so the server render and hydration agree. */
 export default function useSoftStart(ref) {
-  const [play, setPlay] = useState(false);
+  const [state, setState] = useState('rest');
+  useBeforePaint(() => {
+    if (!motionAllowed() || typeof IntersectionObserver === 'undefined') return;
+    if (belowFold(ref.current)) setState('armed');
+  }, []);
   useEffect(() => {
     const el = ref.current;
-    if (!el || typeof IntersectionObserver === 'undefined') return undefined;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    if (!el || state !== 'armed') return undefined;
     const io = new IntersectionObserver(
       (es) => {
         if (es.some((e) => e.isIntersecting)) {
-          setPlay(true);
+          setState('play');
           io.disconnect();
         }
       },
@@ -24,6 +33,6 @@ export default function useSoftStart(ref) {
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [ref]);
-  return play;
+  }, [ref, state]);
+  return state;
 }

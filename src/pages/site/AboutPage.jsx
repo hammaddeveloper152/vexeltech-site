@@ -35,14 +35,14 @@ const HOLD = [
 
 function HoldTo() {
   const ref = useRef(null);
-  const play = useSoftStart(ref);
+  const state = useSoftStart(ref);
   return (
     <section className="vt ab ab--ink ab--hold" aria-labelledby="hold-k">
       <div className="ab__in">
         <p className="ab__eyebrow" id="hold-k">
           What we hold to
         </p>
-        <ul className="hold" ref={ref} data-play={play ? 'true' : 'false'}>
+        <ul className="hold" ref={ref} data-play={state}>
           {HOLD.map((l, i) => (
             <li className={`hold__l${i === 3 ? ' hold__l--y' : ''}`} key={l} style={{ '--i': i }}>
               {l}

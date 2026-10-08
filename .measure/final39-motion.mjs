@@ -1,8 +1,8 @@
 /* final39-motion.mjs: rest full, start soft, PLAY ONCE (final39,
    2026-10-08, the founder). For each artifact on /services (the mosaic, the
    thread, the branding desk): with motion allowed, scroll it into view and
-   count its plays (each play opens with the 400ms crossfade, which sets
-   data-leaving), wait, scroll it out and back in twice, and count again:
+   count its plays (each play ends its 400ms crossfade by taking off the
+   data-leaving its start state set, FINAL41 part 4), wait, scroll it out and back in twice, and count again:
    one play in all is a pass. Also writes the mosaic entering view and
    resting as six frames a second apart, mosaic-rest-01..06.png.
      node .measure/final39-motion.mjs [base]   (default http://localhost:4190) */
@@ -22,11 +22,14 @@ for (const name of ['MarketingMosaic', 'AssistantThread', 'BrandDesk']) {
   await p.goto(BASE + '/services', { waitUntil: 'networkidle0' });
   await p.evaluate(() => document.fonts.ready);
   await p.addStyleTag({ content: '.bar, .skip { visibility: hidden !important; }' });
+  /* A play, since FINAL41 part 4: the soft start's crossfade ends (the
+     `data-leaving` the start state set at load comes off). A replay would
+     have to put it back and take it off again. */
   await p.evaluate((name) => {
     window.__plays = 0;
     const el = document.querySelector(`[data-artifact="${name}"]`);
     new MutationObserver((ms) => {
-      for (const m of ms) if (m.attributeName === 'data-leaving' && m.target.getAttribute('data-leaving') === 'true' && m.oldValue !== 'true') window.__plays += 1;
+      for (const m of ms) if (m.attributeName === 'data-leaving' && m.oldValue === 'true' && !m.target.getAttribute('data-leaving')) window.__plays += 1;
     }).observe(el, { attributes: true, attributeOldValue: true, subtree: true, attributeFilter: ['data-leaving'] });
   }, name);
   const into = () => p.evaluate((name) => document.querySelector(`[data-artifact="${name}"]`).scrollIntoView({ block: 'center' }), name);

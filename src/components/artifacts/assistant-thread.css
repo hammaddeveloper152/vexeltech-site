@@ -34,7 +34,9 @@
   margin: 0 auto;
 }
 
-.at__stage[data-leaving] > * {
+/* The soft start on the moving part only (FINAL41 part 4): the side's
+   words stay at full while the thread waits at 0.35 and crossfades up. */
+.at__stage[data-leaving] > :not(.at__side) {
   opacity: var(--fade, 1);
 }
 
