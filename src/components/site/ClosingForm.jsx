@@ -20,7 +20,7 @@ import './closing-form.css';
    Contact keeps its own page; the legal pages and /thanks have no form.
    There is no "Get in touch" heading and no "Let's talk." block here: the
    footer below says that. */
-export default function ClosingForm({ steps = false, heading, line }) {
+export default function ClosingForm({ steps = false, heading, line, submit = 'Get a custom quote' }) {
   return (
     <section id="form" className={`vt foot foot--sheet tail${steps ? ' tail--steps' : ''}`} aria-labelledby="tail-h">
       <div className="foot__sheet tail__in">
@@ -46,8 +46,10 @@ export default function ClosingForm({ steps = false, heading, line }) {
             </div>
           ) : null}
           <div className="tail__form">
-            {/* The submit reads "Send", as on Contact (FINAL42, the CTA law). */}
-            <LeadForm idPrefix="ff" labelledBy="tail-h" />
+            {/* The closing section is a call to action (FINAL43, the CTA
+                law): its submit reads "Get a custom quote", and the 404's
+                "Send" (Shell). Contact's own form keeps "Send". */}
+            <LeadForm idPrefix="ff" labelledBy="tail-h" submitLabel={submit} />
           </div>
         </div>
       </div>

@@ -233,7 +233,9 @@ main#main section.vt.ab.ab:is(.ab--d1, .ab--cream, .ns) {
 @media (min-width: 1024px) {
   .ns__grid {
     grid-template-columns: 420px minmax(0, 1fr);
-    grid-template-rows: 1fr auto;
+    /* The caption stands 24px under the lead (FINAL43, the founder), not
+       on the column's foot: the second row takes the rest. */
+    grid-template-rows: auto 1fr;
     grid-template-areas:
       'text steps'
       'cap steps';
@@ -254,7 +256,7 @@ main#main section.vt.ab.ab:is(.ab--d1, .ab--cream, .ns) {
 
   .ns__cap {
     grid-area: cap;
-    align-self: end;
+    align-self: start;
     margin-top: 24px !important;
   }
 

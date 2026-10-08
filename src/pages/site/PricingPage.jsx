@@ -7,6 +7,7 @@ import { DISCIPLINES } from '../../content/services.js';
 import { BRANDING, BUNDLE, FIGURES, WEBSITES, money } from '../../content/pricing.js';
 import '../../styles/pricegrid.css';
 import { setFaqLd, setLd, ORIGIN } from './head.js';
+import toForm from '../../components/site/toForm.js';
 
 /* THE PRICING PAGE, REBUILT 2026-09-24 ON THE MELIUS PATTERN (the founder),
    after the quiet pass, so it inherits its type and panel rules.
@@ -140,34 +141,6 @@ const QUESTIONS = [
     a: 'Your site keeps running; it is yours. When you need a change, call us. Small changes are priced small, and there is no retainer unless you ask for one.',
   },
 ];
-
-/* To the form: the page's smooth scroll (none under reduced motion), then
-   the form's first field takes focus once the scroll has ended, without
-   scrolling again. */
-function toForm(e) {
-  const form = document.getElementById('form');
-  if (!form) return;
-  e.preventDefault();
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const field = form.querySelector('input:not([type=hidden]):not([tabindex="-1"]), textarea');
-  const focus = () => field && field.focus({ preventScroll: true });
-  if (reduce) {
-    form.scrollIntoView();
-    focus();
-    return;
-  }
-  let done = false;
-  const finish = () => {
-    if (done) return;
-    done = true;
-    window.removeEventListener('scrollend', finish);
-    focus();
-  };
-  window.addEventListener('scrollend', finish, { once: true });
-  setTimeout(finish, 1200);
-  form.scrollIntoView({ behavior: 'smooth' });
-  if (window.history && window.history.replaceState) window.history.replaceState(null, '', '#form');
-}
 
 export default function PricingPage() {
   const [open, setOpen] = useState(null);
@@ -333,16 +306,7 @@ export default function PricingPage() {
             <h3 className="pr-bundle__name">{BUNDLE.name}</h3>
             <p className="pr-bundle__price">{money(FIGURES.bundle)}</p>
             <p className="pr-bundle__line">{BUNDLE.line()}</p>
-            <PromiseLine className="pr-bundle__promise" />
           </div>
-          {/* THE PAGE'S ONE CALL (FINAL42, the founder: the CTA law). Under
-              the grid and the bundle, centred: it takes the reader to the
-              form below, smoothly, and puts the cursor in its first field. */}
-          <p className="pr-grid__call">
-            <a className="pr-grid__cta" href="#form" data-primary-call="" onClick={toForm}>
-              Get a custom quote
-            </a>
-          </p>
           {/* THE FOOTNOTE, COPY V3, 2026-10-01: under the grid, in the panel. */}
           <p className="pr-grid__note">
             Marketing scales with ad spend and service area. Automation scales with the number of
@@ -350,6 +314,16 @@ export default function PricingPage() {
           </p>
           {/* CURRENCY AND TAX (the launch gate, 2026-10-07, the founder). */}
           <p className="pr-grid__note">All prices are in US dollars and exclude tax where applicable.</p>
+          {/* THE PAGE'S MAIN CALL (FINAL42; FINAL43, the founder): after the
+              grid, the bundle and their footnotes, 56px with an 18px label,
+              the promise line 12px under it. It takes the reader to the form
+              below and puts the cursor in its first field. */}
+          <div className="pr-grid__call">
+            <a className="pr-grid__cta" href="#form" data-primary-call="" onClick={toForm}>
+              Get a custom quote
+            </a>
+            <PromiseLine className="pr-grid__promise" />
+          </div>
         </div>
       </section>
 

@@ -79,3 +79,24 @@
     transition: none;
   }
 }
+
+/* THE PANEL'S LAST LINE (FINAL43, the CTA law): "Get a custom quote" as a
+   text link, in the link law (the underline token, a 48px target), to the
+   page's form. Inside the panel, so it is unseen and out of the tab order
+   (inert) while the panel is closed. */
+.dt__call {
+  margin: var(--s-lg) 0 0;
+}
+
+.dt__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  font-family: var(--font-offer);
+  font-size: var(--t-body-size);
+  line-height: var(--t-body-line);
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: var(--u-thick);
+  text-underline-offset: var(--u-offset);
+}

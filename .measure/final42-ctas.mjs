@@ -86,7 +86,7 @@ for (const w of [1280, 390]) {
         await wait(300);
         const seen = await p.evaluate(() =>
           [...document.querySelectorAll('a, button')]
-            .filter((e) => !e.closest('.wwd__card') && /get a (custom )?quote/i.test(e.innerText || ''))
+            .filter((e) => !e.closest('.wwd__card') && !e.matches('.dt__link') && /get a (custom )?quote/i.test(e.innerText || ''))
             .filter((e) => {
               const r = e.getBoundingClientRect();
               if (!r.width || r.bottom <= 0 || r.top >= innerHeight) return false;
@@ -94,7 +94,11 @@ for (const w of [1280, 390]) {
                 const cs = getComputedStyle(n);
                 if (cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) return false;
               }
-              return true;
+              /* Covered (a call scrolled under the bar's ground): not seen.
+                 Read at the middle of the call's part on screen. */
+              const y = (Math.max(r.top, 0) + Math.min(r.bottom, innerHeight)) / 2;
+              const top = document.elementFromPoint(r.left + r.width / 2, y);
+              return !!top && (e === top || e.contains(top));
             })
             .map((e) => String(e.className).split(' ')[0])
         );

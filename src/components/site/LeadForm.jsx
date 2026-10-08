@@ -364,6 +364,7 @@ export default function LeadForm({ idPrefix = 'ff', needs = false, labelledBy, s
         <button
           className="lf__submit"
           type="submit"
+          {...(submitLabel && /quote/i.test(submitLabel) ? { 'data-primary-call': '' } : {})}
           data-ready={ready ? 'true' : 'false'}
           aria-disabled={ready ? undefined : 'true'}
         >

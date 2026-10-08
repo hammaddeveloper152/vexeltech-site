@@ -3,6 +3,7 @@ import { FIGURES, money } from '../../content/pricing.js';
 import EvidenceBand from '../../components/story/EvidenceBand.jsx';
 import DevicePhones from '../../components/story/DevicePhones.jsx';
 import BandHead from '../../components/story/BandHead.jsx';
+import toForm from '../../components/site/toForm.js';
 import BrandDesk from '../../components/artifacts/BrandDesk.jsx';
 import MarketingMosaic from '../../components/artifacts/MarketingMosaic.jsx';
 import AssistantThread from '../../components/artifacts/AssistantThread.jsx';
@@ -241,6 +242,14 @@ export default function ServiceSections({ disciplines }) {
                 <Details id={`svc-${d.id}-details`}>
                   <SpecSheet rows={SUBSTANCE[d.id].spec} label={`${d.name}, the spec`} />
                   <HowItGoes steps={SUBSTANCE[d.id].steps} label={`${d.name}, how it goes`} />
+                  {/* The panel's last line (FINAL43, the CTA law): a text
+                      link to the page's form, seen only with the panel
+                      open. */}
+                  <p className="dt__call">
+                    <a className="dt__link" href="#form" onClick={toForm}>
+                      Get a custom quote
+                    </a>
+                  </p>
                 </Details>
               ) : null}
             </div>

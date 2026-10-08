@@ -66,12 +66,7 @@ export default function FitColumns() {
             </div>
           ))}
         </div>
-        {/* COPY V4, 2026-10-06: under both lists, 15px, steel on this cream
-            band (the brief's steel-lift is 2.27:1 on cream). */}
-        <p className="fc__note">
-          Our clients are in the US, the UK, Europe and Australia, on the same terms, with calls set to
-          your hours.
-        </p>
+        {/* The line under the lists is deleted (FINAL43, the founder). */}
       </div>
     </section>
   );

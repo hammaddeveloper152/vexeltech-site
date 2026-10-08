@@ -37,6 +37,9 @@ export default function Shell({
   /* `closingLine`: the line under "Ready when you are." (V5, final37:
      /services and About carry their own). */
   closingLine = 'A written number within one business day.',
+  /* `closingSubmit`: the closing form's submit (FINAL43); the 404's is
+     "Send". */
+  closingSubmit = 'Get a custom quote',
   /* `path`: the page's canonical path, and `noindex` for the 404
      (head.js, the release audit, 2026-09-25). */
   path,
@@ -77,7 +80,7 @@ export default function Shell({
             `footerForm={false}` (the legal pages, /thanks). Since final34
             this is the closing section, "Ready when you are." */}
         {meta && footerForm ? (
-          <ClosingForm heading="Ready when you are." line={closingLine} />
+          <ClosingForm heading="Ready when you are." line={closingLine} submit={closingSubmit} />
         ) : null}
       </main>
       {/* THE FOOTER, after <main> on every page, so it is the page's

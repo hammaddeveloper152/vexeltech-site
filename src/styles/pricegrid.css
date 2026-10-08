@@ -690,26 +690,29 @@
    stacked cards below 768 and the discipline chips in its header are
    deleted with their rules. */
 
-/* THE PAGE'S ONE CALL (FINAL42, the founder: the CTA law). Centred under
-   the grid and the bundle, the site's primary: 48px, yellow, asphalt words
-   (9.46:1); the button law at the foot of tokens.css. */
+/* THE PAGE'S MAIN CALL (FINAL42; FINAL43, the founder). After the grid,
+   the bundle and the footnotes, 40px under them (--s-xl); 56px tall with
+   an 18px label, the site's primary (asphalt on yellow, 9.46:1); the
+   promise line 12px under it. The cream band's own 96px foot follows
+   (the founder's answer): nothing extra. */
 .pr-grid__call {
   display: flex;
-  justify-content: center;
-  margin: var(--s-2xl) 0 var(--s-xl);
+  flex-direction: column;
+  align-items: center;
+  margin: var(--s-xl) 0 0;
 }
 
 .pr-grid__cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 48px; /* the brief's 48, exactly */
-  padding: 0 var(--s-lg);
+  height: 56px;
+  padding: 0 var(--s-xl);
   border-radius: var(--r-btn);
   background: var(--c-accent-ground);
   font-family: var(--font-brand);
-  font-size: var(--t-btn);
-  line-height: var(--t-btn-line);
+  font-size: 18px;
+  line-height: 24px;
   font-weight: var(--t-weight-btn);
   color: var(--c-asphalt);
   text-decoration: none;
@@ -718,4 +721,9 @@
 .pr-grid__cta:focus-visible {
   outline: var(--focus-ring) solid var(--c-asphalt); /* yellow on cream is 1.66:1 */
   outline-offset: var(--focus-offset);
+}
+
+.pr-grid .pr-grid__promise {
+  margin: 12px 0 0;
+  text-align: center;
 }
