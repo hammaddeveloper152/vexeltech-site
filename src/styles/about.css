@@ -298,45 +298,29 @@ main#main section.vt.ab.ab:is(.ab--d1, .ab--cream, .ns) {
   }
 }
 
-/* ---- Rest full, start soft (useSoftStart.js) ---------------------------
-   At rest every line and step is in place. Once, at half in view, they
-   replay their entrance: D3's lines from 12px below, D4's steps from 24px,
-   opacity from 0, 400ms each, 150ms apart. Reduced motion: no entrance. */
+/* ---- The entrance (useSoftStart.js; FINAL41 part 4, made dim the same
+   day by the founder) ---------------------------------------------------
+   Loaded below the fold, the lines and the steps wait in their places at
+   0.35, as the mosaic and the thread do: never blank, never offset. At
+   half in view each fades up to full over 400ms, 150ms after the one
+   before (the recorded stagger), and stays. In view at load, finished.
+   Reduced motion: finished. */
 @media (prefers-reduced-motion: no-preference) {
-  /* The start state (FINAL41 part 4): set before the block paints, only
-     when it loaded below the fold (useSoftStart.js). */
-  .hold[data-play='armed'] .hold__l {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
+  .hold[data-play='armed'] .hold__l,
   .ns__steps[data-play='armed'] .ns__step {
-    opacity: 0;
-    transform: translateY(24px);
+    opacity: 0.35;
   }
 
-  .hold[data-play='play'] .hold__l {
-    animation: ab-rise-12 400ms var(--ease-reveal) both;
-    animation-delay: calc(var(--i) * 150ms);
-  }
-
+  .hold[data-play='play'] .hold__l,
   .ns__steps[data-play='play'] .ns__step {
-    animation: ab-rise-24 400ms var(--ease-reveal) both;
+    animation: ab-dim-up 400ms var(--ease-reveal) both;
     animation-delay: calc(var(--i) * 150ms);
   }
 }
 
-@keyframes ab-rise-12 {
+@keyframes ab-dim-up {
   from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-}
-
-@keyframes ab-rise-24 {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
+    opacity: 0.35;
   }
 }
 

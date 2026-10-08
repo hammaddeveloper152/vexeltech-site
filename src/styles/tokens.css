@@ -1267,8 +1267,8 @@ main:focus {
    pointer and to rest on touch, where there is no hover. Focus is the
    ring, unchanged. The submit before the form is valid takes no hover and
    no press, and the default cursor. Reduced motion: the colour only.
-   Nothing else moves: no shadow, no glow, no icon (the submit's arrow and
-   the price buttons' darkening layer stand still). Links keep their
+   Nothing else moves: no shadow, no glow, no icon (the submit's arrow
+   stands still). Links keep their
    underline. Not in the law, each with a recorded behaviour of its own:
    the skip link, the menu button, What we do's cards, the FAQ rows, the
    cost row's dots, the desk's swatches and the form's pills.
@@ -1278,7 +1278,7 @@ main:focus {
   --btn-press: 90ms;
 }
 
-html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl) {
+html body :is(.hero__cta, .bar__cta, .lf__submit, .callband__cta, .pr-grid__cta, .legal__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl) {
   transition:
     transform var(--btn-dur) var(--ease-reveal),
     background-color var(--btn-dur) var(--ease-reveal),
@@ -1295,7 +1295,7 @@ html body :is(.lf__submit)[aria-disabled='true'] {
 
 @media (hover: hover) and (pointer: fine) {
   /* The fill, one step deeper. */
-  html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .svc2__cta, .callband__cta, .pr-col__btn--primary, .legal__cta, .one__cta):not([aria-disabled='true']):hover {
+  html body :is(.hero__cta, .bar__cta, .lf__submit, .callband__cta, .pr-grid__cta, .legal__cta):not([aria-disabled='true']):hover {
     opacity: 1;
     background-color: var(--c-yellow-d);
   }
@@ -1303,7 +1303,7 @@ html body :is(.lf__submit)[aria-disabled='true'] {
   /* The inverted call's hover is set at the foot of this sheet (THE
      INVERTED BUTTON), where it out-ranks the primaries' yellow. */
 
-  html body :is(.pr-col__btn:not(.pr-col__btn--primary), .dt__btn, .pr-col__more):hover {
+  html body :is(.dt__btn, .pr-col__more):hover {
     opacity: 1;
     background-color: rgb(232 234 237 / 10%);
   }
@@ -1318,23 +1318,19 @@ html body :is(.lf__submit)[aria-disabled='true'] {
   }
 
   /* Nothing else moves. */
-  html body .pr-col__btn:hover::after {
-    opacity: 0;
-  }
-
   html body .lf__submit:hover .send__go {
     transform: none;
   }
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):not([aria-disabled='true']):hover {
+  html body :is(.hero__cta, .bar__cta, .lf__submit, .callband__cta, .pr-grid__cta, .legal__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):not([aria-disabled='true']):hover {
     transform: translateY(-2px);
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):not([aria-disabled='true']):active {
+  html body :is(.hero__cta, .bar__cta, .lf__submit, .callband__cta, .pr-grid__cta, .legal__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):not([aria-disabled='true']):active {
     transform: scale(0.97);
     transition-duration: var(--btn-press);
   }
@@ -1352,7 +1348,7 @@ html body .lf__submit[aria-disabled='true']:active {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html body :is(.hero__cta, .bar__cta, .lf__submit, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):is(:hover, :active) {
+  html body :is(.hero__cta, .bar__cta, .lf__submit, .callband__cta, .pr-grid__cta, .legal__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):is(:hover, :active) {
     transform: none;
   }
 }
@@ -1367,7 +1363,7 @@ html body .lf__submit[aria-disabled='true']:active {
 
    WHY THESE SELECTORS CARRY `main` AND A DOUBLED CLASS: the law's hover
    rule above weighs (0,4,2), because one entry in its :is() list,
-   `.hero__cta:not(.hero__cta--line)`, weighs two classes, and :is() takes
+   `.hero__cta`, weighs two classes, and :is() takes
    its heaviest. The field's own hover (0,3,2) lost to it, so the call
    turned yellow on the yellow under the pointer. These weigh (0,4,3).
    Contrast: bone #F4EFE6 on ink 16.36:1 and on black 18.34:1; ink on the

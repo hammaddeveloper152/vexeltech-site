@@ -100,9 +100,15 @@ export default function Header({ over = false }) {
      this. The call keeps its own trigger. `off` on every page without a hero
      call. */
   const [film, setFilm] = useState('off');
+  /* FINAL42 (the founder: the CTA law): the hold covers every one of the
+     page's own "Get a custom quote" calls (`data-primary-call`: the hero's,
+     /pricing's under the grid, About's on the yellow field), so below 768
+     no screen shows two at once. The film's ground still follows the
+     hero alone. */
   useLayoutEffect(() => {
     const heroCall = document.querySelector('.hero__actions .hero__cta');
-    if (!heroCall) {
+    const calls = [...document.querySelectorAll('[data-primary-call]')];
+    if (!calls.length) {
       setHeld(false);
       setFilm('off');
       return undefined;
@@ -112,11 +118,19 @@ export default function Header({ over = false }) {
     const read = () => {
       raf = 0;
       const barBottom = barRef.current ? barRef.current.getBoundingClientRect().bottom : 0;
-      const inView = heroCall.getBoundingClientRect().bottom > barBottom;
-      const copy = document.querySelector('.hero__headline');
-      const clear = copy ? copy.getBoundingClientRect().top > barBottom + 24 : inView;
+      const inView = calls.some((c) => {
+        const r = c.getBoundingClientRect();
+        return r.bottom > barBottom && r.top < window.innerHeight;
+      });
       setHeld(phone.matches && inView);
-      setFilm(clear ? 'true' : 'false');
+      if (heroCall) {
+        const copy = document.querySelector('.hero__headline');
+        const heroIn = heroCall.getBoundingClientRect().bottom > barBottom;
+        const clear = copy ? copy.getBoundingClientRect().top > barBottom + 24 : heroIn;
+        setFilm(clear ? 'true' : 'false');
+      } else {
+        setFilm('off');
+      }
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(read);

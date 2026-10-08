@@ -17,7 +17,11 @@
    mosaic's and the thread's eight frames from half in view are written to
    .measure/out/final41/mosaic-entry-01..08.png and thread-entry-01..08.png.
 
-     node .measure/final41-entry.mjs [base] [shots]   (4190, no shots) */
+   About's two blocks also report their lowest opacity and any offset, and
+   a frame with a line or step under 0.05 is marked BLANK.
+   [only] limits the run: `about` runs About's two blocks at 390 alone.
+
+     node .measure/final41-entry.mjs [base] [shots|-] [only]   (4190) */
 import path from 'node:path';
 import puppeteer from 'puppeteer';
 
@@ -66,14 +70,22 @@ const READ = (sel) => {
   } else {
     const items = [...el.children];
     const shown = items.filter((t) => op(t) > 0.9).length;
-    what = `${shown} of ${items.length} shown at full opacity`;
+    const low = Math.min(...items.map(op));
+    const off = Math.max(
+      ...items.map((t) => {
+        const tf = getComputedStyle(t).transform;
+        return tf === 'none' ? 0 : Math.abs(Number(tf.match(/matrix\(([^)]+)\)/)[1].split(',')[5]));
+      })
+    );
+    what = `${shown} of ${items.length} at full, lowest opacity ${low.toFixed(2)}, offset ${Math.round(off)}px${low < 0.05 ? ', BLANK' : ''}`;
   }
   return `${fade}, ${what}`;
 };
 
+const ONLY = process.argv[4];
 const b = await puppeteer.launch({ headless: 'new' });
-for (const w of [1280, 390]) {
-  for (const c of CASES) {
+for (const w of ONLY === 'about' ? [390] : [1280, 390]) {
+  for (const c of ONLY === 'about' ? CASES.filter((x) => x.route === '/about-us') : CASES) {
     const p = await b.newPage();
     await p.setViewport({ width: w, height: w === 390 ? 844 : 800 });
     await p.goto(BASE + c.route, { waitUntil: 'networkidle0' });

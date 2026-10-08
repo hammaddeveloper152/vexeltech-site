@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { FIGURES, money } from '../../content/pricing.js';
 import EvidenceBand from '../../components/story/EvidenceBand.jsx';
 import DevicePhones from '../../components/story/DevicePhones.jsx';
@@ -9,7 +8,6 @@ import MarketingMosaic from '../../components/artifacts/MarketingMosaic.jsx';
 import AssistantThread from '../../components/artifacts/AssistantThread.jsx';
 import { SpecSheet, HowItGoes } from '../../components/story/Substance.jsx';
 import Details from '../../components/story/Details.jsx';
-import { CALL_HREF, CALL_LABEL, PromiseLine } from './parts.jsx';
 import { SUBSTANCE } from '../../content/substance.js';
 
 /* FINAL14 (the founder, 2026-10-06): the stage titles and step strips of the
@@ -237,13 +235,8 @@ export default function ServiceSections({ disciplines }) {
                 ))}
               </ul>
 
-              <div className="svc2__call">
-                <Link className="svc2__cta" to={CALL_HREF}>
-                  {CALL_LABEL}
-                </Link>
-                {i === 0 ? <PromiseLine className="svc2__promise-line" /> : null}
-              </div>
-
+              {/* No call in the band since FINAL42 (the CTA law): the band
+                  ends with its facts and Details. */}
               {SUBSTANCE[d.id] ? (
                 <Details id={`svc-${d.id}-details`}>
                   <SpecSheet rows={SUBSTANCE[d.id].spec} label={`${d.name}, the spec`} />

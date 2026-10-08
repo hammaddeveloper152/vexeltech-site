@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Brush from '../../components/site/Brush.jsx';
 import Shell from './Shell.jsx';
 import { PromiseLine } from './parts.jsx';
@@ -83,10 +82,8 @@ const COLUMNS = DISCIPLINES.map((d) => ({
      element stays and the buttons stay aligned). */
   line: null,
   items: d.cards.map((c) => c.title),
-  call: d.call.label,
-  /* The button follows its label (2026-09-24): the primary is yellow, the
-     secondary the outline on cream. */
-  primary: d.call.primary,
+  /* No call on the card since FINAL42 (the CTA law): the page has one,
+     under the grid. */
   ...GRID[d.id],
 }));
 
@@ -143,6 +140,34 @@ const QUESTIONS = [
     a: 'Your site keeps running; it is yours. When you need a change, call us. Small changes are priced small, and there is no retainer unless you ask for one.',
   },
 ];
+
+/* To the form: the page's smooth scroll (none under reduced motion), then
+   the form's first field takes focus once the scroll has ended, without
+   scrolling again. */
+function toForm(e) {
+  const form = document.getElementById('form');
+  if (!form) return;
+  e.preventDefault();
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const field = form.querySelector('input:not([type=hidden]):not([tabindex="-1"]), textarea');
+  const focus = () => field && field.focus({ preventScroll: true });
+  if (reduce) {
+    form.scrollIntoView();
+    focus();
+    return;
+  }
+  let done = false;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    window.removeEventListener('scrollend', finish);
+    focus();
+  };
+  window.addEventListener('scrollend', finish, { once: true });
+  setTimeout(finish, 1200);
+  form.scrollIntoView({ behavior: 'smooth' });
+  if (window.history && window.history.replaceState) window.history.replaceState(null, '', '#form');
+}
 
 export default function PricingPage() {
   const [open, setOpen] = useState(null);
@@ -293,15 +318,6 @@ export default function PricingPage() {
                     ))}
                   </div>
                 </div>
-                <Link
-                  className={`pr-col__btn${c.primary ? ' pr-col__btn--primary' : ''}`}
-                  to="/contact-us"
-                >
-                  {c.call}
-                  {/* The labels repeat across columns, so each names its
-                      service for a screen reader listing the page's links. */}
-                  <span className="skip-h">, {c.name}</span>
-                </Link>
               </li>
             ))}
           </ul>
@@ -317,12 +333,16 @@ export default function PricingPage() {
             <h3 className="pr-bundle__name">{BUNDLE.name}</h3>
             <p className="pr-bundle__price">{money(FIGURES.bundle)}</p>
             <p className="pr-bundle__line">{BUNDLE.line()}</p>
-            <Link className="pr-col__btn pr-bundle__btn" to="/contact-us">
-              Get a custom quote
-              <span className="skip-h">, {BUNDLE.name}</span>
-            </Link>
             <PromiseLine className="pr-bundle__promise" />
           </div>
+          {/* THE PAGE'S ONE CALL (FINAL42, the founder: the CTA law). Under
+              the grid and the bundle, centred: it takes the reader to the
+              form below, smoothly, and puts the cursor in its first field. */}
+          <p className="pr-grid__call">
+            <a className="pr-grid__cta" href="#form" data-primary-call="" onClick={toForm}>
+              Get a custom quote
+            </a>
+          </p>
           {/* THE FOOTNOTE, COPY V3, 2026-10-01: under the grid, in the panel. */}
           <p className="pr-grid__note">
             Marketing scales with ad spend and service area. Automation scales with the number of

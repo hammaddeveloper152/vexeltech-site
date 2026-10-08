@@ -22,7 +22,7 @@ import './closing-form.css';
    footer below says that. */
 export default function ClosingForm({ steps = false, heading, line }) {
   return (
-    <section className={`vt foot foot--sheet tail${steps ? ' tail--steps' : ''}`} aria-labelledby="tail-h">
+    <section id="form" className={`vt foot foot--sheet tail${steps ? ' tail--steps' : ''}`} aria-labelledby="tail-h">
       <div className="foot__sheet tail__in">
         <h2 className="tail__h hl" id="tail-h">
           {heading}
@@ -46,7 +46,8 @@ export default function ClosingForm({ steps = false, heading, line }) {
             </div>
           ) : null}
           <div className="tail__form">
-            <LeadForm idPrefix="ff" labelledBy="tail-h" submitLabel="Get a custom quote" />
+            {/* The submit reads "Send", as on Contact (FINAL42, the CTA law). */}
+            <LeadForm idPrefix="ff" labelledBy="tail-h" />
           </div>
         </div>
       </div>

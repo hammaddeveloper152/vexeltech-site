@@ -227,11 +227,10 @@ export default function Hero() {
 
         <div className="hero__support">
           <div className="hero__actions">
-            <Link className="hero__cta" to="/contact-us">
+            {/* One of the site's four "Get a custom quote" buttons (FINAL42,
+                the founder: the CTA law). "Ask a question" is retired. */}
+            <Link className="hero__cta" to="/contact-us" data-primary-call="">
               Get a custom quote
-            </Link>
-            <Link className="hero__cta hero__cta--line" to="/contact-us">
-              Ask a question
             </Link>
           </div>
 

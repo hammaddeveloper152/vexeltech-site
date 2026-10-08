@@ -71,7 +71,7 @@ export function PromiseLine({ className = '' }) {
    field, #F2B01E, with the heading and the line in ink #121212 and the
    call inverted (ink fill, bone text); at 390 it fills one screen with the
    heading at 56px. The page's last stop before the form. */
-export function CallBand({ heading, note = null, promise = false, field = false, cream = false }) {
+export function CallBand({ heading, note = null, promise = false, field = false, cream = false, call = true }) {
   return (
     <section
       className={`vt callband${field ? ' callband--field' : ''}${cream ? ' callband--cream' : ''}`}
@@ -83,9 +83,14 @@ export function CallBand({ heading, note = null, promise = false, field = false,
         {heading}
       </h2>
       {note ? <p className="callband__note">{note}</p> : null}
-      <Link className="callband__cta" to={CALL_HREF}>
-        {CALL_LABEL}
-      </Link>
+      {/* `call={false}` (FINAL42, the CTA law): /services' closing call
+          is the heading and the line; About's yellow field keeps its call,
+          one of the site's four. */}
+      {call ? (
+        <Link className="callband__cta" to={CALL_HREF} data-primary-call="">
+          {CALL_LABEL}
+        </Link>
+      ) : null}
       {promise ? <PromiseLine className="callband__promise" /> : null}
     </section>
   );

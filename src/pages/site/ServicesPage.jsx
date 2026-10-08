@@ -109,6 +109,7 @@ export default function ServicesPage() {
 
       {/* TALK TO US: the closing call. */}
       <CallBand
+        call={false}
         heading="Which one is costing you most?"
         note="Fifteen minutes on the phone, and you have a written number within one business day. In our experience the problem is rarely the expensive one."
       />

@@ -7,10 +7,10 @@ import { useBeforePaint, motionAllowed, belowFold } from '../site/entrance.js';
      'rest'    complete: the prerendered HTML, a block in view at first
                paint, reduced motion, and every block once it has played
      'armed'   the start state, set before the region paints when the block
-               is entirely below the fold: each line or step at its
-               recorded start (opacity 0, below its place; about.css)
-     'play'    once, at half in view: the recorded entrance, 400ms each,
-               150ms apart, ending complete
+               is entirely below the fold: each line or step in its
+               place at 0.35 (about.css), dim, never blank
+     'play'    once, at half in view: each fades up to full, 400ms,
+               150ms apart, and stays
 
    'rest' on the first render, so the server render and hydration agree. */
 export default function useSoftStart(ref) {

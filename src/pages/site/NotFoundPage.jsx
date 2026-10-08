@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Shell from './Shell.jsx';
-import { CALL_HREF, CALL_LABEL, PromiseLine } from './parts.jsx';
+import { PromiseLine } from './parts.jsx';
 import ArtCard from '../../components/site/ArtCard.jsx';
 import './notfound.css';
 import vmark from '../../assets/objects/vmark.webp';
@@ -30,9 +29,7 @@ export default function NotFoundPage() {
             That page isn&apos;t here.
           </h1>
           <p className="nf__lead">Try the menu, or tell us what you were looking for.</p>
-          <Link className="one__cta nf__cta" to={CALL_HREF}>
-            {CALL_LABEL}
-          </Link>
+          {/* The call came off (FINAL42, the CTA law). */}
           <PromiseLine className="nf__promise" />
         </div>
       </section>

@@ -157,7 +157,7 @@
   text-shadow: 0 2px 24px rgb(0 0 0 / 60%);
 }
 
-.hero[data-mode] :is(.hero__eyebrow, .hero__promise, .hero__cta--line) {
+.hero[data-mode] :is(.hero__eyebrow, .hero__promise) {
   text-shadow: 0 1px 12px rgb(0 0 0 / 60%);
 }
 
@@ -329,21 +329,6 @@
 
 /* The second action is a LINK, not a quieter button. Underlined, in the offer
    register. It keeps the 48px target through padding. */
-.hero__cta--line {
-  min-height: 48px;
-  padding: 0;
-  background: none;
-  border: 0;
-  font-family: var(--font-offer);
-  font-size: var(--t-body-size);
-  line-height: var(--t-body-line);
-  font-weight: var(--t-weight-body);
-  letter-spacing: normal;
-  color: var(--c-bone); /* 2026-09-24: nothing white but the headline */
-  text-decoration: underline;
-text-decoration-thickness: var(--u-thick);
-  text-underline-offset: var(--u-offset);
-}
 
 /* Hover is gated. Ungated it sticks on touch. */
 @media (hover: hover) and (pointer: fine) {
@@ -536,10 +521,6 @@ text-decoration-thickness: var(--u-thick);
     height: 120px;
     background: linear-gradient(to bottom, rgb(11 11 13 / 0.6), rgb(11 11 13 / 0) 120px);
     pointer-events: none;
-  }
-
-  .hero[data-mode] .hero__cta--line {
-    display: none;
   }
 
   /* LIFTED, 2026-10-01 (the founder), to match the desktop rule: the copy
