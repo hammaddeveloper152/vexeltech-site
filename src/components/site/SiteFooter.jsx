@@ -66,10 +66,10 @@ export default function SiteFooter() {
             </ul>
           </nav>
 
-          <div className="sf__col">
-            <p className="sf__k">Start</p>
-            {/* The sentence under "Start" is deleted (FINAL41, the founder):
-                the label and the call. */}
+          {/* Column 3 is the call alone (FINAL41, the founder): the
+              sentence and then the "Start" label are deleted. It stands at
+              the top of the row, level with "Let's talk." and "Pages". */}
+          <div className="sf__col sf__col--call">
             <Link className="sf__cta" to="/contact-us">
               Get a custom quote
             </Link>

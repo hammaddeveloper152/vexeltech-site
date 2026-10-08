@@ -59,6 +59,17 @@
   .sf__cta {
     align-self: flex-start;
   }
+
+  /* Column 3 is the call alone (FINAL41): at the top of the row, not on
+     its foot. */
+  .sf__col--call > .sf__cta {
+    margin-top: 0 !important;
+  }
+}
+
+/* Below 1024 the call follows the Pages list by the columns' own gap. */
+.sf__col--call > .sf__cta {
+  margin-top: 0;
 }
 
 .sf__col p,
