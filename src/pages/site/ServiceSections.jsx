@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FIGURES, money } from '../../content/pricing.js';
 import EvidenceBand from '../../components/story/EvidenceBand.jsx';
 import DevicePhones from '../../components/story/DevicePhones.jsx';
+import BandHead from '../../components/story/BandHead.jsx';
 import BrandDesk from '../../components/artifacts/BrandDesk.jsx';
 import MarketingMosaic from '../../components/artifacts/MarketingMosaic.jsx';
 import AssistantThread from '../../components/artifacts/AssistantThread.jsx';
@@ -160,6 +161,37 @@ function factsOf(id) {
   ];
 }
 
+/* THE HEADER ROWS (FINAL41 part 3, copy V5.3, the founder): Branding and
+   Websites carry Marketing's side over their artifacts (BandHead.jsx). */
+const HEADS = {
+  branding: {
+    eyebrow: 'One name · every surface',
+    before: 'One identity, on ',
+    word: 'everything',
+    after: ' your customers see.',
+    paragraph:
+      'Branding is the mark, the colours and the type your customers recognise before they read a word, carried the same way across the sign, the card, the invoice, the listing and the screen.',
+    lines: [
+      'Five or eight concepts, shown on a sign, a card and a screen.',
+      'Every file and the guide, yours from day one.',
+      'Ready in one to two business days.',
+    ],
+  },
+  websites: {
+    eyebrow: 'One site · built for the phone it is read on',
+    before: 'Every page is there to earn a ',
+    word: 'call',
+    after: '.',
+    paragraph:
+      'Your website is where people land after the search, the ad or the referral, and it is the first judgement they make about you. We build six pages around how your customers decide, with the call, the form and the booking within reach on a phone.',
+    lines: [
+      'Six pages, structured around what you sell most.',
+      'Domain, hosting and code in your name.',
+      'Live in four business days from your content.',
+    ],
+  },
+};
+
 export default function ServiceSections({ disciplines }) {
   return (
     <div className="svc2 svc2--one">
@@ -175,6 +207,7 @@ export default function ServiceSections({ disciplines }) {
             <div className={`svc2__in${cream ? ' panel' : ''}`}>
               {d.image || d.phones || d.proof ? (
                 <div className="svc2__band">
+                  {HEADS[d.id] ? <BandHead {...HEADS[d.id]} /> : null}
                   {d.proof ? (
                     React.createElement(PROOF[d.proof])
                   ) : d.phones ? (

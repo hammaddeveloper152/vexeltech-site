@@ -353,9 +353,10 @@ export default function BrandDesk() {
       <div className="bd__stage" ref={ref} aria-hidden="true" {...leaving(leave)}>
         <Crossfade value={i} render={(n) => <Desk set={SETS[n]} t={t} name={name} signFs={signFs} />} />
       </div>
+      {/* The caption's sentence is the band's statement since FINAL41 (the
+          founder): only the price stays, at the right. */}
       <figcaption className="bd__cap">
-        <span>One identity, on everything your customers see.</span>
-        <span>Branding from {money(FIGURES.brandingBasic)}</span>
+        <span className="bd__cap-price">Branding from {money(FIGURES.brandingBasic)}</span>
       </figcaption>
     </figure>
   );

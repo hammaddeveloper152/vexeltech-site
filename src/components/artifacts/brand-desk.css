@@ -118,7 +118,7 @@
 .bd__cap {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-end; /* the price alone, at the right (FINAL41) */
   gap: var(--s-xs) var(--s-lg);
   font-family: var(--font-mono);
   font-size: 11px;

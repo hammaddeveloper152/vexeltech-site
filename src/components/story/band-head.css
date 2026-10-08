@@ -1,0 +1,114 @@
+/* THE BAND'S HEADER ROW (BandHead.jsx, FINAL41 part 3). Marketing's side
+   values (marketing-mosaic.css): the eyebrow mono 11px at 0.14em, the
+   statement Clash 44px 600 at -0.02em (40 below 600), the paragraph 16px
+   at 1.45, the mono lines as Automation's (11px, 22px lines). Inks on the
+   dark band: bone 16.32:1, bone at 85% 11.8, steel-lift 7.55, yellow 9.56.
+   On the cream band: asphalt 15.75, steel 7.20, the yellow ink 5.09. */
+.bh {
+  display: grid;
+  margin: 0 0 40px;
+}
+
+.bh p {
+  margin: 0;
+}
+
+.bh__eyebrow,
+.bh__lines {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-steel-lift);
+}
+
+.bh__eyebrow {
+  line-height: 16px;
+}
+
+.bh__head {
+  margin: 14px 0 18px !important;
+  font-family: var(--font-brand);
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--c-bone);
+}
+
+.bh__head em {
+  font-style: normal;
+  color: var(--c-yellow-d);
+}
+
+.bh__p {
+  max-width: 52ch;
+  font-family: var(--font-offer);
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--c-body-dark);
+}
+
+.bh__lines {
+  margin-top: 26px !important;
+  line-height: 22px;
+}
+
+/* On the cream band. */
+.svc2__d--cream .bh__eyebrow,
+.svc2__d--cream .bh__lines {
+  color: var(--c-steel);
+}
+
+.svc2__d--cream .bh__head {
+  color: var(--c-asphalt);
+}
+
+.svc2__d--cream .bh__head em {
+  color: var(--c-yellow-ink);
+}
+
+.svc2__d--cream .bh__p {
+  color: var(--c-steel);
+}
+
+/* From 1024 a header row: Marketing's 340px column and 40px gap. */
+@media (min-width: 1024px) {
+  /* The eyebrow on its own row over the left column, so the statement and
+     the paragraph start level however many lines the eyebrow takes. */
+  .bh {
+    grid-template-columns: 340px minmax(0, 1fr);
+    grid-template-areas:
+      'eye .'
+      'head right';
+    column-gap: 40px;
+    align-items: start;
+  }
+
+  .bh__l {
+    display: contents;
+  }
+
+  .bh__eyebrow {
+    grid-area: eye;
+  }
+
+  .bh__head {
+    grid-area: head;
+  }
+
+  .bh__r {
+    grid-area: right;
+    margin-top: 14px;
+  }
+
+  .bh__p {
+    max-width: 62ch;
+  }
+}
+
+@media (max-width: 599px) {
+  .bh__head {
+    font-size: 40px;
+  }
+}
