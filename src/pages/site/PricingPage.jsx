@@ -309,6 +309,11 @@ export default function PricingPage() {
               2026-10-02): name, price, line and call. The figure is the
               token; the line is derived (pricing.js). */}
           <div className="pr-bundle">
+            {/* The bundle's face and glow (FINAL40, addendum 4), lit on
+                hover and focus as the four cards are; drawn outside the
+                row's box, so the row does not move at rest. */}
+            <span className="pr-bundle__glow" aria-hidden="true" />
+            <span className="pr-bundle__bg" aria-hidden="true" />
             <h3 className="pr-bundle__name">{BUNDLE.name}</h3>
             <p className="pr-bundle__price">{money(FIGURES.bundle)}</p>
             <p className="pr-bundle__line">{BUNDLE.line()}</p>

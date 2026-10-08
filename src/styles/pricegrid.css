@@ -253,6 +253,123 @@
   opacity: 0;
 }
 
+/* THE CARD LIGHTS UNDER THE POINTER (FINAL40, addendum 4, the founder;
+   BUILD-LAW Touch, Interaction). On hover and on focus within, each of the
+   four cards and the bundle rises 4px and lights as the picked card is lit
+   at rest: its white face and its glow (0.45, the glow's recorded hover
+   value), 200ms on the reveal curve. The glow sits behind the face by
+   design, so the two light together; the hairlines beside the face fade as
+   they do beside the picked card. The price does not scale. The picked
+   card, already 4px up at rest, rises 4px more. Reduced motion: the light
+   only. The card's button keeps the button law on top. */
+.pr-bundle {
+  position: relative;
+  isolation: isolate;
+}
+
+.pr-bundle__glow,
+.pr-bundle__bg {
+  position: absolute;
+  pointer-events: none;
+  border-radius: var(--r-card);
+  opacity: 0;
+}
+
+/* The face 24px past the row on every side, the glow 8px past the face;
+   below 768 both stop at the page's 16px margin at the sides, so neither
+   makes the page scroll sideways at 320 (the launch gate's reflow check). */
+.pr-bundle__bg {
+  inset: -24px;
+  z-index: -1;
+  background: #ffffff;
+  box-shadow: 0 0 24px rgb(240 179 35 / 25%);
+}
+
+.pr-bundle__glow {
+  inset: -32px;
+  z-index: -2;
+  background: var(--c-accent-ground);
+  filter: blur(16px);
+}
+
+@media (max-width: 767px) {
+  .pr-bundle__bg {
+    inset: -24px -16px;
+  }
+
+  .pr-bundle__glow {
+    inset: -32px -16px;
+  }
+}
+
+.pr-col,
+.pr-bundle {
+  transition: transform 200ms var(--ease-reveal);
+}
+
+.pr-col__glow,
+.pr-col__bg,
+.pr-bundle__glow,
+.pr-bundle__bg {
+  transition: opacity 200ms var(--ease-reveal);
+}
+
+/* Focus within lights the card on every device; hover only under a real
+   pointer (BUILD-LAW Motion: touch fires a sticky false hover). */
+.pr-col:focus-within :is(.pr-col__glow, .pr-col__bg),
+.pr-bundle:focus-within .pr-bundle__bg {
+  opacity: 1;
+}
+
+.pr-col:focus-within .pr-col__glow,
+.pr-bundle:focus-within .pr-bundle__glow {
+  opacity: 0.45;
+}
+
+.pr-col:focus-within::before,
+.pr-col:focus-within + .pr-col::before {
+  opacity: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pr-col:hover :is(.pr-col__glow, .pr-col__bg),
+  .pr-bundle:hover .pr-bundle__bg {
+    opacity: 1;
+  }
+
+  .pr-col:hover .pr-col__glow,
+  .pr-bundle:hover .pr-bundle__glow {
+    opacity: 0.45;
+  }
+
+  .pr-col:hover::before,
+  .pr-col:hover + .pr-col::before {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pr-col:focus-within,
+  .pr-bundle:focus-within {
+    transform: translateY(-4px);
+  }
+
+  .pr-col[data-picked='true']:focus-within {
+    transform: translateY(-8px);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .pr-col:hover,
+  .pr-bundle:hover {
+    transform: translateY(-4px);
+  }
+
+  .pr-col[data-picked='true']:hover {
+    transform: translateY(-8px);
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .pr-col__btn:hover::after {
     opacity: 1;
