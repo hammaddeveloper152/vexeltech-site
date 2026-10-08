@@ -1300,9 +1300,8 @@ html body :is(.lf__submit)[aria-disabled='true'] {
     background-color: var(--c-yellow-d);
   }
 
-  html body .callband--field .callband__cta:hover {
-    background-color: #000;
-  }
+  /* The inverted call's hover is set at the foot of this sheet (THE
+     INVERTED BUTTON), where it out-ranks the primaries' yellow. */
 
   html body :is(.pr-col__btn:not(.pr-col__btn--primary), .dt__btn, .pr-col__more):hover {
     opacity: 1;
@@ -1356,4 +1355,37 @@ html body .lf__submit[aria-disabled='true']:active {
   html body :is(.hero__cta, .bar__cta, .lf__submit, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):is(:hover, :active) {
     transform: none;
   }
+}
+
+/* ==========================================================================
+   THE INVERTED BUTTON (FINAL41, 2026-10-08, the founder; BUILD-LAW Touch,
+   Interaction). A call on a yellow ground is ink, never yellow: About's
+   close field is the one yellow ground with a call on it (measured on
+   every route). Rest: ink #121212, bone #F4EFE6, the primary's size and
+   radius. Hover: the law's 2px rise, the fill to #000. Press: 0.97. Focus:
+   an ink ring with a 2px bone gap, so it shows on the yellow.
+
+   WHY THESE SELECTORS CARRY `main` AND A DOUBLED CLASS: the law's hover
+   rule above weighs (0,4,2), because one entry in its :is() list,
+   `.hero__cta:not(.hero__cta--line)`, weighs two classes, and :is() takes
+   its heaviest. The field's own hover (0,3,2) lost to it, so the call
+   turned yellow on the yellow under the pointer. These weigh (0,4,3).
+   Contrast: bone #F4EFE6 on ink 16.36:1 and on black 18.34:1; ink on the
+   field's #F2B01E 9.82:1, black on it 11.0:1 (the ring's ink, 9.82).
+   ========================================================================== */
+html body main .callband--field .callband__cta.callband__cta {
+  background-color: #121212;
+  color: #f4efe6;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html body main .callband--field .callband__cta.callband__cta:hover {
+    background-color: #000;
+  }
+}
+
+html body main .callband--field .callband__cta.callband__cta:focus-visible {
+  outline: var(--focus-ring) solid #121212;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #f4efe6; /* the bone gap inside the ink ring */
 }
