@@ -297,7 +297,7 @@ for (const w of [1280, 390]) {
   }
 }
 /* THE BUTTON LAW, with motion allowed. */
-const LAW = '.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .sf__cta, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl';
+const LAW = '.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl';
 const lawSeen = {};
 for (const route of ROUTES) {
   const p = await b.newPage();

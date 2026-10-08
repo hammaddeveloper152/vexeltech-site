@@ -41,39 +41,29 @@
   min-width: 0;
 }
 
-/* EQUAL COLUMNS (the trim, 2026-10-08, the founder). From 1024 the three
-   share the row's height (the Pages column's, 216px) and each one's last
-   block sits on its foot: the email and phone in 1, the call in 3. Their
-   tops and their feet line up. */
+/* COLUMN 1's FOOT (the trim, 2026-10-08; FINAL41): from 1024 the email
+   and phone stand on the row's foot. Columns 2 and 3 are lists from the
+   top. */
 @media (min-width: 1024px) {
-  .sf__col {
+  .sf__col--talk {
     display: flex;
     flex-direction: column;
   }
 
-  .sf__col > :last-child {
+  .sf__col--talk > :last-child {
     margin-top: auto !important;
   }
 
-  /* The column is a flex column now; the call keeps its own width. */
-  .sf__cta {
-    align-self: flex-start;
+  /* The first link's capitals start level with the top of "Let's talk."
+     (measured, .measure/final41-footer.mjs): the capitals stand 12px
+     under the link's 48px box top. */
+  .sf__col:not(.sf__col--talk) .sf__links {
+    margin-top: -12px;
   }
-
-  /* Column 3 is the call alone (FINAL41): at the top of the row, not on
-     its foot. */
-  .sf__col--call > .sf__cta {
-    margin-top: 0 !important;
-  }
-}
-
-/* Below 1024 the call follows the Pages list by the columns' own gap. */
-.sf__col--call > .sf__cta {
-  margin-top: 0;
 }
 
 .sf__col p,
-.sf__pages {
+.sf__links {
   margin: 0;
 }
 
@@ -124,19 +114,8 @@
   text-decoration-color: var(--c-bone);
 }
 
-/* Column headings */
-.sf__k {
-  margin-bottom: var(--s-sm) !important;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 16px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--c-steel-lift);
-}
-
-/* Column 2 */
-.sf__pages {
+/* Columns 2 and 3: the six links, no labels (FINAL41). */
+.sf__links {
   padding: 0;
   list-style: none;
 }
@@ -153,8 +132,7 @@
 }
 
 /* The underline is drawn on the anchor, on hover and on keyboard focus,
-   and on nothing else: the legal row's dots are their own spans, outside
-   every anchor (final35). */
+   and on nothing else (final35). */
 @media (hover: hover) and (pointer: fine) {
   .sf__a:hover {
     text-decoration: underline;
@@ -169,36 +147,6 @@
   text-underline-offset: var(--u-offset);
 }
 
-/* Column 3 */
-/* Column 3's sentence (.sf__promise) is deleted, FINAL41. */
-
-.sf__cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  margin-top: var(--s-lg);
-  padding: var(--s-md) var(--s-lg);
-  border-radius: var(--r-btn);
-  background: var(--c-accent-ground);
-  font-family: var(--font-brand);
-  font-size: var(--t-btn);
-  line-height: var(--t-btn-line);
-  font-weight: var(--t-weight-btn);
-  color: var(--c-asphalt); /* 9.46:1 */
-  text-decoration: none;
-  transition:
-    opacity var(--d-press) var(--ease-reveal),
-    transform var(--d-press) var(--ease-reveal);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .sf__cta:hover {
-    opacity: var(--hover-opacity);
-  }
-}
-
-.sf__cta:active,
 .sf__a:active,
 .sf__u:active {
   transform: scale(0.97);
@@ -212,9 +160,9 @@
   outline-offset: var(--focus-offset);
 }
 
-/* The legal row, above the wordmark: 12px mono steel-lift, its links
-   bone. No rule above it since final35: the space is the boundary. Wraps
-   to two lines below 600. */
+/* The legal row, above the wordmark: the entity and the address, 12px
+   mono steel-lift (FINAL41: its Privacy and Terms links moved to column 3).
+   No rule above it since final35: the space is the boundary. */
 .sf__legal {
   display: flex;
   flex-wrap: wrap;
@@ -227,39 +175,11 @@
   color: var(--c-steel-lift);
 }
 
-.sf__lg {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-/* The dots are plain text in their own spans, never inside a link. */
+/* The dot is plain text in its own span. */
 .sf__sep {
   padding: 0 10px;
   color: var(--c-steel-lift);
 }
-
-/* Below 600: two lines, the entity and address, then Privacy and Terms. */
-@media (max-width: 599px) {
-  .sf__legal {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .sf__sep--g {
-    display: none;
-  }
-}
-
-.sf__a--legal {
-  /* 48 wide at least (final35, BUILD-LAW Touch): "Terms" sets 38. The words centre in the
-     box and the underline stays under the words. */
-  justify-content: center;
-  min-width: 48px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-}
-
 /* THE WORDMARK. VEXELTECH. in the display face, 600, -0.03em, bone at 92%,
    the full stop yellow, as wide as the container: its set width is 6.14
    times its size, so 100cqi / 6.14 (188px at 1280). The box is the

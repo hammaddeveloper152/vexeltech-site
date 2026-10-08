@@ -34,12 +34,23 @@ const PAGES = [
   { label: 'Contact us', to: '/contact-us' },
 ];
 
+/* THE FOOTER, FINAL41 (2026-10-08, the founder): three columns and no
+   labels. 1, "Let's talk." with the email and the phone; 2, the four
+   pages; 3, the two legal pages. The first links of 2 and 3 stand level
+   with the top of "Let's talk." (site-footer.css). The "Pages" and
+   "Start" labels, the Start sentence and the footer's call are deleted;
+   the legal row is the entity and the address only. */
+const LEGAL = [
+  { label: 'Privacy policy', to: '/privacy-policy' },
+  { label: 'Terms of service', to: '/terms-of-service' },
+];
+
 export default function SiteFooter() {
   return (
     <footer className="vt sf">
       <div className="sf__in">
         <div className="sf__cols">
-          <div className="sf__col">
+          <div className="sf__col sf__col--talk">
             <p className="sf__talk hl">Let&apos;s talk.</p>
             <p className="sf__contact">
               <a className="sf__u" href={`mailto:${EMAIL}`}>
@@ -51,11 +62,8 @@ export default function SiteFooter() {
             </p>
           </div>
 
-          <nav className="sf__col" aria-labelledby="sf-pages">
-            <p className="sf__k" id="sf-pages">
-              Pages
-            </p>
-            <ul className="sf__pages">
+          <nav className="sf__col" aria-label="Pages">
+            <ul className="sf__links">
               {PAGES.map((pg) => (
                 <li key={pg.label}>
                   <Link className="sf__a" to={pg.to}>
@@ -66,41 +74,25 @@ export default function SiteFooter() {
             </ul>
           </nav>
 
-          {/* Column 3 is the call alone (FINAL41, the founder): the
-              sentence and then the "Start" label are deleted. It stands at
-              the top of the row, level with "Let's talk." and "Pages". */}
-          <div className="sf__col sf__col--call">
-            <Link className="sf__cta" to="/contact-us">
-              Get a custom quote
-            </Link>
-          </div>
+          <nav className="sf__col" aria-label="Legal">
+            <ul className="sf__links">
+              {LEGAL.map((pg) => (
+                <li key={pg.label}>
+                  <Link className="sf__a" to={pg.to}>
+                    {pg.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
 
-        {/* Two groups, so below 600 the row breaks between them and never
-            starts a line with a dot. Every dot is a span of its own, outside
-            the links, so a link's underline never runs under one (final35). */}
         <p className="sf__legal">
-          <span className="sf__lg">
-            <span>© 2026 {ENTITY.name}</span>
-            <span className="sf__sep" aria-hidden="true">
-              ·
-            </span>
-            <span>{ENTITY.addressShort}</span>
-          </span>
-          <span className="sf__sep sf__sep--g" aria-hidden="true">
+          <span>© 2026 {ENTITY.name}</span>
+          <span className="sf__sep" aria-hidden="true">
             ·
           </span>
-          <span className="sf__lg">
-            <Link className="sf__a sf__a--legal" to="/privacy-policy">
-              Privacy
-            </Link>
-            <span className="sf__sep" aria-hidden="true">
-              ·
-            </span>
-            <Link className="sf__a sf__a--legal" to="/terms-of-service">
-              Terms
-            </Link>
-          </span>
+          <span>{ENTITY.addressShort}</span>
         </p>
 
         <p className="sf__mark" aria-hidden="true">

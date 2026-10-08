@@ -1278,7 +1278,7 @@ main:focus {
   --btn-press: 90ms;
 }
 
-html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .sf__cta, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl) {
+html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl) {
   transition:
     transform var(--btn-dur) var(--ease-reveal),
     background-color var(--btn-dur) var(--ease-reveal),
@@ -1295,7 +1295,7 @@ html body :is(.lf__submit)[aria-disabled='true'] {
 
 @media (hover: hover) and (pointer: fine) {
   /* The fill, one step deeper. */
-  html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .sf__cta, .svc2__cta, .callband__cta, .pr-col__btn--primary, .legal__cta, .one__cta):not([aria-disabled='true']):hover {
+  html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .svc2__cta, .callband__cta, .pr-col__btn--primary, .legal__cta, .one__cta):not([aria-disabled='true']):hover {
     opacity: 1;
     background-color: var(--c-yellow-d);
   }
@@ -1329,13 +1329,13 @@ html body :is(.lf__submit)[aria-disabled='true'] {
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .sf__cta, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):not([aria-disabled='true']):hover {
+  html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):not([aria-disabled='true']):hover {
     transform: translateY(-2px);
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .sf__cta, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):not([aria-disabled='true']):active {
+  html body :is(.hero__cta:not(.hero__cta--line), .bar__cta, .lf__submit, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):not([aria-disabled='true']):active {
     transform: scale(0.97);
     transition-duration: var(--btn-press);
   }
@@ -1353,7 +1353,7 @@ html body .lf__submit[aria-disabled='true']:active {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html body :is(.hero__cta, .bar__cta, .lf__submit, .sf__cta, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):is(:hover, :active) {
+  html body :is(.hero__cta, .bar__cta, .lf__submit, .svc2__cta, .callband__cta, .pr-col__btn, .legal__cta, .one__cta, .dt__btn, .pr-col__more, .hero__pause, .ct-mq__ctl):is(:hover, :active) {
     transform: none;
   }
 }
